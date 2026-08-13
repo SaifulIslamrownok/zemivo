@@ -3,8 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <title>Zemivo — Connect. Create. Earn.</title>
+  <title>Zemivo - Connect. Create. Earn.</title>
 
   <style>
     * {
@@ -25,6 +24,7 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
+      gap: 15px;
       box-shadow: 0 2px 8px rgba(0,0,0,0.08);
       position: sticky;
       top: 0;
@@ -32,26 +32,28 @@
     }
 
     .logo {
-      font-size: 25px;
+      font-size: 26px;
       font-weight: bold;
       color: #2563eb;
     }
 
     .search {
-      padding: 10px 14px;
+      padding: 11px 15px;
       border: 1px solid #ddd;
       border-radius: 22px;
-      width: 38%;
+      width: 40%;
       outline: none;
+      font-size: 15px;
     }
 
     .login {
       background: #2563eb;
       color: white;
-      padding: 10px 17px;
+      padding: 11px 18px;
       border: none;
-      border-radius: 20px;
+      border-radius: 22px;
       font-weight: bold;
+      text-decoration: none;
     }
 
     .container {
@@ -65,7 +67,7 @@
 
     .card {
       background: white;
-      border-radius: 14px;
+      border-radius: 15px;
       padding: 18px;
       margin-bottom: 18px;
       box-shadow: 0 2px 8px rgba(0,0,0,0.06);
@@ -74,33 +76,34 @@
     .menu div {
       padding: 12px 5px;
       font-weight: bold;
-      cursor: pointer;
     }
 
     .welcome {
       text-align: center;
-      padding: 35px 20px;
+      padding: 40px 20px;
     }
 
     .welcome h1 {
-      font-size: 34px;
-      margin-bottom: 10px;
+      font-size: 36px;
       color: #2563eb;
+      margin-bottom: 12px;
     }
 
     .welcome p {
       color: #666;
-      margin-bottom: 22px;
+      line-height: 1.5;
+      margin-bottom: 25px;
     }
 
     .signup {
+      display: inline-block;
       background: #2563eb;
       color: white;
-      border: none;
-      padding: 12px 25px;
+      padding: 13px 27px;
       border-radius: 25px;
       font-size: 16px;
       font-weight: bold;
+      text-decoration: none;
     }
 
     .post-box textarea {
@@ -111,6 +114,7 @@
       padding: 12px;
       resize: none;
       outline: none;
+      font-size: 15px;
     }
 
     .post-button {
@@ -118,18 +122,24 @@
       background: #2563eb;
       color: white;
       border: none;
-      padding: 10px 20px;
+      padding: 10px 21px;
       border-radius: 20px;
       font-weight: bold;
     }
 
     .post h3 {
-      margin-bottom: 8px;
+      margin-bottom: 9px;
     }
 
     .post p {
       color: #555;
       line-height: 1.5;
+    }
+
+    .actions {
+      margin-top: 15px;
+      color: #2563eb;
+      font-weight: bold;
     }
 
     .earning {
@@ -138,7 +148,11 @@
 
     .earning h2 {
       color: #16a34a;
-      margin-bottom: 8px;
+      margin-bottom: 10px;
+    }
+
+    .trending p {
+      margin-top: 10px;
     }
 
     .footer {
@@ -161,6 +175,10 @@
       .search {
         width: 42%;
       }
+
+      .welcome h1 {
+        font-size: 32px;
+      }
     }
   </style>
 </head>
@@ -168,6 +186,7 @@
 <body>
 
   <header class="topbar">
+
     <div class="logo">Zemivo</div>
 
     <input
@@ -176,12 +195,15 @@
       placeholder="Search Zemivo..."
     >
 
-    <button class="login">Log In</button>
+    <a class="login" href="signup.html">Log In</a>
+
   </header>
+
 
   <main class="container">
 
     <aside class="left">
+
       <div class="card menu">
         <div>🏠 Home</div>
         <div>👤 Profile</div>
@@ -190,11 +212,14 @@
         <div>🔔 Notifications</div>
         <div>💰 Earn</div>
       </div>
+
     </aside>
+
 
     <section>
 
       <div class="card welcome">
+
         <h1>Welcome to Zemivo</h1>
 
         <p>
@@ -202,20 +227,30 @@
           grow your audience and earn from your work.
         </p>
 
-        <button class="signup">Create Account</button>
+        <a class="signup" href="signup.html">
+          Create Account
+        </a>
+
       </div>
 
+
       <div class="card post-box">
+
         <h3>Create a Post</h3>
 
         <textarea
           placeholder="What's happening on Zemivo?"
         ></textarea>
 
-        <button class="post-button">Post</button>
+        <button class="post-button">
+          Post
+        </button>
+
       </div>
 
+
       <div class="card post">
+
         <h3>🌍 Welcome to Zemivo!</h3>
 
         <p>
@@ -223,39 +258,45 @@
           communities and opportunities come together.
         </p>
 
-        <br>
+        <div class="actions">
+          ❤️ Like &nbsp;&nbsp;
+          💬 Comment &nbsp;&nbsp;
+          ↗ Share
+        </div>
 
-        <span>❤️ Like</span>
-        &nbsp;&nbsp;
-        <span>💬 Comment</span>
-        &nbsp;&nbsp;
-        <span>↗ Share</span>
       </div>
 
     </section>
 
+
     <aside class="right">
 
       <div class="card earning">
+
         <h2>💰 Creator Zone</h2>
 
         <p>
           Build your audience and unlock
           future earning opportunities.
         </p>
+
       </div>
 
-      <div class="card">
+
+      <div class="card trending">
+
         <h3>Trending</h3>
-        <br>
+
         <p>🔥 #Zemivo</p>
         <p>🎥 #Creators</p>
         <p>💼 #EarnOnline</p>
+
       </div>
 
     </aside>
 
   </main>
+
 
   <footer class="footer">
     © 2026 Zemivo — Connect. Create. Earn.
