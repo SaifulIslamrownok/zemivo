@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login - Zemivo</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f4f6f8;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .login-box {
+      width: 100%;
+      max-width: 430px;
+      background: white;
+      padding: 30px 25px;
+      border-radius: 18px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+    }
+
+    .logo {
+      text-align: center;
+      font-size: 34px;
+      font-weight: bold;
+      color: #2563eb;
+      margin-bottom: 8px;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 25px;
+    }
+
+    input {
+      width: 100%;
+      padding: 14px;
+      margin-bottom: 15px;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      font-size: 16px;
+    }
+
+    .login-button {
+      width: 100%;
+      padding: 14px;
+      border: none;
+      border-radius: 25px;
+      background: #2563eb;
+      color: white;
+      font-size: 17px;
+      font-weight: bold;
+    }
+
+    .signup {
+      display: block;
+      text-align: center;
+      margin-top: 20px;
+      color: #2563eb;
+      text-decoration: none;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="login-box">
+
+    <div class="logo">Zemivo</div>
+
+    <h2>Welcome Back</h2>
+
+    <form>
+
+      <input
+        type="email"
+        placeholder="Email Address"
+      >
+
+      <input
+        type="password"
+        placeholder="Password"
+      >
+
+      <button class="login-button" type="button">
+        Log In
+      </button>
+
+    </form>
+
+    <a class="signup" href="signup.html">
+      Create a new account
+    </a>
+
+  </div>
+
+</body>
+</html>
