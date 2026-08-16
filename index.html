@@ -305,6 +305,33 @@
   <footer class="footer">
     © 2026 Zemivo — Connect. Create. Earn.
   </footer>
+<script>
+const postBox = document.querySelector(".post-box textarea");
+const postButton = document.querySelector(".post-button");
+const posts = document.querySelector("section");
 
+postButton.addEventListener("click", function () {
+  const text = postBox.value.trim();
+
+  if (text === "") {
+    return;
+  }
+
+  const newPost = document.createElement("div");
+  newPost.className = "card post";
+
+  newPost.innerHTML = `
+    <h3>📝 New Post</h3>
+    <p></p>
+    <div class="actions">❤️ Like &nbsp;&nbsp; 💬 Comment &nbsp;&nbsp; ↗ Share</div>
+  `;
+
+  newPost.querySelector("p").textContent = text;
+
+  posts.insertBefore(newPost, posts.children[1]);
+
+  postBox.value = "";
+});
+</script>
 </body>
 </html>
