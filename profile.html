@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Profile - Zemivo</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f4f6f8;
+    }
+
+    .header {
+      background: white;
+      padding: 18px;
+      text-align: center;
+      font-size: 28px;
+      font-weight: bold;
+      color: #2563eb;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+
+    .profile {
+      max-width: 600px;
+      margin: 25px auto;
+      background: white;
+      padding: 25px;
+      border-radius: 18px;
+      text-align: center;
+    }
+
+    .photo {
+      width: 110px;
+      height: 110px;
+      border-radius: 50%;
+      background: #e5e7eb;
+      margin: 0 auto 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 45px;
+    }
+
+    h2 {
+      margin: 10px 0;
+    }
+
+    .bio {
+      color: #666;
+      margin-bottom: 25px;
+    }
+
+    .stats {
+      display: flex;
+      justify-content: space-around;
+      border-top: 1px solid #eee;
+      padding-top: 20px;
+    }
+
+    .stat strong {
+      display: block;
+      font-size: 20px;
+    }
+
+    .stat span {
+      color: #777;
+      font-size: 14px;
+    }
+
+    .edit {
+      margin-top: 25px;
+      padding: 12px 25px;
+      border: none;
+      border-radius: 25px;
+      background: #2563eb;
+      color: white;
+      font-size: 16px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="header">
+    Zemivo
+  </div>
+
+  <div class="profile">
+
+    <div class="photo">👤</div>
+
+    <h2>Your Name</h2>
+
+    <div class="bio">
+      Welcome to my Zemivo profile.
+    </div>
+
+    <div class="stats">
+      <div class="stat">
+        <strong>0</strong>
+        <span>Posts</span>
+      </div>
+
+      <div class="stat">
+        <strong>0</strong>
+        <span>Followers</span>
+      </div>
+
+      <div class="stat">
+        <strong>0</strong>
+        <span>Following</span>
+      </div>
+    </div>
+
+    <button class="edit">
+      Edit Profile
+    </button>
+
+  </div>
+
+</body>
+</html>
