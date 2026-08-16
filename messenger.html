@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Messenger - Zemivo</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f4f6f8;
+    }
+
+    .header {
+      background: white;
+      padding: 16px;
+      text-align: center;
+      color: #2563eb;
+      font-size: 27px;
+      font-weight: bold;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+
+    .chat {
+      max-width: 650px;
+      height: calc(100vh - 70px);
+      margin: auto;
+      background: white;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .person {
+      padding: 15px;
+      border-bottom: 1px solid #eee;
+      font-weight: bold;
+    }
+
+    .messages {
+      flex: 1;
+      padding: 18px;
+      overflow-y: auto;
+    }
+
+    .message {
+      max-width: 75%;
+      padding: 12px 15px;
+      margin-bottom: 12px;
+      border-radius: 15px;
+      line-height: 1.4;
+    }
+
+    .received {
+      background: #eef2f7;
+      margin-right: auto;
+    }
+
+    .sent {
+      background: #2563eb;
+      color: white;
+      margin-left: auto;
+    }
+
+    .composer {
+      display: flex;
+      gap: 10px;
+      padding: 12px;
+      border-top: 1px solid #eee;
+    }
+
+    .composer input {
+      flex: 1;
+      padding: 13px;
+      border: 1px solid #ddd;
+      border-radius: 25px;
+      font-size: 16px;
+    }
+
+    .send {
+      border: none;
+      border-radius: 25px;
+      padding: 0 20px;
+      background: #2563eb;
+      color: white;
+      font-weight: bold;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="header">
+    Zemivo
+  </div>
+
+  <div class="chat">
+
+    <div class="person">
+      💬 Zemivo User
+    </div>
+
+    <div class="messages">
+
+      <div class="message received">
+        Hello! Welcome to Zemivo.
+      </div>
+
+      <div class="message sent">
+        Hello! How are you?
+      </div>
+
+    </div>
+
+    <div class="composer">
+      <input
+        type="text"
+        placeholder="Type a message..."
+      >
+
+      <button class="send">
+        Send
+      </button>
+    </div>
+
+  </div>
+
+</body>
+</html>
