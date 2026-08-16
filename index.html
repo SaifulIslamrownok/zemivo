@@ -50,10 +50,23 @@
       background: #2563eb;
       color: white;
       padding: 11px 18px;
-      border: none;
       border-radius: 22px;
       font-weight: bold;
       text-decoration: none;
+    }
+
+    .top-nav {
+      background: white;
+      padding: 10px;
+      text-align: center;
+      border-bottom: 1px solid #eee;
+    }
+
+    .top-nav a {
+      margin: 0 8px;
+      color: #2563eb;
+      text-decoration: none;
+      font-weight: bold;
     }
 
     .container {
@@ -73,9 +86,17 @@
       box-shadow: 0 2px 8px rgba(0,0,0,0.06);
     }
 
-    .menu div {
+    .menu div,
+    .menu a {
+      display: block;
       padding: 12px 5px;
       font-weight: bold;
+      text-decoration: none;
+      color: #222;
+    }
+
+    .menu a:hover {
+      color: #2563eb;
     }
 
     .welcome {
@@ -125,6 +146,7 @@
       padding: 10px 21px;
       border-radius: 20px;
       font-weight: bold;
+      cursor: pointer;
     }
 
     .post h3 {
@@ -140,6 +162,14 @@
       margin-top: 15px;
       color: #2563eb;
       font-weight: bold;
+    }
+
+    .like-button {
+      cursor: pointer;
+    }
+
+    .like-button:hover {
+      text-decoration: underline;
     }
 
     .earning {
@@ -184,11 +214,14 @@
 </head>
 
 <body>
-<nav>
-  <a href="profile.html">👤 Profile</a>
-  <a href="feed.html">📰 Feed</a>
-  <a href="messenger.html">💬 Messenger</a>
-</nav>
+
+  <nav class="top-nav">
+    <a href="index.html">🏠 Home</a>
+    <a href="profile.html">👤 Profile</a>
+    <a href="feed.html">📰 Feed</a>
+    <a href="messenger.html">💬 Messenger</a>
+  </nav>
+
   <header class="topbar">
 
     <div class="logo">Zemivo</div>
@@ -199,26 +232,31 @@
       placeholder="Search Zemivo..."
     >
 
-    <a class="login" <a class="login" href="login.html"> In</a>
+    <a class="login" href="login.html">Log In</a>
 
   </header>
-
 
   <main class="container">
 
     <aside class="left">
 
       <div class="card menu">
+
         <div>🏠 Home</div>
-        <div>👤 Profile</div>
+
+        <a href="profile.html">👤 Profile</a>
+
         <a href="#">👥 Friends</a>
+
         <a href="#">🎥 Videos</a>
+
         <a href="#">🔔 Notifications</a>
+
         <a href="#">💰 Earn</a>
+
       </div>
 
     </aside>
-
 
     <section>
 
@@ -237,21 +275,24 @@
 
       </div>
 
-
       <div class="card post-box">
 
         <h3>Create a Post</h3>
 
         <textarea
+          id="postInput"
           placeholder="What's happening on Zemivo?"
         ></textarea>
 
-        <button class="post-button">
+        <button
+          id="postButton"
+          class="post-button"
+          type="button"
+        >
           Post
         </button>
 
       </div>
-
 
       <div class="card post">
 
@@ -263,16 +304,27 @@
         </p>
 
         <div class="actions">
-  <span class="like-button" data-likes="0">❤️ Like 0</span>
-  &nbsp;&nbsp;
-  💬 Comment &nbsp;&nbsp;
-  ↗ Share
-</div>
+
+          <span
+            class="like-button"
+            data-likes="0"
+          >
+            ❤️ Like 0
+          </span>
+
+          &nbsp;&nbsp;
+
+          💬 Comment
+
+          &nbsp;&nbsp;
+
+          ↗ Share
+
+        </div>
 
       </div>
 
     </section>
-
 
     <aside class="right">
 
@@ -286,7 +338,6 @@
         </p>
 
       </div>
-
 
       <div class="card trending">
 
@@ -302,51 +353,90 @@
 
   </main>
 
-
   <footer class="footer">
     © 2026 Zemivo — Connect. Create. Earn.
   </footer>
-<script>
-const postBox = document.querySelector(".post-box textarea");
-const postButton = document.querySelector(".post-button");
-const posts = document.querySelector("section");
 
-postButton.addEventListener("click", function () {
-  const text = postBox.value.trim();
+  <script>
 
-  if (text === "") {
-    return;
-  }
+    const postInput =
+      document.getElementById("postInput");
 
-  const newPost = document.createElement("div");
-  newPost.className = "card post";
+    const postButton =
+      document.getElementById("postButton");
 
-  newPost.innerHTML = `
-    <h3>📝 New Post</h3>
-    <p></p>
-    <div class="actions">❤️ Like &nbsp;&nbsp; 💬 Comment &nbsp;&nbsp; ↗ Share</div>
-  `;
+    const postsSection =
+      document.querySelector("section");
 
-  newPost.querySelector("p").textContent = text;
+    postButton.addEventListener("click", function () {
 
-  posts.insertBefore(newPost, posts.children[1]);
+      const text =
+        postInput.value.trim();
 
-  postBox.value = "";
-});
-</script>
-  document.addEventListener("click", function(event) {
-    if (event.target.classList.contains("like-button")) {
-      let count = Number(event.target.dataset.likes || 0);
-      count++;
-      event.target.dataset.likes = count;
-      event.target.textContent = "❤️ Like " + count;
-    }
-  });
-</script>
+      if (text === "") {
+        return;
+      }
 
-</body>
-</html>
+      const newPost =
+        document.createElement("div");
 
-</script>
+      newPost.className =
+        "card post";
+
+      newPost.innerHTML = `
+        <h3>📝 New Post</h3>
+        <p></p>
+        <div class="actions">
+          <span class="like-button" data-likes="0">
+            ❤️ Like 0
+          </span>
+          &nbsp;&nbsp;
+          💬 Comment
+          &nbsp;&nbsp;
+          ↗ Share
+        </div>
+      `;
+
+      newPost.querySelector("p").textContent = text;
+
+      postsSection.insertBefore(
+        newPost,
+        postsSection.children[1]
+      );
+
+      postInput.value = "";
+
+    });
+
+    document.addEventListener(
+      "click",
+      function(event) {
+
+        if (
+          event.target.classList.contains(
+            "like-button"
+          )
+        ) {
+
+          let count =
+            Number(
+              event.target.dataset.likes || 0
+            );
+
+          count++;
+
+          event.target.dataset.likes =
+            count;
+
+          event.target.textContent =
+            "❤️ Like " + count;
+
+        }
+
+      }
+    );
+
+  </script>
+
 </body>
 </html>
