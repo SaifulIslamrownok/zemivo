@@ -333,5 +333,14 @@ postButton.addEventListener("click", function () {
   postBox.value = "";
 });
 </script>
+document.addEventListener("click", function(event) {
+  if (event.target.classList.contains("like-button")) {
+    let count = Number(event.target.dataset.likes || 0);
+    count++;
+    event.target.dataset.likes = count;
+    event.target.textContent = "❤️ Like " + count;
+  }
+});
+</script>
 </body>
 </html>
