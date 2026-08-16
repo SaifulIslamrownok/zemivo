@@ -155,6 +155,24 @@
     </div>
 
   </div>
+<script>
+const input = document.querySelector(".composer input");
+const sendButton = document.querySelector(".send");
+const messages = document.querySelector(".messages");
 
+sendButton.addEventListener("click", function () {
+  const text = input.value.trim();
+
+  if (text === "") return;
+
+  const message = document.createElement("div");
+  message.className = "message sent";
+  message.textContent = text;
+
+  messages.appendChild(message);
+  input.value = "";
+  messages.scrollTop = messages.scrollHeight;
+});
+</script>
 </body>
 </html>
