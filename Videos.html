@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Zemivo - Videos</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f6f8;
+      color: #222;
+    }
+
+    .topbar {
+      background: white;
+      padding: 15px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+
+    .logo {
+      font-size: 26px;
+      font-weight: bold;
+      color: #2563eb;
+    }
+
+    .nav a {
+      margin-left: 12px;
+      color: #2563eb;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 25px auto;
+      padding: 0 15px;
+    }
+
+    .card {
+      background: white;
+      padding: 20px;
+      margin-bottom: 18px;
+      border-radius: 15px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    }
+
+    h1 {
+      color: #2563eb;
+      margin-bottom: 8px;
+    }
+
+    .video {
+      border: 1px solid #eee;
+      border-radius: 12px;
+      overflow: hidden;
+      margin-top: 18px;
+    }
+
+    .video-box {
+      height: 220px;
+      background: #111827;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 55px;
+    }
+
+    .video-info {
+      padding: 15px;
+    }
+
+    .video-title {
+      font-size: 18px;
+      font-weight: bold;
+    }
+
+    .video-meta {
+      color: #777;
+      margin-top: 6px;
+    }
+
+    .actions {
+      margin-top: 12px;
+      color: #2563eb;
+      font-weight: bold;
+    }
+
+    .action {
+      cursor: pointer;
+      margin-right: 18px;
+    }
+
+    .action:hover {
+      text-decoration: underline;
+    }
+
+    .footer {
+      text-align: center;
+      color: #777;
+      padding: 25px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <header class="topbar">
+    <div class="logo">Zemivo</div>
+
+    <nav class="nav">
+      <a href="index.html">🏠 Home</a>
+      <a href="profile.html">👤 Profile</a>
+      <a href="friends.html">👥 Friends</a>
+      <a href="messenger.html">💬 Messenger</a>
+    </nav>
+  </header>
+
+  <main class="container">
+
+    <div class="card">
+      <h1>🎥 Zemivo Videos</h1>
+      <p>Watch and discover videos from the Zemivo community.</p>
+    </div>
+
+    <div class="card">
+
+      <div class="video">
+        <div class="video-box">▶️</div>
+
+        <div class="video-info">
+          <div class="video-title">
+            Welcome to Zemivo
+          </div>
+
+          <div class="video-meta">
+            Zemivo Official • New video
+          </div>
+
+          <div class="actions">
+            <span class="action">❤️ Like</span>
+            <span class="action">💬 Comment</span>
+            <span class="action">↗ Share</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="video">
+        <div class="video-box">▶️</div>
+
+        <div class="video-info">
+          <div class="video-title">
+            Creator Spotlight
+          </div>
+
+          <div class="video-meta">
+            Zemivo Creators • Trending
+          </div>
+
+          <div class="actions">
+            <span class="action">❤️ Like</span>
+            <span class="action">💬 Comment</span>
+            <span class="action">↗ Share</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="video">
+        <div class="video-box">▶️</div>
+
+        <div class="video-info">
+          <div class="video-title">
+            Discover Zemivo
+          </div>
+
+          <div class="video-meta">
+            Zemivo Community • Featured
+          </div>
+
+          <div class="actions">
+            <span class="action">❤️ Like</span>
+            <span class="action">💬 Comment</span>
+            <span class="action">↗ Share</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </main>
+
+  <footer class="footer">
+    © 2026 Zemivo — Connect. Create. Earn.
+  </footer>
+
+</body>
+</html>
