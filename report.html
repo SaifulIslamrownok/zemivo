@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Zemivo - Report</title>
+<style>
+body{font-family:Arial;background:#f4f6f8;margin:0}
+.card{background:white;max-width:700px;margin:30px auto;padding:25px;border-radius:15px}
+select,textarea{width:100%;padding:12px;margin-top:10px;border:1px solid #ddd;border-radius:10px}
+textarea{min-height:120px}
+button{background:#dc2626;color:white;border:0;padding:11px 20px;border-radius:20px;margin-top:12px}
+</style>
+</head>
+<body>
+<div class="card">
+<h1>📢 Report</h1>
+<p>Report content that violates Zemivo rules.</p>
+
+<select id="reason">
+<option>Spam</option>
+<option>Harassment</option>
+<option>Fake Account</option>
+<option>Inappropriate Content</option>
+<option>Other</option>
+</select>
+
+<textarea id="details" placeholder="Describe the problem..."></textarea>
+
+<button onclick="submitReport()">Submit Report</button>
+</div>
+
+<script>
+function submitReport(){
+alert("Thank you. Your report has been submitted.");
+}
+</script>
+</body>
+</html>
