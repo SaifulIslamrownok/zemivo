@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Zemivo - Music</title>
+<style>
+body{font-family:Arial;background:#f4f6f8;margin:0}
+.card{background:white;max-width:700px;margin:30px auto;padding:25px;border-radius:15px}
+.song{padding:18px;border-bottom:1px solid #eee;display:flex;justify-content:space-between}
+button{background:#2563eb;color:white;border:0;padding:9px 15px;border-radius:20px}
+</style>
+</head>
+<body>
+<div class="card">
+<h1>🎵 Zemivo Music</h1>
+<p>Discover music and audio for your content.</p>
+
+<div class="song">🎵 Zemivo Beats <button onclick="play(this)">▶ Play</button></div>
+<div class="song">🎶 Creator Sound <button onclick="play(this)">▶ Play</button></div>
+<div class="song">🎧 Community Mix <button onclick="play(this)">▶ Play</button></div>
+</div>
+
+<script>
+function play(b){
+b.textContent=b.textContent.includes("Play")?"⏸ Playing":"▶ Play";
+}
+</script>
+</body>
+</html>
