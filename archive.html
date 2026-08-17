@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Zemivo - Archive</title>
+<style>
+body{font-family:Arial;background:#f4f6f8;margin:0}
+.card{background:white;max-width:700px;margin:30px auto;padding:25px;border-radius:15px}
+.post{padding:18px;border-bottom:1px solid #eee}
+button{background:#2563eb;color:white;border:0;padding:9px 15px;border-radius:20px}
+</style>
+</head>
+<body>
+<div class="card">
+<h1>🗂️ Archive</h1>
+<p>Your archived posts and stories.</p>
+
+<div class="post">
+<h3>📝 Archived Post</h3>
+<p>This post is currently archived.</p>
+<button onclick="restore(this)">Restore</button>
+</div>
+
+<div class="post">
+<h3>📸 Archived Story</h3>
+<p>This story is currently archived.</p>
+<button onclick="restore(this)">Restore</button>
+</div>
+</div>
+
+<script>
+function restore(b){
+b.textContent="✓ Restored";
+b.disabled=true;
+}
+</script>
+</body>
+</html>
