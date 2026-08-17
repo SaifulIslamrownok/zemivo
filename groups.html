@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Zemivo - Groups</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f6f8;
+      color: #222;
+    }
+
+    .topbar {
+      background: white;
+      padding: 15px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+
+    .logo {
+      font-size: 26px;
+      font-weight: bold;
+      color: #2563eb;
+    }
+
+    .nav a {
+      margin-left: 10px;
+      color: #2563eb;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 25px auto;
+      padding: 0 15px;
+    }
+
+    .card {
+      background: white;
+      padding: 20px;
+      margin-bottom: 18px;
+      border-radius: 15px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    }
+
+    h1 {
+      color: #2563eb;
+      margin-bottom: 8px;
+    }
+
+    .create {
+      background: #2563eb;
+      color: white;
+      border: none;
+      padding: 11px 18px;
+      border-radius: 22px;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 15px;
+    }
+
+    .group {
+      border: 1px solid #eee;
+      border-radius: 12px;
+      padding: 16px;
+      margin-top: 15px;
+    }
+
+    .group h3 {
+      margin-bottom: 7px;
+    }
+
+    .group p {
+      color: #666;
+      margin-bottom: 12px;
+    }
+
+    .join {
+      background: #16a34a;
+      color: white;
+      border: none;
+      padding: 9px 16px;
+      border-radius: 20px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .join.joined {
+      background: #64748b;
+    }
+
+    .footer {
+      text-align: center;
+      color: #777;
+      padding: 25px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <header class="topbar">
+
+    <div class="logo">Zemivo</div>
+
+    <nav class="nav">
+      <a href="index.html">🏠 Home</a>
+      <a href="profile.html">👤 Profile</a>
+      <a href="friends.html">👥 Friends</a>
+      <a href="videos.html">🎥 Videos</a>
+      <a href="notifications.html">🔔 Notifications</a>
+      <a href="messenger.html">💬 Messenger</a>
+    </nav>
+
+  </header>
+
+  <main class="container">
+
+    <div class="card">
+
+      <h1>👥 Zemivo Groups</h1>
+
+      <p>
+        Join communities, meet people and discuss topics you enjoy.
+      </p>
+
+      <button
+        class="create"
+        onclick="createGroup()"
+      >
+        + Create Group
+      </button>
+
+    </div>
+
+    <div class="card">
+
+      <h2>Discover Groups</h2>
+
+      <div class="group">
+
+        <h3>🌍 Zemivo Community</h3>
+
+        <p>
+          Official community for Zemivo users.
+        </p>
+
+        <button class="join">
+          Join Group
+        </button>
+
+      </div>
+
+      <div class="group">
+
+        <h3>🎥 Creators Hub</h3>
+
+        <p>
+          A place for creators to share ideas and grow.
+        </p>
+
+        <button class="join">
+          Join Group
+        </button>
+
+      </div>
+
+      <div class="group">
+
+        <h3>💰 Online Earning</h3>
+
+        <p>
+          Discuss online earning and creator opportunities.
+        </p>
+
+        <button class="join">
+          Join Group
+        </button>
+
+      </div>
+
+      <div class="group">
+
+        <h3>🎮 Gaming Community</h3>
+
+        <p>
+          Connect with gamers and gaming communities.
+        </p>
+
+        <button class="join">
+          Join Group
+        </button>
+
+      </div>
+
+    </div>
+
+  </main>
+
+  <footer class="footer">
+    © 2026 Zemivo — Connect. Create. Earn.
+  </footer>
+
+  <script>
+
+    const joinButtons =
+      document.querySelectorAll(".join");
+
+    joinButtons.forEach(function(button) {
+
+      button.addEventListener("click", function() {
+
+        if (button.classList.contains("joined")) {
+
+          button.classList.remove("joined");
+          button.textContent = "Join Group";
+
+        } else {
+
+          button.classList.add("joined");
+          button.textContent = "✓ Joined";
+
+        }
+
+      });
+
+    });
+
+    function createGroup() {
+
+      const name =
+        prompt("Enter your group name:");
+
+      if (name && name.trim() !== "") {
+
+        alert(
+          "Group '" +
+          name.trim() +
+          "' is ready to be created."
+        );
+
+      }
+
+    }
+
+  </script>
+
+</body>
+</html>
