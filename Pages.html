@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Zemivo - Pages</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f6f8;
+      color: #222;
+    }
+
+    .topbar {
+      background: white;
+      padding: 15px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+
+    .logo {
+      font-size: 26px;
+      font-weight: bold;
+      color: #2563eb;
+    }
+
+    .nav a {
+      margin-left: 10px;
+      color: #2563eb;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 25px auto;
+      padding: 0 15px;
+    }
+
+    .card {
+      background: white;
+      padding: 20px;
+      margin-bottom: 18px;
+      border-radius: 15px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    }
+
+    h1 {
+      color: #2563eb;
+      margin-bottom: 8px;
+    }
+
+    .create-button {
+      background: #2563eb;
+      color: white;
+      border: none;
+      padding: 11px 18px;
+      border-radius: 22px;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 15px;
+    }
+
+    .page {
+      border: 1px solid #eee;
+      border-radius: 12px;
+      padding: 16px;
+      margin-top: 15px;
+    }
+
+    .page-icon {
+      font-size: 38px;
+      margin-bottom: 8px;
+    }
+
+    .page h3 {
+      margin-bottom: 7px;
+    }
+
+    .page p {
+      color: #666;
+      margin-bottom: 12px;
+    }
+
+    .follow {
+      background: #16a34a;
+      color: white;
+      border: none;
+      padding: 9px 16px;
+      border-radius: 20px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .follow.following {
+      background: #64748b;
+    }
+
+    .footer {
+      text-align: center;
+      color: #777;
+      padding: 25px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <header class="topbar">
+
+    <div class="logo">Zemivo</div>
+
+    <nav class="nav">
+      <a href="index.html">🏠 Home</a>
+      <a href="profile.html">👤 Profile</a>
+      <a href="friends.html">👥 Friends</a>
+      <a href="videos.html">🎥 Videos</a>
+      <a href="notifications.html">🔔 Notifications</a>
+      <a href="groups.html">👥 Groups</a>
+    </nav>
+
+  </header>
+
+  <main class="container">
+
+    <div class="card">
+
+      <h1>📄 Zemivo Pages</h1>
+
+      <p>
+        Discover creators, businesses, brands and communities on Zemivo.
+      </p>
+
+      <button
+        class="create-button"
+        onclick="createPage()"
+      >
+        + Create Page
+      </button>
+
+    </div>
+
+    <div class="card">
+
+      <h2>Discover Pages</h2>
+
+      <div class="page">
+
+        <div class="page-icon">🌍</div>
+
+        <h3>Zemivo Official</h3>
+
+        <p>
+          Official page of the Zemivo platform.
+        </p>
+
+        <button class="follow">
+          Follow
+        </button>
+
+      </div>
+
+      <div class="page">
+
+        <div class="page-icon">🎥</div>
+
+        <h3>Zemivo Creators</h3>
+
+        <p>
+          Discover creators and their latest content.
+        </p>
+
+        <button class="follow">
+          Follow
+        </button>
+
+      </div>
+
+      <div class="page">
+
+        <div class="page-icon">💼</div>
+
+        <h3>Business Hub</h3>
+
+        <p>
+          Businesses and brands can connect with their audience.
+        </p>
+
+        <button class="follow">
+          Follow
+        </button>
+
+      </div>
+
+      <div class="page">
+
+        <div class="page-icon">🎮</div>
+
+        <h3>Gaming Zone</h3>
+
+        <p>
+          Gaming content, communities and updates.
+        </p>
+
+        <button class="follow">
+          Follow
+        </button>
+
+      </div>
+
+    </div>
+
+  </main>
+
+  <footer class="footer">
+    © 2026 Zemivo — Connect. Create. Earn.
+  </footer>
+
+  <script>
+
+    const followButtons =
+      document.querySelectorAll(".follow");
+
+    followButtons.forEach(function(button) {
+
+      button.addEventListener("click", function() {
+
+        if (button.classList.contains("following")) {
+
+          button.classList.remove("following");
+          button.textContent = "Follow";
+
+        } else {
+
+          button.classList.add("following");
+          button.textContent = "✓ Following";
+
+        }
+
+      });
+
+    });
+
+    function createPage() {
+
+      const name =
+        prompt("Enter your page name:");
+
+      if (name && name.trim() !== "") {
+
+        alert(
+          "Page '" +
+          name.trim() +
+          "' is ready to be created."
+        );
+
+      }
+
+    }
+
+  </script>
+
+</body>
+</html>
