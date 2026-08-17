@@ -435,7 +435,18 @@
 
       }
     );
+document.addEventListener("click", function(event) {
+  if (event.target.classList.contains("comment-button")) {
+    const comment = prompt("Write a comment:");
 
+    if (comment && comment.trim() !== "") {
+      const commentText = document.createElement("div");
+      commentText.textContent = "💬 " + comment.trim();
+      commentText.style.marginTop = "8px";
+      event.target.parentElement.appendChild(commentText);
+    }
+  }
+});
   </script>
 
 </body>
