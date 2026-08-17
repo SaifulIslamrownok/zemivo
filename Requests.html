@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zemivo - Requests</title>
+<style>
+body{font-family:Arial;background:#f4f6f8;margin:0}
+.container{max-width:800px;margin:25px auto;padding:15px}
+.card{background:white;padding:20px;border-radius:15px;margin-bottom:18px}
+.request{display:flex;justify-content:space-between;align-items:center;padding:15px 0;border-bottom:1px solid #eee}
+button{border:0;padding:9px 15px;border-radius:20px;font-weight:bold;cursor:pointer}
+.accept{background:#16a34a;color:white}
+.delete{background:#dc2626;color:white;margin-left:5px}
+</style>
+</head>
+<body>
+
+<main class="container">
+
+<div class="card">
+<h1>📩 Friend Requests</h1>
+<p>Manage your incoming friend requests.</p>
+</div>
+
+<div class="card">
+
+<div class="request">
+<span>👤 Zemivo User 4</span>
+<div>
+<button class="accept" onclick="acceptRequest(this)">Accept</button>
+<button class="delete" onclick="removeRequest(this)">Delete</button>
+</div>
+</div>
+
+<div class="request">
+<span>👤 Zemivo User 5</span>
+<div>
+<button class="accept" onclick="acceptRequest(this)">Accept</button>
+<button class="delete" onclick="removeRequest(this)">Delete</button>
+</div>
+</div>
+
+</div>
+
+</main>
+
+<script>
+function acceptRequest(button){
+button.parentElement.parentElement.innerHTML="✓ Friends";
+}
+
+function removeRequest(button){
+button.parentElement.parentElement.remove();
+}
+</script>
+
+</body>
+</html>
