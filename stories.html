@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Zemivo - Stories</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f6f8;
+      color: #222;
+    }
+
+    .topbar {
+      background: white;
+      padding: 15px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+
+    .logo {
+      font-size: 26px;
+      font-weight: bold;
+      color: #2563eb;
+    }
+
+    .nav a {
+      margin-left: 10px;
+      color: #2563eb;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 25px auto;
+      padding: 0 15px;
+    }
+
+    .card {
+      background: white;
+      padding: 20px;
+      margin-bottom: 18px;
+      border-radius: 15px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    }
+
+    h1 {
+      color: #2563eb;
+      margin-bottom: 8px;
+    }
+
+    .story-list {
+      display: flex;
+      gap: 15px;
+      overflow-x: auto;
+      padding: 10px 0;
+    }
+
+    .story {
+      min-width: 130px;
+      height: 190px;
+      border-radius: 15px;
+      background: #dbeafe;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-end;
+      padding: 12px;
+      cursor: pointer;
+      font-weight: bold;
+      position: relative;
+    }
+
+    .story-icon {
+      font-size: 45px;
+      margin-bottom: auto;
+      margin-top: 25px;
+    }
+
+    .add-story {
+      background: #2563eb;
+      color: white;
+    }
+
+    .add-button {
+      border: none;
+      background: white;
+      color: #2563eb;
+      padding: 9px 15px;
+      border-radius: 20px;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    .footer {
+      text-align: center;
+      color: #777;
+      padding: 25px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <header class="topbar">
+
+    <div class="logo">Zemivo</div>
+
+    <nav class="nav">
+      <a href="index.html">🏠 Home</a>
+      <a href="profile.html">👤 Profile</a>
+      <a href="feed.html">📰 Feed</a>
+      <a href="videos.html">🎥 Videos</a>
+      <a href="notifications.html">🔔 Notifications</a>
+    </nav>
+
+  </header>
+
+  <main class="container">
+
+    <div class="card">
+
+      <h1>📸 Zemivo Stories</h1>
+
+      <p>
+        Share moments with your friends and followers.
+      </p>
+
+    </div>
+
+    <div class="card">
+
+      <div class="story-list">
+
+        <div class="story add-story" onclick="addStory()">
+          <div class="story-icon">➕</div>
+          <div>Your Story</div>
+        </div>
+
+        <div class="story" onclick="openStory('Creator Story')">
+          <div class="story-icon">🎥</div>
+          <div>Creator Story</div>
+        </div>
+
+        <div class="story" onclick="openStory('Gaming Story')">
+          <div class="story-icon">🎮</div>
+          <div>Gaming Story</div>
+        </div>
+
+        <div class="story" onclick="openStory('Travel Story')">
+          <div class="story-icon">🌍</div>
+          <div>Travel Story</div>
+        </div>
+
+        <div class="story" onclick="openStory('Business Story')">
+          <div class="story-icon">💼</div>
+          <div>Business Story</div>
+        </div>
+
+      </div>
+
+    </div>
+
+  </main>
+
+  <footer class="footer">
+    © 2026 Zemivo — Connect. Create. Earn.
+  </footer>
+
+  <script>
+
+    function addStory() {
+
+      const text = prompt("Write your story:");
+
+      if (text && text.trim() !== "") {
+
+        alert(
+          "Your story is ready to publish: " +
+          text.trim()
+        );
+
+      }
+
+    }
+
+    function openStory(name) {
+
+      alert(
+        name +
+        " will open here."
+      );
+
+    }
+
+  </script>
+
+</body>
+</html>
