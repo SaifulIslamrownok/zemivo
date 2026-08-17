@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Zemivo - Referrals</title>
+  <style>
+    body{font-family:Arial;background:#f4f6f8;margin:0;color:#222}
+    .topbar{background:white;padding:18px;text-align:center;box-shadow:0 2px 8px #ddd}
+    .logo{font-size:28px;font-weight:bold;color:#2563eb}
+    .container{max-width:700px;margin:25px auto;padding:15px}
+    .card{background:white;padding:22px;border-radius:15px;margin-bottom:18px;box-shadow:0 2px 8px #ddd}
+    h1{color:#2563eb}
+    .invite{background:#eff6ff;padding:15px;border-radius:10px;margin-top:15px;word-break:break-all}
+    button{background:#2563eb;color:white;border:0;padding:11px 18px;border-radius:22px;font-weight:bold;cursor:pointer;margin-top:10px}
+    .stats{display:flex;gap:10px}
+    .stat{flex:1;background:#f8fafc;padding:18px;text-align:center;border-radius:10px}
+    .stat h2{color:#2563eb}
+  </style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="logo">Zemivo</div>
+</header>
+
+<main class="container">
+
+  <div class="card">
+    <h1>🔗 Invite Friends</h1>
+
+    <p>
+      Invite friends to Zemivo and grow your community.
+    </p>
+
+    <div class="invite" id="inviteLink">
+      https://saifulislamrownok.github.io/zemivo/
+    </div>
+
+    <button onclick="copyInvite()">
+      📋 Copy Invite Link
+    </button>
+
+    <button onclick="shareInvite()">
+      ↗ Share Invite
+    </button>
+  </div>
+
+  <div class="card">
+
+    <h2>📊 Referral Statistics</h2>
+
+    <div class="stats">
+
+      <div class="stat">
+        <h2>0</h2>
+        <p>Invites</p>
+      </div>
+
+      <div class="stat">
+        <h2>0</h2>
+        <p>Joined</p>
+      </div>
+
+      <div class="stat">
+        <h2>$0</h2>
+        <p>Rewards</p>
+      </div>
+
+    </div>
+
+  </div>
+
+</main>
+
+<script>
+
+function copyInvite(){
+
+  const link =
+    document.getElementById("inviteLink").textContent.trim();
+
+  navigator.clipboard.writeText(link);
+
+  alert("Invite link copied!");
+
+}
+
+function shareInvite(){
+
+  const link =
+    document.getElementById("inviteLink").textContent.trim();
+
+  if(navigator.share){
+
+    navigator.share({
+      title: "Join Zemivo",
+      text: "Join me on Zemivo!",
+      url: link
+    });
+
+  }else{
+
+    navigator.clipboard.writeText(link);
+
+    alert("Invite link copied!");
+
+  }
+
+}
+
+</script>
+
+</body>
+</html>
