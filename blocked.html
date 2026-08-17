@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Zemivo - Blocked Users</title>
+<style>
+body{font-family:Arial;background:#f4f6f8;margin:0}
+.card{background:white;max-width:700px;margin:30px auto;padding:25px;border-radius:15px}
+.user{padding:15px;border-bottom:1px solid #eee;display:flex;justify-content:space-between}
+button{background:#dc2626;color:white;border:0;padding:9px 15px;border-radius:20px}
+</style>
+</head>
+<body>
+<div class="card">
+<h1>🚫 Blocked Users</h1>
+<p>Manage people you have blocked.</p>
+
+<div class="user">👤 Zemivo User 1 <button onclick="unblock(this)">Unblock</button></div>
+<div class="user">👤 Zemivo User 2 <button onclick="unblock(this)">Unblock</button></div>
+<div class="user">👤 Zemivo User 3 <button onclick="unblock(this)">Unblock</button></div>
+</div>
+
+<script>
+function unblock(b){
+b.parentElement.remove();
+}
+</script>
+</body>
+</html>
