@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Zemivo - Insights</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f6f8;
+      color: #222;
+    }
+
+    .topbar {
+      background: white;
+      padding: 15px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+
+    .logo {
+      font-size: 26px;
+      font-weight: bold;
+      color: #2563eb;
+    }
+
+    .nav a {
+      margin-left: 10px;
+      color: #2563eb;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .container {
+      max-width: 950px;
+      margin: 25px auto;
+      padding: 0 15px;
+    }
+
+    .card {
+      background: white;
+      padding: 20px;
+      margin-bottom: 18px;
+      border-radius: 15px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    }
+
+    h1 {
+      color: #2563eb;
+      margin-bottom: 8px;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 15px;
+      margin-top: 20px;
+    }
+
+    .stat {
+      text-align: center;
+      border: 1px solid #eee;
+      border-radius: 12px;
+      padding: 20px 10px;
+    }
+
+    .stat-icon {
+      font-size: 30px;
+      margin-bottom: 8px;
+    }
+
+    .stat h2 {
+      color: #2563eb;
+      margin-bottom: 5px;
+    }
+
+    .stat p {
+      color: #666;
+    }
+
+    .progress {
+      background: #e5e7eb;
+      height: 12px;
+      border-radius: 10px;
+      overflow: hidden;
+      margin-top: 12px;
+    }
+
+    .progress-bar {
+      background: #2563eb;
+      height: 100%;
+      width: 65%;
+    }
+
+    .footer {
+      text-align: center;
+      color: #777;
+      padding: 25px;
+    }
+
+    @media (max-width: 700px) {
+      .stats {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .nav a {
+        font-size: 12px;
+        margin-left: 4px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header class="topbar">
+
+    <div class="logo">Zemivo</div>
+
+    <nav class="nav">
+      <a href="index.html">🏠 Home</a>
+      <a href="profile.html">👤 Profile</a>
+      <a href="videos.html">🎥 Videos</a>
+      <a href="pages.html">📄 Pages</a>
+      <a href="earn.html">💰 Earn</a>
+      <a href="settings.html">⚙️ Settings</a>
+    </nav>
+
+  </header>
+
+  <main class="container">
+
+    <div class="card">
+
+      <h1>📊 Zemivo Insights</h1>
+
+      <p>
+        Track your content performance and audience growth.
+      </p>
+
+    </div>
+
+    <div class="card">
+
+      <h2>Overview</h2>
+
+      <div class="stats">
+
+        <div class="stat">
+          <div class="stat-icon">👁️</div>
+          <h2>0</h2>
+          <p>Views</p>
+        </div>
+
+        <div class="stat">
+          <div class="stat-icon">❤️</div>
+          <h2>0</h2>
+          <p>Likes</p>
+        </div>
+
+        <div class="stat">
+          <div class="stat-icon">👥</div>
+          <h2>0</h2>
+          <p>Followers</p>
+        </div>
+
+        <div class="stat">
+          <div class="stat-icon">💬</div>
+          <h2>0</h2>
+          <p>Comments</p>
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="card">
+
+      <h2>📈 Audience Growth</h2>
+
+      <p style="margin-top:10px; color:#666;">
+        Your audience growth will appear here.
+      </p>
+
+      <div class="progress">
+        <div class="progress-bar"></div>
+      </div>
+
+    </div>
+
+    <div class="card">
+
+      <h2>💰 Earnings Insights</h2>
+
+      <p style="margin-top:10px; color:#666;">
+        Future creator and affiliate earnings statistics will appear here.
+      </p>
+
+    </div>
+
+  </main>
+
+  <footer class="footer">
+    © 2026 Zemivo — Connect. Create. Earn.
+  </footer>
+
+</body>
+</html>
