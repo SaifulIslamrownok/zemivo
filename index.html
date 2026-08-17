@@ -164,11 +164,15 @@
       font-weight: bold;
     }
 
-    .like-button {
+    .like-button,
+    .comment-button,
+    .share-button {
       cursor: pointer;
     }
 
-    .like-button:hover {
+    .like-button:hover,
+    .comment-button:hover,
+    .share-button:hover {
       text-decoration: underline;
     }
 
@@ -190,6 +194,14 @@
       padding: 25px;
       color: #777;
       font-size: 14px;
+    }
+
+    .comment-text {
+      margin-top: 8px;
+      padding: 8px;
+      background: #f4f6f8;
+      border-radius: 8px;
+      color: #333;
     }
 
     @media (max-width: 800px) {
@@ -314,11 +326,15 @@
 
           &nbsp;&nbsp;
 
-          <span class="comment-button">💬 Comment</span>
+          <span class="comment-button">
+            💬 Comment
+          </span>
 
           &nbsp;&nbsp;
 
-          <span class="share-button">↗ Share</span>
+          <span class="share-button">
+            ↗ Share
+          </span>
 
         </div>
 
@@ -368,6 +384,7 @@
     const postsSection =
       document.querySelector("section");
 
+
     postButton.addEventListener("click", function () {
 
       const text =
@@ -385,19 +402,35 @@
 
       newPost.innerHTML = `
         <h3>📝 New Post</h3>
+
         <p></p>
+
         <div class="actions">
-          <span class="like-button" data-likes="0">
+
+          <span
+            class="like-button"
+            data-likes="0"
+          >
             ❤️ Like 0
           </span>
+
           &nbsp;&nbsp;
-          <span class="comment-button">💬 Comment</span>
+
+          <span class="comment-button">
+            💬 Comment
+          </span>
+
           &nbsp;&nbsp;
-          ↗ Share
+
+          <span class="share-button">
+            ↗ Share
+          </span>
+
         </div>
       `;
 
-      newPost.querySelector("p").textContent = text;
+      newPost.querySelector("p").textContent =
+        text;
 
       postsSection.insertBefore(
         newPost,
@@ -407,6 +440,7 @@
       postInput.value = "";
 
     });
+
 
     document.addEventListener(
       "click",
@@ -433,25 +467,54 @@
 
         }
 
+
+        if (
+          event.target.classList.contains(
+            "comment-button"
+          )
+        ) {
+
+          const comment =
+            prompt("Write a comment:");
+
+          if (
+            comment &&
+            comment.trim() !== ""
+          ) {
+
+            const commentText =
+              document.createElement("div");
+
+            commentText.className =
+              "comment-text";
+
+            commentText.textContent =
+              "💬 " + comment.trim();
+
+            event.target.parentElement.appendChild(
+              commentText
+            );
+
+          }
+
+        }
+
+
+        if (
+          event.target.classList.contains(
+            "share-button"
+          )
+        ) {
+
+          alert(
+            "Share link copied!"
+          );
+
+        }
+
       }
     );
-document.addEventListener("click", function(event) {
-  if (event.target.classList.contains("comment-button")) {
-    const comment = prompt("Write a comment:");
 
-    if (comment && comment.trim() !== "") {
-      const commentText = document.createElement("div");
-      commentText.textContent = "💬 " + comment.trim();
-      commentText.style.marginTop = "8px";
-      event.target.parentElement.appendChild(commentText);
-    }
-  }
-})
-  document.addEventListener("click", function(event) {
-  if (event.target.classList.contains("share-button")) {
-    alert("Share link copied!");
-  }
-});
   </script>
 
 </body>
