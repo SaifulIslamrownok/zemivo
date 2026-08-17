@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zemivo - Check In</title>
+<style>
+body{margin:0;font-family:Arial;background:#f4f6f8;color:#222}
+.topbar{background:white;padding:18px;display:flex;justify-content:space-between;box-shadow:0 2px 8px #ddd}
+.logo{font-size:28px;font-weight:bold;color:#2563eb}
+.topbar a{color:#2563eb;text-decoration:none;font-weight:bold}
+.container{max-width:750px;margin:25px auto;padding:15px}
+.card{background:white;padding:22px;border-radius:15px;margin-bottom:18px;box-shadow:0 2px 8px #ddd}
+input{width:100%;padding:13px;border:1px solid #ddd;border-radius:10px;margin-top:12px;font-size:15px}
+button{background:#2563eb;color:white;border:0;padding:11px 20px;border-radius:22px;font-weight:bold;margin-top:12px}
+.location{padding:15px;border-bottom:1px solid #eee}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+<div class="logo">Zemivo</div>
+<a href="index.html">🏠 Home</a>
+</header>
+
+<main class="container">
+
+<div class="card">
+<h1>📍 Check In</h1>
+<p>Share the place you're visiting with your friends.</p>
+
+<input id="locationInput" placeholder="Enter a location...">
+
+<button onclick="checkIn()">📍 Check In</button>
+</div>
+
+<div class="card">
+<h2>Popular Places</h2>
+
+<div class="location">🏙️ Dhaka</div>
+<div class="location">🌊 Cox's Bazar</div>
+<div class="location">🌆 Chittagong</div>
+<div class="location">🌍 International</div>
+
+</div>
+
+</main>
+
+<script>
+function checkIn(){
+const location=document.getElementById("locationInput").value.trim();
+
+if(location===""){
+alert("Please enter a location.");
+return;
+}
+
+alert("Checked in at " + location + "!");
+}
+</script>
+
+</body>
+</html>
