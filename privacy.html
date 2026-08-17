@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Zemivo - Privacy</title>
+<style>
+body{font-family:Arial;background:#f4f6f8;margin:0;color:#222}
+.card{background:white;max-width:700px;margin:30px auto;padding:25px;border-radius:15px}
+h1{color:#2563eb}
+.item{padding:16px 0;border-bottom:1px solid #eee}
+button{background:#2563eb;color:white;border:0;padding:9px 16px;border-radius:20px}
+</style>
+</head>
+<body>
+<div class="card">
+<h1>🔐 Privacy</h1>
+<p>Control how your information is used on Zemivo.</p>
+
+<div class="item"><b>Profile Visibility</b><br>Choose who can see your profile.</div>
+<div class="item"><b>Post Visibility</b><br>Choose who can see your posts.</div>
+<div class="item"><b>Search Visibility</b><br>Control whether people can find you.</div>
+<div class="item"><b>Activity Status</b><br><button onclick="toggle(this)">On</button></div>
+</div>
+
+<script>
+function toggle(b){b.textContent=b.textContent==="On"?"Off":"On";}
+</script>
+</body>
+</html>
