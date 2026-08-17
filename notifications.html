@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Zemivo - Notifications</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f6f8;
+      color: #222;
+    }
+
+    .topbar {
+      background: white;
+      padding: 15px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+
+    .logo {
+      font-size: 26px;
+      font-weight: bold;
+      color: #2563eb;
+    }
+
+    .nav a {
+      margin-left: 12px;
+      color: #2563eb;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 25px auto;
+      padding: 0 15px;
+    }
+
+    .card {
+      background: white;
+      padding: 20px;
+      margin-bottom: 18px;
+      border-radius: 15px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    }
+
+    h1 {
+      color: #2563eb;
+      margin-bottom: 8px;
+    }
+
+    .notification {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      padding: 16px 5px;
+      border-bottom: 1px solid #eee;
+    }
+
+    .notification:last-child {
+      border-bottom: none;
+    }
+
+    .icon {
+      font-size: 30px;
+    }
+
+    .text {
+      flex: 1;
+    }
+
+    .text strong {
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    .time {
+      color: #777;
+      font-size: 13px;
+    }
+
+    .new {
+      background: #eff6ff;
+      border-radius: 10px;
+      padding: 12px;
+    }
+
+    .mark-button {
+      background: #2563eb;
+      color: white;
+      border: none;
+      padding: 8px 13px;
+      border-radius: 18px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .footer {
+      text-align: center;
+      color: #777;
+      padding: 25px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <header class="topbar">
+
+    <div class="logo">Zemivo</div>
+
+    <nav class="nav">
+      <a href="index.html">🏠 Home</a>
+      <a href="profile.html">👤 Profile</a>
+      <a href="friends.html">👥 Friends</a>
+      <a href="videos.html">🎥 Videos</a>
+      <a href="messenger.html">💬 Messenger</a>
+    </nav>
+
+  </header>
+
+  <main class="container">
+
+    <div class="card">
+
+      <h1>🔔 Notifications</h1>
+
+      <p>
+        Stay updated with activity on your Zemivo account.
+      </p>
+
+    </div>
+
+    <div class="card" id="notificationList">
+
+      <div class="notification new">
+
+        <div class="icon">❤️</div>
+
+        <div class="text">
+          <strong>Someone liked your post</strong>
+          Your Zemivo post received a new Like.
+          <div class="time">Just now</div>
+        </div>
+
+        <button class="mark-button">
+          Read
+        </button>
+
+      </div>
+
+      <div class="notification">
+
+        <div class="icon">👥</div>
+
+        <div class="text">
+          <strong>New friend request</strong>
+          Someone wants to connect with you.
+          <div class="time">5 minutes ago</div>
+        </div>
+
+        <button class="mark-button">
+          View
+        </button>
+
+      </div>
+
+      <div class="notification">
+
+        <div class="icon">💬</div>
+
+        <div class="text">
+          <strong>New message</strong>
+          You received a new Messenger message.
+          <div class="time">10 minutes ago</div>
+        </div>
+
+        <button class="mark-button">
+          Open
+        </button>
+
+      </div>
+
+      <div class="notification">
+
+        <div class="icon">🎥</div>
+
+        <div class="text">
+          <strong>New video</strong>
+          A creator you may like posted a new video.
+          <div class="time">30 minutes ago</div>
+        </div>
+
+        <button class="mark-button">
+          View
+        </button>
+
+      </div>
+
+      <div class="notification">
+
+        <div class="icon">💰</div>
+
+        <div class="text">
+          <strong>Creator Zone update</strong>
+          Check your latest creator opportunities.
+          <div class="time">1 hour ago</div>
+        </div>
+
+        <button class="mark-button">
+          View
+        </button>
+
+      </div>
+
+    </div>
+
+  </main>
+
+  <footer class="footer">
+    © 2026 Zemivo — Connect. Create. Earn.
+  </footer>
+
+  <script>
+
+    const buttons =
+      document.querySelectorAll(".mark-button");
+
+    buttons.forEach(function(button) {
+
+      button.addEventListener("click", function() {
+
+        const notification =
+          button.parentElement;
+
+        notification.classList.remove("new");
+
+        button.textContent = "✓ Read";
+
+      });
+
+    });
+
+  </script>
+
+</body>
+</html>
