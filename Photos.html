@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zemivo - Photos</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial;background:#f4f6f8;color:#222}
+.topbar{background:white;padding:16px 20px;display:flex;justify-content:space-between;box-shadow:0 2px 8px #ddd}
+.logo{font-size:27px;font-weight:bold;color:#2563eb}
+.topbar a{color:#2563eb;text-decoration:none;font-weight:bold}
+.container{max-width:850px;margin:25px auto;padding:15px}
+.card{background:white;padding:20px;border-radius:15px;margin-bottom:18px;box-shadow:0 2px 8px #ddd}
+.albums{display:grid;grid-template-columns:repeat(2,1fr);gap:15px;margin-top:15px}
+.album{border:1px solid #eee;border-radius:12px;padding:25px;text-align:center}
+.album-icon{font-size:50px}
+.album button{background:#2563eb;color:white;border:0;padding:9px 16px;border-radius:20px;font-weight:bold;cursor:pointer;margin-top:10px}
+@media(max-width:600px){
+.albums{grid-template-columns:1fr}
+}
+</style>
+</head>
+
+<body>
+
+<header class="topbar">
+<div class="logo">Zemivo</div>
+<a href="index.html">🏠 Home</a>
+</header>
+
+<main class="container">
+
+<div class="card">
+<h1>🖼️ Photos & Albums</h1>
+<p>Organize and explore your photos on Zemivo.</p>
+</div>
+
+<div class="card">
+
+<h2>My Albums</h2>
+
+<div class="albums">
+
+<div class="album">
+<div class="album-icon">🌍</div>
+<h3>Zemivo Moments</h3>
+<p>0 Photos</p>
+<button onclick="openAlbum(this)">Open Album</button>
+</div>
+
+<div class="album">
+<div class="album-icon">👥</div>
+<h3>Friends</h3>
+<p>0 Photos</p>
+<button onclick="openAlbum(this)">Open Album</button>
+</div>
+
+<div class="album">
+<div class="album-icon">🎥</div>
+<h3>Creator Photos</h3>
+<p>0 Photos</p>
+<button onclick="openAlbum(this)">Open Album</button>
+</div>
+
+<div class="album">
+<div class="album-icon">⭐</div>
+<h3>Favorites</h3>
+<p>0 Photos</p>
+<button onclick="openAlbum(this)">Open Album</button>
+</div>
+
+</div>
+
+</div>
+
+</main>
+
+<script>
+function openAlbum(button){
+button.textContent="Album Opened";
+button.disabled=true;
+}
+</script>
+
+</body>
+</html>
