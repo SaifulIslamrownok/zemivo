@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zemivo - Live</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial;background:#f4f6f8;color:#222}
+.topbar{background:white;padding:16px 20px;display:flex;justify-content:space-between;box-shadow:0 2px 8px #ddd}
+.logo{font-size:27px;font-weight:bold;color:#2563eb}
+.topbar a{color:#2563eb;text-decoration:none;font-weight:bold}
+.container{max-width:850px;margin:25px auto;padding:15px}
+.card{background:white;padding:22px;border-radius:15px;margin-bottom:18px;box-shadow:0 2px 8px #ddd}
+.live-box{background:#111;color:white;border-radius:15px;padding:55px 20px;text-align:center}
+.live-icon{font-size:55px}
+.live{color:#ef4444;font-weight:bold;font-size:22px}
+button{background:#ef4444;color:white;border:0;padding:11px 20px;border-radius:22px;font-weight:bold;cursor:pointer;margin-top:15px}
+.stream{padding:15px;border-bottom:1px solid #eee}
+</style>
+</head>
+
+<body>
+
+<header class="topbar">
+<div class="logo">Zemivo</div>
+<a href="index.html">🏠 Home</a>
+</header>
+
+<main class="container">
+
+<div class="card">
+<h1>🔴 Zemivo Live</h1>
+<p>Watch and create live videos.</p>
+</div>
+
+<div class="card">
+
+<div class="live-box">
+<div class="live-icon">📹</div>
+<div class="live">LIVE VIDEO</div>
+<p>Start sharing your moment with the Zemivo community.</p>
+<button onclick="startLive()">🔴 Go Live</button>
+</div>
+
+</div>
+
+<div class="card">
+
+<h2>🔴 Live Now</h2>
+
+<div class="stream">
+<h3>🎥 Zemivo Creator</h3>
+<p>Creator is currently live.</p>
+<button onclick="watchLive(this)">Watch Live</button>
+</div>
+
+<div class="stream">
+<h3>🎮 Gaming Live</h3>
+<p>Gaming community live stream.</p>
+<button onclick="watchLive(this)">Watch Live</button>
+</div>
+
+</div>
+
+</main>
+
+<script>
+function startLive(){
+alert("Your live video setup is ready.");
+}
+
+function watchLive(button){
+button.textContent="Watching Live";
+}
+</script>
+
+</body>
+</html>
