@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Zemivo - Followers</title>
+<style>
+body{font-family:Arial;background:#f4f6f8;margin:0}
+.card{background:white;max-width:700px;margin:30px auto;padding:25px;border-radius:15px}
+.user{padding:15px;border-bottom:1px solid #eee;display:flex;justify-content:space-between}
+button{background:#2563eb;color:white;border:0;padding:9px 15px;border-radius:20px}
+</style>
+</head>
+<body>
+<div class="card">
+<h1>👥 Followers</h1>
+<p>People following your Zemivo profile.</p>
+
+<div class="user">👤 Creator One <button onclick="follow(this)">Following</button></div>
+<div class="user">👤 Creator Two <button onclick="follow(this)">Following</button></div>
+<div class="user">👤 Creator Three <button onclick="follow(this)">Following</button></div>
+</div>
+
+<script>
+function follow(b){
+b.textContent=b.textContent==="Following"?"Follow":"Following";
+}
+</script>
+</body>
+</html>
