@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Zemivo - Earn</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f6f8;
+      color: #222;
+    }
+
+    .topbar {
+      background: white;
+      padding: 15px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+
+    .logo {
+      font-size: 26px;
+      font-weight: bold;
+      color: #2563eb;
+    }
+
+    .nav a {
+      margin-left: 10px;
+      color: #2563eb;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 25px auto;
+      padding: 0 15px;
+    }
+
+    .card {
+      background: white;
+      padding: 20px;
+      margin-bottom: 18px;
+      border-radius: 15px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    }
+
+    h1 {
+      color: #16a34a;
+      margin-bottom: 8px;
+    }
+
+    .balance {
+      text-align: center;
+      background: #ecfdf5;
+    }
+
+    .balance h2 {
+      color: #16a34a;
+      font-size: 32px;
+      margin: 10px 0;
+    }
+
+    .earning-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 15px;
+      margin-top: 18px;
+    }
+
+    .earning-box {
+      border: 1px solid #eee;
+      border-radius: 12px;
+      padding: 18px;
+    }
+
+    .earning-box h3 {
+      margin-bottom: 8px;
+    }
+
+    .earning-box p {
+      color: #666;
+      line-height: 1.5;
+      margin-bottom: 12px;
+    }
+
+    .button {
+      background: #2563eb;
+      color: white;
+      border: none;
+      padding: 10px 17px;
+      border-radius: 20px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .button:hover {
+      background: #1d4ed8;
+    }
+
+    .footer {
+      text-align: center;
+      color: #777;
+      padding: 25px;
+    }
+
+    @media (max-width: 650px) {
+      .earning-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header class="topbar">
+
+    <div class="logo">Zemivo</div>
+
+    <nav class="nav">
+      <a href="index.html">🏠 Home</a>
+      <a href="profile.html">👤 Profile</a>
+      <a href="videos.html">🎥 Videos</a>
+      <a href="marketplace.html">🛒 Marketplace</a>
+      <a href="notifications.html">🔔 Notifications</a>
+    </nav>
+
+  </header>
+
+  <main class="container">
+
+    <div class="card">
+
+      <h1>💰 Zemivo Earn Center</h1>
+
+      <p>
+        Grow your audience and discover future earning opportunities.
+      </p>
+
+    </div>
+
+    <div class="card balance">
+
+      <p>Your Zemivo Balance</p>
+
+      <h2>$0.00</h2>
+
+      <p>
+        Your earnings will appear here.
+      </p>
+
+    </div>
+
+    <div class="card">
+
+      <h2>Ways to Earn</h2>
+
+      <div class="earning-grid">
+
+        <div class="earning-box">
+
+          <h3>🎥 Creator Earnings</h3>
+
+          <p>
+            Create useful content and build your audience.
+          </p>
+
+          <button class="button">
+            Learn More
+          </button>
+
+        </div>
+
+        <div class="earning-box">
+
+          <h3>🔗 Affiliate Marketing</h3>
+
+          <p>
+            Share products and earn from eligible referrals.
+          </p>
+
+          <button class="button">
+            Explore
+          </button>
+
+        </div>
+
+        <div class="earning-box">
+
+          <h3>🛒 Marketplace</h3>
+
+          <p>
+            Promote products and connect with buyers.
+          </p>
+
+          <button
+            class="button"
+            onclick="location.href='marketplace.html'"
+          >
+            Open Marketplace
+          </button>
+
+        </div>
+
+        <div class="earning-box">
+
+          <h3>🎮 Gaming Rewards</h3>
+
+          <p>
+            Future Zemivo games may include reward opportunities.
+          </p>
+
+          <button class="button">
+            Coming Soon
+          </button>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </main>
+
+  <footer class="footer">
+    © 2026 Zemivo — Connect. Create. Earn.
+  </footer>
+
+</body>
+</html>
