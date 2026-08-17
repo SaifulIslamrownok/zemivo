@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Zemivo - Language</title>
+<style>
+body{font-family:Arial;background:#f4f6f8}.card{background:white;max-width:700px;margin:30px auto;padding:25px;border-radius:15px}select{width:100%;padding:12px;border-radius:10px;border:1px solid #ddd}
+</style>
+</head>
+<body>
+<div class="card">
+<h1>🌍 Language</h1>
+<p>Choose your preferred Zemivo language.</p>
+<select onchange="changeLanguage(this)">
+<option>English</option>
+<option>বাংলা</option>
+<option>Hindi</option>
+<option>Arabic</option>
+<option>Spanish</option>
+<option>French</option>
+<option>Chinese</option>
+</select>
+</div>
+<script>
+function changeLanguage(s){alert("Language changed to "+s.value)}
+</script>
+</body>
+</html>
