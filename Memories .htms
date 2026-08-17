@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zemivo - Memories</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial;background:#f4f6f8;color:#222}
+.topbar{background:white;padding:16px 20px;display:flex;justify-content:space-between;box-shadow:0 2px 8px #ddd}
+.logo{font-size:27px;font-weight:bold;color:#2563eb}
+.topbar a{color:#2563eb;text-decoration:none;font-weight:bold}
+.container{max-width:800px;margin:25px auto;padding:15px}
+.card{background:white;padding:22px;border-radius:15px;margin-bottom:18px;box-shadow:0 2px 8px #ddd}
+.memory{border:1px solid #eee;padding:16px;border-radius:12px;margin-top:15px}
+.memory h3{margin-bottom:8px}
+.memory p{color:#666}
+button{background:#2563eb;color:white;border:0;padding:10px 17px;border-radius:20px;font-weight:bold;cursor:pointer}
+</style>
+</head>
+
+<body>
+
+<header class="topbar">
+<div class="logo">Zemivo</div>
+<a href="index.html">🏠 Home</a>
+</header>
+
+<main class="container">
+
+<div class="card">
+<h1>🕐 Memories</h1>
+<p>Look back at your previous moments and posts on Zemivo.</p>
+</div>
+
+<div class="card">
+
+<h2>Your Memories</h2>
+
+<div class="memory">
+<h3>🌍 Your Zemivo Journey</h3>
+<p>Remember your first post on Zemivo.</p>
+<button onclick="viewMemory(this)">View Memory</button>
+</div>
+
+<div class="memory">
+<h3>📸 A Moment From The Past</h3>
+<p>A previous memory is waiting for you.</p>
+<button onclick="viewMemory(this)">View Memory</button>
+</div>
+
+<div class="memory">
+<h3>❤️ Popular Moment</h3>
+<p>See a post that received attention from your community.</p>
+<button onclick="viewMemory(this)">View Memory</button>
+</div>
+
+</div>
+
+</main>
+
+<script>
+function viewMemory(button){
+button.textContent="✓ Memory Viewed";
+button.disabled=true;
+}
+</script>
+
+</body>
+</html>
