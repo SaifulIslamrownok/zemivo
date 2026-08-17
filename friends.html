@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Zemivo - Friends</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f6f8;
+      color: #222;
+    }
+
+    .topbar {
+      background: white;
+      padding: 15px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+
+    .logo {
+      font-size: 26px;
+      font-weight: bold;
+      color: #2563eb;
+    }
+
+    .nav a {
+      margin-left: 12px;
+      color: #2563eb;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 25px auto;
+      padding: 0 15px;
+    }
+
+    .card {
+      background: white;
+      padding: 20px;
+      margin-bottom: 18px;
+      border-radius: 15px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    }
+
+    h1 {
+      color: #2563eb;
+      margin-bottom: 8px;
+    }
+
+    .search {
+      width: 100%;
+      padding: 13px;
+      border: 1px solid #ddd;
+      border-radius: 25px;
+      margin-top: 15px;
+      font-size: 15px;
+    }
+
+    .friend {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 15px 0;
+      border-bottom: 1px solid #eee;
+    }
+
+    .friend:last-child {
+      border-bottom: none;
+    }
+
+    .avatar {
+      font-size: 35px;
+      margin-right: 12px;
+    }
+
+    .friend-info {
+      display: flex;
+      align-items: center;
+    }
+
+    .friend-name {
+      font-weight: bold;
+      font-size: 17px;
+    }
+
+    .friend-status {
+      color: #777;
+      font-size: 13px;
+      margin-top: 4px;
+    }
+
+    .button {
+      background: #2563eb;
+      color: white;
+      border: none;
+      padding: 9px 15px;
+      border-radius: 20px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .button.added {
+      background: #16a34a;
+    }
+
+    .footer {
+      text-align: center;
+      color: #777;
+      padding: 25px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <header class="topbar">
+    <div class="logo">Zemivo</div>
+
+    <nav class="nav">
+      <a href="index.html">🏠 Home</a>
+      <a href="profile.html">👤 Profile</a>
+      <a href="messenger.html">💬 Messenger</a>
+    </nav>
+  </header>
+
+  <main class="container">
+
+    <div class="card">
+      <h1>👥 Friends</h1>
+      <p>Find people and connect with your friends on Zemivo.</p>
+
+      <input
+        id="friendSearch"
+        class="search"
+        type="text"
+        placeholder="Search friends..."
+      >
+    </div>
+
+    <div class="card" id="friendList">
+
+      <div class="friend">
+        <div class="friend-info">
+          <div class="avatar">👨</div>
+          <div>
+            <div class="friend-name">Zemivo User</div>
+            <div class="friend-status">New member</div>
+          </div>
+        </div>
+        <button class="button">Add Friend</button>
+      </div>
+
+      <div class="friend">
+        <div class="friend-info">
+          <div class="avatar">👩</div>
+          <div>
+            <div class="friend-name">Creator User</div>
+            <div class="friend-status">Creator</div>
+          </div>
+        </div>
+        <button class="button">Add Friend</button>
+      </div>
+
+      <div class="friend">
+        <div class="friend-info">
+          <div class="avatar">🧑</div>
+          <div>
+            <div class="friend-name">Zemivo Member</div>
+            <div class="friend-status">Active on Zemivo</div>
+          </div>
+        </div>
+        <button class="button">Add Friend</button>
+      </div>
+
+    </div>
+
+  </main>
+
+  <footer class="footer">
+    © 2026 Zemivo — Connect. Create. Earn.
+  </footer>
+
+  <script>
+    const buttons = document.querySelectorAll(".button");
+
+    buttons.forEach(function(button) {
+      button.addEventListener("click", function() {
+        if (button.classList.contains("added")) {
+          button.classList.remove("added");
+          button.textContent = "Add Friend";
+        } else {
+          button.classList.add("added");
+          button.textContent = "Added ✓";
+        }
+      });
+    });
+
+    const search = document.getElementById("friendSearch");
+    const friends = document.querySelectorAll(".friend");
+
+    search.addEventListener("input", function() {
+      const text = search.value.toLowerCase();
+
+      friends.forEach(function(friend) {
+        const name = friend
+          .querySelector(".friend-name")
+          .textContent
+          .toLowerCase();
+
+        friend.style.display =
+          name.includes(text) ? "flex" : "none";
+      });
+    });
+  </script>
+
+</body>
+</html>
