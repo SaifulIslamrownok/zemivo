@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zemivo - Watch</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial;background:#f4f6f8;color:#222}
+.topbar{background:white;padding:16px 20px;display:flex;justify-content:space-between;box-shadow:0 2px 8px #ddd}
+.logo{font-size:27px;font-weight:bold;color:#2563eb}
+.topbar a{color:#2563eb;text-decoration:none;font-weight:bold}
+.container{max-width:850px;margin:25px auto;padding:15px}
+.card{background:white;padding:20px;border-radius:15px;margin-bottom:18px;box-shadow:0 2px 8px #ddd}
+.video{border:1px solid #eee;border-radius:12px;overflow:hidden;margin-top:15px}
+.video-screen{height:230px;background:#111;color:white;display:flex;align-items:center;justify-content:center;font-size:55px}
+.video-info{padding:15px}
+button{background:#2563eb;color:white;border:0;padding:9px 17px;border-radius:20px;font-weight:bold;cursor:pointer}
+</style>
+</head>
+
+<body>
+
+<header class="topbar">
+<div class="logo">Zemivo</div>
+<a href="index.html">🏠 Home</a>
+</header>
+
+<main class="container">
+
+<div class="card">
+<h1>🎬 Watch</h1>
+<p>Discover videos and creators on Zemivo.</p>
+</div>
+
+<div class="card">
+
+<div class="video">
+
+<div class="video-screen">
+▶️
+</div>
+
+<div class="video-info">
+<h3>🌍 Welcome to Zemivo</h3>
+<p>Discover the latest content from the Zemivo community.</p>
+<button onclick="playVideo(this)">▶ Watch</button>
+</div>
+
+</div>
+
+<div class="video">
+
+<div class="video-screen">
+▶️
+</div>
+
+<div class="video-info">
+<h3>🎥 Creator Tips</h3>
+<p>Learn how to grow your audience.</p>
+<button onclick="playVideo(this)">▶ Watch</button>
+</div>
+
+</div>
+
+<div class="video">
+
+<div class="video-screen">
+▶️
+</div>
+
+<div class="video-info">
+<h3>🎮 Gaming Community</h3>
+<p>Latest gaming content from Zemivo.</p>
+<button onclick="playVideo(this)">▶ Watch</button>
+</div>
+
+</div>
+
+</div>
+
+</main>
+
+<script>
+function playVideo(button){
+button.textContent="▶ Playing";
+}
+</script>
+
+</body>
+</html>
