@@ -98,6 +98,13 @@
       font-weight: bold;
     }
 
+    .email {
+      margin-top: 8px;
+      color: #666;
+      font-size: 14px;
+      word-break: break-word;
+    }
+
     .stats {
       display: flex;
       justify-content: space-around;
@@ -128,7 +135,7 @@
 
     .voice-message {
       color: #444;
-      line-height: 1.5;
+      line-height: 1.6;
       margin-bottom: 15px;
     }
 
@@ -136,14 +143,15 @@
       border: none;
       background: #2563eb;
       color: white;
-      padding: 12px 20px;
+      padding: 12px 22px;
       border-radius: 25px;
       font-weight: bold;
       cursor: pointer;
+      font-size: 15px;
     }
 
-    .voice-button:hover {
-      opacity: 0.9;
+    .voice-button:disabled {
+      opacity: 0.6;
     }
 
     .identity {
@@ -155,7 +163,7 @@
     }
 
     .identity-row {
-      padding: 10px 0;
+      padding: 12px 0;
       border-bottom: 1px solid #eee;
     }
 
@@ -170,14 +178,38 @@
 
     .identity-value {
       font-weight: bold;
-      margin-top: 3px;
+      margin-top: 4px;
+      word-break: break-word;
+    }
+
+    .logout {
+      width: 100%;
+      border: none;
+      background: #dc2626;
+      color: white;
+      padding: 13px;
+      border-radius: 25px;
+      font-weight: bold;
+      cursor: pointer;
+      font-size: 16px;
     }
 
     .notice {
       text-align: center;
       color: #777;
       font-size: 13px;
-      margin-top: 20px;
+      line-height: 1.5;
+      margin-top: 18px;
+    }
+
+    .loading {
+      text-align: center;
+      padding: 40px;
+      color: #666;
+    }
+
+    #profileContent {
+      display: none;
     }
   </style>
 </head>
@@ -197,10 +229,15 @@
   </header>
 
 
-  <main class="profile">
+  <div id="loading" class="loading">
+    Loading Zemivo Profile...
+  </div>
 
 
-    <!-- PROFILE -->
+  <main class="profile" id="profileContent">
+
+
+    <!-- PROFILE CARD -->
 
     <section class="card profile-header">
 
@@ -222,6 +259,10 @@
 
       <div class="country" id="country">
         🌍 Global
+      </div>
+
+      <div class="email" id="userEmail">
+        Loading...
       </div>
 
 
@@ -247,7 +288,7 @@
     </section>
 
 
-    <!-- VOICE EXPERIENCE -->
+    <!-- VOICE PROFILE EXPERIENCE -->
 
     <section class="card voice-card">
 
@@ -259,7 +300,7 @@
         class="voice-message"
         id="voiceMessage"
       >
-        Welcome to this Zemivo profile.
+        Zemivo-তে স্বাগতম।
       </div>
 
       <button
@@ -320,7 +361,7 @@
         </div>
 
         <div class="identity-value">
-          ✓ Verified
+          ✓ Account Active
         </div>
 
       </div>
@@ -329,133 +370,270 @@
       <div class="identity-row">
 
         <div class="identity-label">
-          Zemivo ID
+          Zemivo User ID
         </div>
 
         <div
           class="identity-value"
           id="zemivoId"
         >
-          ZMV-USER
+          Loading...
         </div>
 
       </div>
 
 
       <p class="notice">
-        Sensitive identity documents are never shown publicly.
+        Sensitive identity documents will not be displayed publicly.
       </p>
 
     </section>
 
+
+    <!-- LOGOUT -->
+
+    <section class="card">
+
+      <button
+        class="logout"
+        id="logoutButton"
+        type="button"
+      >
+        Log Out
+      </button>
+
+    </section>
+
+
   </main>
 
 
-  <script>
+  <!-- FIREBASE + ZEMIVO SYSTEM -->
 
-    /*
-      ==================================
-      ZEMIVO VOICE PROFILE EXPERIENCE
-      ==================================
-    */
+  <script type="module">
 
+    import { initializeApp } from
+      "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
+
+    import {
+      getAuth,
+      onAuthStateChanged,
+      signOut
+    } from
+      "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
+
+
+    /* =========================
+       FIREBASE CONFIG
+       ========================= */
+
+    const firebaseConfig = {
+
+      apiKey:
+        "AIzaSyAxJUFBWm2fa0g3oxUWWqdfSTEAc-bRgfI",
+
+      authDomain:
+        "zemivo.firebaseapp.com",
+
+      projectId:
+        "zemivo",
+
+      storageBucket:
+        "zemivo.firebasestorage.app",
+
+      messagingSenderId:
+        "195335939691",
+
+      appId:
+        "1:195335939691:web:5fa5c62c53d0c0aefe732e",
+
+      measurementId:
+        "G-GNHH5S4H09"
+
+    };
+
+
+    const app =
+      initializeApp(firebaseConfig);
+
+    const auth =
+      getAuth(app);
+
+
+    /* =========================
+       BASIC ELEMENTS
+       ========================= */
+
+    const loading =
+      document.getElementById("loading");
+
+    const profileContent =
+      document.getElementById("profileContent");
+
+    const profileName =
+      document.getElementById("profileName");
+
+    const userEmail =
+      document.getElementById("userEmail");
+
+    const avatar =
+      document.getElementById("avatar");
+
+    const verifiedName =
+      document.getElementById("verifiedName");
+
+    const zemivoId =
+      document.getElementById("zemivoId");
+
+
+    /* =========================
+       VOICE DATABASE
+       ========================= */
 
     const greetings = {
 
-      "bn": [
-        "Zemivo-তে স্বাগতম। একটি নতুন সংযোগের গল্প আবিষ্কার করুন।",
-        "আপনাকে এই প্রোফাইলে স্বাগতম। নতুন একটি সংযোগ শুরু হতে পারে এখান থেকেই।",
-        "Zemivo-তে আপনার উপস্থিতি আনন্দের। এই প্রোফাইলটি আবিষ্কার করুন।",
-        "একটি নতুন পরিচয়, একটি নতুন গল্প। Zemivo-তে স্বাগতম।"
+      bn: [
+        "Zemivo-তে স্বাগতম। নতুন একটি সংযোগের গল্প আবিষ্কার করুন।",
+
+        "আপনাকে Zemivo-তে স্বাগতম। হয়তো এই সংযোগ থেকেই শুরু হবে নতুন একটি গল্প।",
+
+        "Zemivo-তে আপনাকে পেয়ে ভালো লাগছে। এই প্রোফাইলটি আবিষ্কার করুন।",
+
+        "একটি নতুন পরিচয়, একটি নতুন গল্প। Zemivo-তে স্বাগতম।",
+
+        "আপনার এই যাত্রা সুন্দর হোক। Zemivo-তে স্বাগতম।"
       ],
 
-      "en": [
+
+      en: [
         "Welcome to this Zemivo profile. Discover a new connection.",
+
         "Welcome to Zemivo. Every connection can begin a new story.",
+
         "Glad to see you here. Explore this Zemivo profile.",
+
         "A new connection can begin with a simple visit. Welcome to Zemivo."
       ],
 
-      "fr": [
+
+      hi: [
+        "Zemivo प्रोफ़ाइल में आपका स्वागत है। एक नया जुड़ाव खोजें।"
+      ],
+
+
+      ar: [
+        "مرحبًا بك في ملف Zemivo. اكتشف اتصالًا جديدًا."
+      ],
+
+
+      fr: [
         "Bienvenue sur ce profil Zemivo. Découvrez une nouvelle connexion."
       ],
 
-      "es": [
+
+      es: [
         "Bienvenido a este perfil de Zemivo. Descubre una nueva conexión."
       ],
 
-      "de": [
+
+      de: [
         "Willkommen auf diesem Zemivo-Profil. Entdecke eine neue Verbindung."
       ],
 
-      "ja": [
+
+      ja: [
         "Zemivoプロフィールへようこそ。新しいつながりを見つけてください。"
       ],
 
-      "ko": [
+
+      ko: [
         "Zemivo 프로필에 오신 것을 환영합니다. 새로운 인연을 만나보세요."
-      ],
-
-      "hi": [
-        "इस Zemivo प्रोफ़ाइल में आपका स्वागत है। एक नया जुड़ाव खोजें।"
-      ],
-
-      "ar": [
-        "مرحبًا بك في ملف Zemivo هذا. اكتشف اتصالًا جديدًا."
       ]
 
     };
 
 
+    /* =========================
+       LANGUAGE DETECTION
+       ========================= */
+
     function getLanguage() {
 
-      const language =
-        navigator.language || "en-US";
+      const browserLanguage =
+        (
+          navigator.language ||
+          "en-US"
+        ).toLowerCase();
 
-      const code =
-        language.toLowerCase().split("-")[0];
 
-      if (greetings[code]) {
+      const languageCode =
+        browserLanguage.split("-")[0];
 
-        return code;
+
+      if (
+        greetings[languageCode]
+      ) {
+
+        return languageCode;
 
       }
+
 
       return "en";
 
     }
 
 
-    function getRandomGreeting() {
+    /* =========================
+       SELECT GREETING
+       ========================= */
+
+    function getGreeting() {
 
       const language =
         getLanguage();
 
+
       const list =
         greetings[language];
+
 
       const index =
         Math.floor(
           Math.random() * list.length
         );
 
-      return list[index];
+
+      return {
+
+        text: list[index],
+
+        language: language
+
+      };
 
     }
 
 
-    const message =
-      getRandomGreeting();
+    let selectedGreeting =
+      getGreeting();
 
 
     document.getElementById(
       "voiceMessage"
-    ).textContent = message;
+    ).textContent =
+      selectedGreeting.text;
 
 
-    function speakMessage() {
+    /* =========================
+       VOICE FUNCTION
+       ========================= */
 
-      if (!("speechSynthesis" in window)) {
+    function speakGreeting() {
+
+      if (
+        !("speechSynthesis" in window)
+      ) {
 
         alert(
           "Voice playback is not supported on this device."
@@ -466,22 +644,65 @@
       }
 
 
-      window.speechSynthesis.cancel();
+      speechSynthesis.cancel();
 
 
       const speech =
-        new SpeechSynthesisUtterance(message);
+        new SpeechSynthesisUtterance(
+          selectedGreeting.text
+        );
 
 
-      speech.lang =
-        navigator.language || "en-US";
+      /*
+        বাংলা হলে বাংলা voice চাইবে।
+      */
 
-      speech.rate = 0.9;
+      if (
+        selectedGreeting.language === "bn"
+      ) {
+
+        speech.lang = "bn-BD";
+
+      } else {
+
+        speech.lang =
+          selectedGreeting.language;
+
+      }
+
+
+      speech.rate = 0.88;
 
       speech.pitch = 1;
 
 
-      window.speechSynthesis.speak(
+      const voices =
+        speechSynthesis.getVoices();
+
+
+      const matchingVoice =
+        voices.find(
+          function(voice) {
+
+            return voice.lang
+              .toLowerCase()
+              .startsWith(
+                selectedGreeting.language
+              );
+
+          }
+        );
+
+
+      if (matchingVoice) {
+
+        speech.voice =
+          matchingVoice;
+
+      }
+
+
+      speechSynthesis.speak(
         speech
       );
 
@@ -492,137 +713,189 @@
       "voiceButton"
     ).addEventListener(
       "click",
-      speakMessage
+      speakGreeting
     );
 
 
-    /*
-      Try voice after the visitor interacts
-      with the page.
-    */
+    /* =========================
+       FIREBASE LOGIN USER
+       ========================= */
 
-    let played = false;
+    onAuthStateChanged(
+      auth,
+      function(user) {
 
+        if (!user) {
 
-    document.addEventListener(
-      "click",
-      function(event) {
+          /*
+            Login করা না থাকলে
+            Login page-এ পাঠাবে।
+          */
 
-        if (played) {
+          window.location.href =
+            "login.html";
+
           return;
+
         }
+
+
+        /*
+          Firebase থেকে আসল email
+          নেওয়া হচ্ছে।
+        */
+
+        const email =
+          user.email || "User";
+
+
+        userEmail.textContent =
+          email;
+
+
+        /*
+          Email থেকে temporary
+          display name তৈরি করা হচ্ছে।
+          পরে আমরা Firebase Profile
+          data দিয়ে replace করব।
+        */
+
+        let displayName =
+          email.split("@")[0];
+
+
+        displayName =
+          displayName
+            .replace(/[._-]/g, " ");
+
+
+        displayName =
+          displayName
+            .replace(/\b\w/g, function(letter) {
+              return letter.toUpperCase();
+            });
+
+
+        profileName.textContent =
+          displayName;
+
+
+        verifiedName.textContent =
+          displayName;
+
+
+        /*
+          Avatar
+        */
+
+        avatar.textContent =
+          displayName
+            .charAt(0)
+            .toUpperCase();
+
+
+        /*
+          Firebase UID
+          */
+
+        zemivoId.textContent =
+          "ZMV-" +
+          user.uid.substring(0, 12);
+
+
+        /*
+          Country এখন browser language
+          অনুযায়ী প্রাথমিকভাবে দেখানো হচ্ছে।
+          পরে Firebase profile country
+          দিয়ে replace করা হবে।
+        */
+
+        let countryText =
+          "🌍 Global";
 
 
         if (
-          event.target.id ===
-          "voiceButton"
+          selectedGreeting.language === "bn"
         ) {
 
-          played = true;
+          countryText =
+            "🇧🇩 Bangladesh";
 
-          return;
+        }
+
+        if (
+          selectedGreeting.language === "en"
+        ) {
+
+          countryText =
+            "🌍 International";
+
+        }
+
+        if (
+          selectedGreeting.language === "hi"
+        ) {
+
+          countryText =
+            "🇮🇳 India";
 
         }
 
 
-        played = true;
+        document.getElementById(
+          "country"
+        ).textContent =
+          countryText;
 
-        speakMessage();
 
-      },
-      { once: true }
+        document.getElementById(
+          "identityCountry"
+        ).textContent =
+          countryText;
+
+
+        loading.style.display =
+          "none";
+
+
+        profileContent.style.display =
+          "block";
+
+      }
     );
 
 
-    /*
-      Create a temporary Zemivo ID
-      for the current browser.
-    */
-
-    let zemivoId =
-      localStorage.getItem(
-        "zemivoUserId"
-      );
-
-
-    if (!zemivoId) {
-
-      const randomNumber =
-        Math.floor(
-          100000 + Math.random() * 900000
-        );
-
-      zemivoId =
-        "ZMV-" + randomNumber;
-
-      localStorage.setItem(
-        "zemivoUserId",
-        zemivoId
-      );
-
-    }
-
+    /* =========================
+       LOGOUT
+       ========================= */
 
     document.getElementById(
-      "zemivoId"
-    ).textContent =
-      zemivoId;
+      "logoutButton"
+    ).addEventListener(
+      "click",
+      async function() {
 
-<script>
-  const bengaliGreetings = [
-    "Zemivo-তে স্বাগতম। নতুন একটি সংযোগের গল্প আবিষ্কার করুন।",
-    "আপনাকে Zemivo-তে স্বাগতম। হয়তো এই সংযোগ থেকেই শুরু হবে নতুন একটি গল্প।",
-    "Zemivo-তে আপনাকে পেয়ে ভালো লাগছে। এই প্রোফাইলটি আবিষ্কার করুন।",
-    "একটি নতুন পরিচয়, একটি নতুন গল্প। Zemivo-তে স্বাগতম।",
-    "আপনার এই যাত্রা সুন্দর হোক। Zemivo-তে স্বাগতম।"
-  ];
+        try {
 
-  const voiceMessage =
-    bengaliGreetings[
-      Math.floor(Math.random() * bengaliGreetings.length)
-    ];
+          await signOut(auth);
 
-  document.getElementById("voiceMessage").textContent =
-    voiceMessage;
+          window.location.href =
+            "login.html";
 
-  function speakBengali() {
+        } catch (error) {
 
-    if (!("speechSynthesis" in window)) {
-      alert("এই ডিভাইসে Voice Support নেই।");
-      return;
-    }
+          alert(
+            "Logout failed. Please try again."
+          );
 
-    speechSynthesis.cancel();
+          console.error(error);
 
-    const speech =
-      new SpeechSynthesisUtterance(voiceMessage);
+        }
 
-    speech.lang = "bn-BD";
-    speech.rate = 0.88;
-    speech.pitch = 1;
+      }
+    );
 
-    const voices = speechSynthesis.getVoices();
 
-    const bengaliVoice =
-      voices.find(function(voice) {
-        return voice.lang.toLowerCase().startsWith("bn");
-      });
-
-    if (bengaliVoice) {
-      speech.voice = bengaliVoice;
-    }
-
-    speechSynthesis.speak(speech);
-  }
-
-  document
-    .getElementById("voiceButton")
-    .addEventListener("click", speakBengali);
-
-  speechSynthesis.onvoiceschanged = function() {
-    // বাংলা voice available হলে browser সেটি ব্যবহার করবে
-  };
-</script>
   </script>
 
 </body>
