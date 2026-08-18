@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Login - Zemivo</title>
+  <title>Log In - Zemivo</title>
 
   <style>
     * {
@@ -50,6 +50,7 @@
       border: 1px solid #ddd;
       border-radius: 10px;
       font-size: 16px;
+      outline: none;
     }
 
     .login-button {
@@ -61,12 +62,35 @@
       color: white;
       font-size: 17px;
       font-weight: bold;
+      cursor: pointer;
     }
 
-    .signup {
-      display: block;
+    .login-button:disabled {
+      opacity: 0.6;
+    }
+
+    #message {
+      text-align: center;
+      margin-top: 15px;
+      font-weight: bold;
+      color: #dc2626;
+    }
+
+    .signup-link {
       text-align: center;
       margin-top: 20px;
+    }
+
+    .signup-link a {
+      color: #2563eb;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .back {
+      display: block;
+      text-align: center;
+      margin-top: 18px;
       color: #2563eb;
       text-decoration: none;
     }
@@ -81,32 +105,156 @@
 
     <h2>Welcome Back</h2>
 
-    <form>
+    <form id="loginForm">
 
       <input
+        id="email"
         type="email"
         placeholder="Email Address"
+        required
       >
 
       <input
+        id="password"
         type="password"
         placeholder="Password"
+        required
       >
 
-      <button class="login-button" type="button">
+      <button
+        id="loginButton"
+        class="login-button"
+        type="submit"
+      >
         Log In
       </button>
 
     </form>
 
-    <a class="signup" href="signup.html">
-      Create a new account
+    <div id="message"></div>
+
+    <div class="signup-link">
+      Don't have an account?
+      <a href="signup.html">Create Account</a>
+    </div>
+
+    <a class="back" href="index.html">
+      ← Back to Zemivo
     </a>
 
   </div>
-<p>
-  Don't have an account?
-  <a href="signup.html">Sign Up</a>
-</p>
+
+
+  <script type="module">
+
+    import { initializeApp } from
+      "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
+
+    import {
+      getAuth,
+      signInWithEmailAndPassword
+    } from
+      "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
+
+
+    const firebaseConfig = {
+
+      apiKey: "AIzaSyAxJUFBWm2fa0g3oxUWWqdfSTEAc-bRgfI",
+
+      authDomain: "zemivo.firebaseapp.com",
+
+      projectId: "zemivo",
+
+      storageBucket: "zemivo.firebasestorage.app",
+
+      messagingSenderId: "195335939691",
+
+      appId: "1:195335939691:web:5fa5c62c53d0c0aefe732e",
+
+      measurementId: "G-GNHH5S4H09"
+
+    };
+
+
+    const app = initializeApp(firebaseConfig);
+
+    const auth = getAuth(app);
+
+
+    const loginForm =
+      document.getElementById("loginForm");
+
+    const message =
+      document.getElementById("message");
+
+    const loginButton =
+      document.getElementById("loginButton");
+
+
+    loginForm.addEventListener(
+      "submit",
+      async function(event) {
+
+        event.preventDefault();
+
+
+        const email =
+          document.getElementById("email").value.trim();
+
+        const password =
+          document.getElementById("password").value;
+
+
+        message.textContent = "";
+
+        loginButton.disabled = true;
+
+        loginButton.textContent =
+          "Logging in...";
+
+
+        try {
+
+          await signInWithEmailAndPassword(
+            auth,
+            email,
+            password
+          );
+
+
+          message.style.color = "#16a34a";
+
+          message.textContent =
+            "Login successful!";
+
+
+          setTimeout(function() {
+
+            window.location.href =
+              "profile.html";
+
+          }, 1000);
+
+
+        } catch (error) {
+
+          console.error(error);
+
+          message.style.color = "#dc2626";
+
+          message.textContent =
+            "Email or password is incorrect.";
+
+          loginButton.disabled = false;
+
+          loginButton.textContent =
+            "Log In";
+
+        }
+
+      });
+
+  </script>
+
 </body>
 </html>
