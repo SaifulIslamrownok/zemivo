@@ -62,6 +62,7 @@
       color: white;
       font-size: 17px;
       font-weight: bold;
+      cursor: pointer;
     }
 
     .back {
@@ -72,11 +73,21 @@
       text-decoration: none;
     }
 
-    .note {
+    .login-link {
       text-align: center;
-      color: #777;
-      font-size: 13px;
       margin-top: 18px;
+    }
+
+    .login-link a {
+      color: #2563eb;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    #message {
+      text-align: center;
+      margin-top: 15px;
+      font-weight: bold;
     }
   </style>
 </head>
@@ -89,32 +100,180 @@
 
     <h2>Create Your Account</h2>
 
-    <form>
-      <input type="text" placeholder="Full Name">
+    <form id="signupForm">
 
-      <input type="email" placeholder="Email Address">
+      <input
+        id="fullName"
+        type="text"
+        placeholder="Full Name"
+        required
+      >
 
-      <input type="password" placeholder="Password">
+      <input
+        id="email"
+        type="email"
+        placeholder="Email Address"
+        required
+      >
 
-      <input type="password" placeholder="Confirm Password">
+      <input
+        id="password"
+        type="password"
+        placeholder="Password"
+        required
+      >
 
-      <button class="create" type="button">
+      <input
+        id="confirmPassword"
+        type="password"
+        placeholder="Confirm Password"
+        required
+      >
+
+      <button
+        class="create"
+        type="submit"
+      >
         Create Account
       </button>
+
     </form>
+
+    <div id="message"></div>
 
     <a class="back" href="index.html">
       ← Back to Zemivo
     </a>
 
-    <p class="note">
-      Join Zemivo and start building your community.
-    </p>
+    <div class="login-link">
+      Already have an account?
+      <a href="login.html">Log In</a>
+    </div>
 
   </div>
-<p>
-  Already have an account?
-  <a href="login.html">Log In</a>
-</p>
+
+  <script type="module">
+
+    import { initializeApp } from
+      "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
+
+    import {
+      getAuth,
+      createUserWithEmailAndPassword,
+      updateProfile
+    } from
+      "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
+
+
+    const firebaseConfig = {
+
+      apiKey: "AIzaSyAxJUFBWm2fa0g3oxUWWqdfSTEAc-bRgfI",
+
+      authDomain: "zemivo.firebaseapp.com",
+
+      projectId: "zemivo",
+
+      storageBucket: "zemivo.firebasestorage.app",
+
+      messagingSenderId: "195335939691",
+
+      appId: "1:195335939691:web:5fa5c62c53d0c0aefe732e",
+
+      measurementId: "G-GNHH5S4H09"
+
+    };
+
+
+    const app = initializeApp(firebaseConfig);
+
+    const auth = getAuth(app);
+
+
+    const form =
+      document.getElementById("signupForm");
+
+    const message =
+      document.getElementById("message");
+
+
+    form.addEventListener("submit", async function(event) {
+
+      event.preventDefault();
+
+
+      const name =
+        document.getElementById("fullName").value.trim();
+
+      const email =
+        document.getElementById("email").value.trim();
+
+      const password =
+        document.getElementById("password").value;
+
+      const confirmPassword =
+        document.getElementById("confirmPassword").value;
+
+
+      if (password !== confirmPassword) {
+
+        message.textContent =
+          "Passwords do not match.";
+
+        return;
+      }
+
+
+      if (password.length < 6) {
+
+        message.textContent =
+          "Password must be at least 6 characters.";
+
+        return;
+      }
+
+
+      try {
+
+        const userCredential =
+          await createUserWithEmailAndPassword(
+            auth,
+            email,
+            password
+          );
+
+
+        await updateProfile(
+          userCredential.user,
+          {
+            displayName: name
+          }
+        );
+
+
+        message.textContent =
+          "Account created successfully!";
+
+
+        setTimeout(function() {
+
+          window.location.href =
+            "profile.html";
+
+        }, 1000);
+
+
+      } catch (error) {
+
+        console.error(error);
+
+        message.textContent =
+          error.message;
+
+      }
+
+    });
+
+  </script>
+
 </body>
 </html>
