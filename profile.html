@@ -568,7 +568,61 @@
     ).textContent =
       zemivoId;
 
+<script>
+  const bengaliGreetings = [
+    "Zemivo-তে স্বাগতম। নতুন একটি সংযোগের গল্প আবিষ্কার করুন।",
+    "আপনাকে Zemivo-তে স্বাগতম। হয়তো এই সংযোগ থেকেই শুরু হবে নতুন একটি গল্প।",
+    "Zemivo-তে আপনাকে পেয়ে ভালো লাগছে। এই প্রোফাইলটি আবিষ্কার করুন।",
+    "একটি নতুন পরিচয়, একটি নতুন গল্প। Zemivo-তে স্বাগতম।",
+    "আপনার এই যাত্রা সুন্দর হোক। Zemivo-তে স্বাগতম।"
+  ];
 
+  const voiceMessage =
+    bengaliGreetings[
+      Math.floor(Math.random() * bengaliGreetings.length)
+    ];
+
+  document.getElementById("voiceMessage").textContent =
+    voiceMessage;
+
+  function speakBengali() {
+
+    if (!("speechSynthesis" in window)) {
+      alert("এই ডিভাইসে Voice Support নেই।");
+      return;
+    }
+
+    speechSynthesis.cancel();
+
+    const speech =
+      new SpeechSynthesisUtterance(voiceMessage);
+
+    speech.lang = "bn-BD";
+    speech.rate = 0.88;
+    speech.pitch = 1;
+
+    const voices = speechSynthesis.getVoices();
+
+    const bengaliVoice =
+      voices.find(function(voice) {
+        return voice.lang.toLowerCase().startsWith("bn");
+      });
+
+    if (bengaliVoice) {
+      speech.voice = bengaliVoice;
+    }
+
+    speechSynthesis.speak(speech);
+  }
+
+  document
+    .getElementById("voiceButton")
+    .addEventListener("click", speakBengali);
+
+  speechSynthesis.onvoiceschanged = function() {
+    // বাংলা voice available হলে browser সেটি ব্যবহার করবে
+  };
+</script>
   </script>
 
 </body>
