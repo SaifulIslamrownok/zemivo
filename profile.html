@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Profile - Zemivo</title>
+
+  <title>Zemivo Profile</title>
 
   <style>
     * {
@@ -14,58 +15,99 @@
       margin: 0;
       font-family: Arial, sans-serif;
       background: #f4f6f8;
+      color: #222;
     }
 
-    .header {
+    .topbar {
       background: white;
-      padding: 18px;
-      text-align: center;
-      font-size: 28px;
-      font-weight: bold;
-      color: #2563eb;
+      padding: 14px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
       box-shadow: 0 2px 8px rgba(0,0,0,0.08);
     }
 
+    .logo {
+      color: #2563eb;
+      font-size: 26px;
+      font-weight: bold;
+    }
+
+    .back {
+      color: #2563eb;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
     .profile {
-      max-width: 600px;
-      margin: 25px auto;
+      max-width: 700px;
+      margin: 30px auto;
+      padding: 0 15px;
+    }
+
+    .card {
       background: white;
-      padding: 25px;
       border-radius: 18px;
+      padding: 25px;
+      margin-bottom: 20px;
+      box-shadow: 0 3px 12px rgba(0,0,0,0.07);
+    }
+
+    .profile-header {
       text-align: center;
     }
 
-    .photo {
-      width: 110px;
-      height: 110px;
+    .avatar {
+      width: 100px;
+      height: 100px;
       border-radius: 50%;
-      background: #e5e7eb;
-      margin: 0 auto 15px;
+      background: #2563eb;
+      color: white;
       display: flex;
-      align-items: center;
       justify-content: center;
-      font-size: 45px;
+      align-items: center;
+      font-size: 40px;
+      font-weight: bold;
+      margin: auto;
     }
 
-    h2 {
-      margin: 10px 0;
+    .name {
+      margin-top: 15px;
+      font-size: 28px;
+      font-weight: bold;
     }
 
-    .bio {
+    .username {
       color: #666;
-      margin-bottom: 25px;
+      margin-top: 5px;
+    }
+
+    .verified {
+      display: inline-block;
+      margin-top: 10px;
+      background: #e8f1ff;
+      color: #2563eb;
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 14px;
+      font-weight: bold;
+    }
+
+    .country {
+      margin-top: 10px;
+      font-weight: bold;
     }
 
     .stats {
       display: flex;
       justify-content: space-around;
-      border-top: 1px solid #eee;
-      padding-top: 20px;
+      text-align: center;
+      margin-top: 25px;
     }
 
     .stat strong {
       display: block;
-      font-size: 20px;
+      font-size: 21px;
     }
 
     .stat span {
@@ -73,60 +115,461 @@
       font-size: 14px;
     }
 
-    .edit {
-      margin-top: 25px;
-      padding: 12px 25px;
+    .voice-card {
+      text-align: center;
+      background: #eef5ff;
+    }
+
+    .voice-title {
+      font-size: 20px;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    .voice-message {
+      color: #444;
+      line-height: 1.5;
+      margin-bottom: 15px;
+    }
+
+    .voice-button {
       border: none;
-      border-radius: 25px;
       background: #2563eb;
       color: white;
-      font-size: 16px;
+      padding: 12px 20px;
+      border-radius: 25px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .voice-button:hover {
+      opacity: 0.9;
+    }
+
+    .identity {
+      text-align: left;
+    }
+
+    .identity h3 {
+      margin-top: 0;
+    }
+
+    .identity-row {
+      padding: 10px 0;
+      border-bottom: 1px solid #eee;
+    }
+
+    .identity-row:last-child {
+      border-bottom: none;
+    }
+
+    .identity-label {
+      color: #777;
+      font-size: 13px;
+    }
+
+    .identity-value {
+      font-weight: bold;
+      margin-top: 3px;
+    }
+
+    .notice {
+      text-align: center;
+      color: #777;
+      font-size: 13px;
+      margin-top: 20px;
     }
   </style>
 </head>
 
 <body>
 
-  <div class="header">
-    Zemivo
-  </div>
+  <header class="topbar">
 
-  <div class="profile">
-
-    <div class="photo">👤</div>
-
-    <h2>Your Name</h2>
-
-    <div class="bio">
-      Welcome to my Zemivo profile.
+    <div class="logo">
+      Zemivo
     </div>
 
-    <div class="stats">
-      <div class="stat">
-        <strong>0</strong>
-        <span>Posts</span>
+    <a class="back" href="index.html">
+      ← Home
+    </a>
+
+  </header>
+
+
+  <main class="profile">
+
+
+    <!-- PROFILE -->
+
+    <section class="card profile-header">
+
+      <div class="avatar" id="avatar">
+        Z
       </div>
 
-      <div class="stat">
-        <strong>0</strong>
-        <span>Followers</span>
+      <div class="name" id="profileName">
+        Zemivo User
       </div>
 
-      <div class="stat">
-        <strong>0</strong>
-        <span>Following</span>
+      <div class="username" id="username">
+        @zemivo_user
       </div>
-    </div>
 
-    <button class="edit">
-      Edit Profile
-    </button>
+      <div class="verified">
+        ✓ Identity Verified
+      </div>
 
-  </div>
-<nav>
-  <a href="index.html">🏠 Home</a>
-  <a href="feed.html">📰 Feed</a>
-  <a href="messenger.html">💬 Messenger</a>
-</nav>
+      <div class="country" id="country">
+        🌍 Global
+      </div>
+
+
+      <div class="stats">
+
+        <div class="stat">
+          <strong>0</strong>
+          <span>Followers</span>
+        </div>
+
+        <div class="stat">
+          <strong>0</strong>
+          <span>Following</span>
+        </div>
+
+        <div class="stat">
+          <strong>0</strong>
+          <span>Posts</span>
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- VOICE EXPERIENCE -->
+
+    <section class="card voice-card">
+
+      <div class="voice-title">
+        🔊 Zemivo Welcome
+      </div>
+
+      <div
+        class="voice-message"
+        id="voiceMessage"
+      >
+        Welcome to this Zemivo profile.
+      </div>
+
+      <button
+        class="voice-button"
+        id="voiceButton"
+        type="button"
+      >
+        🔊 Play Welcome
+      </button>
+
+    </section>
+
+
+    <!-- IDENTITY -->
+
+    <section class="card identity">
+
+      <h3>
+        🌍 Identity
+      </h3>
+
+      <div class="identity-row">
+
+        <div class="identity-label">
+          Verified Name
+        </div>
+
+        <div
+          class="identity-value"
+          id="verifiedName"
+        >
+          Not verified yet
+        </div>
+
+      </div>
+
+
+      <div class="identity-row">
+
+        <div class="identity-label">
+          Country
+        </div>
+
+        <div
+          class="identity-value"
+          id="identityCountry"
+        >
+          Not selected
+        </div>
+
+      </div>
+
+
+      <div class="identity-row">
+
+        <div class="identity-label">
+          Verification Status
+        </div>
+
+        <div class="identity-value">
+          ✓ Verified
+        </div>
+
+      </div>
+
+
+      <div class="identity-row">
+
+        <div class="identity-label">
+          Zemivo ID
+        </div>
+
+        <div
+          class="identity-value"
+          id="zemivoId"
+        >
+          ZMV-USER
+        </div>
+
+      </div>
+
+
+      <p class="notice">
+        Sensitive identity documents are never shown publicly.
+      </p>
+
+    </section>
+
+  </main>
+
+
+  <script>
+
+    /*
+      ==================================
+      ZEMIVO VOICE PROFILE EXPERIENCE
+      ==================================
+    */
+
+
+    const greetings = {
+
+      "bn": [
+        "Zemivo-তে স্বাগতম। একটি নতুন সংযোগের গল্প আবিষ্কার করুন।",
+        "আপনাকে এই প্রোফাইলে স্বাগতম। নতুন একটি সংযোগ শুরু হতে পারে এখান থেকেই।",
+        "Zemivo-তে আপনার উপস্থিতি আনন্দের। এই প্রোফাইলটি আবিষ্কার করুন।",
+        "একটি নতুন পরিচয়, একটি নতুন গল্প। Zemivo-তে স্বাগতম।"
+      ],
+
+      "en": [
+        "Welcome to this Zemivo profile. Discover a new connection.",
+        "Welcome to Zemivo. Every connection can begin a new story.",
+        "Glad to see you here. Explore this Zemivo profile.",
+        "A new connection can begin with a simple visit. Welcome to Zemivo."
+      ],
+
+      "fr": [
+        "Bienvenue sur ce profil Zemivo. Découvrez une nouvelle connexion."
+      ],
+
+      "es": [
+        "Bienvenido a este perfil de Zemivo. Descubre una nueva conexión."
+      ],
+
+      "de": [
+        "Willkommen auf diesem Zemivo-Profil. Entdecke eine neue Verbindung."
+      ],
+
+      "ja": [
+        "Zemivoプロフィールへようこそ。新しいつながりを見つけてください。"
+      ],
+
+      "ko": [
+        "Zemivo 프로필에 오신 것을 환영합니다. 새로운 인연을 만나보세요."
+      ],
+
+      "hi": [
+        "इस Zemivo प्रोफ़ाइल में आपका स्वागत है। एक नया जुड़ाव खोजें।"
+      ],
+
+      "ar": [
+        "مرحبًا بك في ملف Zemivo هذا. اكتشف اتصالًا جديدًا."
+      ]
+
+    };
+
+
+    function getLanguage() {
+
+      const language =
+        navigator.language || "en-US";
+
+      const code =
+        language.toLowerCase().split("-")[0];
+
+      if (greetings[code]) {
+
+        return code;
+
+      }
+
+      return "en";
+
+    }
+
+
+    function getRandomGreeting() {
+
+      const language =
+        getLanguage();
+
+      const list =
+        greetings[language];
+
+      const index =
+        Math.floor(
+          Math.random() * list.length
+        );
+
+      return list[index];
+
+    }
+
+
+    const message =
+      getRandomGreeting();
+
+
+    document.getElementById(
+      "voiceMessage"
+    ).textContent = message;
+
+
+    function speakMessage() {
+
+      if (!("speechSynthesis" in window)) {
+
+        alert(
+          "Voice playback is not supported on this device."
+        );
+
+        return;
+
+      }
+
+
+      window.speechSynthesis.cancel();
+
+
+      const speech =
+        new SpeechSynthesisUtterance(message);
+
+
+      speech.lang =
+        navigator.language || "en-US";
+
+      speech.rate = 0.9;
+
+      speech.pitch = 1;
+
+
+      window.speechSynthesis.speak(
+        speech
+      );
+
+    }
+
+
+    document.getElementById(
+      "voiceButton"
+    ).addEventListener(
+      "click",
+      speakMessage
+    );
+
+
+    /*
+      Try voice after the visitor interacts
+      with the page.
+    */
+
+    let played = false;
+
+
+    document.addEventListener(
+      "click",
+      function(event) {
+
+        if (played) {
+          return;
+        }
+
+
+        if (
+          event.target.id ===
+          "voiceButton"
+        ) {
+
+          played = true;
+
+          return;
+
+        }
+
+
+        played = true;
+
+        speakMessage();
+
+      },
+      { once: true }
+    );
+
+
+    /*
+      Create a temporary Zemivo ID
+      for the current browser.
+    */
+
+    let zemivoId =
+      localStorage.getItem(
+        "zemivoUserId"
+      );
+
+
+    if (!zemivoId) {
+
+      const randomNumber =
+        Math.floor(
+          100000 + Math.random() * 900000
+        );
+
+      zemivoId =
+        "ZMV-" + randomNumber;
+
+      localStorage.setItem(
+        "zemivoUserId",
+        zemivoId
+      );
+
+    }
+
+
+    document.getElementById(
+      "zemivoId"
+    ).textContent =
+      zemivoId;
+
+
+  </script>
+
 </body>
 </html>
