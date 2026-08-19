@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Zemivo Home</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f4f6f8;
+      color: #222;
+      padding-bottom: 80px;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: white;
+      padding: 13px 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 2px 8px rgba(0,0,0,.08);
+    }
+
+    .logo {
+      font-size: 27px;
+      font-weight: bold;
+      color: #2563eb;
+    }
+
+    .top-actions {
+      display: flex;
+      gap: 8px;
+    }
+
+    .top-actions button {
+      border: none;
+      background: #eef2ff;
+      padding: 9px 12px;
+      border-radius: 20px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    .container {
+      max-width: 850px;
+      margin: 22px auto;
+      padding: 0 15px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 18px;
+      padding: 20px;
+      margin-bottom: 18px;
+      box-shadow: 0 3px 12px rgba(0,0,0,.06);
+    }
+
+    .welcome h2 {
+      margin: 0 0 8px;
+    }
+
+    .welcome p {
+      margin: 0;
+      color: #666;
+      line-height: 1.5;
+    }
+
+    .user-email {
+      margin-top: 12px;
+      color: #2563eb;
+      font-size: 14px;
+      word-break: break-word;
+    }
+
+    .post-input {
+      width: 100%;
+      min-height: 100px;
+      resize: vertical;
+      border: 1px solid #ddd;
+      border-radius: 12px;
+      padding: 14px;
+      font-size: 16px;
+      outline: none;
+    }
+
+    .post-input:focus {
+      border-color: #2563eb;
+    }
+
+    .post-row {
+      display: flex;
+      justify-content: flex-end;
+      margin-top: 12px;
+    }
+
+    .post-button {
+      border: none;
+      background: #2563eb;
+      color: white;
+      padding: 12px 22px;
+      border-radius: 24px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .post-button:disabled {
+      opacity: .6;
+      cursor: not-allowed;
+    }
+
+    .section-title {
+      font-size: 21px;
+      font-weight: bold;
+      margin: 20px 0 12px;
+    }
+
+    .post {
+      background: white;
+      border-radius: 18px;
+      padding: 18px;
+      margin-bottom: 16px;
+      box-shadow: 0 3px 12px rgba(0,0,0,.06);
+    }
+
+    .post-header {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+    }
+
+    .avatar {
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      background: #2563eb;
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-weight: bold;
+      font-size: 20px;
+    }
+
+    .post-name {
+      font-weight: bold;
+    }
+
+    .post-time {
+      color: #777;
+      font-size: 12px;
+      margin-top: 3px;
+    }
+
+    .post-text {
+      margin: 16px 0;
+      line-height: 1.6;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    .post-buttons {
+      border-top: 1px solid #eee;
+      padding-top: 10px;
+      display: flex;
+      justify-content: space-around;
+    }
+
+    .post-buttons button {
+      border: none;
+      background: transparent;
+      padding: 8px 12px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .post-buttons button:hover {
+      background: #f1f5f9;
+    }
+
+    .empty {
+      text-align: center;
+      color: #777;
+      padding: 20px;
+    }
+
+    .loading {
+      text-align: center;
+      padding: 35px;
+      color: #666;
+    }
+
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 200;
+      background: white;
+      display: flex;
+      justify-content: space-around;
+      padding: 9px 4px;
+      box-shadow: 0 -2px 10px rgba(0,0,0,.08);
+    }
+
+    .nav-item {
+      text-decoration: none;
+      color: #555;
+      text-align: center;
+      font-size: 11px;
+      font-weight: bold;
+    }
+
+    .nav-item span {
+      display: block;
+      font-size: 20px;
+      margin-bottom: 2px;
+    }
+
+    .nav-item.active {
+      color: #2563eb;
+    }
+
+    @media (max-width: 600px) {
+      .logo {
+        font-size: 23px;
+      }
+
+      .container {
+        margin-top: 15px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header class="topbar">
+
+    <div class="logo">
+      Zemivo
+    </div>
+
+    <div class="top-actions">
+
+      <button onclick="openPage('search.html')">
+        🔍
+      </button>
+
+      <button onclick="openPage('notifications.html')">
+        🔔
+      </button>
+
+    </div>
+
+  </header>
+
+
+  <main class="container">
+
+    <section class="card welcome">
+
+      <h2 id="welcomeTitle">
+        Welcome to Zemivo 🌍
+      </h2>
+
+      <p>
+        Connect, discover and share with people around the world.
+      </p>
+
+      <div
+        class="user-email"
+        id="userEmail"
+      >
+        Checking your account...
+      </div>
+
+    </section>
+
+
+    <section class="card">
+
+      <textarea
+        id="postInput"
+        class="post-input"
+        placeholder="What's on your mind?"
+      ></textarea>
+
+      <div class="post-row">
+
+        <button
+          id="postButton"
+          class="post-button"
+        >
+          Create Post
+        </button>
+
+      </div>
+
+    </section>
+
+
+    <div class="section-title">
+      🌍 Zemivo Feed
+    </div>
+
+
+    <div id="feed">
+
+      <div class="loading">
+        Loading posts...
+      </div>
+
+    </div>
+
+  </main>
+
+
+  <nav class="bottom-nav">
+
+    <a
+      class="nav-item active"
+      href="home.html"
+    >
+      <span>🏠</span>
+      Home
+    </a>
+
+    <a
+      class="nav-item"
+      href="messenger.html"
+    >
+      <span>💬</span>
+      Messenger
+    </a>
+
+    <a
+      class="nav-item"
+      href="notifications.html"
+    >
+      <span>🔔</span>
+      Alerts
+    </a>
+
+    <a
+      class="nav-item"
+      href="profile.html"
+    >
+      <span>👤</span>
+      Profile
+    </a>
+
+    <a
+      class="nav-item"
+      href="settings.html"
+    >
+      <span>⚙️</span>
+      Settings
+    </a>
+
+  </nav>
+
+
+  <script type="module">
+
+    import {
+      initializeApp
+    } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
+
+
+    import {
+      getAuth,
+      onAuthStateChanged
+    } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
+
+
+    /*
+      Firebase Web Configuration
+    */
+
+    const firebaseConfig = {
+
+      apiKey:
+        "AIzaSyAxJUFBWm2fa0g3oxUWWqdfSTEAc-bRgfI",
+
+      authDomain:
+        "zemivo.firebaseapp.com",
+
+      projectId:
+        "zemivo",
+
+      storageBucket:
+        "zemivo.firebasestorage.app",
+
+      messagingSenderId:
+        "195335939691",
+
+      appId:
+        "1:195335939691:web:5fa5c62c53d0c0aefe732e",
+
+      measurementId:
+        "G-GNHH5S4H09"
+
+    };
+
+
+    const app =
+      initializeApp(firebaseConfig);
+
+
+    const auth =
+      getAuth(app);
+
+
+    const userEmail =
+      document.getElementById("userEmail");
+
+
+    const postInput =
+      document.getElementById("postInput");
+
+
+    const postButton =
+      document.getElementById("postButton");
+
+
+    const feed =
+      document.getElementById("feed");
+
+
+    /*
+      Login user check
+    */
+
+    onAuthStateChanged(
+      auth,
+      function(user) {
+
+        if (!user) {
+
+          window.location.href =
+            "login.html";
+
+          return;
+
+        }
+
+
+        userEmail.textContent =
+          "Logged in as: " +
+          (user.email || "Zemivo User");
+
+
+        const name =
+          user.email
+            ? user.email.split("@")[0]
+            : "User";
+
+
+        document.getElementById(
+          "welcomeTitle"
+        ).textContent =
+          "Welcome, " +
+          name +
+          " 🌍";
+
+
+        loadDemoPost(user);
+
+      }
+    );
+
+
+    /*
+      প্রথম Home version-এর
+      Demo Post.
+    */
+
+    function loadDemoPost(user) {
+
+      feed.innerHTML = "";
+
+
+      const post =
+        document.createElement("article");
+
+
+      post.className = "post";
+
+
+      post.innerHTML = `
+
+        <div class="post-header">
+
+          <div class="avatar">
+            Z
+          </div>
+
+          <div>
+
+            <div class="post-name">
+              Zemivo
+            </div>
+
+            <div class="post-time">
+              Welcome Post
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <div class="post-text">
+          Welcome to Zemivo! 🌍
+
+          A new social platform where people
+          from different countries can connect,
+          share ideas and build new communities.
+        </div>
+
+
+        <div class="post-buttons">
+
+          <button
+            onclick="likePost(this)"
+          >
+            👍 Like
+          </button>
+
+          <button
+            onclick="commentPost()"
+          >
+            💬 Comment
+          </button>
+
+          <button
+            onclick="sharePost()"
+          >
+            🔗 Share
+          </button>
+
+        </div>
+
+      `;
+
+
+      feed.appendChild(post);
+
+    }
+
+
+    /*
+      Create Post-এর প্রথম
+      frontend version.
+    */
+
+    postButton.addEventListener(
+      "click",
+      function() {
+
+        const text =
+          postInput.value.trim();
+
+
+        if (!text) {
+
+          alert(
+            "Please write something first."
+          );
+
+          return;
+
+        }
+
+
+        const post =
+          document.createElement("article");
+
+
+        post.className = "post";
+
+
+        post.innerHTML = `
+
+          <div class="post-header">
+
+            <div class="avatar">
+              U
+            </div>
+
+            <div>
+
+              <div class="post-name">
+                You
+              </div>
+
+              <div class="post-time">
+                Just now
+              </div>
+
+            </div>
+
+          </div>
+
+
+          <div class="post-text"></div>
+
+
+          <div class="post-buttons">
+
+            <button
+              class="like-button"
+            >
+              👍 Like
+            </button>
+
+            <button
+              class="comment-button"
+            >
+              💬 Comment
+            </button>
+
+            <button
+              class="share-button"
+            >
+              🔗 Share
+            </button>
+
+          </div>
+
+        `;
+
+
+        post.querySelector(
+          ".post-text"
+        ).textContent = text;
+
+
+        post.querySelector(
+          ".like-button"
+        ).addEventListener(
+          "click",
+          function() {
+
+            likePost(this);
+
+          }
+        );
+
+
+        post.querySelector(
+          ".comment-button"
+        ).addEventListener(
+          "click",
+          commentPost
+        );
+
+
+        post.querySelector(
+          ".share-button"
+        ).addEventListener(
+          "click",
+          sharePost
+        );
+
+
+        feed.prepend(post);
+
+
+        postInput.value = "";
+
+      }
+    );
+
+
+    /*
+      Like
+    */
+
+    window.likePost =
+      function(button) {
+
+        button.textContent =
+          "❤️ Liked";
+
+      };
+
+
+    /*
+      Comment
+    */
+
+    window.commentPost =
+      function() {
+
+        alert(
+          "Firebase Comment System will be connected in the next step."
+        );
+
+      };
+
+
+    /*
+      Share
+    */
+
+    window.sharePost =
+      function() {
+
+        if (
+          navigator.share
+        ) {
+
+          navigator.share({
+
+            title:
+              "Zemivo",
+
+            text:
+              "Check this post on Zemivo."
+
+          });
+
+        } else {
+
+          alert(
+            "Share system will be connected next."
+          );
+
+        }
+
+      };
+
+
+    /*
+      Navigation
+    */
+
+    window.openPage =
+      function(page) {
+
+        window.location.href =
+          page;
+
+      };
+
+  </script>
+
+</body>
+</html>
