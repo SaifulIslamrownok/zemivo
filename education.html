@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Zemivo Education</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      background: #f4f7fb;
+      color: #172033;
+    }
+
+    .header {
+      background: #111827;
+      color: white;
+      padding: 18px;
+      text-align: center;
+    }
+
+    .header h1 {
+      font-size: 25px;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: auto;
+      padding: 20px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 18px;
+      padding: 20px;
+      margin-bottom: 18px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+    }
+
+    .card h2,
+    .card h3 {
+      margin-bottom: 12px;
+    }
+
+    input,
+    select {
+      width: 100%;
+      padding: 12px;
+      margin: 7px 0 12px;
+      border: 1px solid #d5dbe5;
+      border-radius: 10px;
+      font-size: 15px;
+    }
+
+    button {
+      border: none;
+      border-radius: 10px;
+      padding: 11px 15px;
+      cursor: pointer;
+      font-weight: bold;
+      margin: 4px;
+    }
+
+    .create {
+      background: #2563eb;
+      color: white;
+    }
+
+    .edit {
+      background: #f59e0b;
+      color: white;
+    }
+
+    .delete {
+      background: #dc2626;
+      color: white;
+    }
+
+    .archive {
+      background: #64748b;
+      color: white;
+    }
+
+    .folder {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 14px;
+      padding: 15px;
+      margin-top: 12px;
+    }
+
+    .branch {
+      background: white;
+      border-left: 4px solid #2563eb;
+      padding: 12px;
+      margin: 10px 0;
+      border-radius: 8px;
+    }
+
+    .member {
+      display: inline-block;
+      background: #eef2ff;
+      padding: 7px 11px;
+      border-radius: 20px;
+      margin: 4px;
+      font-size: 13px;
+    }
+
+    .private {
+      color: #16a34a;
+      font-weight: bold;
+    }
+
+    .empty {
+      color: #64748b;
+      font-size: 14px;
+    }
+
+    .top-info {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 12px;
+      margin-top: 15px;
+    }
+
+    .info-box {
+      background: #f8fafc;
+      padding: 15px;
+      border-radius: 12px;
+      text-align: center;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="header">
+    <h1>📚 Zemivo Education</h1>
+    <p>School • Class • Branch • Students • Teachers</p>
+  </div>
+
+  <div class="container">
+
+    <!-- SCHOOL -->
+    <div class="card">
+
+      <h2>🏫 School Information</h2>
+
+      <input
+        type="text"
+        id="schoolName"
+        placeholder="School-এর নাম লিখুন"
+      >
+
+      <input
+        type="text"
+        id="schoolCode"
+        placeholder="School Code"
+      >
+
+      <button class="create" onclick="saveSchool()">
+        💾 Save School
+      </button>
+
+      <div class="top-info">
+
+        <div class="info-box">
+          <b id="schoolDisplay">
+            School Not Added
+          </b>
+          <p>School</p>
+        </div>
+
+        <div class="info-box">
+          <b id="classCount">0</b>
+          <p>Classes</p>
+        </div>
+
+        <div class="info-box">
+          <b id="memberCount">0</b>
+          <p>Members</p>
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- CREATE CLASS -->
+    <div class="card">
+
+      <h2>📚 Create Class</h2>
+
+      <input
+        type="text"
+        id="className"
+        placeholder="যেমন: Class 7"
+      >
+
+      <button class="create" onclick="createClass()">
+        ➕ Create Class
+      </button>
+
+    </div>
+
+
+    <!-- CLASS LIST -->
+    <div class="card">
+
+      <h2>📁 Classes & Branches</h2>
+
+      <div id="classList">
+
+        <p class="empty">
+          এখনো কোনো Class তৈরি করা হয়নি।
+        </p>
+
+      </div>
+
+    </div>
+
+
+    <!-- MEMBER -->
+    <div class="card">
+
+      <h2>👥 Add Member</h2>
+
+      <input
+        type="text"
+        id="memberName"
+        placeholder="Student / Teacher-এর নাম"
+      >
+
+      <select id="memberType">
+
+        <option value="Student">
+          🎓 Student
+        </option>
+
+        <option value="Teacher">
+          👨‍🏫 Teacher
+        </option>
+
+        <option value="Admin">
+          🛡️ Admin
+        </option>
+
+      </select>
+
+      <button class="create" onclick="addMember()">
+        ➕ Add Member
+      </button>
+
+      <p class="empty">
+        ভবিষ্যতে Firebase Authentication-এর মাধ্যমে
+        শুধু অনুমোদিত account-ই Member হতে পারবে।
+      </p>
+
+    </div>
+
+
+    <!-- PERMISSION -->
+    <div class="card">
+
+      <h2>🔐 Folder Permission</h2>
+
+      <p>
+        <span class="private">
+          🔒 Private Folder
+        </span>
+      </p>
+
+      <br>
+
+      <p>
+        শুধুমাত্র অনুমোদিত Student, Teacher অথবা Admin
+        এই Folder দেখতে পারবে।
+      </p>
+
+      <br>
+
+      <p>
+        👑 Folder Creator/Admin →
+        Member Add / Edit / Archive / Delete করতে পারবে।
+      </p>
+
+    </div>
+
+  </div>
+
+
+<script>
+
+  let classes = [];
+
+  let members = [];
+
+  let school = {
+    name: "",
+    code: ""
+  };
+
+
+  /* SCHOOL */
+
+  function saveSchool() {
+
+    const name =
+      document.getElementById("schoolName").value.trim();
+
+    const code =
+      document.getElementById("schoolCode").value.trim();
+
+    if (!name) {
+
+      alert("School-এর নাম দিন");
+
+      return;
+    }
+
+    school.name = name;
+
+    school.code = code;
+
+    document.getElementById("schoolDisplay").textContent =
+      name;
+
+    alert("School successfully saved");
+
+  }
+
+
+  /* CREATE CLASS */
+
+  function createClass() {
+
+    const className =
+      document.getElementById("className").value.trim();
+
+    if (!className) {
+
+      alert("Class-এর নাম লিখুন");
+
+      return;
+    }
+
+    const newClass = {
+
+      id: Date.now(),
+
+      name: className,
+
+      branches: []
+
+    };
+
+    classes.push(newClass);
+
+    document.getElementById("className").value = "";
+
+    renderClasses();
+
+  }
+
+
+  /* CREATE BRANCH */
+
+  function createBranch(classId) {
+
+    const branchName =
+      prompt("Branch-এর নাম লিখুন। যেমন: ক শাখা");
+
+    if (!branchName) return;
+
+    const selectedClass =
+      classes.find(c => c.id === classId);
+
+    if (!selectedClass) return;
+
+    selectedClass.branches.push({
+
+      id: Date.now(),
+
+      name: branchName,
+
+      members: [],
+
+      archived: false
+
+    });
+
+    renderClasses();
+
+  }
+
+
+  /* ADD MEMBER */
+
+  function addMember() {
+
+    const name =
+      document.getElementById("memberName").value.trim();
+
+    const type =
+      document.getElementById("memberType").value;
+
+    if (!name) {
+
+      alert("Member-এর নাম দিন");
+
+      return;
+    }
+
+    members.push({
+
+      name: name,
+
+      type: type
+
+    });
+
+    document.getElementById("memberName").value = "";
+
+    document.getElementById("memberCount").textContent =
+      members.length;
+
+    alert(name + " successfully added");
+
+  }
+
+
+  /* ARCHIVE BRANCH */
+
+  function archiveBranch(classId, branchId) {
+
+    const selectedClass =
+      classes.find(c => c.id === classId);
+
+    if (!selectedClass) return;
+
+    const branch =
+      selectedClass.branches.find(
+        b => b.id === branchId
+      );
+
+    if (!branch) return;
+
+    branch.archived = !branch.archived;
+
+    renderClasses();
+
+  }
+
+
+  /* DELETE CLASS */
+
+  function deleteClass(classId) {
+
+    const confirmDelete =
+      confirm(
+        "এই Class এবং এর Branch মুছে ফেলতে চান?"
+      );
+
+    if (!confirmDelete) return;
+
+    classes =
+      classes.filter(c => c.id !== classId);
+
+    renderClasses();
+
+  }
+
+
+  /* RENDER */
+
+  function renderClasses() {
+
+    const container =
+      document.getElementById("classList");
+
+    container.innerHTML = "";
+
+    if (classes.length === 0) {
+
+      container.innerHTML =
+        '<p class="empty">এখনো কোনো Class তৈরি হয়নি।</p>';
+
+      document.getElementById("classCount").textContent = 0;
+
+      return;
+
+    }
+
+
+    classes.forEach(classItem => {
+
+      const classDiv =
+        document.createElement("div");
+
+      classDiv.className = "folder";
+
+      classDiv.innerHTML = `
+
+        <h3>
+          📁 ${classItem.name}
+        </h3>
+
+        <button
+          class="create"
+          onclick="createBranch(${classItem.id})">
+          ➕ Add Branch
+        </button>
+
+        <button
+          class="delete"
+          onclick="deleteClass(${classItem.id})">
+          🗑️ Delete Class
+        </button>
+
+      `;
+
+
+      classItem.branches.forEach(branch => {
+
+        const branchDiv =
+          document.createElement("div");
+
+        branchDiv.className = "branch";
+
+
+        branchDiv.innerHTML = `
+
+          <b>
+            📂 ${branch.name}
+          </b>
+
+          ${
+            branch.archived
+            ? '<span class="empty"> — ARCHIVED</span>'
+            : ''
+          }
+
+          <br>
+
+          <button
+            class="archive"
+            onclick="archiveBranch(
+              ${classItem.id},
+              ${branch.id}
+            )">
+
+            ${
+              branch.archived
+              ? "♻️ Restore"
+              : "📦 Archive"
+            }
+
+          </button>
+
+          <div>
+
+            ${
+              branch.members.length
+              ? branch.members
+                  .map(
+                    m =>
+                    `<span class="member">
+                      ${m.name} (${m.type})
+                    </span>`
+                  )
+                  .join("")
+              : '<span class="empty">No members yet</span>'
+            }
+
+          </div>
+
+        `;
+
+
+        classDiv.appendChild(branchDiv);
+
+      });
+
+
+      container.appendChild(classDiv);
+
+    });
+
+
+    document.getElementById("classCount").textContent =
+      classes.length;
+
+  }
+
+</script>
+
+</body>
+</html>
