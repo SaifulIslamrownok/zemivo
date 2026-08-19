@@ -3,7 +3,6 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
   <title>Zemivo Home</title>
 
   <style>
@@ -118,6 +117,20 @@
       cursor: not-allowed;
     }
 
+    .status {
+      margin-top: 10px;
+      text-align: center;
+      font-size: 14px;
+    }
+
+    .success {
+      color: #15803d;
+    }
+
+    .error {
+      color: #dc2626;
+    }
+
     .section-title {
       font-size: 21px;
       font-weight: bold;
@@ -188,16 +201,16 @@
       background: #f1f5f9;
     }
 
-    .empty {
-      text-align: center;
-      color: #777;
-      padding: 20px;
-    }
-
     .loading {
       text-align: center;
       padding: 35px;
       color: #666;
+    }
+
+    .empty {
+      text-align: center;
+      color: #777;
+      padding: 25px;
     }
 
     .bottom-nav {
@@ -307,6 +320,11 @@
 
       </div>
 
+      <div
+        id="status"
+        class="status"
+      ></div>
+
     </section>
 
 
@@ -373,20 +391,38 @@
 
   <script type="module">
 
+    /* ==============================
+       FIREBASE
+       ============================== */
+
     import {
       initializeApp
-    } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
+    } from
+    "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
 
 
     import {
       getAuth,
       onAuthStateChanged
-    } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
+    } from
+    "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
 
 
-    /*
-      Firebase Web Configuration
-    */
+    import {
+      getFirestore,
+      collection,
+      addDoc,
+      query,
+      orderBy,
+      onSnapshot,
+      serverTimestamp
+    } from
+    "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
+
+
+    /* ==============================
+       FIREBASE CONFIG
+       ============================== */
 
     const firebaseConfig = {
 
@@ -414,6 +450,10 @@
     };
 
 
+    /* ==============================
+       INITIALIZE
+       ============================== */
+
     const app =
       initializeApp(firebaseConfig);
 
@@ -422,25 +462,56 @@
       getAuth(app);
 
 
+    const db =
+      getFirestore(app);
+
+
+    /* ==============================
+       ELEMENTS
+       ============================== */
+
     const userEmail =
-      document.getElementById("userEmail");
+      document.getElementById(
+        "userEmail"
+      );
+
+
+    const welcomeTitle =
+      document.getElementById(
+        "welcomeTitle"
+      );
 
 
     const postInput =
-      document.getElementById("postInput");
+      document.getElementById(
+        "postInput"
+      );
 
 
     const postButton =
-      document.getElementById("postButton");
+      document.getElementById(
+        "postButton"
+      );
 
 
     const feed =
-      document.getElementById("feed");
+      document.getElementById(
+        "feed"
+      );
 
 
-    /*
-      Login user check
-    */
+    const status =
+      document.getElementById(
+        "status"
+      );
+
+
+    let currentUser = null;
+
+
+    /* ==============================
+       AUTH CHECK
+       ============================== */
 
     onAuthStateChanged(
       auth,
@@ -456,64 +527,283 @@
         }
 
 
+        currentUser = user;
+
+
+        const email =
+          user.email || "Zemivo User";
+
+
         userEmail.textContent =
-          "Logged in as: " +
-          (user.email || "Zemivo User");
+          "Logged in as: " + email;
 
 
-        const name =
-          user.email
-            ? user.email.split("@")[0]
-            : "User";
+        let name =
+          email.split("@")[0];
 
 
-        document.getElementById(
-          "welcomeTitle"
-        ).textContent =
+        name =
+          name.replace(
+            /[._-]/g,
+            " "
+          );
+
+
+        name =
+          name.replace(
+            /\b\w/g,
+            function(letter) {
+              return letter.toUpperCase();
+            }
+          );
+
+
+        welcomeTitle.textContent =
           "Welcome, " +
           name +
           " 🌍";
 
 
-        loadDemoPost(user);
+        loadPosts();
 
       }
     );
 
 
-    /*
-      প্রথম Home version-এর
-      Demo Post.
-    */
+    /* ==============================
+       CREATE POST
+       ============================== */
 
-    function loadDemoPost(user) {
+    postButton.addEventListener(
+      "click",
+      async function() {
 
-      feed.innerHTML = "";
+        if (!currentUser) {
+
+          showStatus(
+            "Please login first.",
+            "error"
+          );
+
+          return;
+
+        }
 
 
-      const post =
-        document.createElement("article");
+        const text =
+          postInput.value.trim();
 
 
-      post.className = "post";
+        if (!text) {
+
+          showStatus(
+            "Please write something first.",
+            "error"
+          );
+
+          return;
+
+        }
 
 
-      post.innerHTML = `
+        postButton.disabled = true;
+
+        postButton.textContent =
+          "Saving...";
+
+
+        try {
+
+          await addDoc(
+            collection(
+              db,
+              "posts"
+            ),
+            {
+
+              text: text,
+
+              userId:
+                currentUser.uid,
+
+              email:
+                currentUser.email || "",
+
+              createdAt:
+                serverTimestamp()
+
+            }
+          );
+
+
+          postInput.value = "";
+
+
+          showStatus(
+            "Post saved successfully! ✅",
+            "success"
+          );
+
+
+        } catch (error) {
+
+          console.error(
+            "Post save error:",
+            error
+          );
+
+
+          showStatus(
+            "Post could not be saved. Check Firestore settings.",
+            "error"
+          );
+
+        }
+
+
+        postButton.disabled = false;
+
+        postButton.textContent =
+          "Create Post";
+
+      }
+    );
+
+
+    /* ==============================
+       LOAD POSTS
+       ============================== */
+
+    function loadPosts() {
+
+      const postsQuery =
+        query(
+          collection(
+            db,
+            "posts"
+          ),
+          orderBy(
+            "createdAt",
+            "desc"
+          )
+        );
+
+
+      onSnapshot(
+        postsQuery,
+        function(snapshot) {
+
+          feed.innerHTML = "";
+
+
+          if (
+            snapshot.empty
+          ) {
+
+            feed.innerHTML =
+              '<div class="empty">' +
+              'No posts yet. Be the first to post! 🌍' +
+              '</div>';
+
+            return;
+
+          }
+
+
+          snapshot.forEach(
+            function(doc) {
+
+              const post =
+                doc.data();
+
+
+              displayPost(
+                post
+              );
+
+            }
+          );
+
+        },
+
+        function(error) {
+
+          console.error(
+            "Feed error:",
+            error
+          );
+
+
+          feed.innerHTML =
+            '<div class="empty">' +
+            'Unable to load posts. Please check Firestore rules.' +
+            '</div>';
+
+        }
+      );
+
+    }
+
+
+    /* ==============================
+       DISPLAY POST
+       ============================== */
+
+    function displayPost(post) {
+
+      const article =
+        document.createElement(
+          "article"
+        );
+
+
+      article.className =
+        "post";
+
+
+      let name =
+        post.email
+          ? post.email.split("@")[0]
+          : "Zemivo User";
+
+
+      name =
+        name.replace(
+          /[._-]/g,
+          " "
+        );
+
+
+      name =
+        name.replace(
+          /\b\w/g,
+          function(letter) {
+            return letter.toUpperCase();
+          }
+        );
+
+
+      const avatarLetter =
+        name.charAt(0)
+          .toUpperCase() || "Z";
+
+
+      article.innerHTML = `
 
         <div class="post-header">
 
           <div class="avatar">
-            Z
+            ${escapeHTML(avatarLetter)}
           </div>
 
           <div>
 
             <div class="post-name">
-              Zemivo
+              ${escapeHTML(name)}
             </div>
 
             <div class="post-time">
-              Welcome Post
+              Zemivo User
             </div>
 
           </div>
@@ -522,11 +812,7 @@
 
 
         <div class="post-text">
-          Welcome to Zemivo! 🌍
-
-          A new social platform where people
-          from different countries can connect,
-          share ideas and build new communities.
+          ${escapeHTML(post.text || "")}
         </div>
 
 
@@ -555,138 +841,70 @@
       `;
 
 
-      feed.appendChild(post);
+      feed.appendChild(
+        article
+      );
 
     }
 
 
-    /*
-      Create Post-এর প্রথম
-      frontend version.
-    */
+    /* ==============================
+       SAFE TEXT
+       ============================== */
 
-    postButton.addEventListener(
-      "click",
-      function() {
+    function escapeHTML(text) {
 
-        const text =
-          postInput.value.trim();
-
-
-        if (!text) {
-
-          alert(
-            "Please write something first."
-          );
-
-          return;
-
-        }
-
-
-        const post =
-          document.createElement("article");
-
-
-        post.className = "post";
-
-
-        post.innerHTML = `
-
-          <div class="post-header">
-
-            <div class="avatar">
-              U
-            </div>
-
-            <div>
-
-              <div class="post-name">
-                You
-              </div>
-
-              <div class="post-time">
-                Just now
-              </div>
-
-            </div>
-
-          </div>
-
-
-          <div class="post-text"></div>
-
-
-          <div class="post-buttons">
-
-            <button
-              class="like-button"
-            >
-              👍 Like
-            </button>
-
-            <button
-              class="comment-button"
-            >
-              💬 Comment
-            </button>
-
-            <button
-              class="share-button"
-            >
-              🔗 Share
-            </button>
-
-          </div>
-
-        `;
-
-
-        post.querySelector(
-          ".post-text"
-        ).textContent = text;
-
-
-        post.querySelector(
-          ".like-button"
-        ).addEventListener(
-          "click",
-          function() {
-
-            likePost(this);
-
-          }
+      const div =
+        document.createElement(
+          "div"
         );
 
 
-        post.querySelector(
-          ".comment-button"
-        ).addEventListener(
-          "click",
-          commentPost
-        );
+      div.textContent =
+        text;
 
 
-        post.querySelector(
-          ".share-button"
-        ).addEventListener(
-          "click",
-          sharePost
-        );
+      return div.innerHTML;
+
+    }
 
 
-        feed.prepend(post);
+    /* ==============================
+       STATUS
+       ============================== */
+
+    function showStatus(
+      message,
+      type
+    ) {
+
+      status.textContent =
+        message;
 
 
-        postInput.value = "";
-
-      }
-    );
+      status.className =
+        "status " + type;
 
 
-    /*
-      Like
-    */
+      setTimeout(
+        function() {
+
+          status.textContent =
+            "";
+
+          status.className =
+            "status";
+
+        },
+        4000
+      );
+
+    }
+
+
+    /* ==============================
+       LIKE
+       ============================== */
 
     window.likePost =
       function(button) {
@@ -697,23 +915,23 @@
       };
 
 
-    /*
-      Comment
-    */
+    /* ==============================
+       COMMENT
+       ============================== */
 
     window.commentPost =
       function() {
 
         alert(
-          "Firebase Comment System will be connected in the next step."
+          "Comment system will be connected next."
         );
 
       };
 
 
-    /*
-      Share
-    */
+    /* ==============================
+       SHARE
+       ============================== */
 
     window.sharePost =
       function() {
@@ -743,9 +961,9 @@
       };
 
 
-    /*
-      Navigation
-    */
+    /* ==============================
+       NAVIGATION
+       ============================== */
 
     window.openPage =
       function(page) {
