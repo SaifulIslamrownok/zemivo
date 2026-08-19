@@ -1,1194 +1,1760 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Zemivo Home</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zemivo Home</title>
 
-  <style>
-    * {
-      box-sizing: border-box;
-    }
-
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #f4f6f8;
-      color: #222;
-      padding-bottom: 80px;
-    }
-
-    .topbar {
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      background: white;
-      padding: 13px 18px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      box-shadow: 0 2px 8px rgba(0,0,0,.08);
-    }
-
-    .logo {
-      font-size: 27px;
-      font-weight: bold;
-      color: #2563eb;
-    }
-
-    .top-actions {
-      display: flex;
-      gap: 8px;
-    }
-
-    .top-actions button {
-      border: none;
-      background: #eef2ff;
-      padding: 9px 12px;
-      border-radius: 20px;
-      cursor: pointer;
-      font-size: 16px;
-    }
-
-    .container {
-      max-width: 850px;
-      margin: 22px auto;
-      padding: 0 15px;
-    }
-
-    .card {
-      background: white;
-      border-radius: 18px;
-      padding: 20px;
-      margin-bottom: 18px;
-      box-shadow: 0 3px 12px rgba(0,0,0,.06);
-    }
-
-    .welcome h2 {
-      margin: 0 0 8px;
-    }
-
-    .welcome p {
-      margin: 0;
-      color: #666;
-      line-height: 1.5;
-    }
-
-    .user-email {
-      margin-top: 12px;
-      color: #2563eb;
-      font-size: 14px;
-      word-break: break-word;
-    }
-
-    .post-input {
-      width: 100%;
-      min-height: 100px;
-      resize: vertical;
-      border: 1px solid #ddd;
-      border-radius: 12px;
-      padding: 14px;
-      font-size: 16px;
-      outline: none;
-    }
-
-    .post-input:focus {
-      border-color: #2563eb;
-    }
-
-    .post-row {
-      display: flex;
-      justify-content: flex-end;
-      margin-top: 12px;
-    }
-
-    .post-button {
-      border: none;
-      background: #2563eb;
-      color: white;
-      padding: 12px 22px;
-      border-radius: 24px;
-      font-weight: bold;
-      cursor: pointer;
-    }
-
-    .post-button:disabled {
-      opacity: .6;
-      cursor: not-allowed;
-    }
-
-    .status {
-      margin-top: 10px;
-      text-align: center;
-      font-size: 14px;
-    }
-
-    .success {
-      color: #15803d;
-    }
-
-    .error {
-      color: #dc2626;
-    }
-
-    .section-title {
-      font-size: 21px;
-      font-weight: bold;
-      margin: 20px 0 12px;
-    }
-
-    .post {
-      background: white;
-      border-radius: 18px;
-      padding: 18px;
-      margin-bottom: 16px;
-      box-shadow: 0 3px 12px rgba(0,0,0,.06);
-    }
-
-    .post-header {
-      display: flex;
-      align-items: center;
-      gap: 11px;
-    }
-
-    .avatar {
-      width: 46px;
-      height: 46px;
-      border-radius: 50%;
-      background: #2563eb;
-      color: white;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      font-weight: bold;
-      font-size: 20px;
-    }
-
-    .post-name {
-      font-weight: bold;
-    }
-
-    .post-time {
-      color: #777;
-      font-size: 12px;
-      margin-top: 3px;
-    }
-
-    .post-text {
-      margin: 16px 0;
-      line-height: 1.6;
-      white-space: pre-wrap;
-      word-break: break-word;
-    }
-
-    .post-buttons {
-      border-top: 1px solid #eee;
-      padding-top: 10px;
-      display: flex;
-      justify-content: space-around;
-      gap: 4px;
-    }
-
-    .post-buttons button {
-      border: none;
-      background: transparent;
-      padding: 9px 7px;
-      border-radius: 10px;
-      cursor: pointer;
-      font-weight: bold;
-      font-size: 13px;
-      flex: 1;
-    }
-
-    .post-buttons button:hover {
-      background: #f1f5f9;
-    }
-
-    .spark-button {
-      color: #7c3aed;
-    }
-
-    .spark-button.sparked {
-      color: #2563eb;
-      background: #eef2ff;
-    }
-
-    .spark-count {
-      display: block;
-      text-align: center;
-      margin-top: 8px;
-      color: #7c3aed;
-      font-size: 13px;
-      font-weight: bold;
-    }
-
-    .loading {
-      text-align: center;
-      padding: 35px;
-      color: #666;
-    }
-
-    .empty {
-      text-align: center;
-      color: #777;
-      padding: 25px;
-    }
-
-    .bottom-nav {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      z-index: 200;
-      background: white;
-      display: flex;
-      justify-content: space-around;
-      padding: 9px 4px;
-      box-shadow: 0 -2px 10px rgba(0,0,0,.08);
-    }
-
-    .nav-item {
-      text-decoration: none;
-      color: #555;
-      text-align: center;
-      font-size: 11px;
-      font-weight: bold;
-    }
-
-    .nav-item span {
-      display: block;
-      font-size: 20px;
-      margin-bottom: 2px;
-    }
-
-    .nav-item.active {
-      color: #2563eb;
-    }
-
-    @media (max-width: 600px) {
-
-      .logo {
-        font-size: 23px;
-      }
-
-      .container {
-        margin-top: 15px;
-      }
-
-      .post-buttons button {
-        font-size: 12px;
-        padding: 8px 3px;
-      }
-    }
-  </style>
+<style>
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:Arial,sans-serif;
+  background:#f3f5f8;
+  color:#222;
+  padding-bottom:80px
+}
+.topbar{
+  position:sticky;
+  top:0;
+  z-index:100;
+  background:#fff;
+  padding:13px 16px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  box-shadow:0 2px 8px #00000012
+}
+.logo{
+  color:#2563eb;
+  font-size:27px;
+  font-weight:bold
+}
+.top-actions button{
+  border:0;
+  background:#eef2ff;
+  padding:9px 12px;
+  border-radius:20px;
+  font-size:17px
+}
+.container{
+  max-width:850px;
+  margin:20px auto;
+  padding:0 14px
+}
+.card,.post{
+  background:#fff;
+  border-radius:18px;
+  padding:18px;
+  margin-bottom:17px;
+  box-shadow:0 3px 12px #0000000c
+}
+.welcome h2{margin:0 0 7px}
+.welcome p{margin:0;color:#666}
+.user-email{
+  margin-top:10px;
+  color:#2563eb;
+  font-size:14px;
+  word-break:break-word
+}
+.post-input{
+  width:100%;
+  min-height:100px;
+  resize:vertical;
+  border:1px solid #ddd;
+  border-radius:13px;
+  padding:13px;
+  font-size:16px
+}
+.post-row{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-top:10px
+}
+.photo-label{
+  border:1px solid #ddd;
+  padding:9px 13px;
+  border-radius:20px;
+  cursor:pointer;
+  font-size:14px
+}
+.post-button{
+  border:0;
+  background:#2563eb;
+  color:#fff;
+  padding:11px 20px;
+  border-radius:22px;
+  font-weight:bold
+}
+.post-button:disabled{opacity:.6}
+.preview{
+  display:none;
+  margin-top:10px;
+  max-height:250px;
+  max-width:100%;
+  border-radius:13px
+}
+.status{
+  text-align:center;
+  margin-top:10px;
+  font-size:14px
+}
+.success{color:#15803d}
+.error{color:#dc2626}
+.section-title{
+  font-size:21px;
+  font-weight:bold;
+  margin:20px 0 12px
+}
+.post-header{
+  display:flex;
+  align-items:center;
+  gap:10px
+}
+.avatar{
+  width:45px;
+  height:45px;
+  border-radius:50%;
+  background:#2563eb;
+  color:white;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  font-weight:bold
+}
+.post-name{font-weight:bold}
+.post-time{
+  color:#777;
+  font-size:12px;
+  margin-top:3px
+}
+.post-text{
+  margin:15px 0;
+  line-height:1.6;
+  white-space:pre-wrap;
+  word-break:break-word
+}
+.post-image{
+  width:100%;
+  max-height:500px;
+  object-fit:cover;
+  border-radius:14px;
+  margin-bottom:12px
+}
+.post-stats{
+  color:#666;
+  font-size:13px;
+  padding-bottom:9px;
+  border-bottom:1px solid #eee
+}
+.post-buttons{
+  display:flex;
+  gap:3px;
+  padding:8px 0
+}
+.post-buttons button{
+  flex:1;
+  border:0;
+  background:transparent;
+  padding:9px 4px;
+  border-radius:10px;
+  font-weight:bold;
+  font-size:13px
+}
+.post-buttons button:hover{background:#f1f5f9}
+.spark{color:#7c3aed}
+.sparked{color:#2563eb!important;background:#eef2ff!important}
+.comments{
+  border-top:1px solid #eee;
+  padding-top:10px
+}
+.comment-input{
+  display:flex;
+  gap:7px;
+  margin-bottom:10px
+}
+.comment-input input{
+  flex:1;
+  border:1px solid #ddd;
+  border-radius:20px;
+  padding:9px 12px;
+  outline:0
+}
+.comment-input button{
+  border:0;
+  background:#2563eb;
+  color:white;
+  border-radius:20px;
+  padding:8px 14px
+}
+.comment{
+  background:#f4f6f8;
+  border-radius:12px;
+  padding:10px;
+  margin:8px 0
+}
+.comment-name{font-weight:bold;font-size:14px}
+.comment-text{
+  margin-top:5px;
+  white-space:pre-wrap;
+  word-break:break-word
+}
+.comment-actions{
+  display:flex;
+  gap:12px;
+  margin-top:6px
+}
+.comment-actions button{
+  border:0;
+  background:transparent;
+  color:#2563eb;
+  font-size:12px;
+  padding:0
+}
+.reply{
+  margin-left:28px;
+  background:#fff;
+  border-left:3px solid #ddd;
+  padding-left:10px;
+  margin-top:8px
+}
+.reply-box{
+  display:none;
+  margin-top:8px
+}
+.reply-box input{
+  width:100%;
+  border:1px solid #ddd;
+  border-radius:18px;
+  padding:8px 12px
+}
+.edit-box{display:none;margin-top:7px}
+.edit-box input{
+  width:100%;
+  border:1px solid #ddd;
+  border-radius:18px;
+  padding:8px 12px
+}
+.loading,.empty{
+  text-align:center;
+  padding:30px;
+  color:#777
+}
+.bottom-nav{
+  position:fixed;
+  left:0;
+  right:0;
+  bottom:0;
+  z-index:200;
+  background:#fff;
+  display:flex;
+  justify-content:space-around;
+  padding:8px 3px;
+  box-shadow:0 -2px 10px #00000012
+}
+.nav-item{
+  text-decoration:none;
+  color:#555;
+  text-align:center;
+  font-size:11px;
+  font-weight:bold
+}
+.nav-item span{
+  display:block;
+  font-size:20px
+}
+.nav-item.active{color:#2563eb}
+@media(max-width:600px){
+  .post-buttons button{font-size:11px}
+}
+</style>
 </head>
-
 
 <body>
 
-  <header class="topbar">
+<header class="topbar">
+  <div class="logo">Zemivo</div>
 
-    <div class="logo">
-      Zemivo
-    </div>
+  <div class="top-actions">
+    <button onclick="openPage('search.html')">🔍</button>
+    <button onclick="openPage('notifications.html')">🔔</button>
+  </div>
+</header>
 
-    <div class="top-actions">
+<main class="container">
 
-      <button onclick="openPage('search.html')">
-        🔍
-      </button>
+<section class="card welcome">
+  <h2 id="welcomeTitle">Welcome to Zemivo 🌍</h2>
+  <p>Connect, discover and share with people around the world.</p>
+  <div class="user-email" id="userEmail">Checking account...</div>
+</section>
 
-      <button onclick="openPage('notifications.html')">
-        🔔
-      </button>
+<section class="card">
 
-    </div>
+<textarea
+  id="postInput"
+  class="post-input"
+  placeholder="What's on your mind?"
+></textarea>
 
-  </header>
+<img id="preview" class="preview">
+
+<div class="post-row">
+
+<label class="photo-label">
+  🖼️ Photo
+  <input
+    id="photoInput"
+    type="file"
+    accept="image/*"
+    hidden
+  >
+</label>
+
+<button id="postButton" class="post-button">
+  Create Post
+</button>
+
+</div>
+
+<div id="status" class="status"></div>
+
+</section>
+
+<div class="section-title">🌍 Zemivo Feed</div>
+
+<div id="feed">
+  <div class="loading">Loading posts...</div>
+</div>
+
+</main>
+
+<nav class="bottom-nav">
+
+<a class="nav-item active" href="home.html">
+<span>🏠</span>Home
+</a>
+
+<a class="nav-item" href="messenger.html">
+<span>💬</span>Messenger
+</a>
+
+<a class="nav-item" href="notifications.html">
+<span>🔔</span>Alerts
+</a>
+
+<a class="nav-item" href="profile.html">
+<span>👤</span>Profile
+</a>
+
+<a class="nav-item" href="settings.html">
+<span>⚙️</span>Settings
+</a>
+
+</nav>
+
+<script type="module">
+
+import {
+  initializeApp
+} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
+
+import {
+  getAuth,
+  onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
+
+import {
+  getFirestore,
+  collection,
+  addDoc,
+  doc,
+  getDoc,
+  setDoc,
+  deleteDoc,
+  updateDoc,
+  query,
+  orderBy,
+  onSnapshot,
+  serverTimestamp,
+  getCountFromServer
+} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
+
+import {
+  getStorage,
+  ref,
+  uploadBytes,
+  getDownloadURL
+} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-storage.js";
 
 
-  <main class="container">
+/* =========================================
+   FIREBASE CONFIG
+   ========================================= */
 
-    <section class="card welcome">
+const firebaseConfig = {
 
-      <h2 id="welcomeTitle">
-        Welcome to Zemivo 🌍
-      </h2>
+  apiKey:
+    "AIzaSyAxJUFBWm2fa0g3oxUWWqdfSTEAc-bRgfI",
 
-      <p>
-        Connect, discover and share with people around the world.
-      </p>
+  authDomain:
+    "zemivo.firebaseapp.com",
 
-      <div
-        class="user-email"
-        id="userEmail"
-      >
-        Checking your account...
+  projectId:
+    "zemivo",
+
+  storageBucket:
+    "zemivo.firebasestorage.app",
+
+  messagingSenderId:
+    "195335939691",
+
+  appId:
+    "1:195335939691:web:5fa5c62c53d0c0aefe732e",
+
+  measurementId:
+    "G-GNHH5S4H09"
+};
+
+
+/* =========================================
+   INITIALIZE
+   ========================================= */
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+const storage = getStorage(app);
+
+
+/* =========================================
+   ELEMENTS
+   ========================================= */
+
+const feed = document.getElementById("feed");
+const postInput = document.getElementById("postInput");
+const postButton = document.getElementById("postButton");
+const photoInput = document.getElementById("photoInput");
+const preview = document.getElementById("preview");
+const status = document.getElementById("status");
+const userEmail = document.getElementById("userEmail");
+const welcomeTitle = document.getElementById("welcomeTitle");
+
+let currentUser = null;
+
+
+/* =========================================
+   PHOTO PREVIEW
+   ========================================= */
+
+photoInput.addEventListener("change", () => {
+
+  const file = photoInput.files[0];
+
+  if (!file) {
+    preview.style.display = "none";
+    return;
+  }
+
+  preview.src = URL.createObjectURL(file);
+  preview.style.display = "block";
+});
+
+
+/* =========================================
+   AUTH
+   ========================================= */
+
+onAuthStateChanged(auth, user => {
+
+  if (!user) {
+
+    window.location.href = "login.html";
+    return;
+  }
+
+  currentUser = user;
+
+  userEmail.textContent =
+    "Logged in as: " + (user.email || "Zemivo User");
+
+  let name =
+    (user.email || "Zemivo User").split("@")[0];
+
+  name = name.replace(/[._-]/g, " ");
+
+  name = name.replace(
+    /\b\w/g,
+    letter => letter.toUpperCase()
+  );
+
+  welcomeTitle.textContent =
+    "Welcome, " + name + " 🌍";
+
+  loadPosts();
+
+});
+
+
+/* =========================================
+   CREATE POST
+   ========================================= */
+
+postButton.addEventListener("click", async () => {
+
+  if (!currentUser) {
+    showStatus("Please login first.", "error");
+    return;
+  }
+
+  const text = postInput.value.trim();
+  const photo = photoInput.files[0];
+
+  if (!text && !photo) {
+    showStatus(
+      "Write something or select a photo.",
+      "error"
+    );
+    return;
+  }
+
+  postButton.disabled = true;
+  postButton.textContent = "Publishing...";
+
+  try {
+
+    let imageUrl = "";
+
+    if (photo) {
+
+      if (photo.size > 5 * 1024 * 1024) {
+        throw new Error(
+          "Image must be smaller than 5 MB."
+        );
+      }
+
+      const fileName =
+        Date.now() + "_" + photo.name;
+
+      const imageRef =
+        ref(
+          storage,
+          "postImages/" +
+          currentUser.uid +
+          "/" +
+          fileName
+        );
+
+      await uploadBytes(
+        imageRef,
+        photo
+      );
+
+      imageUrl =
+        await getDownloadURL(imageRef);
+    }
+
+
+    await addDoc(
+      collection(db, "posts"),
+      {
+        text: text,
+        imageUrl: imageUrl,
+        userId: currentUser.uid,
+        email: currentUser.email || "",
+        createdAt: serverTimestamp()
+      }
+    );
+
+
+    postInput.value = "";
+    photoInput.value = "";
+    preview.style.display = "none";
+
+    showStatus(
+      "Post published successfully! ✅",
+      "success"
+    );
+
+  }
+
+  catch(error) {
+
+    console.error(error);
+
+    showStatus(
+      error.message ||
+      "Post could not be published.",
+      "error"
+    );
+
+  }
+
+  postButton.disabled = false;
+  postButton.textContent = "Create Post";
+
+});
+
+
+/* =========================================
+   LOAD POSTS
+   ========================================= */
+
+function loadPosts() {
+
+  const q =
+    query(
+      collection(db, "posts"),
+      orderBy("createdAt", "desc")
+    );
+
+  onSnapshot(
+    q,
+    snapshot => {
+
+      feed.innerHTML = "";
+
+      if (snapshot.empty) {
+
+        feed.innerHTML =
+          '<div class="empty">No posts yet. Be the first! 🌍</div>';
+
+        return;
+      }
+
+      snapshot.forEach(postDoc => {
+
+        renderPost(
+          postDoc.id,
+          postDoc.data()
+        );
+
+      });
+
+    },
+
+    error => {
+
+      console.error(error);
+
+      feed.innerHTML =
+        '<div class="empty">Unable to load posts.</div>';
+    }
+  );
+
+}
+
+
+/* =========================================
+   RENDER POST
+   ========================================= */
+
+function renderPost(postId, post) {
+
+  const article =
+    document.createElement("article");
+
+  article.className = "post";
+
+  let name =
+    post.email
+      ? post.email.split("@")[0]
+      : "Zemivo User";
+
+  name = name.replace(/[._-]/g, " ");
+
+  name = name.replace(
+    /\b\w/g,
+    letter => letter.toUpperCase()
+  );
+
+  const avatar =
+    name.charAt(0).toUpperCase() || "Z";
+
+  article.innerHTML = `
+
+    <div class="post-header">
+
+      <div class="avatar">
+        ${safe(avatar)}
       </div>
 
-    </section>
+      <div>
 
+        <div class="post-name">
+          ${safe(name)}
+        </div>
 
-    <section class="card">
+        <div class="post-time">
+          Zemivo User
+        </div>
 
-      <textarea
-        id="postInput"
-        class="post-input"
-        placeholder="What's on your mind?"
-      ></textarea>
+      </div>
 
-      <div class="post-row">
+    </div>
+
+    <div class="post-text">
+      ${safe(post.text || "")}
+    </div>
+
+    ${
+      post.imageUrl
+      ?
+      `<img class="post-image"
+        src="${safe(post.imageUrl)}"
+        alt="Zemivo post image">`
+      :
+      ""
+    }
+
+    <div
+      class="post-stats"
+      id="stats-${postId}"
+    >
+      Loading statistics...
+    </div>
+
+    <div class="post-buttons">
+
+      <button onclick="likePost('${postId}', this)">
+        👍 Like
+      </button>
+
+      <button onclick="toggleComments('${postId}')">
+        💬 Comment
+      </button>
+
+      <button onclick="sharePost('${postId}')">
+        🔗 Share
+      </button>
+
+      <button
+        class="spark"
+        onclick="sparkPost('${postId}', this)"
+      >
+        ✨ Spark
+      </button>
+
+    </div>
+
+    <div
+      class="comments"
+      id="comments-${postId}"
+    >
+      <div class="comment-input">
+
+        <input
+          id="comment-input-${postId}"
+          placeholder="Write a comment..."
+        >
 
         <button
-          id="postButton"
-          class="post-button"
+          onclick="addComment('${postId}')"
         >
-          Create Post
+          Send
         </button>
 
       </div>
 
-      <div
-        id="status"
-        class="status"
-      ></div>
-
-    </section>
-
-
-    <div class="section-title">
-      🌍 Zemivo Feed
-    </div>
-
-
-    <div id="feed">
-
-      <div class="loading">
-        Loading posts...
+      <div id="comment-list-${postId}">
       </div>
 
     </div>
 
-  </main>
+  `;
 
+  feed.appendChild(article);
 
-  <nav class="bottom-nav">
+  loadStats(postId);
 
-    <a
-      class="nav-item active"
-      href="home.html"
-    >
-      <span>🏠</span>
-      Home
-    </a>
+  loadComments(postId);
 
-    <a
-      class="nav-item"
-      href="messenger.html"
-    >
-      <span>💬</span>
-      Messenger
-    </a>
+  registerView(postId);
+}
 
-    <a
-      class="nav-item"
-      href="notifications.html"
-    >
-      <span>🔔</span>
-      Alerts
-    </a>
 
-    <a
-      class="nav-item"
-      href="profile.html"
-    >
-      <span>👤</span>
-      Profile
-    </a>
+/* =========================================
+   COMMENTS
+   ========================================= */
 
-    <a
-      class="nav-item"
-      href="settings.html"
-    >
-      <span>⚙️</span>
-      Settings
-    </a>
+window.addComment = async function(postId) {
 
-  </nav>
+  if (!currentUser) return;
 
+  const input =
+    document.getElementById(
+      "comment-input-" + postId
+    );
 
-  <script type="module">
+  const text = input.value.trim();
 
-    /* =====================================
-       FIREBASE IMPORTS
-       ===================================== */
+  if (!text) return;
 
-    import {
-      initializeApp
-    } from
-    "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
+  try {
 
-
-    import {
-      getAuth,
-      onAuthStateChanged
-    } from
-    "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
-
-
-    import {
-      getFirestore,
-      collection,
-      addDoc,
-      doc,
-      updateDoc,
-      getDoc,
-      query,
-      orderBy,
-      onSnapshot,
-      serverTimestamp,
-      increment,
-      setDoc
-    } from
-    "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
-
-
-    /* =====================================
-       FIREBASE CONFIG
-       ===================================== */
-
-    const firebaseConfig = {
-
-      apiKey:
-        "AIzaSyAxJUFBWm2fa0g3oxUWWqdfSTEAc-bRgfI",
-
-      authDomain:
-        "zemivo.firebaseapp.com",
-
-      projectId:
-        "zemivo",
-
-      storageBucket:
-        "zemivo.firebasestorage.app",
-
-      messagingSenderId:
-        "195335939691",
-
-      appId:
-        "1:195335939691:web:5fa5c62c53d0c0aefe732e",
-
-      measurementId:
-        "G-GNHH5S4H09"
-
-    };
-
-
-    /* =====================================
-       INITIALIZE
-       ===================================== */
-
-    const app =
-      initializeApp(firebaseConfig);
-
-
-    const auth =
-      getAuth(app);
-
-
-    const db =
-      getFirestore(app);
-
-
-    /* =====================================
-       ELEMENTS
-       ===================================== */
-
-    const userEmail =
-      document.getElementById(
-        "userEmail"
-      );
-
-
-    const welcomeTitle =
-      document.getElementById(
-        "welcomeTitle"
-      );
-
-
-    const postInput =
-      document.getElementById(
-        "postInput"
-      );
-
-
-    const postButton =
-      document.getElementById(
-        "postButton"
-      );
-
-
-    const feed =
-      document.getElementById(
-        "feed"
-      );
-
-
-    const status =
-      document.getElementById(
-        "status"
-      );
-
-
-    let currentUser = null;
-
-
-    /* =====================================
-       AUTHENTICATION
-       ===================================== */
-
-    onAuthStateChanged(
-      auth,
-      function(user) {
-
-        if (!user) {
-
-          window.location.href =
-            "login.html";
-
-          return;
-
-        }
-
-
-        currentUser = user;
-
-
-        const email =
-          user.email || "Zemivo User";
-
-
-        userEmail.textContent =
-          "Logged in as: " + email;
-
-
-        let name =
-          email.split("@")[0];
-
-
-        name =
-          name.replace(
-            /[._-]/g,
-            " "
-          );
-
-
-        name =
-          name.replace(
-            /\b\w/g,
-            function(letter) {
-              return letter.toUpperCase();
-            }
-          );
-
-
-        welcomeTitle.textContent =
-          "Welcome, " +
-          name +
-          " 🌍";
-
-
-        loadPosts();
-
+    await addDoc(
+      collection(
+        db,
+        "posts",
+        postId,
+        "comments"
+      ),
+      {
+        text: text,
+        userId: currentUser.uid,
+        email: currentUser.email || "",
+        createdAt: serverTimestamp()
       }
     );
 
+    input.value = "";
 
-    /* =====================================
-       CREATE POST
-       ===================================== */
+  } catch(error) {
 
-    postButton.addEventListener(
-      "click",
-      async function() {
+    console.error(error);
 
-        if (!currentUser) {
-
-          showStatus(
-            "Please login first.",
-            "error"
-          );
-
-          return;
-
-        }
+    showStatus(
+      "Comment could not be added.",
+      "error"
+    );
+  }
+};
 
 
-        const text =
-          postInput.value.trim();
+/* =========================================
+   LOAD COMMENTS
+   ========================================= */
 
+function loadComments(postId) {
 
-        if (!text) {
-
-          showStatus(
-            "Please write something first.",
-            "error"
-          );
-
-          return;
-
-        }
-
-
-        postButton.disabled = true;
-
-        postButton.textContent =
-          "Saving...";
-
-
-        try {
-
-          await addDoc(
-            collection(
-              db,
-              "posts"
-            ),
-            {
-
-              text: text,
-
-              userId:
-                currentUser.uid,
-
-              email:
-                currentUser.email || "",
-
-              createdAt:
-                serverTimestamp(),
-
-              likes:
-                0,
-
-              comments:
-                0,
-
-              shares:
-                0,
-
-              sparks:
-                0
-
-            }
-          );
-
-
-          postInput.value = "";
-
-
-          showStatus(
-            "Post saved successfully! ✅",
-            "success"
-          );
-
-
-        } catch (error) {
-
-          console.error(
-            "Post save error:",
-            error
-          );
-
-
-          showStatus(
-            "Post could not be saved.",
-            "error"
-          );
-
-        }
-
-
-        postButton.disabled = false;
-
-        postButton.textContent =
-          "Create Post";
-
-      }
+  const list =
+    document.getElementById(
+      "comment-list-" + postId
     );
 
+  const q =
+    query(
+      collection(
+        db,
+        "posts",
+        postId,
+        "comments"
+      ),
+      orderBy("createdAt", "asc")
+    );
 
-    /* =====================================
-       LOAD POSTS
-       ===================================== */
+  onSnapshot(q, snapshot => {
 
-    function loadPosts() {
+    list.innerHTML = "";
 
-      const postsQuery =
-        query(
-          collection(
-            db,
-            "posts"
-          ),
-          orderBy(
-            "createdAt",
-            "desc"
-          )
-        );
+    snapshot.forEach(commentDoc => {
 
-
-      onSnapshot(
-        postsQuery,
-        function(snapshot) {
-
-          feed.innerHTML = "";
-
-
-          if (
-            snapshot.empty
-          ) {
-
-            feed.innerHTML =
-              '<div class="empty">' +
-              'No posts yet. Be the first to post! 🌍' +
-              '</div>';
-
-            return;
-
-          }
-
-
-          snapshot.forEach(
-            function(postDoc) {
-
-              const post =
-                postDoc.data();
-
-
-              displayPost(
-                postDoc.id,
-                post
-              );
-
-            }
-          );
-
-        },
-
-        function(error) {
-
-          console.error(
-            "Feed error:",
-            error
-          );
-
-
-          feed.innerHTML =
-            '<div class="empty">' +
-            'Unable to load posts. Please check Firestore rules.' +
-            '</div>';
-
-        }
+      renderComment(
+        postId,
+        commentDoc.id,
+        commentDoc.data(),
+        list
       );
 
-    }
+    });
+
+  });
+
+}
 
 
-    /* =====================================
-       DISPLAY POST
-       ===================================== */
+/* =========================================
+   RENDER COMMENT
+   ========================================= */
 
-    function displayPost(
-      postId,
-      post
-    ) {
+function renderComment(
+  postId,
+  commentId,
+  comment,
+  parent
+) {
 
-      const article =
-        document.createElement(
-          "article"
-        );
+  const box =
+    document.createElement("div");
 
+  box.className = "comment";
 
-      article.className =
-        "post";
+  let name =
+    comment.email
+      ? comment.email.split("@")[0]
+      : "Zemivo User";
 
+  name = name.replace(/[._-]/g, " ");
 
-      let name =
-        post.email
-          ? post.email.split("@")[0]
-          : "Zemivo User";
-
-
-      name =
-        name.replace(
-          /[._-]/g,
-          " "
-        );
+  const mine =
+    currentUser &&
+    comment.userId === currentUser.uid;
 
 
-      name =
-        name.replace(
-          /\b\w/g,
-          function(letter) {
-            return letter.toUpperCase();
-          }
-        );
+  box.innerHTML = `
 
+    <div class="comment-name">
+      ${safe(name)}
+    </div>
 
-      const avatarLetter =
-        name.charAt(0)
-          .toUpperCase() || "Z";
+    <div
+      class="comment-text"
+      id="comment-text-${commentId}"
+    >
+      ${safe(comment.text || "")}
+    </div>
 
+    <div
+      class="edit-box"
+      id="edit-box-${commentId}"
+    >
 
-      const sparkCount =
-        Number(post.sparks || 0);
+      <input
+        id="edit-input-${commentId}"
+        value="${safeAttribute(comment.text || "")}"
+      >
 
+      <button
+        onclick="saveComment('${postId}','${commentId}')"
+      >
+        Save
+      </button>
 
-      article.innerHTML = `
+    </div>
 
-        <div class="post-header">
+    <div class="comment-actions">
 
-          <div class="avatar">
-            ${escapeHTML(avatarLetter)}
-          </div>
+      <button
+        onclick="showReply('${commentId}')"
+      >
+        ↩️ Reply
+      </button>
 
-          <div>
-
-            <div class="post-name">
-              ${escapeHTML(name)}
-            </div>
-
-            <div class="post-time">
-              Zemivo User
-            </div>
-
-          </div>
-
-        </div>
-
-
-        <div class="post-text">
-          ${escapeHTML(post.text || "")}
-        </div>
-
-
-        <div class="post-buttons">
-
-          <button
-            onclick="likePost(this)"
-          >
-            👍 Like
-          </button>
-
-
-          <button
-            onclick="commentPost()"
-          >
-            💬 Comment
-          </button>
-
-
-          <button
-            onclick="sharePost()"
-          >
-            🔗 Share
-          </button>
-
-
-          <button
-            class="spark-button"
-            data-post-id="${postId}"
-            onclick="sparkPost(this)"
-          >
-            ✨ Spark
-          </button>
-
-        </div>
-
-
-        <div
-          class="spark-count"
-          id="spark-count-${postId}"
+      ${
+        mine
+        ?
+        `
+        <button
+          onclick="editComment('${commentId}')"
         >
-          ✨ ${sparkCount} Sparks
-        </div>
+          ✏️ Edit
+        </button>
 
-      `;
+        <button
+          onclick="deleteComment('${postId}','${commentId}')"
+        >
+          🗑️ Delete
+        </button>
+        `
+        :
+        ""
+      }
+
+    </div>
+
+    <div
+      class="reply-box"
+      id="reply-box-${commentId}"
+    >
+
+      <input
+        id="reply-input-${commentId}"
+        placeholder="Write a reply..."
+      >
+
+      <button
+        onclick="addReply('${postId}','${commentId}')"
+      >
+        Reply
+      </button>
+
+    </div>
+
+    <div
+      class="replies"
+      id="replies-${commentId}"
+    ></div>
+
+  `;
+
+  parent.appendChild(box);
+
+  loadReplies(
+    postId,
+    commentId
+  );
+
+}
 
 
-      feed.appendChild(
-        article
+/* =========================================
+   REPLY
+   ========================================= */
+
+window.showReply = function(commentId) {
+
+  const box =
+    document.getElementById(
+      "reply-box-" + commentId
+    );
+
+  box.style.display =
+    box.style.display === "block"
+    ? "none"
+    : "block";
+};
+
+
+window.addReply = async function(
+  postId,
+  commentId
+) {
+
+  if (!currentUser) return;
+
+  const input =
+    document.getElementById(
+      "reply-input-" + commentId
+    );
+
+  const text =
+    input.value.trim();
+
+  if (!text) return;
+
+  try {
+
+    await addDoc(
+      collection(
+        db,
+        "posts",
+        postId,
+        "comments",
+        commentId,
+        "replies"
+      ),
+      {
+        text: text,
+        userId: currentUser.uid,
+        email: currentUser.email || "",
+        createdAt: serverTimestamp()
+      }
+    );
+
+    input.value = "";
+
+  } catch(error) {
+
+    console.error(error);
+
+    showStatus(
+      "Reply could not be added.",
+      "error"
+    );
+  }
+};
+
+
+/* =========================================
+   LOAD REPLIES
+   ========================================= */
+
+function loadReplies(
+  postId,
+  commentId
+) {
+
+  const list =
+    document.getElementById(
+      "replies-" + commentId
+    );
+
+  const q =
+    query(
+      collection(
+        db,
+        "posts",
+        postId,
+        "comments",
+        commentId,
+        "replies"
+      ),
+      orderBy("createdAt", "asc")
+    );
+
+  onSnapshot(q, snapshot => {
+
+    list.innerHTML = "";
+
+    snapshot.forEach(replyDoc => {
+
+      renderReply(
+        postId,
+        commentId,
+        replyDoc.id,
+        replyDoc.data(),
+        list
       );
 
+    });
+
+  });
+
+}
+
+
+/* =========================================
+   RENDER REPLY
+   ========================================= */
+
+function renderReply(
+  postId,
+  commentId,
+  replyId,
+  reply,
+  parent
+) {
+
+  const box =
+    document.createElement("div");
+
+  box.className = "reply";
+
+  let name =
+    reply.email
+      ? reply.email.split("@")[0]
+      : "Zemivo User";
+
+  name = name.replace(/[._-]/g, " ");
+
+  const mine =
+    currentUser &&
+    reply.userId === currentUser.uid;
+
+
+  box.innerHTML = `
+
+    <div class="comment-name">
+      ${safe(name)}
+    </div>
+
+    <div
+      class="comment-text"
+      id="reply-text-${replyId}"
+    >
+      ${safe(reply.text || "")}
+    </div>
+
+    <div
+      class="edit-box"
+      id="reply-edit-box-${replyId}"
+    >
+
+      <input
+        id="reply-edit-input-${replyId}"
+        value="${safeAttribute(reply.text || "")}"
+      >
+
+      <button
+        onclick="saveReply('${postId}','${commentId}','${replyId}')"
+      >
+        Save
+      </button>
+
+    </div>
+
+    ${
+      mine
+      ?
+      `
+      <div class="comment-actions">
+
+        <button
+          onclick="editReply('${replyId}')"
+        >
+          ✏️ Edit
+        </button>
+
+        <button
+          onclick="deleteReply('${postId}','${commentId}','${replyId}')"
+        >
+          🗑️ Delete
+        </button>
+
+      </div>
+      `
+      :
+      ""
     }
 
+  `;
 
-    /* =====================================
-       SPARK SYSTEM
-       ===================================== */
+  parent.appendChild(box);
 
-    window.sparkPost =
-      async function(button) {
+}
 
-        if (!currentUser) {
 
-          showStatus(
-            "Please login first.",
-            "error"
-          );
+/* =========================================
+   EDIT COMMENT
+   ========================================= */
 
-          return;
+window.editComment = function(commentId) {
 
+  const box =
+    document.getElementById(
+      "edit-box-" + commentId
+    );
+
+  box.style.display =
+    box.style.display === "block"
+    ? "none"
+    : "block";
+};
+
+
+window.saveComment = async function(
+  postId,
+  commentId
+) {
+
+  const input =
+    document.getElementById(
+      "edit-input-" + commentId
+    );
+
+  const text =
+    input.value.trim();
+
+  if (!text) return;
+
+  try {
+
+    await updateDoc(
+      doc(
+        db,
+        "posts",
+        postId,
+        "comments",
+        commentId
+      ),
+      {
+        text: text
+      }
+    );
+
+  } catch(error) {
+
+    console.error(error);
+
+    showStatus(
+      "Comment could not be edited.",
+      "error"
+    );
+  }
+};
+
+
+/* =========================================
+   DELETE COMMENT
+   ========================================= */
+
+window.deleteComment = async function(
+  postId,
+  commentId
+) {
+
+  if (
+    !confirm(
+      "Delete this comment?"
+    )
+  ) return;
+
+  try {
+
+    await deleteDoc(
+      doc(
+        db,
+        "posts",
+        postId,
+        "comments",
+        commentId
+      )
+    );
+
+  } catch(error) {
+
+    console.error(error);
+
+    showStatus(
+      "Comment could not be deleted.",
+      "error"
+    );
+  }
+};
+
+
+/* =========================================
+   EDIT REPLY
+   ========================================= */
+
+window.editReply = function(replyId) {
+
+  const box =
+    document.getElementById(
+      "reply-edit-box-" + replyId
+    );
+
+  box.style.display =
+    box.style.display === "block"
+    ? "none"
+    : "block";
+};
+
+
+window.saveReply = async function(
+  postId,
+  commentId,
+  replyId
+) {
+
+  const input =
+    document.getElementById(
+      "reply-edit-input-" + replyId
+    );
+
+  const text =
+    input.value.trim();
+
+  if (!text) return;
+
+  try {
+
+    await updateDoc(
+      doc(
+        db,
+        "posts",
+        postId,
+        "comments",
+        commentId,
+        "replies",
+        replyId
+      ),
+      {
+        text: text
+      }
+    );
+
+  } catch(error) {
+
+    console.error(error);
+
+    showStatus(
+      "Reply could not be edited.",
+      "error"
+    );
+  }
+};
+
+
+/* =========================================
+   DELETE REPLY
+   ========================================= */
+
+window.deleteReply = async function(
+  postId,
+  commentId,
+  replyId
+) {
+
+  if (
+    !confirm(
+      "Delete this reply?"
+    )
+  ) return;
+
+  try {
+
+    await deleteDoc(
+      doc(
+        db,
+        "posts",
+        postId,
+        "comments",
+        commentId,
+        "replies",
+        replyId
+      )
+    );
+
+  } catch(error) {
+
+    console.error(error);
+
+    showStatus(
+      "Reply could not be deleted.",
+      "error"
+    );
+  }
+};
+
+
+/* =========================================
+   LIKE
+   ========================================= */
+
+window.likePost = async function(
+  postId,
+  button
+) {
+
+  if (!currentUser) return;
+
+  const likeId =
+    currentUser.uid + "_" + postId;
+
+  const likeRef =
+    doc(
+      db,
+      "postLikes",
+      likeId
+    );
+
+  try {
+
+    const existing =
+      await getDoc(likeRef);
+
+    if (existing.exists()) {
+
+      await deleteDoc(likeRef);
+
+      button.textContent =
+        "👍 Like";
+
+    } else {
+
+      await setDoc(
+        likeRef,
+        {
+          userId: currentUser.uid,
+          postId: postId,
+          createdAt: serverTimestamp()
         }
-
-
-        const postId =
-          button.dataset.postId;
-
-
-        if (!postId) {
-          return;
-        }
-
-
-        button.disabled = true;
-
-
-        try {
-
-          const sparkId =
-            currentUser.uid +
-            "_" +
-            postId;
-
-
-          const sparkRef =
-            doc(
-              db,
-              "postSparks",
-              sparkId
-            );
-
-
-          const existingSpark =
-            await getDoc(
-              sparkRef
-            );
-
-
-          if (
-            existingSpark.exists()
-          ) {
-
-            button.classList.add(
-              "sparked"
-            );
-
-            button.textContent =
-              "✨ Sparked";
-
-            button.disabled = true;
-
-            return;
-
-          }
-
-
-          await setDoc(
-            sparkRef,
-            {
-
-              userId:
-                currentUser.uid,
-
-              postId:
-                postId,
-
-              createdAt:
-                serverTimestamp()
-
-            }
-          );
-
-
-          const postRef =
-            doc(
-              db,
-              "posts",
-              postId
-            );
-
-
-          await updateDoc(
-            postRef,
-            {
-
-              sparks:
-                increment(1)
-
-            }
-          );
-
-
-          button.classList.add(
-            "sparked"
-          );
-
-
-          button.textContent =
-            "✨ Sparked";
-
-
-          showStatus(
-            "Spark added! ✨",
-            "success"
-          );
-
-
-        } catch (error) {
-
-          console.error(
-            "Spark error:",
-            error
-          );
-
-
-          showStatus(
-            "Spark could not be added.",
-            "error"
-          );
-
-
-          button.disabled = false;
-
-        }
-
-      };
-
-
-    /* =====================================
-       LIKE
-       ===================================== */
-
-    window.likePost =
-      function(button) {
-
-        button.textContent =
-          "❤️ Liked";
-
-      };
-
-
-    /* =====================================
-       COMMENT
-       ===================================== */
-
-    window.commentPost =
-      function() {
-
-        alert(
-          "Comment system will be connected next."
-        );
-
-      };
-
-
-    /* =====================================
-       SHARE
-       ===================================== */
-
-    window.sharePost =
-      function() {
-
-        if (
-          navigator.share
-        ) {
-
-          navigator.share({
-
-            title:
-              "Zemivo",
-
-            text:
-              "Check this post on Zemivo."
-
-          });
-
-        } else {
-
-          alert(
-            "Share system will be connected next."
-          );
-
-        }
-
-      };
-
-
-    /* =====================================
-       SAFE HTML
-       ===================================== */
-
-    function escapeHTML(text) {
-
-      const div =
-        document.createElement(
-          "div"
-        );
-
-
-      div.textContent =
-        text;
-
-
-      return div.innerHTML;
-
-    }
-
-
-    /* =====================================
-       STATUS
-       ===================================== */
-
-    function showStatus(
-      message,
-      type
-    ) {
-
-      status.textContent =
-        message;
-
-
-      status.className =
-        "status " + type;
-
-
-      setTimeout(
-        function() {
-
-          status.textContent =
-            "";
-
-          status.className =
-            "status";
-
-        },
-        4000
       );
 
+      button.textContent =
+        "❤️ Liked";
     }
 
+    loadStats(postId);
 
-    /* =====================================
-       NAVIGATION
-       ===================================== */
+  } catch(error) {
 
-    window.openPage =
-      function(page) {
+    console.error(error);
+  }
+};
 
-        window.location.href =
-          page;
 
-      };
+/* =========================================
+   SPARK
+   ========================================= */
 
-  </script>
+window.sparkPost = async function(
+  postId,
+  button
+) {
+
+  if (!currentUser) return;
+
+  const sparkId =
+    currentUser.uid + "_" + postId;
+
+  const sparkRef =
+    doc(
+      db,
+      "postSparks",
+      sparkId
+    );
+
+  try {
+
+    const existing =
+      await getDoc(sparkRef);
+
+    if (existing.exists()) {
+
+      button.textContent =
+        "✨ Sparked";
+
+      button.classList.add(
+        "sparked"
+      );
+
+      return;
+    }
+
+    await setDoc(
+      sparkRef,
+      {
+        userId: currentUser.uid,
+        postId: postId,
+        createdAt: serverTimestamp()
+      }
+    );
+
+    button.textContent =
+      "✨ Sparked";
+
+    button.classList.add(
+      "sparked"
+    );
+
+    loadStats(postId);
+
+    showStatus(
+      "Spark added! ✨",
+      "success"
+    );
+
+  } catch(error) {
+
+    console.error(error);
+
+    showStatus(
+      "Spark could not be added.",
+      "error"
+    );
+  }
+};
+
+
+/* =========================================
+   VIEWS
+   ========================================= */
+
+async function registerView(postId) {
+
+  if (!currentUser) return;
+
+  const viewId =
+    currentUser.uid + "_" + postId;
+
+  const viewRef =
+    doc(
+      db,
+      "postViews",
+      viewId
+    );
+
+  try {
+
+    const existing =
+      await getDoc(viewRef);
+
+    if (!existing.exists()) {
+
+      await setDoc(
+        viewRef,
+        {
+          userId: currentUser.uid,
+          postId: postId,
+          createdAt: serverTimestamp()
+        }
+      );
+
+      loadStats(postId);
+    }
+
+  } catch(error) {
+
+    console.error(
+      "View error:",
+      error
+    );
+  }
+}
+
+
+/* =========================================
+   STATISTICS
+   ========================================= */
+
+async function loadStats(postId) {
+
+  try {
+
+    const likes =
+      await getCountFromServer(
+        collection(
+          db,
+          "postLikes"
+        )
+      );
+
+    const sparks =
+      await getCountFromServer(
+        collection(
+          db,
+          "postSparks"
+        )
+      );
+
+    const views =
+      await getCountFromServer(
+        collection(
+          db,
+          "postViews"
+        )
+      );
+
+    const comments =
+      await getCountFromServer(
+        collection(
+          db,
+          "posts",
+          postId,
+          "comments"
+        )
+      );
+
+    const stats =
+      document.getElementById(
+        "stats-" + postId
+      );
+
+    if (stats) {
+
+      stats.textContent =
+        "👁️ " + views.data().count +
+        " views · 👍 " + likes.data().count +
+        " likes · ✨ " + sparks.data().count +
+        " Sparks · 💬 " + comments.data().count +
+        " comments";
+    }
+
+  } catch(error) {
+
+    console.error(
+      "Statistics error:",
+      error
+    );
+  }
+}
+
+
+/* =========================================
+   COMMENTS TOGGLE
+   ========================================= */
+
+window.toggleComments = function(postId) {
+
+  const box =
+    document.getElementById(
+      "comments-" + postId
+    );
+
+  box.scrollIntoView({
+    behavior:"smooth",
+    block:"center"
+  });
+
+};
+
+
+/* =========================================
+   SHARE
+   ========================================= */
+
+window.sharePost = function(postId) {
+
+  const url =
+    window.location.origin +
+    window.location.pathname +
+    "?post=" +
+    postId;
+
+  if (navigator.share) {
+
+    navigator.share({
+      title:"Zemivo",
+      text:"Check this post on Zemivo.",
+      url:url
+    });
+
+  } else {
+
+    navigator.clipboard.writeText(url);
+
+    showStatus(
+      "Post link copied! 🔗",
+      "success"
+    );
+  }
+};
+
+
+/* =========================================
+   SAFE TEXT
+   ========================================= */
+
+function safe(text) {
+
+  const div =
+    document.createElement("div");
+
+  div.textContent =
+    text;
+
+  return div.innerHTML;
+}
+
+
+function safeAttribute(text) {
+
+  return String(text)
+    .replace(/&/g,"&amp;")
+    .replace(/"/g,"&quot;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;");
+}
+
+
+/* =========================================
+   STATUS
+   ========================================= */
+
+function showStatus(
+  message,
+  type
+) {
+
+  status.textContent =
+    message;
+
+  status.className =
+    "status " + type;
+
+  setTimeout(() => {
+
+    status.textContent = "";
+    status.className = "status";
+
+  },4000);
+}
+
+
+/* =========================================
+   NAVIGATION
+   ========================================= */
+
+window.openPage = function(page) {
+
+  window.location.href = page;
+
+};
+
+</script>
 
 </body>
 </html>
