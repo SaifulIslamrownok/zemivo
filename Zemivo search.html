@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zemivo Search</title>
+
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:#f4f7fb;color:#172033}
+header{background:#111827;color:white;padding:20px;text-align:center}
+.container{max-width:1000px;margin:auto;padding:20px}
+.searchBox{background:white;padding:25px;border-radius:20px;box-shadow:0 5px 20px #0001}
+input{width:100%;padding:16px;border:1px solid #d5dbe5;border-radius:12px;font-size:16px}
+button{margin-top:10px;background:#2563eb;color:white;border:0;padding:12px 20px;border-radius:10px;font-weight:bold}
+.result{background:white;margin-top:15px;padding:18px;border-radius:14px;box-shadow:0 3px 12px #0001}
+.tag{display:inline-block;background:#eef2ff;padding:7px 12px;border-radius:20px;margin:5px}
+</style>
+</head>
+
+<body>
+
+<header>
+<h1>🔎 Zemivo Search</h1>
+<p>Search Everything Inside Zemivo</p>
+</header>
+
+<div class="container">
+
+<div class="searchBox">
+
+<h2>Search Zemivo</h2>
+
+<input
+id="searchInput"
+placeholder="Post, Person, School, Business, Education..."
+oninput="performSearch()"
+>
+
+<div id="results">
+<p>Search শুরু করুন...</p>
+</div>
+
+</div>
+
+<div class="result">
+
+<h3>🔎 Search Categories</h3>
+
+<span class="tag">👤 People</span>
+<span class="tag">📝 Posts</span>
+<span class="tag">📚 Education</span>
+<span class="tag">🏢 Business</span>
+<span class="tag">🎫 Travel</span>
+<span class="tag">🏨 Hotels</span>
+<span class="tag">👥 Groups</span>
+
+</div>
+
+<div class="result">
+
+<h3>🚀 Future Search Engine</h3>
+
+<p>Future version-এ থাকবে:</p>
+
+<p>• Language-aware Search</p>
+<p>• People Search</p>
+<p>• Post Search</p>
+<p>• Education Search</p>
+<p>• Business Search</p>
+<p>• Advanced Filters</p>
+<p>• Popular Results</p>
+<p>• Relevant Results</p>
+
+</div>
+
+</div>
+
+<script>
+
+const data=[
+
+"Zemivo Education",
+"Zemivo Messenger",
+"Public Post",
+"Teacher Community",
+"Student Group",
+"Business Profile",
+"Travel & Hotel",
+"Hotel Booking",
+"Creator Profile"
+
+];
+
+
+function performSearch(){
+
+let q=document
+.getElementById("searchInput")
+.value
+.toLowerCase()
+.trim();
+
+let results=document.getElementById("results");
+
+if(q===""){
+
+results.innerHTML="<p>Search শুরু করুন...</p>";
+return;
+
+}
+
+let found=data.filter(item=>
+item.toLowerCase().includes(q)
+);
+
+if(found.length===0){
+
+results.innerHTML=
+"<div class='result'><b>কোনো result পাওয়া যায়নি</b></div>";
+
+return;
+
+}
+
+results.innerHTML=found.map(item=>`
+
+<div class="result">
+
+<h3>🔎 ${item}</h3>
+
+<p>Zemivo Search Result</p>
+
+</div>
+
+`).join("");
+
+}
+
+</script>
+
+</body>
+</html>
