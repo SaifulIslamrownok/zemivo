@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Zemivo Religious Knowledge</title>
+
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:#f4f7fb;color:#172033}
+header{background:#312e81;color:white;padding:22px;text-align:center}
+.container{max-width:1000px;margin:auto;padding:20px}
+.card{background:white;padding:22px;border-radius:18px;margin-bottom:18px;box-shadow:0 5px 20px #0001}
+input,select{width:100%;padding:13px;border:1px solid #d5dbe5;border-radius:10px;margin:6px 0 12px}
+button{background:#4f46e5;color:white;border:0;padding:12px 18px;border-radius:10px;font-weight:bold}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:15px}
+.religion{padding:18px;border-radius:14px;background:#f8fafc}
+.tag{display:inline-block;background:#eef2ff;padding:7px 11px;border-radius:20px;margin:4px}
+</style>
+
+</head>
+
+<body>
+
+<header>
+
+<h1>📖 Zemivo Religious Knowledge</h1>
+
+<p>Source-Based Comparative Knowledge</p>
+
+</header>
+
+
+<div class="container">
+
+
+<div class="card">
+
+<h2>🔎 ধর্মীয় প্রশ্ন</h2>
+
+<input
+id="question"
+placeholder="আপনার প্রশ্ন লিখুন..."
+>
+
+<select id="religion">
+
+<option>All Sources</option>
+
+<option>Islam</option>
+
+<option>Christianity</option>
+
+<option>Hindu Traditions</option>
+
+<option>Buddhism</option>
+
+</select>
+
+<button onclick="searchReligion()">
+Explore Sources
+</button>
+
+<div id="answer"></div>
+
+</div>
+
+
+<div class="grid">
+
+
+<div class="religion">
+
+<h3>☪️ Islam</h3>
+
+<p>
+Qur'an, Hadith এবং নির্ভরযোগ্য scholarly
+sources-এর reference structure।
+</p>
+
+</div>
+
+
+<div class="religion">
+
+<h3>✝️ Christianity</h3>
+
+<p>
+Bible-এর relevant book, chapter ও verse
+reference structure।
+</p>
+
+</div>
+
+
+<div class="religion">
+
+<h3>🕉️ Hindu Traditions</h3>
+
+<p>
+প্রাসঙ্গিক গ্রন্থ এবং বিভিন্ন tradition-এর
+context আলাদাভাবে দেখানোর structure।
+</p>
+
+</div>
+
+
+<div class="religion">
+
+<h3>☸️ Buddhism</h3>
+
+<p>
+প্রাসঙ্গিক Buddhist canonical texts ও
+tradition-এর reference structure।
+</p>
+
+</div>
+
+
+</div>
+
+
+<div class="card">
+
+<h2>📚 Source Comparison</h2>
+
+<span class="tag">Original Text</span>
+
+<span class="tag">Chapter / Verse</span>
+
+<span class="tag">Historical Context</span>
+
+<span class="tag">Interpretation</span>
+
+<span class="tag">Comparison</span>
+
+</div>
+
+
+<div class="card">
+
+<h2>🤝 Answer Policy</h2>
+
+<p>
+একটি ধর্মের বক্তব্যকে অন্য ধর্মের বক্তব্য হিসেবে
+দেখানো হবে না।
+</p>
+
+<p>
+মূল গ্রন্থ, পরবর্তী ব্যাখ্যা এবং ঐতিহাসিক মতকে
+আলাদা করে দেখানো হবে।
+</p>
+
+<p>
+যেখানে মতপার্থক্য থাকবে সেখানে মতপার্থক্য
+স্পষ্টভাবে উল্লেখ করা হবে।
+</p>
+
+<p>
+ব্যবহারকারীকে কোনো ধর্ম গ্রহণ করতে বাধ্য করা হবে না।
+</p>
+
+</div>
+
+
+<div class="card">
+
+<h2>🚀 Future Version</h2>
+
+<p>✔ Original Source Reference</p>
+
+<p>✔ Chapter / Verse</p>
+
+<p>✔ Multiple Religious Sources</p>
+
+<p>✔ Historical Context</p>
+
+<p>✔ Comparative Analysis</p>
+
+<p>✔ Bengali + English + Other Languages</p>
+
+<p>✔ Source Verification</p>
+
+</div>
+
+
+</div>
+
+
+<script>
+
+function searchReligion(){
+
+let question=
+document.getElementById("question")
+.value
+.trim();
+
+let religion=
+document.getElementById("religion")
+.value;
+
+if(!question){
+
+alert("প্রশ্ন লিখুন");
+
+return;
+
+}
+
+document.getElementById("answer").innerHTML=`
+
+<div class="card">
+
+<h3>📖 Source Search</h3>
+
+<p>
+<b>Question:</b> ${question}
+</p>
+
+<p>
+<b>Selected Source:</b> ${religion}
+</p>
+
+<p>
+বর্তমানে এটি একটি Demo Foundation।
+পরবর্তী ধাপে verified primary sources,
+chapter/verse references এবং comparative
+analysis যুক্ত করা হবে।
+</p>
+
+</div>
+
+`;
+
+}
+
+</script>
+
+</body>
+</html>
