@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zemivo Health</title>
+
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:#f4f7fb;color:#172033}
+header{background:#0f766e;color:white;padding:20px;text-align:center}
+.container{max-width:1000px;margin:auto;padding:20px}
+.card{background:white;padding:22px;border-radius:18px;margin-bottom:18px;box-shadow:0 5px 20px #0001}
+input{width:100%;padding:14px;border:1px solid #d5dbe5;border-radius:10px}
+button{margin-top:10px;background:#0f766e;color:white;border:0;padding:12px 18px;border-radius:10px;font-weight:bold}
+.warning{background:#fff7ed;border-left:5px solid #f97316;padding:15px;border-radius:10px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:15px}
+</style>
+</head>
+
+<body>
+
+<header>
+<h1>🩺 Zemivo Health</h1>
+<p>Health & Medicine Information</p>
+</header>
+
+<div class="container">
+
+<div class="card">
+
+<h2>🔎 Health Search</h2>
+
+<input
+id="healthSearch"
+placeholder="রোগ বা Medicine-এর নাম লিখুন"
+>
+
+<button onclick="healthSearch()">
+Search Information
+</button>
+
+<div id="healthResult"></div>
+
+</div>
+
+
+<div class="grid">
+
+<div class="card">
+<h3>💊 Medicine Information</h3>
+<p>Medicine-এর নাম, generic name এবং সাধারণ ব্যবহার সম্পর্কে তথ্য।</p>
+</div>
+
+<div class="card">
+<h3>💰 Medicine Price</h3>
+<p>দেশ ও বাজার অনুযায়ী medicine-এর বর্তমান মূল্য খোঁজার ব্যবস্থা।</p>
+</div>
+
+<div class="card">
+<h3>📅 Expiry</h3>
+<p>Medicine-এর package-এর expiry date এবং storage information।</p>
+</div>
+
+<div class="card">
+<h3>⚠️ Safety</h3>
+<p>Medicine-এর সতর্কতা ও সম্ভাব্য ঝুঁকি সম্পর্কে তথ্য।</p>
+</div>
+
+</div>
+
+
+<div class="card warning">
+
+<h3>⚠️ গুরুত্বপূর্ণ</h3>
+
+<p>
+Zemivo Health কোনো ব্যক্তির জন্য নিজে থেকে diagnosis
+বা prescription তৈরি করবে না।
+</p>
+
+<p>
+গুরুতর অসুস্থতা বা জরুরি অবস্থায় qualified doctor/
+health professional-এর পরামর্শ প্রয়োজন।
+</p>
+
+</div>
+
+
+<div class="card">
+
+<h3>🚀 Future Version</h3>
+
+<p>✔ Medicine Database</p>
+<p>✔ Official Source</p>
+<p>✔ Price Information</p>
+<p>✔ Manufacturer</p>
+<p>✔ Expiry Information</p>
+<p>✔ Drug Interaction Warning</p>
+<p>✔ Country-specific Information</p>
+
+</div>
+
+</div>
+
+
+<script>
+
+function healthSearch(){
+
+let q=document
+.getElementById("healthSearch")
+.value
+.trim();
+
+if(!q){
+
+alert("রোগ বা Medicine-এর নাম লিখুন");
+return;
+
+}
+
+document.getElementById("healthResult").innerHTML=`
+
+<div class="card">
+
+<h3>🔎 Search Result</h3>
+
+<p>
+আপনি অনুসন্ধান করেছেন:
+<b>${q}</b>
+</p>
+
+<p>
+বর্তমানে এটি Demo Search।
+Future version-এ verified medical sources
+থেকে তথ্য দেখানো হবে।
+</p>
+
+</div>
+
+`;
+
+}
+
+</script>
+
+</body>
+</html>
