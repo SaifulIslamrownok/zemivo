@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zemivo Travel</title>
+
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:#f4f7fb;color:#172033}
+header{background:#111827;color:white;padding:20px;text-align:center}
+.container{max-width:1000px;margin:auto;padding:20px}
+.card{background:white;padding:22px;border-radius:18px;margin-bottom:18px;box-shadow:0 5px 20px #0001}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px}
+input,select{width:100%;padding:12px;margin:7px 0 14px;border:1px solid #d5dbe5;border-radius:10px}
+button{background:#2563eb;color:white;border:0;padding:12px 18px;border-radius:10px;font-weight:bold;cursor:pointer}
+.result{background:#f8fafc;padding:15px;border-radius:12px;margin-top:12px}
+</style>
+</head>
+
+<body>
+
+<header>
+<h1>🎫 Zemivo Travel</h1>
+<p>Ticket & Hotel Booking</p>
+</header>
+
+<div class="container">
+
+<div class="card">
+<h2>✈️ Ticket Search</h2>
+
+<input id="from" placeholder="From">
+<input id="to" placeholder="To">
+<input id="travelDate" type="date">
+
+<select id="ticketType">
+<option>Flight</option>
+<option>Bus</option>
+<option>Train</option>
+<option>Launch</option>
+</select>
+
+<button onclick="searchTicket()">Search Ticket</button>
+
+<div id="ticketResult"></div>
+</div>
+
+
+<div class="card">
+<h2>🏨 Hotel Search</h2>
+
+<input id="city" placeholder="City / Destination">
+<input id="checkin" type="date">
+<input id="checkout" type="date">
+
+<select>
+<option>1 Room — 2 Guests</option>
+<option>1 Room — 1 Guest</option>
+<option>2 Rooms — 4 Guests</option>
+</select>
+
+<button onclick="searchHotel()">Search Hotel</button>
+
+<div id="hotelResult"></div>
+</div>
+
+
+<div class="card">
+<h2>📋 Future Booking System</h2>
+
+<p>Search</p>
+<p>Availability</p>
+<p>Price Comparison</p>
+<p>Secure Booking</p>
+<p>Payment</p>
+<p>Booking Confirmation</p>
+
+</div>
+
+</div>
+
+<script>
+
+function searchTicket(){
+
+let from=document.getElementById("from").value;
+let to=document.getElementById("to").value;
+let date=document.getElementById("travelDate").value;
+
+if(!from || !to || !date){
+alert("From, To এবং Date দিন");
+return;
+}
+
+document.getElementById("ticketResult").innerHTML=`
+<div class="result">
+<b>🔎 Ticket Search</b>
+<p>${from} → ${to}</p>
+<p>Date: ${date}</p>
+<p>বর্তমানে এটি Demo Search.</p>
+</div>`;
+}
+
+
+function searchHotel(){
+
+let city=document.getElementById("city").value;
+
+if(!city){
+alert("Destination লিখুন");
+return;
+}
+
+document.getElementById("hotelResult").innerHTML=`
+<div class="result">
+<b>🏨 Hotel Search</b>
+<p>Destination: ${city}</p>
+<p>বর্তমানে এটি Demo Search.</p>
+</div>`;
+}
+
+</script>
+
+</body>
+</html>
