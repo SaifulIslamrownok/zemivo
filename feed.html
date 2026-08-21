@@ -1,159 +1,3381 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Feed - Zemivo</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <style>
-    * {
-      box-sizing: border-box;
-    }
+<title>Zemivo Feed</title>
 
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #f4f6f8;
-    }
+<style>
+*{
+  box-sizing:border-box;
+}
 
-    .header {
-      background: white;
-      padding: 16px;
-      text-align: center;
-      color: #2563eb;
-      font-size: 28px;
-      font-weight: bold;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-    }
+body{
+  margin:0;
+  font-family:Arial,Helvetica,sans-serif;
+  background:#f0f2f5;
+  color:#17202a;
+}
 
-    .feed {
-      max-width: 600px;
-      margin: 20px auto;
-      padding: 0 12px;
-    }
+button,
+input,
+textarea{
+  font-family:inherit;
+}
 
-    .create-post,
-    .post {
-      background: white;
-      border-radius: 16px;
-      padding: 18px;
-      margin-bottom: 18px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.06);
-    }
+button{
+  cursor:pointer;
+}
 
-    textarea {
-      width: 100%;
-      min-height: 90px;
-      padding: 12px;
-      border: 1px solid #ddd;
-      border-radius: 12px;
-      resize: none;
-      font-size: 16px;
-    }
+.topbar{
+  position:sticky;
+  top:0;
+  z-index:100;
+  height:62px;
+  background:#fff;
+  border-bottom:1px solid #ddd;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 18px;
+}
 
-    .post-button {
-      margin-top: 12px;
-      width: 100%;
-      padding: 13px;
-      border: none;
-      border-radius: 25px;
-      background: #2563eb;
-      color: white;
-      font-size: 16px;
-      font-weight: bold;
-    }
+.logo{
+  color:#2563eb;
+  font-size:28px;
+  font-weight:800;
+}
 
-    .post-header {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
+.top-actions{
+  display:flex;
+  gap:8px;
+}
 
-    .avatar {
-      width: 45px;
-      height: 45px;
-      border-radius: 50%;
-      background: #e5e7eb;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 22px;
-    }
+.icon-btn{
+  width:42px;
+  height:42px;
+  border:0;
+  border-radius:50%;
+  background:#f0f2f5;
+  font-size:19px;
+}
 
-    .post-name {
-      font-weight: bold;
-    }
+.page{
+  width:100%;
+  max-width:760px;
+  margin:22px auto;
+  padding:0 12px;
+}
 
-    .post-time {
-      color: #777;
-      font-size: 12px;
-    }
+/* COMPOSER */
 
-    .post-text {
-      margin: 18px 0;
-      line-height: 1.5;
-    }
+.composer{
+  background:#fff;
+  border-radius:16px;
+  padding:16px;
+  box-shadow:0 2px 8px rgba(0,0,0,.08);
+}
 
-    .actions {
-      display: flex;
-      justify-content: space-around;
-      border-top: 1px solid #eee;
-      padding-top: 12px;
-    }
+.composer-top{
+  display:flex;
+  gap:12px;
+  align-items:flex-start;
+}
 
-    .action {
-      border: none;
-      background: none;
-      font-size: 15px;
-      cursor: pointer;
-    }
-  </style>
+.avatar{
+  width:46px;
+  height:46px;
+  border-radius:50%;
+  background:#2563eb;
+  color:#fff;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:bold;
+  flex-shrink:0;
+}
+
+.composer textarea{
+  width:100%;
+  min-height:90px;
+  resize:none;
+  border:0;
+  outline:0;
+  font-size:18px;
+  padding:8px 4px;
+}
+
+.composer textarea::placeholder{
+  color:#777;
+}
+
+.composer-extra{
+  display:none;
+  margin-top:12px;
+  padding-top:12px;
+  border-top:1px solid #eee;
+}
+
+.composer-extra.show{
+  display:block;
+}
+
+.field{
+  margin-bottom:10px;
+}
+
+.field input,
+.field select{
+  width:100%;
+  padding:11px 12px;
+  border:1px solid #ddd;
+  border-radius:10px;
+  outline:none;
+}
+
+.media-preview{
+  display:none;
+  position:relative;
+  margin-top:10px;
+  border-radius:12px;
+  overflow:hidden;
+  background:#f3f4f6;
+}
+
+.media-preview.show{
+  display:block;
+}
+
+.media-preview img,
+.media-preview video{
+  width:100%;
+  max-height:380px;
+  object-fit:cover;
+  display:block;
+}
+
+.remove-media{
+  position:absolute;
+  top:8px;
+  right:8px;
+  width:34px;
+  height:34px;
+  border:0;
+  border-radius:50%;
+  background:rgba(0,0,0,.65);
+  color:#fff;
+  font-size:18px;
+}
+
+.composer-tools{
+  position:relative;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-top:12px;
+  padding-top:12px;
+  border-top:1px solid #eee;
+}
+
+.tool-left{
+  display:flex;
+  gap:6px;
+  align-items:center;
+}
+
+.tool{
+  border:0;
+  background:#f0f2f5;
+  border-radius:20px;
+  padding:9px 12px;
+  font-size:14px;
+}
+
+.tool:hover{
+  background:#e4e6e9;
+}
+
+.plus-btn{
+  width:42px;
+  height:42px;
+  border:0;
+  border-radius:50%;
+  background:#2563eb;
+  color:white;
+  font-size:25px;
+  font-weight:bold;
+}
+
+.media-menu{
+  display:none;
+  position:absolute;
+  left:0;
+  bottom:54px;
+  width:240px;
+  background:#fff;
+  border-radius:14px;
+  box-shadow:0 5px 22px rgba(0,0,0,.18);
+  padding:8px;
+  z-index:50;
+}
+
+.media-menu.show{
+  display:block;
+}
+
+.media-option{
+  width:100%;
+  border:0;
+  background:#fff;
+  padding:12px;
+  text-align:left;
+  border-radius:10px;
+  font-size:15px;
+}
+
+.media-option:hover{
+  background:#f0f2f5;
+}
+
+.publish-row{
+  margin-top:12px;
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+}
+
+.audience{
+  flex:1;
+  padding:11px;
+  border:1px solid #ddd;
+  border-radius:10px;
+  background:#fff;
+}
+
+.publish{
+  flex:1;
+  border:0;
+  border-radius:10px;
+  background:#2563eb;
+  color:#fff;
+  font-size:16px;
+  font-weight:bold;
+}
+
+.publish:disabled{
+  opacity:.6;
+}
+
+/* ADMIN */
+
+.admin-panel{
+  display:none;
+  background:#fff;
+  border-radius:16px;
+  padding:16px;
+  margin-bottom:16px;
+  border:2px solid #2563eb;
+}
+
+.admin-panel.show{
+  display:block;
+}
+
+.admin-title{
+  font-weight:bold;
+  color:#2563eb;
+  margin-bottom:10px;
+}
+
+.admin-note{
+  font-size:13px;
+  color:#666;
+  margin-bottom:10px;
+}
+
+/* FEED */
+
+.feed{
+  margin-top:18px;
+}
+
+.post{
+  background:#fff;
+  border-radius:16px;
+  margin-bottom:18px;
+  box-shadow:0 2px 8px rgba(0,0,0,.08);
+  overflow:hidden;
+}
+
+.post-head{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:15px 16px 10px;
+}
+
+.post-user{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+.post-name{
+  font-weight:bold;
+}
+
+.post-meta{
+  color:#777;
+  font-size:12px;
+  margin-top:3px;
+}
+
+.post-menu-wrap{
+  position:relative;
+}
+
+.dots{
+  width:38px;
+  height:38px;
+  border:0;
+  background:#f0f2f5;
+  border-radius:50%;
+  font-size:20px;
+}
+
+.post-menu{
+  display:none;
+  position:absolute;
+  right:0;
+  top:44px;
+  width:220px;
+  background:#fff;
+  border-radius:12px;
+  box-shadow:0 5px 22px rgba(0,0,0,.2);
+  padding:7px;
+  z-index:80;
+}
+
+.post-menu.show{
+  display:block;
+}
+
+.menu-item{
+  width:100%;
+  border:0;
+  background:#fff;
+  padding:11px;
+  border-radius:9px;
+  text-align:left;
+  font-size:14px;
+}
+
+.menu-item:hover{
+  background:#f0f2f5;
+}
+
+.menu-item.danger{
+  color:#dc2626;
+}
+
+.post-content{
+  padding:4px 16px 12px;
+  font-size:16px;
+  line-height:1.55;
+  white-space:pre-wrap;
+  overflow-wrap:anywhere;
+}
+
+.post-content .hashtag{
+  color:#2563eb;
+}
+
+.post-content .mention{
+  color:#2563eb;
+}
+
+.post-media{
+  width:100%;
+  max-height:550px;
+  object-fit:cover;
+  display:block;
+}
+
+.post-info{
+  padding:9px 16px;
+  display:flex;
+  justify-content:space-between;
+  color:#777;
+  font-size:13px;
+}
+
+.post-actions{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  border-top:1px solid #eee;
+  border-bottom:1px solid #eee;
+}
+
+.action{
+  border:0;
+  background:#fff;
+  padding:12px 5px;
+  font-size:14px;
+  font-weight:600;
+}
+
+.action:hover{
+  background:#f0f2f5;
+}
+
+.action.active{
+  color:#2563eb;
+}
+
+.action.spark{
+  color:#f59e0b;
+}
+
+/* COMMENTS */
+
+.comments{
+  padding:10px 16px 15px;
+}
+
+.comment{
+  background:#f0f2f5;
+  border-radius:12px;
+  padding:8px 11px;
+  margin-bottom:7px;
+}
+
+.comment-name{
+  font-weight:bold;
+  font-size:13px;
+}
+
+.comment-text{
+  font-size:14px;
+  margin-top:2px;
+}
+
+.comment-form{
+  display:flex;
+  gap:7px;
+  margin-top:9px;
+}
+
+.comment-form input{
+  flex:1;
+  border:1px solid #ddd;
+  border-radius:20px;
+  padding:10px 13px;
+  outline:none;
+}
+
+.comment-form button{
+  border:0;
+  background:#2563eb;
+  color:#fff;
+  border-radius:20px;
+  padding:0 15px;
+}
+
+.empty{
+  text-align:center;
+  color:#777;
+  padding:40px 10px;
+}
+
+.loading{
+  text-align:center;
+  padding:30px;
+  color:#777;
+}
+
+.toast{
+  position:fixed;
+  left:50%;
+  bottom:25px;
+  transform:translateX(-50%);
+  background:#111827;
+  color:#fff;
+  padding:12px 18px;
+  border-radius:10px;
+  display:none;
+  z-index:999;
+  max-width:90%;
+  text-align:center;
+}
+
+.toast.show{
+  display:block;
+}
+
+.edit-area{
+  width:100%;
+  min-height:120px;
+  border:1px solid #ddd;
+  border-radius:10px;
+  padding:12px;
+  resize:vertical;
+  outline:none;
+}
+
+.modal{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.55);
+  z-index:500;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+}
+
+.modal.show{
+  display:flex;
+}
+
+.modal-box{
+  width:100%;
+  max-width:500px;
+  background:#fff;
+  border-radius:16px;
+  padding:18px;
+}
+
+.modal-title{
+  font-size:20px;
+  font-weight:bold;
+  margin-bottom:12px;
+}
+
+.modal-buttons{
+  display:flex;
+  gap:8px;
+  margin-top:12px;
+}
+
+.modal-buttons button{
+  flex:1;
+  padding:11px;
+  border:0;
+  border-radius:10px;
+}
+
+.cancel{
+  background:#e5e7eb;
+}
+
+.confirm{
+  background:#2563eb;
+  color:#fff;
+}
+
+@media(max-width:600px){
+  .page{
+    margin-top:12px;
+  }
+
+  .topbar{
+    padding:0 12px;
+  }
+
+  .logo{
+    font-size:24px;
+  }
+
+  .tool{
+    padding:8px 9px;
+  }
+
+  .post-actions{
+    font-size:13px;
+  }
+}
+</style>
 </head>
 
 <body>
 
-  <div class="header">
-    Zemivo
+<header class="topbar">
+
+  <div class="logo">Zemivo</div>
+
+  <div class="top-actions">
+    <button class="icon-btn" onclick="location.href='notifications.html'">🔔</button>
+    <button class="icon-btn" onclick="location.href='profile.html'">👤</button>
   </div>
 
-  <div class="feed">
+</header>
 
-    <div class="create-post">
-      <textarea placeholder="What's on your mind?"></textarea>
 
-      <button class="post-button">
-        Create Post
-      </button>
+<main class="page">
+
+  <!-- ADMIN ANNOUNCEMENT -->
+  <section id="adminPanel" class="admin-panel">
+
+    <div class="admin-title">
+      🛡️ Zemivo Admin Announcement
     </div>
 
-    <div class="post">
+    <div class="admin-note">
+      This area is visible only to an account recognized as an administrator.
+    </div>
 
-      <div class="post-header">
-        <div class="avatar">👤</div>
+    <textarea
+      id="adminText"
+      class="edit-area"
+      placeholder="Write an official Zemivo announcement..."
+    ></textarea>
+
+    <button
+      class="publish"
+      id="adminPublish"
+      style="height:44px;margin-top:10px;"
+    >
+      Publish Global Announcement
+    </button>
+
+  </section>
+
+
+  <!-- POST COMPOSER -->
+  <section class="composer">
+
+    <div class="composer-top">
+
+      <div class="avatar" id="currentAvatar">
+        Z
+      </div>
+
+      <textarea
+        id="postText"
+        placeholder="What's on your mind?"
+      ></textarea>
+
+    </div>
+
+
+    <!-- EXTRA POST INFORMATION -->
+    <div
+      id="composerExtra"
+      class="composer-extra"
+    >
+
+      <div class="field">
+        <input
+          id="locationInput"
+          type="text"
+          placeholder="📍 Location"
+        >
+      </div>
+
+      <div class="field">
+        <input
+          id="groupInput"
+          type="text"
+          placeholder="👥 Group name (optional)"
+        >
+      </div>
+
+      <div class="field">
+        <input
+          id="productInput"
+          type="url"
+          placeholder="🔗 Product / Affiliate link (optional)"
+        >
+      </div>
+
+      <div class="field">
+        <select id="audienceSelect">
+          <option value="public">🌎 Public</option>
+          <option value="friends">👥 Friends</option>
+          <option value="private">🔒 Only me</option>
+        </select>
+      </div>
+
+    </div>
+
+
+    <!-- MEDIA PREVIEW -->
+    <div
+      id="mediaPreview"
+      class="media-preview"
+    >
+
+      <button
+        id="removeMedia"
+        class="remove-media"
+        type="button"
+      >
+        ×
+      </button>
+
+      <img
+        id="imagePreview"
+        style="display:none;"
+        alt="Selected media"
+      >
+
+      <video
+        id="videoPreview"
+        style="display:none;"
+        controls
+      ></video>
+
+    </div>
+
+
+    <!-- TOOLS -->
+    <div class="composer-tools">
+
+      <div class="tool-left">
+
+        <button
+          class="plus-btn"
+          id="plusButton"
+          type="button"
+        >
+          +
+        </button>
+
+        <button
+          class="tool"
+          id="detailsButton"
+          type="button"
+        >
+          ⚙ Details
+        </button>
+
+      </div>
+
+
+      <div
+        id="mediaMenu"
+        class="media-menu"
+      >
+
+        <button
+          class="media-option"
+          id="galleryButton"
+          type="button"
+        >
+          🖼️ Gallery / Photo
+        </button>
+
+        <button
+          class="media-option"
+          id="videoButton"
+          type="button"
+        >
+          🎥 Video
+        </button>
+
+        <button
+          class="media-option"
+          id="gifButton"
+          type="button"
+        >
+          GIF
+        </button>
+
+        <button
+          class="media-option"
+          id="hashtagButton"
+          type="button"
+        >
+          # Hashtag
+        </button>
+
+        <button
+          class="media-option"
+          id="mentionButton"
+          type="button"
+        >
+          @ Mention
+        </button>
+
+        <button
+          class="media-option"
+          id="locationButton"
+          type="button"
+        >
+          📍 Location
+        </button>
+
+      </div>
+
+    </div>
+
+
+    <div class="publish-row">
+
+      <select
+        id="quickAudience"
+        class="audience"
+      >
+        <option value="public">🌎 Public</option>
+        <option value="friends">👥 Friends</option>
+        <option value="private">🔒 Only me</option>
+      </select>
+
+      <button
+        id="publishButton"
+        class="publish"
+        type="button"
+      >
+        Post
+      </button>
+
+    </div>
+
+  </section>
+
+
+  <!-- FEED -->
+  <section
+    id="feed"
+    class="feed"
+  >
+
+    <div class="loading">
+      Loading Zemivo feed...
+    </div>
+
+  </section>
+
+</main>
+
+
+<!-- HIDDEN FILE INPUTS -->
+
+<input
+  id="imageInput"
+  type="file"
+  accept="image/*"
+  hidden
+>
+
+<input
+  id="videoInput"
+  type="file"
+  accept="video/*"
+  hidden
+>
+
+
+<!-- EDIT MODAL -->
+
+<div
+  id="editModal"
+  class="modal"
+>
+
+  <div class="modal-box">
+
+    <div class="modal-title">
+      Edit post
+    </div>
+
+    <textarea
+      id="editText"
+      class="edit-area"
+      placeholder="Edit your post..."
+    ></textarea>
+
+    <div class="modal-buttons">
+
+      <button
+        id="cancelEdit"
+        class="cancel"
+        type="button"
+      >
+        Cancel
+      </button>
+
+      <button
+        id="saveEdit"
+        class="confirm"
+        type="button"
+      >
+        Save changes
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<div
+  id="toast"
+  class="toast"
+></div>
+
+
+<script type="module">
+
+import {
+  initializeApp
+} from
+"https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
+
+
+import {
+  getAuth,
+  onAuthStateChanged
+} from
+"https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
+
+
+import {
+  getFirestore,
+  collection,
+  addDoc,
+  doc,
+  getDoc,
+  setDoc,
+  updateDoc,
+  deleteDoc,
+  query,
+  orderBy,
+  onSnapshot,
+  serverTimestamp,
+  increment,
+  arrayUnion,
+  arrayRemove
+} from
+"https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
+
+
+const firebaseConfig = {
+
+  apiKey:
+    "AIzaSyAxJUFBWm2fa0g3oxUWWqdfSTEAc-bRgfI",
+
+  authDomain:
+    "zemivo.firebaseapp.com",
+
+  projectId:
+    "zemivo",
+
+  storageBucket:
+    "zemivo.firebasestorage.app",
+
+  messagingSenderId:
+    "195335939691",
+
+  appId:
+    "1:195335939691:web:5fa5c62c53d0c0aefe732e",
+
+  measurementId:
+    "G-GNHH5S4H09"
+
+};
+
+
+const app =
+  initializeApp(firebaseConfig);
+
+
+const auth =
+  getAuth(app);
+
+
+const db =
+  getFirestore(app);
+
+
+/* ELEMENTS */
+
+const postText =
+  document.getElementById("postText");
+
+const publishButton =
+  document.getElementById("publishButton");
+
+const feed =
+  document.getElementById("feed");
+
+const plusButton =
+  document.getElementById("plusButton");
+
+const mediaMenu =
+  document.getElementById("mediaMenu");
+
+const imageInput =
+  document.getElementById("imageInput");
+
+const videoInput =
+  document.getElementById("videoInput");
+
+const mediaPreview =
+  document.getElementById("mediaPreview");
+
+const imagePreview =
+  document.getElementById("imagePreview");
+
+const videoPreview =
+  document.getElementById("videoPreview");
+
+const removeMedia =
+  document.getElementById("removeMedia");
+
+const composerExtra =
+  document.getElementById("composerExtra");
+
+const detailsButton =
+  document.getElementById("detailsButton");
+
+const locationInput =
+  document.getElementById("locationInput");
+
+const groupInput =
+  document.getElementById("groupInput");
+
+const productInput =
+  document.getElementById("productInput");
+
+const quickAudience =
+  document.getElementById("quickAudience");
+
+const audienceSelect =
+  document.getElementById("audienceSelect");
+
+const currentAvatar =
+  document.getElementById("currentAvatar");
+
+const toast =
+  document.getElementById("toast");
+
+const editModal =
+  document.getElementById("editModal");
+
+const editText =
+  document.getElementById("editText");
+
+const cancelEdit =
+  document.getElementById("cancelEdit");
+
+const saveEdit =
+  document.getElementById("saveEdit");
+
+const adminPanel =
+  document.getElementById("adminPanel");
+
+const adminText =
+  document.getElementById("adminText");
+
+const adminPublish =
+  document.getElementById("adminPublish");
+
+
+/* STATE */
+
+let currentUser = null;
+
+let currentProfile = null;
+
+let selectedFile = null;
+
+let selectedFileType = null;
+
+let editingPostId = null;
+
+let unsubscribeFeed = null;
+
+
+/* TOAST */
+
+function showToast(text){
+
+  toast.textContent = text;
+
+  toast.classList.add("show");
+
+  setTimeout(() => {
+
+    toast.classList.remove("show");
+
+  }, 2500);
+
+}
+
+
+/* ESCAPE HTML */
+
+function escapeHtml(value){
+
+  if(value === undefined || value === null){
+    return "";
+  }
+
+  return String(value)
+    .replaceAll("&","&amp;")
+    .replaceAll("<","&lt;")
+    .replaceAll(">","&gt;")
+    .replaceAll('"',"&quot;")
+    .replaceAll("'","&#039;");
+
+}
+
+
+/* FORMAT POST TEXT */
+
+function formatPostText(text){
+
+  let safe =
+    escapeHtml(text);
+
+  safe =
+    safe.replace(
+      /(^|\s)(#[a-zA-Z0-9_]+)/g,
+      '$1<span class="hashtag">$2</span>'
+    );
+
+  safe =
+    safe.replace(
+      /(^|\s)(@[a-zA-Z0-9_]+)/g,
+      '$1<span class="mention">$2</span>'
+    );
+
+  return safe;
+
+}
+
+
+/* CURRENT USER */
+
+onAuthStateChanged(
+  auth,
+  async function(user){
+
+    if(!user){
+
+      showToast(
+        "Please log in to use Zemivo."
+      );
+
+      setTimeout(() => {
+
+        location.href =
+          "login.html";
+
+      },1200);
+
+      return;
+
+    }
+
+
+    currentUser =
+      user;
+
+
+    const profileRef =
+      doc(
+        db,
+        "profiles",
+        user.uid
+      );
+
+
+    try{
+
+      const profileSnap =
+        await getDoc(profileRef);
+
+
+      if(profileSnap.exists()){
+
+        currentProfile =
+          profileSnap.data();
+
+      }
+      else{
+
+        currentProfile = {
+
+          displayName:
+            user.displayName ||
+            "Zemivo User",
+
+          role:
+            "user"
+
+        };
+
+      }
+
+
+      const name =
+        currentProfile.displayName ||
+        user.displayName ||
+        "Zemivo User";
+
+
+      currentAvatar.textContent =
+        name.charAt(0).toUpperCase();
+
+
+      /*
+       ADMIN UI
+
+       This is only the frontend visibility layer.
+       Real administrator authorization MUST later
+       be enforced by Firestore Security Rules / backend.
+      */
+
+      if(
+        currentProfile.role ===
+        "admin"
+      ){
+
+        adminPanel.classList.add(
+          "show"
+        );
+
+      }
+
+
+      startFeedListener();
+
+    }
+    catch(error){
+
+      console.error(error);
+
+      showToast(
+        "Could not load your Zemivo profile."
+      );
+
+      startFeedListener();
+
+    }
+
+  }
+);
+
+
+/* FEED LISTENER */
+
+function startFeedListener(){
+
+  if(unsubscribeFeed){
+    unsubscribeFeed();
+  }
+
+
+  const postsQuery =
+    query(
+      collection(
+        db,
+        "posts"
+      ),
+      orderBy(
+        "createdAt",
+        "desc"
+      )
+    );
+
+
+  unsubscribeFeed =
+    onSnapshot(
+      postsQuery,
+      function(snapshot){
+
+        if(snapshot.empty){
+
+          feed.innerHTML = `
+            <div class="empty">
+              No posts yet.<br>
+              Be the first person to post on Zemivo.
+            </div>
+          `;
+
+          return;
+
+        }
+
+
+        feed.innerHTML = "";
+
+
+        snapshot.forEach(
+          function(postSnapshot){
+
+            const post =
+              postSnapshot.data();
+
+            const postId =
+              postSnapshot.id;
+
+
+            renderPost(
+              postId,
+              post
+            );
+
+          }
+        );
+
+      },
+      function(error){
+
+        console.error(error);
+
+        feed.innerHTML = `
+          <div class="empty">
+            Could not load posts.<br>
+            Please check Firestore permissions.
+          </div>
+        `;
+
+      }
+    );
+
+}
+
+
+/* RENDER POST */
+
+function renderPost(
+  postId,
+  post
+){
+
+  const article =
+    document.createElement("article");
+
+
+  article.className =
+    "post";
+
+
+  const name =
+    post.displayName ||
+    "Zemivo User";
+
+
+  const initial =
+    name
+      .charAt(0)
+      .toUpperCase();
+
+
+  const created =
+    post.createdAt &&
+    post.createdAt.toDate
+      ? post.createdAt.toDate()
+      : new Date();
+
+
+  const dateText =
+    created.toLocaleString();
+
+
+  const isOwner =
+    currentUser &&
+    post.uid ===
+    currentUser.uid;
+
+
+  const isAdmin =
+    currentProfile &&
+    currentProfile.role ===
+    "admin";
+
+
+  const menuItems = `
+
+    <button
+      class="menu-item"
+      data-action="save"
+    >
+      🔖 Save post
+    </button>
+
+    ${
+      isOwner
+      ?
+      `
+      <button
+        class="menu-item"
+        data-action="edit"
+      >
+        ✏️ Edit post
+      </button>
+
+      <button
+        class="menu-item"
+        data-action="archive"
+      >
+        📦 Move to archive
+      </button>
+
+      <button
+        class="menu-item danger"
+        data-action="delete"
+      >
+        🗑️ Move to trash
+      </button>
+      `
+      :
+      ""
+    }
+
+    <button
+      class="menu-item"
+      data-action="copy"
+    >
+      🔗 Copy link
+    </button>
+
+    ${
+      isAdmin
+      ?
+      `
+      <button
+        class="menu-item"
+        data-action="adminFeature"
+      >
+        🛡️ Admin control
+      </button>
+      `
+      :
+      ""
+    }
+
+  `;
+
+
+  const mediaHTML =
+    post.mediaPreview
+    ?
+    (
+      post.mediaType ===
+      "video"
+      ?
+      `
+      <video
+        class="post-media"
+        src="${post.mediaPreview}"
+        controls
+      ></video>
+      `
+      :
+      `
+      <img
+        class="post-media"
+        src="${post.mediaPreview}"
+        alt="Zemivo post"
+      >
+      `
+    )
+    :
+    "";
+
+
+  const productHTML =
+    post.productLink
+    ?
+    `
+    <div
+      style="
+        padding:10px 16px;
+      "
+    >
+      <a
+        href="${escapeHtml(post.productLink)}"
+        target="_blank"
+        rel="noopener noreferrer"
+        style="
+          color:#2563eb;
+          font-weight:bold;
+          text-decoration:none;
+        "
+      >
+        🔗 View product / affiliate link
+      </a>
+    </div>
+    `
+    :
+    "";
+
+
+  const locationHTML =
+    post.location
+    ?
+    `
+    <div
+      style="
+        padding:0 16px 10px;
+        color:#666;
+        font-size:13px;
+      "
+    >
+      📍 ${escapeHtml(post.location)}
+    </div>
+    `
+    :
+    "";
+
+
+  const groupHTML =
+    post.group
+    ?
+    `
+    <div
+      style="
+        padding:0 16px 10px;
+        color:#2563eb;
+        font-size:13px;
+      "
+    >
+      👥 ${escapeHtml(post.group)}
+    </div>
+    `
+    :
+    "";
+
+
+  const liked =
+    Array.isArray(post.likedBy) &&
+    currentUser &&
+    post.likedBy.includes(
+      currentUser.uid
+    );
+
+
+  article.innerHTML = `
+
+    <div class="post-head">
+
+      <div class="post-user">
+
+        <div class="avatar">
+          ${escapeHtml(initial)}
+        </div>
 
         <div>
-          <div class="post-name">Zemivo User</div>
-          <div class="post-time">Just now</div>
+
+          <div class="post-name">
+            ${escapeHtml(name)}
+            ${
+              post.isAdminAnnouncement
+              ?
+              `
+              <span
+                style="
+                  color:#2563eb;
+                  font-size:12px;
+                  margin-left:5px;
+                "
+              >
+                🛡️ Official
+              </span>
+              `
+              :
+              ""
+            }
+          </div>
+
+          <div class="post-meta">
+            ${escapeHtml(dateText)}
+            ·
+            ${escapeHtml(post.audience || "public")}
+          </div>
+
         </div>
+
       </div>
 
-      <div class="post-text">
-        Welcome to Zemivo! 🌍
-      </div>
 
-      <div class="actions">
-        <button class="action">❤️ Like</button>
-        <button class="action">💬 Comment</button>
-        <button class="action">↗ Share</button>
+      <div class="post-menu-wrap">
+
+        <button
+          class="dots"
+          data-menu-button
+        >
+          ⋯
+        </button>
+
+        <div class="post-menu">
+          ${menuItems}
+        </div>
+
       </div>
 
     </div>
 
-  </div>
-<nav>
-  <a href="index.html">🏠 Home</a>
-  <a href="profile.html">👤 Profile</a>
-  <a href="messenger.html">💬 Messenger</a>
-</nav>
+
+    <div class="post-content">
+      ${formatPostText(post.text || "")}
+    </div>
+
+    ${locationHTML}
+
+    ${groupHTML}
+
+    ${mediaHTML}
+
+    ${productHTML}
+
+
+    <div class="post-info">
+
+      <span>
+        ❤️ ${post.likes || 0}
+      </span>
+
+      <span>
+        💬 ${post.commentsCount || 0}
+        ·
+        🔄 ${post.shares || 0}
+        ·
+        ✨ ${post.sparks || 0}
+      </span>
+
+    </div>
+
+
+    <div class="post-actions">
+
+      <button
+        class="action ${liked ? "active" : ""}"
+        data-action="like"
+      >
+        ${liked ? "❤️ Liked" : "♡ Like"}
+      </button>
+
+      <button
+        class="action"
+        data-action="comment"
+      >
+        💬 Comment
+      </button>
+
+      <button
+        class="action"
+        data-action="share"
+      >
+        🔄 Share
+      </button>
+
+      <button
+        class="action spark"
+        data-action="spark"
+      >
+        ✨ Spark
+      </button>
+
+    </div>
+
+
+    <div class="comments">
+
+      <div
+        class="comments-list"
+        data-comments
+      >
+      </div>
+
+      <div class="comment-form">
+
+        <input
+          type="text"
+          placeholder="Write a comment..."
+          data-comment-input
+        >
+
+        <button
+          data-comment-button
+        >
+          Send
+        </button>
+
+      </div>
+
+    </div>
+
+  `;
+
+
+  feed.appendChild(article);
+
+
+  loadComments(
+    postId,
+    article
+  );
+
+
+  /*
+   MAIN POST ACTIONS
+  */
+
+  article.addEventListener(
+    "click",
+    async function(event){
+
+      const actionButton =
+        event.target.closest(
+          "[data-action]"
+        );
+
+
+      if(!actionButton){
+        return;
+      }
+
+
+      const action =
+        actionButton.dataset.action;
+
+
+      if(action === "like"){
+
+        await toggleLike(
+          postId,
+          post
+        );
+
+      }
+
+
+      if(action === "share"){
+
+        await sharePost(
+          postId,
+          post
+        );
+
+      }
+
+
+      if(action === "spark"){
+
+        await sparkPost(
+          postId
+        );
+
+      }
+
+
+      if(action === "comment"){
+
+        const input =
+          article.querySelector(
+            "[data-comment-input]"
+          );
+
+        input.focus();
+
+      }
+
+
+      if(action === "save"){
+
+        await savePost(
+          postId
+        );
+
+      }
+
+
+      if(action === "edit"){
+
+        if(!isOwner){
+          return;
+        }
+
+        openEditModal(
+          postId,
+          post.text || ""
+        );
+
+      }
+
+
+      if(action === "delete"){
+
+        if(!isOwner){
+          return;
+        }
+
+        await moveToTrash(
+          postId
+        );
+
+      }
+
+
+      if(action === "archive"){
+
+        if(!isOwner){
+          return;
+        }
+
+        await archivePost(
+          postId
+        );
+
+      }
+
+
+      if(action === "copy"){
+
+        await copyPostLink(
+          postId
+        );
+
+      }
+
+
+      if(action === "adminFeature"){
+
+        if(!isAdmin){
+          return;
+        }
+
+        showToast(
+          "Admin controls are ready for the secure backend phase."
+        );
+
+      }
+
+    }
+  );
+
+
+  /*
+   THREE DOT MENU
+  */
+
+  const menuButton =
+    article.querySelector(
+      "[data-menu-button]"
+    );
+
+
+  const postMenu =
+    article.querySelector(
+      ".post-menu"
+    );
+
+
+  menuButton.addEventListener(
+    "click",
+    function(event){
+
+      event.stopPropagation();
+
+      document
+        .querySelectorAll(
+          ".post-menu.show"
+        )
+        .forEach(
+          menu =>
+            menu.classList.remove(
+              "show"
+            )
+        );
+
+
+      postMenu.classList.toggle(
+        "show"
+      );
+
+    }
+  );
+
+
+  /*
+   COMMENT
+  */
+
+  const commentButton =
+    article.querySelector(
+      "[data-comment-button]"
+    );
+
+
+  const commentInput =
+    article.querySelector(
+      "[data-comment-input]"
+    );
+
+
+  commentButton.addEventListener(
+    "click",
+    async function(){
+
+      await submitComment(
+        postId,
+        commentInput
+      );
+
+    }
+  );
+
+
+  commentInput.addEventListener(
+    "keydown",
+    async function(event){
+
+      if(event.key === "Enter"){
+
+        event.preventDefault();
+
+        await submitComment(
+          postId,
+          commentInput
+        );
+
+      }
+
+    }
+  );
+
+}
+
+
+/* CLOSE MENUS */
+
+document.addEventListener(
+  "click",
+  function(){
+
+    document
+      .querySelectorAll(
+        ".post-menu.show"
+      )
+      .forEach(
+        menu =>
+          menu.classList.remove(
+            "show"
+          )
+      );
+
+  }
+);
+
+
+/* PLUS MENU */
+
+plusButton.addEventListener(
+  "click",
+  function(event){
+
+    event.stopPropagation();
+
+    mediaMenu.classList.toggle(
+      "show"
+    );
+
+  }
+);
+
+
+/* DETAILS */
+
+detailsButton.addEventListener(
+  "click",
+  function(){
+
+    composerExtra.classList.toggle(
+      "show"
+    );
+
+  }
+);
+
+
+/* GALLERY */
+
+document
+  .getElementById("galleryButton")
+  .addEventListener(
+    "click",
+    function(){
+
+      imageInput.click();
+
+      mediaMenu.classList.remove(
+        "show"
+      );
+
+    }
+  );
+
+
+/* VIDEO */
+
+document
+  .getElementById("videoButton")
+  .addEventListener(
+    "click",
+    function(){
+
+      videoInput.click();
+
+      mediaMenu.classList.remove(
+        "show"
+      );
+
+    }
+  );
+
+
+/* IMAGE SELECT */
+
+imageInput.addEventListener(
+  "change",
+  function(){
+
+    const file =
+      imageInput.files[0];
+
+    if(!file){
+      return;
+    }
+
+    selectedFile =
+      file;
+
+    selectedFileType =
+      "image";
+
+    previewSelectedFile();
+
+  }
+);
+
+
+/* VIDEO SELECT */
+
+videoInput.addEventListener(
+  "change",
+  function(){
+
+    const file =
+      videoInput.files[0];
+
+    if(!file){
+      return;
+    }
+
+    selectedFile =
+      file;
+
+    selectedFileType =
+      "video";
+
+    previewSelectedFile();
+
+  }
+);
+
+
+/* PREVIEW */
+
+function previewSelectedFile(){
+
+  if(!selectedFile){
+    return;
+  }
+
+
+  const reader =
+    new FileReader();
+
+
+  reader.onload =
+    function(event){
+
+      mediaPreview.classList.add(
+        "show"
+      );
+
+
+      if(
+        selectedFileType ===
+        "image"
+      ){
+
+        imagePreview.src =
+          event.target.result;
+
+        imagePreview.style.display =
+          "block";
+
+        videoPreview.style.display =
+          "none";
+
+      }
+      else{
+
+        videoPreview.src =
+          event.target.result;
+
+        videoPreview.style.display =
+          "block";
+
+        imagePreview.style.display =
+          "none";
+
+      }
+
+    };
+
+
+  reader.readAsDataURL(
+    selectedFile
+  );
+
+}
+
+
+/* REMOVE MEDIA */
+
+removeMedia.addEventListener(
+  "click",
+  function(){
+
+    selectedFile = null;
+
+    selectedFileType = null;
+
+    imageInput.value = "";
+
+    videoInput.value = "";
+
+    imagePreview.src = "";
+
+    videoPreview.src = "";
+
+    imagePreview.style.display =
+      "none";
+
+    videoPreview.style.display =
+      "none";
+
+    mediaPreview.classList.remove(
+      "show"
+    );
+
+  }
+);
+
+
+/* HASHTAG */
+
+document
+  .getElementById("hashtagButton")
+  .addEventListener(
+    "click",
+    function(){
+
+      insertTextAtCursor(
+        "#"
+      );
+
+      postText.focus();
+
+      mediaMenu.classList.remove(
+        "show"
+      );
+
+    }
+  );
+
+
+/* MENTION */
+
+document
+  .getElementById("mentionButton")
+  .addEventListener(
+    "click",
+    function(){
+
+      insertTextAtCursor(
+        "@"
+      );
+
+      postText.focus();
+
+      mediaMenu.classList.remove(
+        "show"
+      );
+
+    }
+  );
+
+
+/* LOCATION */
+
+document
+  .getElementById("locationButton")
+  .addEventListener(
+    "click",
+    function(){
+
+      composerExtra.classList.add(
+        "show"
+      );
+
+      locationInput.focus();
+
+      mediaMenu.classList.remove(
+        "show"
+      );
+
+    }
+  );
+
+
+function insertTextAtCursor(text){
+
+  const start =
+    postText.selectionStart;
+
+  const end =
+    postText.selectionEnd;
+
+  const before =
+    postText.value.substring(
+      0,
+      start
+    );
+
+  const after =
+    postText.value.substring(
+      end
+    );
+
+  postText.value =
+    before +
+    text +
+    after;
+
+  postText.selectionStart =
+    postText.selectionEnd =
+      start + text.length;
+
+}
+
+
+/* SYNC AUDIENCE */
+
+quickAudience.addEventListener(
+  "change",
+  function(){
+
+    audienceSelect.value =
+      quickAudience.value;
+
+  }
+);
+
+
+audienceSelect.addEventListener(
+  "change",
+  function(){
+
+    quickAudience.value =
+      audienceSelect.value;
+
+  }
+);
+
+
+/* CREATE POST */
+
+publishButton.addEventListener(
+  "click",
+  async function(){
+
+    if(!currentUser){
+
+      showToast(
+        "Please log in first."
+      );
+
+      return;
+
+    }
+
+
+    const text =
+      postText.value.trim();
+
+
+    if(
+      !text &&
+      !selectedFile
+    ){
+
+      showToast(
+        "Write something or select media first."
+      );
+
+      return;
+
+    }
+
+
+    publishButton.disabled =
+      true;
+
+    publishButton.textContent =
+      "Posting...";
+
+
+    try{
+
+      /*
+       IMPORTANT:
+
+       At this stage the selected image/video
+       is used as a temporary browser preview.
+
+       Firebase Storage will be connected later
+       so large media can be stored safely and
+       scalably.
+      */
+
+      let mediaPreviewData =
+        null;
+
+
+      if(selectedFile){
+
+        /*
+         Small testing files can be previewed.
+         Do NOT rely on this for production media.
+        */
+
+        mediaPreviewData =
+          await readFileAsDataURL(
+            selectedFile
+          );
+
+      }
+
+
+      const postData = {
+
+        uid:
+          currentUser.uid,
+
+        displayName:
+          currentProfile?.displayName ||
+          currentUser.displayName ||
+          "Zemivo User",
+
+        text:
+          text,
+
+        createdAt:
+          serverTimestamp(),
+
+        updatedAt:
+          serverTimestamp(),
+
+        audience:
+          quickAudience.value,
+
+        location:
+          locationInput.value.trim(),
+
+        group:
+          groupInput.value.trim(),
+
+        productLink:
+          productInput.value.trim(),
+
+        mediaType:
+          selectedFileType,
+
+        mediaPreview:
+          mediaPreviewData,
+
+        likes:
+          0,
+
+        commentsCount:
+          0,
+
+        shares:
+          0,
+
+        sparks:
+          0,
+
+        likedBy:
+          [],
+
+        sparkBy:
+          [],
+
+        status:
+          "published",
+
+        isAdminAnnouncement:
+          false
+
+      };
+
+
+      await addDoc(
+        collection(
+          db,
+          "posts"
+        ),
+        postData
+      );
+
+
+      clearComposer();
+
+
+      showToast(
+        "Post published successfully."
+      );
+
+    }
+    catch(error){
+
+      console.error(error);
+
+      showToast(
+        "Post could not be published. Check Firestore permissions."
+      );
+
+    }
+
+
+    publishButton.disabled =
+      false;
+
+    publishButton.textContent =
+      "Post";
+
+  }
+);
+
+
+/* READ FILE */
+
+function readFileAsDataURL(file){
+
+  return new Promise(
+    function(resolve,reject){
+
+      const reader =
+        new FileReader();
+
+
+      reader.onload =
+        () =>
+          resolve(
+            reader.result
+          );
+
+
+      reader.onerror =
+        reject;
+
+
+      reader.readAsDataURL(
+        file
+      );
+
+    }
+  );
+
+}
+
+
+/* CLEAR COMPOSER */
+
+function clearComposer(){
+
+  postText.value = "";
+
+  locationInput.value = "";
+
+  groupInput.value = "";
+
+  productInput.value = "";
+
+  selectedFile = null;
+
+  selectedFileType = null;
+
+  imageInput.value = "";
+
+  videoInput.value = "";
+
+  imagePreview.src = "";
+
+  videoPreview.src = "";
+
+  imagePreview.style.display =
+    "none";
+
+  videoPreview.style.display =
+    "none";
+
+  mediaPreview.classList.remove(
+    "show"
+  );
+
+  composerExtra.classList.remove(
+    "show"
+  );
+
+}
+
+
+/* LIKE */
+
+async function toggleLike(
+  postId,
+  post
+){
+
+  if(!currentUser){
+    return;
+  }
+
+
+  const ref =
+    doc(
+      db,
+      "posts",
+      postId
+    );
+
+
+  const liked =
+    Array.isArray(post.likedBy) &&
+    post.likedBy.includes(
+      currentUser.uid
+    );
+
+
+  try{
+
+    if(liked){
+
+      await updateDoc(
+        ref,
+        {
+          likes:
+            increment(-1),
+
+          likedBy:
+            arrayRemove(
+              currentUser.uid
+            )
+        }
+      );
+
+    }
+    else{
+
+      await updateDoc(
+        ref,
+        {
+          likes:
+            increment(1),
+
+          likedBy:
+            arrayUnion(
+              currentUser.uid
+            )
+        }
+      );
+
+    }
+
+  }
+  catch(error){
+
+    console.error(error);
+
+    showToast(
+      "Could not update reaction."
+    );
+
+  }
+
+}
+
+
+/* SPARK */
+
+async function sparkPost(
+  postId
+){
+
+  if(!currentUser){
+    return;
+  }
+
+
+  const ref =
+    doc(
+      db,
+      "posts",
+      postId
+    );
+
+
+  try{
+
+    await updateDoc(
+      ref,
+      {
+
+        sparks:
+          increment(1),
+
+        sparkBy:
+          arrayUnion(
+            currentUser.uid
+          )
+
+      }
+    );
+
+
+    showToast(
+      "✨ Spark added!"
+    );
+
+  }
+  catch(error){
+
+    console.error(error);
+
+    showToast(
+      "Could not add Spark."
+    );
+
+  }
+
+}
+
+
+/* SHARE */
+
+async function sharePost(
+  postId,
+  post
+){
+
+  try{
+
+    const shareUrl =
+      location.origin +
+      location.pathname +
+      "?post=" +
+      encodeURIComponent(
+        postId
+      );
+
+
+    if(
+      navigator.share
+    ){
+
+      await navigator.share({
+
+        title:
+          "Zemivo post",
+
+        text:
+          post.text ||
+          "Check this post on Zemivo.",
+
+        url:
+          shareUrl
+
+      });
+
+    }
+    else if(
+      navigator.clipboard
+    ){
+
+      await navigator.clipboard.writeText(
+        shareUrl
+      );
+
+      showToast(
+        "Post link copied."
+      );
+
+    }
+
+
+    await updateDoc(
+      doc(
+        db,
+        "posts",
+        postId
+      ),
+      {
+        shares:
+          increment(1)
+      }
+    );
+
+  }
+  catch(error){
+
+    console.error(error);
+
+  }
+
+}
+
+
+/* COPY LINK */
+
+async function copyPostLink(
+  postId
+){
+
+  const url =
+    location.origin +
+    location.pathname +
+    "?post=" +
+    encodeURIComponent(
+      postId
+    );
+
+
+  try{
+
+    await navigator.clipboard.writeText(
+      url
+    );
+
+    showToast(
+      "Post link copied."
+    );
+
+  }
+  catch(error){
+
+    showToast(
+      "Could not copy the link."
+    );
+
+  }
+
+}
+
+
+/* SAVE */
+
+async function savePost(
+  postId
+){
+
+  if(!currentUser){
+    return;
+  }
+
+
+  try{
+
+    await setDoc(
+      doc(
+        db,
+        "users",
+        currentUser.uid,
+        "saved",
+        postId
+      ),
+      {
+
+        postId:
+          postId,
+
+        savedAt:
+          serverTimestamp()
+
+      }
+    );
+
+
+    showToast(
+      "Post saved."
+    );
+
+  }
+  catch(error){
+
+    console.error(error);
+
+    showToast(
+      "Could not save post."
+    );
+
+  }
+
+}
+
+
+/* EDIT */
+
+function openEditModal(
+  postId,
+  text
+){
+
+  editingPostId =
+    postId;
+
+  editText.value =
+    text;
+
+  editModal.classList.add(
+    "show"
+  );
+
+  editText.focus();
+
+}
+
+
+cancelEdit.addEventListener(
+  "click",
+  function(){
+
+    editingPostId =
+      null;
+
+    editModal.classList.remove(
+      "show"
+    );
+
+  }
+);
+
+
+saveEdit.addEventListener(
+  "click",
+  async function(){
+
+    if(!editingPostId){
+      return;
+    }
+
+
+    const text =
+      editText.value.trim();
+
+
+    if(!text){
+
+      showToast(
+        "Post cannot be empty."
+      );
+
+      return;
+
+    }
+
+
+    try{
+
+      await updateDoc(
+        doc(
+          db,
+          "posts",
+          editingPostId
+        ),
+        {
+
+          text:
+            text,
+
+          updatedAt:
+            serverTimestamp()
+
+        }
+      );
+
+
+      editModal.classList.remove(
+        "show"
+      );
+
+
+      editingPostId =
+        null;
+
+
+      showToast(
+        "Post updated successfully."
+      );
+
+    }
+    catch(error){
+
+      console.error(error);
+
+      showToast(
+        "Could not update post."
+      );
+
+    }
+
+  }
+);
+
+
+/* TRASH */
+
+async function moveToTrash(
+  postId
+){
+
+  if(!currentUser){
+    return;
+  }
+
+
+  const confirmed =
+    confirm(
+      "Move this post to trash?"
+    );
+
+
+  if(!confirmed){
+    return;
+  }
+
+
+  try{
+
+    await updateDoc(
+      doc(
+        db,
+        "posts",
+        postId
+      ),
+      {
+
+        status:
+          "trash",
+
+        trashedAt:
+          serverTimestamp()
+
+      }
+    );
+
+
+    showToast(
+      "Post moved to trash."
+    );
+
+  }
+  catch(error){
+
+    console.error(error);
+
+    showToast(
+      "Could not move post to trash."
+    );
+
+  }
+
+}
+
+
+/* ARCHIVE */
+
+async function archivePost(
+  postId
+){
+
+  try{
+
+    await updateDoc(
+      doc(
+        db,
+        "posts",
+        postId
+      ),
+      {
+
+        status:
+          "archived",
+
+        archivedAt:
+          serverTimestamp()
+
+      }
+    );
+
+
+    showToast(
+      "Post archived."
+    );
+
+  }
+  catch(error){
+
+    console.error(error);
+
+    showToast(
+      "Could not archive post."
+    );
+
+  }
+
+}
+
+
+/* COMMENTS */
+
+async function submitComment(
+  postId,
+  input
+){
+
+  const text =
+    input.value.trim();
+
+
+  if(!text){
+    return;
+  }
+
+
+  if(!currentUser){
+    return;
+  }
+
+
+  try{
+
+    await addDoc(
+      collection(
+        db,
+        "posts",
+        postId,
+        "comments"
+      ),
+      {
+
+        uid:
+          currentUser.uid,
+
+        displayName:
+          currentProfile?.displayName ||
+          currentUser.displayName ||
+          "Zemivo User",
+
+        text:
+          text,
+
+        createdAt:
+          serverTimestamp()
+
+      }
+    );
+
+
+    await updateDoc(
+      doc(
+        db,
+        "posts",
+        postId
+      ),
+      {
+
+        commentsCount:
+          increment(1)
+
+      }
+    );
+
+
+    input.value = "";
+
+
+  }
+  catch(error){
+
+    console.error(error);
+
+    showToast(
+      "Could not send comment."
+    );
+
+  }
+
+}
+
+
+/* LOAD COMMENTS */
+
+function loadComments(
+  postId,
+  article
+){
+
+  const commentsList =
+    article.querySelector(
+      "[data-comments]"
+    );
+
+
+  const commentsQuery =
+    query(
+      collection(
+        db,
+        "posts",
+        postId,
+        "comments"
+      ),
+      orderBy(
+        "createdAt",
+        "asc"
+      )
+    );
+
+
+  onSnapshot(
+    commentsQuery,
+    function(snapshot){
+
+      commentsList.innerHTML = "";
+
+
+      snapshot.forEach(
+        function(commentSnapshot){
+
+          const comment =
+            commentSnapshot.data();
+
+
+          const div =
+            document.createElement(
+              "div"
+            );
+
+
+          div.className =
+            "comment";
+
+
+          div.innerHTML = `
+
+            <div class="comment-name">
+              ${escapeHtml(
+                comment.displayName ||
+                "Zemivo User"
+              )}
+            </div>
+
+            <div class="comment-text">
+              ${formatPostText(
+                comment.text || ""
+              )}
+            </div>
+
+          `;
+
+
+          commentsList.appendChild(
+            div
+          );
+
+        }
+      );
+
+    },
+    function(error){
+
+      console.error(
+        "Comment listener error:",
+        error
+      );
+
+    }
+  );
+
+}
+
+
+/* ADMIN GLOBAL ANNOUNCEMENT */
+
+adminPublish.addEventListener(
+  "click",
+  async function(){
+
+    if(
+      !currentProfile ||
+      currentProfile.role !==
+      "admin"
+    ){
+
+      showToast(
+        "Administrator permission required."
+      );
+
+      return;
+
+    }
+
+
+    const text =
+      adminText.value.trim();
+
+
+    if(!text){
+
+      showToast(
+        "Write an announcement first."
+      );
+
+      return;
+
+    }
+
+
+    adminPublish.disabled =
+      true;
+
+    adminPublish.textContent =
+      "Publishing...";
+
+
+    try{
+
+      await addDoc(
+        collection(
+          db,
+          "posts"
+        ),
+        {
+
+          uid:
+            currentUser.uid,
+
+          displayName:
+            currentProfile.displayName ||
+            "Zemivo Administration",
+
+          text:
+            text,
+
+          createdAt:
+            serverTimestamp(),
+
+          updatedAt:
+            serverTimestamp(),
+
+          audience:
+            "global",
+
+          likes:
+            0,
+
+          commentsCount:
+            0,
+
+          shares:
+            0,
+
+          sparks:
+            0,
+
+          likedBy:
+            [],
+
+          sparkBy:
+            [],
+
+          status:
+            "published",
+
+          isAdminAnnouncement:
+            true
+
+        }
+      );
+
+
+      adminText.value = "";
+
+
+      showToast(
+        "Official announcement published."
+      );
+
+    }
+    catch(error){
+
+      console.error(error);
+
+      showToast(
+        "Announcement failed."
+      );
+
+    }
+
+
+    adminPublish.disabled =
+      false;
+
+    adminPublish.textContent =
+      "Publish Global Announcement";
+
+  }
+);
+
+
+/*
+ IMPORTANT PRODUCTION NOTE
+
+ The admin controls shown above are NOT the final
+ security layer.
+
+ In the production version, administrator
+ privileges MUST be enforced by Firebase
+ Security Rules / trusted backend authorization.
+
+ Never trust only:
+ currentProfile.role === "admin"
+
+because browser-side JavaScript can be modified
+by a malicious user.
+
+The same principle applies to:
+- deleting posts
+- editing posts
+- affiliate management
+- global announcements
+- currency
+- monetization
+- user data
+- moderation
+*/
+</script>
+
 </body>
 </html>
