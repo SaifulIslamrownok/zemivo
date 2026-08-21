@@ -1,521 +1,1186 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Zemivo - Connect. Create. Earn.</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zemivo - Home</title>
 
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+<style>
+*{box-sizing:border-box}
 
-    body {
-      font-family: Arial, sans-serif;
-      background: #f4f6f8;
-      color: #222;
-    }
+body{
+  margin:0;
+  font-family:Arial,sans-serif;
+  background:#f4f6f8;
+  color:#172033;
+}
 
-    .topbar {
-      background: white;
-      padding: 14px 20px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 15px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-      position: sticky;
-      top: 0;
-      z-index: 10;
-    }
+.header{
+  position:sticky;
+  top:0;
+  z-index:100;
+  height:64px;
+  background:#fff;
+  border-bottom:1px solid #e5e7eb;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 18px;
+}
 
-    .logo {
-      font-size: 26px;
-      font-weight: bold;
-      color: #2563eb;
-    }
+.logo{
+  font-size:27px;
+  font-weight:800;
+  color:#2563eb;
+}
 
-    .search {
-      padding: 11px 15px;
-      border: 1px solid #ddd;
-      border-radius: 22px;
-      width: 40%;
-      outline: none;
-      font-size: 15px;
-    }
+.header-actions{
+  display:flex;
+  gap:8px;
+}
 
-    .login {
-      background: #2563eb;
-      color: white;
-      padding: 11px 18px;
-      border-radius: 22px;
-      font-weight: bold;
-      text-decoration: none;
-    }
+.icon-btn{
+  width:42px;
+  height:42px;
+  border:0;
+  border-radius:50%;
+  background:#f1f5f9;
+  cursor:pointer;
+  font-size:19px;
+}
 
-    .top-nav {
-      background: white;
-      padding: 10px;
-      text-align: center;
-      border-bottom: 1px solid #eee;
-    }
+.container{
+  width:100%;
+  max-width:760px;
+  margin:20px auto;
+  padding:0 12px;
+}
 
-    .top-nav a {
-      margin: 0 8px;
-      color: #2563eb;
-      text-decoration: none;
-      font-weight: bold;
-    }
+.card{
+  background:#fff;
+  border-radius:16px;
+  border:1px solid #e5e7eb;
+  margin-bottom:16px;
+  overflow:hidden;
+}
 
-    .container {
-      max-width: 1050px;
-      margin: 25px auto;
-      padding: 0 15px;
-      display: grid;
-      grid-template-columns: 220px 1fr 220px;
-      gap: 20px;
-    }
+.composer{
+  padding:16px;
+}
 
-    .card {
-      background: white;
-      border-radius: 15px;
-      padding: 18px;
-      margin-bottom: 18px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-    }
+.composer-top{
+  display:flex;
+  gap:12px;
+  align-items:center;
+}
 
-    .menu div,
-    .menu a {
-      display: block;
-      padding: 12px 5px;
-      font-weight: bold;
-      text-decoration: none;
-      color: #222;
-    }
+.avatar{
+  width:44px;
+  height:44px;
+  border-radius:50%;
+  background:#2563eb;
+  color:white;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:bold;
+  flex-shrink:0;
+}
 
-    .menu a:hover {
-      color: #2563eb;
-    }
+textarea{
+  width:100%;
+  min-height:70px;
+  resize:none;
+  border:1px solid #e5e7eb;
+  border-radius:12px;
+  padding:12px;
+  font-size:15px;
+  outline:none;
+}
 
-    .welcome {
-      text-align: center;
-      padding: 40px 20px;
-    }
+textarea:focus{
+  border-color:#2563eb;
+}
 
-    .welcome h1 {
-      font-size: 36px;
-      color: #2563eb;
-      margin-bottom: 12px;
-    }
+.photo-preview{
+  margin-top:12px;
+  display:none;
+}
 
-    .welcome p {
-      color: #666;
-      line-height: 1.5;
-      margin-bottom: 25px;
-    }
+.photo-preview img{
+  width:100%;
+  max-height:420px;
+  object-fit:cover;
+  border-radius:12px;
+}
 
-    .signup {
-      display: inline-block;
-      background: #2563eb;
-      color: white;
-      padding: 13px 27px;
-      border-radius: 25px;
-      font-size: 16px;
-      font-weight: bold;
-      text-decoration: none;
-    }
+.composer-actions{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-top:12px;
+}
 
-    .post-box textarea {
-      width: 100%;
-      min-height: 90px;
-      border: 1px solid #ddd;
-      border-radius: 12px;
-      padding: 12px;
-      resize: none;
-      outline: none;
-      font-size: 15px;
-    }
+.photo-label{
+  cursor:pointer;
+  padding:9px 13px;
+  border-radius:10px;
+  background:#eff6ff;
+  color:#2563eb;
+  font-weight:bold;
+}
 
-    .post-button {
-      margin-top: 10px;
-      background: #2563eb;
-      color: white;
-      border: none;
-      padding: 10px 21px;
-      border-radius: 20px;
-      font-weight: bold;
-      cursor: pointer;
-    }
+#photoInput{
+  display:none;
+}
 
-    .post h3 {
-      margin-bottom: 9px;
-    }
+.post-btn{
+  border:0;
+  background:#2563eb;
+  color:white;
+  padding:10px 20px;
+  border-radius:22px;
+  font-weight:bold;
+  cursor:pointer;
+}
 
-    .post p {
-      color: #555;
-      line-height: 1.5;
-    }
+.post-header{
+  padding:15px;
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
 
-    .actions {
-      margin-top: 15px;
-      color: #2563eb;
-      font-weight: bold;
-    }
+.post-info{
+  flex:1;
+}
 
-    .like-button,
-    .comment-button,
-    .share-button {
-      cursor: pointer;
-    }
+.post-name{
+  font-weight:bold;
+}
 
-    .like-button:hover,
-    .comment-button:hover,
-    .share-button:hover {
-      text-decoration: underline;
-    }
+.post-time{
+  font-size:12px;
+  color:#64748b;
+  margin-top:3px;
+}
 
-    .earning {
-      text-align: center;
-    }
+.more-btn{
+  border:0;
+  background:transparent;
+  font-size:22px;
+  cursor:pointer;
+}
 
-    .earning h2 {
-      color: #16a34a;
-      margin-bottom: 10px;
-    }
+.post-text{
+  padding:0 15px 15px;
+  white-space:pre-wrap;
+  line-height:1.5;
+}
 
-    .trending p {
-      margin-top: 10px;
-    }
+.post-image{
+  width:100%;
+  max-height:520px;
+  object-fit:cover;
+  display:block;
+}
 
-    .footer {
-      text-align: center;
-      padding: 25px;
-      color: #777;
-      font-size: 14px;
-    }
+.stats{
+  padding:10px 15px;
+  display:flex;
+  justify-content:space-between;
+  color:#64748b;
+  font-size:13px;
+  border-bottom:1px solid #eef0f3;
+}
 
-    .comment-text {
-      margin-top: 8px;
-      padding: 8px;
-      background: #f4f6f8;
-      border-radius: 8px;
-      color: #333;
-    }
+.post-actions{
+  display:flex;
+  border-bottom:1px solid #eef0f3;
+}
 
-    @media (max-width: 800px) {
-      .container {
-        grid-template-columns: 1fr;
-      }
+.post-actions button{
+  flex:1;
+  border:0;
+  background:#fff;
+  padding:12px 5px;
+  cursor:pointer;
+  font-weight:bold;
+  color:#475569;
+}
 
-      .left,
-      .right {
-        display: none;
-      }
+.post-actions button:hover{
+  background:#f8fafc;
+}
 
-      .search {
-        width: 42%;
-      }
+.post-actions .liked{
+  color:#2563eb;
+}
 
-      .welcome h1 {
-        font-size: 32px;
-      }
-    }
-  </style>
+.comments{
+  padding:12px 15px;
+}
+
+.comment-form{
+  display:flex;
+  gap:8px;
+}
+
+.comment-form input{
+  flex:1;
+  border:1px solid #e2e8f0;
+  border-radius:20px;
+  padding:10px 13px;
+  outline:none;
+}
+
+.comment-form button{
+  border:0;
+  border-radius:20px;
+  padding:0 15px;
+  background:#2563eb;
+  color:white;
+  cursor:pointer;
+}
+
+.comment{
+  margin-top:12px;
+}
+
+.comment-main{
+  display:flex;
+  gap:8px;
+}
+
+.comment-body{
+  background:#f1f5f9;
+  border-radius:14px;
+  padding:9px 12px;
+  flex:1;
+}
+
+.comment-author{
+  font-size:13px;
+  font-weight:bold;
+}
+
+.comment-text{
+  margin-top:4px;
+  line-height:1.4;
+}
+
+.comment-tools{
+  display:flex;
+  gap:14px;
+  padding:5px 8px;
+  font-size:12px;
+  color:#64748b;
+}
+
+.comment-tools button{
+  border:0;
+  background:none;
+  padding:0;
+  cursor:pointer;
+  color:#64748b;
+  font-weight:bold;
+}
+
+.comment-tools .active{
+  color:#2563eb;
+}
+
+.reply-area{
+  margin-left:50px;
+  margin-top:6px;
+}
+
+.reply-form{
+  display:flex;
+  gap:7px;
+}
+
+.reply-form input{
+  flex:1;
+  border:1px solid #e2e8f0;
+  border-radius:18px;
+  padding:8px 11px;
+}
+
+.reply-form button{
+  border:0;
+  border-radius:18px;
+  background:#2563eb;
+  color:white;
+  padding:0 12px;
+  cursor:pointer;
+}
+
+.replies{
+  margin-left:50px;
+}
+
+.empty{
+  text-align:center;
+  color:#64748b;
+  padding:30px 10px;
+}
+
+.hidden{
+  display:none!important;
+}
+
+@media(max-width:600px){
+  .header{
+    padding:0 12px;
+  }
+
+  .container{
+    margin-top:10px;
+    padding:0 7px;
+  }
+
+  .card{
+    border-radius:12px;
+  }
+
+  .logo{
+    font-size:24px;
+  }
+}
+</style>
 </head>
 
 <body>
 
-  <nav class="top-nav">
-    <a href="index.html">🏠 Home</a>
-    <a href="profile.html">👤 Profile</a>
-    <a href="feed.html">📰 Feed</a>
-    <a href="messenger.html">💬 Messenger</a>
-  </nav>
+<header class="header">
+  <div class="logo">Zemivo</div>
 
-  <header class="topbar">
+  <div class="header-actions">
+    <button class="icon-btn" title="Search">🔍</button>
+    <button class="icon-btn" title="Messages">💬</button>
+    <button class="icon-btn" title="Notifications">🔔</button>
+  </div>
+</header>
 
-    <div class="logo">Zemivo</div>
+<main class="container">
 
-    <input
-      class="search"
-      type="text"
-      placeholder="Search Zemivo..."
-    >
+  <section class="card composer">
 
-    <a class="login" href="login.html">Log In</a>
+    <div class="composer-top">
+      <div class="avatar">Z</div>
 
-  </header>
+      <textarea
+        id="postText"
+        placeholder="What's on your mind?"
+      ></textarea>
+    </div>
 
-  <main class="container">
+    <div class="photo-preview" id="photoPreview">
+      <img id="previewImage" alt="Selected photo">
+    </div>
 
-    <aside class="left">
+    <div class="composer-actions">
 
-      <div class="card menu">
+      <label class="photo-label" for="photoInput">
+        🖼️ Photo
+      </label>
 
-        <div>🏠 Home</div>
+      <input
+        id="photoInput"
+        type="file"
+        accept="image/*"
+      >
 
-        <a href="profile.html">👤 Profile</a>
+      <button
+        class="post-btn"
+        id="postButton"
+      >
+        Post
+      </button>
 
-        <a href="#">👥 Friends</a>
+    </div>
 
-        <a href="#">🎥 Videos</a>
+  </section>
 
-        <a href="#">🔔 Notifications</a>
+  <section id="feed"></section>
 
-        <a href="#">💰 Earn</a>
+</main>
 
-      </div>
+<script>
 
-    </aside>
+let posts = [];
 
-    <section>
+let currentPhoto = "";
 
-      <div class="card welcome">
+const postText =
+  document.getElementById("postText");
 
-        <h1>Welcome to Zemivo</h1>
+const photoInput =
+  document.getElementById("photoInput");
 
-        <p>
-          Connect with people, create content,
-          grow your audience and earn from your work.
-        </p>
+const photoPreview =
+  document.getElementById("photoPreview");
 
-        <a class="signup" href="signup.html">
-          Create Account
-        </a>
+const previewImage =
+  document.getElementById("previewImage");
 
-      </div>
+const postButton =
+  document.getElementById("postButton");
 
-      <div class="card post-box">
+const feed =
+  document.getElementById("feed");
 
-        <h3>Create a Post</h3>
 
-        <textarea
-          id="postInput"
-          placeholder="What's happening on Zemivo?"
-        ></textarea>
+photoInput.addEventListener("change", function(){
+
+  const file = this.files[0];
+
+  if(!file){
+    currentPhoto = "";
+    photoPreview.style.display = "none";
+    return;
+  }
+
+  const reader = new FileReader();
+
+  reader.onload = function(e){
+
+    currentPhoto = e.target.result;
+
+    previewImage.src = currentPhoto;
+
+    photoPreview.style.display = "block";
+
+  };
+
+  reader.readAsDataURL(file);
+
+});
+
+
+postButton.addEventListener("click", function(){
+
+  const text =
+    postText.value.trim();
+
+  if(!text && !currentPhoto){
+    alert("Please write something or select a photo.");
+    return;
+  }
+
+  const post = {
+
+    id: Date.now(),
+
+    name: "You",
+
+    text: text,
+
+    photo: currentPhoto,
+
+    likes: 0,
+
+    liked: false,
+
+    views: 0,
+
+    comments: []
+
+  };
+
+  posts.unshift(post);
+
+  postText.value = "";
+
+  photoInput.value = "";
+
+  currentPhoto = "";
+
+  photoPreview.style.display = "none";
+
+  renderFeed();
+
+});
+
+
+function renderFeed(){
+
+  feed.innerHTML = "";
+
+  if(posts.length === 0){
+
+    feed.innerHTML =
+      '<div class="card empty">No posts yet. Create the first post.</div>';
+
+    return;
+
+  }
+
+  posts.forEach(function(post){
+
+    const card =
+      document.createElement("article");
+
+    card.className = "card";
+
+    post.views++;
+
+    card.innerHTML = `
+
+      <div class="post-header">
+
+        <div class="avatar">
+          ${escapeHTML(post.name.charAt(0))}
+        </div>
+
+        <div class="post-info">
+
+          <div class="post-name">
+            ${escapeHTML(post.name)}
+          </div>
+
+          <div class="post-time">
+            Just now
+          </div>
+
+        </div>
 
         <button
-          id="postButton"
-          class="post-button"
-          type="button"
+          class="more-btn"
+          onclick="postMenu(${post.id})"
         >
-          Post
+          ⋯
         </button>
 
       </div>
 
-      <div class="card post">
-
-        <h3>🌍 Welcome to Zemivo!</h3>
-
-        <p>
-          A new social platform where creators,
-          communities and opportunities come together.
-        </p>
-
-        <div class="actions">
-
-          <span
-            class="like-button"
-            data-likes="0"
-          >
-            ❤️ Like 0
-          </span>
-
-          &nbsp;&nbsp;
-
-          <span class="comment-button">
-            💬 Comment
-          </span>
-
-          &nbsp;&nbsp;
-
-          <span class="share-button">
-            ↗ Share
-          </span>
-
-        </div>
-
-      </div>
-
-    </section>
-
-    <aside class="right">
-
-      <div class="card earning">
-
-        <h2>💰 Creator Zone</h2>
-
-        <p>
-          Build your audience and unlock
-          future earning opportunities.
-        </p>
-
-      </div>
-
-      <div class="card trending">
-
-        <h3>Trending</h3>
-
-        <p>🔥 #Zemivo</p>
-        <p>🎥 #Creators</p>
-        <p>💼 #EarnOnline</p>
-
-      </div>
-
-    </aside>
-
-  </main>
-
-  <footer class="footer">
-    © 2026 Zemivo — Connect. Create. Earn.
-  </footer>
-
-  <script>
-
-    const postInput =
-      document.getElementById("postInput");
-
-    const postButton =
-      document.getElementById("postButton");
-
-    const postsSection =
-      document.querySelector("section");
-
-
-    postButton.addEventListener("click", function () {
-
-      const text =
-        postInput.value.trim();
-
-      if (text === "") {
-        return;
+      ${
+        post.text
+        ?
+        `<div class="post-text">
+          ${escapeHTML(post.text)}
+        </div>`
+        :
+        ""
       }
 
-      const newPost =
-        document.createElement("div");
+      ${
+        post.photo
+        ?
+        `<img
+          class="post-image"
+          src="${post.photo}"
+          alt="Post image"
+        >`
+        :
+        ""
+      }
 
-      newPost.className =
-        "card post";
+      <div class="stats">
 
-      newPost.innerHTML = `
-        <h3>📝 New Post</h3>
+        <span>
+          ❤️ ${post.likes}
+        </span>
 
-        <p></p>
+        <span>
+          💬 ${countAllComments(post)}
+          &nbsp;&nbsp;
+          👁️ ${post.views}
+        </span>
 
-        <div class="actions">
+      </div>
 
-          <span
-            class="like-button"
-            data-likes="0"
+      <div class="post-actions">
+
+        <button
+          class="${post.liked ? "liked" : ""}"
+          onclick="toggleLike(${post.id})"
+        >
+          ❤️ Like
+        </button>
+
+        <button
+          onclick="focusComment(${post.id})"
+        >
+          💬 Comment
+        </button>
+
+        <button
+          onclick="sharePost(${post.id})"
+        >
+          ↗ Share
+        </button>
+
+      </div>
+
+      <div class="comments">
+
+        <div class="comment-form">
+
+          <input
+            id="comment-${post.id}"
+            placeholder="Write a comment..."
           >
-            ❤️ Like 0
-          </span>
 
-          &nbsp;&nbsp;
-
-          <span class="comment-button">
-            💬 Comment
-          </span>
-
-          &nbsp;&nbsp;
-
-          <span class="share-button">
-            ↗ Share
-          </span>
+          <button
+            onclick="addComment(${post.id})"
+          >
+            Send
+          </button>
 
         </div>
-      `;
 
-      newPost.querySelector("p").textContent =
-        text;
+        <div id="comments-${post.id}">
+          ${renderComments(post)}
+        </div>
 
-      postsSection.insertBefore(
-        newPost,
-        postsSection.children[1]
+      </div>
+    `;
+
+    feed.appendChild(card);
+
+  });
+
+}
+
+
+function toggleLike(postId){
+
+  const post =
+    posts.find(p => p.id === postId);
+
+  if(!post) return;
+
+  post.liked = !post.liked;
+
+  post.likes +=
+    post.liked ? 1 : -1;
+
+  renderFeed();
+
+}
+
+
+function addComment(postId){
+
+  const input =
+    document.getElementById(
+      `comment-${postId}`
+    );
+
+  if(!input) return;
+
+  const text =
+    input.value.trim();
+
+  if(!text) return;
+
+  const post =
+    posts.find(p => p.id === postId);
+
+  if(!post) return;
+
+  post.comments.push({
+
+    id: Date.now(),
+
+    author: "You",
+
+    text: text,
+
+    likes: 0,
+
+    liked: false,
+
+    replies: []
+
+  });
+
+  renderFeed();
+
+}
+
+
+function addReply(postId, commentId){
+
+  const input =
+    document.getElementById(
+      `reply-${commentId}`
+    );
+
+  if(!input) return;
+
+  const text =
+    input.value.trim();
+
+  if(!text) return;
+
+  const post =
+    posts.find(p => p.id === postId);
+
+  if(!post) return;
+
+  const comment =
+    findComment(post.comments, commentId);
+
+  if(!comment) return;
+
+  comment.replies.push({
+
+    id: Date.now(),
+
+    author: "You",
+
+    text: text,
+
+    likes: 0,
+
+    liked: false,
+
+    replies: []
+
+  });
+
+  renderFeed();
+
+}
+
+
+function findComment(comments, id){
+
+  for(const comment of comments){
+
+    if(comment.id === id){
+      return comment;
+    }
+
+    const found =
+      findComment(comment.replies || [], id);
+
+    if(found){
+      return found;
+    }
+
+  }
+
+  return null;
+
+}
+
+
+function renderComments(post){
+
+  return post.comments
+    .map(function(comment){
+
+      return renderComment(
+        post.id,
+        comment,
+        0
       );
 
-      postInput.value = "";
+    })
+    .join("");
+
+}
+
+
+function renderComment(
+  postId,
+  comment,
+  level
+){
+
+  const replies =
+    (comment.replies || [])
+      .map(function(reply){
+
+        return renderComment(
+          postId,
+          reply,
+          level + 1
+        );
+
+      })
+      .join("");
+
+  return `
+
+    <div
+      class="comment"
+      data-level="${level}"
+    >
+
+      <div class="comment-main">
+
+        <div class="avatar">
+          ${escapeHTML(comment.author.charAt(0))}
+        </div>
+
+        <div class="comment-body">
+
+          <div class="comment-author">
+            ${escapeHTML(comment.author)}
+          </div>
+
+          <div class="comment-text">
+            ${escapeHTML(comment.text)}
+          </div>
+
+        </div>
+
+      </div>
+
+      <div class="comment-tools">
+
+        <button
+          class="${comment.liked ? "active" : ""}"
+          onclick="likeComment(${postId}, ${comment.id})"
+        >
+          ❤️ ${comment.likes}
+        </button>
+
+        <button
+          onclick="editComment(${postId}, ${comment.id})"
+        >
+          ✏️ Edit
+        </button>
+
+        <button
+          onclick="deleteComment(${postId}, ${comment.id})"
+        >
+          🗑️ Delete
+        </button>
+
+        <button
+          onclick="showReplyBox(${comment.id})"
+        >
+          ↩ Reply
+        </button>
+
+      </div>
+
+      <div
+        class="reply-area hidden"
+        id="reply-box-${comment.id}"
+      >
+
+        <div class="reply-form">
+
+          <input
+            id="reply-${comment.id}"
+            placeholder="Write a reply..."
+          >
+
+          <button
+            onclick="addReply(${postId}, ${comment.id})"
+          >
+            Send
+          </button>
+
+        </div>
+
+      </div>
+
+      <div class="replies">
+        ${replies}
+      </div>
+
+    </div>
+  `;
+
+}
+
+
+function likeComment(
+  postId,
+  commentId
+){
+
+  const post =
+    posts.find(p => p.id === postId);
+
+  if(!post) return;
+
+  const comment =
+    findComment(post.comments, commentId);
+
+  if(!comment) return;
+
+  comment.liked =
+    !comment.liked;
+
+  comment.likes +=
+    comment.liked ? 1 : -1;
+
+  renderFeed();
+
+}
+
+
+function showReplyBox(commentId){
+
+  const box =
+    document.getElementById(
+      `reply-box-${commentId}`
+    );
+
+  if(!box) return;
+
+  box.classList.toggle("hidden");
+
+}
+
+
+function editComment(
+  postId,
+  commentId
+){
+
+  const post =
+    posts.find(p => p.id === postId);
+
+  if(!post) return;
+
+  const comment =
+    findComment(post.comments, commentId);
+
+  if(!comment) return;
+
+  const newText =
+    prompt(
+      "Edit your comment:",
+      comment.text
+    );
+
+  if(
+    newText === null ||
+    !newText.trim()
+  ){
+    return;
+  }
+
+  comment.text =
+    newText.trim();
+
+  renderFeed();
+
+}
+
+
+function deleteComment(
+  postId,
+  commentId
+){
+
+  const post =
+    posts.find(p => p.id === postId);
+
+  if(!post) return;
+
+  const deleted =
+    removeComment(
+      post.comments,
+      commentId
+    );
+
+  if(deleted){
+    renderFeed();
+  }
+
+}
+
+
+function removeComment(
+  comments,
+  id
+){
+
+  const index =
+    comments.findIndex(
+      c => c.id === id
+    );
+
+  if(index !== -1){
+
+    comments.splice(index,1);
+
+    return true;
+
+  }
+
+  for(const comment of comments){
+
+    if(
+      removeComment(
+        comment.replies || [],
+        id
+      )
+    ){
+      return true;
+    }
+
+  }
+
+  return false;
+
+}
+
+
+function countAllComments(post){
+
+  let total = 0;
+
+  function count(list){
+
+    list.forEach(function(item){
+
+      total++;
+
+      if(item.replies){
+        count(item.replies);
+      }
 
     });
 
+  }
 
-    document.addEventListener(
-      "click",
-      function(event) {
+  count(post.comments);
 
-        if (
-          event.target.classList.contains(
-            "like-button"
-          )
-        ) {
+  return total;
 
-          let count =
-            Number(
-              event.target.dataset.likes || 0
-            );
-
-          count++;
-
-          event.target.dataset.likes =
-            count;
-
-          event.target.textContent =
-            "❤️ Like " + count;
-
-        }
+}
 
 
-        if (
-          event.target.classList.contains(
-            "comment-button"
-          )
-        ) {
+function postMenu(postId){
 
-          const comment =
-            prompt("Write a comment:");
+  const post =
+    posts.find(p => p.id === postId);
 
-          if (
-            comment &&
-            comment.trim() !== ""
-          ) {
+  if(!post) return;
 
-            const commentText =
-              document.createElement("div");
-
-            commentText.className =
-              "comment-text";
-
-            commentText.textContent =
-              "💬 " + comment.trim();
-
-            event.target.parentElement.appendChild(
-              commentText
-            );
-
-          }
-
-        }
-
-
-        if (
-          event.target.classList.contains(
-            "share-button"
-          )
-        ) {
-
-          alert(
-            "Share link copied!"
-          );
-
-        }
-
-      }
+  const action =
+    prompt(
+      "Type EDIT to edit this post, or DELETE to delete it."
     );
 
-  </script>
+  if(!action) return;
+
+  if(
+    action.toUpperCase() === "DELETE"
+  ){
+
+    if(
+      confirm(
+        "Delete this post?"
+      )
+    ){
+
+      posts =
+        posts.filter(
+          p => p.id !== postId
+        );
+
+      renderFeed();
+
+    }
+
+  }
+
+  else if(
+    action.toUpperCase() === "EDIT"
+  ){
+
+    const newText =
+      prompt(
+        "Edit your post:",
+        post.text
+      );
+
+    if(
+      newText !== null
+    ){
+
+      post.text =
+        newText.trim();
+
+      renderFeed();
+
+    }
+
+  }
+
+}
+
+
+function focusComment(postId){
+
+  const input =
+    document.getElementById(
+      `comment-${postId}`
+    );
+
+  if(input){
+
+    input.focus();
+
+  }
+
+}
+
+
+function sharePost(postId){
+
+  const post =
+    posts.find(p => p.id === postId);
+
+  if(!post) return;
+
+  const shareText =
+    post.text ||
+    "Check out this Zemivo post.";
+
+  if(
+    navigator.share
+  ){
+
+    navigator.share({
+
+      title:"Zemivo",
+
+      text:shareText
+
+    }).catch(function(){});
+
+  }
+
+  else{
+
+    alert(
+      "Sharing will be connected to Zemivo's full sharing system later."
+    );
+
+  }
+
+}
+
+
+function escapeHTML(value){
+
+  return String(value)
+    .replaceAll("&","&amp;")
+    .replaceAll("<","&lt;")
+    .replaceAll(">","&gt;")
+    .replaceAll('"',"&quot;")
+    .replaceAll("'","&#039;");
+
+}
+
+
+renderFeed();
+
+</script>
 
 </body>
 </html>
