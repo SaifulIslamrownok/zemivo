@@ -1,2022 +1,2340 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#2563eb">
-
-  <title>Zemivo — Home</title>
-
-  <style>
-    * {
-      box-sizing: border-box;
-    }
-
-    :root {
-      --primary: #2563eb;
-      --primary-dark: #1d4ed8;
-      --bg: #f1f5f9;
-      --card: #ffffff;
-      --text: #0f172a;
-      --muted: #64748b;
-      --border: #e2e8f0;
-      --danger: #dc2626;
-      --success: #15803d;
-    }
-
-    body {
-      margin: 0;
-      font-family: Arial, Helvetica, sans-serif;
-      background: var(--bg);
-      color: var(--text);
-    }
-
-    button,
-    input,
-    textarea {
-      font: inherit;
-    }
-
-    button {
-      cursor: pointer;
-    }
-
-    /* =========================
-       HEADER
-    ========================= */
-
-    .topbar {
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-      height: 62px;
-      background: #ffffff;
-      border-bottom: 1px solid var(--border);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 18px;
-    }
-
-    .brand {
-      color: var(--primary);
-      font-size: 28px;
-      font-weight: 800;
-      text-decoration: none;
-    }
-
-    .top-actions {
-      display: flex;
-      gap: 8px;
-      align-items: center;
-    }
-
-    .top-btn {
-      border: 0;
-      background: #f1f5f9;
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      font-size: 18px;
-    }
-
-    /* =========================
-       PAGE
-    ========================= */
-
-    .page {
-      width: 100%;
-      max-width: 680px;
-      margin: 24px auto;
-      padding: 0 12px;
-    }
-
-    /* =========================
-       COMPOSER
-    ========================= */
-
-    .composer {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 16px;
-      box-shadow: 0 2px 10px rgba(15, 23, 42, 0.04);
-    }
-
-    .composer-title {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin-bottom: 12px;
-    }
-
-    .avatar {
-      width: 42px;
-      height: 42px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, #2563eb, #60a5fa);
-      color: white;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: bold;
-      flex-shrink: 0;
-    }
-
-    .mind-box {
-      width: 100%;
-      min-height: 95px;
-      resize: vertical;
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 14px;
-      outline: none;
-      background: #f8fafc;
-    }
-
-    .mind-box:focus {
-      border-color: var(--primary);
-      background: white;
-    }
-
-    /* Everything related to creating a post stays INSIDE composer */
-
-    .composer-tools {
-      margin-top: 12px;
-      padding: 10px;
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      background: #fafafa;
-    }
-
-    .tool-btn {
-      border: 0;
-      background: white;
-      border: 1px solid var(--border);
-      padding: 9px 12px;
-      border-radius: 10px;
-      color: #334155;
-      font-weight: 600;
-    }
-
-    .tool-btn:hover {
-      background: #eff6ff;
-      border-color: #bfdbfe;
-    }
-
-    .selected-file {
-      margin-top: 10px;
-      display: none;
-      padding: 10px;
-      border-radius: 10px;
-      background: #eff6ff;
-      color: #1e40af;
-      font-size: 14px;
-    }
-
-    .preview {
-      display: none;
-      margin-top: 10px;
-      border-radius: 12px;
-      overflow: hidden;
-      background: #f8fafc;
-    }
-
-    .preview img,
-    .preview video {
-      width: 100%;
-      max-height: 420px;
-      object-fit: contain;
-      display: block;
-    }
-
-    .composer-bottom {
-      display: flex;
-      justify-content: flex-end;
-      margin-top: 12px;
-    }
-
-    .post-btn {
-      border: 0;
-      background: var(--primary);
-      color: white;
-      padding: 11px 28px;
-      border-radius: 24px;
-      font-weight: bold;
-    }
-
-    .post-btn:hover {
-      background: var(--primary-dark);
-    }
-
-    .post-btn:disabled {
-      opacity: 0.6;
-      cursor: not-allowed;
-    }
-
-    /* =========================
-       FEED
-    ========================= */
-
-    .feed {
-      margin-top: 18px;
-    }
-
-    .empty {
-      background: white;
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 28px;
-      text-align: center;
-      color: var(--muted);
-    }
-
-    /* =========================
-       POST CARD
-    ========================= */
-
-    .post {
-      position: relative;
-      background: white;
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      margin-bottom: 16px;
-      overflow: hidden;
-    }
-
-    .post-header {
-      padding: 14px 16px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-
-    .post-user {
-      display: flex;
-      gap: 10px;
-      align-items: center;
-    }
-
-    .post-user-info {
-      display: flex;
-      flex-direction: column;
-    }
-
-    .post-name {
-      font-weight: bold;
-    }
-
-    .post-time {
-      color: var(--muted);
-      font-size: 12px;
-      margin-top: 3px;
-    }
-
-    .more-btn {
-      border: 0;
-      background: transparent;
-      width: 38px;
-      height: 38px;
-      border-radius: 50%;
-      font-size: 22px;
-      color: #475569;
-    }
-
-    .more-btn:hover {
-      background: #f1f5f9;
-    }
-
-    .post-content {
-      padding: 0 16px 14px;
-      white-space: pre-wrap;
-      word-wrap: break-word;
-      line-height: 1.55;
-    }
-
-    .post-media {
-      width: 100%;
-      max-height: 520px;
-      object-fit: contain;
-      display: block;
-      background: #f8fafc;
-    }
-
-    .post-actions {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      border-top: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
-    }
-
-    .post-action {
-      border: 0;
-      background: white;
-      padding: 12px 5px;
-      color: #475569;
-      font-weight: 600;
-    }
-
-    .post-action:hover {
-      background: #f8fafc;
-    }
-
-    /* =========================
-       THREE DOT MENU
-    ========================= */
-
-    .menu {
-      position: absolute;
-      top: 56px;
-      right: 12px;
-      width: 210px;
-      background: white;
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      box-shadow: 0 12px 30px rgba(15, 23, 42, 0.16);
-      display: none;
-      z-index: 50;
-      overflow: hidden;
-    }
-
-    .menu.open {
-      display: block;
-    }
-
-    .menu button {
-      width: 100%;
-      text-align: left;
-      border: 0;
-      background: white;
-      padding: 12px 14px;
-      color: #334155;
-    }
-
-    .menu button:hover {
-      background: #f8fafc;
-    }
-
-    .menu .danger {
-      color: var(--danger);
-    }
-
-    /* =========================
-       MODAL
-    ========================= */
-
-    .modal-backdrop {
-      position: fixed;
-      inset: 0;
-      background: rgba(15, 23, 42, 0.55);
-      display: none;
-      align-items: center;
-      justify-content: center;
-      padding: 18px;
-      z-index: 2000;
-    }
-
-    .modal-backdrop.open {
-      display: flex;
-    }
-
-    .modal {
-      width: 100%;
-      max-width: 520px;
-      background: white;
-      border-radius: 16px;
-      padding: 18px;
-    }
-
-    .modal h3 {
-      margin-top: 0;
-    }
-
-    .edit-area {
-      width: 100%;
-      min-height: 150px;
-      resize: vertical;
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 12px;
-      outline: none;
-    }
-
-    .modal-actions {
-      display: flex;
-      justify-content: flex-end;
-      gap: 8px;
-      margin-top: 12px;
-    }
-
-    .cancel-btn,
-    .save-btn {
-      border: 0;
-      padding: 10px 18px;
-      border-radius: 20px;
-      font-weight: bold;
-    }
-
-    .cancel-btn {
-      background: #e2e8f0;
-      color: #334155;
-    }
-
-    .save-btn {
-      background: var(--primary);
-      color: white;
-    }
-
-    /* =========================
-       MESSAGE
-    ========================= */
-
-    #status {
-      text-align: center;
-      margin: 12px 0;
-      font-size: 14px;
-      min-height: 20px;
-    }
-
-    .status-success {
-      color: var(--success);
-    }
-
-    .status-error {
-      color: var(--danger);
-    }
-
-    /* =========================
-       MOBILE
-    ========================= */
-
-    @media (max-width: 600px) {
-
-      .topbar {
-        padding: 0 12px;
-      }
-
-      .brand {
-        font-size: 24px;
-      }
-
-      .page {
-        margin-top: 12px;
-      }
-
-      .composer,
-      .post {
-        border-radius: 12px;
-      }
-
-      .composer-tools {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-      }
-
-      .tool-btn {
-        width: 100%;
-      }
-
-      .post-actions {
-        font-size: 14px;
-      }
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zemivo - Home</title>
+
+<style>
+*{box-sizing:border-box}
+
+body{
+  margin:0;
+  font-family:Arial,sans-serif;
+  background:#f3f5f8;
+  color:#172033;
+}
+
+button,input,textarea{
+  font:inherit;
+}
+
+button{
+  cursor:pointer;
+}
+
+.topbar{
+  position:sticky;
+  top:0;
+  z-index:100;
+  height:64px;
+  background:#fff;
+  border-bottom:1px solid #e5e7eb;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 18px;
+}
+
+.logo{
+  color:#2563eb;
+  font-size:27px;
+  font-weight:800;
+}
+
+.nav{
+  display:flex;
+  gap:8px;
+}
+
+.nav button{
+  border:0;
+  background:#fff;
+  font-size:22px;
+  padding:9px 13px;
+  border-radius:12px;
+}
+
+.nav button:hover{
+  background:#eef3ff;
+}
+
+.container{
+  width:100%;
+  max-width:760px;
+  margin:20px auto;
+  padding:0 12px;
+}
+
+.card{
+  background:#fff;
+  border-radius:16px;
+  margin-bottom:16px;
+  box-shadow:0 2px 10px rgba(0,0,0,.06);
+  overflow:hidden;
+}
+
+.composer{
+  padding:18px;
+}
+
+.composer-top{
+  display:flex;
+  gap:12px;
+  align-items:center;
+}
+
+.avatar{
+  width:44px;
+  height:44px;
+  border-radius:50%;
+  background:#dbeafe;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:bold;
+  color:#2563eb;
+  flex-shrink:0;
+}
+
+textarea{
+  width:100%;
+  min-height:78px;
+  resize:none;
+  border:1px solid #e5e7eb;
+  border-radius:14px;
+  padding:13px;
+  outline:none;
+}
+
+textarea:focus{
+  border-color:#2563eb;
+}
+
+.tools{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  margin-top:12px;
+}
+
+.tool{
+  border:1px solid #e5e7eb;
+  background:#fff;
+  border-radius:22px;
+  padding:9px 13px;
+}
+
+.tool:hover{
+  background:#f1f5ff;
+}
+
+.hashtag-box{
+  display:none;
+  margin-top:10px;
+}
+
+.hashtag-box input{
+  width:100%;
+  padding:11px;
+  border:1px solid #ddd;
+  border-radius:10px;
+}
+
+.publish-row{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-top:14px;
+}
+
+.publish{
+  background:#2563eb;
+  color:#fff;
+  border:0;
+  border-radius:22px;
+  padding:10px 22px;
+  font-weight:bold;
+}
+
+.preview{
+  margin-top:10px;
+}
+
+.preview img{
+  max-width:100%;
+  max-height:360px;
+  border-radius:12px;
+}
+
+.post{
+  padding:0;
+}
+
+.post-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:15px 16px 10px;
+}
+
+.user{
+  display:flex;
+  gap:10px;
+  align-items:center;
+}
+
+.user-name{
+  font-weight:bold;
+}
+
+.post-time{
+  font-size:12px;
+  color:#777;
+  margin-top:3px;
+}
+
+.more{
+  border:0;
+  background:#fff;
+  font-size:24px;
+  border-radius:50%;
+  width:40px;
+  height:40px;
+}
+
+.more:hover{
+  background:#f1f3f5;
+}
+
+.post-text{
+  padding:0 16px 12px;
+  white-space:pre-wrap;
+  line-height:1.5;
+}
+
+.post-media{
+  width:100%;
+  max-height:600px;
+  object-fit:cover;
+}
+
+.post-stats{
+  display:flex;
+  justify-content:space-between;
+  padding:10px 16px;
+  color:#667085;
+  font-size:14px;
+}
+
+.actions{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  border-top:1px solid #eee;
+}
+
+.actions button{
+  border:0;
+  background:#fff;
+  padding:12px 4px;
+  font-weight:600;
+}
+
+.actions button:hover{
+  background:#f5f7fa;
+}
+
+.actions .active{
+  color:#2563eb;
+}
+
+.menu-overlay{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.25);
+  z-index:500;
+}
+
+.menu{
+  position:absolute;
+  left:50%;
+  bottom:0;
+  transform:translateX(-50%);
+  width:min(680px,100%);
+  max-height:88vh;
+  overflow:auto;
+  background:#fff;
+  border-radius:24px 24px 0 0;
+  padding:12px;
+}
+
+.handle{
+  width:44px;
+  height:5px;
+  border-radius:5px;
+  background:#9ca3af;
+  margin:4px auto 12px;
+}
+
+.menu-item{
+  width:100%;
+  border:0;
+  background:#fff;
+  text-align:left;
+  padding:14px 15px;
+  border-radius:12px;
+  display:flex;
+  gap:13px;
+  align-items:center;
+  font-weight:600;
+}
+
+.menu-item:hover{
+  background:#f3f4f6;
+}
+
+.menu-item small{
+  display:block;
+  color:#777;
+  font-weight:normal;
+  margin-top:3px;
+}
+
+.menu-section{
+  border-top:1px solid #eee;
+  margin-top:8px;
+  padding-top:8px;
+}
+
+.modal{
+  display:none;
+  position:fixed;
+  inset:0;
+  z-index:700;
+  background:rgba(0,0,0,.45);
+  align-items:center;
+  justify-content:center;
+  padding:18px;
+}
+
+.modal-box{
+  width:min(560px,100%);
+  background:#fff;
+  border-radius:18px;
+  padding:20px;
+}
+
+.modal-box h3{
+  margin-top:0;
+}
+
+.modal-box textarea,
+.modal-box input{
+  width:100%;
+  margin:8px 0;
+  padding:12px;
+  border:1px solid #ddd;
+  border-radius:10px;
+}
+
+.modal-actions{
+  display:flex;
+  gap:8px;
+  justify-content:flex-end;
+  margin-top:12px;
+}
+
+.cancel{
+  background:#e5e7eb;
+  border:0;
+  padding:10px 17px;
+  border-radius:20px;
+}
+
+.primary{
+  background:#2563eb;
+  color:white;
+  border:0;
+  padding:10px 17px;
+  border-radius:20px;
+}
+
+.danger{
+  background:#dc2626;
+  color:#fff;
+}
+
+.admin{
+  display:none;
+  border:2px solid #2563eb;
+}
+
+.admin-title{
+  color:#2563eb;
+  font-weight:bold;
+}
+
+.toast{
+  position:fixed;
+  left:50%;
+  bottom:25px;
+  transform:translateX(-50%);
+  background:#111827;
+  color:#fff;
+  padding:12px 18px;
+  border-radius:20px;
+  display:none;
+  z-index:1000;
+}
+
+@media(max-width:600px){
+  .topbar{
+    padding:0 10px;
+  }
+
+  .nav button{
+    padding:8px;
+  }
+
+  .container{
+    margin-top:10px;
+    padding:0 7px;
+  }
+
+  .card{
+    border-radius:12px;
+  }
+
+  .actions button{
+    font-size:13px;
+  }
+}
+</style>
 </head>
 
 <body>
 
-  <!-- =========================
-       ZEMIVO HEADER
-  ========================= -->
+<header class="topbar">
 
-  <header class="topbar">
+  <div class="logo">Zemivo</div>
 
-    <a class="brand" href="index.html">
-      Zemivo
-    </a>
+  <div class="nav">
+    <button onclick="location.href='index.html'">⌂</button>
+    <button onclick="location.href='stories.html'">◉</button>
+    <button onclick="location.href='friends.html'">♧</button>
+    <button onclick="location.href='marketplace.html'">🛍</button>
+    <button onclick="location.href='notifications.html'">🔔</button>
+    <button onclick="location.href='profile.html'">👤</button>
+  </div>
 
-    <div class="top-actions">
-      <button class="top-btn" title="Search">🔍</button>
-      <button class="top-btn" title="Notifications">🔔</button>
-      <button
-        class="top-btn"
-        title="Profile"
-        onclick="window.location.href='profile.html'"
-      >
-        👤
-      </button>
+</header>
+
+
+<main class="container">
+
+  <!-- ADMIN BROADCAST -->
+  <section class="card admin" id="adminPanel">
+
+    <div class="composer">
+
+      <div class="admin-title">
+        🛡 Zemivo Admin Control
+      </div>
+
+      <p>
+        Admin announcement / platform-wide message
+      </p>
+
+      <textarea
+        id="adminMessage"
+        placeholder="Write an official Zemivo announcement..."
+      ></textarea>
+
+      <div class="publish-row">
+
+        <span>
+          🌐 Platform-wide
+        </span>
+
+        <button
+          class="publish"
+          id="broadcastButton"
+        >
+          Publish
+        </button>
+
+      </div>
+
     </div>
 
-  </header>
+  </section>
 
 
-  <main class="page">
+  <!-- CREATE POST -->
+  <section class="card">
 
-    <!-- =========================
-         COMPOSER
-    ========================= -->
+    <div class="composer">
 
-    <section class="composer">
+      <div class="composer-top">
 
-      <div class="composer-title">
-
-        <div class="avatar">
+        <div class="avatar" id="composerAvatar">
           Z
         </div>
 
-        <strong>
-          Create a post
-        </strong>
+        <textarea
+          id="postText"
+          placeholder="What's on your mind?"
+        ></textarea>
 
       </div>
 
 
-      <textarea
-        id="postText"
-        class="mind-box"
-        placeholder="What's on your mind?"
-      ></textarea>
-
-
-      <!--
-        IMPORTANT:
-        All post creation options are INSIDE
-        the composer.
-      -->
-
-      <div class="composer-tools">
+      <div class="tools">
 
         <button
-          type="button"
-          class="tool-btn"
-          id="photoButton"
+          class="tool"
+          id="galleryButton"
         >
-          🖼️ Photo
+          🖼 Gallery
         </button>
 
         <button
-          type="button"
-          class="tool-btn"
-          id="videoButton"
+          class="tool"
+          id="gifButton"
         >
-          🎥 Video
+          GIF
         </button>
 
         <button
-          type="button"
-          class="tool-btn"
-          id="feelingButton"
+          class="tool"
+          id="liveButton"
         >
-          😊 Feeling
+          🎥 Live
         </button>
 
         <button
-          type="button"
-          class="tool-btn"
-          id="morePostButton"
+          class="tool"
+          id="hashtagButton"
         >
-          ➕ More
+          # Hashtag
+        </button>
+
+        <button
+          class="tool"
+          id="mentionButton"
+        >
+          @ Mention
+        </button>
+
+        <button
+          class="tool"
+          id="groupButton"
+        >
+          👥 Group
+        </button>
+
+        <button
+          class="tool"
+          id="locationButton"
+        >
+          📍 Location
+        </button>
+
+        <button
+          class="tool"
+          id="productButton"
+        >
+          🛍 Product
+        </button>
+
+        <button
+          class="tool"
+          id="affiliateButton"
+        >
+          🔗 Affiliate
         </button>
 
       </div>
 
 
       <input
-        id="photoInput"
         type="file"
+        id="imageInput"
         accept="image/*"
         hidden
       >
 
-      <input
-        id="videoInput"
-        type="file"
-        accept="video/*"
-        hidden
+
+      <div
+        class="hashtag-box"
+        id="hashtagBox"
       >
 
+        <input
+          id="hashtagInput"
+          placeholder="Example: #Zemivo #Bangladesh"
+        >
+
+      </div>
+
 
       <div
-        id="selectedFile"
-        class="selected-file"
-      ></div>
-
-
-      <div
-        id="preview"
         class="preview"
+        id="imagePreview"
       ></div>
 
 
-      <div class="composer-bottom">
+      <div class="publish-row">
+
+        <span id="postStatus">
+          🌐 Public
+        </span>
 
         <button
-          id="publishButton"
-          class="post-btn"
-          type="button"
+          class="publish"
+          id="postButton"
         >
           Post
         </button>
 
       </div>
 
-    </section>
+    </div>
+
+  </section>
 
 
-    <div id="status"></div>
+  <!-- FEED -->
+  <section id="feed"></section>
+
+</main>
 
 
-    <!-- =========================
-         FEED
-    ========================= -->
+<!-- THREE DOT MENU -->
+<div
+  class="menu-overlay"
+  id="menuOverlay"
+>
 
-    <section
-      id="feed"
-      class="feed"
+  <div class="menu">
+
+    <div class="handle"></div>
+
+    <button
+      class="menu-item"
+      onclick="saveCurrentPost()"
     >
-
-      <div class="empty" id="emptyFeed">
-        No posts yet. Create the first Zemivo post.
-      </div>
-
-    </section>
-
-  </main>
+      🔖
+      <span>
+        Save post
+        <small>Add this to your saved items.</small>
+      </span>
+    </button>
 
 
-  <!-- =========================
-       EDIT MODAL
-  ========================= -->
+    <button
+      class="menu-item"
+      onclick="editCurrentPost()"
+    >
+      ✏️
+      <span>Edit post</span>
+    </button>
 
-  <div
-    id="editModalBackdrop"
-    class="modal-backdrop"
-  >
 
-    <div class="modal">
+    <button
+      class="menu-item"
+      onclick="manageProduct()"
+    >
+      🔗
+      <span>
+        Manage product link
+        <small>Add, update or remove an affiliate product link.</small>
+      </span>
+    </button>
 
-      <h3>
-        Edit your post
-      </h3>
 
-      <textarea
-        id="editText"
-        class="edit-area"
-        placeholder="Edit your post..."
-      ></textarea>
+    <button
+      class="menu-item"
+      onclick="commentSettings()"
+    >
+      💬
+      <span>Who can comment on your post?</span>
+    </button>
 
-      <div class="modal-actions">
 
-        <button
-          id="cancelEdit"
-          class="cancel-btn"
-          type="button"
-        >
-          Cancel
-        </button>
+    <button
+      class="menu-item"
+      onclick="privacySettings()"
+    >
+      🌐
+      <span>Edit Privacy</span>
+    </button>
 
-        <button
-          id="saveEdit"
-          class="save-btn"
-          type="button"
-        >
-          Save Changes
-        </button>
 
-      </div>
+    <button
+      class="menu-item"
+      onclick="archiveCurrentPost()"
+    >
+      🗃️
+      <span>Move to archive</span>
+    </button>
+
+
+    <button
+      class="menu-item"
+      onclick="trashCurrentPost()"
+    >
+      🗑️
+      <span>
+        Move to trash
+        <small>Items in your trash can be permanently removed later.</small>
+      </span>
+    </button>
+
+
+    <button
+      class="menu-item"
+      onclick="sparkCurrentPost()"
+    >
+      ✨
+      <span>Turn on Spark for this post</span>
+    </button>
+
+
+    <button
+      class="menu-item"
+      onclick="notificationSettings()"
+    >
+      🔕
+      <span>Turn off notifications for this post</span>
+    </button>
+
+
+    <button
+      class="menu-item"
+      onclick="copyCurrentLink()"
+    >
+      📋
+      <span>Copy link</span>
+    </button>
+
+
+    <div class="menu-section">
+
+      <button
+        class="menu-item"
+        onclick="partnershipCode()"
+      >
+        🤝
+        <span>Share partnership ad code</span>
+      </button>
+
+
+      <button
+        class="menu-item"
+        onclick="createAd()"
+      >
+        📣
+        <span>Create ad</span>
+      </button>
 
     </div>
 
   </div>
 
-
-  <script>
-
-    /*
-    ============================================================
-      ZEMIVO POST ENGINE
-      ------------------------------------------------------------
-      This frontend structure is intentionally modular.
-
-      Later we can replace the localStorage layer with:
-      Firebase Authentication
-      Firestore
-      Firebase Storage
-      Cloud Functions
-      Security Rules
-
-      The UI structure does not need to be rebuilt.
-    ============================================================
-    */
+</div>
 
 
-    const STORAGE_KEY = "zemivo_posts_v1";
+<!-- EDIT MODAL -->
+<div
+  class="modal"
+  id="editModal"
+>
+
+  <div class="modal-box">
+
+    <h3>Edit post</h3>
+
+    <textarea
+      id="editText"
+      rows="6"
+    ></textarea>
+
+    <div class="modal-actions">
+
+      <button
+        class="cancel"
+        onclick="closeModal('editModal')"
+      >
+        Cancel
+      </button>
+
+      <button
+        class="primary"
+        onclick="saveEditedPost()"
+      >
+        Save changes
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
 
 
-    let posts = loadPosts();
+<!-- PRODUCT MODAL -->
+<div
+  class="modal"
+  id="productModal"
+>
 
-    let selectedMedia = null;
+  <div class="modal-box">
 
-    let selectedMediaType = null;
+    <h3>Affiliate / Product Link</h3>
 
-    let editingPostId = null;
+    <input
+      id="productUrl"
+      type="url"
+      placeholder="Paste product or affiliate URL"
+    >
 
+    <div class="modal-actions">
 
-    /* =========================
-       ELEMENTS
-    ========================= */
+      <button
+        class="cancel"
+        onclick="closeModal('productModal')"
+      >
+        Cancel
+      </button>
 
-    const postText =
-      document.getElementById("postText");
+      <button
+        class="primary"
+        onclick="saveProductLink()"
+      >
+        Save link
+      </button>
 
-    const photoButton =
-      document.getElementById("photoButton");
+    </div>
 
-    const videoButton =
-      document.getElementById("videoButton");
+  </div>
 
-    const feelingButton =
-      document.getElementById("feelingButton");
-
-    const morePostButton =
-      document.getElementById("morePostButton");
-
-    const photoInput =
-      document.getElementById("photoInput");
-
-    const videoInput =
-      document.getElementById("videoInput");
-
-    const selectedFile =
-      document.getElementById("selectedFile");
-
-    const preview =
-      document.getElementById("preview");
-
-    const publishButton =
-      document.getElementById("publishButton");
-
-    const feed =
-      document.getElementById("feed");
-
-    const status =
-      document.getElementById("status");
-
-    const editModalBackdrop =
-      document.getElementById("editModalBackdrop");
-
-    const editText =
-      document.getElementById("editText");
-
-    const cancelEdit =
-      document.getElementById("cancelEdit");
-
-    const saveEdit =
-      document.getElementById("saveEdit");
+</div>
 
 
-    /* =========================
-       LOAD POSTS
-    ========================= */
+<div
+  class="toast"
+  id="toast"
+></div>
 
-    function loadPosts() {
 
-      try {
+<script type="module">
 
-        const saved =
-          localStorage.getItem(STORAGE_KEY);
+import {
+  initializeApp
+} from
+"https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
 
-        if (!saved) {
-          return [];
-        }
 
-        return JSON.parse(saved);
+import {
+  getAuth,
+  onAuthStateChanged
+} from
+"https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
 
-      } catch (error) {
 
-        console.error(error);
+import {
+  getFirestore,
+  collection,
+  addDoc,
+  doc,
+  updateDoc,
+  deleteDoc,
+  setDoc,
+  getDoc,
+  serverTimestamp,
+  query,
+  orderBy,
+  onSnapshot
+} from
+"https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
 
-        return [];
 
-      }
+const firebaseConfig = {
+
+  apiKey:
+  "AIzaSyAxJUFBWm2fa0g3oxUWWqdfSTEAc-bRgfI",
+
+  authDomain:
+  "zemivo.firebaseapp.com",
+
+  projectId:
+  "zemivo",
+
+  storageBucket:
+  "zemivo.firebasestorage.app",
+
+  messagingSenderId:
+  "195335939691",
+
+  appId:
+  "1:195335939691:web:5fa5c62c53d0c0aefe732e",
+
+  measurementId:
+  "G-GNHH5S4H09"
+
+};
+
+
+const app =
+  initializeApp(firebaseConfig);
+
+const auth =
+  getAuth(app);
+
+const db =
+  getFirestore(app);
+
+
+let currentUser = null;
+
+let currentPostId = null;
+
+let currentPostData = null;
+
+let selectedImage = null;
+
+
+/* --------------------------------
+   AUTH
+-------------------------------- */
+
+onAuthStateChanged(
+  auth,
+  async user => {
+
+    currentUser = user;
+
+    if(user){
+
+      document
+        .getElementById("composerAvatar")
+        .textContent =
+        (
+          user.displayName ||
+          user.email ||
+          "Z"
+        )
+        .charAt(0)
+        .toUpperCase();
+
+      await checkAdmin(user.uid);
 
     }
 
+    loadPosts();
 
-    /* =========================
-       SAVE POSTS
-    ========================= */
-
-    function savePosts() {
-
-      localStorage.setItem(
-        STORAGE_KEY,
-        JSON.stringify(posts)
-      );
-
-    }
+  }
+);
 
 
-    /* =========================
-       STATUS
-    ========================= */
+/* --------------------------------
+   ADMIN
+-------------------------------- */
 
-    function showStatus(
-      text,
-      type = ""
-    ) {
+async function checkAdmin(uid){
 
-      status.textContent = text;
+  try{
 
-      status.className =
-        type === "success"
-          ? "status-success"
-          : type === "error"
-            ? "status-error"
-            : "";
+    const adminRef =
+      doc(db,"admins",uid);
 
-      setTimeout(
-        function() {
+    const snap =
+      await getDoc(adminRef);
 
-          status.textContent = "";
+    if(
+      snap.exists() &&
+      snap.data().active === true
+    ){
 
-          status.className = "";
-
-        },
-        3000
-      );
+      document
+        .getElementById("adminPanel")
+        .style.display =
+        "block";
 
     }
 
+  }catch(error){
 
-    /* =========================
-       FILE SELECTION
-    ========================= */
-
-    photoButton.addEventListener(
-      "click",
-      function() {
-
-        photoInput.click();
-
-      }
+    console.error(
+      "Admin check failed:",
+      error
     );
 
+  }
 
-    videoButton.addEventListener(
-      "click",
-      function() {
-
-        videoInput.click();
-
-      }
-    );
+}
 
 
-    photoInput.addEventListener(
-      "change",
-      function() {
+/* --------------------------------
+   CREATE POST
+-------------------------------- */
 
-        handleMedia(
-          photoInput.files[0],
-          "image"
-        );
+document
+  .getElementById("galleryButton")
+  .addEventListener(
+    "click",
+    () => {
 
-      }
-    );
+      document
+        .getElementById("imageInput")
+        .click();
 
-
-    videoInput.addEventListener(
-      "change",
-      function() {
-
-        handleMedia(
-          videoInput.files[0],
-          "video"
-        );
-
-      }
-    );
+    }
+  );
 
 
-    function handleMedia(
-      file,
-      type
-    ) {
+document
+  .getElementById("imageInput")
+  .addEventListener(
+    "change",
+    event => {
 
-      if (!file) {
-        return;
-      }
+      const file =
+        event.target.files[0];
 
+      if(!file) return;
 
-      selectedMedia =
+      selectedImage =
         file;
-
-      selectedMediaType =
-        type;
-
-
-      selectedFile.style.display =
-        "block";
-
-      selectedFile.textContent =
-        "Selected: " + file.name;
-
-
-      preview.innerHTML = "";
-
-      preview.style.display =
-        "block";
-
 
       const reader =
         new FileReader();
 
-
       reader.onload =
-        function(event) {
+        e => {
 
-          if (type === "image") {
-
-            const img =
-              document.createElement("img");
-
-            img.src =
-              event.target.result;
-
-            img.alt =
-              "Selected image";
-
-            preview.appendChild(img);
-
-          }
-
-          else {
-
-            const video =
-              document.createElement("video");
-
-            video.src =
-              event.target.result;
-
-            video.controls =
-              true;
-
-            preview.appendChild(video);
-
-          }
+          document
+            .getElementById("imagePreview")
+            .innerHTML =
+            `<img src="${e.target.result}" alt="Post image">`;
 
         };
-
 
       reader.readAsDataURL(file);
 
     }
+  );
 
 
-    /* =========================
-       FEELING
-    ========================= */
+document
+  .getElementById("hashtagButton")
+  .addEventListener(
+    "click",
+    () => {
 
-    feelingButton.addEventListener(
-      "click",
-      function() {
-
-        const feeling =
-          prompt(
-            "How are you feeling? Example: Happy, Excited, Grateful"
-          );
-
-        if (!feeling) {
-          return;
-        }
-
-        postText.value +=
-          " 😊 Feeling " +
-          feeling;
-
-        postText.focus();
-
-      }
-    );
-
-
-    /* =========================
-       MORE
-    ========================= */
-
-    morePostButton.addEventListener(
-      "click",
-      function() {
-
-        alert(
-          "More Zemivo post features will be added here later."
+      const box =
+        document.getElementById(
+          "hashtagBox"
         );
 
-      }
-    );
+      box.style.display =
+        box.style.display === "block"
+        ? "none"
+        : "block";
 
+    }
+  );
 
-    /* =========================
-       CREATE POST
-    ========================= */
 
-    publishButton.addEventListener(
-      "click",
-      async function() {
+document
+  .getElementById("mentionButton")
+  .addEventListener(
+    "click",
+    () => {
 
-        const text =
-          postText.value.trim();
+      const textarea =
+        document.getElementById(
+          "postText"
+        );
 
+      textarea.value += " @";
 
-        if (
-          text === "" &&
-          !selectedMedia
-        ) {
+      textarea.focus();
 
-          showStatus(
-            "Write something or add a photo/video first.",
-            "error"
-          );
+    }
+  );
 
-          return;
 
-        }
+document
+  .getElementById("groupButton")
+  .addEventListener(
+    "click",
+    () => {
 
-
-        publishButton.disabled =
-          true;
-
-        publishButton.textContent =
-          "Posting...";
-
-
-        try {
-
-          let mediaData =
-            null;
-
-
-          /*
-            NOTE:
-
-            localStorage is only for this prototype.
-
-            Later the file will go to secure
-            Firebase Storage instead.
-          */
-
-          if (selectedMedia) {
-
-            mediaData =
-              await fileToDataURL(
-                selectedMedia
-              );
-
-          }
-
-
-          const post = {
-
-            id:
-              createId(),
-
-            author: {
-
-              uid:
-                "demo-user",
-
-              name:
-                "Zemivo User"
-
-            },
-
-            text:
-              text,
-
-            media:
-              mediaData,
-
-            mediaType:
-              selectedMediaType,
-
-            createdAt:
-              Date.now(),
-
-            updatedAt:
-              null
-
-          };
-
-
-          posts.unshift(post);
-
-          savePosts();
-
-          clearComposer();
-
-          renderFeed();
-
-
-          showStatus(
-            "Post published successfully.",
-            "success"
-          );
-
-
-        } catch (error) {
-
-          console.error(error);
-
-          showStatus(
-            "Could not publish the post.",
-            "error"
-          );
-
-        }
-
-
-        publishButton.disabled =
-          false;
-
-        publishButton.textContent =
-          "Post";
-
-      }
-    );
-
-
-    /* =========================
-       FILE -> DATA URL
-    ========================= */
-
-    function fileToDataURL(file) {
-
-      return new Promise(
-        function(resolve, reject) {
-
-          const reader =
-            new FileReader();
-
-
-          reader.onload =
-            function() {
-
-              resolve(
-                reader.result
-              );
-
-            };
-
-
-          reader.onerror =
-            function() {
-
-              reject(
-                new Error(
-                  "File could not be read."
-                )
-              );
-
-            };
-
-
-          reader.readAsDataURL(file);
-
-        }
+      showToast(
+        "Group selector will connect to groups.html."
       );
 
     }
+  );
 
 
-    /* =========================
-       CLEAR COMPOSER
-    ========================= */
+document
+  .getElementById("locationButton")
+  .addEventListener(
+    "click",
+    () => {
 
-    function clearComposer() {
-
-      postText.value =
-        "";
-
-      selectedMedia =
-        null;
-
-      selectedMediaType =
-        null;
-
-      selectedFile.style.display =
-        "none";
-
-      selectedFile.textContent =
-        "";
-
-      preview.innerHTML =
-        "";
-
-      preview.style.display =
-        "none";
-
-      photoInput.value =
-        "";
-
-      videoInput.value =
-        "";
-
-    }
-
-
-    /* =========================
-       CREATE ID
-    ========================= */
-
-    function createId() {
-
-      return (
-        Date.now().toString(36) +
-        Math.random()
-          .toString(36)
-          .substring(2, 10)
+      showToast(
+        "Location option is ready for integration."
       );
 
     }
+  );
 
 
-    /* =========================
-       RENDER FEED
-    ========================= */
+document
+  .getElementById("gifButton")
+  .addEventListener(
+    "click",
+    () => {
 
-    function renderFeed() {
-
-      feed.innerHTML =
-        "";
-
-
-      if (posts.length === 0) {
-
-        const empty =
-          document.createElement("div");
-
-        empty.className =
-          "empty";
-
-        empty.textContent =
-          "No posts yet. Create the first Zemivo post.";
-
-        feed.appendChild(empty);
-
-        return;
-
-      }
-
-
-      posts.forEach(
-        function(post) {
-
-          feed.appendChild(
-            createPostElement(post)
-          );
-
-        }
+      showToast(
+        "GIF selector is ready for integration."
       );
 
     }
+  );
 
 
-    /* =========================
-       CREATE POST ELEMENT
-    ========================= */
+document
+  .getElementById("liveButton")
+  .addEventListener(
+    "click",
+    () => {
 
-    function createPostElement(post) {
-
-      const article =
-        document.createElement("article");
-
-      article.className =
-        "post";
-
-      article.dataset.postId =
-        post.id;
-
-
-      /* HEADER */
-
-      const header =
-        document.createElement("div");
-
-      header.className =
-        "post-header";
-
-
-      const user =
-        document.createElement("div");
-
-      user.className =
-        "post-user";
-
-
-      const avatar =
-        document.createElement("div");
-
-      avatar.className =
-        "avatar";
-
-      avatar.textContent =
-        getInitial(
-          post.author.name
-        );
-
-
-      const userInfo =
-        document.createElement("div");
-
-      userInfo.className =
-        "post-user-info";
-
-
-      const name =
-        document.createElement("div");
-
-      name.className =
-        "post-name";
-
-      name.textContent =
-        post.author.name;
-
-
-      const time =
-        document.createElement("div");
-
-      time.className =
-        "post-time";
-
-      time.textContent =
-        formatTime(
-          post.createdAt
-        );
-
-
-      userInfo.appendChild(name);
-
-      userInfo.appendChild(time);
-
-      user.appendChild(avatar);
-
-      user.appendChild(userInfo);
-
-
-      const more =
-        document.createElement("button");
-
-      more.className =
-        "more-btn";
-
-      more.textContent =
-        "⋯";
-
-      more.title =
-        "Post options";
-
-
-      header.appendChild(user);
-
-      header.appendChild(more);
-
-
-      /* MENU */
-
-      const menu =
-        document.createElement("div");
-
-      menu.className =
-        "menu";
-
-
-      const edit =
-        document.createElement("button");
-
-      edit.textContent =
-        "✏️ Edit post";
-
-
-      const deleteBtn =
-        document.createElement("button");
-
-      deleteBtn.textContent =
-        "🗑️ Delete post";
-
-      deleteBtn.className =
-        "danger";
-
-
-      const save =
-        document.createElement("button");
-
-      save.textContent =
-        "🔖 Save post";
-
-
-      const copy =
-        document.createElement("button");
-
-      copy.textContent =
-        "🔗 Copy link";
-
-
-      const privacy =
-        document.createElement("button");
-
-      privacy.textContent =
-        "🔒 Post privacy";
-
-
-      menu.appendChild(edit);
-
-      menu.appendChild(deleteBtn);
-
-      menu.appendChild(save);
-
-      menu.appendChild(copy);
-
-      menu.appendChild(privacy);
-
-
-      more.addEventListener(
-        "click",
-        function(event) {
-
-          event.stopPropagation();
-
-          closeAllMenus();
-
-          menu.classList.toggle("open");
-
-        }
-      );
-
-
-      edit.addEventListener(
-        "click",
-        function() {
-
-          openEditModal(post);
-
-          menu.classList.remove("open");
-
-        }
-      );
-
-
-      deleteBtn.addEventListener(
-        "click",
-        function() {
-
-          deletePost(post.id);
-
-        }
-      );
-
-
-      save.addEventListener(
-        "click",
-        function() {
-
-          showStatus(
-            "Post saved.",
-            "success"
-          );
-
-          menu.classList.remove("open");
-
-        }
-      );
-
-
-      copy.addEventListener(
-        "click",
-        async function() {
-
-          const link =
-            window.location.href.split("#")[0] +
-            "#post-" +
-            post.id;
-
-
-          try {
-
-            await navigator.clipboard.writeText(
-              link
-            );
-
-            showStatus(
-              "Post link copied.",
-              "success"
-            );
-
-          } catch (error) {
-
-            showStatus(
-              "Could not copy the link.",
-              "error"
-            );
-
-          }
-
-
-          menu.classList.remove("open");
-
-        }
-      );
-
-
-      privacy.addEventListener(
-        "click",
-        function() {
-
-          showStatus(
-            "Privacy controls will be connected to the secure backend.",
-            "success"
-          );
-
-          menu.classList.remove("open");
-
-        }
-      );
-
-
-      /* CONTENT */
-
-      const content =
-        document.createElement("div");
-
-      content.className =
-        "post-content";
-
-      content.textContent =
-        post.text;
-
-
-      /* MEDIA */
-
-      let mediaElement =
-        null;
-
-
-      if (post.media) {
-
-        if (
-          post.mediaType ===
-          "image"
-        ) {
-
-          mediaElement =
-            document.createElement("img");
-
-          mediaElement.src =
-            post.media;
-
-          mediaElement.alt =
-            "Zemivo post image";
-
-        }
-
-        else if (
-          post.mediaType ===
-          "video"
-        ) {
-
-          mediaElement =
-            document.createElement("video");
-
-          mediaElement.src =
-            post.media;
-
-          mediaElement.controls =
-            true;
-
-        }
-
-
-        if (mediaElement) {
-
-          mediaElement.className =
-            "post-media";
-
-        }
-
-      }
-
-
-      /* ACTIONS */
-
-      const actions =
-        document.createElement("div");
-
-      actions.className =
-        "post-actions";
-
-
-      const like =
-        createActionButton(
-          "👍 Like"
-        );
-
-      const comment =
-        createActionButton(
-          "💬 Comment"
-        );
-
-      const share =
-        createActionButton(
-          "↗️ Share"
-        );
-
-
-      like.addEventListener(
-        "click",
-        function() {
-
-          like.textContent =
-            like.textContent.includes("Liked")
-              ? "👍 Like"
-              : "👍 Liked";
-
-        }
-      );
-
-
-      comment.addEventListener(
-        "click",
-        function() {
-
-          showStatus(
-            "Comment system will be connected next.",
-            "success"
-          );
-
-        }
-      );
-
-
-      share.addEventListener(
-        "click",
-        async function() {
-
-          const link =
-            window.location.href.split("#")[0] +
-            "#post-" +
-            post.id;
-
-
-          if (
-            navigator.share
-          ) {
-
-            try {
-
-              await navigator.share({
-                title:
-                  "Zemivo Post",
-                text:
-                  post.text,
-                url:
-                  link
-              });
-
-            } catch (error) {}
-
-          }
-
-          else {
-
-            try {
-
-              await navigator.clipboard.writeText(
-                link
-              );
-
-              showStatus(
-                "Post link copied for sharing.",
-                "success"
-              );
-
-            } catch (error) {
-
-              showStatus(
-                "Sharing is not available on this device.",
-                "error"
-              );
-
-            }
-
-          }
-
-        }
-      );
-
-
-      actions.appendChild(like);
-
-      actions.appendChild(comment);
-
-      actions.appendChild(share);
-
-
-      /* BUILD POST */
-
-      article.appendChild(header);
-
-      article.appendChild(menu);
-
-      if (post.text) {
-
-        article.appendChild(content);
-
-      }
-
-
-      if (mediaElement) {
-
-        article.appendChild(
-          mediaElement
-        );
-
-      }
-
-
-      article.appendChild(actions);
-
-
-      return article;
-
-    }
-
-
-    /* =========================
-       ACTION BUTTON
-    ========================= */
-
-    function createActionButton(
-      text
-    ) {
-
-      const button =
-        document.createElement("button");
-
-      button.className =
-        "post-action";
-
-      button.textContent =
-        text;
-
-      return button;
-
-    }
-
-
-    /* =========================
-       DELETE POST
-    ========================= */
-
-    function deletePost(
-      postId
-    ) {
-
-      const confirmed =
-        confirm(
-          "Are you sure you want to delete this post?"
-        );
-
-
-      if (!confirmed) {
-        return;
-      }
-
-
-      posts =
-        posts.filter(
-          function(post) {
-
-            return post.id !== postId;
-
-          }
-        );
-
-
-      savePosts();
-
-      renderFeed();
-
-
-      showStatus(
-        "Post deleted successfully.",
-        "success"
+      showToast(
+        "Live video will open from the Live system."
       );
 
     }
+  );
 
 
-    /* =========================
-       EDIT POST
-    ========================= */
-
-    function openEditModal(
-      post
-    ) {
-
-      editingPostId =
-        post.id;
-
-      editText.value =
-        post.text || "";
-
-      editModalBackdrop.classList.add(
-        "open"
-      );
-
-      editText.focus();
-
-    }
-
-
-    cancelEdit.addEventListener(
-      "click",
-      function() {
-
-        closeEditModal();
-
-      }
-    );
-
-
-    editModalBackdrop.addEventListener(
-      "click",
-      function(event) {
-
-        if (
-          event.target ===
-          editModalBackdrop
-        ) {
-
-          closeEditModal();
-
-        }
-
-      }
-    );
-
-
-    saveEdit.addEventListener(
-      "click",
-      function() {
-
-        if (!editingPostId) {
-          return;
-        }
-
-
-        const newText =
-          editText.value.trim();
-
-
-        if (!newText) {
-
-          showStatus(
-            "Post text cannot be empty.",
-            "error"
-          );
-
-          return;
-
-        }
-
-
-        const post =
-          posts.find(
-            function(item) {
-
-              return item.id ===
-                editingPostId;
-
-            }
-          );
-
-
-        if (!post) {
-          return;
-        }
-
-
-        post.text =
-          newText;
-
-        post.updatedAt =
-          Date.now();
-
-
-        savePosts();
-
-        renderFeed();
-
-        closeEditModal();
-
-
-        showStatus(
-          "Post updated successfully.",
-          "success"
-        );
-
-      }
-    );
-
-
-    function closeEditModal() {
-
-      editingPostId =
-        null;
-
-      editText.value =
-        "";
-
-      editModalBackdrop.classList.remove(
-        "open"
-      );
-
-    }
-
-
-    /* =========================
-       CLOSE MENUS
-    ========================= */
-
-    document.addEventListener(
-      "click",
-      function() {
-
-        closeAllMenus();
-
-      }
-    );
-
-
-    function closeAllMenus() {
+document
+  .getElementById("productButton")
+  .addEventListener(
+    "click",
+    () => {
 
       document
-        .querySelectorAll(".menu.open")
-        .forEach(
-          function(menu) {
+        .getElementById("productModal")
+        .style.display =
+        "flex";
 
-            menu.classList.remove(
-              "open"
-            );
+    }
+  );
+
+
+document
+  .getElementById("affiliateButton")
+  .addEventListener(
+    "click",
+    () => {
+
+      document
+        .getElementById("productModal")
+        .style.display =
+        "flex";
+
+    }
+  );
+
+
+document
+  .getElementById("postButton")
+  .addEventListener(
+    "click",
+    createPost
+  );
+
+
+async function createPost(){
+
+  if(!currentUser){
+
+    showToast(
+      "Please log in first."
+    );
+
+    return;
+
+  }
+
+
+  const text =
+    document
+      .getElementById("postText")
+      .value
+      .trim();
+
+
+  const hashtags =
+    document
+      .getElementById("hashtagInput")
+      .value
+      .trim();
+
+
+  if(!text && !selectedImage){
+
+    showToast(
+      "Write something or add an image."
+    );
+
+    return;
+
+  }
+
+
+  try{
+
+    await addDoc(
+      collection(db,"posts"),
+      {
+
+        uid:
+          currentUser.uid,
+
+        displayName:
+          currentUser.displayName ||
+          "Zemivo User",
+
+        text:
+          text,
+
+        hashtags:
+          hashtags,
+
+        imageData:
+          selectedImage
+          ? await fileToDataURL(
+              selectedImage
+            )
+          : "",
+
+        likes:
+          0,
+
+        comments:
+          0,
+
+        shares:
+          0,
+
+        sparks:
+          0,
+
+        status:
+          "published",
+
+        privacy:
+          "public",
+
+        createdAt:
+          serverTimestamp()
+
+      }
+    );
+
+
+    document
+      .getElementById("postText")
+      .value = "";
+
+    document
+      .getElementById("hashtagInput")
+      .value = "";
+
+    document
+      .getElementById("imagePreview")
+      .innerHTML = "";
+
+    selectedImage =
+      null;
+
+
+    showToast(
+      "Post published successfully."
+    );
+
+
+  }catch(error){
+
+    console.error(error);
+
+    showToast(
+      "Post could not be published."
+    );
+
+  }
+
+}
+
+
+function fileToDataURL(file){
+
+  return new Promise(
+    (resolve,reject) => {
+
+      const reader =
+        new FileReader();
+
+      reader.onload =
+        () => resolve(
+          reader.result
+        );
+
+      reader.onerror =
+        reject;
+
+      reader.readAsDataURL(file);
+
+    }
+  );
+
+}
+
+
+/* --------------------------------
+   LOAD POSTS
+-------------------------------- */
+
+function loadPosts(){
+
+  const feed =
+    document.getElementById(
+      "feed"
+    );
+
+
+  const q =
+    query(
+      collection(db,"posts"),
+      orderBy(
+        "createdAt",
+        "desc"
+      )
+    );
+
+
+  onSnapshot(
+    q,
+    snapshot => {
+
+      feed.innerHTML = "";
+
+      snapshot.forEach(
+        item => {
+
+          const data =
+            item.data();
+
+          if(
+            data.status ===
+            "deleted"
+          ) return;
+
+          feed.appendChild(
+            createPostElement(
+              item.id,
+              data
+            )
+          );
+
+        }
+      );
+
+    },
+    error => {
+
+      console.error(error);
+
+      feed.innerHTML = `
+        <div class="card" style="padding:20px;text-align:center">
+          Feed could not be loaded.
+        </div>
+      `;
+
+    }
+  );
+
+}
+
+
+/* --------------------------------
+   POST CARD
+-------------------------------- */
+
+function createPostElement(
+  id,
+  data
+){
+
+  const article =
+    document.createElement(
+      "article"
+    );
+
+  article.className =
+    "card post";
+
+
+  const initial =
+    (
+      data.displayName ||
+      "Z"
+    )
+    .charAt(0)
+    .toUpperCase();
+
+
+  article.innerHTML = `
+
+    <div class="post-head">
+
+      <div class="user">
+
+        <div class="avatar">
+          ${escapeHTML(initial)}
+        </div>
+
+        <div>
+
+          <div class="user-name">
+            ${escapeHTML(
+              data.displayName ||
+              "Zemivo User"
+            )}
+          </div>
+
+          <div class="post-time">
+            ${formatTime(
+              data.createdAt
+            )}
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <button
+        class="more"
+        data-menu="${id}"
+      >
+        ⋯
+      </button>
+
+    </div>
+
+
+    <div class="post-text">
+
+      ${escapeHTML(
+        data.text || ""
+      )}
+
+      ${
+        data.hashtags
+        ? `<br><br>${escapeHTML(
+            data.hashtags
+          )}`
+        : ""
+      }
+
+    </div>
+
+
+    ${
+      data.imageData
+      ? `
+        <img
+          class="post-media"
+          src="${data.imageData}"
+          alt="Zemivo post"
+        >
+      `
+      : ""
+    }
+
+
+    <div class="post-stats">
+
+      <span>
+        👍 ${data.likes || 0}
+      </span>
+
+      <span>
+        💬 ${data.comments || 0}
+        &nbsp;&nbsp;
+        🔄 ${data.shares || 0}
+        &nbsp;&nbsp;
+        ✨ ${data.sparks || 0}
+      </span>
+
+    </div>
+
+
+    <div class="actions">
+
+      <button
+        onclick="likePost('${id}')"
+      >
+        👍 Like
+      </button>
+
+      <button
+        onclick="commentPost('${id}')"
+      >
+        💬 Comment
+      </button>
+
+      <button
+        onclick="sharePost('${id}')"
+      >
+        ↗ Share
+      </button>
+
+      <button
+        onclick="sparkPost('${id}')"
+      >
+        ✨ Spark
+      </button>
+
+    </div>
+
+  `;
+
+
+  article
+    .querySelector(
+      ".more"
+    )
+    .addEventListener(
+      "click",
+      () => {
+
+        openPostMenu(
+          id,
+          data
+        );
+
+      }
+    );
+
+
+  return article;
+
+}
+
+
+/* --------------------------------
+   THREE DOT MENU
+-------------------------------- */
+
+window.openPostMenu =
+function(id,data){
+
+  currentPostId =
+    id;
+
+  currentPostData =
+    data;
+
+  document
+    .getElementById(
+      "menuOverlay"
+    )
+    .style.display =
+    "block";
+
+};
+
+
+document
+  .getElementById(
+    "menuOverlay"
+  )
+  .addEventListener(
+    "click",
+    event => {
+
+      if(
+        event.target.id ===
+        "menuOverlay"
+      ){
+
+        closeMenu();
+
+      }
+
+    }
+  );
+
+
+function closeMenu(){
+
+  document
+    .getElementById(
+      "menuOverlay"
+    )
+    .style.display =
+    "none";
+
+}
+
+
+/* --------------------------------
+   MENU ACTIONS
+-------------------------------- */
+
+window.saveCurrentPost =
+async function(){
+
+  closeMenu();
+
+  if(!currentUser) return;
+
+  try{
+
+    await setDoc(
+      doc(
+        db,
+        "users",
+        currentUser.uid,
+        "saved",
+        currentPostId
+      ),
+      {
+        postId:
+          currentPostId,
+
+        savedAt:
+          serverTimestamp()
+      }
+    );
+
+    showToast(
+      "Post saved."
+    );
+
+  }catch(error){
+
+    console.error(error);
+
+    showToast(
+      "Could not save post."
+    );
+
+  }
+
+};
+
+
+window.editCurrentPost =
+function(){
+
+  closeMenu();
+
+  if(
+    !currentUser ||
+    currentPostData.uid !==
+    currentUser.uid
+  ){
+
+    showToast(
+      "You can only edit your own posts."
+    );
+
+    return;
+
+  }
+
+
+  document
+    .getElementById("editText")
+    .value =
+    currentPostData.text || "";
+
+
+  document
+    .getElementById("editModal")
+    .style.display =
+    "flex";
+
+};
+
+
+window.saveEditedPost =
+async function(){
+
+  if(!currentPostId) return;
+
+  try{
+
+    const text =
+      document
+        .getElementById(
+          "editText"
+        )
+        .value
+        .trim();
+
+
+    await updateDoc(
+      doc(
+        db,
+        "posts",
+        currentPostId
+      ),
+      {
+        text:
+          text,
+
+        editedAt:
+          serverTimestamp()
+      }
+    );
+
+
+    closeModal(
+      "editModal"
+    );
+
+
+    showToast(
+      "Post updated."
+    );
+
+  }catch(error){
+
+    console.error(error);
+
+    showToast(
+      "Could not edit post."
+    );
+
+  }
+
+};
+
+
+window.manageProduct =
+function(){
+
+  closeMenu();
+
+  document
+    .getElementById(
+      "productModal"
+    )
+    .style.display =
+    "flex";
+
+};
+
+
+window.saveProductLink =
+async function(){
+
+  const url =
+    document
+      .getElementById(
+        "productUrl"
+      )
+      .value
+      .trim();
+
+
+  if(!url){
+
+    showToast(
+      "Enter a product URL."
+    );
+
+    return;
+
+  }
+
+
+  try{
+
+    await updateDoc(
+      doc(
+        db,
+        "posts",
+        currentPostId
+      ),
+      {
+        productUrl:
+          url
+      }
+    );
+
+
+    closeModal(
+      "productModal"
+    );
+
+
+    document
+      .getElementById(
+        "productUrl"
+      )
+      .value = "";
+
+
+    showToast(
+      "Affiliate product link saved."
+    );
+
+  }catch(error){
+
+    console.error(error);
+
+    showToast(
+      "Could not save product link."
+    );
+
+  }
+
+};
+
+
+window.commentSettings =
+function(){
+
+  closeMenu();
+
+  showToast(
+    "Comment controls are ready for the post settings system."
+  );
+
+};
+
+
+window.privacySettings =
+function(){
+
+  closeMenu();
+
+  showToast(
+    "Privacy settings are ready for public/friends/private controls."
+  );
+
+};
+
+
+window.archiveCurrentPost =
+async function(){
+
+  closeMenu();
+
+  if(
+    !currentUser ||
+    currentPostData.uid !==
+    currentUser.uid
+  ){
+
+    showToast(
+      "You can only archive your own post."
+    );
+
+    return;
+
+  }
+
+
+  try{
+
+    await updateDoc(
+      doc(
+        db,
+        "posts",
+        currentPostId
+      ),
+      {
+        status:
+          "archived"
+      }
+    );
+
+
+    showToast(
+      "Post moved to archive."
+    );
+
+  }catch(error){
+
+    console.error(error);
+
+    showToast(
+      "Could not archive post."
+    );
+
+  }
+
+};
+
+
+window.trashCurrentPost =
+async function(){
+
+  closeMenu();
+
+  if(
+    !currentUser ||
+    currentPostData.uid !==
+    currentUser.uid
+  ){
+
+    showToast(
+      "You can only delete your own post."
+    );
+
+    return;
+
+  }
+
+
+  try{
+
+    await updateDoc(
+      doc(
+        db,
+        "posts",
+        currentPostId
+      ),
+      {
+
+        status:
+          "trash",
+
+        trashedAt:
+          serverTimestamp()
+
+      }
+    );
+
+
+    showToast(
+      "Post moved to trash."
+    );
+
+  }catch(error){
+
+    console.error(error);
+
+    showToast(
+      "Could not move post to trash."
+    );
+
+  }
+
+};
+
+
+window.sparkCurrentPost =
+async function(){
+
+  closeMenu();
+
+  await sparkPost(
+    currentPostId
+  );
+
+};
+
+
+window.notificationSettings =
+function(){
+
+  closeMenu();
+
+  showToast(
+    "Post notifications turned off."
+  );
+
+};
+
+
+window.copyCurrentLink =
+async function(){
+
+  closeMenu();
+
+  const link =
+    location.origin +
+    location.pathname +
+    "?post=" +
+    currentPostId;
+
+
+  try{
+
+    await navigator.clipboard.writeText(
+      link
+    );
+
+    showToast(
+      "Post link copied."
+    );
+
+  }catch(error){
+
+    showToast(
+      link
+    );
+
+  }
+
+};
+
+
+window.partnershipCode =
+function(){
+
+  closeMenu();
+
+  showToast(
+    "Partnership ad code system is ready for integration."
+  );
+
+};
+
+
+window.createAd =
+function(){
+
+  closeMenu();
+
+  showToast(
+    "Create Ad opened."
+  );
+
+};
+
+
+/* --------------------------------
+   LIKE / COMMENT / SHARE / SPARK
+-------------------------------- */
+
+window.likePost =
+async function(id){
+
+  try{
+
+    const ref =
+      doc(
+        db,
+        "posts",
+        id
+      );
+
+    const snap =
+      await getDoc(ref);
+
+    const data =
+      snap.data();
+
+
+    await updateDoc(
+      ref,
+      {
+        likes:
+          (data.likes || 0) + 1
+      }
+    );
+
+  }catch(error){
+
+    console.error(error);
+
+  }
+
+};
+
+
+window.sparkPost =
+async function(id){
+
+  try{
+
+    const ref =
+      doc(
+        db,
+        "posts",
+        id
+      );
+
+    const snap =
+      await getDoc(ref);
+
+    const data =
+      snap.data();
+
+
+    await updateDoc(
+      ref,
+      {
+        sparks:
+          (data.sparks || 0) + 1
+      }
+    );
+
+    showToast(
+      "✨ Spark added."
+    );
+
+  }catch(error){
+
+    console.error(error);
+
+  }
+
+};
+
+
+window.commentPost =
+function(id){
+
+  showToast(
+    "Comment system will open here."
+  );
+
+};
+
+
+window.sharePost =
+async function(id){
+
+  try{
+
+    const link =
+      location.origin +
+      location.pathname +
+      "?post=" +
+      id;
+
+
+    if(
+      navigator.share
+    ){
+
+      await navigator.share({
+
+        title:
+          "Zemivo Post",
+
+        url:
+          link
+
+      });
+
+    }else{
+
+      await navigator.clipboard.writeText(
+        link
+      );
+
+      showToast(
+        "Post link copied."
+      );
+
+    }
+
+
+  }catch(error){
+
+    console.log(
+      "Share cancelled."
+    );
+
+  }
+
+};
+
+
+/* --------------------------------
+   ADMIN BROADCAST
+-------------------------------- */
+
+document
+  .getElementById(
+    "broadcastButton"
+  )
+  .addEventListener(
+    "click",
+    async () => {
+
+      if(!currentUser){
+
+        showToast(
+          "Admin session required."
+        );
+
+        return;
+
+      }
+
+
+      const message =
+        document
+          .getElementById(
+            "adminMessage"
+          )
+          .value
+          .trim();
+
+
+      if(!message){
+
+        showToast(
+          "Write an announcement first."
+        );
+
+        return;
+
+      }
+
+
+      try{
+
+        await addDoc(
+          collection(
+            db,
+            "platformAnnouncements"
+          ),
+          {
+
+            message:
+              message,
+
+            createdBy:
+              currentUser.uid,
+
+            createdAt:
+              serverTimestamp(),
+
+            status:
+              "published"
 
           }
         );
 
-    }
+
+        document
+          .getElementById(
+            "adminMessage"
+          )
+          .value = "";
 
 
-    /* =========================
-       HELPERS
-    ========================= */
+        showToast(
+          "Platform announcement published."
+        );
 
-    function getInitial(
-      name
-    ) {
+      }catch(error){
 
-      if (!name) {
-        return "Z";
+        console.error(error);
+
+        showToast(
+          "Admin broadcast was blocked."
+        );
+
       }
 
-      return name
-        .trim()
-        .charAt(0)
-        .toUpperCase();
-
     }
+  );
 
 
-    function formatTime(
-      timestamp
-    ) {
+/* --------------------------------
+   HELPERS
+-------------------------------- */
 
-      const date =
-        new Date(timestamp);
+window.closeModal =
+function(id){
 
-      return date.toLocaleString();
+  document
+    .getElementById(id)
+    .style.display =
+    "none";
 
-    }
+};
 
 
-    /* =========================
-       INITIALIZE
-    ========================= */
+function showToast(text){
 
-    renderFeed();
+  const toast =
+    document.getElementById(
+      "toast"
+    );
 
-  </script>
+  toast.textContent =
+    text;
+
+  toast.style.display =
+    "block";
+
+
+  setTimeout(
+    () => {
+
+      toast.style.display =
+        "none";
+
+    },
+    2500
+  );
+
+}
+
+
+function escapeHTML(value){
+
+  return String(value)
+    .replaceAll("&","&amp;")
+    .replaceAll("<","&lt;")
+    .replaceAll(">","&gt;")
+    .replaceAll('"',"&quot;")
+    .replaceAll("'","&#039;");
+
+}
+
+
+function formatTime(timestamp){
+
+  if(!timestamp)
+    return "Just now";
+
+  try{
+
+    return timestamp
+      .toDate()
+      .toLocaleString();
+
+  }catch(error){
+
+    return "Just now";
+
+  }
+
+}
+
+</script>
 
 </body>
 </html>
