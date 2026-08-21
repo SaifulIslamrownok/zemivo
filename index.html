@@ -1,870 +1,621 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#2563eb">
 
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
-  >
-
-  <title>Zemivo - Home</title>
-
+  <title>Zemivo — Home</title>
 
   <style>
-
-    *{
-      box-sizing:border-box;
-    }
-
-
-    body{
-      margin:0;
-      font-family:Arial,sans-serif;
-      background:#f3f5f8;
-      color:#172033;
-    }
-
-
-    /* HEADER */
-
-    .header{
-      position:sticky;
-      top:0;
-      z-index:1000;
-      height:64px;
-      background:#ffffff;
-      border-bottom:1px solid #e5e7eb;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      padding:0 18px;
-    }
-
-
-    .logo{
-      font-size:27px;
-      font-weight:800;
-      color:#2563eb;
-    }
-
-
-    .header-actions{
-      display:flex;
-      gap:8px;
-    }
-
-
-    .icon-btn{
-      width:42px;
-      height:42px;
-      border:0;
-      border-radius:50%;
-      background:#f1f5f9;
-      cursor:pointer;
-      font-size:18px;
-    }
-
-
-    .icon-btn:hover{
-      background:#e2e8f0;
-    }
-
-
-    /* MAIN */
-
-    .container{
-      width:100%;
-      max-width:760px;
-      margin:20px auto;
-      padding:0 12px;
-    }
-
-
-    /* CARD */
-
-    .card{
-      background:#ffffff;
-      border:1px solid #e5e7eb;
-      border-radius:16px;
-      overflow:hidden;
-      margin-bottom:16px;
-    }
-
-
-    /* CREATE POST */
-
-    .composer{
-      padding:16px;
-    }
-
-
-    .composer-top{
-      display:flex;
-      gap:12px;
-      align-items:flex-start;
-    }
-
-
-    .avatar{
-      width:44px;
-      height:44px;
-      min-width:44px;
-      border-radius:50%;
-      background:#2563eb;
-      color:#ffffff;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      font-weight:bold;
-      font-size:18px;
-    }
-
-
-    textarea{
-      width:100%;
-      min-height:75px;
-      resize:none;
-      border:1px solid #dbe2ea;
-      border-radius:13px;
-      padding:12px;
-      font-size:15px;
-      outline:none;
-      font-family:inherit;
-    }
-
-
-    textarea:focus{
-      border-color:#2563eb;
-    }
-
-
-    .photo-preview{
-      display:none;
-      margin-top:12px;
-      position:relative;
-    }
-
-
-    .photo-preview img{
-      width:100%;
-      max-height:420px;
-      object-fit:cover;
-      border-radius:12px;
-      display:block;
-    }
-
-
-    .remove-preview{
-      position:absolute;
-      right:10px;
-      top:10px;
-      width:36px;
-      height:36px;
-      border:0;
-      border-radius:50%;
-      background:rgba(0,0,0,.65);
-      color:#ffffff;
-      font-size:20px;
-      cursor:pointer;
-    }
-
-
-    .composer-actions{
-      margin-top:12px;
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      gap:10px;
-    }
-
-
-    .photo-label{
-      background:#eff6ff;
-      color:#2563eb;
-      padding:10px 14px;
-      border-radius:10px;
-      font-weight:bold;
-      cursor:pointer;
-    }
-
-
-    #photoInput{
-      display:none;
-    }
-
-
-    .post-btn{
-      border:0;
-      background:#2563eb;
-      color:#ffffff;
-      padding:11px 22px;
-      border-radius:22px;
-      font-size:15px;
-      font-weight:bold;
-      cursor:pointer;
-    }
-
-
-    .post-btn:hover{
-      background:#1d4ed8;
-    }
-
-
-    /* POST HEADER */
-
-    .post-header{
-      padding:15px;
-      display:flex;
-      align-items:center;
-      gap:10px;
-    }
-
-
-    .post-info{
-      flex:1;
-      min-width:0;
-    }
-
-
-    .post-name{
-      font-weight:bold;
-      font-size:15px;
-    }
-
-
-    .post-time{
-      color:#64748b;
-      font-size:12px;
-      margin-top:3px;
+    * {
+      box-sizing: border-box;
     }
 
+    :root {
+      --primary: #2563eb;
+      --primary-dark: #1d4ed8;
+      --bg: #f1f5f9;
+      --card: #ffffff;
+      --text: #0f172a;
+      --muted: #64748b;
+      --border: #e2e8f0;
+      --danger: #dc2626;
+      --success: #15803d;
+    }
 
-    .post-menu-wrapper{
-      position:relative;
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+    }
+
+    button,
+    input,
+    textarea {
+      font: inherit;
+    }
+
+    button {
+      cursor: pointer;
     }
 
+    /* =========================
+       HEADER
+    ========================= */
 
-    .more-btn{
-      width:38px;
-      height:38px;
-      border:0;
-      border-radius:50%;
-      background:transparent;
-      font-size:24px;
-      cursor:pointer;
-      line-height:1;
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      height: 62px;
+      background: #ffffff;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 18px;
+    }
+
+    .brand {
+      color: var(--primary);
+      font-size: 28px;
+      font-weight: 800;
+      text-decoration: none;
+    }
+
+    .top-actions {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .top-btn {
+      border: 0;
+      background: #f1f5f9;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      font-size: 18px;
+    }
+
+    /* =========================
+       PAGE
+    ========================= */
+
+    .page {
+      width: 100%;
+      max-width: 680px;
+      margin: 24px auto;
+      padding: 0 12px;
+    }
+
+    /* =========================
+       COMPOSER
+    ========================= */
+
+    .composer {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 16px;
+      box-shadow: 0 2px 10px rgba(15, 23, 42, 0.04);
+    }
+
+    .composer-title {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 12px;
     }
 
-
-    .more-btn:hover{
-      background:#f1f5f9;
-    }
-
-
-    /* THREE DOT MENU */
-
-    .post-menu{
-      position:absolute;
-      right:0;
-      top:43px;
-      width:300px;
-      max-width:calc(100vw - 35px);
-      background:#ffffff;
-      border:1px solid #e2e8f0;
-      border-radius:16px;
-      box-shadow:0 10px 35px rgba(0,0,0,.18);
-      padding:8px;
-      z-index:500;
-    }
-
-
-    .post-menu.hidden{
-      display:none;
-    }
-
-
-    .post-menu button{
-      width:100%;
-      min-height:45px;
-      border:0;
-      background:#ffffff;
-      border-radius:10px;
-      display:flex;
-      align-items:center;
-      gap:12px;
-      padding:10px 12px;
-      font-size:14px;
-      text-align:left;
-      cursor:pointer;
-      color:#172033;
-    }
-
-
-    .post-menu button:hover{
-      background:#f1f5f9;
-    }
-
-
-    .post-menu .danger{
-      color:#dc2626;
-    }
-
-
-    .menu-divider{
-      height:1px;
-      background:#e5e7eb;
-      margin:7px 4px;
+    .avatar {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #2563eb, #60a5fa);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      flex-shrink: 0;
     }
 
-
-    /* POST CONTENT */
-
-    .post-text{
-      padding:0 15px 15px;
-      line-height:1.55;
-      white-space:pre-wrap;
-      overflow-wrap:anywhere;
-    }
-
-
-    .post-image{
-      width:100%;
-      max-height:560px;
-      object-fit:cover;
-      display:block;
-      background:#f1f5f9;
-    }
-
-
-    /* STATS */
-
-    .stats{
-      padding:10px 15px;
-      display:flex;
-      justify-content:space-between;
-      color:#64748b;
-      font-size:13px;
-      border-bottom:1px solid #eef0f3;
-    }
-
-
-    /* POST ACTIONS */
-
-    .post-actions{
-      display:flex;
-      border-bottom:1px solid #eef0f3;
-    }
-
-
-    .post-actions button{
-      flex:1;
-      border:0;
-      background:#ffffff;
-      padding:12px 5px;
-      color:#475569;
-      font-weight:bold;
-      cursor:pointer;
-    }
-
-
-    .post-actions button:hover{
-      background:#f8fafc;
+    .mind-box {
+      width: 100%;
+      min-height: 95px;
+      resize: vertical;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 14px;
+      outline: none;
+      background: #f8fafc;
     }
-
 
-    .post-actions .liked{
-      color:#2563eb;
+    .mind-box:focus {
+      border-color: var(--primary);
+      background: white;
     }
 
+    /* Everything related to creating a post stays INSIDE composer */
 
-    /* COMMENTS */
-
-    .comments{
-      padding:13px 15px;
+    .composer-tools {
+      margin-top: 12px;
+      padding: 10px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      background: #fafafa;
     }
-
 
-    .comment-form{
-      display:flex;
-      gap:8px;
+    .tool-btn {
+      border: 0;
+      background: white;
+      border: 1px solid var(--border);
+      padding: 9px 12px;
+      border-radius: 10px;
+      color: #334155;
+      font-weight: 600;
     }
 
-
-    .comment-form input{
-      flex:1;
-      min-width:0;
-      border:1px solid #dbe2ea;
-      border-radius:21px;
-      padding:10px 13px;
-      outline:none;
+    .tool-btn:hover {
+      background: #eff6ff;
+      border-color: #bfdbfe;
     }
 
-
-    .comment-form button{
-      border:0;
-      border-radius:21px;
-      background:#2563eb;
-      color:#ffffff;
-      padding:0 15px;
-      cursor:pointer;
-      font-weight:bold;
+    .selected-file {
+      margin-top: 10px;
+      display: none;
+      padding: 10px;
+      border-radius: 10px;
+      background: #eff6ff;
+      color: #1e40af;
+      font-size: 14px;
     }
-
 
-    .comment{
-      margin-top:13px;
+    .preview {
+      display: none;
+      margin-top: 10px;
+      border-radius: 12px;
+      overflow: hidden;
+      background: #f8fafc;
     }
 
-
-    .comment-main{
-      display:flex;
-      gap:8px;
+    .preview img,
+    .preview video {
+      width: 100%;
+      max-height: 420px;
+      object-fit: contain;
+      display: block;
     }
-
 
-    .comment-main .avatar{
-      width:36px;
-      height:36px;
-      min-width:36px;
-      font-size:14px;
+    .composer-bottom {
+      display: flex;
+      justify-content: flex-end;
+      margin-top: 12px;
     }
 
-
-    .comment-body{
-      background:#f1f5f9;
-      border-radius:14px;
-      padding:9px 12px;
-      max-width:calc(100% - 44px);
+    .post-btn {
+      border: 0;
+      background: var(--primary);
+      color: white;
+      padding: 11px 28px;
+      border-radius: 24px;
+      font-weight: bold;
     }
 
-
-    .comment-author{
-      font-weight:bold;
-      font-size:13px;
+    .post-btn:hover {
+      background: var(--primary-dark);
     }
-
 
-    .comment-text{
-      margin-top:4px;
-      line-height:1.45;
-      overflow-wrap:anywhere;
+    .post-btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
     }
 
+    /* =========================
+       FEED
+    ========================= */
 
-    .comment-tools{
-      display:flex;
-      gap:13px;
-      padding:5px 7px;
-      flex-wrap:wrap;
+    .feed {
+      margin-top: 18px;
     }
 
-
-    .comment-tools button{
-      border:0;
-      background:none;
-      color:#64748b;
-      padding:0;
-      cursor:pointer;
-      font-size:12px;
-      font-weight:bold;
+    .empty {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 28px;
+      text-align: center;
+      color: var(--muted);
     }
 
+    /* =========================
+       POST CARD
+    ========================= */
 
-    .comment-tools button:hover{
-      color:#2563eb;
+    .post {
+      position: relative;
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      margin-bottom: 16px;
+      overflow: hidden;
     }
-
 
-    .comment-tools .active{
-      color:#2563eb;
+    .post-header {
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
     }
 
-
-    .reply-area{
-      margin-left:44px;
-      margin-top:6px;
+    .post-user {
+      display: flex;
+      gap: 10px;
+      align-items: center;
     }
 
-
-    .reply-area.hidden{
-      display:none;
+    .post-user-info {
+      display: flex;
+      flex-direction: column;
     }
-
 
-    .reply-form{
-      display:flex;
-      gap:7px;
+    .post-name {
+      font-weight: bold;
     }
 
-
-    .reply-form input{
-      flex:1;
-      min-width:0;
-      border:1px solid #dbe2ea;
-      border-radius:20px;
-      padding:8px 11px;
-      outline:none;
+    .post-time {
+      color: var(--muted);
+      font-size: 12px;
+      margin-top: 3px;
     }
-
 
-    .reply-form button{
-      border:0;
-      border-radius:20px;
-      background:#2563eb;
-      color:#ffffff;
-      padding:0 12px;
-      cursor:pointer;
+    .more-btn {
+      border: 0;
+      background: transparent;
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      font-size: 22px;
+      color: #475569;
     }
 
-
-    .replies{
-      margin-left:44px;
+    .more-btn:hover {
+      background: #f1f5f9;
     }
-
-
-    /* EDIT POST MODAL */
 
-    .modal-overlay{
-      position:fixed;
-      inset:0;
-      background:rgba(0,0,0,.55);
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      padding:18px;
-      z-index:3000;
+    .post-content {
+      padding: 0 16px 14px;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+      line-height: 1.55;
     }
 
-
-    .modal-overlay.hidden{
-      display:none;
+    .post-media {
+      width: 100%;
+      max-height: 520px;
+      object-fit: contain;
+      display: block;
+      background: #f8fafc;
     }
-
 
-    .edit-modal{
-      width:100%;
-      max-width:520px;
-      background:#ffffff;
-      border-radius:18px;
-      padding:18px;
-      box-shadow:0 15px 50px rgba(0,0,0,.25);
+    .post-actions {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
     }
 
-
-    .edit-modal-header{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      margin-bottom:15px;
+    .post-action {
+      border: 0;
+      background: white;
+      padding: 12px 5px;
+      color: #475569;
+      font-weight: 600;
     }
 
-
-    .edit-modal-header h3{
-      margin:0;
+    .post-action:hover {
+      background: #f8fafc;
     }
 
+    /* =========================
+       THREE DOT MENU
+    ========================= */
 
-    .close-modal{
-      width:38px;
-      height:38px;
-      border:0;
-      border-radius:50%;
-      background:#f1f5f9;
-      font-size:22px;
-      cursor:pointer;
+    .menu {
+      position: absolute;
+      top: 56px;
+      right: 12px;
+      width: 210px;
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      box-shadow: 0 12px 30px rgba(15, 23, 42, 0.16);
+      display: none;
+      z-index: 50;
+      overflow: hidden;
     }
-
 
-    .edit-photo-preview{
-      margin-top:12px;
+    .menu.open {
+      display: block;
     }
 
-
-    .edit-photo-preview img{
-      width:100%;
-      max-height:330px;
-      object-fit:cover;
-      border-radius:12px;
+    .menu button {
+      width: 100%;
+      text-align: left;
+      border: 0;
+      background: white;
+      padding: 12px 14px;
+      color: #334155;
     }
-
 
-    .edit-photo-label{
-      display:inline-block;
-      margin-top:10px;
-      padding:10px 13px;
-      background:#eff6ff;
-      color:#2563eb;
-      border-radius:10px;
-      font-weight:bold;
-      cursor:pointer;
+    .menu button:hover {
+      background: #f8fafc;
     }
 
-
-    #editPhotoInput{
-      display:none;
+    .menu .danger {
+      color: var(--danger);
     }
 
+    /* =========================
+       MODAL
+    ========================= */
 
-    .edit-buttons{
-      display:flex;
-      gap:8px;
-      margin-top:15px;
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.55);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 18px;
+      z-index: 2000;
     }
 
-
-    .edit-buttons button{
-      flex:1;
-      border:0;
-      border-radius:10px;
-      padding:11px;
-      font-weight:bold;
-      cursor:pointer;
+    .modal-backdrop.open {
+      display: flex;
     }
-
 
-    .save-edit{
-      background:#2563eb;
-      color:#ffffff;
+    .modal {
+      width: 100%;
+      max-width: 520px;
+      background: white;
+      border-radius: 16px;
+      padding: 18px;
     }
 
-
-    .cancel-edit{
-      background:#e2e8f0;
-      color:#172033;
+    .modal h3 {
+      margin-top: 0;
     }
-
 
-    /* CONFIRM MODAL */
-
-    .confirm-modal{
-      width:100%;
-      max-width:400px;
-      background:#ffffff;
-      border-radius:18px;
-      padding:22px;
-      text-align:center;
+    .edit-area {
+      width: 100%;
+      min-height: 150px;
+      resize: vertical;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 12px;
+      outline: none;
     }
 
-
-    .confirm-modal h3{
-      margin-top:0;
+    .modal-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 8px;
+      margin-top: 12px;
     }
-
 
-    .confirm-modal p{
-      color:#64748b;
-      line-height:1.5;
+    .cancel-btn,
+    .save-btn {
+      border: 0;
+      padding: 10px 18px;
+      border-radius: 20px;
+      font-weight: bold;
     }
 
-
-    .confirm-buttons{
-      display:flex;
-      gap:10px;
-      margin-top:18px;
+    .cancel-btn {
+      background: #e2e8f0;
+      color: #334155;
     }
 
-
-    .confirm-buttons button{
-      flex:1;
-      border:0;
-      border-radius:10px;
-      padding:12px;
-      font-weight:bold;
-      cursor:pointer;
+    .save-btn {
+      background: var(--primary);
+      color: white;
     }
 
+    /* =========================
+       MESSAGE
+    ========================= */
 
-    .cancel-delete{
-      background:#e2e8f0;
+    #status {
+      text-align: center;
+      margin: 12px 0;
+      font-size: 14px;
+      min-height: 20px;
     }
-
 
-    .confirm-delete{
-      background:#dc2626;
-      color:#ffffff;
+    .status-success {
+      color: var(--success);
     }
 
-
-    /* EMPTY */
-
-    .empty{
-      text-align:center;
-      color:#64748b;
-      padding:35px 15px;
+    .status-error {
+      color: var(--danger);
     }
-
 
-    /* MOBILE */
+    /* =========================
+       MOBILE
+    ========================= */
 
-    @media(max-width:600px){
+    @media (max-width: 600px) {
 
-      .header{
-        padding:0 11px;
+      .topbar {
+        padding: 0 12px;
       }
 
-
-      .container{
-        margin:10px auto;
-        padding:0 7px;
+      .brand {
+        font-size: 24px;
       }
 
-
-      .card{
-        border-radius:12px;
+      .page {
+        margin-top: 12px;
       }
 
-
-      .logo{
-        font-size:24px;
+      .composer,
+      .post {
+        border-radius: 12px;
       }
 
-
-      .header-actions{
-        gap:3px;
+      .composer-tools {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
       }
 
-
-      .icon-btn{
-        width:38px;
-        height:38px;
+      .tool-btn {
+        width: 100%;
       }
 
-
-      .post-menu{
-        width:285px;
+      .post-actions {
+        font-size: 14px;
       }
-
-
-      .post-menu button{
-        font-size:14px;
-      }
-
-
-      .post-actions button{
-        font-size:13px;
-      }
-
     }
-
   </style>
-
 </head>
-
 
 <body>
 
+  <!-- =========================
+       ZEMIVO HEADER
+  ========================= -->
 
-  <!-- HEADER -->
+  <header class="topbar">
 
-  <header class="header">
-
-    <div class="logo">
+    <a class="brand" href="index.html">
       Zemivo
-    </div>
+    </a>
 
-
-    <div class="header-actions">
-
+    <div class="top-actions">
+      <button class="top-btn" title="Search">🔍</button>
+      <button class="top-btn" title="Notifications">🔔</button>
       <button
-        class="icon-btn"
-        title="Search"
-        onclick="showComingSoon('Search')"
+        class="top-btn"
+        title="Profile"
+        onclick="window.location.href='profile.html'"
       >
-        🔍
+        👤
       </button>
-
-
-      <button
-        class="icon-btn"
-        title="Messages"
-        onclick="showComingSoon('Messenger')"
-      >
-        💬
-      </button>
-
-
-      <button
-        class="icon-btn"
-        title="Notifications"
-        onclick="showComingSoon('Notifications')"
-      >
-        🔔
-      </button>
-
     </div>
 
   </header>
 
 
-  <!-- MAIN -->
+  <main class="page">
 
-  <main class="container">
+    <!-- =========================
+         COMPOSER
+    ========================= -->
 
+    <section class="composer">
 
-    <!-- CREATE POST -->
-
-    <section class="card composer">
-
-      <div class="composer-top">
+      <div class="composer-title">
 
         <div class="avatar">
           Z
         </div>
 
-
-        <textarea
-          id="postText"
-          placeholder="What's on your mind?"
-        ></textarea>
+        <strong>
+          Create a post
+        </strong>
 
       </div>
+
+
+      <textarea
+        id="postText"
+        class="mind-box"
+        placeholder="What's on your mind?"
+      ></textarea>
+
+
+      <!--
+        IMPORTANT:
+        All post creation options are INSIDE
+        the composer.
+      -->
+
+      <div class="composer-tools">
+
+        <button
+          type="button"
+          class="tool-btn"
+          id="photoButton"
+        >
+          🖼️ Photo
+        </button>
+
+        <button
+          type="button"
+          class="tool-btn"
+          id="videoButton"
+        >
+          🎥 Video
+        </button>
+
+        <button
+          type="button"
+          class="tool-btn"
+          id="feelingButton"
+        >
+          😊 Feeling
+        </button>
+
+        <button
+          type="button"
+          class="tool-btn"
+          id="morePostButton"
+        >
+          ➕ More
+        </button>
+
+      </div>
+
+
+      <input
+        id="photoInput"
+        type="file"
+        accept="image/*"
+        hidden
+      >
+
+      <input
+        id="videoInput"
+        type="file"
+        accept="video/*"
+        hidden
+      >
 
 
       <div
-        class="photo-preview"
-        id="photoPreview"
-      >
+        id="selectedFile"
+        class="selected-file"
+      ></div>
+
+
+      <div
+        id="preview"
+        class="preview"
+      ></div>
+
+
+      <div class="composer-bottom">
 
         <button
-          class="remove-preview"
-          id="removePreview"
-          type="button"
-        >
-          ×
-        </button>
-
-
-        <img
-          id="previewImage"
-          alt="Selected photo"
-        >
-
-      </div>
-
-
-      <div class="composer-actions">
-
-        <label
-          class="photo-label"
-          for="photoInput"
-        >
-          🖼️ Photo
-        </label>
-
-
-        <input
-          id="photoInput"
-          type="file"
-          accept="image/*"
-        >
-
-
-        <button
+          id="publishButton"
           class="post-btn"
-          id="postButton"
           type="button"
         >
           Post
@@ -875,91 +626,64 @@
     </section>
 
 
-    <!-- FEED -->
+    <div id="status"></div>
 
-    <section id="feed"></section>
+
+    <!-- =========================
+         FEED
+    ========================= -->
+
+    <section
+      id="feed"
+      class="feed"
+    >
+
+      <div class="empty" id="emptyFeed">
+        No posts yet. Create the first Zemivo post.
+      </div>
+
+    </section>
 
   </main>
 
 
-  <!-- EDIT POST MODAL -->
+  <!-- =========================
+       EDIT MODAL
+  ========================= -->
 
   <div
-    id="editModal"
-    class="modal-overlay hidden"
+    id="editModalBackdrop"
+    class="modal-backdrop"
   >
 
-    <div class="edit-modal">
+    <div class="modal">
 
-      <div class="edit-modal-header">
-
-        <h3>
-          Edit post
-        </h3>
-
-
-        <button
-          class="close-modal"
-          type="button"
-          onclick="closeEditModal()"
-        >
-          ×
-        </button>
-
-      </div>
-
+      <h3>
+        Edit your post
+      </h3>
 
       <textarea
-        id="editPostText"
+        id="editText"
+        class="edit-area"
         placeholder="Edit your post..."
       ></textarea>
 
-
-      <div
-        class="edit-photo-preview"
-        id="editPhotoPreview"
-      >
-
-        <img
-          id="editPreviewImage"
-          alt="Post photo"
-        >
-
-      </div>
-
-
-      <label
-        class="edit-photo-label"
-        for="editPhotoInput"
-      >
-        🖼️ Change photo
-      </label>
-
-
-      <input
-        id="editPhotoInput"
-        type="file"
-        accept="image/*"
-      >
-
-
-      <div class="edit-buttons">
+      <div class="modal-actions">
 
         <button
-          class="cancel-edit"
+          id="cancelEdit"
+          class="cancel-btn"
           type="button"
-          onclick="closeEditModal()"
         >
           Cancel
         </button>
 
-
         <button
-          class="save-edit"
+          id="saveEdit"
+          class="save-btn"
           type="button"
-          onclick="saveEditedPost()"
         >
-          Save changes
+          Save Changes
         </button>
 
       </div>
@@ -969,2074 +693,1330 @@
   </div>
 
 
-  <!-- DELETE CONFIRMATION -->
+  <script>
 
-  <div
-    id="deleteModal"
-    class="modal-overlay hidden"
-  >
+    /*
+    ============================================================
+      ZEMIVO POST ENGINE
+      ------------------------------------------------------------
+      This frontend structure is intentionally modular.
 
-    <div class="confirm-modal">
+      Later we can replace the localStorage layer with:
+      Firebase Authentication
+      Firestore
+      Firebase Storage
+      Cloud Functions
+      Security Rules
 
-      <h3>
-        Delete post?
-      </h3>
-
-
-      <p>
-        Are you sure you want to permanently
-        delete this post?
-      </p>
-
-
-      <div class="confirm-buttons">
-
-        <button
-          class="cancel-delete"
-          type="button"
-          onclick="closeDeleteModal()"
-        >
-          Cancel
-        </button>
+      The UI structure does not need to be rebuilt.
+    ============================================================
+    */
 
 
-        <button
-          class="confirm-delete"
-          type="button"
-          onclick="confirmDeletePost()"
-        >
-          Delete
-        </button>
-
-      </div>
-
-    </div>
-
-  </div>
+    const STORAGE_KEY = "zemivo_posts_v1";
 
 
-<script>
+    let posts = loadPosts();
+
+    let selectedMedia = null;
+
+    let selectedMediaType = null;
+
+    let editingPostId = null;
 
 
-/* =========================
-   DATA
-========================= */
+    /* =========================
+       ELEMENTS
+    ========================= */
 
-let posts = [];
+    const postText =
+      document.getElementById("postText");
 
-let currentPhoto = "";
+    const photoButton =
+      document.getElementById("photoButton");
 
-let editingPostId = null;
+    const videoButton =
+      document.getElementById("videoButton");
 
-let deletingPostId = null;
+    const feelingButton =
+      document.getElementById("feelingButton");
 
-let editPhotoData = null;
+    const morePostButton =
+      document.getElementById("morePostButton");
 
+    const photoInput =
+      document.getElementById("photoInput");
 
-/* =========================
-   ELEMENTS
-========================= */
+    const videoInput =
+      document.getElementById("videoInput");
 
-const postText =
-  document.getElementById("postText");
+    const selectedFile =
+      document.getElementById("selectedFile");
 
+    const preview =
+      document.getElementById("preview");
 
-const photoInput =
-  document.getElementById("photoInput");
+    const publishButton =
+      document.getElementById("publishButton");
 
+    const feed =
+      document.getElementById("feed");
 
-const photoPreview =
-  document.getElementById("photoPreview");
+    const status =
+      document.getElementById("status");
 
+    const editModalBackdrop =
+      document.getElementById("editModalBackdrop");
 
-const previewImage =
-  document.getElementById("previewImage");
+    const editText =
+      document.getElementById("editText");
 
+    const cancelEdit =
+      document.getElementById("cancelEdit");
 
-const removePreview =
-  document.getElementById("removePreview");
-
-
-const postButton =
-  document.getElementById("postButton");
-
-
-const feed =
-  document.getElementById("feed");
-
-
-const editModal =
-  document.getElementById("editModal");
-
-
-const editPostText =
-  document.getElementById("editPostText");
+    const saveEdit =
+      document.getElementById("saveEdit");
 
 
-const editPhotoInput =
-  document.getElementById("editPhotoInput");
+    /* =========================
+       LOAD POSTS
+    ========================= */
 
+    function loadPosts() {
 
-const editPhotoPreview =
-  document.getElementById("editPhotoPreview");
+      try {
 
+        const saved =
+          localStorage.getItem(STORAGE_KEY);
 
-const editPreviewImage =
-  document.getElementById("editPreviewImage");
+        if (!saved) {
+          return [];
+        }
 
+        return JSON.parse(saved);
 
-const deleteModal =
-  document.getElementById("deleteModal");
+      } catch (error) {
 
+        console.error(error);
 
-/* =========================
-   CREATE PHOTO PREVIEW
-========================= */
+        return [];
 
-photoInput.addEventListener(
-  "change",
-  function(){
-
-    const file =
-      this.files[0];
-
-    if(!file){
-
-      clearNewPhoto();
-
-      return;
+      }
 
     }
 
 
-    if(!file.type.startsWith("image/")){
+    /* =========================
+       SAVE POSTS
+    ========================= */
 
-      alert("Please select an image.");
+    function savePosts() {
 
-      clearNewPhoto();
-
-      return;
-
-    }
-
-
-    const reader =
-      new FileReader();
-
-
-    reader.onload =
-      function(event){
-
-        currentPhoto =
-          event.target.result;
-
-        previewImage.src =
-          currentPhoto;
-
-        photoPreview.style.display =
-          "block";
-
-      };
-
-
-    reader.readAsDataURL(file);
-
-  }
-);
-
-
-/* =========================
-   REMOVE NEW PHOTO
-========================= */
-
-removePreview.addEventListener(
-  "click",
-  function(){
-
-    clearNewPhoto();
-
-  }
-);
-
-
-function clearNewPhoto(){
-
-  currentPhoto = "";
-
-  photoInput.value = "";
-
-  previewImage.src = "";
-
-  photoPreview.style.display =
-    "none";
-
-}
-
-
-/* =========================
-   CREATE POST
-========================= */
-
-postButton.addEventListener(
-  "click",
-  function(){
-
-    const text =
-      postText.value.trim();
-
-
-    if(!text && !currentPhoto){
-
-      alert(
-        "Please write something or select a photo."
+      localStorage.setItem(
+        STORAGE_KEY,
+        JSON.stringify(posts)
       );
 
-      return;
+    }
+
+
+    /* =========================
+       STATUS
+    ========================= */
+
+    function showStatus(
+      text,
+      type = ""
+    ) {
+
+      status.textContent = text;
+
+      status.className =
+        type === "success"
+          ? "status-success"
+          : type === "error"
+            ? "status-error"
+            : "";
+
+      setTimeout(
+        function() {
+
+          status.textContent = "";
+
+          status.className = "";
+
+        },
+        3000
+      );
 
     }
 
 
-    const post = {
+    /* =========================
+       FILE SELECTION
+    ========================= */
 
-      id:
-        Date.now(),
+    photoButton.addEventListener(
+      "click",
+      function() {
 
-      name:
-        "You",
-
-      text:
-        text,
-
-      photo:
-        currentPhoto,
-
-      likes:
-        0,
-
-      liked:
-        false,
-
-      views:
-        0,
-
-      hidden:
-        false,
-
-      comments:
-        [],
-
-      createdAt:
-        new Date()
-
-    };
-
-
-    posts.unshift(post);
-
-
-    postText.value = "";
-
-    clearNewPhoto();
-
-
-    renderFeed();
-
-  }
-);
-
-
-/* =========================
-   RENDER FEED
-========================= */
-
-function renderFeed(){
-
-  feed.innerHTML = "";
-
-
-  const visiblePosts =
-    posts.filter(
-      function(post){
-
-        return !post.hidden;
+        photoInput.click();
 
       }
     );
 
 
-  if(visiblePosts.length === 0){
+    videoButton.addEventListener(
+      "click",
+      function() {
 
-    feed.innerHTML = `
+        videoInput.click();
 
-      <div class="card empty">
-
-        No posts yet.
-        Create the first post.
-
-      </div>
-
-    `;
-
-    return;
-
-  }
+      }
+    );
 
 
-  visiblePosts.forEach(
-    function(post){
+    photoInput.addEventListener(
+      "change",
+      function() {
 
-      post.views++;
+        handleMedia(
+          photoInput.files[0],
+          "image"
+        );
+
+      }
+    );
 
 
-      const card =
+    videoInput.addEventListener(
+      "change",
+      function() {
+
+        handleMedia(
+          videoInput.files[0],
+          "video"
+        );
+
+      }
+    );
+
+
+    function handleMedia(
+      file,
+      type
+    ) {
+
+      if (!file) {
+        return;
+      }
+
+
+      selectedMedia =
+        file;
+
+      selectedMediaType =
+        type;
+
+
+      selectedFile.style.display =
+        "block";
+
+      selectedFile.textContent =
+        "Selected: " + file.name;
+
+
+      preview.innerHTML = "";
+
+      preview.style.display =
+        "block";
+
+
+      const reader =
+        new FileReader();
+
+
+      reader.onload =
+        function(event) {
+
+          if (type === "image") {
+
+            const img =
+              document.createElement("img");
+
+            img.src =
+              event.target.result;
+
+            img.alt =
+              "Selected image";
+
+            preview.appendChild(img);
+
+          }
+
+          else {
+
+            const video =
+              document.createElement("video");
+
+            video.src =
+              event.target.result;
+
+            video.controls =
+              true;
+
+            preview.appendChild(video);
+
+          }
+
+        };
+
+
+      reader.readAsDataURL(file);
+
+    }
+
+
+    /* =========================
+       FEELING
+    ========================= */
+
+    feelingButton.addEventListener(
+      "click",
+      function() {
+
+        const feeling =
+          prompt(
+            "How are you feeling? Example: Happy, Excited, Grateful"
+          );
+
+        if (!feeling) {
+          return;
+        }
+
+        postText.value +=
+          " 😊 Feeling " +
+          feeling;
+
+        postText.focus();
+
+      }
+    );
+
+
+    /* =========================
+       MORE
+    ========================= */
+
+    morePostButton.addEventListener(
+      "click",
+      function() {
+
+        alert(
+          "More Zemivo post features will be added here later."
+        );
+
+      }
+    );
+
+
+    /* =========================
+       CREATE POST
+    ========================= */
+
+    publishButton.addEventListener(
+      "click",
+      async function() {
+
+        const text =
+          postText.value.trim();
+
+
+        if (
+          text === "" &&
+          !selectedMedia
+        ) {
+
+          showStatus(
+            "Write something or add a photo/video first.",
+            "error"
+          );
+
+          return;
+
+        }
+
+
+        publishButton.disabled =
+          true;
+
+        publishButton.textContent =
+          "Posting...";
+
+
+        try {
+
+          let mediaData =
+            null;
+
+
+          /*
+            NOTE:
+
+            localStorage is only for this prototype.
+
+            Later the file will go to secure
+            Firebase Storage instead.
+          */
+
+          if (selectedMedia) {
+
+            mediaData =
+              await fileToDataURL(
+                selectedMedia
+              );
+
+          }
+
+
+          const post = {
+
+            id:
+              createId(),
+
+            author: {
+
+              uid:
+                "demo-user",
+
+              name:
+                "Zemivo User"
+
+            },
+
+            text:
+              text,
+
+            media:
+              mediaData,
+
+            mediaType:
+              selectedMediaType,
+
+            createdAt:
+              Date.now(),
+
+            updatedAt:
+              null
+
+          };
+
+
+          posts.unshift(post);
+
+          savePosts();
+
+          clearComposer();
+
+          renderFeed();
+
+
+          showStatus(
+            "Post published successfully.",
+            "success"
+          );
+
+
+        } catch (error) {
+
+          console.error(error);
+
+          showStatus(
+            "Could not publish the post.",
+            "error"
+          );
+
+        }
+
+
+        publishButton.disabled =
+          false;
+
+        publishButton.textContent =
+          "Post";
+
+      }
+    );
+
+
+    /* =========================
+       FILE -> DATA URL
+    ========================= */
+
+    function fileToDataURL(file) {
+
+      return new Promise(
+        function(resolve, reject) {
+
+          const reader =
+            new FileReader();
+
+
+          reader.onload =
+            function() {
+
+              resolve(
+                reader.result
+              );
+
+            };
+
+
+          reader.onerror =
+            function() {
+
+              reject(
+                new Error(
+                  "File could not be read."
+                )
+              );
+
+            };
+
+
+          reader.readAsDataURL(file);
+
+        }
+      );
+
+    }
+
+
+    /* =========================
+       CLEAR COMPOSER
+    ========================= */
+
+    function clearComposer() {
+
+      postText.value =
+        "";
+
+      selectedMedia =
+        null;
+
+      selectedMediaType =
+        null;
+
+      selectedFile.style.display =
+        "none";
+
+      selectedFile.textContent =
+        "";
+
+      preview.innerHTML =
+        "";
+
+      preview.style.display =
+        "none";
+
+      photoInput.value =
+        "";
+
+      videoInput.value =
+        "";
+
+    }
+
+
+    /* =========================
+       CREATE ID
+    ========================= */
+
+    function createId() {
+
+      return (
+        Date.now().toString(36) +
+        Math.random()
+          .toString(36)
+          .substring(2, 10)
+      );
+
+    }
+
+
+    /* =========================
+       RENDER FEED
+    ========================= */
+
+    function renderFeed() {
+
+      feed.innerHTML =
+        "";
+
+
+      if (posts.length === 0) {
+
+        const empty =
+          document.createElement("div");
+
+        empty.className =
+          "empty";
+
+        empty.textContent =
+          "No posts yet. Create the first Zemivo post.";
+
+        feed.appendChild(empty);
+
+        return;
+
+      }
+
+
+      posts.forEach(
+        function(post) {
+
+          feed.appendChild(
+            createPostElement(post)
+          );
+
+        }
+      );
+
+    }
+
+
+    /* =========================
+       CREATE POST ELEMENT
+    ========================= */
+
+    function createPostElement(post) {
+
+      const article =
         document.createElement("article");
 
+      article.className =
+        "post";
 
-      card.className =
-        "card";
+      article.dataset.postId =
+        post.id;
 
 
-      card.id =
-        "post-" + post.id;
+      /* HEADER */
 
+      const header =
+        document.createElement("div");
 
-      card.innerHTML = `
+      header.className =
+        "post-header";
 
-        <!-- POST HEADER -->
 
-        <div class="post-header">
+      const user =
+        document.createElement("div");
 
-          <div class="avatar">
+      user.className =
+        "post-user";
 
-            ${escapeHTML(
-              post.name.charAt(0)
-            )}
 
-          </div>
+      const avatar =
+        document.createElement("div");
 
+      avatar.className =
+        "avatar";
 
-          <div class="post-info">
-
-            <div class="post-name">
-
-              ${escapeHTML(post.name)}
-
-            </div>
-
-
-            <div class="post-time">
-
-              ${formatTime(post.createdAt)}
-
-            </div>
-
-          </div>
-
-
-          <!-- THREE DOT -->
-
-          <div class="post-menu-wrapper">
-
-            <button
-              class="more-btn"
-              type="button"
-              onclick="togglePostMenu(${post.id})"
-              aria-label="Post options"
-            >
-              ⋯
-            </button>
-
-
-            <div
-              id="post-menu-${post.id}"
-              class="post-menu hidden"
-            >
-
-              <button
-                type="button"
-                onclick="pinPost(${post.id})"
-              >
-                📌
-                <span>Pin post</span>
-              </button>
-
-
-              <button
-                type="button"
-                onclick="savePost(${post.id})"
-              >
-                🔖
-                <span>Save post</span>
-              </button>
-
-
-              <button
-                type="button"
-                onclick="openEditPost(${post.id})"
-              >
-                ✏️
-                <span>Edit post</span>
-              </button>
-
-
-              <button
-                type="button"
-                onclick="manageProduct(${post.id})"
-              >
-                🛍️
-                <span>Manage product</span>
-              </button>
-
-
-              <button
-                type="button"
-                onclick="commentSettings(${post.id})"
-              >
-                💬
-                <span>Who can comment on your post?</span>
-              </button>
-
-
-              <button
-                type="button"
-                onclick="editPrivacy(${post.id})"
-              >
-                🌐
-                <span>Edit Privacy</span>
-              </button>
-
-
-              <button
-                type="button"
-                onclick="togglePostNotifications(${post.id})"
-              >
-                🔕
-                <span>
-                  Turn off notifications for this post
-                </span>
-              </button>
-
-
-              <button
-                type="button"
-                onclick="copyPostLink(${post.id})"
-              >
-                🔗
-                <span>Copy link</span>
-              </button>
-
-
-              <div class="menu-divider"></div>
-
-
-              <button
-                type="button"
-                onclick="hidePost(${post.id})"
-              >
-                👁️
-                <span>Hide from profile</span>
-              </button>
-
-
-              <button
-                type="button"
-                onclick="partnershipAd(${post.id})"
-              >
-                🤝
-                <span>
-                  Share partnership ad code
-                </span>
-              </button>
-
-
-              <button
-                type="button"
-                onclick="createAd(${post.id})"
-              >
-                📢
-                <span>Create ad</span>
-              </button>
-
-
-              <div class="menu-divider"></div>
-
-
-              <button
-                type="button"
-                class="danger"
-                onclick="openDeletePost(${post.id})"
-              >
-                🗑️
-                <span>Delete post</span>
-              </button>
-
-            </div>
-
-          </div>
-
-        </div>
-
-
-        <!-- POST TEXT -->
-
-        ${
-          post.text
-          ?
-          `
-            <div class="post-text">
-              ${escapeHTML(post.text)}
-            </div>
-          `
-          :
-          ""
-        }
-
-
-        <!-- POST PHOTO -->
-
-        ${
-          post.photo
-          ?
-          `
-            <img
-              class="post-image"
-              src="${post.photo}"
-              alt="Post image"
-            >
-          `
-          :
-          ""
-        }
-
-
-        <!-- STATS -->
-
-        <div class="stats">
-
-          <span>
-            ❤️ ${post.likes}
-          </span>
-
-
-          <span>
-
-            💬 ${countAllComments(post)}
-
-            &nbsp;&nbsp;
-
-            👁️ ${post.views}
-
-          </span>
-
-        </div>
-
-
-        <!-- ACTIONS -->
-
-        <div class="post-actions">
-
-          <button
-            type="button"
-            class="${post.liked ? "liked" : ""}"
-            onclick="togglePostLike(${post.id})"
-          >
-            ❤️ Like
-          </button>
-
-
-          <button
-            type="button"
-            onclick="focusComment(${post.id})"
-          >
-            💬 Comment
-          </button>
-
-
-          <button
-            type="button"
-            onclick="sharePost(${post.id})"
-          >
-            ↗ Share
-          </button>
-
-        </div>
-
-
-        <!-- COMMENTS -->
-
-        <div class="comments">
-
-          <div class="comment-form">
-
-            <input
-              id="comment-${post.id}"
-              type="text"
-              placeholder="Write a comment..."
-            >
-
-
-            <button
-              type="button"
-              onclick="addComment(${post.id})"
-            >
-              Send
-            </button>
-
-          </div>
-
-
-          <div id="comments-${post.id}">
-
-            ${renderComments(post)}
-
-          </div>
-
-        </div>
-
-      `;
-
-
-      feed.appendChild(card);
-
-    }
-  );
-
-}
-
-
-/* =========================
-   THREE DOT MENU
-========================= */
-
-function togglePostMenu(postId){
-
-  document
-    .querySelectorAll(".post-menu")
-    .forEach(
-      function(menu){
-
-        menu.classList.add("hidden");
-
-      }
-    );
-
-
-  const menu =
-    document.getElementById(
-      "post-menu-" + postId
-    );
-
-
-  if(menu){
-
-    menu.classList.toggle("hidden");
-
-  }
-
-}
-
-
-/* =========================
-   CLOSE MENUS
-========================= */
-
-function closeAllPostMenus(){
-
-  document
-    .querySelectorAll(".post-menu")
-    .forEach(
-      function(menu){
-
-        menu.classList.add("hidden");
-
-      }
-    );
-
-}
-
-
-/* =========================
-   EDIT POST
-========================= */
-
-function openEditPost(postId){
-
-  closeAllPostMenus();
-
-
-  const post =
-    posts.find(
-      function(p){
-
-        return p.id === postId;
-
-      }
-    );
-
-
-  if(!post) return;
-
-
-  editingPostId =
-    postId;
-
-
-  editPhotoData =
-    post.photo || "";
-
-
-  editPostText.value =
-    post.text || "";
-
-
-  if(post.photo){
-
-    editPreviewImage.src =
-      post.photo;
-
-    editPhotoPreview.style.display =
-      "block";
-
-  }else{
-
-    editPreviewImage.src = "";
-
-    editPhotoPreview.style.display =
-      "none";
-
-  }
-
-
-  editPhotoInput.value = "";
-
-
-  editModal.classList.remove(
-    "hidden"
-  );
-
-}
-
-
-/* =========================
-   EDIT PHOTO
-========================= */
-
-editPhotoInput.addEventListener(
-  "change",
-  function(){
-
-    const file =
-      this.files[0];
-
-
-    if(!file) return;
-
-
-    if(!file.type.startsWith("image/")){
-
-      alert(
-        "Please select an image."
-      );
-
-      return;
-
-    }
-
-
-    const reader =
-      new FileReader();
-
-
-    reader.onload =
-      function(event){
-
-        editPhotoData =
-          event.target.result;
-
-
-        editPreviewImage.src =
-          editPhotoData;
-
-
-        editPhotoPreview.style.display =
-          "block";
-
-      };
-
-
-    reader.readAsDataURL(file);
-
-  }
-);
-
-
-/* =========================
-   SAVE EDITED POST
-========================= */
-
-function saveEditedPost(){
-
-  if(editingPostId === null){
-
-    return;
-
-  }
-
-
-  const post =
-    posts.find(
-      function(p){
-
-        return p.id === editingPostId;
-
-      }
-    );
-
-
-  if(!post){
-
-    closeEditModal();
-
-    return;
-
-  }
-
-
-  const newText =
-    editPostText.value.trim();
-
-
-  if(!newText && !editPhotoData){
-
-    alert(
-      "A post must contain text or a photo."
-    );
-
-    return;
-
-  }
-
-
-  post.text =
-    newText;
-
-
-  post.photo =
-    editPhotoData;
-
-
-  closeEditModal();
-
-
-  renderFeed();
-
-}
-
-
-/* =========================
-   CLOSE EDIT
-========================= */
-
-function closeEditModal(){
-
-  editingPostId =
-    null;
-
-  editPhotoData =
-    null;
-
-  editPostText.value =
-    "";
-
-  editPhotoInput.value =
-    "";
-
-  editPreviewImage.src =
-    "";
-
-  editPhotoPreview.style.display =
-    "none";
-
-
-  editModal.classList.add(
-    "hidden"
-  );
-
-}
-
-
-/* =========================
-   DELETE POST
-========================= */
-
-function openDeletePost(postId){
-
-  closeAllPostMenus();
-
-
-  deletingPostId =
-    postId;
-
-
-  deleteModal.classList.remove(
-    "hidden"
-  );
-
-}
-
-
-/* =========================
-   CONFIRM DELETE
-========================= */
-
-function confirmDeletePost(){
-
-  if(deletingPostId === null){
-
-    return;
-
-  }
-
-
-  posts =
-    posts.filter(
-      function(post){
-
-        return post.id !== deletingPostId;
-
-      }
-    );
-
-
-  closeDeleteModal();
-
-
-  renderFeed();
-
-}
-
-
-/* =========================
-   CLOSE DELETE MODAL
-========================= */
-
-function closeDeleteModal(){
-
-  deletingPostId =
-    null;
-
-
-  deleteModal.classList.add(
-    "hidden"
-  );
-
-}
-
-
-/* =========================
-   POST LIKE
-========================= */
-
-function togglePostLike(postId){
-
-  const post =
-    posts.find(
-      function(p){
-
-        return p.id === postId;
-
-      }
-    );
-
-
-  if(!post) return;
-
-
-  post.liked =
-    !post.liked;
-
-
-  post.likes +=
-    post.liked
-    ?
-    1
-    :
-    -1;
-
-
-  renderFeed();
-
-}
-
-
-/* =========================
-   ADD COMMENT
-========================= */
-
-function addComment(postId){
-
-  const input =
-    document.getElementById(
-      "comment-" + postId
-    );
-
-
-  if(!input) return;
-
-
-  const text =
-    input.value.trim();
-
-
-  if(!text) return;
-
-
-  const post =
-    posts.find(
-      function(p){
-
-        return p.id === postId;
-
-      }
-    );
-
-
-  if(!post) return;
-
-
-  post.comments.push({
-
-    id:
-      Date.now() +
-      Math.random(),
-
-    author:
-      "You",
-
-    text:
-      text,
-
-    likes:
-      0,
-
-    liked:
-      false,
-
-    replies:
-      []
-
-  });
-
-
-  renderFeed();
-
-}
-
-
-/* =========================
-   RENDER COMMENTS
-========================= */
-
-function renderComments(post){
-
-  return post.comments
-    .map(
-      function(comment){
-
-        return renderComment(
-          post.id,
-          comment,
-          0
+      avatar.textContent =
+        getInitial(
+          post.author.name
         );
 
+
+      const userInfo =
+        document.createElement("div");
+
+      userInfo.className =
+        "post-user-info";
+
+
+      const name =
+        document.createElement("div");
+
+      name.className =
+        "post-name";
+
+      name.textContent =
+        post.author.name;
+
+
+      const time =
+        document.createElement("div");
+
+      time.className =
+        "post-time";
+
+      time.textContent =
+        formatTime(
+          post.createdAt
+        );
+
+
+      userInfo.appendChild(name);
+
+      userInfo.appendChild(time);
+
+      user.appendChild(avatar);
+
+      user.appendChild(userInfo);
+
+
+      const more =
+        document.createElement("button");
+
+      more.className =
+        "more-btn";
+
+      more.textContent =
+        "⋯";
+
+      more.title =
+        "Post options";
+
+
+      header.appendChild(user);
+
+      header.appendChild(more);
+
+
+      /* MENU */
+
+      const menu =
+        document.createElement("div");
+
+      menu.className =
+        "menu";
+
+
+      const edit =
+        document.createElement("button");
+
+      edit.textContent =
+        "✏️ Edit post";
+
+
+      const deleteBtn =
+        document.createElement("button");
+
+      deleteBtn.textContent =
+        "🗑️ Delete post";
+
+      deleteBtn.className =
+        "danger";
+
+
+      const save =
+        document.createElement("button");
+
+      save.textContent =
+        "🔖 Save post";
+
+
+      const copy =
+        document.createElement("button");
+
+      copy.textContent =
+        "🔗 Copy link";
+
+
+      const privacy =
+        document.createElement("button");
+
+      privacy.textContent =
+        "🔒 Post privacy";
+
+
+      menu.appendChild(edit);
+
+      menu.appendChild(deleteBtn);
+
+      menu.appendChild(save);
+
+      menu.appendChild(copy);
+
+      menu.appendChild(privacy);
+
+
+      more.addEventListener(
+        "click",
+        function(event) {
+
+          event.stopPropagation();
+
+          closeAllMenus();
+
+          menu.classList.toggle("open");
+
+        }
+      );
+
+
+      edit.addEventListener(
+        "click",
+        function() {
+
+          openEditModal(post);
+
+          menu.classList.remove("open");
+
+        }
+      );
+
+
+      deleteBtn.addEventListener(
+        "click",
+        function() {
+
+          deletePost(post.id);
+
+        }
+      );
+
+
+      save.addEventListener(
+        "click",
+        function() {
+
+          showStatus(
+            "Post saved.",
+            "success"
+          );
+
+          menu.classList.remove("open");
+
+        }
+      );
+
+
+      copy.addEventListener(
+        "click",
+        async function() {
+
+          const link =
+            window.location.href.split("#")[0] +
+            "#post-" +
+            post.id;
+
+
+          try {
+
+            await navigator.clipboard.writeText(
+              link
+            );
+
+            showStatus(
+              "Post link copied.",
+              "success"
+            );
+
+          } catch (error) {
+
+            showStatus(
+              "Could not copy the link.",
+              "error"
+            );
+
+          }
+
+
+          menu.classList.remove("open");
+
+        }
+      );
+
+
+      privacy.addEventListener(
+        "click",
+        function() {
+
+          showStatus(
+            "Privacy controls will be connected to the secure backend.",
+            "success"
+          );
+
+          menu.classList.remove("open");
+
+        }
+      );
+
+
+      /* CONTENT */
+
+      const content =
+        document.createElement("div");
+
+      content.className =
+        "post-content";
+
+      content.textContent =
+        post.text;
+
+
+      /* MEDIA */
+
+      let mediaElement =
+        null;
+
+
+      if (post.media) {
+
+        if (
+          post.mediaType ===
+          "image"
+        ) {
+
+          mediaElement =
+            document.createElement("img");
+
+          mediaElement.src =
+            post.media;
+
+          mediaElement.alt =
+            "Zemivo post image";
+
+        }
+
+        else if (
+          post.mediaType ===
+          "video"
+        ) {
+
+          mediaElement =
+            document.createElement("video");
+
+          mediaElement.src =
+            post.media;
+
+          mediaElement.controls =
+            true;
+
+        }
+
+
+        if (mediaElement) {
+
+          mediaElement.className =
+            "post-media";
+
+        }
+
       }
-    )
-    .join("");
-
-}
 
 
-/* =========================
-   RENDER COMMENT TREE
-========================= */
+      /* ACTIONS */
 
-function renderComment(
-  postId,
-  comment,
-  level
-){
+      const actions =
+        document.createElement("div");
 
-  const replies =
-    (comment.replies || [])
-      .map(
-        function(reply){
+      actions.className =
+        "post-actions";
 
-          return renderComment(
-            postId,
-            reply,
-            level + 1
+
+      const like =
+        createActionButton(
+          "👍 Like"
+        );
+
+      const comment =
+        createActionButton(
+          "💬 Comment"
+        );
+
+      const share =
+        createActionButton(
+          "↗️ Share"
+        );
+
+
+      like.addEventListener(
+        "click",
+        function() {
+
+          like.textContent =
+            like.textContent.includes("Liked")
+              ? "👍 Like"
+              : "👍 Liked";
+
+        }
+      );
+
+
+      comment.addEventListener(
+        "click",
+        function() {
+
+          showStatus(
+            "Comment system will be connected next.",
+            "success"
           );
 
         }
-      )
-      .join("");
-
-
-  return `
-
-    <div class="comment">
-
-      <div class="comment-main">
-
-        <div class="avatar">
-
-          ${escapeHTML(
-            comment.author.charAt(0)
-          )}
-
-        </div>
-
-
-        <div class="comment-body">
-
-          <div class="comment-author">
-
-            ${escapeHTML(
-              comment.author
-            )}
-
-          </div>
-
-
-          <div class="comment-text">
-
-            ${escapeHTML(
-              comment.text
-            )}
-
-          </div>
-
-        </div>
-
-      </div>
-
-
-      <div class="comment-tools">
-
-        <button
-          type="button"
-          class="${comment.liked ? "active" : ""}"
-          onclick="likeComment(${postId}, ${comment.id})"
-        >
-          ❤️ ${comment.likes}
-        </button>
-
-
-        <button
-          type="button"
-          onclick="showReplyBox(${comment.id})"
-        >
-          ↩ Reply
-        </button>
-
-
-        <button
-          type="button"
-          onclick="editComment(${postId}, ${comment.id})"
-        >
-          ✏️ Edit
-        </button>
-
-
-        <button
-          type="button"
-          onclick="deleteComment(${postId}, ${comment.id})"
-        >
-          🗑️ Delete
-        </button>
-
-      </div>
-
-
-      <div
-        class="reply-area hidden"
-        id="reply-box-${comment.id}"
-      >
-
-        <div class="reply-form">
-
-          <input
-            id="reply-${comment.id}"
-            type="text"
-            placeholder="Write a reply..."
-          >
-
-
-          <button
-            type="button"
-            onclick="addReply(${postId}, ${comment.id})"
-          >
-            Send
-          </button>
-
-        </div>
-
-      </div>
-
-
-      <div class="replies">
-
-        ${replies}
-
-      </div>
-
-    </div>
-
-  `;
-
-}
-
-
-/* =========================
-   FIND COMMENT RECURSIVELY
-========================= */
-
-function findComment(
-  comments,
-  id
-){
-
-  for(
-    const comment
-    of comments
-  ){
-
-    if(
-      String(comment.id) ===
-      String(id)
-    ){
-
-      return comment;
-
-    }
-
-
-    const found =
-      findComment(
-        comment.replies || [],
-        id
       );
 
 
-    if(found){
+      share.addEventListener(
+        "click",
+        async function() {
 
-      return found;
+          const link =
+            window.location.href.split("#")[0] +
+            "#post-" +
+            post.id;
+
+
+          if (
+            navigator.share
+          ) {
+
+            try {
+
+              await navigator.share({
+                title:
+                  "Zemivo Post",
+                text:
+                  post.text,
+                url:
+                  link
+              });
+
+            } catch (error) {}
+
+          }
+
+          else {
+
+            try {
+
+              await navigator.clipboard.writeText(
+                link
+              );
+
+              showStatus(
+                "Post link copied for sharing.",
+                "success"
+              );
+
+            } catch (error) {
+
+              showStatus(
+                "Sharing is not available on this device.",
+                "error"
+              );
+
+            }
+
+          }
+
+        }
+      );
+
+
+      actions.appendChild(like);
+
+      actions.appendChild(comment);
+
+      actions.appendChild(share);
+
+
+      /* BUILD POST */
+
+      article.appendChild(header);
+
+      article.appendChild(menu);
+
+      if (post.text) {
+
+        article.appendChild(content);
+
+      }
+
+
+      if (mediaElement) {
+
+        article.appendChild(
+          mediaElement
+        );
+
+      }
+
+
+      article.appendChild(actions);
+
+
+      return article;
 
     }
 
-  }
+
+    /* =========================
+       ACTION BUTTON
+    ========================= */
+
+    function createActionButton(
+      text
+    ) {
+
+      const button =
+        document.createElement("button");
+
+      button.className =
+        "post-action";
+
+      button.textContent =
+        text;
+
+      return button;
+
+    }
 
 
-  return null;
+    /* =========================
+       DELETE POST
+    ========================= */
 
-}
+    function deletePost(
+      postId
+    ) {
 
-
-/* =========================
-   ADD REPLY
-========================= */
-
-function addReply(
-  postId,
-  commentId
-){
-
-  const input =
-    document.getElementById(
-      "reply-" + commentId
-    );
+      const confirmed =
+        confirm(
+          "Are you sure you want to delete this post?"
+        );
 
 
-  if(!input) return;
+      if (!confirmed) {
+        return;
+      }
 
 
-  const text =
-    input.value.trim();
+      posts =
+        posts.filter(
+          function(post) {
+
+            return post.id !== postId;
+
+          }
+        );
 
 
-  if(!text) return;
+      savePosts();
+
+      renderFeed();
 
 
-  const post =
-    posts.find(
-      function(p){
+      showStatus(
+        "Post deleted successfully.",
+        "success"
+      );
 
-        return p.id === postId;
+    }
+
+
+    /* =========================
+       EDIT POST
+    ========================= */
+
+    function openEditModal(
+      post
+    ) {
+
+      editingPostId =
+        post.id;
+
+      editText.value =
+        post.text || "";
+
+      editModalBackdrop.classList.add(
+        "open"
+      );
+
+      editText.focus();
+
+    }
+
+
+    cancelEdit.addEventListener(
+      "click",
+      function() {
+
+        closeEditModal();
 
       }
     );
 
 
-  if(!post) return;
+    editModalBackdrop.addEventListener(
+      "click",
+      function(event) {
 
+        if (
+          event.target ===
+          editModalBackdrop
+        ) {
 
-  const comment =
-    findComment(
-      post.comments,
-      commentId
-    );
+          closeEditModal();
 
-
-  if(!comment) return;
-
-
-  if(!comment.replies){
-
-    comment.replies = [];
-
-  }
-
-
-  comment.replies.push({
-
-    id:
-      Date.now() +
-      Math.random(),
-
-    author:
-      "You",
-
-    text:
-      text,
-
-    likes:
-      0,
-
-    liked:
-      false,
-
-    replies:
-      []
-
-  });
-
-
-  renderFeed();
-
-}
-
-
-/* =========================
-   SHOW REPLY BOX
-========================= */
-
-function showReplyBox(commentId){
-
-  const box =
-    document.getElementById(
-      "reply-box-" + commentId
-    );
-
-
-  if(!box) return;
-
-
-  box.classList.toggle(
-    "hidden"
-  );
-
-}
-
-
-/* =========================
-   LIKE COMMENT / REPLY
-========================= */
-
-function likeComment(
-  postId,
-  commentId
-){
-
-  const post =
-    posts.find(
-      function(p){
-
-        return p.id === postId;
+        }
 
       }
     );
 
 
-  if(!post) return;
+    saveEdit.addEventListener(
+      "click",
+      function() {
+
+        if (!editingPostId) {
+          return;
+        }
 
 
-  const comment =
-    findComment(
-      post.comments,
-      commentId
-    );
+        const newText =
+          editText.value.trim();
 
 
-  if(!comment) return;
+        if (!newText) {
+
+          showStatus(
+            "Post text cannot be empty.",
+            "error"
+          );
+
+          return;
+
+        }
 
 
-  comment.liked =
-    !comment.liked;
+        const post =
+          posts.find(
+            function(item) {
+
+              return item.id ===
+                editingPostId;
+
+            }
+          );
 
 
-  comment.likes +=
-    comment.liked
-    ?
-    1
-    :
-    -1;
+        if (!post) {
+          return;
+        }
 
 
-  renderFeed();
+        post.text =
+          newText;
 
-}
-
-
-/* =========================
-   EDIT COMMENT / REPLY
-========================= */
-
-function editComment(
-  postId,
-  commentId
-){
-
-  const post =
-    posts.find(
-      function(p){
-
-        return p.id === postId;
-
-      }
-    );
+        post.updatedAt =
+          Date.now();
 
 
-  if(!post) return;
+        savePosts();
+
+        renderFeed();
+
+        closeEditModal();
 
 
-  const comment =
-    findComment(
-      post.comments,
-      commentId
-    );
-
-
-  if(!comment) return;
-
-
-  const newText =
-    prompt(
-      "Edit your comment:",
-      comment.text
-    );
-
-
-  if(
-    newText === null
-  ){
-
-    return;
-
-  }
-
-
-  if(
-    !newText.trim()
-  ){
-
-    return;
-
-  }
-
-
-  comment.text =
-    newText.trim();
-
-
-  renderFeed();
-
-}
-
-
-/* =========================
-   DELETE COMMENT / REPLY
-========================= */
-
-function deleteComment(
-  postId,
-  commentId
-){
-
-  const post =
-    posts.find(
-      function(p){
-
-        return p.id === postId;
+        showStatus(
+          "Post updated successfully.",
+          "success"
+        );
 
       }
     );
 
 
-  if(!post) return;
+    function closeEditModal() {
+
+      editingPostId =
+        null;
+
+      editText.value =
+        "";
+
+      editModalBackdrop.classList.remove(
+        "open"
+      );
+
+    }
 
 
-  const confirmed =
-    confirm(
-      "Delete this comment?"
+    /* =========================
+       CLOSE MENUS
+    ========================= */
+
+    document.addEventListener(
+      "click",
+      function() {
+
+        closeAllMenus();
+
+      }
     );
 
 
-  if(!confirmed) return;
+    function closeAllMenus() {
+
+      document
+        .querySelectorAll(".menu.open")
+        .forEach(
+          function(menu) {
+
+            menu.classList.remove(
+              "open"
+            );
+
+          }
+        );
+
+    }
 
 
-  const removed =
-    removeComment(
-      post.comments,
-      commentId
-    );
+    /* =========================
+       HELPERS
+    ========================= */
+
+    function getInitial(
+      name
+    ) {
+
+      if (!name) {
+        return "Z";
+      }
+
+      return name
+        .trim()
+        .charAt(0)
+        .toUpperCase();
+
+    }
 
 
-  if(removed){
+    function formatTime(
+      timestamp
+    ) {
+
+      const date =
+        new Date(timestamp);
+
+      return date.toLocaleString();
+
+    }
+
+
+    /* =========================
+       INITIALIZE
+    ========================= */
 
     renderFeed();
 
-  }
-
-}
-
-
-/* =========================
-   REMOVE COMMENT RECURSIVELY
-========================= */
-
-function removeComment(
-  comments,
-  id
-){
-
-  const index =
-    comments.findIndex(
-      function(comment){
-
-        return String(comment.id) ===
-          String(id);
-
-      }
-    );
-
-
-  if(index !== -1){
-
-    comments.splice(
-      index,
-      1
-    );
-
-    return true;
-
-  }
-
-
-  for(
-    const comment
-    of comments
-  ){
-
-    if(
-      removeComment(
-        comment.replies || [],
-        id
-      )
-    ){
-
-      return true;
-
-    }
-
-  }
-
-
-  return false;
-
-}
-
-
-/* =========================
-   COUNT COMMENTS
-========================= */
-
-function countAllComments(post){
-
-  let total =
-    0;
-
-
-  function count(list){
-
-    list.forEach(
-      function(item){
-
-        total++;
-
-
-        if(item.replies){
-
-          count(
-            item.replies
-          );
-
-        }
-
-      }
-    );
-
-  }
-
-
-  count(
-    post.comments
-  );
-
-
-  return total;
-
-}
-
-
-/* =========================
-   SHARE
-========================= */
-
-function sharePost(postId){
-
-  const post =
-    posts.find(
-      function(p){
-
-        return p.id === postId;
-
-      }
-    );
-
-
-  if(!post) return;
-
-
-  const shareText =
-    post.text ||
-    "Check out this post on Zemivo.";
-
-
-  const shareUrl =
-    window.location.href +
-    "#post-" +
-    postId;
-
-
-  if(
-    navigator.share
-  ){
-
-    navigator.share({
-
-      title:
-        "Zemivo",
-
-      text:
-        shareText,
-
-      url:
-        shareUrl
-
-    }).catch(
-      function(){}
-    );
-
-  }else{
-
-    copyText(
-      shareUrl
-    );
-
-    alert(
-      "Post link copied."
-    );
-
-  }
-
-}
-
-
-/* =========================
-   COPY POST LINK
-========================= */
-
-function copyPostLink(postId){
-
-  closeAllPostMenus();
-
-
-  const link =
-    window.location.href +
-    "#post-" +
-    postId;
-
-
-  copyText(link);
-
-}
-
-
-/* =========================
-   COPY TEXT
-========================= */
-
-function copyText(text){
-
-  if(
-    navigator.clipboard
-  ){
-
-    navigator.clipboard
-      .writeText(text)
-      .then(
-        function(){
-
-          alert(
-            "Link copied."
-          );
-
-        }
-      )
-      .catch(
-        function(){
-
-          alert(text);
-
-        }
-      );
-
-  }else{
-
-    alert(text);
-
-  }
-
-}
-
-
-/* =========================
-   PIN
-========================= */
-
-function pinPost(postId){
-
-  closeAllPostMenus();
-
-
-  const post =
-    posts.find(
-      function(p){
-
-        return p.id === postId;
-
-      }
-    );
-
-
-  if(!post) return;
-
-
-  posts.forEach(
-    function(item){
-
-      item.pinned =
-        false;
-
-    }
-  );
-
-
-  post.pinned =
-    true;
-
-
-  posts =
-    posts.sort(
-      function(a,b){
-
-        return (
-          Number(b.pinned) -
-          Number(a.pinned)
-        );
-
-      }
-    );
-
-
-  renderFeed();
-
-}
-
-
-/* =========================
-   SAVE
-========================= */
-
-function savePost(postId){
-
-  closeAllPostMenus();
-
-
-  const post =
-    posts.find(
-      function(p){
-
-        return p.id === postId;
-
-      }
-    );
-
-
-  if(!post) return;
-
-
-  post.saved =
-    !post.saved;
-
-
-  alert(
-    post.saved
-    ?
-    "Post saved."
-    :
-    "Post removed from saved items."
-  );
-
-}
-
-
-/* =========================
-   HIDE
-========================= */
-
-function hidePost(postId){
-
-  closeAllPostMenus();
-
-
-  const post =
-    posts.find(
-      function(p){
-
-        return p.id === postId;
-
-      }
-    );
-
-
-  if(!post) return;
-
-
-  post.hidden =
-    true;
-
-
-  renderFeed();
-
-}
-
-
-/* =========================
-   OTHER OPTIONS
-========================= */
-
-function manageProduct(postId){
-
-  closeAllPostMenus();
-
-  alert(
-    "Product management will be connected to Zemivo Marketplace."
-  );
-
-}
-
-
-function commentSettings(postId){
-
-  closeAllPostMenus();
-
-  alert(
-    "Comment permission settings will be connected later."
-  );
-
-}
-
-
-function editPrivacy(postId){
-
-  closeAllPostMenus();
-
-  alert(
-    "Privacy settings will be connected later."
-  );
-
-}
-
-
-function togglePostNotifications(postId){
-
-  closeAllPostMenus();
-
-  alert(
-    "Post notification settings will be connected later."
-  );
-
-}
-
-
-function partnershipAd(postId){
-
-  closeAllPostMenus();
-
-  alert(
-    "Partnership advertising will be connected to Zemivo Ads."
-  );
-
-}
-
-
-function createAd(postId){
-
-  closeAllPostMenus();
-
-  alert(
-    "Create Ad will be connected to Zemivo Ads."
-  );
-
-}
-
-
-function showComingSoon(name){
-
-  alert(
-    name +
-    " will be connected to Zemivo."
-  );
-
-}
-
-
-/* =========================
-   FOCUS COMMENT
-========================= */
-
-function focusComment(postId){
-
-  const input =
-    document.getElementById(
-      "comment-" + postId
-    );
-
-
-  if(input){
-
-    input.focus();
-
-  }
-
-}
-
-
-/* =========================
-   TIME
-========================= */
-
-function formatTime(date){
-
-  if(!date){
-
-    return "Just now";
-
-  }
-
-
-  return "Just now";
-
-}
-
-
-/* =========================
-   ESCAPE HTML
-========================= */
-
-function escapeHTML(value){
-
-  return String(value)
-
-    .replaceAll(
-      "&",
-      "&amp;"
-    )
-
-    .replaceAll(
-      "<",
-      "&lt;"
-    )
-
-    .replaceAll(
-      ">",
-      "&gt;"
-    )
-
-    .replaceAll(
-      '"',
-      "&quot;"
-    )
-
-    .replaceAll(
-      "'",
-      "&#039;"
-    );
-
-}
-
-
-/* =========================
-   CLOSE MENU OUTSIDE
-========================= */
-
-document.addEventListener(
-  "click",
-  function(event){
-
-    if(
-      !event.target.closest(
-        ".post-menu-wrapper"
-      )
-    ){
-
-      closeAllPostMenus();
-
-    }
-
-  }
-);
-
-
-/* =========================
-   INITIAL FEED
-========================= */
-
-renderFeed();
-
-</script>
+  </script>
 
 </body>
-
 </html>
