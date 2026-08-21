@@ -1,1459 +1,1167 @@
- 
-"
-  getFirestore,
-  collection,
-  addDoc,
-  doc,
-  updateDoc,
-  deleteDoc,
-  setDoc,
-  getDoc,
-  serverTimestamp,
-  query,
-  orderBy,
-  onSnapshot
-} from
-"https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zemivo - Home</title>
 
+<style>
+*{box-sizing:border-box}
 
-const firebaseConfig = {
-
-  apiKey:
-  "AIzaSyAxJUFBWm2fa0g3oxUWWqdfSTEAc-bRgfI",
-
-  authDomain:
-  "zemivo.firebaseapp.com",
-
-  projectId:
-  "zemivo",
-
-  storageBucket:
-  "zemivo.firebasestorage.app",
-
-  messagingSenderId:
-  "195335939691",
-
-  appId:
-  "1:195335939691:web:5fa5c62c53d0c0aefe732e",
-
-  measurementId:
-  "G-GNHH5S4H09"
-
-};
-
-
-const app =
-  initializeApp(firebaseConfig);
-
-const auth =
-  getAuth(app);
-
-const db =
-  getFirestore(app);
-
-
-let currentUser = null;
-
-let currentPostId = null;
-
-let currentPostData = null;
-
-let selectedImage = null;
-
-
-/* --------------------------------
-   AUTH
--------------------------------- */
-
-onAuthStateChanged(
-  auth,
-  async user => {
-
-    currentUser = user;
-
-    if(user){
-
-      document
-        .getElementById("composerAvatar")
-        .textContent =
-        (
-          user.displayName ||
-          user.email ||
-          "Z"
-        )
-        .charAt(0)
-        .toUpperCase();
-
-      await checkAdmin(user.uid);
-
-    }
-
-    loadPosts();
-
-  }
-);
-
-
-/* --------------------------------
-   ADMIN
--------------------------------- */
-
-async function checkAdmin(uid){
-
-  try{
-
-    const adminRef =
-      doc(db,"admins",uid);
-
-    const snap =
-      await getDoc(adminRef);
-
-    if(
-      snap.exists() &&
-      snap.data().active === true
-    ){
-
-      document
-        .getElementById("adminPanel")
-        .style.display =
-        "block";
-
-    }
-
-  }catch(error){
-
-    console.error(
-      "Admin check failed:",
-      error
-    );
-
-  }
-
+body{
+  margin:0;
+  font-family:Arial,sans-serif;
+  background:#f4f6f8;
+  color:#172033;
 }
 
+.header{
+  position:sticky;
+  top:0;
+  z-index:100;
+  height:64px;
+  background:#fff;
+  border-bottom:1px solid #e5e7eb;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 18px;
+}
 
-/* --------------------------------
-   CREATE POST
--------------------------------- */
+.logo{
+  font-size:27px;
+  font-weight:800;
+  color:#2563eb;
+}
 
-document
-  .getElementById("galleryButton")
-  .addEventListener(
-    "click",
-    () => {
+.header-actions{
+  display:flex;
+  gap:8px;
+}
 
-      document
-        .getElementById("imageInput")
-        .click();
+.icon-btn{
+  width:42px;
+  height:42px;
+  border:0;
+  border-radius:50%;
+  background:#f1f5f9;
+  cursor:pointer;
+  font-size:19px;
+}
 
-    }
-  );
+.container{
+  width:100%;
+  max-width:760px;
+  margin:20px auto;
+  padding:0 12px;
+}
 
+.card{
+  background:#fff;
+  border-radius:16px;
+  border:1px solid #e5e7eb;
+  margin-bottom:16px;
+  overflow:hidden;
+}
 
-document
-  .getElementById("imageInput")
-  .addEventListener(
-    "change",
-    event => {
+.composer{
+  padding:16px;
+}
 
-      const file =
-        event.target.files[0];
+.composer-top{
+  display:flex;
+  gap:12px;
+  align-items:center;
+}
 
-      if(!file) return;
+.avatar{
+  width:44px;
+  height:44px;
+  border-radius:50%;
+  background:#2563eb;
+  color:white;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:bold;
+  flex-shrink:0;
+}
 
-      selectedImage =
-        file;
+textarea{
+  width:100%;
+  min-height:70px;
+  resize:none;
+  border:1px solid #e5e7eb;
+  border-radius:12px;
+  padding:12px;
+  font-size:15px;
+  outline:none;
+}
 
-      const reader =
-        new FileReader();
+textarea:focus{
+  border-color:#2563eb;
+}
 
-      reader.onload =
-        e => {
+.photo-preview{
+  margin-top:12px;
+  display:none;
+}
 
-          document
-            .getElementById("imagePreview")
-            .innerHTML =
-            `<img src="${e.target.result}" alt="Post image">`;
+.photo-preview img{
+  width:100%;
+  max-height:420px;
+  object-fit:cover;
+  border-radius:12px;
+}
 
-        };
+.composer-actions{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-top:12px;
+}
 
-      reader.readAsDataURL(file);
+.photo-label{
+  cursor:pointer;
+  padding:9px 13px;
+  border-radius:10px;
+  background:#eff6ff;
+  color:#2563eb;
+  font-weight:bold;
+}
 
-    }
-  );
+#photoInput{
+  display:none;
+}
 
+.post-btn{
+  border:0;
+  background:#2563eb;
+  color:white;
+  padding:10px 20px;
+  border-radius:22px;
+  font-weight:bold;
+  cursor:pointer;
+}
 
-document
-  .getElementById("hashtagButton")
-  .addEventListener(
-    "click",
-    () => {
+.post-header{
+  padding:15px;
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
 
-      const box =
-        document.getElementById(
-          "hashtagBox"
-        );
+.post-info{
+  flex:1;
+}
 
-      box.style.display =
-        box.style.display === "block"
-        ? "none"
-        : "block";
+.post-name{
+  font-weight:bold;
+}
 
-    }
-  );
+.post-time{
+  font-size:12px;
+  color:#64748b;
+  margin-top:3px;
+}
 
+.more-btn{
+  border:0;
+  background:transparent;
+  font-size:22px;
+  cursor:pointer;
+}
 
-document
-  .getElementById("mentionButton")
-  .addEventListener(
-    "click",
-    () => {
+.post-text{
+  padding:0 15px 15px;
+  white-space:pre-wrap;
+  line-height:1.5;
+}
 
-      const textarea =
-        document.getElementById(
-          "postText"
-        );
+.post-image{
+  width:100%;
+  max-height:520px;
+  object-fit:cover;
+  display:block;
+}
 
-      textarea.value += " @";
+.stats{
+  padding:10px 15px;
+  display:flex;
+  justify-content:space-between;
+  color:#64748b;
+  font-size:13px;
+  border-bottom:1px solid #eef0f3;
+}
 
-      textarea.focus();
+.post-actions{
+  display:flex;
+  border-bottom:1px solid #eef0f3;
+}
 
-    }
-  );
+.post-actions button{
+  flex:1;
+  border:0;
+  background:#fff;
+  padding:12px 5px;
+  cursor:pointer;
+  font-weight:bold;
+  color:#475569;
+}
 
+.post-actions button:hover{
+  background:#f8fafc;
+}
 
-document
-  .getElementById("groupButton")
-  .addEventListener(
-    "click",
-    () => {
+.post-actions .liked{
+  color:#2563eb;
+}
 
-      showToast(
-        "Group selector will connect to groups.html."
-      );
+.comments{
+  padding:12px 15px;
+}
 
-    }
-  );
+.comment-form{
+  display:flex;
+  gap:8px;
+}
 
+.comment-form input{
+  flex:1;
+  border:1px solid #e2e8f0;
+  border-radius:20px;
+  padding:10px 13px;
+  outline:none;
+}
 
-document
-  .getElementById("locationButton")
-  .addEventListener(
-    "click",
-    () => {
+.comment-form button{
+  border:0;
+  border-radius:20px;
+  padding:0 15px;
+  background:#2563eb;
+  color:white;
+  cursor:pointer;
+}
 
-      showToast(
-        "Location option is ready for integration."
-      );
+.comment{
+  margin-top:12px;
+}
 
-    }
-  );
+.comment-main{
+  display:flex;
+  gap:8px;
+}
 
+.comment-body{
+  background:#f1f5f9;
+  border-radius:14px;
+  padding:9px 12px;
+  flex:1;
+}
 
-document
-  .getElementById("gifButton")
-  .addEventListener(
-    "click",
-    () => {
+.comment-author{
+  font-size:13px;
+  font-weight:bold;
+}
 
-      showToast(
-        "GIF selector is ready for integration."
-      );
+.comment-text{
+  margin-top:4px;
+  line-height:1.4;
+}
 
-    }
-  );
+.comment-tools{
+  display:flex;
+  gap:14px;
+  padding:5px 8px;
+  font-size:12px;
+  color:#64748b;
+}
 
+.comment-tools button{
+  border:0;
+  background:none;
+  padding:0;
+  cursor:pointer;
+  color:#64748b;
+  font-weight:bold;
+}
 
-document
-  .getElementById("liveButton")
-  .addEventListener(
-    "click",
-    () => {
+.comment-tools .active{
+  color:#2563eb;
+}
 
-      showToast(
-        "Live video will open from the Live system."
-      );
+.reply-area{
+  margin-left:50px;
+  margin-top:6px;
+}
 
-    }
-  );
+.reply-form{
+  display:flex;
+  gap:7px;
+}
 
+.reply-form input{
+  flex:1;
+  border:1px solid #e2e8f0;
+  border-radius:18px;
+  padding:8px 11px;
+}
 
-document
-  .getElementById("productButton")
-  .addEventListener(
-    "click",
-    () => {
+.reply-form button{
+  border:0;
+  border-radius:18px;
+  background:#2563eb;
+  color:white;
+  padding:0 12px;
+  cursor:pointer;
+}
 
-      document
-        .getElementById("productModal")
-        .style.display =
-        "flex";
+.replies{
+  margin-left:50px;
+}
 
-    }
-  );
+.empty{
+  text-align:center;
+  color:#64748b;
+  padding:30px 10px;
+}
 
+.hidden{
+  display:none!important;
+}
 
-document
-  .getElementById("affiliateButton")
-  .addEventListener(
-    "click",
-    () => {
-
-      document
-        .getElementById("productModal")
-        .style.display =
-        "flex";
-
-    }
-  );
-
-
-document
-  .getElementById("postButton")
-  .addEventListener(
-    "click",
-    createPost
-  );
-
-
-async function createPost(){
-
-  if(!currentUser){
-
-    showToast(
-      "Please log in first."
-    );
-
-    return;
-
+@media(max-width:600px){
+  .header{
+    padding:0 12px;
   }
 
+  .container{
+    margin-top:10px;
+    padding:0 7px;
+  }
+
+  .card{
+    border-radius:12px;
+  }
+
+  .logo{
+    font-size:24px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header class="header">
+  <div class="logo">Zemivo</div>
+
+  <div class="header-actions">
+    <button class="icon-btn" title="Search">🔍</button>
+    <button class="icon-btn" title="Messages">💬</button>
+    <button class="icon-btn" title="Notifications">🔔</button>
+  </div>
+</header>
+
+<main class="container">
+
+  <section class="card composer">
+
+    <div class="composer-top">
+      <div class="avatar">Z</div>
+
+      <textarea
+        id="postText"
+        placeholder="What's on your mind?"
+      ></textarea>
+    </div>
+
+    <div class="photo-preview" id="photoPreview">
+      <img id="previewImage" alt="Selected photo">
+    </div>
+
+    <div class="composer-actions">
+
+      <label class="photo-label" for="photoInput">
+        🖼️ Photo
+      </label>
+
+      <input
+        id="photoInput"
+        type="file"
+        accept="image/*"
+      >
+
+      <button
+        class="post-btn"
+        id="postButton"
+      >
+        Post
+      </button>
+
+    </div>
+
+  </section>
+
+  <section id="feed"></section>
+
+</main>
+
+<script>
+
+let posts = [];
+
+let currentPhoto = "";
+
+const postText =
+  document.getElementById("postText");
+
+const photoInput =
+  document.getElementById("photoInput");
+
+const photoPreview =
+  document.getElementById("photoPreview");
+
+const previewImage =
+  document.getElementById("previewImage");
+
+const postButton =
+  document.getElementById("postButton");
+
+const feed =
+  document.getElementById("feed");
+
+
+photoInput.addEventListener("change", function(){
+
+  const file = this.files[0];
+
+  if(!file){
+    currentPhoto = "";
+    photoPreview.style.display = "none";
+    return;
+  }
+
+  const reader = new FileReader();
+
+  reader.onload = function(e){
+
+    currentPhoto = e.target.result;
+
+    previewImage.src = currentPhoto;
+
+    photoPreview.style.display = "block";
+
+  };
+
+  reader.readAsDataURL(file);
+
+});
+
+
+postButton.addEventListener("click", function(){
 
   const text =
-    document
-      .getElementById("postText")
-      .value
-      .trim();
+    postText.value.trim();
+
+  if(!text && !currentPhoto){
+    alert("Please write something or select a photo.");
+    return;
+  }
+
+  const post = {
+
+    id: Date.now(),
+
+    name: "You",
+
+    text: text,
+
+    photo: currentPhoto,
+
+    likes: 0,
+
+    liked: false,
+
+    views: 0,
+
+    comments: []
+
+  };
+
+  posts.unshift(post);
+
+  postText.value = "";
+
+  photoInput.value = "";
+
+  currentPhoto = "";
+
+  photoPreview.style.display = "none";
+
+  renderFeed();
+
+});
 
 
-  const hashtags =
-    document
-      .getElementById("hashtagInput")
-      .value
-      .trim();
+function renderFeed(){
 
+  feed.innerHTML = "";
 
-  if(!text && !selectedImage){
+  if(posts.length === 0){
 
-    showToast(
-      "Write something or add an image."
-    );
+    feed.innerHTML =
+      '<div class="card empty">No posts yet. Create the first post.</div>';
 
     return;
 
   }
 
+  posts.forEach(function(post){
 
-  try{
+    const card =
+      document.createElement("article");
 
-    await addDoc(
-      collection(db,"posts"),
-      {
+    card.className = "card";
 
-        uid:
-          currentUser.uid,
+    post.views++;
 
-        displayName:
-          currentUser.displayName ||
-          "Zemivo User",
+    card.innerHTML = `
 
-        text:
-          text,
-
-        hashtags:
-          hashtags,
-
-        imageData:
-          selectedImage
-          ? await fileToDataURL(
-              selectedImage
-            )
-          : "",
-
-        likes:
-          0,
-
-        comments:
-          0,
-
-        shares:
-          0,
-
-        sparks:
-          0,
-
-        status:
-          "published",
-
-        privacy:
-          "public",
-
-        createdAt:
-          serverTimestamp()
-
-      }
-    );
-
-
-    document
-      .getElementById("postText")
-      .value = "";
-
-    document
-      .getElementById("hashtagInput")
-      .value = "";
-
-    document
-      .getElementById("imagePreview")
-      .innerHTML = "";
-
-    selectedImage =
-      null;
-
-
-    showToast(
-      "Post published successfully."
-    );
-
-
-  }catch(error){
-
-    console.error(error);
-
-    showToast(
-      "Post could not be published."
-    );
-
-  }
-
-}
-
-
-function fileToDataURL(file){
-
-  return new Promise(
-    (resolve,reject) => {
-
-      const reader =
-        new FileReader();
-
-      reader.onload =
-        () => resolve(
-          reader.result
-        );
-
-      reader.onerror =
-        reject;
-
-      reader.readAsDataURL(file);
-
-    }
-  );
-
-}
-
-
-/* --------------------------------
-   LOAD POSTS
--------------------------------- */
-
-function loadPosts(){
-
-  const feed =
-    document.getElementById(
-      "feed"
-    );
-
-
-  const q =
-    query(
-      collection(db,"posts"),
-      orderBy(
-        "createdAt",
-        "desc"
-      )
-    );
-
-
-  onSnapshot(
-    q,
-    snapshot => {
-
-      feed.innerHTML = "";
-
-      snapshot.forEach(
-        item => {
-
-          const data =
-            item.data();
-
-          if(
-            data.status ===
-            "deleted"
-          ) return;
-
-          feed.appendChild(
-            createPostElement(
-              item.id,
-              data
-            )
-          );
-
-        }
-      );
-
-    },
-    error => {
-
-      console.error(error);
-
-      feed.innerHTML = `
-        <div class="card" style="padding:20px;text-align:center">
-          Feed could not be loaded.
-        </div>
-      `;
-
-    }
-  );
-
-}
-
-
-/* --------------------------------
-   POST CARD
--------------------------------- */
-
-function createPostElement(
-  id,
-  data
-){
-
-  const article =
-    document.createElement(
-      "article"
-    );
-
-  article.className =
-    "card post";
-
-
-  const initial =
-    (
-      data.displayName ||
-      "Z"
-    )
-    .charAt(0)
-    .toUpperCase();
-
-
-  article.innerHTML = `
-
-    <div class="post-head">
-
-      <div class="user">
+      <div class="post-header">
 
         <div class="avatar">
-          ${escapeHTML(initial)}
+          ${escapeHTML(post.name.charAt(0))}
         </div>
 
-        <div>
+        <div class="post-info">
 
-          <div class="user-name">
-            ${escapeHTML(
-              data.displayName ||
-              "Zemivo User"
-            )}
+          <div class="post-name">
+            ${escapeHTML(post.name)}
           </div>
 
           <div class="post-time">
-            ${formatTime(
-              data.createdAt
-            )}
+            Just now
+          </div>
+
+        </div>
+
+        <button
+          class="more-btn"
+          onclick="postMenu(${post.id})"
+        >
+          ⋯
+        </button>
+
+      </div>
+
+      ${
+        post.text
+        ?
+        `<div class="post-text">
+          ${escapeHTML(post.text)}
+        </div>`
+        :
+        ""
+      }
+
+      ${
+        post.photo
+        ?
+        `<img
+          class="post-image"
+          src="${post.photo}"
+          alt="Post image"
+        >`
+        :
+        ""
+      }
+
+      <div class="stats">
+
+        <span>
+          ❤️ ${post.likes}
+        </span>
+
+        <span>
+          💬 ${countAllComments(post)}
+          &nbsp;&nbsp;
+          👁️ ${post.views}
+        </span>
+
+      </div>
+
+      <div class="post-actions">
+
+        <button
+          class="${post.liked ? "liked" : ""}"
+          onclick="toggleLike(${post.id})"
+        >
+          ❤️ Like
+        </button>
+
+        <button
+          onclick="focusComment(${post.id})"
+        >
+          💬 Comment
+        </button>
+
+        <button
+          onclick="sharePost(${post.id})"
+        >
+          ↗ Share
+        </button>
+
+      </div>
+
+      <div class="comments">
+
+        <div class="comment-form">
+
+          <input
+            id="comment-${post.id}"
+            placeholder="Write a comment..."
+          >
+
+          <button
+            onclick="addComment(${post.id})"
+          >
+            Send
+          </button>
+
+        </div>
+
+        <div id="comments-${post.id}">
+          ${renderComments(post)}
+        </div>
+
+      </div>
+    `;
+
+    feed.appendChild(card);
+
+  });
+
+}
+
+
+function toggleLike(postId){
+
+  const post =
+    posts.find(p => p.id === postId);
+
+  if(!post) return;
+
+  post.liked = !post.liked;
+
+  post.likes +=
+    post.liked ? 1 : -1;
+
+  renderFeed();
+
+}
+
+
+function addComment(postId){
+
+  const input =
+    document.getElementById(
+      `comment-${postId}`
+    );
+
+  if(!input) return;
+
+  const text =
+    input.value.trim();
+
+  if(!text) return;
+
+  const post =
+    posts.find(p => p.id === postId);
+
+  if(!post) return;
+
+  post.comments.push({
+
+    id: Date.now(),
+
+    author: "You",
+
+    text: text,
+
+    likes: 0,
+
+    liked: false,
+
+    replies: []
+
+  });
+
+  renderFeed();
+
+}
+
+
+function addReply(postId, commentId){
+
+  const input =
+    document.getElementById(
+      `reply-${commentId}`
+    );
+
+  if(!input) return;
+
+  const text =
+    input.value.trim();
+
+  if(!text) return;
+
+  const post =
+    posts.find(p => p.id === postId);
+
+  if(!post) return;
+
+  const comment =
+    findComment(post.comments, commentId);
+
+  if(!comment) return;
+
+  comment.replies.push({
+
+    id: Date.now(),
+
+    author: "You",
+
+    text: text,
+
+    likes: 0,
+
+    liked: false,
+
+    replies: []
+
+  });
+
+  renderFeed();
+
+}
+
+
+function findComment(comments, id){
+
+  for(const comment of comments){
+
+    if(comment.id === id){
+      return comment;
+    }
+
+    const found =
+      findComment(comment.replies || [], id);
+
+    if(found){
+      return found;
+    }
+
+  }
+
+  return null;
+
+}
+
+
+function renderComments(post){
+
+  return post.comments
+    .map(function(comment){
+
+      return renderComment(
+        post.id,
+        comment,
+        0
+      );
+
+    })
+    .join("");
+
+}
+
+
+function renderComment(
+  postId,
+  comment,
+  level
+){
+
+  const replies =
+    (comment.replies || [])
+      .map(function(reply){
+
+        return renderComment(
+          postId,
+          reply,
+          level + 1
+        );
+
+      })
+      .join("");
+
+  return `
+
+    <div
+      class="comment"
+      data-level="${level}"
+    >
+
+      <div class="comment-main">
+
+        <div class="avatar">
+          ${escapeHTML(comment.author.charAt(0))}
+        </div>
+
+        <div class="comment-body">
+
+          <div class="comment-author">
+            ${escapeHTML(comment.author)}
+          </div>
+
+          <div class="comment-text">
+            ${escapeHTML(comment.text)}
           </div>
 
         </div>
 
       </div>
 
+      <div class="comment-tools">
 
-      <button
-        class="more"
-        data-menu="${id}"
-      >
-        ⋯
-      </button>
-
-    </div>
-
-
-    <div class="post-text">
-
-      ${escapeHTML(
-        data.text || ""
-      )}
-
-      ${
-        data.hashtags
-        ? `<br><br>${escapeHTML(
-            data.hashtags
-          )}`
-        : ""
-      }
-
-    </div>
-
-
-    ${
-      data.imageData
-      ? `
-        <img
-          class="post-media"
-          src="${data.imageData}"
-          alt="Zemivo post"
+        <button
+          class="${comment.liked ? "active" : ""}"
+          onclick="likeComment(${postId}, ${comment.id})"
         >
-      `
-      : ""
-    }
+          ❤️ ${comment.likes}
+        </button>
 
+        <button
+          onclick="editComment(${postId}, ${comment.id})"
+        >
+          ✏️ Edit
+        </button>
 
-    <div class="post-stats">
+        <button
+          onclick="deleteComment(${postId}, ${comment.id})"
+        >
+          🗑️ Delete
+        </button>
 
-      <span>
-        👍 ${data.likes || 0}
-      </span>
+        <button
+          onclick="showReplyBox(${comment.id})"
+        >
+          ↩ Reply
+        </button>
 
-      <span>
-        💬 ${data.comments || 0}
-        &nbsp;&nbsp;
-        🔄 ${data.shares || 0}
-        &nbsp;&nbsp;
-        ✨ ${data.sparks || 0}
-      </span>
+      </div>
+
+      <div
+        class="reply-area hidden"
+        id="reply-box-${comment.id}"
+      >
+
+        <div class="reply-form">
+
+          <input
+            id="reply-${comment.id}"
+            placeholder="Write a reply..."
+          >
+
+          <button
+            onclick="addReply(${postId}, ${comment.id})"
+          >
+            Send
+          </button>
+
+        </div>
+
+      </div>
+
+      <div class="replies">
+        ${replies}
+      </div>
 
     </div>
-
-
-    <div class="actions">
-
-      <button
-        onclick="likePost('${id}')"
-      >
-        👍 Like
-      </button>
-
-      <button
-        onclick="commentPost('${id}')"
-      >
-        💬 Comment
-      </button>
-
-      <button
-        onclick="sharePost('${id}')"
-      >
-        ↗ Share
-      </button>
-
-      <button
-        onclick="sparkPost('${id}')"
-      >
-        ✨ Spark
-      </button>
-
-    </div>
-
   `;
 
-
-  article
-    .querySelector(
-      ".more"
-    )
-    .addEventListener(
-      "click",
-      () => {
-
-        openPostMenu(
-          id,
-          data
-        );
-
-      }
-    );
+}
 
 
-  return article;
+function likeComment(
+  postId,
+  commentId
+){
+
+  const post =
+    posts.find(p => p.id === postId);
+
+  if(!post) return;
+
+  const comment =
+    findComment(post.comments, commentId);
+
+  if(!comment) return;
+
+  comment.liked =
+    !comment.liked;
+
+  comment.likes +=
+    comment.liked ? 1 : -1;
+
+  renderFeed();
 
 }
 
 
-/* --------------------------------
-   THREE DOT MENU
--------------------------------- */
+function showReplyBox(commentId){
 
-window.openPostMenu =
-function(id,data){
+  const box =
+    document.getElementById(
+      `reply-box-${commentId}`
+    );
 
-  currentPostId =
-    id;
+  if(!box) return;
 
-  currentPostData =
-    data;
-
-  document
-    .getElementById(
-      "menuOverlay"
-    )
-    .style.display =
-    "block";
-
-};
-
-
-document
-  .getElementById(
-    "menuOverlay"
-  )
-  .addEventListener(
-    "click",
-    event => {
-
-      if(
-        event.target.id ===
-        "menuOverlay"
-      ){
-
-        closeMenu();
-
-      }
-
-    }
-  );
-
-
-function closeMenu(){
-
-  document
-    .getElementById(
-      "menuOverlay"
-    )
-    .style.display =
-    "none";
+  box.classList.toggle("hidden");
 
 }
 
 
-/* --------------------------------
-   MENU ACTIONS
--------------------------------- */
+function editComment(
+  postId,
+  commentId
+){
 
-window.saveCurrentPost =
-async function(){
+  const post =
+    posts.find(p => p.id === postId);
 
-  closeMenu();
+  if(!post) return;
 
-  if(!currentUser) return;
+  const comment =
+    findComment(post.comments, commentId);
 
-  try{
+  if(!comment) return;
 
-    await setDoc(
-      doc(
-        db,
-        "users",
-        currentUser.uid,
-        "saved",
-        currentPostId
-      ),
-      {
-        postId:
-          currentPostId,
-
-        savedAt:
-          serverTimestamp()
-      }
+  const newText =
+    prompt(
+      "Edit your comment:",
+      comment.text
     );
-
-    showToast(
-      "Post saved."
-    );
-
-  }catch(error){
-
-    console.error(error);
-
-    showToast(
-      "Could not save post."
-    );
-
-  }
-
-};
-
-
-window.editCurrentPost =
-function(){
-
-  closeMenu();
 
   if(
-    !currentUser ||
-    currentPostData.uid !==
-    currentUser.uid
+    newText === null ||
+    !newText.trim()
   ){
-
-    showToast(
-      "You can only edit your own posts."
-    );
-
     return;
+  }
+
+  comment.text =
+    newText.trim();
+
+  renderFeed();
+
+}
+
+
+function deleteComment(
+  postId,
+  commentId
+){
+
+  const post =
+    posts.find(p => p.id === postId);
+
+  if(!post) return;
+
+  const deleted =
+    removeComment(
+      post.comments,
+      commentId
+    );
+
+  if(deleted){
+    renderFeed();
+  }
+
+}
+
+
+function removeComment(
+  comments,
+  id
+){
+
+  const index =
+    comments.findIndex(
+      c => c.id === id
+    );
+
+  if(index !== -1){
+
+    comments.splice(index,1);
+
+    return true;
 
   }
 
-
-  document
-    .getElementById("editText")
-    .value =
-    currentPostData.text || "";
-
-
-  document
-    .getElementById("editModal")
-    .style.display =
-    "flex";
-
-};
-
-
-window.saveEditedPost =
-async function(){
-
-  if(!currentPostId) return;
-
-  try{
-
-    const text =
-      document
-        .getElementById(
-          "editText"
-        )
-        .value
-        .trim();
-
-
-    await updateDoc(
-      doc(
-        db,
-        "posts",
-        currentPostId
-      ),
-      {
-        text:
-          text,
-
-        editedAt:
-          serverTimestamp()
-      }
-    );
-
-
-    closeModal(
-      "editModal"
-    );
-
-
-    showToast(
-      "Post updated."
-    );
-
-  }catch(error){
-
-    console.error(error);
-
-    showToast(
-      "Could not edit post."
-    );
-
-  }
-
-};
-
-
-window.manageProduct =
-function(){
-
-  closeMenu();
-
-  document
-    .getElementById(
-      "productModal"
-    )
-    .style.display =
-    "flex";
-
-};
-
-
-window.saveProductLink =
-async function(){
-
-  const url =
-    document
-      .getElementById(
-        "productUrl"
-      )
-      .value
-      .trim();
-
-
-  if(!url){
-
-    showToast(
-      "Enter a product URL."
-    );
-
-    return;
-
-  }
-
-
-  try{
-
-    await updateDoc(
-      doc(
-        db,
-        "posts",
-        currentPostId
-      ),
-      {
-        productUrl:
-          url
-      }
-    );
-
-
-    closeModal(
-      "productModal"
-    );
-
-
-    document
-      .getElementById(
-        "productUrl"
-      )
-      .value = "";
-
-
-    showToast(
-      "Affiliate product link saved."
-    );
-
-  }catch(error){
-
-    console.error(error);
-
-    showToast(
-      "Could not save product link."
-    );
-
-  }
-
-};
-
-
-window.commentSettings =
-function(){
-
-  closeMenu();
-
-  showToast(
-    "Comment controls are ready for the post settings system."
-  );
-
-};
-
-
-window.privacySettings =
-function(){
-
-  closeMenu();
-
-  showToast(
-    "Privacy settings are ready for public/friends/private controls."
-  );
-
-};
-
-
-window.archiveCurrentPost =
-async function(){
-
-  closeMenu();
-
-  if(
-    !currentUser ||
-    currentPostData.uid !==
-    currentUser.uid
-  ){
-
-    showToast(
-      "You can only archive your own post."
-    );
-
-    return;
-
-  }
-
-
-  try{
-
-    await updateDoc(
-      doc(
-        db,
-        "posts",
-        currentPostId
-      ),
-      {
-        status:
-          "archived"
-      }
-    );
-
-
-    showToast(
-      "Post moved to archive."
-    );
-
-  }catch(error){
-
-    console.error(error);
-
-    showToast(
-      "Could not archive post."
-    );
-
-  }
-
-};
-
-
-window.trashCurrentPost =
-async function(){
-
-  closeMenu();
-
-  if(
-    !currentUser ||
-    currentPostData.uid !==
-    currentUser.uid
-  ){
-
-    showToast(
-      "You can only delete your own post."
-    );
-
-    return;
-
-  }
-
-
-  try{
-
-    await updateDoc(
-      doc(
-        db,
-        "posts",
-        currentPostId
-      ),
-      {
-
-        status:
-          "trash",
-
-        trashedAt:
-          serverTimestamp()
-
-      }
-    );
-
-
-    showToast(
-      "Post moved to trash."
-    );
-
-  }catch(error){
-
-    console.error(error);
-
-    showToast(
-      "Could not move post to trash."
-    );
-
-  }
-
-};
-
-
-window.sparkCurrentPost =
-async function(){
-
-  closeMenu();
-
-  await sparkPost(
-    currentPostId
-  );
-
-};
-
-
-window.notificationSettings =
-function(){
-
-  closeMenu();
-
-  showToast(
-    "Post notifications turned off."
-  );
-
-};
-
-
-window.copyCurrentLink =
-async function(){
-
-  closeMenu();
-
-  const link =
-    location.origin +
-    location.pathname +
-    "?post=" +
-    currentPostId;
-
-
-  try{
-
-    await navigator.clipboard.writeText(
-      link
-    );
-
-    showToast(
-      "Post link copied."
-    );
-
-  }catch(error){
-
-    showToast(
-      link
-    );
-
-  }
-
-};
-
-
-window.partnershipCode =
-function(){
-
-  closeMenu();
-
-  showToast(
-    "Partnership ad code system is ready for integration."
-  );
-
-};
-
-
-window.createAd =
-function(){
-
-  closeMenu();
-
-  showToast(
-    "Create Ad opened."
-  );
-
-};
-
-
-/* --------------------------------
-   LIKE / COMMENT / SHARE / SPARK
--------------------------------- */
-
-window.likePost =
-async function(id){
-
-  try{
-
-    const ref =
-      doc(
-        db,
-        "posts",
-        id
-      );
-
-    const snap =
-      await getDoc(ref);
-
-    const data =
-      snap.data();
-
-
-    await updateDoc(
-      ref,
-      {
-        likes:
-          (data.likes || 0) + 1
-      }
-    );
-
-  }catch(error){
-
-    console.error(error);
-
-  }
-
-};
-
-
-window.sparkPost =
-async function(id){
-
-  try{
-
-    const ref =
-      doc(
-        db,
-        "posts",
-        id
-      );
-
-    const snap =
-      await getDoc(ref);
-
-    const data =
-      snap.data();
-
-
-    await updateDoc(
-      ref,
-      {
-        sparks:
-          (data.sparks || 0) + 1
-      }
-    );
-
-    showToast(
-      "✨ Spark added."
-    );
-
-  }catch(error){
-
-    console.error(error);
-
-  }
-
-};
-
-
-window.commentPost =
-function(id){
-
-  showToast(
-    "Comment system will open here."
-  );
-
-};
-
-
-window.sharePost =
-async function(id){
-
-  try{
-
-    const link =
-      location.origin +
-      location.pathname +
-      "?post=" +
-      id;
-
+  for(const comment of comments){
 
     if(
-      navigator.share
+      removeComment(
+        comment.replies || [],
+        id
+      )
     ){
-
-      await navigator.share({
-
-        title:
-          "Zemivo Post",
-
-        url:
-          link
-
-      });
-
-    }else{
-
-      await navigator.clipboard.writeText(
-        link
-      );
-
-      showToast(
-        "Post link copied."
-      );
-
+      return true;
     }
-
-
-  }catch(error){
-
-    console.log(
-      "Share cancelled."
-    );
 
   }
 
-};
+  return false;
+
+}
 
 
-/* --------------------------------
-   ADMIN BROADCAST
--------------------------------- */
+function countAllComments(post){
 
-document
-  .getElementById(
-    "broadcastButton"
-  )
-  .addEventListener(
-    "click",
-    async () => {
+  let total = 0;
 
-      if(!currentUser){
+  function count(list){
 
-        showToast(
-          "Admin session required."
-        );
+    list.forEach(function(item){
 
-        return;
+      total++;
 
+      if(item.replies){
+        count(item.replies);
       }
 
+    });
 
-      const message =
-        document
-          .getElementById(
-            "adminMessage"
-          )
-          .value
-          .trim();
+  }
 
+  count(post.comments);
 
-      if(!message){
+  return total;
 
-        showToast(
-          "Write an announcement first."
-        );
-
-        return;
-
-      }
+}
 
 
-      try{
+function postMenu(postId){
 
-        await addDoc(
-          collection(
-            db,
-            "platformAnnouncements"
-          ),
-          {
+  const post =
+    posts.find(p => p.id === postId);
 
-            message:
-              message,
+  if(!post) return;
 
-            createdBy:
-              currentUser.uid,
-
-            createdAt:
-              serverTimestamp(),
-
-            status:
-              "published"
-
-          }
-        );
-
-
-        document
-          .getElementById(
-            "adminMessage"
-          )
-          .value = "";
-
-
-        showToast(
-          "Platform announcement published."
-        );
-
-      }catch(error){
-
-        console.error(error);
-
-        showToast(
-          "Admin broadcast was blocked."
-        );
-
-      }
-
-    }
-  );
-
-
-/* --------------------------------
-   HELPERS
--------------------------------- */
-
-window.closeModal =
-function(id){
-
-  document
-    .getElementById(id)
-    .style.display =
-    "none";
-
-};
-
-
-function showToast(text){
-
-  const toast =
-    document.getElementById(
-      "toast"
+  const action =
+    prompt(
+      "Type EDIT to edit this post, or DELETE to delete it."
     );
 
-  toast.textContent =
-    text;
+  if(!action) return;
 
-  toast.style.display =
-    "block";
+  if(
+    action.toUpperCase() === "DELETE"
+  ){
+
+    if(
+      confirm(
+        "Delete this post?"
+      )
+    ){
+
+      posts =
+        posts.filter(
+          p => p.id !== postId
+        );
+
+      renderFeed();
+
+    }
+
+  }
+
+  else if(
+    action.toUpperCase() === "EDIT"
+  ){
+
+    const newText =
+      prompt(
+        "Edit your post:",
+        post.text
+      );
+
+    if(
+      newText !== null
+    ){
+
+      post.text =
+        newText.trim();
+
+      renderFeed();
+
+    }
+
+  }
+
+}
 
 
-  setTimeout(
-    () => {
+function focusComment(postId){
 
-      toast.style.display =
-        "none";
+  const input =
+    document.getElementById(
+      `comment-${postId}`
+    );
 
-    },
-    2500
-  );
+  if(input){
+
+    input.focus();
+
+  }
+
+}
+
+
+function sharePost(postId){
+
+  const post =
+    posts.find(p => p.id === postId);
+
+  if(!post) return;
+
+  const shareText =
+    post.text ||
+    "Check out this Zemivo post.";
+
+  if(
+    navigator.share
+  ){
+
+    navigator.share({
+
+      title:"Zemivo",
+
+      text:shareText
+
+    }).catch(function(){});
+
+  }
+
+  else{
+
+    alert(
+      "Sharing will be connected to Zemivo's full sharing system later."
+    );
+
+  }
 
 }
 
@@ -1470,24 +1178,7 @@ function escapeHTML(value){
 }
 
 
-function formatTime(timestamp){
-
-  if(!timestamp)
-    return "Just now";
-
-  try{
-
-    return timestamp
-      .toDate()
-      .toLocaleString();
-
-  }catch(error){
-
-    return "Just now";
-
-  }
-
-}
+renderFeed();
 
 </script>
 
