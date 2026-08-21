@@ -2,350 +2,820 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Zemivo - Home</title>
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+
+<title>Zemivo — Home</title>
 
 <style>
-*{box-sizing:border-box}
+:root{
+  --blue:#1877f2;
+  --blue-dark:#0f5dcc;
+  --bg:#f0f2f5;
+  --card:#fff;
+  --text:#111827;
+  --muted:#667085;
+  --line:#e4e7ec;
+  --danger:#dc2626;
+  --green:#16a34a;
+  --orange:#f59e0b;
+  --purple:#7c3aed;
+  --shadow:0 4px 18px rgba(16,24,40,.08);
+}
+
+*{
+  box-sizing:border-box;
+}
+
+html{
+  scroll-behavior:smooth;
+}
 
 body{
   margin:0;
-  font-family:Arial,sans-serif;
-  background:#f4f6f8;
-  color:#172033;
+  background:var(--bg);
+  font-family:Arial,Helvetica,sans-serif;
+  color:var(--text);
 }
 
-.header{
+button,
+input,
+textarea,
+select{
+  font:inherit;
+}
+
+button{
+  cursor:pointer;
+}
+
+/* =========================
+   TOP BAR
+========================= */
+
+.topbar{
   position:sticky;
   top:0;
-  z-index:100;
-  height:64px;
+  z-index:50;
+  height:62px;
   background:#fff;
-  border-bottom:1px solid #e5e7eb;
+  border-bottom:1px solid var(--line);
   display:flex;
   align-items:center;
-  justify-content:space-between;
-  padding:0 18px;
+  padding:0 14px;
+  gap:12px;
 }
 
-.logo{
-  font-size:27px;
+.brand{
+  font-size:28px;
   font-weight:800;
-  color:#2563eb;
+  color:var(--blue);
+  letter-spacing:-1px;
 }
 
-.header-actions{
-  display:flex;
-  gap:8px;
-}
-
-.icon-btn{
-  width:42px;
-  height:42px;
+.search{
+  flex:1;
+  max-width:430px;
+  background:#f2f4f7;
   border:0;
-  border-radius:50%;
-  background:#f1f5f9;
-  cursor:pointer;
-  font-size:19px;
+  border-radius:22px;
+  padding:11px 15px;
+  outline:0;
 }
 
-.container{
+.nav{
+  display:flex;
+  gap:5px;
+  margin-left:auto;
+}
+
+.nav button{
+  border:0;
+  background:transparent;
+  border-radius:12px;
+  padding:10px 12px;
+  font-size:20px;
+}
+
+.nav button:hover{
+  background:#f2f4f7;
+}
+
+/* =========================
+   LAYOUT
+========================= */
+
+.layout{
   width:100%;
-  max-width:760px;
-  margin:20px auto;
-  padding:0 12px;
+  max-width:1180px;
+  margin:auto;
+  display:grid;
+  grid-template-columns:220px minmax(0,650px) 240px;
+  gap:18px;
+  padding:18px;
 }
 
+.panel,
 .card{
-  background:#fff;
+  background:var(--card);
+  border:1px solid var(--line);
   border-radius:16px;
-  border:1px solid #e5e7eb;
-  margin-bottom:16px;
-  overflow:hidden;
+  box-shadow:var(--shadow);
 }
+
+/* =========================
+   SIDEBAR
+========================= */
+
+.sidebar{
+  position:sticky;
+  top:80px;
+  height:max-content;
+  padding:10px;
+}
+
+.sidebtn{
+  display:flex;
+  width:100%;
+  align-items:center;
+  gap:10px;
+  border:0;
+  background:transparent;
+  padding:12px;
+  border-radius:11px;
+  text-align:left;
+}
+
+.sidebtn:hover{
+  background:#f2f4f7;
+}
+
+.admin-only{
+  display:none!important;
+}
+
+.admin .admin-only{
+  display:flex!important;
+}
+
+/* =========================
+   COMPOSER
+========================= */
 
 .composer{
   padding:16px;
+  margin-bottom:14px;
 }
 
-.composer-top{
+.compose-row{
   display:flex;
-  gap:12px;
+  gap:10px;
   align-items:center;
 }
 
 .avatar{
-  width:44px;
-  height:44px;
+  width:42px;
+  height:42px;
   border-radius:50%;
-  background:#2563eb;
-  color:white;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-weight:bold;
-  flex-shrink:0;
+  background:linear-gradient(135deg,#1877f2,#7c3aed);
+  color:#fff;
+  display:grid;
+  place-items:center;
+  font-weight:700;
+  flex:none;
 }
 
-textarea{
-  width:100%;
-  min-height:70px;
-  resize:none;
+.mind{
+  flex:1;
   border:1px solid #e5e7eb;
-  border-radius:12px;
-  padding:12px;
-  font-size:15px;
-  outline:none;
-}
-
-textarea:focus{
-  border-color:#2563eb;
-}
-
-.photo-preview{
-  margin-top:12px;
-  display:none;
-}
-
-.photo-preview img{
-  width:100%;
-  max-height:420px;
-  object-fit:cover;
-  border-radius:12px;
-}
-
-.composer-actions{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  margin-top:12px;
-}
-
-.photo-label{
+  background:#f7f8fa;
+  border-radius:24px;
+  padding:13px 17px;
+  color:#687385;
   cursor:pointer;
-  padding:9px 13px;
-  border-radius:10px;
-  background:#eff6ff;
-  color:#2563eb;
-  font-weight:bold;
+  transition:.15s;
 }
 
-#photoInput{
-  display:none;
+.mind:hover{
+  background:#eef2f6;
 }
 
-.post-btn{
+.compose-tools{
+  display:flex;
+  gap:6px;
+  margin-top:12px;
+  flex-wrap:wrap;
+}
+
+.tool{
   border:0;
-  background:#2563eb;
-  color:white;
-  padding:10px 20px;
-  border-radius:22px;
-  font-weight:bold;
-  cursor:pointer;
+  background:#f8fafc;
+  padding:9px 12px;
+  border-radius:12px;
 }
 
-.post-header{
-  padding:15px;
+.tool:hover{
+  background:#eef2ff;
+}
+
+/* =========================
+   POSTS
+========================= */
+
+.post{
+  margin-bottom:14px;
+  overflow:hidden;
+}
+
+.post-head{
   display:flex;
   align-items:center;
+  padding:14px 15px;
   gap:10px;
 }
 
-.post-info{
+.post-meta{
   flex:1;
 }
 
 .post-name{
-  font-weight:bold;
+  font-weight:700;
 }
 
 .post-time{
   font-size:12px;
-  color:#64748b;
+  color:var(--muted);
   margin-top:3px;
 }
 
-.more-btn{
+.dots{
   border:0;
   background:transparent;
-  font-size:22px;
-  cursor:pointer;
+  font-size:25px;
+  border-radius:50%;
+  width:38px;
+  height:38px;
 }
 
-.post-text{
-  padding:0 15px 15px;
+.dots:hover{
+  background:#f2f4f7;
+}
+
+.post-body{
+  padding:0 15px 13px;
+  line-height:1.55;
   white-space:pre-wrap;
-  line-height:1.5;
 }
 
-.post-image{
-  width:100%;
-  max-height:520px;
-  object-fit:cover;
+.post-img{
   display:block;
+  width:100%;
+  max-height:620px;
+  object-fit:cover;
+  background:#e5e7eb;
+}
+
+.tag{
+  color:var(--blue);
+  font-weight:600;
+}
+
+.post-extra{
+  color:var(--muted);
+  font-size:13px;
+  margin-top:9px;
 }
 
 .stats{
-  padding:10px 15px;
   display:flex;
   justify-content:space-between;
-  color:#64748b;
+  color:var(--muted);
   font-size:13px;
-  border-bottom:1px solid #eef0f3;
+  padding:8px 15px;
+  border-bottom:1px solid var(--line);
 }
 
-.post-actions{
-  display:flex;
-  border-bottom:1px solid #eef0f3;
+.actions{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  padding:5px;
 }
 
-.post-actions button{
-  flex:1;
+.actions button{
   border:0;
-  background:#fff;
-  padding:12px 5px;
-  cursor:pointer;
-  font-weight:bold;
-  color:#475569;
+  background:transparent;
+  padding:10px 5px;
+  border-radius:10px;
 }
 
-.post-actions button:hover{
-  background:#f8fafc;
+.actions button:hover{
+  background:#f4f6f8;
 }
 
-.post-actions .liked{
-  color:#2563eb;
+.actions button.active{
+  color:var(--blue);
+  font-weight:700;
 }
+
+/* =========================
+   COMMENTS
+========================= */
 
 .comments{
-  padding:12px 15px;
-}
-
-.comment-form{
-  display:flex;
-  gap:8px;
-}
-
-.comment-form input{
-  flex:1;
-  border:1px solid #e2e8f0;
-  border-radius:20px;
-  padding:10px 13px;
-  outline:none;
-}
-
-.comment-form button{
-  border:0;
-  border-radius:20px;
-  padding:0 15px;
-  background:#2563eb;
-  color:white;
-  cursor:pointer;
+  padding:0 15px 13px;
 }
 
 .comment{
-  margin-top:12px;
-}
-
-.comment-main{
   display:flex;
   gap:8px;
+  margin-top:8px;
 }
 
-.comment-body{
-  background:#f1f5f9;
+.comment .avatar{
+  width:32px;
+  height:32px;
+  font-size:12px;
+}
+
+.bubble{
+  background:#f2f4f7;
   border-radius:14px;
-  padding:9px 12px;
+  padding:8px 11px;
   flex:1;
 }
 
-.comment-author{
-  font-size:13px;
-  font-weight:bold;
-}
-
-.comment-text{
-  margin-top:4px;
-  line-height:1.4;
-}
-
-.comment-tools{
-  display:flex;
-  gap:14px;
-  padding:5px 8px;
-  font-size:12px;
-  color:#64748b;
-}
-
-.comment-tools button{
-  border:0;
-  background:none;
-  padding:0;
-  cursor:pointer;
-  color:#64748b;
-  font-weight:bold;
-}
-
-.comment-tools .active{
-  color:#2563eb;
-}
-
-.reply-area{
-  margin-left:50px;
-  margin-top:6px;
-}
-
-.reply-form{
+.comment-input{
   display:flex;
   gap:7px;
+  margin-top:10px;
 }
 
-.reply-form input{
+.comment-input input{
   flex:1;
-  border:1px solid #e2e8f0;
-  border-radius:18px;
-  padding:8px 11px;
+  border:1px solid var(--line);
+  border-radius:20px;
+  padding:9px 12px;
+  outline:0;
 }
 
-.reply-form button{
+.comment-input input:focus{
+  border-color:var(--blue);
+}
+
+.comment-input button{
   border:0;
-  border-radius:18px;
-  background:#2563eb;
-  color:white;
-  padding:0 12px;
-  cursor:pointer;
+  border-radius:20px;
+  background:var(--blue);
+  color:#fff;
+  padding:0 14px;
 }
 
-.replies{
-  margin-left:50px;
+/* =========================
+   RIGHT SIDE
+========================= */
+
+.right{
+  height:max-content;
 }
+
+.right .card{
+  padding:15px;
+  margin-bottom:14px;
+}
+
+.mini{
+  display:flex;
+  gap:10px;
+  align-items:center;
+  padding:8px 0;
+}
+
+.small{
+  font-size:13px;
+  color:var(--muted);
+}
+
+/* =========================
+   MODAL
+========================= */
+
+.modal{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.52);
+  z-index:100;
+  display:none;
+  align-items:flex-end;
+  justify-content:center;
+}
+
+.modal.show{
+  display:flex;
+}
+
+.sheet{
+  width:min(720px,100%);
+  max-height:94vh;
+  overflow:auto;
+  background:#fff;
+  border-radius:20px 20px 0 0;
+  padding:18px;
+}
+
+.grab{
+  width:48px;
+  height:5px;
+  background:#c7cdd6;
+  border-radius:9px;
+  margin:0 auto 12px;
+}
+
+.modal-title{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+
+.close{
+  border:0;
+  background:#f2f4f7;
+  width:36px;
+  height:36px;
+  border-radius:50%;
+  font-size:22px;
+}
+
+.stepbar{
+  display:flex;
+  gap:7px;
+  margin:10px 0 16px;
+}
+
+.stepbar span{
+  flex:1;
+  height:5px;
+  background:#e5e7eb;
+  border-radius:8px;
+}
+
+.stepbar span.on{
+  background:var(--blue);
+}
+
+/* =========================
+   POST WRITER
+========================= */
+
+.writer-user{
+  display:flex;
+  gap:10px;
+  align-items:center;
+}
+
+.composer-large{
+  border:0;
+  outline:0;
+  width:100%;
+  min-height:170px;
+  resize:none;
+  font-size:18px;
+  padding:18px 2px 8px;
+}
+
+.media-preview{
+  display:none;
+  border-radius:14px;
+  overflow:hidden;
+  margin:8px 0;
+  position:relative;
+}
+
+.media-preview.show{
+  display:block;
+}
+
+.media-preview img,
+.media-preview video{
+  width:100%;
+  max-height:390px;
+  object-fit:cover;
+}
+
+.remove-media{
+  position:absolute;
+  right:8px;
+  top:8px;
+  border:0;
+  background:rgba(0,0,0,.65);
+  color:#fff;
+  border-radius:50%;
+  width:34px;
+  height:34px;
+  z-index:2;
+}
+
+/* =========================
+   INSIDE POST OPTIONS
+========================= */
+
+.inside-options{
+  border:1px solid var(--line);
+  border-radius:14px;
+  overflow:hidden;
+  margin-top:8px;
+}
+
+.inside-option{
+  width:100%;
+  display:flex;
+  align-items:center;
+  gap:12px;
+  border:0;
+  border-bottom:1px solid var(--line);
+  background:#fff;
+  padding:14px;
+  text-align:left;
+}
+
+.inside-option:last-child{
+  border-bottom:0;
+}
+
+.inside-option:hover{
+  background:#f8fafc;
+}
+
+.option-icon{
+  width:38px;
+  height:38px;
+  border-radius:50%;
+  display:grid;
+  place-items:center;
+  background:#eef2ff;
+  flex:none;
+}
+
+/* =========================
+   CHIPS
+========================= */
+
+.chips{
+  display:flex;
+  gap:7px;
+  overflow:auto;
+  padding:7px 0;
+}
+
+.chip{
+  white-space:nowrap;
+  border:1px solid var(--line);
+  background:#fff;
+  border-radius:20px;
+  padding:9px 12px;
+}
+
+.chip:hover{
+  background:#f4f6f8;
+}
+
+/* =========================
+   SETTINGS STEP
+========================= */
+
+.settings{
+  display:none;
+}
+
+.settings.show{
+  display:block;
+}
+
+.setting{
+  display:flex;
+  justify-content:space-between;
+  gap:12px;
+  align-items:center;
+  padding:14px 0;
+  border-bottom:1px solid var(--line);
+}
+
+.setting:last-child{
+  border:0;
+}
+
+.setting select,
+.setting input{
+  border:1px solid var(--line);
+  border-radius:9px;
+  padding:8px;
+  max-width:190px;
+}
+
+.toggle{
+  width:48px;
+  height:27px;
+  border-radius:20px;
+  background:#cbd5e1;
+  border:0;
+  position:relative;
+  flex:none;
+}
+
+.toggle:after{
+  content:"";
+  position:absolute;
+  width:21px;
+  height:21px;
+  top:3px;
+  left:3px;
+  border-radius:50%;
+  background:#fff;
+  transition:.2s;
+}
+
+.toggle.on{
+  background:var(--blue);
+}
+
+.toggle.on:after{
+  left:24px;
+}
+
+/* =========================
+   BUTTONS
+========================= */
+
+.nextbar{
+  display:flex;
+  justify-content:flex-end;
+  gap:8px;
+  margin-top:14px;
+}
+
+.primary{
+  border:0;
+  background:var(--blue);
+  color:#fff;
+  padding:11px 22px;
+  border-radius:11px;
+  font-weight:700;
+}
+
+.primary:hover{
+  background:var(--blue-dark);
+}
+
+.secondary{
+  border:0;
+  background:#eef2f6;
+  padding:11px 18px;
+  border-radius:11px;
+}
+
+/* =========================
+   THREE DOT MENU
+========================= */
+
+.menu{
+  position:fixed;
+  z-index:150;
+  background:#fff;
+  border:1px solid var(--line);
+  box-shadow:0 15px 45px rgba(0,0,0,.18);
+  border-radius:14px;
+  padding:7px;
+  display:none;
+  min-width:250px;
+}
+
+.menu.show{
+  display:block;
+}
+
+.menu button{
+  display:block;
+  width:100%;
+  border:0;
+  background:transparent;
+  text-align:left;
+  padding:11px;
+  border-radius:9px;
+}
+
+.menu button:hover{
+  background:#f2f4f7;
+}
+
+.danger{
+  color:var(--danger);
+}
+
+/* =========================
+   TOAST
+========================= */
+
+.toast{
+  position:fixed;
+  left:50%;
+  bottom:20px;
+  transform:translateX(-50%);
+  background:#111827;
+  color:#fff;
+  padding:12px 16px;
+  border-radius:12px;
+  z-index:200;
+  display:none;
+  max-width:90%;
+  text-align:center;
+}
+
+.toast.show{
+  display:block;
+}
+
+/* =========================
+   EMPTY STATE
+========================= */
 
 .empty{
+  padding:35px 20px;
   text-align:center;
-  color:#64748b;
-  padding:30px 10px;
+  color:var(--muted);
 }
 
-.hidden{
-  display:none!important;
-}
+/* =========================
+   MOBILE
+========================= */
 
-@media(max-width:600px){
-  .header{
-    padding:0 12px;
+@media(max-width:900px){
+
+  .layout{
+    grid-template-columns:1fr;
+    max-width:680px;
   }
 
-  .container{
-    margin-top:10px;
-    padding:0 7px;
+  .sidebar,
+  .right{
+    display:none;
+  }
+
+  .topbar{
+    position:sticky;
+  }
+
+  .nav{
+    gap:0;
+  }
+
+  .nav button{
+    padding:9px;
+  }
+
+  .search{
+    display:none;
+  }
+}
+
+@media(max-width:520px){
+
+  .layout{
+    padding:9px;
   }
 
   .card{
-    border-radius:12px;
+    border-radius:13px;
   }
 
-  .logo{
-    font-size:24px;
+  .topbar{
+    height:56px;
+  }
+
+  .brand{
+    font-size:23px;
+  }
+
+  .nav button{
+    font-size:18px;
+    padding:7px;
+  }
+
+  .actions button{
+    font-size:13px;
+    padding:9px 2px;
+  }
+
+  .sheet{
+    padding:15px;
+  }
+
+  .setting{
+    align-items:flex-start;
+    flex-direction:column;
+  }
+
+  .setting select,
+  .setting input{
+    max-width:none;
+    width:100%;
   }
 }
 </style>
@@ -353,772 +823,2259 @@ textarea:focus{
 
 <body>
 
-<header class="header">
-  <div class="logo">Zemivo</div>
+<!-- =========================
+     TOP BAR
+========================= -->
 
-  <div class="header-actions">
-    <button class="icon-btn" title="Search">🔍</button>
-    <button class="icon-btn" title="Messages">💬</button>
-    <button class="icon-btn" title="Notifications">🔔</button>
-  </div>
+<header class="topbar">
+
+  <div class="brand">Zemivo</div>
+
+  <input
+    id="search"
+    class="search"
+    placeholder="Search Zemivo"
+  >
+
+  <nav class="nav">
+
+    <button
+      title="Home"
+      onclick="goHome()">
+      ⌂
+    </button>
+
+    <button
+      title="Reels"
+      onclick="toast('Reels module')">
+      ▣
+    </button>
+
+    <button
+      title="Friends"
+      onclick="toast('Friends')">
+      ♧
+    </button>
+
+    <button
+      title="Marketplace"
+      onclick="toast('Marketplace')">
+      🛍
+    </button>
+
+    <button
+      title="Notifications"
+      onclick="toast('Notifications')">
+      🔔
+    </button>
+
+    <button
+      title="Profile"
+      onclick="toast('Profile')">
+      ◉
+    </button>
+
+  </nav>
+
 </header>
 
-<main class="container">
 
-  <section class="card composer">
+<main class="layout">
 
-    <div class="composer-top">
-      <div class="avatar">Z</div>
+<!-- =========================
+     LEFT SIDEBAR
+========================= -->
 
-      <textarea
-        id="postText"
-        placeholder="What's on your mind?"
-      ></textarea>
+<aside class="sidebar panel">
+
+  <button
+    class="sidebtn"
+    onclick="goHome()">
+    🏠 Home
+  </button>
+
+  <button
+    class="sidebtn"
+    onclick="toast('Friends')">
+    👥 Friends
+  </button>
+
+  <button
+    class="sidebtn"
+    onclick="toast('Groups')">
+    👨‍👩‍👧 Groups
+  </button>
+
+  <button
+    class="sidebtn"
+    onclick="toast('Saved posts')">
+    🔖 Saved
+  </button>
+
+  <button
+    class="sidebtn"
+    onclick="toast('Marketplace')">
+    🛍️ Marketplace
+  </button>
+
+  <button
+    class="sidebtn"
+    onclick="toast('Messenger')">
+    💬 Messenger
+  </button>
+
+  <button
+    class="sidebtn"
+    onclick="toast('Notifications')">
+    🔔 Notifications
+  </button>
+
+  <button
+    class="sidebtn"
+    onclick="toast('Settings')">
+    ⚙️ Settings
+  </button>
+
+  <button
+    class="sidebtn admin-only"
+    onclick="adminBroadcast()">
+    📢 Admin broadcast
+  </button>
+
+</aside>
+
+
+<!-- =========================
+     MAIN FEED
+========================= -->
+
+<section>
+
+  <!-- MAIN MIND BOX -->
+
+  <div class="composer card">
+
+    <div class="compose-row">
+
+      <div
+        class="avatar"
+        id="meAvatar">
+        Z
+      </div>
+
+      <div
+        class="mind"
+        onclick="openComposer()">
+        What's on your mind?
+      </div>
+
     </div>
 
-    <div class="photo-preview" id="photoPreview">
-      <img id="previewImage" alt="Selected photo">
-    </div>
+    <!--
+      IMPORTANT:
+      Main posting options remain INSIDE
+      the same composer card.
+    -->
 
-    <div class="composer-actions">
-
-      <label class="photo-label" for="photoInput">
-        🖼️ Photo
-      </label>
-
-      <input
-        id="photoInput"
-        type="file"
-        accept="image/*"
-      >
+    <div class="inside-options">
 
       <button
-        class="post-btn"
-        id="postButton"
-      >
-        Post
+        class="inside-option"
+        onclick="openComposer('photo')">
+
+        <div class="option-icon">
+          🖼️
+        </div>
+
+        <div>
+          <b>Photo / Video</b>
+          <div class="small">
+            Share a photo or video
+          </div>
+        </div>
+
+      </button>
+
+
+      <button
+        class="inside-option"
+        onclick="openComposer('live')">
+
+        <div class="option-icon">
+          🔴
+        </div>
+
+        <div>
+          <b>Live</b>
+          <div class="small">
+            Start a live session
+          </div>
+        </div>
+
+      </button>
+
+
+      <button
+        class="inside-option"
+        onclick="openComposer('feeling')">
+
+        <div class="option-icon">
+          😊
+        </div>
+
+        <div>
+          <b>Feeling / Activity</b>
+          <div class="small">
+            Share how you feel
+          </div>
+        </div>
+
+      </button>
+
+
+      <button
+        class="inside-option"
+        onclick="openComposer('location')">
+
+        <div class="option-icon">
+          📍
+        </div>
+
+        <div>
+          <b>Location</b>
+          <div class="small">
+            Add a location
+          </div>
+        </div>
+
       </button>
 
     </div>
 
-  </section>
+  </div>
 
-  <section id="feed"></section>
+
+  <!-- FEED -->
+
+  <div id="feed"></div>
+
+</section>
+
+
+<!-- =========================
+     RIGHT SIDEBAR
+========================= -->
+
+<aside class="right">
+
+  <div class="card">
+
+    <b>Zemivo</b>
+
+    <p class="small">
+      Social platform prototype.
+      Posts are saved locally during testing.
+      Firestore synchronization is prepared
+      for the next backend phase.
+    </p>
+
+  </div>
+
+
+  <div class="card">
+
+    <b>Quick tools</b>
+
+    <div class="mini">
+      💰
+      <span>Coin & Creator</span>
+    </div>
+
+    <div class="mini">
+      🔗
+      <span>Affiliate</span>
+    </div>
+
+    <div class="mini">
+      🚚
+      <span>Drop-shipping</span>
+    </div>
+
+    <div class="mini">
+      🛡️
+      <span>Safety</span>
+    </div>
+
+  </div>
+
+</aside>
 
 </main>
 
-<script>
 
-let posts = [];
+<!-- ==================================================
+     POST CREATOR
+================================================== -->
 
-let currentPhoto = "";
+<div
+  id="composerModal"
+  class="modal">
 
-const postText =
-  document.getElementById("postText");
+  <div class="sheet">
 
-const photoInput =
-  document.getElementById("photoInput");
-
-const photoPreview =
-  document.getElementById("photoPreview");
-
-const previewImage =
-  document.getElementById("previewImage");
-
-const postButton =
-  document.getElementById("postButton");
-
-const feed =
-  document.getElementById("feed");
+    <div class="grab"></div>
 
 
-photoInput.addEventListener("change", function(){
+    <div class="modal-title">
 
-  const file = this.files[0];
+      <h2 id="composerTitle">
+        Create post
+      </h2>
+
+      <button
+        class="close"
+        onclick="closeModal('composerModal')">
+        ×
+      </button>
+
+    </div>
+
+
+    <!-- STEP INDICATOR -->
+
+    <div class="stepbar">
+
+      <span
+        id="s1"
+        class="on">
+      </span>
+
+      <span
+        id="s2">
+      </span>
+
+    </div>
+
+
+    <!-- ==================================================
+         STEP 1
+    ================================================== -->
+
+    <section id="composeStep1">
+
+      <div class="writer-user">
+
+        <div class="avatar">
+          Z
+        </div>
+
+        <div>
+
+          <b>Zemivo User</b>
+
+          <div class="small">
+            Create something for your audience
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <textarea
+        id="postText"
+        class="composer-large"
+        placeholder="What's on your mind?">
+      </textarea>
+
+
+      <!-- TAG OPTIONS -->
+
+      <div class="chips">
+
+        <button
+          class="chip"
+          onclick="insertText('@')">
+          @ Mention
+        </button>
+
+        <button
+          class="chip"
+          onclick="insertText('#')">
+          # Hashtag
+        </button>
+
+        <button
+          class="chip"
+          onclick="addLocation()">
+          📍 Location
+        </button>
+
+        <button
+          class="chip"
+          onclick="addGroup()">
+          👥 Group
+        </button>
+
+        <button
+          class="chip"
+          onclick="addProduct()">
+          🔗 Product
+        </button>
+
+      </div>
+
+
+      <!-- MEDIA -->
+
+      <div
+        id="mediaPreview"
+        class="media-preview">
+
+        <button
+          class="remove-media"
+          onclick="clearMedia()">
+          ×
+        </button>
+
+        <img
+          id="previewImg"
+          alt="Preview">
+
+      </div>
+
+
+      <input
+        id="galleryInput"
+        type="file"
+        accept="image/*,video/*"
+        hidden
+        onchange="handleMedia(event)">
+
+
+      <!-- INSIDE WRITER TOOLS -->
+
+      <div class="inside-options">
+
+        <button
+          class="inside-option"
+          onclick="document.getElementById('galleryInput').click()">
+
+          <div class="option-icon">
+            🖼️
+          </div>
+
+          <div>
+            <b>Photo / Video</b>
+            <div class="small">
+              Add media to your post
+            </div>
+          </div>
+
+        </button>
+
+
+        <button
+          class="inside-option"
+          onclick="addGif()">
+
+          <div class="option-icon">
+            GIF
+          </div>
+
+          <div>
+            <b>GIF</b>
+            <div class="small">
+              Add a GIF
+            </div>
+          </div>
+
+        </button>
+
+
+        <button
+          class="inside-option"
+          onclick="addFeeling()">
+
+          <div class="option-icon">
+            😊
+          </div>
+
+          <div>
+            <b>Feeling / Activity</b>
+            <div class="small">
+              Add a feeling
+            </div>
+          </div>
+
+        </button>
+
+
+        <button
+          class="inside-option"
+          onclick="addLocation()">
+
+          <div class="option-icon">
+            📍
+          </div>
+
+          <div>
+            <b>Location</b>
+            <div class="small">
+              Add your location
+            </div>
+          </div>
+
+        </button>
+
+      </div>
+
+
+      <!-- NEXT -->
+
+      <div class="nextbar">
+
+        <button
+          class="primary"
+          onclick="nextPostStep()">
+          Next
+        </button>
+
+      </div>
+
+    </section>
+
+
+    <!-- ==================================================
+         STEP 2
+    ================================================== -->
+
+    <section
+      id="composeStep2"
+      class="settings">
+
+      <h3>
+        Post settings
+      </h3>
+
+
+      <div class="setting">
+
+        <div>
+          <b>Post audience</b>
+
+          <div class="small">
+            Who can see this post?
+          </div>
+
+        </div>
+
+        <select id="audience">
+
+          <option>
+            Public
+          </option>
+
+          <option>
+            Friends
+          </option>
+
+          <option>
+            Only me
+          </option>
+
+        </select>
+
+      </div>
+
+
+      <div class="setting">
+
+        <div>
+          <b>Who can comment</b>
+
+          <div class="small">
+            Choose who may comment
+          </div>
+
+        </div>
+
+        <select id="comments">
+
+          <option>
+            Public
+          </option>
+
+          <option>
+            Friends
+          </option>
+
+          <option>
+            Off
+          </option>
+
+        </select>
+
+      </div>
+
+
+      <div class="setting">
+
+        <div>
+
+          <b>Share to Story</b>
+
+          <div class="small">
+            Add this post to your story
+          </div>
+
+        </div>
+
+        <button
+          id="storyToggle"
+          class="toggle"
+          onclick="toggle(this)">
+        </button>
+
+      </div>
+
+
+      <div class="setting">
+
+        <div>
+
+          <b>Monetization</b>
+
+          <div class="small">
+            Creator monetization tools
+          </div>
+
+        </div>
+
+        <button
+          class="toggle"
+          onclick="toggle(this)">
+        </button>
+
+      </div>
+
+
+      <div class="setting">
+
+        <div>
+
+          <b>AI Label</b>
+
+          <div class="small">
+            Label realistic AI content
+          </div>
+
+        </div>
+
+        <button
+          class="toggle"
+          onclick="toggle(this)">
+        </button>
+
+      </div>
+
+
+      <div class="setting">
+
+        <div>
+
+          <b>Affiliate product</b>
+
+          <div class="small">
+            Attach product link
+          </div>
+
+        </div>
+
+        <button
+          class="secondary"
+          onclick="addProduct()">
+          Add
+        </button>
+
+      </div>
+
+
+      <div class="setting">
+
+        <div>
+
+          <b>Group</b>
+
+          <div class="small">
+            Publish to a group
+          </div>
+
+        </div>
+
+        <button
+          class="secondary"
+          onclick="addGroup()">
+          Choose
+        </button>
+
+      </div>
+
+
+      <div
+        class="nextbar"
+        style="justify-content:space-between">
+
+        <button
+          class="secondary"
+          onclick="previousPostStep()">
+          Back
+        </button>
+
+        <button
+          class="primary"
+          onclick="publishPost()">
+          Share
+        </button>
+
+      </div>
+
+    </section>
+
+  </div>
+
+</div>
+
+
+<!-- ==================================================
+     THREE DOT MENU
+================================================== -->
+
+<div
+  id="postMenu"
+  class="menu">
+
+  <button onclick="editSelected()">
+    ✏️ Edit post
+  </button>
+
+  <button onclick="saveSelected()">
+    🔖 Save post
+  </button>
+
+  <button onclick="manageProductSelected()">
+    🔗 Manage product link
+  </button>
+
+  <button onclick="commentSettingsSelected()">
+    💬 Who can comment
+  </button>
+
+  <button onclick="privacySelected()">
+    🌍 Edit privacy
+  </button>
+
+  <button onclick="archiveSelected()">
+    🗄️ Move to archive
+  </button>
+
+  <button
+    onclick="trashSelected()"
+    class="danger">
+    🗑️ Delete / Move to trash
+  </button>
+
+  <button onclick="toggleNotificationsSelected()">
+    🔕 Toggle notifications
+  </button>
+
+  <button onclick="copySelectedLink()">
+    📋 Copy link
+  </button>
+
+  <button onclick="sparkSelected()">
+    ✨ Spark
+  </button>
+
+  <button
+    class="admin-only"
+    onclick="adminBoostSelected()">
+    📢 Admin broadcast
+  </button>
+
+</div>
+
+
+<div
+  id="toast"
+  class="toast">
+</div>
+
+
+<!-- ==================================================
+     FIREBASE + APPLICATION
+================================================== -->
+
+<script type="module">
+
+/* ==================================================
+   FIREBASE IMPORTS
+================================================== */
+
+import {
+  initializeApp
+} from
+"https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
+
+
+import {
+  getAuth,
+  onAuthStateChanged
+} from
+"https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
+
+
+import {
+  getFirestore,
+  collection,
+  doc,
+  setDoc,
+  serverTimestamp
+} from
+"https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
+
+
+/* ==================================================
+   FIREBASE CONFIG
+================================================== */
+
+const firebaseConfig = {
+
+  apiKey:
+    "AIzaSyAxJUFBWm2fa0g3oxUWWqdfSTEAc-bRgfI",
+
+  authDomain:
+    "zemivo.firebaseapp.com",
+
+  projectId:
+    "zemivo",
+
+  storageBucket:
+    "zemivo.firebasestorage.app",
+
+  messagingSenderId:
+    "195335939691",
+
+  appId:
+    "1:195335939691:web:5fa5c62c53d0c0aefe732e",
+
+  measurementId:
+    "G-GNHH5S4H09"
+
+};
+
+
+const app =
+  initializeApp(firebaseConfig);
+
+
+const auth =
+  getAuth(app);
+
+
+const db =
+  getFirestore(app);
+
+
+/* ==================================================
+   APPLICATION STATE
+================================================== */
+
+const KEY =
+  "zemivo_test_posts_v8";
+
+
+let posts =
+  JSON.parse(
+    localStorage.getItem(KEY) || "[]"
+  );
+
+
+let selectedPostId =
+  null;
+
+
+let selectedMedia =
+  "";
+
+
+let selectedProduct =
+  "";
+
+
+let selectedGroup =
+  "";
+
+
+let selectedLocation =
+  "";
+
+
+let editingId =
+  null;
+
+
+let currentUser =
+  null;
+
+
+/* ==================================================
+   AUTH STATE
+================================================== */
+
+onAuthStateChanged(
+  auth,
+  user => {
+
+    currentUser =
+      user || null;
+
+    if(user){
+
+      const name =
+        user.displayName || "Z";
+
+      document.getElementById(
+        "meAvatar"
+      ).textContent =
+        name.charAt(0).toUpperCase();
+
+    }
+
+  }
+);
+
+
+/* ==================================================
+   BASIC HELPERS
+================================================== */
+
+function uid(){
+
+  return Date.now().toString(36)
+    +
+    Math.random()
+      .toString(36)
+      .slice(2,9);
+
+}
+
+
+function saveLocal(){
+
+  localStorage.setItem(
+    KEY,
+    JSON.stringify(posts)
+  );
+
+}
+
+
+function find(id){
+
+  return posts.find(
+    p => p.id === id
+  );
+
+}
+
+
+function esc(value){
+
+  return String(value ?? "")
+    .replace(
+      /[&<>"']/g,
+      m => ({
+        "&":"&amp;",
+        "<":"&lt;",
+        ">":"&gt;",
+        '"':"&quot;",
+        "'":"&#039;"
+      }[m])
+    );
+
+}
+
+
+/* ==================================================
+   TEXT FORMAT
+================================================== */
+
+function formatText(text){
+
+  return esc(text)
+
+    .replace(
+      /(^|[\s])(@[A-Za-z0-9_\u0980-\u09ff]+)/g,
+      '$1<span class="tag">$2</span>'
+    )
+
+    .replace(
+      /(^|[\s])(#[A-Za-z0-9_\u0980-\u09ff]+)/g,
+      '$1<span class="tag">$2</span>'
+    );
+
+}
+
+
+/* ==================================================
+   TOAST
+================================================== */
+
+window.toast =
+function(text){
+
+  const el =
+    document.getElementById(
+      "toast"
+    );
+
+  el.textContent =
+    text;
+
+  el.classList.add(
+    "show"
+  );
+
+  clearTimeout(
+    window.__toastTimer
+  );
+
+  window.__toastTimer =
+    setTimeout(
+      () => {
+        el.classList.remove(
+          "show"
+        );
+      },
+      2200
+    );
+
+};
+
+
+/* ==================================================
+   MODALS
+================================================== */
+
+window.openModal =
+function(id){
+
+  document
+    .getElementById(id)
+    .classList.add("show");
+
+};
+
+
+window.closeModal =
+function(id){
+
+  document
+    .getElementById(id)
+    .classList.remove("show");
+
+};
+
+
+/* ==================================================
+   HOME
+================================================== */
+
+window.goHome =
+function(){
+
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
+
+};
+
+
+/* ==================================================
+   OPEN COMPOSER
+================================================== */
+
+window.openComposer =
+function(kind=""){
+
+  editingId =
+    null;
+
+  selectedMedia =
+    "";
+
+  selectedProduct =
+    "";
+
+  selectedGroup =
+    "";
+
+  selectedLocation =
+    "";
+
+
+  document.getElementById(
+    "postText"
+  ).value = "";
+
+
+  document.getElementById(
+    "mediaPreview"
+  ).classList.remove(
+    "show"
+  );
+
+
+  document.getElementById(
+    "galleryInput"
+  ).value = "";
+
+
+  document.getElementById(
+    "composeStep1"
+  ).style.display =
+    "block";
+
+
+  document.getElementById(
+    "composeStep2"
+  ).classList.remove(
+    "show"
+  );
+
+
+  document.getElementById(
+    "s1"
+  ).classList.add("on");
+
+
+  document.getElementById(
+    "s2"
+  ).classList.remove("on");
+
+
+  const title =
+    document.getElementById(
+      "composerTitle"
+    );
+
+
+  if(kind === "photo"){
+
+    title.textContent =
+      "Create photo / video post";
+
+  }
+
+  else if(kind === "live"){
+
+    title.textContent =
+      "Create live post";
+
+    toast(
+      "Live module is prepared for the next phase."
+    );
+
+  }
+
+  else{
+
+    title.textContent =
+      "Create post";
+
+  }
+
+
+  openModal(
+    "composerModal"
+  );
+
+};
+
+
+/* ==================================================
+   TEXT TOOLS
+================================================== */
+
+window.insertText =
+function(text){
+
+  const area =
+    document.getElementById(
+      "postText"
+    );
+
+  area.focus();
+
+  area.value +=
+    text;
+
+};
+
+
+window.addLocation =
+function(){
+
+  const value =
+    prompt(
+      "Location name"
+    );
+
+  if(value){
+
+    selectedLocation =
+      value.trim();
+
+    toast(
+      "Location added"
+    );
+
+  }
+
+};
+
+
+window.addGroup =
+function(){
+
+  const value =
+    prompt(
+      "Group name"
+    );
+
+  if(value){
+
+    selectedGroup =
+      value.trim();
+
+    toast(
+      "Group added"
+    );
+
+  }
+
+};
+
+
+window.addProduct =
+function(){
+
+  const value =
+    prompt(
+      "Product / Affiliate URL"
+    );
+
+  if(value){
+
+    selectedProduct =
+      value.trim();
+
+    toast(
+      "Product link attached"
+    );
+
+  }
+
+};
+
+
+window.addFeeling =
+function(){
+
+  const area =
+    document.getElementById(
+      "postText"
+    );
+
+  area.value +=
+    " 😊";
+
+  area.focus();
+
+};
+
+
+window.addGif =
+function(){
+
+  const area =
+    document.getElementById(
+      "postText"
+    );
+
+  area.value +=
+    " [GIF]";
+
+  area.focus();
+
+  toast(
+    "GIF placeholder added"
+  );
+
+};
+
+
+/* ==================================================
+   MEDIA
+================================================== */
+
+window.handleMedia =
+function(event){
+
+  const file =
+    event.target.files[0];
 
   if(!file){
-    currentPhoto = "";
-    photoPreview.style.display = "none";
     return;
   }
 
-  const reader = new FileReader();
 
-  reader.onload = function(e){
+  if(
+    file.size >
+    5 * 1024 * 1024
+  ){
 
-    currentPhoto = e.target.result;
+    toast(
+      "For testing, please use a file under 5 MB."
+    );
 
-    previewImage.src = currentPhoto;
+    return;
 
-    photoPreview.style.display = "block";
-
-  };
-
-  reader.readAsDataURL(file);
-
-});
+  }
 
 
-postButton.addEventListener("click", function(){
+  if(
+    !file.type.startsWith("image/")
+  ){
+
+    toast(
+      "Image preview is enabled in this test version."
+    );
+
+    return;
+
+  }
+
+
+  const reader =
+    new FileReader();
+
+
+  reader.onload =
+    function(){
+
+      selectedMedia =
+        reader.result;
+
+
+      document.getElementById(
+        "previewImg"
+      ).src =
+        selectedMedia;
+
+
+      document.getElementById(
+        "mediaPreview"
+      ).classList.add(
+        "show"
+      );
+
+    };
+
+
+  reader.readAsDataURL(
+    file
+  );
+
+};
+
+
+window.clearMedia =
+function(){
+
+  selectedMedia =
+    "";
+
+  document.getElementById(
+    "previewImg"
+  ).src =
+    "";
+
+  document.getElementById(
+    "mediaPreview"
+  ).classList.remove(
+    "show"
+  );
+
+  document.getElementById(
+    "galleryInput"
+  ).value =
+    "";
+
+};
+
+
+/* ==================================================
+   TOGGLES
+================================================== */
+
+window.toggle =
+function(button){
+
+  button.classList.toggle(
+    "on"
+  );
+
+};
+
+
+/* ==================================================
+   NEXT / BACK
+================================================== */
+
+window.nextPostStep =
+function(){
+
+  document.getElementById(
+    "composeStep1"
+  ).style.display =
+    "none";
+
+
+  document.getElementById(
+    "composeStep2"
+  ).classList.add(
+    "show"
+  );
+
+
+  document.getElementById(
+    "s1"
+  ).classList.remove(
+    "on"
+  );
+
+
+  document.getElementById(
+    "s2"
+  ).classList.add(
+    "on"
+  );
+
+};
+
+
+window.previousPostStep =
+function(){
+
+  document.getElementById(
+    "composeStep2"
+  ).classList.remove(
+    "show"
+  );
+
+
+  document.getElementById(
+    "composeStep1"
+  ).style.display =
+    "block";
+
+
+  document.getElementById(
+    "s2"
+  ).classList.remove(
+    "on"
+  );
+
+
+  document.getElementById(
+    "s1"
+  ).classList.add(
+    "on"
+  );
+
+};
+
+
+/* ==================================================
+   FIRESTORE SYNC
+================================================== */
+
+async function syncPostToFirestore(post){
+
+  if(!currentUser){
+
+    return;
+
+  }
+
+
+  try{
+
+    await setDoc(
+
+      doc(
+        db,
+        "posts",
+        post.id
+      ),
+
+      {
+        id:post.id,
+
+        author:post.author,
+
+        authorUid:
+          currentUser.uid,
+
+        text:post.text || "",
+
+        product:
+          post.product || "",
+
+        group:
+          post.group || "",
+
+        location:
+          post.location || "",
+
+        audience:
+          post.audience || "Public",
+
+        comments:
+          post.comments || "Public",
+
+        likes:
+          post.likes || 0,
+
+        shares:
+          post.shares || 0,
+
+        sparks:
+          post.sparks || 0,
+
+        createdAt:
+          serverTimestamp(),
+
+        updatedAt:
+          serverTimestamp()
+      },
+
+      {
+        merge:true
+      }
+
+    );
+
+  }
+
+  catch(error){
+
+    console.warn(
+      "Firestore sync waiting for Security Rules:",
+      error
+    );
+
+  }
+
+}
+
+
+/* ==================================================
+   PUBLISH
+================================================== */
+
+window.publishPost =
+async function(){
 
   const text =
-    postText.value.trim();
+    document.getElementById(
+      "postText"
+    ).value.trim();
 
-  if(!text && !currentPhoto){
-    alert("Please write something or select a photo.");
+
+  if(
+    !text &&
+    !selectedMedia
+  ){
+
+    toast(
+      "Write something or add a photo first."
+    );
+
     return;
+
   }
+
+
+  const oldPost =
+    editingId
+      ? find(editingId)
+      : null;
+
 
   const post = {
 
-    id: Date.now(),
+    id:
+      editingId ||
+      uid(),
 
-    name: "You",
+    author:
+      currentUser?.displayName ||
+      "Zemivo User",
 
-    text: text,
+    authorUid:
+      currentUser?.uid ||
+      "local-test-user",
 
-    photo: currentPhoto,
+    text:
+      text,
 
-    likes: 0,
+    media:
+      selectedMedia,
 
-    liked: false,
+    product:
+      selectedProduct,
 
-    views: 0,
+    group:
+      selectedGroup,
 
-    comments: []
+    location:
+      selectedLocation,
+
+    audience:
+      document.getElementById(
+        "audience"
+      ).value,
+
+    comments:
+      document.getElementById(
+        "comments"
+      ).value,
+
+    createdAt:
+      oldPost?.createdAt ||
+      Date.now(),
+
+    likes:
+      oldPost?.likes || 0,
+
+    commentsList:
+      oldPost?.commentsList || [],
+
+    shares:
+      oldPost?.shares || 0,
+
+    sparks:
+      oldPost?.sparks || 0,
+
+    liked:
+      oldPost?.liked || false,
+
+    sparked:
+      oldPost?.sparked || false,
+
+    saved:
+      oldPost?.saved || false,
+
+    archived:
+      false,
+
+    trashed:
+      false,
+
+    broadcast:
+      oldPost?.broadcast || false
 
   };
 
-  posts.unshift(post);
 
-  postText.value = "";
+  if(editingId){
 
-  photoInput.value = "";
+    const index =
+      posts.findIndex(
+        p => p.id === editingId
+      );
 
-  currentPhoto = "";
+    if(index >= 0){
 
-  photoPreview.style.display = "none";
+      posts[index] =
+        post;
 
-  renderFeed();
+    }
 
-});
+  }
+
+  else{
+
+    posts.unshift(
+      post
+    );
+
+  }
 
 
-function renderFeed(){
+  saveLocal();
 
-  feed.innerHTML = "";
+  render();
 
-  if(posts.length === 0){
+  closeModal(
+    "composerModal"
+  );
+
+
+  toast(
+    editingId
+      ? "Post updated successfully"
+      : "Post shared successfully"
+  );
+
+
+  await syncPostToFirestore(
+    post
+  );
+
+
+  editingId =
+    null;
+
+};
+
+
+/* ==================================================
+   RENDER
+================================================== */
+
+function render(){
+
+  const feed =
+    document.getElementById(
+      "feed"
+    );
+
+
+  const query =
+    document.getElementById(
+      "search"
+    ).value
+      .trim()
+      .toLowerCase();
+
+
+  const visible =
+    posts
+
+      .filter(
+        p =>
+          !p.trashed &&
+          !p.archived
+      )
+
+      .filter(
+        p => {
+
+          const text =
+            (
+              p.text +
+              " " +
+              p.group +
+              " " +
+              p.location
+            )
+            .toLowerCase();
+
+          return text.includes(
+            query
+          );
+
+        }
+
+      );
+
+
+  if(
+    !visible.length
+  ){
 
     feed.innerHTML =
-      '<div class="card empty">No posts yet. Create the first post.</div>';
+      `
+      <div class="card empty">
+
+        <div style="font-size:40px">
+          📝
+        </div>
+
+        <h3>No posts yet</h3>
+
+        <div>
+          Create your first Zemivo post.
+        </div>
+
+      </div>
+      `;
 
     return;
 
   }
 
-  posts.forEach(function(post){
 
-    const card =
-      document.createElement("article");
-
-    card.className = "card";
-
-    post.views++;
-
-    card.innerHTML = `
-
-      <div class="post-header">
-
-        <div class="avatar">
-          ${escapeHTML(post.name.charAt(0))}
-        </div>
-
-        <div class="post-info">
-
-          <div class="post-name">
-            ${escapeHTML(post.name)}
-          </div>
-
-          <div class="post-time">
-            Just now
-          </div>
-
-        </div>
-
-        <button
-          class="more-btn"
-          onclick="postMenu(${post.id})"
-        >
-          ⋯
-        </button>
-
-      </div>
-
-      ${
-        post.text
-        ?
-        `<div class="post-text">
-          ${escapeHTML(post.text)}
-        </div>`
-        :
-        ""
-      }
-
-      ${
-        post.photo
-        ?
-        `<img
-          class="post-image"
-          src="${post.photo}"
-          alt="Post image"
-        >`
-        :
-        ""
-      }
-
-      <div class="stats">
-
-        <span>
-          ❤️ ${post.likes}
-        </span>
-
-        <span>
-          💬 ${countAllComments(post)}
-          &nbsp;&nbsp;
-          👁️ ${post.views}
-        </span>
-
-      </div>
-
-      <div class="post-actions">
-
-        <button
-          class="${post.liked ? "liked" : ""}"
-          onclick="toggleLike(${post.id})"
-        >
-          ❤️ Like
-        </button>
-
-        <button
-          onclick="focusComment(${post.id})"
-        >
-          💬 Comment
-        </button>
-
-        <button
-          onclick="sharePost(${post.id})"
-        >
-          ↗ Share
-        </button>
-
-      </div>
-
-      <div class="comments">
-
-        <div class="comment-form">
-
-          <input
-            id="comment-${post.id}"
-            placeholder="Write a comment..."
-          >
-
-          <button
-            onclick="addComment(${post.id})"
-          >
-            Send
-          </button>
-
-        </div>
-
-        <div id="comments-${post.id}">
-          ${renderComments(post)}
-        </div>
-
-      </div>
-    `;
-
-    feed.appendChild(card);
-
-  });
-
-}
-
-
-function toggleLike(postId){
-
-  const post =
-    posts.find(p => p.id === postId);
-
-  if(!post) return;
-
-  post.liked = !post.liked;
-
-  post.likes +=
-    post.liked ? 1 : -1;
-
-  renderFeed();
-
-}
-
-
-function addComment(postId){
-
-  const input =
-    document.getElementById(
-      `comment-${postId}`
-    );
-
-  if(!input) return;
-
-  const text =
-    input.value.trim();
-
-  if(!text) return;
-
-  const post =
-    posts.find(p => p.id === postId);
-
-  if(!post) return;
-
-  post.comments.push({
-
-    id: Date.now(),
-
-    author: "You",
-
-    text: text,
-
-    likes: 0,
-
-    liked: false,
-
-    replies: []
-
-  });
-
-  renderFeed();
-
-}
-
-
-function addReply(postId, commentId){
-
-  const input =
-    document.getElementById(
-      `reply-${commentId}`
-    );
-
-  if(!input) return;
-
-  const text =
-    input.value.trim();
-
-  if(!text) return;
-
-  const post =
-    posts.find(p => p.id === postId);
-
-  if(!post) return;
-
-  const comment =
-    findComment(post.comments, commentId);
-
-  if(!comment) return;
-
-  comment.replies.push({
-
-    id: Date.now(),
-
-    author: "You",
-
-    text: text,
-
-    likes: 0,
-
-    liked: false,
-
-    replies: []
-
-  });
-
-  renderFeed();
-
-}
-
-
-function findComment(comments, id){
-
-  for(const comment of comments){
-
-    if(comment.id === id){
-      return comment;
-    }
-
-    const found =
-      findComment(comment.replies || [], id);
-
-    if(found){
-      return found;
-    }
-
-  }
-
-  return null;
-
-}
-
-
-function renderComments(post){
-
-  return post.comments
-    .map(function(comment){
-
-      return renderComment(
-        post.id,
-        comment,
-        0
-      );
-
-    })
-    .join("");
-
-}
-
-
-function renderComment(
-  postId,
-  comment,
-  level
-){
-
-  const replies =
-    (comment.replies || [])
-      .map(function(reply){
-
-        return renderComment(
-          postId,
-          reply,
-          level + 1
-        );
-
-      })
+  feed.innerHTML =
+    visible
+      .map(
+        postHTML
+      )
       .join("");
+
+}
+
+
+/* ==================================================
+   POST HTML
+================================================== */
+
+function postHTML(p){
+
+  const comments =
+    (p.commentsList || [])
+
+      .map(
+        c => `
+
+        <div class="comment">
+
+          <div class="avatar">
+            ${esc(
+              (c.name || "U")
+                .charAt(0)
+                .toUpperCase()
+            )}
+          </div>
+
+          <div class="bubble">
+
+            <b>
+              ${esc(c.name)}
+            </b>
+
+            <br>
+
+            ${esc(c.text)}
+
+          </div>
+
+        </div>
+
+        `
+      )
+      .join("");
+
+
+  const media =
+    p.media
+
+      ? `
+        <img
+          class="post-img"
+          src="${p.media}"
+          alt="Zemivo post image">
+        `
+
+      : "";
+
+
+  const extras = [
+
+    p.location
+      ? `📍 ${esc(p.location)}`
+      : "",
+
+    p.group
+      ? `👥 ${esc(p.group)}`
+      : "",
+
+    p.product
+      ? `🔗 Affiliate`
+      : "",
+
+    p.broadcast
+      ? `📢 Admin broadcast`
+      : ""
+
+  ]
+
+  .filter(Boolean)
+  .join(" · ");
+
 
   return `
 
-    <div
-      class="comment"
-      data-level="${level}"
-    >
+  <article
+    class="post card"
+    id="post-${p.id}">
 
-      <div class="comment-main">
 
-        <div class="avatar">
-          ${escapeHTML(comment.author.charAt(0))}
-        </div>
+    <div class="post-head">
 
-        <div class="comment-body">
+      <div class="avatar">
 
-          <div class="comment-author">
-            ${escapeHTML(comment.author)}
-          </div>
-
-          <div class="comment-text">
-            ${escapeHTML(comment.text)}
-          </div>
-
-        </div>
+        ${esc(
+          (p.author || "Z")
+            .charAt(0)
+            .toUpperCase()
+        )}
 
       </div>
 
-      <div class="comment-tools">
 
-        <button
-          class="${comment.liked ? "active" : ""}"
-          onclick="likeComment(${postId}, ${comment.id})"
-        >
-          ❤️ ${comment.likes}
-        </button>
+      <div class="post-meta">
 
-        <button
-          onclick="editComment(${postId}, ${comment.id})"
-        >
-          ✏️ Edit
-        </button>
+        <div class="post-name">
+          ${esc(p.author)}
+        </div>
 
-        <button
-          onclick="deleteComment(${postId}, ${comment.id})"
-        >
-          🗑️ Delete
-        </button>
+        <div class="post-time">
 
-        <button
-          onclick="showReplyBox(${comment.id})"
-        >
-          ↩ Reply
-        </button>
+          ${new Date(
+            p.createdAt
+          ).toLocaleString()}
 
-      </div>
+          ·
 
-      <div
-        class="reply-area hidden"
-        id="reply-box-${comment.id}"
-      >
-
-        <div class="reply-form">
-
-          <input
-            id="reply-${comment.id}"
-            placeholder="Write a reply..."
-          >
-
-          <button
-            onclick="addReply(${postId}, ${comment.id})"
-          >
-            Send
-          </button>
+          ${esc(
+            p.audience ||
+            "Public"
+          )}
 
         </div>
 
       </div>
 
-      <div class="replies">
-        ${replies}
-      </div>
+
+      <button
+        class="dots"
+        onclick="openPostMenu('${p.id}',event)">
+
+        ⋯
+
+      </button>
 
     </div>
+
+
+    ${
+      p.text
+
+        ? `
+
+        <div class="post-body">
+
+          ${formatText(
+            p.text
+          )}
+
+          ${
+            extras
+
+              ? `
+                <div class="post-extra">
+                  ${extras}
+                </div>
+                `
+
+              : ""
+          }
+
+        </div>
+
+        `
+
+        : extras
+
+          ? `
+            <div class="post-body">
+
+              <div class="post-extra">
+                ${extras}
+              </div>
+
+            </div>
+            `
+
+          : ""
+
+    }
+
+
+    ${media}
+
+
+    <div class="stats">
+
+      <span>
+        ${p.likes || 0} Likes
+      </span>
+
+      <span>
+
+        ${(p.commentsList || []).length}
+        Comments
+
+        ·
+
+        ${p.shares || 0}
+        Shares
+
+        ·
+
+        ${p.sparks || 0}
+        Sparks
+
+      </span>
+
+    </div>
+
+
+    <div class="actions">
+
+      <button
+        class="${p.liked ? "active" : ""}"
+        onclick="likePost('${p.id}')">
+
+        👍 Like
+
+      </button>
+
+
+      <button
+        onclick="focusComment('${p.id}')">
+
+        💬 Comment
+
+      </button>
+
+
+      <button
+        onclick="sharePost('${p.id}')">
+
+        ↗ Share
+
+      </button>
+
+
+      <button
+        class="${p.sparked ? "active" : ""}"
+        onclick="sparkPost('${p.id}')">
+
+        ✨ Spark
+
+      </button>
+
+    </div>
+
+
+    <div class="comments">
+
+      ${comments}
+
+
+      ${
+        p.comments !== "Off"
+
+          ? `
+
+          <div class="comment-input">
+
+            <input
+              id="ci-${p.id}"
+              placeholder="Write a comment..."
+              onkeydown="
+                if(event.key==='Enter')
+                  addComment('${p.id}')
+              ">
+
+            <button
+              onclick="
+                addComment('${p.id}')
+              ">
+
+              Send
+
+            </button>
+
+          </div>
+
+          `
+
+          : `
+
+          <div class="small">
+
+            Comments are turned off.
+
+          </div>
+
+          `
+
+      }
+
+    </div>
+
+
+  </article>
+
   `;
 
 }
 
 
-function likeComment(
-  postId,
-  commentId
-){
+/* ==================================================
+   LIKE
+================================================== */
 
-  const post =
-    posts.find(p => p.id === postId);
+window.likePost =
+function(id){
 
-  if(!post) return;
+  const p =
+    find(id);
 
-  const comment =
-    findComment(post.comments, commentId);
-
-  if(!comment) return;
-
-  comment.liked =
-    !comment.liked;
-
-  comment.likes +=
-    comment.liked ? 1 : -1;
-
-  renderFeed();
-
-}
-
-
-function showReplyBox(commentId){
-
-  const box =
-    document.getElementById(
-      `reply-box-${commentId}`
-    );
-
-  if(!box) return;
-
-  box.classList.toggle("hidden");
-
-}
-
-
-function editComment(
-  postId,
-  commentId
-){
-
-  const post =
-    posts.find(p => p.id === postId);
-
-  if(!post) return;
-
-  const comment =
-    findComment(post.comments, commentId);
-
-  if(!comment) return;
-
-  const newText =
-    prompt(
-      "Edit your comment:",
-      comment.text
-    );
-
-  if(
-    newText === null ||
-    !newText.trim()
-  ){
+  if(!p){
     return;
   }
 
-  comment.text =
-    newText.trim();
 
-  renderFeed();
-
-}
+  p.liked =
+    !p.liked;
 
 
-function deleteComment(
-  postId,
-  commentId
-){
-
-  const post =
-    posts.find(p => p.id === postId);
-
-  if(!post) return;
-
-  const deleted =
-    removeComment(
-      post.comments,
-      commentId
+  p.likes =
+    Math.max(
+      0,
+      (p.likes || 0)
+      +
+      (p.liked ? 1 : -1)
     );
 
-  if(deleted){
-    renderFeed();
+
+  saveLocal();
+
+  render();
+
+};
+
+
+/* ==================================================
+   SPARK
+================================================== */
+
+window.sparkPost =
+function(id){
+
+  const p =
+    find(id);
+
+  if(!p){
+    return;
   }
 
-}
+
+  p.sparked =
+    !p.sparked;
 
 
-function removeComment(
-  comments,
-  id
-){
-
-  const index =
-    comments.findIndex(
-      c => c.id === id
+  p.sparks =
+    Math.max(
+      0,
+      (p.sparks || 0)
+      +
+      (p.sparked ? 1 : -1)
     );
 
-  if(index !== -1){
 
-    comments.splice(index,1);
+  saveLocal();
 
-    return true;
+  render();
 
+};
+
+
+/* ==================================================
+   SHARE
+================================================== */
+
+window.sharePost =
+async function(id){
+
+  const p =
+    find(id);
+
+  if(!p){
+    return;
   }
 
-  for(const comment of comments){
 
-    if(
-      removeComment(
-        comment.replies || [],
-        id
-      )
-    ){
-      return true;
-    }
-
-  }
-
-  return false;
-
-}
+  p.shares =
+    (p.shares || 0)
+    + 1;
 
 
-function countAllComments(post){
+  saveLocal();
 
-  let total = 0;
-
-  function count(list){
-
-    list.forEach(function(item){
-
-      total++;
-
-      if(item.replies){
-        count(item.replies);
-      }
-
-    });
-
-  }
-
-  count(post.comments);
-
-  return total;
-
-}
+  render();
 
 
-function postMenu(postId){
+  const url =
+    location.href.split("#")[0]
+    +
+    "#post-"
+    +
+    id;
 
-  const post =
-    posts.find(p => p.id === postId);
 
-  if(!post) return;
+  try{
 
-  const action =
-    prompt(
-      "Type EDIT to edit this post, or DELETE to delete it."
+    await navigator.clipboard.writeText(
+      url
     );
 
-  if(!action) return;
-
-  if(
-    action.toUpperCase() === "DELETE"
-  ){
-
-    if(
-      confirm(
-        "Delete this post?"
-      )
-    ){
-
-      posts =
-        posts.filter(
-          p => p.id !== postId
-        );
-
-      renderFeed();
-
-    }
+    toast(
+      "Post link copied"
+    );
 
   }
 
-  else if(
-    action.toUpperCase() === "EDIT"
-  ){
+  catch{
 
-    const newText =
-      prompt(
-        "Edit your post:",
-        post.text
-      );
-
-    if(
-      newText !== null
-    ){
-
-      post.text =
-        newText.trim();
-
-      renderFeed();
-
-    }
+    toast(
+      "Share count updated"
+    );
 
   }
 
-}
+};
 
 
-function focusComment(postId){
+/* ==================================================
+   COMMENT
+================================================== */
+
+window.focusComment =
+function(id){
 
   const input =
     document.getElementById(
-      `comment-${postId}`
+      "ci-" + id
     );
 
   if(input){
@@ -1127,58 +3084,883 @@ function focusComment(postId){
 
   }
 
-}
+};
 
 
-function sharePost(postId){
+window.addComment =
+function(id){
 
-  const post =
-    posts.find(p => p.id === postId);
+  const input =
+    document.getElementById(
+      "ci-" + id
+    );
 
-  if(!post) return;
 
-  const shareText =
-    post.text ||
-    "Check out this Zemivo post.";
+  const p =
+    find(id);
+
 
   if(
-    navigator.share
+    !p ||
+    !input
   ){
 
-    navigator.share({
-
-      title:"Zemivo",
-
-      text:shareText
-
-    }).catch(function(){});
+    return;
 
   }
 
-  else{
 
-    alert(
-      "Sharing will be connected to Zemivo's full sharing system later."
+  const text =
+    input.value.trim();
+
+
+  if(!text){
+    return;
+  }
+
+
+  if(!p.commentsList){
+    p.commentsList=[];
+  }
+
+
+  p.commentsList.push({
+
+    name:
+      currentUser?.displayName ||
+      "Zemivo User",
+
+    text:
+      text
+
+  });
+
+
+  input.value =
+    "";
+
+
+  saveLocal();
+
+  render();
+
+
+  setTimeout(
+    () => focusComment(id),
+    30
+  );
+
+};
+
+
+/* ==================================================
+   THREE DOT MENU
+================================================== */
+
+window.openPostMenu =
+function(id,event){
+
+  event.stopPropagation();
+
+
+  selectedPostId =
+    id;
+
+
+  const menu =
+    document.getElementById(
+      "postMenu"
+    );
+
+
+  let left =
+    event.clientX;
+
+
+  let top =
+    event.clientY;
+
+
+  if(
+    left +
+    260 >
+    window.innerWidth
+  ){
+
+    left =
+      window.innerWidth -
+      270;
+
+  }
+
+
+  if(
+    top +
+    500 >
+    window.innerHeight
+  ){
+
+    top =
+      window.innerHeight -
+      510;
+
+  }
+
+
+  menu.style.left =
+    Math.max(
+      8,
+      left
+    )
+    + "px";
+
+
+  menu.style.top =
+    Math.max(
+      8,
+      top
+    )
+    + "px";
+
+
+  menu.classList.add(
+    "show"
+  );
+
+};
+
+
+/* CLOSE MENU */
+
+document.addEventListener(
+  "click",
+  event => {
+
+    const menu =
+      document.getElementById(
+        "postMenu"
+      );
+
+
+    if(
+      !event.target.closest(
+        "#postMenu"
+      ) &&
+      !event.target.closest(
+        ".dots"
+      )
+    ){
+
+      menu.classList.remove(
+        "show"
+      );
+
+    }
+
+  }
+);
+
+
+/* ==================================================
+   EDIT
+================================================== */
+
+window.editSelected =
+function(){
+
+  const p =
+    find(
+      selectedPostId
+    );
+
+
+  if(!p){
+    return;
+  }
+
+
+  editingId =
+    p.id;
+
+
+  selectedMedia =
+    p.media || "";
+
+
+  selectedProduct =
+    p.product || "";
+
+
+  selectedGroup =
+    p.group || "";
+
+
+  selectedLocation =
+    p.location || "";
+
+
+  document.getElementById(
+    "postText"
+  ).value =
+    p.text || "";
+
+
+  if(selectedMedia){
+
+    document.getElementById(
+      "previewImg"
+    ).src =
+      selectedMedia;
+
+
+    document.getElementById(
+      "mediaPreview"
+    ).classList.add(
+      "show"
     );
 
   }
 
+
+  document.getElementById(
+    "composerTitle"
+  ).textContent =
+    "Edit post";
+
+
+  document.getElementById(
+    "composeStep1"
+  ).style.display =
+    "block";
+
+
+  document.getElementById(
+    "composeStep2"
+  ).classList.remove(
+    "show"
+  );
+
+
+  document.getElementById(
+    "s1"
+  ).classList.add(
+    "on"
+  );
+
+
+  document.getElementById(
+    "s2"
+  ).classList.remove(
+    "on"
+  );
+
+
+  document.getElementById(
+    "postMenu"
+  ).classList.remove(
+    "show"
+  );
+
+
+  openModal(
+    "composerModal"
+  );
+
+};
+
+
+/* ==================================================
+   SAVE
+================================================== */
+
+window.saveSelected =
+function(){
+
+  const p =
+    find(
+      selectedPostId
+    );
+
+
+  if(!p){
+    return;
+  }
+
+
+  p.saved =
+    !p.saved;
+
+
+  saveLocal();
+
+
+  toast(
+    p.saved
+      ? "Post saved"
+      : "Post removed from saved"
+  );
+
+
+  document.getElementById(
+    "postMenu"
+  ).classList.remove(
+    "show"
+  );
+
+};
+
+
+/* ==================================================
+   PRODUCT
+================================================== */
+
+window.manageProductSelected =
+function(){
+
+  const p =
+    find(
+      selectedPostId
+    );
+
+
+  if(!p){
+    return;
+  }
+
+
+  const value =
+    prompt(
+      "Product / Affiliate URL",
+      p.product || ""
+    );
+
+
+  if(value !== null){
+
+    p.product =
+      value.trim();
+
+
+    saveLocal();
+
+    render();
+
+    toast(
+      "Product link updated"
+    );
+
+  }
+
+
+  document.getElementById(
+    "postMenu"
+  ).classList.remove(
+    "show"
+  );
+
+};
+
+
+/* ==================================================
+   COMMENT SETTINGS
+================================================== */
+
+window.commentSettingsSelected =
+function(){
+
+  const p =
+    find(
+      selectedPostId
+    );
+
+
+  if(!p){
+    return;
+  }
+
+
+  const value =
+    prompt(
+      "Public / Friends / Off",
+      p.comments ||
+      "Public"
+    );
+
+
+  if(value){
+
+    p.comments =
+      value;
+
+
+    saveLocal();
+
+    render();
+
+  }
+
+
+  document.getElementById(
+    "postMenu"
+  ).classList.remove(
+    "show"
+  );
+
+};
+
+
+/* ==================================================
+   PRIVACY
+================================================== */
+
+window.privacySelected =
+function(){
+
+  const p =
+    find(
+      selectedPostId
+    );
+
+
+  if(!p){
+    return;
+  }
+
+
+  const value =
+    prompt(
+      "Public / Friends / Only me",
+      p.audience ||
+      "Public"
+    );
+
+
+  if(value){
+
+    p.audience =
+      value;
+
+
+    saveLocal();
+
+    render();
+
+  }
+
+
+  document.getElementById(
+    "postMenu"
+  ).classList.remove(
+    "show"
+  );
+
+};
+
+
+/* ==================================================
+   ARCHIVE
+================================================== */
+
+window.archiveSelected =
+function(){
+
+  const p =
+    find(
+      selectedPostId
+    );
+
+
+  if(p){
+
+    p.archived =
+      true;
+
+
+    saveLocal();
+
+    render();
+
+    toast(
+      "Post moved to archive"
+    );
+
+  }
+
+
+  document.getElementById(
+    "postMenu"
+  ).classList.remove(
+    "show"
+  );
+
+};
+
+
+/* ==================================================
+   DELETE / TRASH
+================================================== */
+
+window.trashSelected =
+function(){
+
+  const p =
+    find(
+      selectedPostId
+    );
+
+
+  if(
+    p &&
+    confirm(
+      "Delete this post?"
+    )
+  ){
+
+    p.trashed =
+      true;
+
+
+    saveLocal();
+
+    render();
+
+    toast(
+      "Post moved to trash"
+    );
+
+  }
+
+
+  document.getElementById(
+    "postMenu"
+  ).classList.remove(
+    "show"
+  );
+
+};
+
+
+/* ==================================================
+   NOTIFICATIONS
+================================================== */
+
+window.toggleNotificationsSelected =
+function(){
+
+  toast(
+    "Post notifications updated"
+  );
+
+
+  document.getElementById(
+    "postMenu"
+  ).classList.remove(
+    "show"
+  );
+
+};
+
+
+/* ==================================================
+   COPY LINK
+================================================== */
+
+window.copySelectedLink =
+async function(){
+
+  const url =
+    location.href.split("#")[0]
+    +
+    "#post-"
+    +
+    selectedPostId;
+
+
+  try{
+
+    await navigator.clipboard.writeText(
+      url
+    );
+
+    toast(
+      "Post link copied"
+    );
+
+  }
+
+  catch{
+
+    toast(
+      url
+    );
+
+  }
+
+
+  document.getElementById(
+    "postMenu"
+  ).classList.remove(
+    "show"
+  );
+
+};
+
+
+/* ==================================================
+   SPARK MENU
+================================================== */
+
+window.sparkSelected =
+function(){
+
+  sparkPost(
+    selectedPostId
+  );
+
+
+  document.getElementById(
+    "postMenu"
+  ).classList.remove(
+    "show"
+  );
+
+};
+
+
+/* ==================================================
+   ADMIN MODE
+================================================== */
+
+const isAdmin =
+  localStorage.getItem(
+    "zemivo_role"
+  ) === "admin";
+
+
+document.body.classList.toggle(
+  "admin",
+  isAdmin
+);
+
+
+window.adminBroadcast =
+function(){
+
+  if(!isAdmin){
+
+    toast(
+      "Admin permission required"
+    );
+
+    return;
+
+  }
+
+
+  const text =
+    prompt(
+      "Admin broadcast message"
+    );
+
+
+  if(!text){
+    return;
+  }
+
+
+  const post = {
+
+    id:
+      uid(),
+
+    author:
+      "Zemivo Admin",
+
+    authorUid:
+      "admin",
+
+    text:
+      text,
+
+    media:
+      "",
+
+    product:
+      "",
+
+    group:
+      "",
+
+    location:
+      "",
+
+    audience:
+      "Public",
+
+    comments:
+      "Public",
+
+    createdAt:
+      Date.now(),
+
+    likes:
+      0,
+
+    commentsList:
+      [],
+
+    shares:
+      0,
+
+    sparks:
+      0,
+
+    liked:
+      false,
+
+    sparked:
+      false,
+
+    saved:
+      false,
+
+    archived:
+      false,
+
+    trashed:
+      false,
+
+    broadcast:
+      true
+
+  };
+
+
+  posts.unshift(
+    post
+  );
+
+
+  saveLocal();
+
+  render();
+
+  toast(
+    "Admin broadcast published"
+  );
+
+
+  syncPostToFirestore(
+    post
+  );
+
+};
+
+
+window.adminBoostSelected =
+function(){
+
+  if(!isAdmin){
+
+    toast(
+      "Admin permission required"
+    );
+
+    return;
+
+  }
+
+
+  const p =
+    find(
+      selectedPostId
+    );
+
+
+  if(p){
+
+    p.broadcast =
+      true;
+
+    p.audience =
+      "Public";
+
+
+    saveLocal();
+
+    render();
+
+    toast(
+      "Admin broadcast enabled"
+    );
+
+  }
+
+
+  document.getElementById(
+    "postMenu"
+  ).classList.remove(
+    "show"
+  );
+
+};
+
+
+/* ==================================================
+   SEARCH
+================================================== */
+
+document
+  .getElementById(
+    "search"
+  )
+  .addEventListener(
+    "input",
+    render
+  );
+
+
+/* ==================================================
+   CLOSE MODAL BY BACKDROP
+================================================== */
+
+document
+  .getElementById(
+    "composerModal"
+  )
+  .addEventListener(
+    "click",
+    event => {
+
+      if(
+        event.target.id ===
+        "composerModal"
+      ){
+
+        closeModal(
+          "composerModal"
+        );
+
+      }
+
+    }
+  );
+
+
+/* ==================================================
+   INITIAL RENDER
+================================================== */
+
+render();
+
+
+if(isAdmin){
+
+  toast(
+    "Admin test mode enabled"
+  );
+
 }
-
-
-function escapeHTML(value){
-
-  return String(value)
-    .replaceAll("&","&amp;")
-    .replaceAll("<","&lt;")
-    .replaceAll(">","&gt;")
-    .replaceAll('"',"&quot;")
-    .replaceAll("'","&#039;");
-
-}
-
-
-renderFeed();
 
 </script>
 
