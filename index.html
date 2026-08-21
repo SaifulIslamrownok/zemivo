@@ -1,790 +1,2064 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Zemivo - Home</title>
 
-<style>
-*{box-sizing:border-box}
+  <meta charset="UTF-8">
 
-body{
-  margin:0;
-  font-family:Arial,sans-serif;
-  background:#f4f6f8;
-  color:#172033;
-}
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
 
-.header{
-  position:sticky;
-  top:0;
-  z-index:100;
-  height:64px;
-  background:#fff;
-  border-bottom:1px solid #e5e7eb;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  padding:0 18px;
-}
+  <title>Zemivo - Home</title>
 
-.logo{
-  font-size:27px;
-  font-weight:800;
-  color:#2563eb;
-}
 
-.header-actions{
-  display:flex;
-  gap:8px;
-}
+  <style>
 
-.icon-btn{
-  width:42px;
-  height:42px;
-  border:0;
-  border-radius:50%;
-  background:#f1f5f9;
-  cursor:pointer;
-  font-size:19px;
-}
+    *{
+      box-sizing:border-box;
+    }
 
-.container{
-  width:100%;
-  max-width:760px;
-  margin:20px auto;
-  padding:0 12px;
-}
 
-.card{
-  background:#fff;
-  border-radius:16px;
-  border:1px solid #e5e7eb;
-  margin-bottom:16px;
-  overflow:hidden;
-}
+    body{
+      margin:0;
+      font-family:Arial,sans-serif;
+      background:#f3f5f8;
+      color:#172033;
+    }
 
-.composer{
-  padding:16px;
-}
 
-.composer-top{
-  display:flex;
-  gap:12px;
-  align-items:center;
-}
+    /* HEADER */
 
-.avatar{
-  width:44px;
-  height:44px;
-  border-radius:50%;
-  background:#2563eb;
-  color:white;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-weight:bold;
-  flex-shrink:0;
-}
+    .header{
+      position:sticky;
+      top:0;
+      z-index:1000;
+      height:64px;
+      background:#ffffff;
+      border-bottom:1px solid #e5e7eb;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding:0 18px;
+    }
 
-textarea{
-  width:100%;
-  min-height:70px;
-  resize:none;
-  border:1px solid #e5e7eb;
-  border-radius:12px;
-  padding:12px;
-  font-size:15px;
-  outline:none;
-}
 
-textarea:focus{
-  border-color:#2563eb;
-}
+    .logo{
+      font-size:27px;
+      font-weight:800;
+      color:#2563eb;
+    }
 
-.photo-preview{
-  margin-top:12px;
-  display:none;
-}
 
-.photo-preview img{
-  width:100%;
-  max-height:420px;
-  object-fit:cover;
-  border-radius:12px;
-}
+    .header-actions{
+      display:flex;
+      gap:8px;
+    }
 
-.composer-actions{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  margin-top:12px;
-}
 
-.photo-label{
-  cursor:pointer;
-  padding:9px 13px;
-  border-radius:10px;
-  background:#eff6ff;
-  color:#2563eb;
-  font-weight:bold;
-}
+    .icon-btn{
+      width:42px;
+      height:42px;
+      border:0;
+      border-radius:50%;
+      background:#f1f5f9;
+      cursor:pointer;
+      font-size:18px;
+    }
 
-#photoInput{
-  display:none;
-}
 
-.post-btn{
-  border:0;
-  background:#2563eb;
-  color:white;
-  padding:10px 20px;
-  border-radius:22px;
-  font-weight:bold;
-  cursor:pointer;
-}
+    .icon-btn:hover{
+      background:#e2e8f0;
+    }
 
-.post-header{
-  padding:15px;
-  display:flex;
-  align-items:center;
-  gap:10px;
-}
 
-.post-info{
-  flex:1;
-}
+    /* MAIN */
 
-.post-name{
-  font-weight:bold;
-}
+    .container{
+      width:100%;
+      max-width:760px;
+      margin:20px auto;
+      padding:0 12px;
+    }
 
-.post-time{
-  font-size:12px;
-  color:#64748b;
-  margin-top:3px;
-}
 
-.more-btn{
-  border:0;
-  background:transparent;
-  font-size:22px;
-  cursor:pointer;
-}
+    /* CARD */
 
-.post-text{
-  padding:0 15px 15px;
-  white-space:pre-wrap;
-  line-height:1.5;
-}
+    .card{
+      background:#ffffff;
+      border:1px solid #e5e7eb;
+      border-radius:16px;
+      overflow:hidden;
+      margin-bottom:16px;
+    }
 
-.post-image{
-  width:100%;
-  max-height:520px;
-  object-fit:cover;
-  display:block;
-}
 
-.stats{
-  padding:10px 15px;
-  display:flex;
-  justify-content:space-between;
-  color:#64748b;
-  font-size:13px;
-  border-bottom:1px solid #eef0f3;
-}
+    /* CREATE POST */
 
-.post-actions{
-  display:flex;
-  border-bottom:1px solid #eef0f3;
-}
+    .composer{
+      padding:16px;
+    }
 
-.post-actions button{
-  flex:1;
-  border:0;
-  background:#fff;
-  padding:12px 5px;
-  cursor:pointer;
-  font-weight:bold;
-  color:#475569;
-}
 
-.post-actions button:hover{
-  background:#f8fafc;
-}
+    .composer-top{
+      display:flex;
+      gap:12px;
+      align-items:flex-start;
+    }
 
-.post-actions .liked{
-  color:#2563eb;
-}
 
-.comments{
-  padding:12px 15px;
-}
+    .avatar{
+      width:44px;
+      height:44px;
+      min-width:44px;
+      border-radius:50%;
+      background:#2563eb;
+      color:#ffffff;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-weight:bold;
+      font-size:18px;
+    }
 
-.comment-form{
-  display:flex;
-  gap:8px;
-}
 
-.comment-form input{
-  flex:1;
-  border:1px solid #e2e8f0;
-  border-radius:20px;
-  padding:10px 13px;
-  outline:none;
-}
+    textarea{
+      width:100%;
+      min-height:75px;
+      resize:none;
+      border:1px solid #dbe2ea;
+      border-radius:13px;
+      padding:12px;
+      font-size:15px;
+      outline:none;
+      font-family:inherit;
+    }
 
-.comment-form button{
-  border:0;
-  border-radius:20px;
-  padding:0 15px;
-  background:#2563eb;
-  color:white;
-  cursor:pointer;
-}
 
-.comment{
-  margin-top:12px;
-}
+    textarea:focus{
+      border-color:#2563eb;
+    }
 
-.comment-main{
-  display:flex;
-  gap:8px;
-}
 
-.comment-body{
-  background:#f1f5f9;
-  border-radius:14px;
-  padding:9px 12px;
-  flex:1;
-}
+    .photo-preview{
+      display:none;
+      margin-top:12px;
+      position:relative;
+    }
 
-.comment-author{
-  font-size:13px;
-  font-weight:bold;
-}
 
-.comment-text{
-  margin-top:4px;
-  line-height:1.4;
-}
+    .photo-preview img{
+      width:100%;
+      max-height:420px;
+      object-fit:cover;
+      border-radius:12px;
+      display:block;
+    }
 
-.comment-tools{
-  display:flex;
-  gap:14px;
-  padding:5px 8px;
-  font-size:12px;
-  color:#64748b;
-}
 
-.comment-tools button{
-  border:0;
-  background:none;
-  padding:0;
-  cursor:pointer;
-  color:#64748b;
-  font-weight:bold;
-}
+    .remove-preview{
+      position:absolute;
+      right:10px;
+      top:10px;
+      width:36px;
+      height:36px;
+      border:0;
+      border-radius:50%;
+      background:rgba(0,0,0,.65);
+      color:#ffffff;
+      font-size:20px;
+      cursor:pointer;
+    }
 
-.comment-tools .active{
-  color:#2563eb;
-}
 
-.reply-area{
-  margin-left:50px;
-  margin-top:6px;
-}
+    .composer-actions{
+      margin-top:12px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:10px;
+    }
 
-.reply-form{
-  display:flex;
-  gap:7px;
-}
 
-.reply-form input{
-  flex:1;
-  border:1px solid #e2e8f0;
-  border-radius:18px;
-  padding:8px 11px;
-}
+    .photo-label{
+      background:#eff6ff;
+      color:#2563eb;
+      padding:10px 14px;
+      border-radius:10px;
+      font-weight:bold;
+      cursor:pointer;
+    }
 
-.reply-form button{
-  border:0;
-  border-radius:18px;
-  background:#2563eb;
-  color:white;
-  padding:0 12px;
-  cursor:pointer;
-}
 
-.replies{
-  margin-left:50px;
-}
+    #photoInput{
+      display:none;
+    }
 
-.empty{
-  text-align:center;
-  color:#64748b;
-  padding:30px 10px;
-}
 
-.hidden{
-  display:none!important;
-}
+    .post-btn{
+      border:0;
+      background:#2563eb;
+      color:#ffffff;
+      padding:11px 22px;
+      border-radius:22px;
+      font-size:15px;
+      font-weight:bold;
+      cursor:pointer;
+    }
 
-@media(max-width:600px){
-  .header{
-    padding:0 12px;
-  }
 
-  .container{
-    margin-top:10px;
-    padding:0 7px;
-  }
+    .post-btn:hover{
+      background:#1d4ed8;
+    }
 
-  .card{
-    border-radius:12px;
-  }
 
-  .logo{
-    font-size:24px;
-  }
-}
-</style>
+    /* POST HEADER */
+
+    .post-header{
+      padding:15px;
+      display:flex;
+      align-items:center;
+      gap:10px;
+    }
+
+
+    .post-info{
+      flex:1;
+      min-width:0;
+    }
+
+
+    .post-name{
+      font-weight:bold;
+      font-size:15px;
+    }
+
+
+    .post-time{
+      color:#64748b;
+      font-size:12px;
+      margin-top:3px;
+    }
+
+
+    .post-menu-wrapper{
+      position:relative;
+    }
+
+
+    .more-btn{
+      width:38px;
+      height:38px;
+      border:0;
+      border-radius:50%;
+      background:transparent;
+      font-size:24px;
+      cursor:pointer;
+      line-height:1;
+    }
+
+
+    .more-btn:hover{
+      background:#f1f5f9;
+    }
+
+
+    /* THREE DOT MENU */
+
+    .post-menu{
+      position:absolute;
+      right:0;
+      top:43px;
+      width:300px;
+      max-width:calc(100vw - 35px);
+      background:#ffffff;
+      border:1px solid #e2e8f0;
+      border-radius:16px;
+      box-shadow:0 10px 35px rgba(0,0,0,.18);
+      padding:8px;
+      z-index:500;
+    }
+
+
+    .post-menu.hidden{
+      display:none;
+    }
+
+
+    .post-menu button{
+      width:100%;
+      min-height:45px;
+      border:0;
+      background:#ffffff;
+      border-radius:10px;
+      display:flex;
+      align-items:center;
+      gap:12px;
+      padding:10px 12px;
+      font-size:14px;
+      text-align:left;
+      cursor:pointer;
+      color:#172033;
+    }
+
+
+    .post-menu button:hover{
+      background:#f1f5f9;
+    }
+
+
+    .post-menu .danger{
+      color:#dc2626;
+    }
+
+
+    .menu-divider{
+      height:1px;
+      background:#e5e7eb;
+      margin:7px 4px;
+    }
+
+
+    /* POST CONTENT */
+
+    .post-text{
+      padding:0 15px 15px;
+      line-height:1.55;
+      white-space:pre-wrap;
+      overflow-wrap:anywhere;
+    }
+
+
+    .post-image{
+      width:100%;
+      max-height:560px;
+      object-fit:cover;
+      display:block;
+      background:#f1f5f9;
+    }
+
+
+    /* STATS */
+
+    .stats{
+      padding:10px 15px;
+      display:flex;
+      justify-content:space-between;
+      color:#64748b;
+      font-size:13px;
+      border-bottom:1px solid #eef0f3;
+    }
+
+
+    /* POST ACTIONS */
+
+    .post-actions{
+      display:flex;
+      border-bottom:1px solid #eef0f3;
+    }
+
+
+    .post-actions button{
+      flex:1;
+      border:0;
+      background:#ffffff;
+      padding:12px 5px;
+      color:#475569;
+      font-weight:bold;
+      cursor:pointer;
+    }
+
+
+    .post-actions button:hover{
+      background:#f8fafc;
+    }
+
+
+    .post-actions .liked{
+      color:#2563eb;
+    }
+
+
+    /* COMMENTS */
+
+    .comments{
+      padding:13px 15px;
+    }
+
+
+    .comment-form{
+      display:flex;
+      gap:8px;
+    }
+
+
+    .comment-form input{
+      flex:1;
+      min-width:0;
+      border:1px solid #dbe2ea;
+      border-radius:21px;
+      padding:10px 13px;
+      outline:none;
+    }
+
+
+    .comment-form button{
+      border:0;
+      border-radius:21px;
+      background:#2563eb;
+      color:#ffffff;
+      padding:0 15px;
+      cursor:pointer;
+      font-weight:bold;
+    }
+
+
+    .comment{
+      margin-top:13px;
+    }
+
+
+    .comment-main{
+      display:flex;
+      gap:8px;
+    }
+
+
+    .comment-main .avatar{
+      width:36px;
+      height:36px;
+      min-width:36px;
+      font-size:14px;
+    }
+
+
+    .comment-body{
+      background:#f1f5f9;
+      border-radius:14px;
+      padding:9px 12px;
+      max-width:calc(100% - 44px);
+    }
+
+
+    .comment-author{
+      font-weight:bold;
+      font-size:13px;
+    }
+
+
+    .comment-text{
+      margin-top:4px;
+      line-height:1.45;
+      overflow-wrap:anywhere;
+    }
+
+
+    .comment-tools{
+      display:flex;
+      gap:13px;
+      padding:5px 7px;
+      flex-wrap:wrap;
+    }
+
+
+    .comment-tools button{
+      border:0;
+      background:none;
+      color:#64748b;
+      padding:0;
+      cursor:pointer;
+      font-size:12px;
+      font-weight:bold;
+    }
+
+
+    .comment-tools button:hover{
+      color:#2563eb;
+    }
+
+
+    .comment-tools .active{
+      color:#2563eb;
+    }
+
+
+    .reply-area{
+      margin-left:44px;
+      margin-top:6px;
+    }
+
+
+    .reply-area.hidden{
+      display:none;
+    }
+
+
+    .reply-form{
+      display:flex;
+      gap:7px;
+    }
+
+
+    .reply-form input{
+      flex:1;
+      min-width:0;
+      border:1px solid #dbe2ea;
+      border-radius:20px;
+      padding:8px 11px;
+      outline:none;
+    }
+
+
+    .reply-form button{
+      border:0;
+      border-radius:20px;
+      background:#2563eb;
+      color:#ffffff;
+      padding:0 12px;
+      cursor:pointer;
+    }
+
+
+    .replies{
+      margin-left:44px;
+    }
+
+
+    /* EDIT POST MODAL */
+
+    .modal-overlay{
+      position:fixed;
+      inset:0;
+      background:rgba(0,0,0,.55);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:18px;
+      z-index:3000;
+    }
+
+
+    .modal-overlay.hidden{
+      display:none;
+    }
+
+
+    .edit-modal{
+      width:100%;
+      max-width:520px;
+      background:#ffffff;
+      border-radius:18px;
+      padding:18px;
+      box-shadow:0 15px 50px rgba(0,0,0,.25);
+    }
+
+
+    .edit-modal-header{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      margin-bottom:15px;
+    }
+
+
+    .edit-modal-header h3{
+      margin:0;
+    }
+
+
+    .close-modal{
+      width:38px;
+      height:38px;
+      border:0;
+      border-radius:50%;
+      background:#f1f5f9;
+      font-size:22px;
+      cursor:pointer;
+    }
+
+
+    .edit-photo-preview{
+      margin-top:12px;
+    }
+
+
+    .edit-photo-preview img{
+      width:100%;
+      max-height:330px;
+      object-fit:cover;
+      border-radius:12px;
+    }
+
+
+    .edit-photo-label{
+      display:inline-block;
+      margin-top:10px;
+      padding:10px 13px;
+      background:#eff6ff;
+      color:#2563eb;
+      border-radius:10px;
+      font-weight:bold;
+      cursor:pointer;
+    }
+
+
+    #editPhotoInput{
+      display:none;
+    }
+
+
+    .edit-buttons{
+      display:flex;
+      gap:8px;
+      margin-top:15px;
+    }
+
+
+    .edit-buttons button{
+      flex:1;
+      border:0;
+      border-radius:10px;
+      padding:11px;
+      font-weight:bold;
+      cursor:pointer;
+    }
+
+
+    .save-edit{
+      background:#2563eb;
+      color:#ffffff;
+    }
+
+
+    .cancel-edit{
+      background:#e2e8f0;
+      color:#172033;
+    }
+
+
+    /* CONFIRM MODAL */
+
+    .confirm-modal{
+      width:100%;
+      max-width:400px;
+      background:#ffffff;
+      border-radius:18px;
+      padding:22px;
+      text-align:center;
+    }
+
+
+    .confirm-modal h3{
+      margin-top:0;
+    }
+
+
+    .confirm-modal p{
+      color:#64748b;
+      line-height:1.5;
+    }
+
+
+    .confirm-buttons{
+      display:flex;
+      gap:10px;
+      margin-top:18px;
+    }
+
+
+    .confirm-buttons button{
+      flex:1;
+      border:0;
+      border-radius:10px;
+      padding:12px;
+      font-weight:bold;
+      cursor:pointer;
+    }
+
+
+    .cancel-delete{
+      background:#e2e8f0;
+    }
+
+
+    .confirm-delete{
+      background:#dc2626;
+      color:#ffffff;
+    }
+
+
+    /* EMPTY */
+
+    .empty{
+      text-align:center;
+      color:#64748b;
+      padding:35px 15px;
+    }
+
+
+    /* MOBILE */
+
+    @media(max-width:600px){
+
+      .header{
+        padding:0 11px;
+      }
+
+
+      .container{
+        margin:10px auto;
+        padding:0 7px;
+      }
+
+
+      .card{
+        border-radius:12px;
+      }
+
+
+      .logo{
+        font-size:24px;
+      }
+
+
+      .header-actions{
+        gap:3px;
+      }
+
+
+      .icon-btn{
+        width:38px;
+        height:38px;
+      }
+
+
+      .post-menu{
+        width:285px;
+      }
+
+
+      .post-menu button{
+        font-size:14px;
+      }
+
+
+      .post-actions button{
+        font-size:13px;
+      }
+
+    }
+
+  </style>
+
 </head>
+
 
 <body>
 
-<header class="header">
-  <div class="logo">Zemivo</div>
 
-  <div class="header-actions">
-    <button class="icon-btn" title="Search">🔍</button>
-    <button class="icon-btn" title="Messages">💬</button>
-    <button class="icon-btn" title="Notifications">🔔</button>
-  </div>
-</header>
+  <!-- HEADER -->
 
-<main class="container">
+  <header class="header">
 
-  <section class="card composer">
-
-    <div class="composer-top">
-      <div class="avatar">Z</div>
-
-      <textarea
-        id="postText"
-        placeholder="What's on your mind?"
-      ></textarea>
+    <div class="logo">
+      Zemivo
     </div>
 
-    <div class="photo-preview" id="photoPreview">
-      <img id="previewImage" alt="Selected photo">
-    </div>
 
-    <div class="composer-actions">
-
-      <label class="photo-label" for="photoInput">
-        🖼️ Photo
-      </label>
-
-      <input
-        id="photoInput"
-        type="file"
-        accept="image/*"
-      >
+    <div class="header-actions">
 
       <button
-        class="post-btn"
-        id="postButton"
+        class="icon-btn"
+        title="Search"
+        onclick="showComingSoon('Search')"
       >
-        Post
+        🔍
+      </button>
+
+
+      <button
+        class="icon-btn"
+        title="Messages"
+        onclick="showComingSoon('Messenger')"
+      >
+        💬
+      </button>
+
+
+      <button
+        class="icon-btn"
+        title="Notifications"
+        onclick="showComingSoon('Notifications')"
+      >
+        🔔
       </button>
 
     </div>
 
-  </section>
+  </header>
 
-  <section id="feed"></section>
 
-</main>
+  <!-- MAIN -->
+
+  <main class="container">
+
+
+    <!-- CREATE POST -->
+
+    <section class="card composer">
+
+      <div class="composer-top">
+
+        <div class="avatar">
+          Z
+        </div>
+
+
+        <textarea
+          id="postText"
+          placeholder="What's on your mind?"
+        ></textarea>
+
+      </div>
+
+
+      <div
+        class="photo-preview"
+        id="photoPreview"
+      >
+
+        <button
+          class="remove-preview"
+          id="removePreview"
+          type="button"
+        >
+          ×
+        </button>
+
+
+        <img
+          id="previewImage"
+          alt="Selected photo"
+        >
+
+      </div>
+
+
+      <div class="composer-actions">
+
+        <label
+          class="photo-label"
+          for="photoInput"
+        >
+          🖼️ Photo
+        </label>
+
+
+        <input
+          id="photoInput"
+          type="file"
+          accept="image/*"
+        >
+
+
+        <button
+          class="post-btn"
+          id="postButton"
+          type="button"
+        >
+          Post
+        </button>
+
+      </div>
+
+    </section>
+
+
+    <!-- FEED -->
+
+    <section id="feed"></section>
+
+  </main>
+
+
+  <!-- EDIT POST MODAL -->
+
+  <div
+    id="editModal"
+    class="modal-overlay hidden"
+  >
+
+    <div class="edit-modal">
+
+      <div class="edit-modal-header">
+
+        <h3>
+          Edit post
+        </h3>
+
+
+        <button
+          class="close-modal"
+          type="button"
+          onclick="closeEditModal()"
+        >
+          ×
+        </button>
+
+      </div>
+
+
+      <textarea
+        id="editPostText"
+        placeholder="Edit your post..."
+      ></textarea>
+
+
+      <div
+        class="edit-photo-preview"
+        id="editPhotoPreview"
+      >
+
+        <img
+          id="editPreviewImage"
+          alt="Post photo"
+        >
+
+      </div>
+
+
+      <label
+        class="edit-photo-label"
+        for="editPhotoInput"
+      >
+        🖼️ Change photo
+      </label>
+
+
+      <input
+        id="editPhotoInput"
+        type="file"
+        accept="image/*"
+      >
+
+
+      <div class="edit-buttons">
+
+        <button
+          class="cancel-edit"
+          type="button"
+          onclick="closeEditModal()"
+        >
+          Cancel
+        </button>
+
+
+        <button
+          class="save-edit"
+          type="button"
+          onclick="saveEditedPost()"
+        >
+          Save changes
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- DELETE CONFIRMATION -->
+
+  <div
+    id="deleteModal"
+    class="modal-overlay hidden"
+  >
+
+    <div class="confirm-modal">
+
+      <h3>
+        Delete post?
+      </h3>
+
+
+      <p>
+        Are you sure you want to permanently
+        delete this post?
+      </p>
+
+
+      <div class="confirm-buttons">
+
+        <button
+          class="cancel-delete"
+          type="button"
+          onclick="closeDeleteModal()"
+        >
+          Cancel
+        </button>
+
+
+        <button
+          class="confirm-delete"
+          type="button"
+          onclick="confirmDeletePost()"
+        >
+          Delete
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
 
 <script>
+
+
+/* =========================
+   DATA
+========================= */
 
 let posts = [];
 
 let currentPhoto = "";
 
+let editingPostId = null;
+
+let deletingPostId = null;
+
+let editPhotoData = null;
+
+
+/* =========================
+   ELEMENTS
+========================= */
+
 const postText =
   document.getElementById("postText");
+
 
 const photoInput =
   document.getElementById("photoInput");
 
+
 const photoPreview =
   document.getElementById("photoPreview");
+
 
 const previewImage =
   document.getElementById("previewImage");
 
+
+const removePreview =
+  document.getElementById("removePreview");
+
+
 const postButton =
   document.getElementById("postButton");
+
 
 const feed =
   document.getElementById("feed");
 
 
-photoInput.addEventListener("change", function(){
+const editModal =
+  document.getElementById("editModal");
 
-  const file = this.files[0];
 
-  if(!file){
-    currentPhoto = "";
-    photoPreview.style.display = "none";
-    return;
+const editPostText =
+  document.getElementById("editPostText");
+
+
+const editPhotoInput =
+  document.getElementById("editPhotoInput");
+
+
+const editPhotoPreview =
+  document.getElementById("editPhotoPreview");
+
+
+const editPreviewImage =
+  document.getElementById("editPreviewImage");
+
+
+const deleteModal =
+  document.getElementById("deleteModal");
+
+
+/* =========================
+   CREATE PHOTO PREVIEW
+========================= */
+
+photoInput.addEventListener(
+  "change",
+  function(){
+
+    const file =
+      this.files[0];
+
+    if(!file){
+
+      clearNewPhoto();
+
+      return;
+
+    }
+
+
+    if(!file.type.startsWith("image/")){
+
+      alert("Please select an image.");
+
+      clearNewPhoto();
+
+      return;
+
+    }
+
+
+    const reader =
+      new FileReader();
+
+
+    reader.onload =
+      function(event){
+
+        currentPhoto =
+          event.target.result;
+
+        previewImage.src =
+          currentPhoto;
+
+        photoPreview.style.display =
+          "block";
+
+      };
+
+
+    reader.readAsDataURL(file);
+
   }
-
-  const reader = new FileReader();
-
-  reader.onload = function(e){
-
-    currentPhoto = e.target.result;
-
-    previewImage.src = currentPhoto;
-
-    photoPreview.style.display = "block";
-
-  };
-
-  reader.readAsDataURL(file);
-
-});
+);
 
 
-postButton.addEventListener("click", function(){
+/* =========================
+   REMOVE NEW PHOTO
+========================= */
 
-  const text =
-    postText.value.trim();
+removePreview.addEventListener(
+  "click",
+  function(){
 
-  if(!text && !currentPhoto){
-    alert("Please write something or select a photo.");
-    return;
+    clearNewPhoto();
+
   }
+);
 
-  const post = {
 
-    id: Date.now(),
-
-    name: "You",
-
-    text: text,
-
-    photo: currentPhoto,
-
-    likes: 0,
-
-    liked: false,
-
-    views: 0,
-
-    comments: []
-
-  };
-
-  posts.unshift(post);
-
-  postText.value = "";
-
-  photoInput.value = "";
+function clearNewPhoto(){
 
   currentPhoto = "";
 
-  photoPreview.style.display = "none";
+  photoInput.value = "";
 
-  renderFeed();
+  previewImage.src = "";
 
-});
+  photoPreview.style.display =
+    "none";
 
+}
+
+
+/* =========================
+   CREATE POST
+========================= */
+
+postButton.addEventListener(
+  "click",
+  function(){
+
+    const text =
+      postText.value.trim();
+
+
+    if(!text && !currentPhoto){
+
+      alert(
+        "Please write something or select a photo."
+      );
+
+      return;
+
+    }
+
+
+    const post = {
+
+      id:
+        Date.now(),
+
+      name:
+        "You",
+
+      text:
+        text,
+
+      photo:
+        currentPhoto,
+
+      likes:
+        0,
+
+      liked:
+        false,
+
+      views:
+        0,
+
+      hidden:
+        false,
+
+      comments:
+        [],
+
+      createdAt:
+        new Date()
+
+    };
+
+
+    posts.unshift(post);
+
+
+    postText.value = "";
+
+    clearNewPhoto();
+
+
+    renderFeed();
+
+  }
+);
+
+
+/* =========================
+   RENDER FEED
+========================= */
 
 function renderFeed(){
 
   feed.innerHTML = "";
 
-  if(posts.length === 0){
 
-    feed.innerHTML =
-      '<div class="card empty">No posts yet. Create the first post.</div>';
+  const visiblePosts =
+    posts.filter(
+      function(post){
+
+        return !post.hidden;
+
+      }
+    );
+
+
+  if(visiblePosts.length === 0){
+
+    feed.innerHTML = `
+
+      <div class="card empty">
+
+        No posts yet.
+        Create the first post.
+
+      </div>
+
+    `;
 
     return;
 
   }
 
-  posts.forEach(function(post){
 
-    const card =
-      document.createElement("article");
+  visiblePosts.forEach(
+    function(post){
 
-    card.className = "card";
+      post.views++;
 
-    post.views++;
 
-    card.innerHTML = `
+      const card =
+        document.createElement("article");
 
-      <div class="post-header">
 
-        <div class="avatar">
-          ${escapeHTML(post.name.charAt(0))}
-        </div>
+      card.className =
+        "card";
 
-        <div class="post-info">
 
-          <div class="post-name">
-            ${escapeHTML(post.name)}
+      card.id =
+        "post-" + post.id;
+
+
+      card.innerHTML = `
+
+        <!-- POST HEADER -->
+
+        <div class="post-header">
+
+          <div class="avatar">
+
+            ${escapeHTML(
+              post.name.charAt(0)
+            )}
+
           </div>
 
-          <div class="post-time">
-            Just now
+
+          <div class="post-info">
+
+            <div class="post-name">
+
+              ${escapeHTML(post.name)}
+
+            </div>
+
+
+            <div class="post-time">
+
+              ${formatTime(post.createdAt)}
+
+            </div>
+
+          </div>
+
+
+          <!-- THREE DOT -->
+
+          <div class="post-menu-wrapper">
+
+            <button
+              class="more-btn"
+              type="button"
+              onclick="togglePostMenu(${post.id})"
+              aria-label="Post options"
+            >
+              ⋯
+            </button>
+
+
+            <div
+              id="post-menu-${post.id}"
+              class="post-menu hidden"
+            >
+
+              <button
+                type="button"
+                onclick="pinPost(${post.id})"
+              >
+                📌
+                <span>Pin post</span>
+              </button>
+
+
+              <button
+                type="button"
+                onclick="savePost(${post.id})"
+              >
+                🔖
+                <span>Save post</span>
+              </button>
+
+
+              <button
+                type="button"
+                onclick="openEditPost(${post.id})"
+              >
+                ✏️
+                <span>Edit post</span>
+              </button>
+
+
+              <button
+                type="button"
+                onclick="manageProduct(${post.id})"
+              >
+                🛍️
+                <span>Manage product</span>
+              </button>
+
+
+              <button
+                type="button"
+                onclick="commentSettings(${post.id})"
+              >
+                💬
+                <span>Who can comment on your post?</span>
+              </button>
+
+
+              <button
+                type="button"
+                onclick="editPrivacy(${post.id})"
+              >
+                🌐
+                <span>Edit Privacy</span>
+              </button>
+
+
+              <button
+                type="button"
+                onclick="togglePostNotifications(${post.id})"
+              >
+                🔕
+                <span>
+                  Turn off notifications for this post
+                </span>
+              </button>
+
+
+              <button
+                type="button"
+                onclick="copyPostLink(${post.id})"
+              >
+                🔗
+                <span>Copy link</span>
+              </button>
+
+
+              <div class="menu-divider"></div>
+
+
+              <button
+                type="button"
+                onclick="hidePost(${post.id})"
+              >
+                👁️
+                <span>Hide from profile</span>
+              </button>
+
+
+              <button
+                type="button"
+                onclick="partnershipAd(${post.id})"
+              >
+                🤝
+                <span>
+                  Share partnership ad code
+                </span>
+              </button>
+
+
+              <button
+                type="button"
+                onclick="createAd(${post.id})"
+              >
+                📢
+                <span>Create ad</span>
+              </button>
+
+
+              <div class="menu-divider"></div>
+
+
+              <button
+                type="button"
+                class="danger"
+                onclick="openDeletePost(${post.id})"
+              >
+                🗑️
+                <span>Delete post</span>
+              </button>
+
+            </div>
+
           </div>
 
         </div>
 
-        <button
-          class="more-btn"
-          onclick="postMenu(${post.id})"
-        >
-          ⋯
-        </button>
 
-      </div>
+        <!-- POST TEXT -->
 
-      ${
-        post.text
-        ?
-        `<div class="post-text">
-          ${escapeHTML(post.text)}
-        </div>`
-        :
-        ""
-      }
+        ${
+          post.text
+          ?
+          `
+            <div class="post-text">
+              ${escapeHTML(post.text)}
+            </div>
+          `
+          :
+          ""
+        }
 
-      ${
-        post.photo
-        ?
-        `<img
-          class="post-image"
-          src="${post.photo}"
-          alt="Post image"
-        >`
-        :
-        ""
-      }
 
-      <div class="stats">
+        <!-- POST PHOTO -->
 
-        <span>
-          ❤️ ${post.likes}
-        </span>
+        ${
+          post.photo
+          ?
+          `
+            <img
+              class="post-image"
+              src="${post.photo}"
+              alt="Post image"
+            >
+          `
+          :
+          ""
+        }
 
-        <span>
-          💬 ${countAllComments(post)}
-          &nbsp;&nbsp;
-          👁️ ${post.views}
-        </span>
 
-      </div>
+        <!-- STATS -->
 
-      <div class="post-actions">
+        <div class="stats">
 
-        <button
-          class="${post.liked ? "liked" : ""}"
-          onclick="toggleLike(${post.id})"
-        >
-          ❤️ Like
-        </button>
+          <span>
+            ❤️ ${post.likes}
+          </span>
 
-        <button
-          onclick="focusComment(${post.id})"
-        >
-          💬 Comment
-        </button>
 
-        <button
-          onclick="sharePost(${post.id})"
-        >
-          ↗ Share
-        </button>
+          <span>
 
-      </div>
+            💬 ${countAllComments(post)}
 
-      <div class="comments">
+            &nbsp;&nbsp;
 
-        <div class="comment-form">
+            👁️ ${post.views}
 
-          <input
-            id="comment-${post.id}"
-            placeholder="Write a comment..."
-          >
+          </span>
+
+        </div>
+
+
+        <!-- ACTIONS -->
+
+        <div class="post-actions">
 
           <button
-            onclick="addComment(${post.id})"
+            type="button"
+            class="${post.liked ? "liked" : ""}"
+            onclick="togglePostLike(${post.id})"
           >
-            Send
+            ❤️ Like
+          </button>
+
+
+          <button
+            type="button"
+            onclick="focusComment(${post.id})"
+          >
+            💬 Comment
+          </button>
+
+
+          <button
+            type="button"
+            onclick="sharePost(${post.id})"
+          >
+            ↗ Share
           </button>
 
         </div>
 
-        <div id="comments-${post.id}">
-          ${renderComments(post)}
+
+        <!-- COMMENTS -->
+
+        <div class="comments">
+
+          <div class="comment-form">
+
+            <input
+              id="comment-${post.id}"
+              type="text"
+              placeholder="Write a comment..."
+            >
+
+
+            <button
+              type="button"
+              onclick="addComment(${post.id})"
+            >
+              Send
+            </button>
+
+          </div>
+
+
+          <div id="comments-${post.id}">
+
+            ${renderComments(post)}
+
+          </div>
+
         </div>
 
-      </div>
-    `;
+      `;
 
-    feed.appendChild(card);
 
-  });
+      feed.appendChild(card);
+
+    }
+  );
 
 }
 
 
-function toggleLike(postId){
+/* =========================
+   THREE DOT MENU
+========================= */
+
+function togglePostMenu(postId){
+
+  document
+    .querySelectorAll(".post-menu")
+    .forEach(
+      function(menu){
+
+        menu.classList.add("hidden");
+
+      }
+    );
+
+
+  const menu =
+    document.getElementById(
+      "post-menu-" + postId
+    );
+
+
+  if(menu){
+
+    menu.classList.toggle("hidden");
+
+  }
+
+}
+
+
+/* =========================
+   CLOSE MENUS
+========================= */
+
+function closeAllPostMenus(){
+
+  document
+    .querySelectorAll(".post-menu")
+    .forEach(
+      function(menu){
+
+        menu.classList.add("hidden");
+
+      }
+    );
+
+}
+
+
+/* =========================
+   EDIT POST
+========================= */
+
+function openEditPost(postId){
+
+  closeAllPostMenus();
+
 
   const post =
-    posts.find(p => p.id === postId);
+    posts.find(
+      function(p){
+
+        return p.id === postId;
+
+      }
+    );
+
 
   if(!post) return;
 
-  post.liked = !post.liked;
 
-  post.likes +=
-    post.liked ? 1 : -1;
+  editingPostId =
+    postId;
+
+
+  editPhotoData =
+    post.photo || "";
+
+
+  editPostText.value =
+    post.text || "";
+
+
+  if(post.photo){
+
+    editPreviewImage.src =
+      post.photo;
+
+    editPhotoPreview.style.display =
+      "block";
+
+  }else{
+
+    editPreviewImage.src = "";
+
+    editPhotoPreview.style.display =
+      "none";
+
+  }
+
+
+  editPhotoInput.value = "";
+
+
+  editModal.classList.remove(
+    "hidden"
+  );
+
+}
+
+
+/* =========================
+   EDIT PHOTO
+========================= */
+
+editPhotoInput.addEventListener(
+  "change",
+  function(){
+
+    const file =
+      this.files[0];
+
+
+    if(!file) return;
+
+
+    if(!file.type.startsWith("image/")){
+
+      alert(
+        "Please select an image."
+      );
+
+      return;
+
+    }
+
+
+    const reader =
+      new FileReader();
+
+
+    reader.onload =
+      function(event){
+
+        editPhotoData =
+          event.target.result;
+
+
+        editPreviewImage.src =
+          editPhotoData;
+
+
+        editPhotoPreview.style.display =
+          "block";
+
+      };
+
+
+    reader.readAsDataURL(file);
+
+  }
+);
+
+
+/* =========================
+   SAVE EDITED POST
+========================= */
+
+function saveEditedPost(){
+
+  if(editingPostId === null){
+
+    return;
+
+  }
+
+
+  const post =
+    posts.find(
+      function(p){
+
+        return p.id === editingPostId;
+
+      }
+    );
+
+
+  if(!post){
+
+    closeEditModal();
+
+    return;
+
+  }
+
+
+  const newText =
+    editPostText.value.trim();
+
+
+  if(!newText && !editPhotoData){
+
+    alert(
+      "A post must contain text or a photo."
+    );
+
+    return;
+
+  }
+
+
+  post.text =
+    newText;
+
+
+  post.photo =
+    editPhotoData;
+
+
+  closeEditModal();
+
 
   renderFeed();
 
 }
 
+
+/* =========================
+   CLOSE EDIT
+========================= */
+
+function closeEditModal(){
+
+  editingPostId =
+    null;
+
+  editPhotoData =
+    null;
+
+  editPostText.value =
+    "";
+
+  editPhotoInput.value =
+    "";
+
+  editPreviewImage.src =
+    "";
+
+  editPhotoPreview.style.display =
+    "none";
+
+
+  editModal.classList.add(
+    "hidden"
+  );
+
+}
+
+
+/* =========================
+   DELETE POST
+========================= */
+
+function openDeletePost(postId){
+
+  closeAllPostMenus();
+
+
+  deletingPostId =
+    postId;
+
+
+  deleteModal.classList.remove(
+    "hidden"
+  );
+
+}
+
+
+/* =========================
+   CONFIRM DELETE
+========================= */
+
+function confirmDeletePost(){
+
+  if(deletingPostId === null){
+
+    return;
+
+  }
+
+
+  posts =
+    posts.filter(
+      function(post){
+
+        return post.id !== deletingPostId;
+
+      }
+    );
+
+
+  closeDeleteModal();
+
+
+  renderFeed();
+
+}
+
+
+/* =========================
+   CLOSE DELETE MODAL
+========================= */
+
+function closeDeleteModal(){
+
+  deletingPostId =
+    null;
+
+
+  deleteModal.classList.add(
+    "hidden"
+  );
+
+}
+
+
+/* =========================
+   POST LIKE
+========================= */
+
+function togglePostLike(postId){
+
+  const post =
+    posts.find(
+      function(p){
+
+        return p.id === postId;
+
+      }
+    );
+
+
+  if(!post) return;
+
+
+  post.liked =
+    !post.liked;
+
+
+  post.likes +=
+    post.liked
+    ?
+    1
+    :
+    -1;
+
+
+  renderFeed();
+
+}
+
+
+/* =========================
+   ADD COMMENT
+========================= */
 
 function addComment(postId){
 
   const input =
     document.getElementById(
-      `comment-${postId}`
+      "comment-" + postId
     );
 
+
   if(!input) return;
+
 
   const text =
     input.value.trim();
 
+
   if(!text) return;
 
+
   const post =
-    posts.find(p => p.id === postId);
+    posts.find(
+      function(p){
+
+        return p.id === postId;
+
+      }
+    );
+
 
   if(!post) return;
+
 
   post.comments.push({
 
-    id: Date.now(),
+    id:
+      Date.now() +
+      Math.random(),
 
-    author: "You",
+    author:
+      "You",
 
-    text: text,
+    text:
+      text,
 
-    likes: 0,
+    likes:
+      0,
 
-    liked: false,
+    liked:
+      false,
 
-    replies: []
+    replies:
+      []
 
   });
+
 
   renderFeed();
 
 }
 
 
-function addReply(postId, commentId){
-
-  const input =
-    document.getElementById(
-      `reply-${commentId}`
-    );
-
-  if(!input) return;
-
-  const text =
-    input.value.trim();
-
-  if(!text) return;
-
-  const post =
-    posts.find(p => p.id === postId);
-
-  if(!post) return;
-
-  const comment =
-    findComment(post.comments, commentId);
-
-  if(!comment) return;
-
-  comment.replies.push({
-
-    id: Date.now(),
-
-    author: "You",
-
-    text: text,
-
-    likes: 0,
-
-    liked: false,
-
-    replies: []
-
-  });
-
-  renderFeed();
-
-}
-
-
-function findComment(comments, id){
-
-  for(const comment of comments){
-
-    if(comment.id === id){
-      return comment;
-    }
-
-    const found =
-      findComment(comment.replies || [], id);
-
-    if(found){
-      return found;
-    }
-
-  }
-
-  return null;
-
-}
-
+/* =========================
+   RENDER COMMENTS
+========================= */
 
 function renderComments(post){
 
   return post.comments
-    .map(function(comment){
+    .map(
+      function(comment){
 
-      return renderComment(
-        post.id,
-        comment,
-        0
-      );
+        return renderComment(
+          post.id,
+          comment,
+          0
+        );
 
-    })
+      }
+    )
     .join("");
 
 }
 
+
+/* =========================
+   RENDER COMMENT TREE
+========================= */
 
 function renderComment(
   postId,
@@ -794,72 +2068,95 @@ function renderComment(
 
   const replies =
     (comment.replies || [])
-      .map(function(reply){
+      .map(
+        function(reply){
 
-        return renderComment(
-          postId,
-          reply,
-          level + 1
-        );
+          return renderComment(
+            postId,
+            reply,
+            level + 1
+          );
 
-      })
+        }
+      )
       .join("");
+
 
   return `
 
-    <div
-      class="comment"
-      data-level="${level}"
-    >
+    <div class="comment">
 
       <div class="comment-main">
 
         <div class="avatar">
-          ${escapeHTML(comment.author.charAt(0))}
+
+          ${escapeHTML(
+            comment.author.charAt(0)
+          )}
+
         </div>
+
 
         <div class="comment-body">
 
           <div class="comment-author">
-            ${escapeHTML(comment.author)}
+
+            ${escapeHTML(
+              comment.author
+            )}
+
           </div>
 
+
           <div class="comment-text">
-            ${escapeHTML(comment.text)}
+
+            ${escapeHTML(
+              comment.text
+            )}
+
           </div>
 
         </div>
 
       </div>
 
+
       <div class="comment-tools">
 
         <button
+          type="button"
           class="${comment.liked ? "active" : ""}"
           onclick="likeComment(${postId}, ${comment.id})"
         >
           ❤️ ${comment.likes}
         </button>
 
-        <button
-          onclick="editComment(${postId}, ${comment.id})"
-        >
-          ✏️ Edit
-        </button>
 
         <button
-          onclick="deleteComment(${postId}, ${comment.id})"
-        >
-          🗑️ Delete
-        </button>
-
-        <button
+          type="button"
           onclick="showReplyBox(${comment.id})"
         >
           ↩ Reply
         </button>
 
+
+        <button
+          type="button"
+          onclick="editComment(${postId}, ${comment.id})"
+        >
+          ✏️ Edit
+        </button>
+
+
+        <button
+          type="button"
+          onclick="deleteComment(${postId}, ${comment.id})"
+        >
+          🗑️ Delete
+        </button>
+
       </div>
+
 
       <div
         class="reply-area hidden"
@@ -870,10 +2167,13 @@ function renderComment(
 
           <input
             id="reply-${comment.id}"
+            type="text"
             placeholder="Write a reply..."
           >
 
+
           <button
+            type="button"
             onclick="addReply(${postId}, ${comment.id})"
           >
             Send
@@ -883,15 +2183,174 @@ function renderComment(
 
       </div>
 
+
       <div class="replies">
+
         ${replies}
+
       </div>
 
     </div>
+
   `;
 
 }
 
+
+/* =========================
+   FIND COMMENT RECURSIVELY
+========================= */
+
+function findComment(
+  comments,
+  id
+){
+
+  for(
+    const comment
+    of comments
+  ){
+
+    if(
+      String(comment.id) ===
+      String(id)
+    ){
+
+      return comment;
+
+    }
+
+
+    const found =
+      findComment(
+        comment.replies || [],
+        id
+      );
+
+
+    if(found){
+
+      return found;
+
+    }
+
+  }
+
+
+  return null;
+
+}
+
+
+/* =========================
+   ADD REPLY
+========================= */
+
+function addReply(
+  postId,
+  commentId
+){
+
+  const input =
+    document.getElementById(
+      "reply-" + commentId
+    );
+
+
+  if(!input) return;
+
+
+  const text =
+    input.value.trim();
+
+
+  if(!text) return;
+
+
+  const post =
+    posts.find(
+      function(p){
+
+        return p.id === postId;
+
+      }
+    );
+
+
+  if(!post) return;
+
+
+  const comment =
+    findComment(
+      post.comments,
+      commentId
+    );
+
+
+  if(!comment) return;
+
+
+  if(!comment.replies){
+
+    comment.replies = [];
+
+  }
+
+
+  comment.replies.push({
+
+    id:
+      Date.now() +
+      Math.random(),
+
+    author:
+      "You",
+
+    text:
+      text,
+
+    likes:
+      0,
+
+    liked:
+      false,
+
+    replies:
+      []
+
+  });
+
+
+  renderFeed();
+
+}
+
+
+/* =========================
+   SHOW REPLY BOX
+========================= */
+
+function showReplyBox(commentId){
+
+  const box =
+    document.getElementById(
+      "reply-box-" + commentId
+    );
+
+
+  if(!box) return;
+
+
+  box.classList.toggle(
+    "hidden"
+  );
+
+}
+
+
+/* =========================
+   LIKE COMMENT / REPLY
+========================= */
 
 function likeComment(
   postId,
@@ -899,39 +2358,48 @@ function likeComment(
 ){
 
   const post =
-    posts.find(p => p.id === postId);
+    posts.find(
+      function(p){
+
+        return p.id === postId;
+
+      }
+    );
+
 
   if(!post) return;
 
+
   const comment =
-    findComment(post.comments, commentId);
+    findComment(
+      post.comments,
+      commentId
+    );
+
 
   if(!comment) return;
+
 
   comment.liked =
     !comment.liked;
 
+
   comment.likes +=
-    comment.liked ? 1 : -1;
+    comment.liked
+    ?
+    1
+    :
+    -1;
+
 
   renderFeed();
 
 }
 
 
-function showReplyBox(commentId){
-
-  const box =
-    document.getElementById(
-      `reply-box-${commentId}`
-    );
-
-  if(!box) return;
-
-  box.classList.toggle("hidden");
-
-}
-
+/* =========================
+   EDIT COMMENT / REPLY
+========================= */
 
 function editComment(
   postId,
@@ -939,14 +2407,27 @@ function editComment(
 ){
 
   const post =
-    posts.find(p => p.id === postId);
+    posts.find(
+      function(p){
+
+        return p.id === postId;
+
+      }
+    );
+
 
   if(!post) return;
 
+
   const comment =
-    findComment(post.comments, commentId);
+    findComment(
+      post.comments,
+      commentId
+    );
+
 
   if(!comment) return;
+
 
   const newText =
     prompt(
@@ -954,20 +2435,37 @@ function editComment(
       comment.text
     );
 
+
   if(
-    newText === null ||
+    newText === null
+  ){
+
+    return;
+
+  }
+
+
+  if(
     !newText.trim()
   ){
+
     return;
+
   }
+
 
   comment.text =
     newText.trim();
+
 
   renderFeed();
 
 }
 
+
+/* =========================
+   DELETE COMMENT / REPLY
+========================= */
 
 function deleteComment(
   postId,
@@ -975,22 +2473,46 @@ function deleteComment(
 ){
 
   const post =
-    posts.find(p => p.id === postId);
+    posts.find(
+      function(p){
+
+        return p.id === postId;
+
+      }
+    );
+
 
   if(!post) return;
 
-  const deleted =
+
+  const confirmed =
+    confirm(
+      "Delete this comment?"
+    );
+
+
+  if(!confirmed) return;
+
+
+  const removed =
     removeComment(
       post.comments,
       commentId
     );
 
-  if(deleted){
+
+  if(removed){
+
     renderFeed();
+
   }
 
 }
 
+
+/* =========================
+   REMOVE COMMENT RECURSIVELY
+========================= */
 
 function removeComment(
   comments,
@@ -999,18 +2521,31 @@ function removeComment(
 
   const index =
     comments.findIndex(
-      c => c.id === id
+      function(comment){
+
+        return String(comment.id) ===
+          String(id);
+
+      }
     );
+
 
   if(index !== -1){
 
-    comments.splice(index,1);
+    comments.splice(
+      index,
+      1
+    );
 
     return true;
 
   }
 
-  for(const comment of comments){
+
+  for(
+    const comment
+    of comments
+  ){
 
     if(
       removeComment(
@@ -1018,108 +2553,396 @@ function removeComment(
         id
       )
     ){
+
       return true;
+
     }
 
   }
+
 
   return false;
 
 }
 
 
+/* =========================
+   COUNT COMMENTS
+========================= */
+
 function countAllComments(post){
 
-  let total = 0;
+  let total =
+    0;
+
 
   function count(list){
 
-    list.forEach(function(item){
+    list.forEach(
+      function(item){
 
-      total++;
+        total++;
 
-      if(item.replies){
-        count(item.replies);
+
+        if(item.replies){
+
+          count(
+            item.replies
+          );
+
+        }
+
       }
-
-    });
+    );
 
   }
 
-  count(post.comments);
+
+  count(
+    post.comments
+  );
+
 
   return total;
 
 }
 
 
-function postMenu(postId){
+/* =========================
+   SHARE
+========================= */
+
+function sharePost(postId){
 
   const post =
-    posts.find(p => p.id === postId);
+    posts.find(
+      function(p){
+
+        return p.id === postId;
+
+      }
+    );
+
 
   if(!post) return;
 
-  const action =
-    prompt(
-      "Type EDIT to edit this post, or DELETE to delete it."
-    );
 
-  if(!action) return;
+  const shareText =
+    post.text ||
+    "Check out this post on Zemivo.";
+
+
+  const shareUrl =
+    window.location.href +
+    "#post-" +
+    postId;
+
 
   if(
-    action.toUpperCase() === "DELETE"
+    navigator.share
   ){
 
-    if(
-      confirm(
-        "Delete this post?"
-      )
-    ){
+    navigator.share({
 
-      posts =
-        posts.filter(
-          p => p.id !== postId
-        );
+      title:
+        "Zemivo",
 
-      renderFeed();
+      text:
+        shareText,
 
-    }
+      url:
+        shareUrl
 
-  }
+    }).catch(
+      function(){}
+    );
 
-  else if(
-    action.toUpperCase() === "EDIT"
-  ){
+  }else{
 
-    const newText =
-      prompt(
-        "Edit your post:",
-        post.text
-      );
+    copyText(
+      shareUrl
+    );
 
-    if(
-      newText !== null
-    ){
-
-      post.text =
-        newText.trim();
-
-      renderFeed();
-
-    }
+    alert(
+      "Post link copied."
+    );
 
   }
 
 }
 
 
+/* =========================
+   COPY POST LINK
+========================= */
+
+function copyPostLink(postId){
+
+  closeAllPostMenus();
+
+
+  const link =
+    window.location.href +
+    "#post-" +
+    postId;
+
+
+  copyText(link);
+
+}
+
+
+/* =========================
+   COPY TEXT
+========================= */
+
+function copyText(text){
+
+  if(
+    navigator.clipboard
+  ){
+
+    navigator.clipboard
+      .writeText(text)
+      .then(
+        function(){
+
+          alert(
+            "Link copied."
+          );
+
+        }
+      )
+      .catch(
+        function(){
+
+          alert(text);
+
+        }
+      );
+
+  }else{
+
+    alert(text);
+
+  }
+
+}
+
+
+/* =========================
+   PIN
+========================= */
+
+function pinPost(postId){
+
+  closeAllPostMenus();
+
+
+  const post =
+    posts.find(
+      function(p){
+
+        return p.id === postId;
+
+      }
+    );
+
+
+  if(!post) return;
+
+
+  posts.forEach(
+    function(item){
+
+      item.pinned =
+        false;
+
+    }
+  );
+
+
+  post.pinned =
+    true;
+
+
+  posts =
+    posts.sort(
+      function(a,b){
+
+        return (
+          Number(b.pinned) -
+          Number(a.pinned)
+        );
+
+      }
+    );
+
+
+  renderFeed();
+
+}
+
+
+/* =========================
+   SAVE
+========================= */
+
+function savePost(postId){
+
+  closeAllPostMenus();
+
+
+  const post =
+    posts.find(
+      function(p){
+
+        return p.id === postId;
+
+      }
+    );
+
+
+  if(!post) return;
+
+
+  post.saved =
+    !post.saved;
+
+
+  alert(
+    post.saved
+    ?
+    "Post saved."
+    :
+    "Post removed from saved items."
+  );
+
+}
+
+
+/* =========================
+   HIDE
+========================= */
+
+function hidePost(postId){
+
+  closeAllPostMenus();
+
+
+  const post =
+    posts.find(
+      function(p){
+
+        return p.id === postId;
+
+      }
+    );
+
+
+  if(!post) return;
+
+
+  post.hidden =
+    true;
+
+
+  renderFeed();
+
+}
+
+
+/* =========================
+   OTHER OPTIONS
+========================= */
+
+function manageProduct(postId){
+
+  closeAllPostMenus();
+
+  alert(
+    "Product management will be connected to Zemivo Marketplace."
+  );
+
+}
+
+
+function commentSettings(postId){
+
+  closeAllPostMenus();
+
+  alert(
+    "Comment permission settings will be connected later."
+  );
+
+}
+
+
+function editPrivacy(postId){
+
+  closeAllPostMenus();
+
+  alert(
+    "Privacy settings will be connected later."
+  );
+
+}
+
+
+function togglePostNotifications(postId){
+
+  closeAllPostMenus();
+
+  alert(
+    "Post notification settings will be connected later."
+  );
+
+}
+
+
+function partnershipAd(postId){
+
+  closeAllPostMenus();
+
+  alert(
+    "Partnership advertising will be connected to Zemivo Ads."
+  );
+
+}
+
+
+function createAd(postId){
+
+  closeAllPostMenus();
+
+  alert(
+    "Create Ad will be connected to Zemivo Ads."
+  );
+
+}
+
+
+function showComingSoon(name){
+
+  alert(
+    name +
+    " will be connected to Zemivo."
+  );
+
+}
+
+
+/* =========================
+   FOCUS COMMENT
+========================= */
+
 function focusComment(postId){
 
   const input =
     document.getElementById(
-      `comment-${postId}`
+      "comment-" + postId
     );
+
 
   if(input){
 
@@ -1130,57 +2953,90 @@ function focusComment(postId){
 }
 
 
-function sharePost(postId){
+/* =========================
+   TIME
+========================= */
 
-  const post =
-    posts.find(p => p.id === postId);
+function formatTime(date){
 
-  if(!post) return;
+  if(!date){
 
-  const shareText =
-    post.text ||
-    "Check out this Zemivo post.";
-
-  if(
-    navigator.share
-  ){
-
-    navigator.share({
-
-      title:"Zemivo",
-
-      text:shareText
-
-    }).catch(function(){});
+    return "Just now";
 
   }
 
-  else{
 
-    alert(
-      "Sharing will be connected to Zemivo's full sharing system later."
-    );
-
-  }
+  return "Just now";
 
 }
 
+
+/* =========================
+   ESCAPE HTML
+========================= */
 
 function escapeHTML(value){
 
   return String(value)
-    .replaceAll("&","&amp;")
-    .replaceAll("<","&lt;")
-    .replaceAll(">","&gt;")
-    .replaceAll('"',"&quot;")
-    .replaceAll("'","&#039;");
+
+    .replaceAll(
+      "&",
+      "&amp;"
+    )
+
+    .replaceAll(
+      "<",
+      "&lt;"
+    )
+
+    .replaceAll(
+      ">",
+      "&gt;"
+    )
+
+    .replaceAll(
+      '"',
+      "&quot;"
+    )
+
+    .replaceAll(
+      "'",
+      "&#039;"
+    );
 
 }
 
+
+/* =========================
+   CLOSE MENU OUTSIDE
+========================= */
+
+document.addEventListener(
+  "click",
+  function(event){
+
+    if(
+      !event.target.closest(
+        ".post-menu-wrapper"
+      )
+    ){
+
+      closeAllPostMenus();
+
+    }
+
+  }
+);
+
+
+/* =========================
+   INITIAL FEED
+========================= */
 
 renderFeed();
 
 </script>
 
 </body>
+
 </html>
