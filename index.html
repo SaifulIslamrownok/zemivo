@@ -3,7 +3,6 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
-
 <title>Zemivo — Home</title>
 
 <style>
@@ -17,24 +16,19 @@
   --line:#e4e7ec;
   --danger:#dc2626;
   --green:#16a34a;
-  --orange:#f59e0b;
   --purple:#7c3aed;
-  --shadow:0 4px 18px rgba(16,24,40,.08);
+  --shadow:0 3px 14px rgba(0,0,0,.08);
 }
 
 *{
   box-sizing:border-box;
 }
 
-html{
-  scroll-behavior:smooth;
-}
-
 body{
   margin:0;
   background:var(--bg);
-  font-family:Arial,Helvetica,sans-serif;
   color:var(--text);
+  font-family:Arial,Helvetica,sans-serif;
 }
 
 button,
@@ -49,55 +43,54 @@ button{
 }
 
 /* =========================
-   TOP BAR
+   TOP
 ========================= */
 
 .topbar{
+  height:60px;
   position:sticky;
   top:0;
   z-index:50;
-  height:62px;
   background:#fff;
   border-bottom:1px solid var(--line);
   display:flex;
   align-items:center;
-  padding:0 14px;
   gap:12px;
+  padding:0 15px;
 }
 
 .brand{
-  font-size:28px;
-  font-weight:800;
   color:var(--blue);
-  letter-spacing:-1px;
+  font-size:27px;
+  font-weight:800;
 }
 
 .search{
   flex:1;
   max-width:430px;
-  background:#f2f4f7;
   border:0;
-  border-radius:22px;
-  padding:11px 15px;
   outline:0;
+  background:#f1f3f5;
+  border-radius:24px;
+  padding:11px 15px;
 }
 
 .nav{
-  display:flex;
-  gap:5px;
   margin-left:auto;
+  display:flex;
+  gap:4px;
 }
 
 .nav button{
   border:0;
   background:transparent;
-  border-radius:12px;
-  padding:10px 12px;
+  border-radius:10px;
+  padding:9px 11px;
   font-size:20px;
 }
 
 .nav button:hover{
-  background:#f2f4f7;
+  background:#f1f3f5;
 }
 
 /* =========================
@@ -105,20 +98,19 @@ button{
 ========================= */
 
 .layout{
-  width:100%;
   max-width:1180px;
   margin:auto;
+  padding:18px;
   display:grid;
   grid-template-columns:220px minmax(0,650px) 240px;
   gap:18px;
-  padding:18px;
 }
 
-.panel,
-.card{
-  background:var(--card);
+.card,
+.panel{
+  background:#fff;
   border:1px solid var(--line);
-  border-radius:16px;
+  border-radius:15px;
   box-shadow:var(--shadow);
 }
 
@@ -127,113 +119,122 @@ button{
 ========================= */
 
 .sidebar{
-  position:sticky;
-  top:80px;
   height:max-content;
-  padding:10px;
+  position:sticky;
+  top:78px;
+  padding:9px;
 }
 
 .sidebtn{
-  display:flex;
   width:100%;
-  align-items:center;
+  display:flex;
   gap:10px;
+  align-items:center;
+  padding:12px;
   border:0;
   background:transparent;
-  padding:12px;
-  border-radius:11px;
+  border-radius:10px;
   text-align:left;
 }
 
 .sidebtn:hover{
-  background:#f2f4f7;
-}
-
-.admin-only{
-  display:none!important;
-}
-
-.admin .admin-only{
-  display:flex!important;
+  background:#f1f3f5;
 }
 
 /* =========================
-   COMPOSER
+   MIND BOX
 ========================= */
 
-.composer{
-  padding:16px;
-  margin-bottom:14px;
+.mind-card{
+  padding:15px;
+  margin-bottom:15px;
 }
 
-.compose-row{
+.mind-row{
   display:flex;
-  gap:10px;
   align-items:center;
+  gap:10px;
 }
 
 .avatar{
-  width:42px;
-  height:42px;
+  width:43px;
+  height:43px;
   border-radius:50%;
-  background:linear-gradient(135deg,#1877f2,#7c3aed);
-  color:#fff;
   display:grid;
   place-items:center;
-  font-weight:700;
   flex:none;
+  color:#fff;
+  font-weight:700;
+  background:linear-gradient(135deg,#1877f2,#7c3aed);
 }
 
-.mind{
+.mind-button{
   flex:1;
   border:1px solid #e5e7eb;
   background:#f7f8fa;
-  border-radius:24px;
+  color:#667085;
+  border-radius:25px;
+  text-align:left;
   padding:13px 17px;
-  color:#687385;
   cursor:pointer;
-  transition:.15s;
 }
 
-.mind:hover{
-  background:#eef2f6;
+.mind-button:hover{
+  background:#eef1f5;
 }
 
-.compose-tools{
-  display:flex;
-  gap:6px;
-  margin-top:12px;
-  flex-wrap:wrap;
+/*
+  IMPORTANT:
+  চারটি পোস্ট অপশন Mind Box-এর
+  ভেতরেই থাকবে।
+*/
+
+.mind-options{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:7px;
+  margin-top:13px;
 }
 
-.tool{
+.mind-option{
   border:0;
   background:#f8fafc;
-  padding:9px 12px;
-  border-radius:12px;
+  padding:11px 5px;
+  border-radius:10px;
 }
 
-.tool:hover{
+.mind-option:hover{
   background:#eef2ff;
 }
 
+.mind-icon{
+  font-size:20px;
+  display:block;
+  margin-bottom:4px;
+}
+
+.mind-label{
+  font-size:13px;
+  font-weight:600;
+}
+
 /* =========================
-   POSTS
+   POST
 ========================= */
 
 .post{
-  margin-bottom:14px;
   overflow:hidden;
+  margin-bottom:15px;
 }
 
 .post-head{
   display:flex;
-  align-items:center;
-  padding:14px 15px;
   gap:10px;
+  align-items:center;
+  padding:14px;
 }
 
-.post-meta{
+.post-info{
   flex:1;
 }
 
@@ -242,76 +243,79 @@ button{
 }
 
 .post-time{
-  font-size:12px;
   color:var(--muted);
+  font-size:12px;
   margin-top:3px;
 }
 
-.dots{
-  border:0;
-  background:transparent;
-  font-size:25px;
-  border-radius:50%;
+.more-btn{
   width:38px;
   height:38px;
+  border:0;
+  background:transparent;
+  border-radius:50%;
+  font-size:23px;
 }
 
-.dots:hover{
-  background:#f2f4f7;
+.more-btn:hover{
+  background:#f1f3f5;
 }
 
-.post-body{
+.post-text{
   padding:0 15px 13px;
   line-height:1.55;
   white-space:pre-wrap;
 }
 
-.post-img{
-  display:block;
+.post-image{
   width:100%;
-  max-height:620px;
+  display:block;
+  max-height:600px;
   object-fit:cover;
-  background:#e5e7eb;
-}
-
-.tag{
-  color:var(--blue);
-  font-weight:600;
+  background:#ddd;
 }
 
 .post-extra{
+  margin-top:9px;
   color:var(--muted);
   font-size:13px;
-  margin-top:9px;
 }
+
+/* =========================
+   STATS
+========================= */
 
 .stats{
   display:flex;
   justify-content:space-between;
+  padding:9px 15px;
   color:var(--muted);
   font-size:13px;
-  padding:8px 15px;
   border-bottom:1px solid var(--line);
 }
 
-.actions{
+/*
+  EXACTLY FOUR OPTIONS
+*/
+
+.post-actions{
   display:grid;
   grid-template-columns:repeat(4,1fr);
   padding:5px;
 }
 
-.actions button{
+.post-actions button{
   border:0;
   background:transparent;
-  padding:10px 5px;
-  border-radius:10px;
+  padding:11px 4px;
+  border-radius:9px;
 }
 
-.actions button:hover{
-  background:#f4f6f8;
+.post-actions button:hover{
+  background:#f2f4f7;
 }
 
-.actions button.active{
+.post-actions button.active{
   color:var(--blue);
   font-weight:700;
 }
@@ -321,13 +325,13 @@ button{
 ========================= */
 
 .comments{
-  padding:0 15px 13px;
+  padding:0 15px 14px;
 }
 
 .comment{
   display:flex;
   gap:8px;
-  margin-top:8px;
+  margin-top:9px;
 }
 
 .comment .avatar{
@@ -336,62 +340,54 @@ button{
   font-size:12px;
 }
 
-.bubble{
-  background:#f2f4f7;
+.comment-bubble{
+  flex:1;
+  background:#f1f3f5;
   border-radius:14px;
   padding:8px 11px;
-  flex:1;
 }
 
-.comment-input{
+.comment-box{
   display:flex;
   gap:7px;
   margin-top:10px;
 }
 
-.comment-input input{
+.comment-box input{
   flex:1;
+  min-width:0;
   border:1px solid var(--line);
+  outline:0;
   border-radius:20px;
   padding:9px 12px;
-  outline:0;
 }
 
-.comment-input input:focus{
-  border-color:var(--blue);
-}
-
-.comment-input button{
+.comment-box button{
   border:0;
-  border-radius:20px;
   background:var(--blue);
-  color:#fff;
-  padding:0 14px;
+  color:white;
+  border-radius:20px;
+  padding:0 15px;
 }
 
 /* =========================
-   RIGHT SIDE
+   RIGHT
 ========================= */
-
-.right{
-  height:max-content;
-}
 
 .right .card{
   padding:15px;
-  margin-bottom:14px;
-}
-
-.mini{
-  display:flex;
-  gap:10px;
-  align-items:center;
-  padding:8px 0;
+  margin-bottom:15px;
 }
 
 .small{
   font-size:13px;
   color:var(--muted);
+}
+
+.tool-row{
+  display:flex;
+  gap:9px;
+  padding:8px 0;
 }
 
 /* =========================
@@ -401,8 +397,8 @@ button{
 .modal{
   position:fixed;
   inset:0;
-  background:rgba(0,0,0,.52);
   z-index:100;
+  background:rgba(0,0,0,.55);
   display:none;
   align-items:flex-end;
   justify-content:center;
@@ -422,109 +418,76 @@ button{
 }
 
 .grab{
-  width:48px;
+  width:45px;
   height:5px;
-  background:#c7cdd6;
-  border-radius:9px;
-  margin:0 auto 12px;
+  background:#cbd0d7;
+  border-radius:10px;
+  margin:0 auto 13px;
 }
 
-.modal-title{
+.modal-head{
   display:flex;
   align-items:center;
   justify-content:space-between;
 }
 
 .close{
+  width:37px;
+  height:37px;
   border:0;
-  background:#f2f4f7;
-  width:36px;
-  height:36px;
   border-radius:50%;
+  background:#f1f3f5;
   font-size:22px;
 }
 
-.stepbar{
+/* =========================
+   STEPS
+========================= */
+
+.steps{
   display:flex;
-  gap:7px;
-  margin:10px 0 16px;
+  gap:6px;
+  margin:12px 0 18px;
 }
 
-.stepbar span{
-  flex:1;
+.steps span{
   height:5px;
+  flex:1;
+  border-radius:10px;
   background:#e5e7eb;
-  border-radius:8px;
 }
 
-.stepbar span.on{
+.steps span.active{
   background:var(--blue);
 }
 
 /* =========================
-   POST WRITER
+   STEP 1
 ========================= */
 
 .writer-user{
   display:flex;
-  gap:10px;
   align-items:center;
+  gap:10px;
 }
 
-.composer-large{
+.post-textarea{
+  width:100%;
+  min-height:150px;
+  resize:none;
   border:0;
   outline:0;
-  width:100%;
-  min-height:170px;
-  resize:none;
   font-size:18px;
-  padding:18px 2px 8px;
+  padding:18px 2px;
 }
 
-.media-preview{
-  display:none;
-  border-radius:14px;
-  overflow:hidden;
-  margin:8px 0;
-  position:relative;
-}
-
-.media-preview.show{
-  display:block;
-}
-
-.media-preview img,
-.media-preview video{
-  width:100%;
-  max-height:390px;
-  object-fit:cover;
-}
-
-.remove-media{
-  position:absolute;
-  right:8px;
-  top:8px;
-  border:0;
-  background:rgba(0,0,0,.65);
-  color:#fff;
-  border-radius:50%;
-  width:34px;
-  height:34px;
-  z-index:2;
-}
-
-/* =========================
-   INSIDE POST OPTIONS
-========================= */
-
-.inside-options{
+.writer-tools{
   border:1px solid var(--line);
-  border-radius:14px;
+  border-radius:13px;
   overflow:hidden;
-  margin-top:8px;
 }
 
-.inside-option{
+.writer-tool{
   width:100%;
   display:flex;
   align-items:center;
@@ -536,49 +499,72 @@ button{
   text-align:left;
 }
 
-.inside-option:last-child{
+.writer-tool:last-child{
   border-bottom:0;
 }
 
-.inside-option:hover{
+.writer-tool:hover{
   background:#f8fafc;
 }
 
-.option-icon{
-  width:38px;
-  height:38px;
+.tool-icon{
+  width:39px;
+  height:39px;
   border-radius:50%;
+  background:#eef2ff;
   display:grid;
   place-items:center;
-  background:#eef2ff;
   flex:none;
 }
 
-/* =========================
-   CHIPS
-========================= */
-
-.chips{
+.tags{
   display:flex;
   gap:7px;
-  overflow:auto;
-  padding:7px 0;
+  flex-wrap:wrap;
+  margin:9px 0;
 }
 
-.chip{
-  white-space:nowrap;
+.tag-btn{
   border:1px solid var(--line);
   background:#fff;
   border-radius:20px;
-  padding:9px 12px;
+  padding:8px 11px;
 }
 
-.chip:hover{
-  background:#f4f6f8;
+.media-preview{
+  display:none;
+  position:relative;
+  margin:10px 0;
+  border-radius:13px;
+  overflow:hidden;
+}
+
+.media-preview.show{
+  display:block;
+}
+
+.media-preview img{
+  display:block;
+  width:100%;
+  max-height:390px;
+  object-fit:cover;
+}
+
+.remove-media{
+  position:absolute;
+  right:8px;
+  top:8px;
+  z-index:3;
+  width:34px;
+  height:34px;
+  border:0;
+  border-radius:50%;
+  background:rgba(0,0,0,.7);
+  color:#fff;
 }
 
 /* =========================
-   SETTINGS STEP
+   STEP 2
 ========================= */
 
 .settings{
@@ -591,44 +577,41 @@ button{
 
 .setting{
   display:flex;
-  justify-content:space-between;
-  gap:12px;
   align-items:center;
+  justify-content:space-between;
+  gap:15px;
   padding:14px 0;
   border-bottom:1px solid var(--line);
 }
 
 .setting:last-child{
-  border:0;
+  border-bottom:0;
 }
 
-.setting select,
-.setting input{
+.setting select{
   border:1px solid var(--line);
   border-radius:9px;
   padding:8px;
-  max-width:190px;
 }
 
 .toggle{
   width:48px;
   height:27px;
+  border:0;
   border-radius:20px;
   background:#cbd5e1;
-  border:0;
   position:relative;
-  flex:none;
 }
 
 .toggle:after{
   content:"";
-  position:absolute;
   width:21px;
   height:21px;
+  position:absolute;
   top:3px;
   left:3px;
   border-radius:50%;
-  background:#fff;
+  background:white;
   transition:.2s;
 }
 
@@ -646,29 +629,25 @@ button{
 
 .nextbar{
   display:flex;
-  justify-content:flex-end;
+  justify-content:space-between;
   gap:8px;
-  margin-top:14px;
+  margin-top:15px;
 }
 
 .primary{
   border:0;
   background:var(--blue);
   color:#fff;
+  border-radius:10px;
   padding:11px 22px;
-  border-radius:11px;
   font-weight:700;
-}
-
-.primary:hover{
-  background:var(--blue-dark);
 }
 
 .secondary{
   border:0;
-  background:#eef2f6;
-  padding:11px 18px;
-  border-radius:11px;
+  background:#eef1f4;
+  border-radius:10px;
+  padding:11px 19px;
 }
 
 /* =========================
@@ -677,14 +656,16 @@ button{
 
 .menu{
   position:fixed;
-  z-index:150;
+  z-index:200;
+  display:none;
+  min-width:260px;
+  max-height:80vh;
+  overflow:auto;
   background:#fff;
   border:1px solid var(--line);
-  box-shadow:0 15px 45px rgba(0,0,0,.18);
   border-radius:14px;
+  box-shadow:0 15px 45px rgba(0,0,0,.2);
   padding:7px;
-  display:none;
-  min-width:250px;
 }
 
 .menu.show{
@@ -702,7 +683,7 @@ button{
 }
 
 .menu button:hover{
-  background:#f2f4f7;
+  background:#f1f3f5;
 }
 
 .danger{
@@ -715,17 +696,15 @@ button{
 
 .toast{
   position:fixed;
-  left:50%;
+  z-index:300;
   bottom:20px;
+  left:50%;
   transform:translateX(-50%);
   background:#111827;
   color:#fff;
-  padding:12px 16px;
+  padding:12px 17px;
   border-radius:12px;
-  z-index:200;
   display:none;
-  max-width:90%;
-  text-align:center;
 }
 
 .toast.show{
@@ -733,12 +712,12 @@ button{
 }
 
 /* =========================
-   EMPTY STATE
+   EMPTY
 ========================= */
 
 .empty{
-  padding:35px 20px;
   text-align:center;
+  padding:40px 20px;
   color:var(--muted);
 }
 
@@ -758,18 +737,6 @@ button{
     display:none;
   }
 
-  .topbar{
-    position:sticky;
-  }
-
-  .nav{
-    gap:0;
-  }
-
-  .nav button{
-    padding:9px;
-  }
-
   .search{
     display:none;
   }
@@ -778,15 +745,7 @@ button{
 @media(max-width:520px){
 
   .layout{
-    padding:9px;
-  }
-
-  .card{
-    border-radius:13px;
-  }
-
-  .topbar{
-    height:56px;
+    padding:8px;
   }
 
   .brand{
@@ -794,13 +753,20 @@ button{
   }
 
   .nav button{
-    font-size:18px;
+    font-size:17px;
     padding:7px;
   }
 
-  .actions button{
-    font-size:13px;
-    padding:9px 2px;
+  .mind-options{
+    grid-template-columns:repeat(4,1fr);
+  }
+
+  .mind-label{
+    font-size:11px;
+  }
+
+  .post-actions button{
+    font-size:12px;
   }
 
   .sheet{
@@ -809,13 +775,6 @@ button{
 
   .setting{
     align-items:flex-start;
-    flex-direction:column;
-  }
-
-  .setting select,
-  .setting input{
-    max-width:none;
-    width:100%;
   }
 }
 </style>
@@ -834,46 +793,16 @@ button{
   <input
     id="search"
     class="search"
-    placeholder="Search Zemivo"
-  >
+    placeholder="Search Zemivo">
 
   <nav class="nav">
 
-    <button
-      title="Home"
-      onclick="goHome()">
-      ⌂
-    </button>
-
-    <button
-      title="Reels"
-      onclick="toast('Reels module')">
-      ▣
-    </button>
-
-    <button
-      title="Friends"
-      onclick="toast('Friends')">
-      ♧
-    </button>
-
-    <button
-      title="Marketplace"
-      onclick="toast('Marketplace')">
-      🛍
-    </button>
-
-    <button
-      title="Notifications"
-      onclick="toast('Notifications')">
-      🔔
-    </button>
-
-    <button
-      title="Profile"
-      onclick="toast('Profile')">
-      ◉
-    </button>
+    <button onclick="goHome()">⌂</button>
+    <button onclick="showToast('Reels')">▣</button>
+    <button onclick="showToast('Friends')">♧</button>
+    <button onclick="showToast('Marketplace')">🛍</button>
+    <button onclick="showToast('Notifications')">🔔</button>
+    <button onclick="showToast('Profile')">◉</button>
 
   </nav>
 
@@ -883,170 +812,93 @@ button{
 <main class="layout">
 
 <!-- =========================
-     LEFT SIDEBAR
+     LEFT
 ========================= -->
 
 <aside class="sidebar panel">
 
-  <button
-    class="sidebtn"
-    onclick="goHome()">
-    🏠 Home
-  </button>
-
-  <button
-    class="sidebtn"
-    onclick="toast('Friends')">
-    👥 Friends
-  </button>
-
-  <button
-    class="sidebtn"
-    onclick="toast('Groups')">
-    👨‍👩‍👧 Groups
-  </button>
-
-  <button
-    class="sidebtn"
-    onclick="toast('Saved posts')">
-    🔖 Saved
-  </button>
-
-  <button
-    class="sidebtn"
-    onclick="toast('Marketplace')">
-    🛍️ Marketplace
-  </button>
-
-  <button
-    class="sidebtn"
-    onclick="toast('Messenger')">
-    💬 Messenger
-  </button>
-
-  <button
-    class="sidebtn"
-    onclick="toast('Notifications')">
-    🔔 Notifications
-  </button>
-
-  <button
-    class="sidebtn"
-    onclick="toast('Settings')">
-    ⚙️ Settings
-  </button>
-
-  <button
-    class="sidebtn admin-only"
-    onclick="adminBroadcast()">
-    📢 Admin broadcast
-  </button>
+  <button class="sidebtn" onclick="goHome()">🏠 Home</button>
+  <button class="sidebtn" onclick="showToast('Friends')">👥 Friends</button>
+  <button class="sidebtn" onclick="showToast('Groups')">👨‍👩‍👧 Groups</button>
+  <button class="sidebtn" onclick="showToast('Saved')">🔖 Saved</button>
+  <button class="sidebtn" onclick="showToast('Marketplace')">🛍️ Marketplace</button>
+  <button class="sidebtn" onclick="showToast('Messenger')">💬 Messenger</button>
+  <button class="sidebtn" onclick="showToast('Notifications')">🔔 Notifications</button>
+  <button class="sidebtn" onclick="showToast('Settings')">⚙️ Settings</button>
 
 </aside>
 
 
 <!-- =========================
-     MAIN FEED
+     FEED
 ========================= -->
 
 <section>
 
-  <!-- MAIN MIND BOX -->
+  <!-- =========================
+       MIND BOX
+  ========================= -->
 
-  <div class="composer card">
+  <div class="mind-card card">
 
-    <div class="compose-row">
+    <div class="mind-row">
 
-      <div
-        class="avatar"
-        id="meAvatar">
-        Z
-      </div>
+      <div class="avatar">Z</div>
 
-      <div
-        class="mind"
+      <button
+        class="mind-button"
         onclick="openComposer()">
+
         What's on your mind?
-      </div>
+
+      </button>
 
     </div>
 
+
     <!--
-      IMPORTANT:
-      Main posting options remain INSIDE
-      the same composer card.
+      EXACTLY FOUR OPTIONS
+      AND ALL ARE INSIDE THE BOX
     -->
 
-    <div class="inside-options">
+    <div class="mind-options">
 
       <button
-        class="inside-option"
+        class="mind-option"
         onclick="openComposer('photo')">
 
-        <div class="option-icon">
-          🖼️
-        </div>
-
-        <div>
-          <b>Photo / Video</b>
-          <div class="small">
-            Share a photo or video
-          </div>
-        </div>
+        <span class="mind-icon">🖼️</span>
+        <span class="mind-label">Photo</span>
 
       </button>
 
 
       <button
-        class="inside-option"
+        class="mind-option"
         onclick="openComposer('live')">
 
-        <div class="option-icon">
-          🔴
-        </div>
-
-        <div>
-          <b>Live</b>
-          <div class="small">
-            Start a live session
-          </div>
-        </div>
+        <span class="mind-icon">🔴</span>
+        <span class="mind-label">Live</span>
 
       </button>
 
 
       <button
-        class="inside-option"
+        class="mind-option"
         onclick="openComposer('feeling')">
 
-        <div class="option-icon">
-          😊
-        </div>
-
-        <div>
-          <b>Feeling / Activity</b>
-          <div class="small">
-            Share how you feel
-          </div>
-        </div>
+        <span class="mind-icon">😊</span>
+        <span class="mind-label">Feeling</span>
 
       </button>
 
 
       <button
-        class="inside-option"
+        class="mind-option"
         onclick="openComposer('location')">
 
-        <div class="option-icon">
-          📍
-        </div>
-
-        <div>
-          <b>Location</b>
-          <div class="small">
-            Add a location
-          </div>
-        </div>
+        <span class="mind-icon">📍</span>
+        <span class="mind-label">Location</span>
 
       </button>
 
@@ -1055,15 +907,13 @@ button{
   </div>
 
 
-  <!-- FEED -->
-
   <div id="feed"></div>
 
 </section>
 
 
 <!-- =========================
-     RIGHT SIDEBAR
+     RIGHT
 ========================= -->
 
 <aside class="right">
@@ -1073,38 +923,19 @@ button{
     <b>Zemivo</b>
 
     <p class="small">
-      Social platform prototype.
-      Posts are saved locally during testing.
-      Firestore synchronization is prepared
-      for the next backend phase.
+      Your social platform.
     </p>
 
   </div>
-
 
   <div class="card">
 
     <b>Quick tools</b>
 
-    <div class="mini">
-      💰
-      <span>Coin & Creator</span>
-    </div>
-
-    <div class="mini">
-      🔗
-      <span>Affiliate</span>
-    </div>
-
-    <div class="mini">
-      🚚
-      <span>Drop-shipping</span>
-    </div>
-
-    <div class="mini">
-      🛡️
-      <span>Safety</span>
-    </div>
+    <div class="tool-row">💰 Coin & Creator</div>
+    <div class="tool-row">🔗 Affiliate</div>
+    <div class="tool-row">🚚 Drop-shipping</div>
+    <div class="tool-row">🛡️ Safety</div>
 
   </div>
 
@@ -1113,9 +944,9 @@ button{
 </main>
 
 
-<!-- ==================================================
-     POST CREATOR
-================================================== -->
+<!-- =====================================================
+     COMPOSER
+===================================================== -->
 
 <div
   id="composerModal"
@@ -1126,7 +957,7 @@ button{
     <div class="grab"></div>
 
 
-    <div class="modal-title">
+    <div class="modal-head">
 
       <h2 id="composerTitle">
         Create post
@@ -1134,34 +965,36 @@ button{
 
       <button
         class="close"
-        onclick="closeModal('composerModal')">
+        onclick="closeComposer()">
+
         ×
+
       </button>
 
     </div>
 
 
-    <!-- STEP INDICATOR -->
+    <!-- STEP BAR -->
 
-    <div class="stepbar">
+    <div class="steps">
 
       <span
-        id="s1"
-        class="on">
+        id="stepOneBar"
+        class="active">
       </span>
 
       <span
-        id="s2">
+        id="stepTwoBar">
       </span>
 
     </div>
 
 
-    <!-- ==================================================
-         STEP 1
-    ================================================== -->
+    <!-- =================================================
+         STEP ONE
+    ================================================= -->
 
-    <section id="composeStep1">
+    <section id="stepOne">
 
       <div class="writer-user">
 
@@ -1174,7 +1007,7 @@ button{
           <b>Zemivo User</b>
 
           <div class="small">
-            Create something for your audience
+            Create your post
           </div>
 
         </div>
@@ -1184,41 +1017,34 @@ button{
 
       <textarea
         id="postText"
-        class="composer-large"
-        placeholder="What's on your mind?">
-      </textarea>
+        class="post-textarea"
+        placeholder="What's on your mind?"></textarea>
 
 
-      <!-- TAG OPTIONS -->
+      <!-- SMALL POST TAG TOOLS -->
 
-      <div class="chips">
+      <div class="tags">
 
         <button
-          class="chip"
-          onclick="insertText('@')">
+          class="tag-btn"
+          onclick="mention()">
           @ Mention
         </button>
 
         <button
-          class="chip"
-          onclick="insertText('#')">
+          class="tag-btn"
+          onclick="hashtag()">
           # Hashtag
         </button>
 
         <button
-          class="chip"
-          onclick="addLocation()">
-          📍 Location
-        </button>
-
-        <button
-          class="chip"
+          class="tag-btn"
           onclick="addGroup()">
           👥 Group
         </button>
 
         <button
-          class="chip"
+          class="tag-btn"
           onclick="addProduct()">
           🔗 Product
         </button>
@@ -1226,7 +1052,7 @@ button{
       </div>
 
 
-      <!-- MEDIA -->
+      <!-- MEDIA PREVIEW -->
 
       <div
         id="mediaPreview"
@@ -1234,96 +1060,215 @@ button{
 
         <button
           class="remove-media"
-          onclick="clearMedia()">
+          onclick="removeMedia()">
+
           ×
+
         </button>
 
         <img
-          id="previewImg"
+          id="previewImage"
           alt="Preview">
 
       </div>
 
 
       <input
-        id="galleryInput"
+        id="mediaInput"
         type="file"
-        accept="image/*,video/*"
+        accept="image/*"
         hidden
-        onchange="handleMedia(event)">
+        onchange="selectMedia(event)">
 
 
-      <!-- INSIDE WRITER TOOLS -->
+      <!--
+        ALL POST TOOLS INSIDE THE CREATOR
+      -->
 
-      <div class="inside-options">
+      <div class="writer-tools">
 
         <button
-          class="inside-option"
-          onclick="document.getElementById('galleryInput').click()">
+          class="writer-tool"
+          onclick="document.getElementById('mediaInput').click()">
 
-          <div class="option-icon">
-            🖼️
-          </div>
+          <div class="tool-icon">🖼️</div>
 
           <div>
+
             <b>Photo / Video</b>
+
             <div class="small">
-              Add media to your post
+              Add photo or video
             </div>
+
           </div>
 
         </button>
 
 
         <button
-          class="inside-option"
-          onclick="addGif()">
+          class="writer-tool"
+          onclick="addGIF()">
 
-          <div class="option-icon">
+          <div class="tool-icon">
             GIF
           </div>
 
           <div>
+
             <b>GIF</b>
+
             <div class="small">
               Add a GIF
             </div>
+
           </div>
 
         </button>
 
 
         <button
-          class="inside-option"
+          class="writer-tool"
           onclick="addFeeling()">
 
-          <div class="option-icon">
+          <div class="tool-icon">
             😊
           </div>
 
           <div>
+
             <b>Feeling / Activity</b>
+
             <div class="small">
-              Add a feeling
+              Tell people how you feel
             </div>
+
           </div>
 
         </button>
 
 
         <button
-          class="inside-option"
+          class="writer-tool"
           onclick="addLocation()">
 
-          <div class="option-icon">
+          <div class="tool-icon">
             📍
           </div>
 
           <div>
+
             <b>Location</b>
+
             <div class="small">
               Add your location
             </div>
+
+          </div>
+
+        </button>
+
+
+        <button
+          class="writer-tool"
+          onclick="addLiveInfo()">
+
+          <div class="tool-icon">
+            🔴
+          </div>
+
+          <div>
+
+            <b>Live</b>
+
+            <div class="small">
+              Prepare a live post
+            </div>
+
+          </div>
+
+        </button>
+
+
+        <button
+          class="writer-tool"
+          onclick="addBackground()">
+
+          <div class="tool-icon">
+            🎨
+          </div>
+
+          <div>
+
+            <b>Background</b>
+
+            <div class="small">
+              Choose post background
+            </div>
+
+          </div>
+
+        </button>
+
+
+        <button
+          class="writer-tool"
+          onclick="addPoll()">
+
+          <div class="tool-icon">
+            📊
+          </div>
+
+          <div>
+
+            <b>Poll</b>
+
+            <div class="small">
+              Create a poll
+            </div>
+
+          </div>
+
+        </button>
+
+
+        <button
+          class="writer-tool"
+          onclick="addEvent()">
+
+          <div class="tool-icon">
+            📅
+          </div>
+
+          <div>
+
+            <b>Event</b>
+
+            <div class="small">
+              Add an event
+            </div>
+
+          </div>
+
+        </button>
+
+
+        <button
+          class="writer-tool"
+          onclick="addProduct()">
+
+          <div class="tool-icon">
+            🔗
+          </div>
+
+          <div>
+
+            <b>Affiliate Product</b>
+
+            <div class="small">
+              Add product or affiliate link
+            </div>
+
           </div>
 
         </button>
@@ -1335,10 +1280,14 @@ button{
 
       <div class="nextbar">
 
+        <div></div>
+
         <button
           class="primary"
-          onclick="nextPostStep()">
-          Next
+          onclick="goToStepTwo()">
+
+          Next →
+
         </button>
 
       </div>
@@ -1346,12 +1295,12 @@ button{
     </section>
 
 
-    <!-- ==================================================
-         STEP 2
-    ================================================== -->
+    <!-- =================================================
+         STEP TWO
+    ================================================= -->
 
     <section
-      id="composeStep2"
+      id="stepTwo"
       class="settings">
 
       <h3>
@@ -1362,57 +1311,20 @@ button{
       <div class="setting">
 
         <div>
-          <b>Post audience</b>
+
+          <b>🌍 Audience</b>
 
           <div class="small">
-            Who can see this post?
+            Who can see your post?
           </div>
 
         </div>
 
         <select id="audience">
 
-          <option>
-            Public
-          </option>
-
-          <option>
-            Friends
-          </option>
-
-          <option>
-            Only me
-          </option>
-
-        </select>
-
-      </div>
-
-
-      <div class="setting">
-
-        <div>
-          <b>Who can comment</b>
-
-          <div class="small">
-            Choose who may comment
-          </div>
-
-        </div>
-
-        <select id="comments">
-
-          <option>
-            Public
-          </option>
-
-          <option>
-            Friends
-          </option>
-
-          <option>
-            Off
-          </option>
+          <option>Public</option>
+          <option>Friends</option>
+          <option>Only me</option>
 
         </select>
 
@@ -1423,19 +1335,21 @@ button{
 
         <div>
 
-          <b>Share to Story</b>
+          <b>💬 Comments</b>
 
           <div class="small">
-            Add this post to your story
+            Who can comment?
           </div>
 
         </div>
 
-        <button
-          id="storyToggle"
-          class="toggle"
-          onclick="toggle(this)">
-        </button>
+        <select id="commentPermission">
+
+          <option>Public</option>
+          <option>Friends</option>
+          <option>Off</option>
+
+        </select>
 
       </div>
 
@@ -1444,30 +1358,10 @@ button{
 
         <div>
 
-          <b>Monetization</b>
+          <b>📖 Share to Story</b>
 
           <div class="small">
-            Creator monetization tools
-          </div>
-
-        </div>
-
-        <button
-          class="toggle"
-          onclick="toggle(this)">
-        </button>
-
-      </div>
-
-
-      <div class="setting">
-
-        <div>
-
-          <b>AI Label</b>
-
-          <div class="small">
-            Label realistic AI content
+            Also publish to your story
           </div>
 
         </div>
@@ -1484,10 +1378,30 @@ button{
 
         <div>
 
-          <b>Affiliate product</b>
+          <b>💰 Monetization</b>
 
           <div class="small">
-            Attach product link
+            Enable creator earning
+          </div>
+
+        </div>
+
+        <button
+          class="toggle"
+          onclick="toggle(this)">
+        </button>
+
+      </div>
+
+
+      <div class="setting">
+
+        <div>
+
+          <b>🔗 Affiliate</b>
+
+          <div class="small">
+            Attach affiliate product
           </div>
 
         </div>
@@ -1495,7 +1409,9 @@ button{
         <button
           class="secondary"
           onclick="addProduct()">
+
           Add
+
         </button>
 
       </div>
@@ -1505,10 +1421,10 @@ button{
 
         <div>
 
-          <b>Group</b>
+          <b>👥 Group</b>
 
           <div class="small">
-            Publish to a group
+            Publish inside a group
           </div>
 
         </div>
@@ -1516,26 +1432,71 @@ button{
         <button
           class="secondary"
           onclick="addGroup()">
+
           Choose
+
         </button>
 
       </div>
 
 
-      <div
-        class="nextbar"
-        style="justify-content:space-between">
+      <div class="setting">
+
+        <div>
+
+          <b>🤖 AI Label</b>
+
+          <div class="small">
+            Mark AI-generated content
+          </div>
+
+        </div>
+
+        <button
+          class="toggle"
+          onclick="toggle(this)">
+        </button>
+
+      </div>
+
+
+      <div class="setting">
+
+        <div>
+
+          <b>🔔 Notifications</b>
+
+          <div class="small">
+            Notify people about this post
+          </div>
+
+        </div>
+
+        <button
+          class="toggle on"
+          onclick="toggle(this)">
+        </button>
+
+      </div>
+
+
+      <div class="nextbar">
 
         <button
           class="secondary"
-          onclick="previousPostStep()">
-          Back
+          onclick="backToStepOne()">
+
+          ← Back
+
         </button>
+
 
         <button
           class="primary"
           onclick="publishPost()">
-          Share
+
+          Share Post
+
         </button>
 
       </div>
@@ -1547,60 +1508,60 @@ button{
 </div>
 
 
-<!-- ==================================================
+<!-- =====================================================
      THREE DOT MENU
-================================================== -->
+===================================================== -->
 
 <div
   id="postMenu"
   class="menu">
 
-  <button onclick="editSelected()">
+  <button onclick="editPost()">
     ✏️ Edit post
   </button>
 
-  <button onclick="saveSelected()">
+  <button onclick="savePost()">
     🔖 Save post
   </button>
 
-  <button onclick="manageProductSelected()">
-    🔗 Manage product link
+  <button onclick="pinPost()">
+    📌 Pin post
   </button>
 
-  <button onclick="commentSettingsSelected()">
-    💬 Who can comment
+  <button onclick="copyPostLink()">
+    📋 Copy post link
   </button>
 
-  <button onclick="privacySelected()">
+  <button onclick="changePrivacy()">
     🌍 Edit privacy
   </button>
 
-  <button onclick="archiveSelected()">
-    🗄️ Move to archive
+  <button onclick="changeComments()">
+    💬 Comment settings
+  </button>
+
+  <button onclick="manageProduct()">
+    🔗 Manage product
+  </button>
+
+  <button onclick="archivePost()">
+    🗄️ Archive post
+  </button>
+
+  <button onclick="togglePostNotifications()">
+    🔔 Notifications
+  </button>
+
+  <button onclick="reportPost()">
+    ⚠️ Report post
   </button>
 
   <button
-    onclick="trashSelected()"
-    class="danger">
-    🗑️ Delete / Move to trash
-  </button>
+    class="danger"
+    onclick="deletePost()">
 
-  <button onclick="toggleNotificationsSelected()">
-    🔕 Toggle notifications
-  </button>
+    🗑️ Move to trash
 
-  <button onclick="copySelectedLink()">
-    📋 Copy link
-  </button>
-
-  <button onclick="sparkSelected()">
-    ✨ Spark
-  </button>
-
-  <button
-    class="admin-only"
-    onclick="adminBoostSelected()">
-    📢 Admin broadcast
   </button>
 
 </div>
@@ -1612,425 +1573,439 @@ button{
 </div>
 
 
-<!-- ==================================================
-     FIREBASE + APPLICATION
-================================================== -->
+<script>
 
-<script type="module">
+/* =====================================================
+   DATA
+===================================================== */
 
-/* ==================================================
-   FIREBASE IMPORTS
-================================================== */
-
-import {
-  initializeApp
-} from
-"https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
-
-
-import {
-  getAuth,
-  onAuthStateChanged
-} from
-"https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
-
-
-import {
-  getFirestore,
-  collection,
-  doc,
-  setDoc,
-  serverTimestamp
-} from
-"https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
-
-
-/* ==================================================
-   FIREBASE CONFIG
-================================================== */
-
-const firebaseConfig = {
-
-  apiKey:
-    "AIzaSyAxJUFBWm2fa0g3oxUWWqdfSTEAc-bRgfI",
-
-  authDomain:
-    "zemivo.firebaseapp.com",
-
-  projectId:
-    "zemivo",
-
-  storageBucket:
-    "zemivo.firebasestorage.app",
-
-  messagingSenderId:
-    "195335939691",
-
-  appId:
-    "1:195335939691:web:5fa5c62c53d0c0aefe732e",
-
-  measurementId:
-    "G-GNHH5S4H09"
-
-};
-
-
-const app =
-  initializeApp(firebaseConfig);
-
-
-const auth =
-  getAuth(app);
-
-
-const db =
-  getFirestore(app);
-
-
-/* ==================================================
-   APPLICATION STATE
-================================================== */
-
-const KEY =
-  "zemivo_test_posts_v8";
-
+const STORAGE_KEY =
+  "zemivo_complete_posts_v1";
 
 let posts =
   JSON.parse(
-    localStorage.getItem(KEY) || "[]"
+    localStorage.getItem(STORAGE_KEY) || "[]"
   );
 
-
-let selectedPostId =
-  null;
-
-
-let selectedMedia =
-  "";
-
-
-let selectedProduct =
-  "";
+let selectedPostId = null;
+let selectedMedia = "";
+let selectedLocation = "";
+let selectedGroup = "";
+let selectedProduct = "";
+let editingId = null;
 
 
-let selectedGroup =
-  "";
+/* =====================================================
+   SAVE
+===================================================== */
 
-
-let selectedLocation =
-  "";
-
-
-let editingId =
-  null;
-
-
-let currentUser =
-  null;
-
-
-/* ==================================================
-   AUTH STATE
-================================================== */
-
-onAuthStateChanged(
-  auth,
-  user => {
-
-    currentUser =
-      user || null;
-
-    if(user){
-
-      const name =
-        user.displayName || "Z";
-
-      document.getElementById(
-        "meAvatar"
-      ).textContent =
-        name.charAt(0).toUpperCase();
-
-    }
-
-  }
-);
-
-
-/* ==================================================
-   BASIC HELPERS
-================================================== */
-
-function uid(){
-
-  return Date.now().toString(36)
-    +
-    Math.random()
-      .toString(36)
-      .slice(2,9);
-
-}
-
-
-function saveLocal(){
+function save(){
 
   localStorage.setItem(
-    KEY,
+    STORAGE_KEY,
     JSON.stringify(posts)
   );
 
 }
 
 
-function find(id){
+/* =====================================================
+   ID
+===================================================== */
 
-  return posts.find(
-    p => p.id === id
-  );
+function createId(){
 
-}
-
-
-function esc(value){
-
-  return String(value ?? "")
-    .replace(
-      /[&<>"']/g,
-      m => ({
-        "&":"&amp;",
-        "<":"&lt;",
-        ">":"&gt;",
-        '"':"&quot;",
-        "'":"&#039;"
-      }[m])
-    );
+  return Date.now().toString(36)
+    +
+    Math.random()
+      .toString(36)
+      .substring(2,9);
 
 }
 
 
-/* ==================================================
-   TEXT FORMAT
-================================================== */
+/* =====================================================
+   ESCAPE
+===================================================== */
 
-function formatText(text){
+function escapeHTML(value){
 
-  return esc(text)
-
-    .replace(
-      /(^|[\s])(@[A-Za-z0-9_\u0980-\u09ff]+)/g,
-      '$1<span class="tag">$2</span>'
-    )
-
-    .replace(
-      /(^|[\s])(#[A-Za-z0-9_\u0980-\u09ff]+)/g,
-      '$1<span class="tag">$2</span>'
-    );
+  return String(value || "")
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
 
 }
 
 
-/* ==================================================
+/* =====================================================
    TOAST
-================================================== */
+===================================================== */
 
-window.toast =
-function(text){
+function showToast(message){
 
-  const el =
-    document.getElementById(
-      "toast"
-    );
+  const toast =
+    document.getElementById("toast");
 
-  el.textContent =
-    text;
+  toast.textContent =
+    message;
 
-  el.classList.add(
-    "show"
-  );
+  toast.classList.add("show");
 
-  clearTimeout(
-    window.__toastTimer
-  );
+  clearTimeout(window.toastTimer);
 
-  window.__toastTimer =
-    setTimeout(
-      () => {
-        el.classList.remove(
-          "show"
-        );
-      },
-      2200
-    );
+  window.toastTimer =
+    setTimeout(() => {
 
-};
+      toast.classList.remove("show");
+
+    },2200);
+
+}
 
 
-/* ==================================================
-   MODALS
-================================================== */
-
-window.openModal =
-function(id){
-
-  document
-    .getElementById(id)
-    .classList.add("show");
-
-};
-
-
-window.closeModal =
-function(id){
-
-  document
-    .getElementById(id)
-    .classList.remove("show");
-
-};
-
-
-/* ==================================================
+/* =====================================================
    HOME
-================================================== */
+===================================================== */
 
-window.goHome =
-function(){
+function goHome(){
 
   window.scrollTo({
     top:0,
     behavior:"smooth"
   });
 
-};
+}
 
 
-/* ==================================================
-   OPEN COMPOSER
-================================================== */
+/* =====================================================
+   COMPOSER
+===================================================== */
 
-window.openComposer =
-function(kind=""){
+function openComposer(kind=""){
 
-  editingId =
-    null;
+  editingId = null;
 
-  selectedMedia =
-    "";
+  selectedMedia = "";
+  selectedLocation = "";
+  selectedGroup = "";
+  selectedProduct = "";
 
-  selectedProduct =
-    "";
+  document.getElementById("postText").value = "";
 
-  selectedGroup =
-    "";
+  document.getElementById("mediaPreview")
+    .classList.remove("show");
 
-  selectedLocation =
-    "";
+  document.getElementById("mediaInput").value = "";
 
+  document.getElementById("composerTitle")
+    .textContent = "Create post";
 
-  document.getElementById(
-    "postText"
-  ).value = "";
+  resetStepOne();
 
-
-  document.getElementById(
-    "mediaPreview"
-  ).classList.remove(
-    "show"
-  );
-
-
-  document.getElementById(
-    "galleryInput"
-  ).value = "";
-
-
-  document.getElementById(
-    "composeStep1"
-  ).style.display =
-    "block";
-
-
-  document.getElementById(
-    "composeStep2"
-  ).classList.remove(
-    "show"
-  );
-
-
-  document.getElementById(
-    "s1"
-  ).classList.add("on");
-
-
-  document.getElementById(
-    "s2"
-  ).classList.remove("on");
-
-
-  const title =
-    document.getElementById(
-      "composerTitle"
-    );
-
+  document.getElementById("composerModal")
+    .classList.add("show");
 
   if(kind === "photo"){
 
-    title.textContent =
-      "Create photo / video post";
+    setTimeout(() => {
+
+      document.getElementById("mediaInput")
+        .click();
+
+    },150);
 
   }
 
-  else if(kind === "live"){
+  if(kind === "live"){
 
-    title.textContent =
-      "Create live post";
+    addLiveInfo();
 
-    toast(
-      "Live module is prepared for the next phase."
+  }
+
+  if(kind === "feeling"){
+
+    addFeeling();
+
+  }
+
+  if(kind === "location"){
+
+    addLocation();
+
+  }
+
+}
+
+
+function closeComposer(){
+
+  document.getElementById("composerModal")
+    .classList.remove("show");
+
+}
+
+
+/* =====================================================
+   STEP CONTROL
+===================================================== */
+
+function resetStepOne(){
+
+  document.getElementById("stepOne")
+    .style.display = "block";
+
+  document.getElementById("stepTwo")
+    .classList.remove("show");
+
+  document.getElementById("stepOneBar")
+    .classList.add("active");
+
+  document.getElementById("stepTwoBar")
+    .classList.remove("active");
+
+}
+
+
+function goToStepTwo(){
+
+  const text =
+    document.getElementById("postText")
+      .value.trim();
+
+  if(!text && !selectedMedia){
+
+    showToast(
+      "Write something or add a photo first."
     );
 
-  }
-
-  else{
-
-    title.textContent =
-      "Create post";
+    return;
 
   }
 
+  document.getElementById("stepOne")
+    .style.display = "none";
 
-  openModal(
-    "composerModal"
-  );
+  document.getElementById("stepTwo")
+    .classList.add("show");
 
-};
+  document.getElementById("stepOneBar")
+    .classList.remove("active");
+
+  document.getElementById("stepTwoBar")
+    .classList.add("active");
+
+}
 
 
-/* ==================================================
-   TEXT TOOLS
-================================================== */
+function backToStepOne(){
 
-window.insertText =
-function(text){
+  document.getElementById("stepTwo")
+    .classList.remove("show");
+
+  document.getElementById("stepOne")
+    .style.display = "block";
+
+  document.getElementById("stepTwoBar")
+    .classList.remove("active");
+
+  document.getElementById("stepOneBar")
+    .classList.add("active");
+
+}
+
+
+/* =====================================================
+   MEDIA
+===================================================== */
+
+function selectMedia(event){
+
+  const file =
+    event.target.files[0];
+
+  if(!file) return;
+
+  if(file.size > 8 * 1024 * 1024){
+
+    showToast(
+      "For testing use an image below 8 MB."
+    );
+
+    return;
+
+  }
+
+  if(!file.type.startsWith("image/")){
+
+    showToast(
+      "This test version previews images."
+    );
+
+    return;
+
+  }
+
+  const reader =
+    new FileReader();
+
+  reader.onload = function(){
+
+    selectedMedia =
+      reader.result;
+
+    document.getElementById("previewImage")
+      .src = selectedMedia;
+
+    document.getElementById("mediaPreview")
+      .classList.add("show");
+
+  };
+
+  reader.readAsDataURL(file);
+
+}
+
+
+function removeMedia(){
+
+  selectedMedia = "";
+
+  document.getElementById("previewImage")
+    .src = "";
+
+  document.getElementById("mediaPreview")
+    .classList.remove("show");
+
+  document.getElementById("mediaInput")
+    .value = "";
+
+}
+
+
+/* =====================================================
+   WRITER TOOLS
+===================================================== */
+
+function mention(){
 
   const area =
-    document.getElementById(
-      "postText"
-    );
+    document.getElementById("postText");
+
+  area.value += " @";
 
   area.focus();
 
+}
+
+
+function hashtag(){
+
+  const area =
+    document.getElementById("postText");
+
+  area.value += " #";
+
+  area.focus();
+
+}
+
+
+function addFeeling(){
+
+  const area =
+    document.getElementById("postText");
+
+  area.value += " 😊 Feeling happy";
+
+  area.focus();
+
+}
+
+
+function addGIF(){
+
+  const area =
+    document.getElementById("postText");
+
+  area.value += " [GIF]";
+
+  area.focus();
+
+  showToast("GIF placeholder added");
+
+}
+
+
+function addLiveInfo(){
+
+  const area =
+    document.getElementById("postText");
+
   area.value +=
-    text;
+    " 🔴 Live session";
 
-};
+  area.focus();
+
+}
 
 
-window.addLocation =
-function(){
+function addBackground(){
+
+  showToast(
+    "Background selector prepared."
+  );
+
+}
+
+
+function addPoll(){
+
+  const question =
+    prompt("Poll question");
+
+  if(question){
+
+    const area =
+      document.getElementById("postText");
+
+    area.value +=
+      "\n📊 Poll: " + question;
+
+    area.focus();
+
+  }
+
+}
+
+
+function addEvent(){
+
+  const eventName =
+    prompt("Event name");
+
+  if(eventName){
+
+    const area =
+      document.getElementById("postText");
+
+    area.value +=
+      "\n📅 Event: " + eventName;
+
+    area.focus();
+
+  }
+
+}
+
+
+function addLocation(){
 
   const value =
     prompt(
-      "Location name"
+      "Enter location"
     );
 
   if(value){
@@ -2038,21 +2013,20 @@ function(){
     selectedLocation =
       value.trim();
 
-    toast(
+    showToast(
       "Location added"
     );
 
   }
 
-};
+}
 
 
-window.addGroup =
-function(){
+function addGroup(){
 
   const value =
     prompt(
-      "Group name"
+      "Enter group name"
     );
 
   if(value){
@@ -2060,17 +2034,16 @@ function(){
     selectedGroup =
       value.trim();
 
-    toast(
+    showToast(
       "Group added"
     );
 
   }
 
-};
+}
 
 
-window.addProduct =
-function(){
+function addProduct(){
 
   const value =
     prompt(
@@ -2082,310 +2055,8 @@ function(){
     selectedProduct =
       value.trim();
 
-    toast(
-      "Product link attached"
-    );
-
-  }
-
-};
-
-
-window.addFeeling =
-function(){
-
-  const area =
-    document.getElementById(
-      "postText"
-    );
-
-  area.value +=
-    " 😊";
-
-  area.focus();
-
-};
-
-
-window.addGif =
-function(){
-
-  const area =
-    document.getElementById(
-      "postText"
-    );
-
-  area.value +=
-    " [GIF]";
-
-  area.focus();
-
-  toast(
-    "GIF placeholder added"
-  );
-
-};
-
-
-/* ==================================================
-   MEDIA
-================================================== */
-
-window.handleMedia =
-function(event){
-
-  const file =
-    event.target.files[0];
-
-  if(!file){
-    return;
-  }
-
-
-  if(
-    file.size >
-    5 * 1024 * 1024
-  ){
-
-    toast(
-      "For testing, please use a file under 5 MB."
-    );
-
-    return;
-
-  }
-
-
-  if(
-    !file.type.startsWith("image/")
-  ){
-
-    toast(
-      "Image preview is enabled in this test version."
-    );
-
-    return;
-
-  }
-
-
-  const reader =
-    new FileReader();
-
-
-  reader.onload =
-    function(){
-
-      selectedMedia =
-        reader.result;
-
-
-      document.getElementById(
-        "previewImg"
-      ).src =
-        selectedMedia;
-
-
-      document.getElementById(
-        "mediaPreview"
-      ).classList.add(
-        "show"
-      );
-
-    };
-
-
-  reader.readAsDataURL(
-    file
-  );
-
-};
-
-
-window.clearMedia =
-function(){
-
-  selectedMedia =
-    "";
-
-  document.getElementById(
-    "previewImg"
-  ).src =
-    "";
-
-  document.getElementById(
-    "mediaPreview"
-  ).classList.remove(
-    "show"
-  );
-
-  document.getElementById(
-    "galleryInput"
-  ).value =
-    "";
-
-};
-
-
-/* ==================================================
-   TOGGLES
-================================================== */
-
-window.toggle =
-function(button){
-
-  button.classList.toggle(
-    "on"
-  );
-
-};
-
-
-/* ==================================================
-   NEXT / BACK
-================================================== */
-
-window.nextPostStep =
-function(){
-
-  document.getElementById(
-    "composeStep1"
-  ).style.display =
-    "none";
-
-
-  document.getElementById(
-    "composeStep2"
-  ).classList.add(
-    "show"
-  );
-
-
-  document.getElementById(
-    "s1"
-  ).classList.remove(
-    "on"
-  );
-
-
-  document.getElementById(
-    "s2"
-  ).classList.add(
-    "on"
-  );
-
-};
-
-
-window.previousPostStep =
-function(){
-
-  document.getElementById(
-    "composeStep2"
-  ).classList.remove(
-    "show"
-  );
-
-
-  document.getElementById(
-    "composeStep1"
-  ).style.display =
-    "block";
-
-
-  document.getElementById(
-    "s2"
-  ).classList.remove(
-    "on"
-  );
-
-
-  document.getElementById(
-    "s1"
-  ).classList.add(
-    "on"
-  );
-
-};
-
-
-/* ==================================================
-   FIRESTORE SYNC
-================================================== */
-
-async function syncPostToFirestore(post){
-
-  if(!currentUser){
-
-    return;
-
-  }
-
-
-  try{
-
-    await setDoc(
-
-      doc(
-        db,
-        "posts",
-        post.id
-      ),
-
-      {
-        id:post.id,
-
-        author:post.author,
-
-        authorUid:
-          currentUser.uid,
-
-        text:post.text || "",
-
-        product:
-          post.product || "",
-
-        group:
-          post.group || "",
-
-        location:
-          post.location || "",
-
-        audience:
-          post.audience || "Public",
-
-        comments:
-          post.comments || "Public",
-
-        likes:
-          post.likes || 0,
-
-        shares:
-          post.shares || 0,
-
-        sparks:
-          post.sparks || 0,
-
-        createdAt:
-          serverTimestamp(),
-
-        updatedAt:
-          serverTimestamp()
-      },
-
-      {
-        merge:true
-      }
-
-    );
-
-  }
-
-  catch(error){
-
-    console.warn(
-      "Firestore sync waiting for Security Rules:",
-      error
+    showToast(
+      "Affiliate product added"
     );
 
   }
@@ -2393,25 +2064,30 @@ async function syncPostToFirestore(post){
 }
 
 
-/* ==================================================
-   PUBLISH
-================================================== */
+/* =====================================================
+   TOGGLE
+===================================================== */
 
-window.publishPost =
-async function(){
+function toggle(button){
+
+  button.classList.toggle("on");
+
+}
+
+
+/* =====================================================
+   PUBLISH
+===================================================== */
+
+function publishPost(){
 
   const text =
-    document.getElementById(
-      "postText"
-    ).value.trim();
+    document.getElementById("postText")
+      .value.trim();
 
+  if(!text && !selectedMedia){
 
-  if(
-    !text &&
-    !selectedMedia
-  ){
-
-    toast(
+    showToast(
       "Write something or add a photo first."
     );
 
@@ -2419,212 +2095,151 @@ async function(){
 
   }
 
+  const audience =
+    document.getElementById("audience")
+      .value;
 
-  const oldPost =
-    editingId
-      ? find(editingId)
-      : null;
-
-
-  const post = {
-
-    id:
-      editingId ||
-      uid(),
-
-    author:
-      currentUser?.displayName ||
-      "Zemivo User",
-
-    authorUid:
-      currentUser?.uid ||
-      "local-test-user",
-
-    text:
-      text,
-
-    media:
-      selectedMedia,
-
-    product:
-      selectedProduct,
-
-    group:
-      selectedGroup,
-
-    location:
-      selectedLocation,
-
-    audience:
-      document.getElementById(
-        "audience"
-      ).value,
-
-    comments:
-      document.getElementById(
-        "comments"
-      ).value,
-
-    createdAt:
-      oldPost?.createdAt ||
-      Date.now(),
-
-    likes:
-      oldPost?.likes || 0,
-
-    commentsList:
-      oldPost?.commentsList || [],
-
-    shares:
-      oldPost?.shares || 0,
-
-    sparks:
-      oldPost?.sparks || 0,
-
-    liked:
-      oldPost?.liked || false,
-
-    sparked:
-      oldPost?.sparked || false,
-
-    saved:
-      oldPost?.saved || false,
-
-    archived:
-      false,
-
-    trashed:
-      false,
-
-    broadcast:
-      oldPost?.broadcast || false
-
-  };
+  const comments =
+    document.getElementById("commentPermission")
+      .value;
 
 
   if(editingId){
 
-    const index =
-      posts.findIndex(
+    const post =
+      posts.find(
         p => p.id === editingId
       );
 
-    if(index >= 0){
+    if(post){
 
-      posts[index] =
-        post;
+      post.text = text;
+      post.media = selectedMedia;
+      post.location = selectedLocation;
+      post.group = selectedGroup;
+      post.product = selectedProduct;
+      post.audience = audience;
+      post.comments = comments;
 
     }
 
-  }
+    showToast(
+      "Post updated"
+    );
 
-  else{
+  }else{
 
-    posts.unshift(
-      post
+    const post = {
+
+      id:createId(),
+
+      author:"Zemivo User",
+
+      text:text,
+
+      media:selectedMedia,
+
+      location:selectedLocation,
+
+      group:selectedGroup,
+
+      product:selectedProduct,
+
+      audience:audience,
+
+      comments:comments,
+
+      createdAt:Date.now(),
+
+      likes:0,
+
+      liked:false,
+
+      shares:0,
+
+      saved:false,
+
+      pinned:false,
+
+      commentsList:[],
+
+      archived:false,
+
+      trashed:false
+
+    };
+
+    posts.unshift(post);
+
+    showToast(
+      "Post shared successfully"
     );
 
   }
 
-
-  saveLocal();
+  save();
 
   render();
 
-  closeModal(
-    "composerModal"
-  );
+  closeComposer();
+
+}
 
 
-  toast(
-    editingId
-      ? "Post updated successfully"
-      : "Post shared successfully"
-  );
-
-
-  await syncPostToFirestore(
-    post
-  );
-
-
-  editingId =
-    null;
-
-};
-
-
-/* ==================================================
+/* =====================================================
    RENDER
-================================================== */
+===================================================== */
 
 function render(){
 
   const feed =
-    document.getElementById(
-      "feed"
-    );
+    document.getElementById("feed");
 
-
-  const query =
-    document.getElementById(
-      "search"
-    ).value
+  const search =
+    document.getElementById("search")
+      .value
       .trim()
       .toLowerCase();
 
-
   const visible =
-    posts
+    posts.filter(p => {
 
-      .filter(
-        p =>
-          !p.trashed &&
-          !p.archived
-      )
+      if(p.trashed || p.archived)
+        return false;
 
-      .filter(
-        p => {
+      const combined =
+        (
+          p.text +
+          " " +
+          p.location +
+          " " +
+          p.group
+        ).toLowerCase();
 
-          const text =
-            (
-              p.text +
-              " " +
-              p.group +
-              " " +
-              p.location
-            )
-            .toLowerCase();
+      return combined.includes(search);
 
-          return text.includes(
-            query
-          );
-
-        }
-
-      );
+    });
 
 
-  if(
-    !visible.length
-  ){
+  if(!visible.length){
 
-    feed.innerHTML =
-      `
+    feed.innerHTML = `
+
       <div class="card empty">
 
-        <div style="font-size:40px">
+        <div style="font-size:42px">
           📝
         </div>
 
         <h3>No posts yet</h3>
 
-        <div>
+        <p>
           Create your first Zemivo post.
-        </div>
+        </p>
 
       </div>
-      `;
+
+    `;
 
     return;
 
@@ -2633,449 +2248,314 @@ function render(){
 
   feed.innerHTML =
     visible
-      .map(
-        postHTML
-      )
+      .map(postHTML)
       .join("");
 
 }
 
 
-/* ==================================================
+/* =====================================================
    POST HTML
-================================================== */
+===================================================== */
 
-function postHTML(p){
+function postHTML(post){
 
   const comments =
-    (p.commentsList || [])
-
-      .map(
-        c => `
+    (post.commentsList || [])
+      .map(comment => `
 
         <div class="comment">
 
           <div class="avatar">
-            ${esc(
-              (c.name || "U")
+
+            ${escapeHTML(
+              (comment.name || "Z")
                 .charAt(0)
                 .toUpperCase()
             )}
+
           </div>
 
-          <div class="bubble">
+          <div class="comment-bubble">
 
             <b>
-              ${esc(c.name)}
+              ${escapeHTML(comment.name)}
             </b>
 
             <br>
 
-            ${esc(c.text)}
+            ${escapeHTML(comment.text)}
 
           </div>
 
         </div>
 
-        `
-      )
+      `)
       .join("");
 
 
-  const media =
-    p.media
+  let extras = "";
 
-      ? `
-        <img
-          class="post-img"
-          src="${p.media}"
-          alt="Zemivo post image">
-        `
+  if(post.location){
 
-      : "";
+    extras +=
+      "📍 " +
+      escapeHTML(post.location) +
+      " ";
 
+  }
 
-  const extras = [
+  if(post.group){
 
-    p.location
-      ? `📍 ${esc(p.location)}`
-      : "",
+    extras +=
+      " · 👥 " +
+      escapeHTML(post.group);
 
-    p.group
-      ? `👥 ${esc(p.group)}`
-      : "",
+  }
 
-    p.product
-      ? `🔗 Affiliate`
-      : "",
+  if(post.product){
 
-    p.broadcast
-      ? `📢 Admin broadcast`
-      : ""
+    extras +=
+      " · 🔗 Affiliate";
 
-  ]
-
-  .filter(Boolean)
-  .join(" · ");
+  }
 
 
   return `
 
-  <article
-    class="post card"
-    id="post-${p.id}">
+    <article
+      class="post card"
+      id="post-${post.id}">
+
+      <div class="post-head">
+
+        <div class="avatar">
+          Z
+        </div>
+
+        <div class="post-info">
+
+          <div class="post-name">
+            ${escapeHTML(post.author)}
+          </div>
+
+          <div class="post-time">
+
+            ${new Date(post.createdAt)
+              .toLocaleString()}
+
+            ·
+
+            ${escapeHTML(
+              post.audience || "Public"
+            )}
+
+          </div>
+
+        </div>
 
 
-    <div class="post-head">
+        <button
+          class="more-btn"
+          onclick="openPostMenu('${post.id}',event)">
 
-      <div class="avatar">
+          ⋯
 
-        ${esc(
-          (p.author || "Z")
-            .charAt(0)
-            .toUpperCase()
-        )}
+        </button>
 
       </div>
-
-
-      <div class="post-meta">
-
-        <div class="post-name">
-          ${esc(p.author)}
-        </div>
-
-        <div class="post-time">
-
-          ${new Date(
-            p.createdAt
-          ).toLocaleString()}
-
-          ·
-
-          ${esc(
-            p.audience ||
-            "Public"
-          )}
-
-        </div>
-
-      </div>
-
-
-      <button
-        class="dots"
-        onclick="openPostMenu('${p.id}',event)">
-
-        ⋯
-
-      </button>
-
-    </div>
-
-
-    ${
-      p.text
-
-        ? `
-
-        <div class="post-body">
-
-          ${formatText(
-            p.text
-          )}
-
-          ${
-            extras
-
-              ? `
-                <div class="post-extra">
-                  ${extras}
-                </div>
-                `
-
-              : ""
-          }
-
-        </div>
-
-        `
-
-        : extras
-
-          ? `
-            <div class="post-body">
-
-              <div class="post-extra">
-                ${extras}
-              </div>
-
-            </div>
-            `
-
-          : ""
-
-    }
-
-
-    ${media}
-
-
-    <div class="stats">
-
-      <span>
-        ${p.likes || 0} Likes
-      </span>
-
-      <span>
-
-        ${(p.commentsList || []).length}
-        Comments
-
-        ·
-
-        ${p.shares || 0}
-        Shares
-
-        ·
-
-        ${p.sparks || 0}
-        Sparks
-
-      </span>
-
-    </div>
-
-
-    <div class="actions">
-
-      <button
-        class="${p.liked ? "active" : ""}"
-        onclick="likePost('${p.id}')">
-
-        👍 Like
-
-      </button>
-
-
-      <button
-        onclick="focusComment('${p.id}')">
-
-        💬 Comment
-
-      </button>
-
-
-      <button
-        onclick="sharePost('${p.id}')">
-
-        ↗ Share
-
-      </button>
-
-
-      <button
-        class="${p.sparked ? "active" : ""}"
-        onclick="sparkPost('${p.id}')">
-
-        ✨ Spark
-
-      </button>
-
-    </div>
-
-
-    <div class="comments">
-
-      ${comments}
 
 
       ${
-        p.comments !== "Off"
+        post.text
+        ? `
 
-          ? `
+          <div class="post-text">
 
-          <div class="comment-input">
+            ${escapeHTML(post.text)}
 
-            <input
-              id="ci-${p.id}"
-              placeholder="Write a comment..."
-              onkeydown="
-                if(event.key==='Enter')
-                  addComment('${p.id}')
-              ">
+            ${
+              extras
+              ? `
 
-            <button
-              onclick="
-                addComment('${p.id}')
-              ">
+                <div class="post-extra">
+                  ${extras}
+                </div>
 
-              Send
-
-            </button>
+              `
+              : ""
+            }
 
           </div>
 
-          `
-
-          : `
-
-          <div class="small">
-
-            Comments are turned off.
-
-          </div>
-
-          `
-
+        `
+        : ""
       }
 
-    </div>
+
+      ${
+        post.media
+        ? `
+
+          <img
+            class="post-image"
+            src="${post.media}"
+            alt="Zemivo post">
+
+        `
+        : ""
+      }
 
 
-  </article>
+      <div class="stats">
+
+        <span>
+          👍 ${post.likes || 0} Likes
+        </span>
+
+        <span>
+
+          ${(post.commentsList || []).length}
+          Comments
+
+          ·
+
+          ${post.shares || 0}
+          Shares
+
+        </span>
+
+      </div>
+
+
+      <!--
+        EXACTLY FOUR OPTIONS
+      -->
+
+      <div class="post-actions">
+
+        <button
+          class="${post.liked ? "active" : ""}"
+          onclick="likePost('${post.id}')">
+
+          👍 Like
+
+        </button>
+
+
+        <button
+          onclick="focusComment('${post.id}')">
+
+          💬 Comment
+
+        </button>
+
+
+        <button
+          onclick="sharePost('${post.id}')">
+
+          ↗ Share
+
+        </button>
+
+
+        <button
+          onclick="openPostMenu('${post.id}',event)">
+
+          ⋯ More
+
+        </button>
+
+      </div>
+
+
+      <div class="comments">
+
+        ${comments}
+
+
+        ${
+          post.comments !== "Off"
+          ? `
+
+            <div class="comment-box">
+
+              <input
+                id="comment-${post.id}"
+                placeholder="Write a comment..."
+                onkeydown="
+                  if(event.key==='Enter'){
+                    addComment('${post.id}')
+                  }
+                ">
+
+              <button
+                onclick="addComment('${post.id}')">
+
+                Send
+
+              </button>
+
+            </div>
+
+          `
+          : `
+
+            <div class="small">
+              Comments are turned off.
+            </div>
+
+          `
+        }
+
+      </div>
+
+    </article>
 
   `;
 
 }
 
 
-/* ==================================================
+/* =====================================================
    LIKE
-================================================== */
+===================================================== */
 
-window.likePost =
-function(id){
+function likePost(id){
 
-  const p =
-    find(id);
+  const post =
+    posts.find(
+      p => p.id === id
+    );
 
-  if(!p){
-    return;
-  }
+  if(!post) return;
 
+  post.liked =
+    !post.liked;
 
-  p.liked =
-    !p.liked;
-
-
-  p.likes =
+  post.likes =
     Math.max(
       0,
-      (p.likes || 0)
-      +
-      (p.liked ? 1 : -1)
+      (post.likes || 0) +
+      (post.liked ? 1 : -1)
     );
 
-
-  saveLocal();
+  save();
 
   render();
 
-};
+}
 
 
-/* ==================================================
-   SPARK
-================================================== */
-
-window.sparkPost =
-function(id){
-
-  const p =
-    find(id);
-
-  if(!p){
-    return;
-  }
-
-
-  p.sparked =
-    !p.sparked;
-
-
-  p.sparks =
-    Math.max(
-      0,
-      (p.sparks || 0)
-      +
-      (p.sparked ? 1 : -1)
-    );
-
-
-  saveLocal();
-
-  render();
-
-};
-
-
-/* ==================================================
-   SHARE
-================================================== */
-
-window.sharePost =
-async function(id){
-
-  const p =
-    find(id);
-
-  if(!p){
-    return;
-  }
-
-
-  p.shares =
-    (p.shares || 0)
-    + 1;
-
-
-  saveLocal();
-
-  render();
-
-
-  const url =
-    location.href.split("#")[0]
-    +
-    "#post-"
-    +
-    id;
-
-
-  try{
-
-    await navigator.clipboard.writeText(
-      url
-    );
-
-    toast(
-      "Post link copied"
-    );
-
-  }
-
-  catch{
-
-    toast(
-      "Share count updated"
-    );
-
-  }
-
-};
-
-
-/* ==================================================
+/* =====================================================
    COMMENT
-================================================== */
+===================================================== */
 
-window.focusComment =
-function(id){
+function focusComment(id){
 
   const input =
     document.getElementById(
-      "ci-" + id
+      "comment-" + id
     );
 
   if(input){
@@ -3084,176 +2564,168 @@ function(id){
 
   }
 
-};
+}
 
 
-window.addComment =
-function(id){
+function addComment(id){
 
   const input =
     document.getElementById(
-      "ci-" + id
+      "comment-" + id
     );
 
+  const post =
+    posts.find(
+      p => p.id === id
+    );
 
-  const p =
-    find(id);
-
-
-  if(
-    !p ||
-    !input
-  ){
-
+  if(!post || !input)
     return;
-
-  }
-
 
   const text =
     input.value.trim();
 
-
-  if(!text){
+  if(!text)
     return;
-  }
 
+  if(!post.commentsList)
+    post.commentsList = [];
 
-  if(!p.commentsList){
-    p.commentsList=[];
-  }
+  post.commentsList.push({
 
+    name:"Zemivo User",
 
-  p.commentsList.push({
-
-    name:
-      currentUser?.displayName ||
-      "Zemivo User",
-
-    text:
-      text
+    text:text
 
   });
 
+  input.value = "";
 
-  input.value =
-    "";
-
-
-  saveLocal();
+  save();
 
   render();
 
-
-  setTimeout(
-    () => focusComment(id),
-    30
-  );
-
-};
+}
 
 
-/* ==================================================
+/* =====================================================
+   SHARE
+===================================================== */
+
+function sharePost(id){
+
+  const post =
+    posts.find(
+      p => p.id === id
+    );
+
+  if(!post)
+    return;
+
+  post.shares =
+    (post.shares || 0) + 1;
+
+  save();
+
+  render();
+
+  const link =
+    location.href.split("#")[0]
+    +
+    "#post-"
+    +
+    id;
+
+  if(navigator.clipboard){
+
+    navigator.clipboard
+      .writeText(link)
+      .then(() => {
+
+        showToast(
+          "Post link copied"
+        );
+
+      })
+      .catch(() => {
+
+        showToast(
+          "Share count updated"
+        );
+
+      });
+
+  }else{
+
+    showToast(
+      "Share count updated"
+    );
+
+  }
+
+}
+
+
+/* =====================================================
    THREE DOT MENU
-================================================== */
+===================================================== */
 
-window.openPostMenu =
-function(id,event){
+function openPostMenu(id,event){
 
   event.stopPropagation();
 
-
-  selectedPostId =
-    id;
-
+  selectedPostId = id;
 
   const menu =
-    document.getElementById(
-      "postMenu"
-    );
-
+    document.getElementById("postMenu");
 
   let left =
     event.clientX;
 
-
   let top =
     event.clientY;
 
-
-  if(
-    left +
-    260 >
-    window.innerWidth
-  ){
+  if(left + 270 >
+     window.innerWidth){
 
     left =
-      window.innerWidth -
-      270;
+      window.innerWidth - 278;
 
   }
 
-
-  if(
-    top +
-    500 >
-    window.innerHeight
-  ){
+  if(top + 450 >
+     window.innerHeight){
 
     top =
-      window.innerHeight -
-      510;
+      window.innerHeight - 458;
 
   }
 
-
   menu.style.left =
-    Math.max(
-      8,
-      left
-    )
-    + "px";
-
+    Math.max(8,left) + "px";
 
   menu.style.top =
-    Math.max(
-      8,
-      top
-    )
-    + "px";
+    Math.max(8,top) + "px";
 
+  menu.classList.add("show");
 
-  menu.classList.add(
-    "show"
-  );
+}
 
-};
-
-
-/* CLOSE MENU */
 
 document.addEventListener(
   "click",
-  event => {
+  function(event){
 
     const menu =
-      document.getElementById(
-        "postMenu"
-      );
-
+      document.getElementById("postMenu");
 
     if(
-      !event.target.closest(
-        "#postMenu"
-      ) &&
-      !event.target.closest(
-        ".dots"
-      )
+      !event.target.closest("#postMenu") &&
+      !event.target.closest(".more-btn") &&
+      !event.target.closest(".post-actions button:last-child")
     ){
 
-      menu.classList.remove(
-        "show"
-      );
+      menu.classList.remove("show");
 
     }
 
@@ -3261,685 +2733,343 @@ document.addEventListener(
 );
 
 
-/* ==================================================
-   EDIT
-================================================== */
+/* =====================================================
+   MENU ACTIONS
+===================================================== */
 
-window.editSelected =
-function(){
+function getSelectedPost(){
 
-  const p =
-    find(
-      selectedPostId
-    );
+  return posts.find(
+    p => p.id === selectedPostId
+  );
 
-
-  if(!p){
-    return;
-  }
+}
 
 
-  editingId =
-    p.id;
+function closeMenu(){
 
+  document.getElementById("postMenu")
+    .classList.remove("show");
+
+}
+
+
+function editPost(){
+
+  const post =
+    getSelectedPost();
+
+  if(!post) return;
+
+  editingId = post.id;
 
   selectedMedia =
-    p.media || "";
-
-
-  selectedProduct =
-    p.product || "";
-
-
-  selectedGroup =
-    p.group || "";
-
+    post.media || "";
 
   selectedLocation =
-    p.location || "";
+    post.location || "";
 
+  selectedGroup =
+    post.group || "";
 
-  document.getElementById(
-    "postText"
-  ).value =
-    p.text || "";
+  selectedProduct =
+    post.product || "";
 
+  document.getElementById("postText")
+    .value = post.text || "";
+
+  document.getElementById("audience")
+    .value =
+    post.audience || "Public";
+
+  document.getElementById("commentPermission")
+    .value =
+    post.comments || "Public";
 
   if(selectedMedia){
 
-    document.getElementById(
-      "previewImg"
-    ).src =
-      selectedMedia;
+    document.getElementById("previewImage")
+      .src = selectedMedia;
 
-
-    document.getElementById(
-      "mediaPreview"
-    ).classList.add(
-      "show"
-    );
+    document.getElementById("mediaPreview")
+      .classList.add("show");
 
   }
 
+  document.getElementById("composerTitle")
+    .textContent = "Edit post";
 
-  document.getElementById(
-    "composerTitle"
-  ).textContent =
-    "Edit post";
+  resetStepOne();
+
+  document.getElementById("composerModal")
+    .classList.add("show");
+
+  closeMenu();
+
+}
 
 
-  document.getElementById(
-    "composeStep1"
-  ).style.display =
-    "block";
+function savePost(){
 
+  const post =
+    getSelectedPost();
 
-  document.getElementById(
-    "composeStep2"
-  ).classList.remove(
-    "show"
+  if(!post) return;
+
+  post.saved =
+    !post.saved;
+
+  save();
+
+  showToast(
+    post.saved
+    ? "Post saved"
+    : "Post removed from saved"
   );
 
+  closeMenu();
 
-  document.getElementById(
-    "s1"
-  ).classList.add(
-    "on"
+}
+
+
+function pinPost(){
+
+  const post =
+    getSelectedPost();
+
+  if(!post) return;
+
+  post.pinned =
+    !post.pinned;
+
+  save();
+
+  showToast(
+    post.pinned
+    ? "Post pinned"
+    : "Post unpinned"
   );
 
+  closeMenu();
 
-  document.getElementById(
-    "s2"
-  ).classList.remove(
-    "on"
-  );
+}
 
 
-  document.getElementById(
-    "postMenu"
-  ).classList.remove(
-    "show"
-  );
+function copyPostLink(){
 
-
-  openModal(
-    "composerModal"
-  );
-
-};
-
-
-/* ==================================================
-   SAVE
-================================================== */
-
-window.saveSelected =
-function(){
-
-  const p =
-    find(
-      selectedPostId
-    );
-
-
-  if(!p){
-    return;
-  }
-
-
-  p.saved =
-    !p.saved;
-
-
-  saveLocal();
-
-
-  toast(
-    p.saved
-      ? "Post saved"
-      : "Post removed from saved"
-  );
-
-
-  document.getElementById(
-    "postMenu"
-  ).classList.remove(
-    "show"
-  );
-
-};
-
-
-/* ==================================================
-   PRODUCT
-================================================== */
-
-window.manageProductSelected =
-function(){
-
-  const p =
-    find(
-      selectedPostId
-    );
-
-
-  if(!p){
-    return;
-  }
-
-
-  const value =
-    prompt(
-      "Product / Affiliate URL",
-      p.product || ""
-    );
-
-
-  if(value !== null){
-
-    p.product =
-      value.trim();
-
-
-    saveLocal();
-
-    render();
-
-    toast(
-      "Product link updated"
-    );
-
-  }
-
-
-  document.getElementById(
-    "postMenu"
-  ).classList.remove(
-    "show"
-  );
-
-};
-
-
-/* ==================================================
-   COMMENT SETTINGS
-================================================== */
-
-window.commentSettingsSelected =
-function(){
-
-  const p =
-    find(
-      selectedPostId
-    );
-
-
-  if(!p){
-    return;
-  }
-
-
-  const value =
-    prompt(
-      "Public / Friends / Off",
-      p.comments ||
-      "Public"
-    );
-
-
-  if(value){
-
-    p.comments =
-      value;
-
-
-    saveLocal();
-
-    render();
-
-  }
-
-
-  document.getElementById(
-    "postMenu"
-  ).classList.remove(
-    "show"
-  );
-
-};
-
-
-/* ==================================================
-   PRIVACY
-================================================== */
-
-window.privacySelected =
-function(){
-
-  const p =
-    find(
-      selectedPostId
-    );
-
-
-  if(!p){
-    return;
-  }
-
-
-  const value =
-    prompt(
-      "Public / Friends / Only me",
-      p.audience ||
-      "Public"
-    );
-
-
-  if(value){
-
-    p.audience =
-      value;
-
-
-    saveLocal();
-
-    render();
-
-  }
-
-
-  document.getElementById(
-    "postMenu"
-  ).classList.remove(
-    "show"
-  );
-
-};
-
-
-/* ==================================================
-   ARCHIVE
-================================================== */
-
-window.archiveSelected =
-function(){
-
-  const p =
-    find(
-      selectedPostId
-    );
-
-
-  if(p){
-
-    p.archived =
-      true;
-
-
-    saveLocal();
-
-    render();
-
-    toast(
-      "Post moved to archive"
-    );
-
-  }
-
-
-  document.getElementById(
-    "postMenu"
-  ).classList.remove(
-    "show"
-  );
-
-};
-
-
-/* ==================================================
-   DELETE / TRASH
-================================================== */
-
-window.trashSelected =
-function(){
-
-  const p =
-    find(
-      selectedPostId
-    );
-
-
-  if(
-    p &&
-    confirm(
-      "Delete this post?"
-    )
-  ){
-
-    p.trashed =
-      true;
-
-
-    saveLocal();
-
-    render();
-
-    toast(
-      "Post moved to trash"
-    );
-
-  }
-
-
-  document.getElementById(
-    "postMenu"
-  ).classList.remove(
-    "show"
-  );
-
-};
-
-
-/* ==================================================
-   NOTIFICATIONS
-================================================== */
-
-window.toggleNotificationsSelected =
-function(){
-
-  toast(
-    "Post notifications updated"
-  );
-
-
-  document.getElementById(
-    "postMenu"
-  ).classList.remove(
-    "show"
-  );
-
-};
-
-
-/* ==================================================
-   COPY LINK
-================================================== */
-
-window.copySelectedLink =
-async function(){
-
-  const url =
+  const link =
     location.href.split("#")[0]
     +
     "#post-"
     +
     selectedPostId;
 
+  if(navigator.clipboard){
 
-  try{
+    navigator.clipboard
+      .writeText(link)
+      .then(() => {
 
-    await navigator.clipboard.writeText(
-      url
-    );
+        showToast(
+          "Post link copied"
+        );
 
-    toast(
-      "Post link copied"
-    );
-
-  }
-
-  catch{
-
-    toast(
-      url
-    );
+      });
 
   }
 
+  closeMenu();
 
-  document.getElementById(
-    "postMenu"
-  ).classList.remove(
-    "show"
-  );
-
-};
+}
 
 
-/* ==================================================
-   SPARK MENU
-================================================== */
+function changePrivacy(){
 
-window.sparkSelected =
-function(){
+  const post =
+    getSelectedPost();
 
-  sparkPost(
-    selectedPostId
-  );
+  if(!post) return;
 
-
-  document.getElementById(
-    "postMenu"
-  ).classList.remove(
-    "show"
-  );
-
-};
-
-
-/* ==================================================
-   ADMIN MODE
-================================================== */
-
-const isAdmin =
-  localStorage.getItem(
-    "zemivo_role"
-  ) === "admin";
-
-
-document.body.classList.toggle(
-  "admin",
-  isAdmin
-);
-
-
-window.adminBroadcast =
-function(){
-
-  if(!isAdmin){
-
-    toast(
-      "Admin permission required"
-    );
-
-    return;
-
-  }
-
-
-  const text =
+  const value =
     prompt(
-      "Admin broadcast message"
+      "Public / Friends / Only me",
+      post.audience || "Public"
     );
 
+  if(value){
 
-  if(!text){
-    return;
-  }
+    post.audience =
+      value;
 
-
-  const post = {
-
-    id:
-      uid(),
-
-    author:
-      "Zemivo Admin",
-
-    authorUid:
-      "admin",
-
-    text:
-      text,
-
-    media:
-      "",
-
-    product:
-      "",
-
-    group:
-      "",
-
-    location:
-      "",
-
-    audience:
-      "Public",
-
-    comments:
-      "Public",
-
-    createdAt:
-      Date.now(),
-
-    likes:
-      0,
-
-    commentsList:
-      [],
-
-    shares:
-      0,
-
-    sparks:
-      0,
-
-    liked:
-      false,
-
-    sparked:
-      false,
-
-    saved:
-      false,
-
-    archived:
-      false,
-
-    trashed:
-      false,
-
-    broadcast:
-      true
-
-  };
-
-
-  posts.unshift(
-    post
-  );
-
-
-  saveLocal();
-
-  render();
-
-  toast(
-    "Admin broadcast published"
-  );
-
-
-  syncPostToFirestore(
-    post
-  );
-
-};
-
-
-window.adminBoostSelected =
-function(){
-
-  if(!isAdmin){
-
-    toast(
-      "Admin permission required"
-    );
-
-    return;
-
-  }
-
-
-  const p =
-    find(
-      selectedPostId
-    );
-
-
-  if(p){
-
-    p.broadcast =
-      true;
-
-    p.audience =
-      "Public";
-
-
-    saveLocal();
+    save();
 
     render();
 
-    toast(
-      "Admin broadcast enabled"
+  }
+
+  closeMenu();
+
+}
+
+
+function changeComments(){
+
+  const post =
+    getSelectedPost();
+
+  if(!post) return;
+
+  const value =
+    prompt(
+      "Public / Friends / Off",
+      post.comments || "Public"
+    );
+
+  if(value){
+
+    post.comments =
+      value;
+
+    save();
+
+    render();
+
+  }
+
+  closeMenu();
+
+}
+
+
+function manageProduct(){
+
+  const post =
+    getSelectedPost();
+
+  if(!post) return;
+
+  const value =
+    prompt(
+      "Affiliate product URL",
+      post.product || ""
+    );
+
+  if(value !== null){
+
+    post.product =
+      value.trim();
+
+    save();
+
+    render();
+
+  }
+
+  closeMenu();
+
+}
+
+
+function archivePost(){
+
+  const post =
+    getSelectedPost();
+
+  if(!post) return;
+
+  post.archived = true;
+
+  save();
+
+  render();
+
+  showToast(
+    "Post moved to archive"
+  );
+
+  closeMenu();
+
+}
+
+
+function togglePostNotifications(){
+
+  showToast(
+    "Post notifications updated"
+  );
+
+  closeMenu();
+
+}
+
+
+function reportPost(){
+
+  showToast(
+    "Report submitted for review"
+  );
+
+  closeMenu();
+
+}
+
+
+function deletePost(){
+
+  const post =
+    getSelectedPost();
+
+  if(!post) return;
+
+  if(
+    confirm(
+      "Move this post to trash?"
+    )
+  ){
+
+    post.trashed = true;
+
+    save();
+
+    render();
+
+    showToast(
+      "Post moved to trash"
     );
 
   }
 
+  closeMenu();
 
-  document.getElementById(
-    "postMenu"
-  ).classList.remove(
-    "show"
-  );
-
-};
+}
 
 
-/* ==================================================
+/* =====================================================
    SEARCH
-================================================== */
+===================================================== */
 
-document
-  .getElementById(
-    "search"
-  )
+document.getElementById("search")
   .addEventListener(
     "input",
     render
   );
 
 
-/* ==================================================
-   CLOSE MODAL BY BACKDROP
-================================================== */
+/* =====================================================
+   MODAL BACKDROP
+===================================================== */
 
-document
-  .getElementById(
-    "composerModal"
-  )
+document.getElementById("composerModal")
   .addEventListener(
     "click",
-    event => {
+    function(event){
 
       if(
         event.target.id ===
         "composerModal"
       ){
 
-        closeModal(
-          "composerModal"
-        );
+        closeComposer();
 
       }
 
@@ -3947,20 +3077,11 @@ document
   );
 
 
-/* ==================================================
-   INITIAL RENDER
-================================================== */
+/* =====================================================
+   INITIAL
+===================================================== */
 
 render();
-
-
-if(isAdmin){
-
-  toast(
-    "Admin test mode enabled"
-  );
-
-}
 
 </script>
 
