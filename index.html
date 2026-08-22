@@ -121,6 +121,7 @@ button{
   border-radius:16px;
   box-shadow:var(--shadow);
 }
+
 /* =========================
    SIDEBAR
 ========================= */
@@ -150,7 +151,6 @@ button{
 
 /* =========================
    MIND BOX
-   OPTIONS HIDDEN INITIALLY
 ========================= */
 
 .mind-card{
@@ -190,12 +190,6 @@ button{
 .mind-button:hover{
   background:#eef1f5;
 }
-
-/*
-  IMPORTANT:
-  Options are INSIDE the Mind Box.
-  They stay hidden until the Mind Box is touched.
-*/
 
 .mind-options{
   display:none;
@@ -305,11 +299,6 @@ button{
   font-size:13px;
   border-bottom:1px solid var(--line);
 }
-
-/*
-  EXACTLY FOUR OPTIONS
-  No MORE here.
-*/
 
 .post-actions{
   display:grid;
@@ -734,7 +723,6 @@ button{
 
 /* =========================
    THREE DOT MENU
-   UNCHANGED
 ========================= */
 
 .menu{
@@ -865,10 +853,6 @@ button{
 
 <body>
 
-<!-- =========================
-     TOP BAR
-========================= -->
-
 <header class="topbar">
 
   <div class="brand">Zemivo</div>
@@ -894,10 +878,6 @@ button{
 
 <main class="layout">
 
-<!-- =========================
-     LEFT
-========================= -->
-
 <aside class="sidebar panel">
 
   <button class="sidebtn" onclick="goHome()">🏠 Home</button>
@@ -912,25 +892,13 @@ button{
 </aside>
 
 
-<!-- =========================
-     FEED
-========================= -->
-
 <section>
-
-  <!-- =========================
-       MIND BOX
-  ========================= -->
 
   <div class="mind-card card">
 
     <div class="mind-row">
 
       <div class="avatar">Z</div>
-
-      <!--
-        ONLY THIS BOX OPENS THE OPTIONS
-      -->
 
       <button
         id="mindButton"
@@ -942,12 +910,6 @@ button{
       </button>
 
     </div>
-
-
-    <!--
-      HIDDEN INITIALLY.
-      OPENS INSIDE THE SAME BOX.
-    -->
 
     <div
       id="mindOptions"
@@ -962,7 +924,6 @@ button{
 
       </button>
 
-
       <button
         class="mind-option"
         onclick="openComposer('live')">
@@ -972,7 +933,6 @@ button{
 
       </button>
 
-
       <button
         class="mind-option"
         onclick="openComposer('feeling')">
@@ -981,7 +941,6 @@ button{
         <span class="mind-label">Feeling</span>
 
       </button>
-
 
       <button
         class="mind-option"
@@ -996,15 +955,10 @@ button{
 
   </div>
 
-
   <div id="feed"></div>
 
 </section>
 
-
-<!-- =========================
-     RIGHT
-========================= -->
 
 <aside class="right">
 
@@ -1034,10 +988,6 @@ button{
 </main>
 
 
-<!-- =====================================================
-     COMPOSER
-===================================================== -->
-
 <div
   id="composerModal"
   class="modal">
@@ -1062,9 +1012,6 @@ button{
 
     </div>
 
-
-    <!-- STEP BAR -->
-
     <div class="steps">
 
       <span
@@ -1078,10 +1025,6 @@ button{
 
     </div>
 
-
-    <!-- =================================================
-         STEP ONE
-    ================================================= -->
 
     <section id="stepOne">
 
@@ -1109,8 +1052,6 @@ button{
         class="post-textarea"
         placeholder="What's on your mind?"></textarea>
 
-
-      <!-- SMALL POST TAG TOOLS -->
 
       <div class="tags">
 
@@ -1141,8 +1082,6 @@ button{
       </div>
 
 
-      <!-- MEDIA PREVIEW -->
-
       <div
         id="mediaPreview"
         class="media-preview">
@@ -1169,10 +1108,6 @@ button{
         hidden
         onchange="selectMedia(event)">
 
-
-      <!--
-        ALL POST TOOLS INSIDE THE CREATOR
-      -->
 
       <div class="writer-tools">
 
@@ -1365,8 +1300,6 @@ button{
       </div>
 
 
-      <!-- NEXT -->
-
       <div class="nextbar">
 
         <div></div>
@@ -1383,10 +1316,6 @@ button{
 
     </section>
 
-
-    <!-- =================================================
-         STEP TWO
-    ================================================= -->
 
     <section
       id="stepTwo"
@@ -1597,11 +1526,6 @@ button{
 </div>
 
 
-<!-- =====================================================
-     THREE DOT MENU
-     THIS IS KEPT
-===================================================== -->
-
 <div
   id="postMenu"
   class="menu">
@@ -1772,7 +1696,6 @@ function goHome(){
 
 /* =====================================================
    MIND OPTIONS
-   OPEN ONLY INSIDE MIND BOX
 ===================================================== */
 
 function toggleMindOptions(){
@@ -1787,6 +1710,7 @@ function toggleMindOptions(){
 
 /* =====================================================
    COMPOSER
+   FIXED: DUPLICATE openComposer REMOVED
 ===================================================== */
 
 function openComposer(kind=""){
@@ -1813,10 +1737,6 @@ function openComposer(kind=""){
   document.getElementById("composerModal")
     .classList.add("show");
 
-  /*
-    Close the Mind options after entering composer.
-  */
-
   document.getElementById("mindOptions")
     .classList.remove("show");
 
@@ -1831,43 +1751,7 @@ function openComposer(kind=""){
 
   }
 
-  function openComposer(kind=""){
-  editingId = null;
-
-  selectedMedia = "";
-  selectedLocation = "";
-  selectedGroup = "";
-  selectedProduct = "";
-
-  document.getElementById("postText").value = "";
-
-  document.getElementById("mediaPreview")
-    .classList.remove("show");
-
-  document.getElementById("mediaInput").value = "";
-
-  document.getElementById("composerTitle")
-    .textContent = "Create post";
-
-  resetStepOne();
-
-  document.getElementById("composerModal")
-    .classList.add("show");
-
-  /*
-    Close the Mind options after entering composer.
-  */
-  document.getElementById("mindOptions")
-    .classList.remove("show");
-
-  if(kind === "photo"){
-    setTimeout(() => {
-      document.getElementById("mediaInput")
-        .click();
-    },150);
-  }
 }
-
 
 
 function closeComposer(){
@@ -1980,11 +1864,6 @@ function selectMedia(event){
     return;
 
   }
-
-  /*
-    Current preview system is image based.
-    Images are previewed directly.
-  */
 
   if(file.type.startsWith("image/")){
 
@@ -2613,8 +2492,6 @@ function postHTML(post){
         </div>
 
 
-        <!-- THREE DOT REMAINS -->
-
         <button
           class="more-btn"
           onclick="openPostMenu('${post.id}',event)">
@@ -2687,12 +2564,6 @@ function postHTML(post){
 
       </div>
 
-
-      <!--
-        EXACTLY FOUR OPTIONS
-        LIKE / COMMENT / SHARE / SAVE
-        NO MORE HERE
-      -->
 
       <div class="post-actions">
 
@@ -2811,7 +2682,7 @@ function likePost(id){
 
 
 /* =====================================================
-   SAVE — FOURTH POST OPTION
+   SAVE
 ===================================================== */
 
 function quickSavePost(id){
@@ -3057,7 +2928,6 @@ function sharePost(id){
 
 /* =====================================================
    THREE DOT MENU
-   KEPT AS BEFORE
 ===================================================== */
 
 function openPostMenu(id,event){
