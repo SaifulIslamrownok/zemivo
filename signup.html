@@ -94,6 +94,7 @@
       margin: 10px 0 15px;
       display: flex;
       justify-content: center;
+      min-height: 0;
     }
 
     #message {
@@ -242,7 +243,7 @@
       maxlength="6"
     >
 
-    <button id="verifyButton">
+    <button id="verifyButton" type="button">
       Verify Phone
     </button>
 
@@ -335,26 +336,20 @@
   const form =
     document.getElementById("signupForm");
 
-
   const message =
     document.getElementById("message");
-
 
   const createButton =
     document.getElementById("createButton");
 
-
   const verifyButton =
     document.getElementById("verifyButton");
-
 
   const resendButton =
     document.getElementById("resendButton");
 
-
   const step1 =
     document.getElementById("step1");
-
 
   const step2 =
     document.getElementById("step2");
@@ -367,6 +362,10 @@
   let pendingUserData = null;
 
 
+  /* =========================
+     MESSAGE
+  ========================= */
+
   function showMessage(text, type = "") {
 
     message.textContent = text;
@@ -375,6 +374,10 @@
 
   }
 
+
+  /* =========================
+     AGE
+  ========================= */
 
   function calculateAge(birthDate) {
 
@@ -406,6 +409,10 @@
   }
 
 
+  /* =========================
+     RECAPTCHA
+  ========================= */
+
   function setupRecaptcha() {
 
     if (recaptchaVerifier) {
@@ -417,12 +424,29 @@
         auth,
         "recaptcha-container",
         {
-          size: "normal"
+          size: "normal",
+          callback: function() {
+
+            showMessage("");
+
+          },
+          "expired-callback": function() {
+
+            showMessage(
+              "reCAPTCHA expired. Please complete it again.",
+              "warning"
+            );
+
+          }
         }
       );
 
   }
 
+
+  /* =========================
+     SEND PHONE OTP
+  ========================= */
 
   async function sendPhoneOTP() {
 
@@ -435,9 +459,11 @@
       auth.currentUser;
 
     if (!user) {
+
       throw new Error(
         "Your account session has expired. Please start again."
       );
+
     }
 
     confirmationResult =
@@ -450,12 +476,15 @@
   }
 
 
+  /* =========================
+     SIGN UP
+  ========================= */
+
   form.addEventListener(
     "submit",
     async function(event) {
 
       event.preventDefault();
-
 
       showMessage("");
 
@@ -499,6 +528,8 @@
           .value;
 
 
+      /* NAME */
+
       if (name.length < 2) {
 
         showMessage(
@@ -510,6 +541,8 @@
 
       }
 
+
+      /* BIRTH DATE */
 
       if (!birthDate) {
 
@@ -551,10 +584,26 @@
       }
 
 
+      /* PHONE */
+
       if (!phone.startsWith("+")) {
 
         showMessage(
           "Please enter your phone number with country code. Example: +8801XXXXXXXXX",
+          "error"
+        );
+
+        return;
+
+      }
+
+
+      /* PASSWORD */
+
+      if (password.length < 6) {
+
+        showMessage(
+          "Password must be at least 6 characters.",
           "error"
         );
 
@@ -575,18 +624,6 @@
       }
 
 
-      if (password.length < 6) {
-
-        showMessage(
-          "Password must be at least 6 characters.",
-          "error"
-        );
-
-        return;
-
-      }
-
-
       createButton.disabled = true;
 
       createButton.textContent =
@@ -594,6 +631,8 @@
 
 
       try {
+
+        /* CREATE FIREBASE ACCOUNT */
 
         const userCredential =
           await createUserWithEmailAndPassword(
@@ -607,6 +646,8 @@
           userCredential.user;
 
 
+        /* SAVE NAME */
+
         await updateProfile(
           user,
           {
@@ -615,8 +656,12 @@
         );
 
 
+        /* EMAIL VERIFICATION */
+
         await sendEmailVerification(user);
 
+
+        /* TEMPORARY SIGNUP DATA */
 
         pendingUserData = {
 
@@ -633,8 +678,16 @@
         };
 
 
+        /*
+          PHONE OTP
+        */
+
         await sendPhoneOTP();
 
+
+        /*
+          MOVE TO STEP 2
+        */
 
         step1.classList.add("hidden");
 
@@ -698,6 +751,16 @@
 
         else if (
           error.code ===
+          "auth/provider-already-linked"
+        ) {
+
+          errorMessage =
+            "This phone number is already linked to this account.";
+
+        }
+
+        else if (
+          error.code ===
           "auth/too-many-requests"
         ) {
 
@@ -726,6 +789,26 @@
 
         }
 
+        else if (
+          error.code ===
+          "auth/quota-exceeded"
+        ) {
+
+          errorMessage =
+            "SMS verification limit has been reached. Please try again later.";
+
+        }
+
+        else if (
+          error.message
+        ) {
+
+          errorMessage =
+            error.message;
+
+        }
+
+
         showMessage(
           errorMessage,
           "error"
@@ -743,6 +826,10 @@
   );
 
 
+  /* =========================
+     VERIFY OTP
+  ========================= */
+
   verifyButton.addEventListener(
     "click",
     async function() {
@@ -754,7 +841,7 @@
           .trim();
 
 
-      if (!otp || otp.length < 6) {
+      if (!otp || otp.length !== 6) {
 
         showMessage(
           "Please enter the 6-digit OTP.",
@@ -806,11 +893,7 @@
           auth.currentUser;
 
 
-        const phoneVerified =
-          !!updatedUser.phoneNumber;
-
-
-        if (!phoneVerified) {
+        if (!updatedUser.phoneNumber) {
 
           throw new Error(
             "Phone verification was not completed."
@@ -819,9 +902,9 @@
         }
 
 
-        /*
-          PUBLIC PROFILE
-        */
+        /* =========================
+           PUBLIC PROFILE
+        ========================= */
 
         await setDoc(
           doc(
@@ -831,7 +914,8 @@
           ),
           {
 
-            uid: updatedUser.uid,
+            uid:
+              updatedUser.uid,
 
             displayName:
               pendingUserData.name,
@@ -849,12 +933,9 @@
         );
 
 
-        /*
-          PRIVATE ACCOUNT DATA
-
-          Sensitive information is kept
-          separately from the public profile.
-        */
+        /* =========================
+           PRIVATE ACCOUNT DATA
+        ========================= */
 
         await setDoc(
           doc(
@@ -896,6 +977,10 @@
           "success"
         );
 
+
+        /*
+          GO TO PROFILE
+        */
 
         setTimeout(
           function() {
@@ -948,6 +1033,16 @@
         }
 
         else if (
+          error.code ===
+          "permission-denied"
+        ) {
+
+          errorMessage =
+            "Firestore permission is blocking account setup. Please check Firebase Security Rules.";
+
+        }
+
+        else if (
           error.message &&
           error.message.includes(
             "PERMISSION_DENIED"
@@ -955,7 +1050,16 @@
         ) {
 
           errorMessage =
-            "Firestore permission is blocking account setup. Please check the Firestore Security Rules.";
+            "Firestore permission is blocking account setup. Please check Firebase Security Rules.";
+
+        }
+
+        else if (
+          error.message
+        ) {
+
+          errorMessage =
+            error.message;
 
         }
 
@@ -976,6 +1080,10 @@
     }
   );
 
+
+  /* =========================
+     RESEND OTP
+  ========================= */
 
   resendButton.addEventListener(
     "click",
@@ -1029,6 +1137,7 @@
 
 
         showMessage(
+          error.message ||
           "Could not resend OTP. Please try again later.",
           "error"
         );
@@ -1043,6 +1152,7 @@
 
     }
   );
+
 
 </script>
 
