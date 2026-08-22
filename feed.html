@@ -20,7 +20,8 @@ body{
 
 button,
 input,
-textarea{
+textarea,
+select{
   font-family:inherit;
 }
 
@@ -86,6 +87,7 @@ button{
 .avatar{
   width:46px;
   height:46px;
+  min-width:46px;
   border-radius:50%;
   background:#2563eb;
   color:#fff;
@@ -93,7 +95,6 @@ button{
   align-items:center;
   justify-content:center;
   font-weight:bold;
-  flex-shrink:0;
 }
 
 .composer textarea{
@@ -104,6 +105,7 @@ button{
   outline:0;
   font-size:18px;
   padding:8px 4px;
+  background:#fff;
 }
 
 .composer textarea::placeholder{
@@ -132,6 +134,7 @@ button{
   border:1px solid #ddd;
   border-radius:10px;
   outline:none;
+  background:#fff;
 }
 
 .media-preview{
@@ -166,6 +169,7 @@ button{
   background:rgba(0,0,0,.65);
   color:#fff;
   font-size:18px;
+  z-index:5;
 }
 
 .composer-tools{
@@ -261,10 +265,12 @@ button{
   color:#fff;
   font-size:16px;
   font-weight:bold;
+  min-height:44px;
 }
 
 .publish:disabled{
   opacity:.6;
+  cursor:not-allowed;
 }
 
 /* ADMIN */
@@ -319,10 +325,12 @@ button{
   display:flex;
   align-items:center;
   gap:10px;
+  min-width:0;
 }
 
 .post-name{
   font-weight:bold;
+  overflow-wrap:anywhere;
 }
 
 .post-meta{
@@ -486,6 +494,8 @@ button{
   text-align:center;
   color:#777;
   padding:40px 10px;
+  background:#fff;
+  border-radius:16px;
 }
 
 .loading{
@@ -575,6 +585,7 @@ button{
 }
 
 @media(max-width:600px){
+
   .page{
     margin-top:12px;
   }
@@ -594,6 +605,11 @@ button{
   .post-actions{
     font-size:13px;
   }
+
+  .post-info{
+    gap:10px;
+  }
+
 }
 </style>
 </head>
@@ -605,8 +621,23 @@ button{
   <div class="logo">Zemivo</div>
 
   <div class="top-actions">
-    <button class="icon-btn" onclick="location.href='notifications.html'">🔔</button>
-    <button class="icon-btn" onclick="location.href='profile.html'">👤</button>
+
+    <button
+      class="icon-btn"
+      type="button"
+      onclick="location.href='notifications.html'"
+    >
+      🔔
+    </button>
+
+    <button
+      class="icon-btn"
+      type="button"
+      onclick="location.href='profile.html'"
+    >
+      👤
+    </button>
+
   </div>
 
 </header>
@@ -614,8 +645,12 @@ button{
 
 <main class="page">
 
-  <!-- ADMIN ANNOUNCEMENT -->
-  <section id="adminPanel" class="admin-panel">
+  <!-- ADMIN -->
+
+  <section
+    id="adminPanel"
+    class="admin-panel"
+  >
 
     <div class="admin-title">
       🛡️ Zemivo Admin Announcement
@@ -634,6 +669,7 @@ button{
     <button
       class="publish"
       id="adminPublish"
+      type="button"
       style="height:44px;margin-top:10px;"
     >
       Publish Global Announcement
@@ -643,11 +679,15 @@ button{
 
 
   <!-- POST COMPOSER -->
+
   <section class="composer">
 
     <div class="composer-top">
 
-      <div class="avatar" id="currentAvatar">
+      <div
+        class="avatar"
+        id="currentAvatar"
+      >
         Z
       </div>
 
@@ -659,48 +699,69 @@ button{
     </div>
 
 
-    <!-- EXTRA POST INFORMATION -->
     <div
       id="composerExtra"
       class="composer-extra"
     >
 
       <div class="field">
+
         <input
           id="locationInput"
           type="text"
           placeholder="📍 Location"
         >
+
       </div>
 
+
       <div class="field">
+
         <input
           id="groupInput"
           type="text"
           placeholder="👥 Group name (optional)"
         >
+
       </div>
 
+
       <div class="field">
+
         <input
           id="productInput"
           type="url"
           placeholder="🔗 Product / Affiliate link (optional)"
         >
+
       </div>
 
+
       <div class="field">
+
         <select id="audienceSelect">
-          <option value="public">🌎 Public</option>
-          <option value="friends">👥 Friends</option>
-          <option value="private">🔒 Only me</option>
+
+          <option value="public">
+            🌎 Public
+          </option>
+
+          <option value="friends">
+            👥 Friends
+          </option>
+
+          <option value="private">
+            🔒 Only me
+          </option>
+
         </select>
+
       </div>
 
     </div>
 
 
     <!-- MEDIA PREVIEW -->
+
     <div
       id="mediaPreview"
       class="media-preview"
@@ -730,6 +791,7 @@ button{
 
 
     <!-- TOOLS -->
+
     <div class="composer-tools">
 
       <div class="tool-left">
@@ -776,14 +838,6 @@ button{
 
         <button
           class="media-option"
-          id="gifButton"
-          type="button"
-        >
-          GIF
-        </button>
-
-        <button
-          class="media-option"
           id="hashtagButton"
           type="button"
         >
@@ -817,10 +871,21 @@ button{
         id="quickAudience"
         class="audience"
       >
-        <option value="public">🌎 Public</option>
-        <option value="friends">👥 Friends</option>
-        <option value="private">🔒 Only me</option>
+
+        <option value="public">
+          🌎 Public
+        </option>
+
+        <option value="friends">
+          👥 Friends
+        </option>
+
+        <option value="private">
+          🔒 Only me
+        </option>
+
       </select>
+
 
       <button
         id="publishButton"
@@ -836,6 +901,7 @@ button{
 
 
   <!-- FEED -->
+
   <section
     id="feed"
     class="feed"
@@ -850,7 +916,7 @@ button{
 </main>
 
 
-<!-- HIDDEN FILE INPUTS -->
+<!-- FILE INPUTS -->
 
 <input
   id="imageInput"
@@ -919,18 +985,16 @@ button{
 
 <script type="module">
 
+/* FIREBASE */
+
 import {
   initializeApp
-} from
-"https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
-
+} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
 
 import {
   getAuth,
   onAuthStateChanged
-} from
-"https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
-
+} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
 
 import {
   getFirestore,
@@ -940,7 +1004,6 @@ import {
   getDoc,
   setDoc,
   updateDoc,
-  deleteDoc,
   query,
   orderBy,
   onSnapshot,
@@ -948,9 +1011,10 @@ import {
   increment,
   arrayUnion,
   arrayRemove
-} from
-"https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
+} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
 
+
+/* FIREBASE CONFIG */
 
 const firebaseConfig = {
 
@@ -981,10 +1045,8 @@ const firebaseConfig = {
 const app =
   initializeApp(firebaseConfig);
 
-
 const auth =
   getAuth(app);
-
 
 const db =
   getFirestore(app);
@@ -1093,38 +1155,66 @@ let unsubscribeFeed = null;
 
 function showToast(text){
 
-  toast.textContent = text;
+  toast.textContent =
+    text;
 
-  toast.classList.add("show");
+  toast.classList.add(
+    "show"
+  );
 
-  setTimeout(() => {
+  setTimeout(
+    function(){
 
-    toast.classList.remove("show");
+      toast.classList.remove(
+        "show"
+      );
 
-  }, 2500);
+    },
+    3000
+  );
 
 }
 
 
-/* ESCAPE HTML */
+/* ESCAPE */
 
 function escapeHtml(value){
 
-  if(value === undefined || value === null){
+  if(
+    value === undefined ||
+    value === null
+  ){
+
     return "";
+
   }
 
   return String(value)
-    .replaceAll("&","&amp;")
-    .replaceAll("<","&lt;")
-    .replaceAll(">","&gt;")
-    .replaceAll('"',"&quot;")
-    .replaceAll("'","&#039;");
+    .replaceAll(
+      "&",
+      "&amp;"
+    )
+    .replaceAll(
+      "<",
+      "&lt;"
+    )
+    .replaceAll(
+      ">",
+      "&gt;"
+    )
+    .replaceAll(
+      '"',
+      "&quot;"
+    )
+    .replaceAll(
+      "'",
+      "&#039;"
+    );
 
 }
 
 
-/* FORMAT POST TEXT */
+/* TEXT FORMAT */
 
 function formatPostText(text){
 
@@ -1148,7 +1238,7 @@ function formatPostText(text){
 }
 
 
-/* CURRENT USER */
+/* AUTH */
 
 onAuthStateChanged(
   auth,
@@ -1156,16 +1246,28 @@ onAuthStateChanged(
 
     if(!user){
 
+      currentUser =
+        null;
+
+      feed.innerHTML = `
+        <div class="empty">
+          Please log in to use Zemivo Feed.
+        </div>
+      `;
+
       showToast(
-        "Please log in to use Zemivo."
+        "Please log in first."
       );
 
-      setTimeout(() => {
+      setTimeout(
+        function(){
 
-        location.href =
-          "login.html";
+          location.href =
+            "login.html";
 
-      },1200);
+        },
+        1500
+      );
 
       return;
 
@@ -1187,10 +1289,14 @@ onAuthStateChanged(
     try{
 
       const profileSnap =
-        await getDoc(profileRef);
+        await getDoc(
+          profileRef
+        );
 
 
-      if(profileSnap.exists()){
+      if(
+        profileSnap.exists()
+      ){
 
         currentProfile =
           profileSnap.data();
@@ -1219,16 +1325,10 @@ onAuthStateChanged(
 
 
       currentAvatar.textContent =
-        name.charAt(0).toUpperCase();
+        name
+          .charAt(0)
+          .toUpperCase();
 
-
-      /*
-       ADMIN UI
-
-       This is only the frontend visibility layer.
-       Real administrator authorization MUST later
-       be enforced by Firestore Security Rules / backend.
-      */
 
       if(
         currentProfile.role ===
@@ -1242,53 +1342,145 @@ onAuthStateChanged(
       }
 
 
-      startFeedListener();
-
     }
     catch(error){
 
-      console.error(error);
-
-      showToast(
-        "Could not load your Zemivo profile."
+      console.error(
+        "Profile error:",
+        error
       );
 
-      startFeedListener();
+
+      currentProfile = {
+
+        displayName:
+          user.displayName ||
+          "Zemivo User",
+
+        role:
+          "user"
+
+      };
+
+
+      currentAvatar.textContent =
+        (
+          currentProfile.displayName
+        )
+        .charAt(0)
+        .toUpperCase();
 
     }
+
+
+    startFeedListener();
 
   }
 );
 
 
-/* FEED LISTENER */
+/* FEED */
 
 function startFeedListener(){
 
-  if(unsubscribeFeed){
+  if(
+    unsubscribeFeed
+  ){
+
     unsubscribeFeed();
+
+    unsubscribeFeed =
+      null;
+
   }
 
 
-  const postsQuery =
-    query(
-      collection(
-        db,
-        "posts"
-      ),
-      orderBy(
-        "createdAt",
-        "desc"
-      )
-    );
+  feed.innerHTML = `
+    <div class="loading">
+      Loading Zemivo feed...
+    </div>
+  `;
+
+
+  let postsQuery;
+
+
+  try{
+
+    postsQuery =
+      query(
+        collection(
+          db,
+          "posts"
+        ),
+        orderBy(
+          "createdAt",
+          "desc"
+        )
+      );
+
+  }
+  catch(error){
+
+    console.error(error);
+
+    feed.innerHTML = `
+      <div class="empty">
+        Could not prepare Zemivo Feed.
+      </div>
+    `;
+
+    return;
+
+  }
 
 
   unsubscribeFeed =
     onSnapshot(
       postsQuery,
+
       function(snapshot){
 
-        if(snapshot.empty){
+        const posts = [];
+
+        snapshot.forEach(
+          function(postSnapshot){
+
+            const post =
+              postSnapshot.data();
+
+            const postId =
+              postSnapshot.id;
+
+
+            /*
+             Show published posts
+             and old posts that do
+             not have a status field.
+            */
+
+            if(
+              post.status === "trash" ||
+              post.status === "archived"
+            ){
+
+              return;
+
+            }
+
+
+            posts.push({
+              id:postId,
+              data:post
+            });
+
+          }
+        );
+
+
+        if(
+          posts.length === 0
+        ){
 
           feed.innerHTML = `
             <div class="empty">
@@ -1305,33 +1497,34 @@ function startFeedListener(){
         feed.innerHTML = "";
 
 
-        snapshot.forEach(
-          function(postSnapshot){
-
-            const post =
-              postSnapshot.data();
-
-            const postId =
-              postSnapshot.id;
-
+        posts.forEach(
+          function(item){
 
             renderPost(
-              postId,
-              post
+              item.id,
+              item.data
             );
 
           }
         );
 
       },
+
       function(error){
 
-        console.error(error);
+        console.error(
+          "Feed listener error:",
+          error
+        );
+
 
         feed.innerHTML = `
           <div class="empty">
-            Could not load posts.<br>
-            Please check Firestore permissions.
+            <strong>
+              Zemivo Feed could not load.
+            </strong>
+            <br><br>
+            Please check Firebase Firestore permissions.
           </div>
         `;
 
@@ -1341,7 +1534,7 @@ function startFeedListener(){
 }
 
 
-/* RENDER POST */
+/* RENDER */
 
 function renderPost(
   postId,
@@ -1349,7 +1542,9 @@ function renderPost(
 ){
 
   const article =
-    document.createElement("article");
+    document.createElement(
+      "article"
+    );
 
 
   article.className =
@@ -1367,11 +1562,20 @@ function renderPost(
       .toUpperCase();
 
 
-  const created =
+  let created =
+    new Date();
+
+
+  if(
     post.createdAt &&
-    post.createdAt.toDate
-      ? post.createdAt.toDate()
-      : new Date();
+    typeof post.createdAt.toDate ===
+    "function"
+  ){
+
+    created =
+      post.createdAt.toDate();
+
+  }
 
 
   const dateText =
@@ -1390,22 +1594,35 @@ function renderPost(
     "admin";
 
 
-  const menuItems = `
+  let menuItems = `
 
     <button
       class="menu-item"
       data-action="save"
+      type="button"
     >
       🔖 Save post
     </button>
 
-    ${
-      isOwner
-      ?
-      `
+    <button
+      class="menu-item"
+      data-action="copy"
+      type="button"
+    >
+      🔗 Copy link
+    </button>
+
+  `;
+
+
+  if(isOwner){
+
+    menuItems += `
+
       <button
         class="menu-item"
         data-action="edit"
+        type="button"
       >
         ✏️ Edit post
       </button>
@@ -1413,6 +1630,7 @@ function renderPost(
       <button
         class="menu-item"
         data-action="archive"
+        type="button"
       >
         📦 Move to archive
       </button>
@@ -1420,88 +1638,89 @@ function renderPost(
       <button
         class="menu-item danger"
         data-action="delete"
+        type="button"
       >
         🗑️ Move to trash
       </button>
-      `
-      :
-      ""
-    }
 
-    <button
-      class="menu-item"
-      data-action="copy"
-    >
-      🔗 Copy link
-    </button>
+    `;
 
-    ${
-      isAdmin
-      ?
-      `
+  }
+
+
+  if(isAdmin){
+
+    menuItems += `
+
       <button
         class="menu-item"
         data-action="adminFeature"
+        type="button"
       >
         🛡️ Admin control
       </button>
-      `
-      :
-      ""
-    }
 
-  `;
+    `;
+
+  }
 
 
-  const mediaHTML =
+  let mediaHTML =
+    "";
+
+
+  if(
     post.mediaPreview
-    ?
-    (
+  ){
+
+    if(
       post.mediaType ===
       "video"
-      ?
-      `
-      <video
-        class="post-media"
-        src="${post.mediaPreview}"
-        controls
-      ></video>
-      `
-      :
-      `
-      <img
-        class="post-media"
-        src="${post.mediaPreview}"
-        alt="Zemivo post"
-      >
-      `
-    )
-    :
-    "";
+    ){
+
+      mediaHTML = `
+        <video
+          class="post-media"
+          src="${escapeHtml(post.mediaPreview)}"
+          controls
+          playsinline
+        ></video>
+      `;
+
+    }
+    else{
+
+      mediaHTML = `
+        <img
+          class="post-media"
+          src="${escapeHtml(post.mediaPreview)}"
+          alt="Zemivo post"
+        >
+      `;
+
+    }
+
+  }
 
 
   const productHTML =
     post.productLink
     ?
     `
-    <div
-      style="
-        padding:10px 16px;
-      "
-    >
-      <a
-        href="${escapeHtml(post.productLink)}"
-        target="_blank"
-        rel="noopener noreferrer"
-        style="
-          color:#2563eb;
-          font-weight:bold;
-          text-decoration:none;
-        "
-      >
-        🔗 View product / affiliate link
-      </a>
-    </div>
+      <div style="padding:10px 16px;">
+        <a
+          href="${escapeHtml(post.productLink)}"
+          target="_blank"
+          rel="noopener noreferrer"
+          style="
+            color:#2563eb;
+            font-weight:bold;
+            text-decoration:none;
+          "
+        >
+          🔗 View product / affiliate link
+        </a>
+      </div>
     `
     :
     "";
@@ -1511,15 +1730,15 @@ function renderPost(
     post.location
     ?
     `
-    <div
-      style="
-        padding:0 16px 10px;
-        color:#666;
-        font-size:13px;
-      "
-    >
-      📍 ${escapeHtml(post.location)}
-    </div>
+      <div
+        style="
+          padding:0 16px 10px;
+          color:#666;
+          font-size:13px;
+        "
+      >
+        📍 ${escapeHtml(post.location)}
+      </div>
     `
     :
     "";
@@ -1529,15 +1748,15 @@ function renderPost(
     post.group
     ?
     `
-    <div
-      style="
-        padding:0 16px 10px;
-        color:#2563eb;
-        font-size:13px;
-      "
-    >
-      👥 ${escapeHtml(post.group)}
-    </div>
+      <div
+        style="
+          padding:0 16px 10px;
+          color:#2563eb;
+          font-size:13px;
+        "
+      >
+        👥 ${escapeHtml(post.group)}
+      </div>
     `
     :
     "";
@@ -1548,6 +1767,28 @@ function renderPost(
     currentUser &&
     post.likedBy.includes(
       currentUser.uid
+    );
+
+
+  const likes =
+    Number(post.likes || 0);
+
+
+  const commentsCount =
+    Number(
+      post.commentsCount || 0
+    );
+
+
+  const shares =
+    Number(
+      post.shares || 0
+    );
+
+
+  const sparks =
+    Number(
+      post.sparks || 0
     );
 
 
@@ -1564,30 +1805,40 @@ function renderPost(
         <div>
 
           <div class="post-name">
+
             ${escapeHtml(name)}
+
             ${
               post.isAdminAnnouncement
               ?
               `
-              <span
-                style="
-                  color:#2563eb;
-                  font-size:12px;
-                  margin-left:5px;
-                "
-              >
-                🛡️ Official
-              </span>
+                <span
+                  style="
+                    color:#2563eb;
+                    font-size:12px;
+                    margin-left:5px;
+                  "
+                >
+                  🛡️ Official
+                </span>
               `
               :
               ""
             }
+
           </div>
 
           <div class="post-meta">
+
             ${escapeHtml(dateText)}
+
             ·
-            ${escapeHtml(post.audience || "public")}
+
+            ${escapeHtml(
+              post.audience ||
+              "public"
+            )}
+
           </div>
 
         </div>
@@ -1600,12 +1851,15 @@ function renderPost(
         <button
           class="dots"
           data-menu-button
+          type="button"
         >
           ⋯
         </button>
 
         <div class="post-menu">
+
           ${menuItems}
+
         </div>
 
       </div>
@@ -1614,8 +1868,13 @@ function renderPost(
 
 
     <div class="post-content">
-      ${formatPostText(post.text || "")}
+
+      ${formatPostText(
+        post.text || ""
+      )}
+
     </div>
+
 
     ${locationHTML}
 
@@ -1629,15 +1888,15 @@ function renderPost(
     <div class="post-info">
 
       <span>
-        ❤️ ${post.likes || 0}
+        ❤️ ${likes}
       </span>
 
       <span>
-        💬 ${post.commentsCount || 0}
+        💬 ${commentsCount}
         ·
-        🔄 ${post.shares || 0}
+        🔄 ${shares}
         ·
-        ✨ ${post.sparks || 0}
+        ✨ ${sparks}
       </span>
 
     </div>
@@ -1648,27 +1907,40 @@ function renderPost(
       <button
         class="action ${liked ? "active" : ""}"
         data-action="like"
+        type="button"
       >
-        ${liked ? "❤️ Liked" : "♡ Like"}
+        ${
+          liked
+          ?
+          "❤️ Liked"
+          :
+          "♡ Like"
+        }
       </button>
+
 
       <button
         class="action"
         data-action="comment"
+        type="button"
       >
         💬 Comment
       </button>
 
+
       <button
         class="action"
         data-action="share"
+        type="button"
       >
         🔄 Share
       </button>
 
+
       <button
         class="action spark"
         data-action="spark"
+        type="button"
       >
         ✨ Spark
       </button>
@@ -1681,8 +1953,8 @@ function renderPost(
       <div
         class="comments-list"
         data-comments
-      >
-      </div>
+      ></div>
+
 
       <div class="comment-form">
 
@@ -1694,6 +1966,7 @@ function renderPost(
 
         <button
           data-comment-button
+          type="button"
         >
           Send
         </button>
@@ -1705,7 +1978,9 @@ function renderPost(
   `;
 
 
-  feed.appendChild(article);
+  feed.appendChild(
+    article
+  );
 
 
   loadComments(
@@ -1714,9 +1989,7 @@ function renderPost(
   );
 
 
-  /*
-   MAIN POST ACTIONS
-  */
+  /* ACTIONS */
 
   article.addEventListener(
     "click",
@@ -1737,113 +2010,151 @@ function renderPost(
         actionButton.dataset.action;
 
 
-      if(action === "like"){
+      try{
 
-        await toggleLike(
-          postId,
-          post
-        );
+        if(
+          action === "like"
+        ){
 
-      }
-
-
-      if(action === "share"){
-
-        await sharePost(
-          postId,
-          post
-        );
-
-      }
-
-
-      if(action === "spark"){
-
-        await sparkPost(
-          postId
-        );
-
-      }
-
-
-      if(action === "comment"){
-
-        const input =
-          article.querySelector(
-            "[data-comment-input]"
+          await toggleLike(
+            postId,
+            post
           );
 
-        input.focus();
-
-      }
-
-
-      if(action === "save"){
-
-        await savePost(
-          postId
-        );
-
-      }
-
-
-      if(action === "edit"){
-
-        if(!isOwner){
-          return;
         }
 
-        openEditModal(
-          postId,
-          post.text || ""
-        );
 
-      }
+        if(
+          action === "share"
+        ){
 
+          await sharePost(
+            postId,
+            post
+          );
 
-      if(action === "delete"){
-
-        if(!isOwner){
-          return;
         }
 
-        await moveToTrash(
-          postId
-        );
 
-      }
+        if(
+          action === "spark"
+        ){
 
+          await sparkPost(
+            postId
+          );
 
-      if(action === "archive"){
-
-        if(!isOwner){
-          return;
         }
 
-        await archivePost(
-          postId
-        );
 
-      }
+        if(
+          action === "comment"
+        ){
 
+          const input =
+            article.querySelector(
+              "[data-comment-input]"
+            );
 
-      if(action === "copy"){
+          if(input){
+            input.focus();
+          }
 
-        await copyPostLink(
-          postId
-        );
-
-      }
-
-
-      if(action === "adminFeature"){
-
-        if(!isAdmin){
-          return;
         }
+
+
+        if(
+          action === "save"
+        ){
+
+          await savePost(
+            postId
+          );
+
+        }
+
+
+        if(
+          action === "edit"
+        ){
+
+          if(!isOwner){
+            return;
+          }
+
+          openEditModal(
+            postId,
+            post.text || ""
+          );
+
+        }
+
+
+        if(
+          action === "delete"
+        ){
+
+          if(!isOwner){
+            return;
+          }
+
+          await moveToTrash(
+            postId
+          );
+
+        }
+
+
+        if(
+          action === "archive"
+        ){
+
+          if(!isOwner){
+            return;
+          }
+
+          await archivePost(
+            postId
+          );
+
+        }
+
+
+        if(
+          action === "copy"
+        ){
+
+          await copyPostLink(
+            postId
+          );
+
+        }
+
+
+        if(
+          action === "adminFeature"
+        ){
+
+          if(!isAdmin){
+            return;
+          }
+
+          showToast(
+            "Admin controls are ready for the secure backend phase."
+          );
+
+        }
+
+      }
+      catch(error){
+
+        console.error(
+          "Action error:",
+          error
+        );
 
         showToast(
-          "Admin controls are ready for the secure backend phase."
+          "Something went wrong."
         );
 
       }
@@ -1852,9 +2163,7 @@ function renderPost(
   );
 
 
-  /*
-   THREE DOT MENU
-  */
+  /* MENU */
 
   const menuButton =
     article.querySelector(
@@ -1868,35 +2177,44 @@ function renderPost(
     );
 
 
-  menuButton.addEventListener(
-    "click",
-    function(event){
+  if(
+    menuButton &&
+    postMenu
+  ){
 
-      event.stopPropagation();
+    menuButton.addEventListener(
+      "click",
+      function(event){
 
-      document
-        .querySelectorAll(
-          ".post-menu.show"
-        )
-        .forEach(
-          menu =>
-            menu.classList.remove(
-              "show"
-            )
+        event.stopPropagation();
+
+
+        document
+          .querySelectorAll(
+            ".post-menu.show"
+          )
+          .forEach(
+            function(menu){
+
+              menu.classList.remove(
+                "show"
+              );
+
+            }
+          );
+
+
+        postMenu.classList.toggle(
+          "show"
         );
 
+      }
+    );
 
-      postMenu.classList.toggle(
-        "show"
-      );
-
-    }
-  );
+  }
 
 
-  /*
-   COMMENT
-  */
+  /* COMMENT */
 
   const commentButton =
     article.querySelector(
@@ -1910,26 +2228,14 @@ function renderPost(
     );
 
 
-  commentButton.addEventListener(
-    "click",
-    async function(){
+  if(
+    commentButton &&
+    commentInput
+  ){
 
-      await submitComment(
-        postId,
-        commentInput
-      );
-
-    }
-  );
-
-
-  commentInput.addEventListener(
-    "keydown",
-    async function(event){
-
-      if(event.key === "Enter"){
-
-        event.preventDefault();
+    commentButton.addEventListener(
+      "click",
+      async function(){
 
         await submitComment(
           postId,
@@ -1937,14 +2243,36 @@ function renderPost(
         );
 
       }
+    );
 
-    }
-  );
+
+    commentInput.addEventListener(
+      "keydown",
+      async function(event){
+
+        if(
+          event.key ===
+          "Enter"
+        ){
+
+          event.preventDefault();
+
+          await submitComment(
+            postId,
+            commentInput
+          );
+
+        }
+
+      }
+    );
+
+  }
 
 }
 
 
-/* CLOSE MENUS */
+/* CLOSE MENU */
 
 document.addEventListener(
   "click",
@@ -1955,17 +2283,20 @@ document.addEventListener(
         ".post-menu.show"
       )
       .forEach(
-        menu =>
+        function(menu){
+
           menu.classList.remove(
             "show"
-          )
+          );
+
+        }
       );
 
   }
 );
 
 
-/* PLUS MENU */
+/* PLUS */
 
 plusButton.addEventListener(
   "click",
@@ -1998,7 +2329,9 @@ detailsButton.addEventListener(
 /* GALLERY */
 
 document
-  .getElementById("galleryButton")
+  .getElementById(
+    "galleryButton"
+  )
   .addEventListener(
     "click",
     function(){
@@ -2016,7 +2349,9 @@ document
 /* VIDEO */
 
 document
-  .getElementById("videoButton")
+  .getElementById(
+    "videoButton"
+  )
   .addEventListener(
     "click",
     function(){
@@ -2031,7 +2366,7 @@ document
   );
 
 
-/* IMAGE SELECT */
+/* IMAGE */
 
 imageInput.addEventListener(
   "change",
@@ -2040,9 +2375,11 @@ imageInput.addEventListener(
     const file =
       imageInput.files[0];
 
+
     if(!file){
       return;
     }
+
 
     selectedFile =
       file;
@@ -2050,13 +2387,14 @@ imageInput.addEventListener(
     selectedFileType =
       "image";
 
+
     previewSelectedFile();
 
   }
 );
 
 
-/* VIDEO SELECT */
+/* VIDEO */
 
 videoInput.addEventListener(
   "change",
@@ -2065,15 +2403,18 @@ videoInput.addEventListener(
     const file =
       videoInput.files[0];
 
+
     if(!file){
       return;
     }
+
 
     selectedFile =
       file;
 
     selectedFileType =
       "video";
+
 
     previewSelectedFile();
 
@@ -2133,6 +2474,16 @@ function previewSelectedFile(){
     };
 
 
+  reader.onerror =
+    function(){
+
+      showToast(
+        "Could not preview this file."
+      );
+
+    };
+
+
   reader.readAsDataURL(
     selectedFile
   );
@@ -2146,17 +2497,23 @@ removeMedia.addEventListener(
   "click",
   function(){
 
-    selectedFile = null;
+    selectedFile =
+      null;
 
-    selectedFileType = null;
+    selectedFileType =
+      null;
 
-    imageInput.value = "";
+    imageInput.value =
+      "";
 
-    videoInput.value = "";
+    videoInput.value =
+      "";
 
-    imagePreview.src = "";
+    imagePreview.src =
+      "";
 
-    videoPreview.src = "";
+    videoPreview.src =
+      "";
 
     imagePreview.style.display =
       "none";
@@ -2175,7 +2532,9 @@ removeMedia.addEventListener(
 /* HASHTAG */
 
 document
-  .getElementById("hashtagButton")
+  .getElementById(
+    "hashtagButton"
+  )
   .addEventListener(
     "click",
     function(){
@@ -2197,7 +2556,9 @@ document
 /* MENTION */
 
 document
-  .getElementById("mentionButton")
+  .getElementById(
+    "mentionButton"
+  )
   .addEventListener(
     "click",
     function(){
@@ -2219,7 +2580,9 @@ document
 /* LOCATION */
 
 document
-  .getElementById("locationButton")
+  .getElementById(
+    "locationButton"
+  )
   .addEventListener(
     "click",
     function(){
@@ -2238,7 +2601,11 @@ document
   );
 
 
-function insertTextAtCursor(text){
+/* INSERT TEXT */
+
+function insertTextAtCursor(
+  text
+){
 
   const start =
     postText.selectionStart;
@@ -2246,21 +2613,25 @@ function insertTextAtCursor(text){
   const end =
     postText.selectionEnd;
 
+
   const before =
     postText.value.substring(
       0,
       start
     );
 
+
   const after =
     postText.value.substring(
       end
     );
 
+
   postText.value =
     before +
     text +
     after;
+
 
   postText.selectionStart =
     postText.selectionEnd =
@@ -2269,7 +2640,7 @@ function insertTextAtCursor(text){
 }
 
 
-/* SYNC AUDIENCE */
+/* AUDIENCE */
 
 quickAudience.addEventListener(
   "change",
@@ -2314,6 +2685,13 @@ publishButton.addEventListener(
       postText.value.trim();
 
 
+    /*
+     IMPORTANT:
+     For this testing version,
+     media is only previewed locally.
+     Text post is saved normally.
+    */
+
     if(
       !text &&
       !selectedFile
@@ -2321,6 +2699,27 @@ publishButton.addEventListener(
 
       showToast(
         "Write something or select media first."
+      );
+
+      return;
+
+    }
+
+
+    /*
+     To keep Firestore safe,
+     prevent large media from being
+     saved directly as Base64.
+    */
+
+    if(
+      selectedFile &&
+      selectedFile.size >
+      700000
+    ){
+
+      showToast(
+        "For now use a small image/video. Firebase Storage will be connected later for large media."
       );
 
       return;
@@ -2337,27 +2736,13 @@ publishButton.addEventListener(
 
     try{
 
-      /*
-       IMPORTANT:
-
-       At this stage the selected image/video
-       is used as a temporary browser preview.
-
-       Firebase Storage will be connected later
-       so large media can be stored safely and
-       scalably.
-      */
-
       let mediaPreviewData =
         null;
 
 
-      if(selectedFile){
-
-        /*
-         Small testing files can be previewed.
-         Do NOT rely on this for production media.
-        */
+      if(
+        selectedFile
+      ){
 
         mediaPreviewData =
           await readFileAsDataURL(
@@ -2399,7 +2784,8 @@ publishButton.addEventListener(
           productInput.value.trim(),
 
         mediaType:
-          selectedFileType,
+          selectedFileType ||
+          null,
 
         mediaPreview:
           mediaPreviewData,
@@ -2431,12 +2817,19 @@ publishButton.addEventListener(
       };
 
 
-      await addDoc(
-        collection(
-          db,
-          "posts"
-        ),
-        postData
+      const postRef =
+        await addDoc(
+          collection(
+            db,
+            "posts"
+          ),
+          postData
+        );
+
+
+      console.log(
+        "Post created:",
+        postRef.id
       );
 
 
@@ -2450,28 +2843,50 @@ publishButton.addEventListener(
     }
     catch(error){
 
-      console.error(error);
-
-      showToast(
-        "Post could not be published. Check Firestore permissions."
+      console.error(
+        "POST ERROR:",
+        error
       );
 
+
+      if(
+        error.code ===
+        "permission-denied"
+      ){
+
+        showToast(
+          "Firebase permission denied. Firestore Rules need to allow logged-in users to create posts."
+        );
+
+      }
+      else{
+
+        showToast(
+          "Post could not be published. Check browser console/Firebase."
+        );
+
+      }
+
     }
+    finally{
 
+      publishButton.disabled =
+        false;
 
-    publishButton.disabled =
-      false;
+      publishButton.textContent =
+        "Post";
 
-    publishButton.textContent =
-      "Post";
+    }
 
   }
 );
 
 
-/* READ FILE */
+/* FILE READER */
 
-function readFileAsDataURL(file){
+function readFileAsDataURL(
+  file
+){
 
   return new Promise(
     function(resolve,reject){
@@ -2481,14 +2896,23 @@ function readFileAsDataURL(file){
 
 
       reader.onload =
-        () =>
+        function(){
+
           resolve(
             reader.result
           );
 
+        };
+
 
       reader.onerror =
-        reject;
+        function(error){
+
+          reject(
+            error
+          );
+
+        };
 
 
       reader.readAsDataURL(
@@ -2501,29 +2925,39 @@ function readFileAsDataURL(file){
 }
 
 
-/* CLEAR COMPOSER */
+/* CLEAR */
 
 function clearComposer(){
 
-  postText.value = "";
+  postText.value =
+    "";
 
-  locationInput.value = "";
+  locationInput.value =
+    "";
 
-  groupInput.value = "";
+  groupInput.value =
+    "";
 
-  productInput.value = "";
+  productInput.value =
+    "";
 
-  selectedFile = null;
+  selectedFile =
+    null;
 
-  selectedFileType = null;
+  selectedFileType =
+    null;
 
-  imageInput.value = "";
+  imageInput.value =
+    "";
 
-  videoInput.value = "";
+  videoInput.value =
+    "";
 
-  imagePreview.src = "";
+  imagePreview.src =
+    "";
 
-  videoPreview.src = "";
+  videoPreview.src =
+    "";
 
   imagePreview.style.display =
     "none";
@@ -2563,7 +2997,9 @@ async function toggleLike(
 
 
   const liked =
-    Array.isArray(post.likedBy) &&
+    Array.isArray(
+      post.likedBy
+    ) &&
     post.likedBy.includes(
       currentUser.uid
     );
@@ -2576,6 +3012,7 @@ async function toggleLike(
       await updateDoc(
         ref,
         {
+
           likes:
             increment(-1),
 
@@ -2583,6 +3020,7 @@ async function toggleLike(
             arrayRemove(
               currentUser.uid
             )
+
         }
       );
 
@@ -2592,6 +3030,7 @@ async function toggleLike(
       await updateDoc(
         ref,
         {
+
           likes:
             increment(1),
 
@@ -2599,6 +3038,7 @@ async function toggleLike(
             arrayUnion(
               currentUser.uid
             )
+
         }
       );
 
@@ -2607,7 +3047,10 @@ async function toggleLike(
   }
   catch(error){
 
-    console.error(error);
+    console.error(
+      "Like error:",
+      error
+    );
 
     showToast(
       "Could not update reaction."
@@ -2629,18 +3072,14 @@ async function sparkPost(
   }
 
 
-  const ref =
-    doc(
-      db,
-      "posts",
-      postId
-    );
-
-
   try{
 
     await updateDoc(
-      ref,
+      doc(
+        db,
+        "posts",
+        postId
+      ),
       {
 
         sparks:
@@ -2662,7 +3101,10 @@ async function sparkPost(
   }
   catch(error){
 
-    console.error(error);
+    console.error(
+      "Spark error:",
+      error
+    );
 
     showToast(
       "Could not add Spark."
@@ -2732,15 +3174,20 @@ async function sharePost(
         postId
       ),
       {
+
         shares:
           increment(1)
+
       }
     );
 
   }
   catch(error){
 
-    console.error(error);
+    console.error(
+      "Share error:",
+      error
+    );
 
   }
 
@@ -2774,6 +3221,8 @@ async function copyPostLink(
 
   }
   catch(error){
+
+    console.error(error);
 
     showToast(
       "Could not copy the link."
@@ -2824,7 +3273,10 @@ async function savePost(
   }
   catch(error){
 
-    console.error(error);
+    console.error(
+      "Save error:",
+      error
+    );
 
     showToast(
       "Could not save post."
@@ -2932,7 +3384,10 @@ saveEdit.addEventListener(
     }
     catch(error){
 
-      console.error(error);
+      console.error(
+        "Edit error:",
+        error
+      );
 
       showToast(
         "Could not update post."
@@ -2955,14 +3410,14 @@ async function moveToTrash(
   }
 
 
-  const confirmed =
-    confirm(
+  if(
+    !confirm(
       "Move this post to trash?"
-    );
+    )
+  ){
 
-
-  if(!confirmed){
     return;
+
   }
 
 
@@ -2993,7 +3448,10 @@ async function moveToTrash(
   }
   catch(error){
 
-    console.error(error);
+    console.error(
+      "Trash error:",
+      error
+    );
 
     showToast(
       "Could not move post to trash."
@@ -3037,7 +3495,10 @@ async function archivePost(
   }
   catch(error){
 
-    console.error(error);
+    console.error(
+      "Archive error:",
+      error
+    );
 
     showToast(
       "Could not archive post."
@@ -3048,23 +3509,23 @@ async function archivePost(
 }
 
 
-/* COMMENTS */
+/* COMMENT */
 
 async function submitComment(
   postId,
   input
 ){
 
+  if(!currentUser){
+    return;
+  }
+
+
   const text =
     input.value.trim();
 
 
   if(!text){
-    return;
-  }
-
-
-  if(!currentUser){
     return;
   }
 
@@ -3113,13 +3574,16 @@ async function submitComment(
     );
 
 
-    input.value = "";
-
+    input.value =
+      "";
 
   }
   catch(error){
 
-    console.error(error);
+    console.error(
+      "Comment error:",
+      error
+    );
 
     showToast(
       "Could not send comment."
@@ -3143,6 +3607,11 @@ function loadComments(
     );
 
 
+  if(!commentsList){
+    return;
+  }
+
+
   const commentsQuery =
     query(
       collection(
@@ -3160,9 +3629,11 @@ function loadComments(
 
   onSnapshot(
     commentsQuery,
+
     function(snapshot){
 
-      commentsList.innerHTML = "";
+      commentsList.innerHTML =
+        "";
 
 
       snapshot.forEach(
@@ -3193,7 +3664,8 @@ function loadComments(
 
             <div class="comment-text">
               ${formatPostText(
-                comment.text || ""
+                comment.text ||
+                ""
               )}
             </div>
 
@@ -3208,6 +3680,7 @@ function loadComments(
       );
 
     },
+
     function(error){
 
       console.error(
@@ -3221,13 +3694,14 @@ function loadComments(
 }
 
 
-/* ADMIN GLOBAL ANNOUNCEMENT */
+/* ADMIN */
 
 adminPublish.addEventListener(
   "click",
   async function(){
 
     if(
+      !currentUser ||
       !currentProfile ||
       currentProfile.role !==
       "admin"
@@ -3320,8 +3794,8 @@ adminPublish.addEventListener(
       );
 
 
-      adminText.value = "";
-
+      adminText.value =
+        "";
 
       showToast(
         "Official announcement published."
@@ -3330,51 +3804,29 @@ adminPublish.addEventListener(
     }
     catch(error){
 
-      console.error(error);
+      console.error(
+        "Admin post error:",
+        error
+      );
 
       showToast(
         "Announcement failed."
       );
 
     }
+    finally{
 
+      adminPublish.disabled =
+        false;
 
-    adminPublish.disabled =
-      false;
+      adminPublish.textContent =
+        "Publish Global Announcement";
 
-    adminPublish.textContent =
-      "Publish Global Announcement";
+    }
 
   }
 );
 
-
-/*
- IMPORTANT PRODUCTION NOTE
-
- The admin controls shown above are NOT the final
- security layer.
-
- In the production version, administrator
- privileges MUST be enforced by Firebase
- Security Rules / trusted backend authorization.
-
- Never trust only:
- currentProfile.role === "admin"
-
-because browser-side JavaScript can be modified
-by a malicious user.
-
-The same principle applies to:
-- deleting posts
-- editing posts
-- affiliate management
-- global announcements
-- currency
-- monetization
-- user data
-- moderation
-*/
 </script>
 
 </body>
