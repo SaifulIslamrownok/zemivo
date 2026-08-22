@@ -143,6 +143,7 @@ button{
 
 /* =========================
    MIND BOX
+   OPTIONS HIDDEN INITIALLY
 ========================= */
 
 .mind-card{
@@ -185,15 +186,19 @@ button{
 
 /*
   IMPORTANT:
-  চারটি পোস্ট অপশন Mind Box-এর
-  ভেতরেই থাকবে।
+  Options are INSIDE the Mind Box.
+  They stay hidden until the Mind Box is touched.
 */
 
 .mind-options{
-  display:grid;
+  display:none;
   grid-template-columns:repeat(4,1fr);
   gap:7px;
   margin-top:13px;
+}
+
+.mind-options.show{
+  display:grid;
 }
 
 .mind-option{
@@ -296,6 +301,7 @@ button{
 
 /*
   EXACTLY FOUR OPTIONS
+  No MORE here.
 */
 
 .post-actions{
@@ -340,11 +346,80 @@ button{
   font-size:12px;
 }
 
-.comment-bubble{
+.comment-content{
   flex:1;
+  min-width:0;
+}
+
+.comment-bubble{
   background:#f1f3f5;
   border-radius:14px;
   padding:8px 11px;
+}
+
+.comment-actions{
+  display:flex;
+  gap:12px;
+  margin-top:4px;
+  padding-left:8px;
+}
+
+.comment-action{
+  border:0;
+  background:transparent;
+  color:#667085;
+  font-size:12px;
+  font-weight:600;
+  padding:3px 4px;
+}
+
+.comment-action:hover{
+  color:var(--blue);
+}
+
+.reply-list{
+  margin-left:14px;
+}
+
+.reply{
+  display:flex;
+  gap:7px;
+  margin-top:7px;
+}
+
+.reply .avatar{
+  width:28px;
+  height:28px;
+  font-size:11px;
+}
+
+.reply-box{
+  display:none;
+  gap:6px;
+  margin-top:7px;
+}
+
+.reply-box.show{
+  display:flex;
+}
+
+.reply-box input{
+  flex:1;
+  min-width:0;
+  border:1px solid var(--line);
+  outline:0;
+  border-radius:18px;
+  padding:7px 10px;
+  font-size:13px;
+}
+
+.reply-box button{
+  border:0;
+  background:var(--blue);
+  color:white;
+  border-radius:18px;
+  padding:0 12px;
+  font-size:12px;
 }
 
 .comment-box{
@@ -652,6 +727,7 @@ button{
 
 /* =========================
    THREE DOT MENU
+   UNCHANGED
 ========================= */
 
 .menu{
@@ -845,9 +921,14 @@ button{
 
       <div class="avatar">Z</div>
 
+      <!--
+        ONLY THIS BOX OPENS THE OPTIONS
+      -->
+
       <button
+        id="mindButton"
         class="mind-button"
-        onclick="openComposer()">
+        onclick="toggleMindOptions()">
 
         What's on your mind?
 
@@ -857,11 +938,13 @@ button{
 
 
     <!--
-      EXACTLY FOUR OPTIONS
-      AND ALL ARE INSIDE THE BOX
+      HIDDEN INITIALLY.
+      OPENS INSIDE THE SAME BOX.
     -->
 
-    <div class="mind-options">
+    <div
+      id="mindOptions"
+      class="mind-options">
 
       <button
         class="mind-option"
@@ -955,7 +1038,6 @@ button{
   <div class="sheet">
 
     <div class="grab"></div>
-
 
     <div class="modal-head">
 
@@ -1076,7 +1158,7 @@ button{
       <input
         id="mediaInput"
         type="file"
-        accept="image/*"
+        accept="image/*,video/*"
         hidden
         onchange="selectMedia(event)">
 
@@ -1510,6 +1592,7 @@ button{
 
 <!-- =====================================================
      THREE DOT MENU
+     THIS IS KEPT
 ===================================================== -->
 
 <div
@@ -1681,6 +1764,21 @@ function goHome(){
 
 
 /* =====================================================
+   MIND OPTIONS
+   OPEN ONLY INSIDE MIND BOX
+===================================================== */
+
+function toggleMindOptions(){
+
+  const options =
+    document.getElementById("mindOptions");
+
+  options.classList.toggle("show");
+
+}
+
+
+/* =====================================================
    COMPOSER
 ===================================================== */
 
@@ -1707,6 +1805,13 @@ function openComposer(kind=""){
 
   document.getElementById("composerModal")
     .classList.add("show");
+
+  /*
+    Close the Mind options after entering composer.
+  */
+
+  document.getElementById("mindOptions")
+    .classList.remove("show");
 
   if(kind === "photo"){
 
@@ -1831,40 +1936,58 @@ function selectMedia(event){
   if(file.size > 8 * 1024 * 1024){
 
     showToast(
-      "For testing use an image below 8 MB."
+      "For testing use a file below 8 MB."
     );
 
     return;
 
   }
 
-  if(!file.type.startsWith("image/")){
+  if(
+    !file.type.startsWith("image/") &&
+    !file.type.startsWith("video/")
+  ){
 
     showToast(
-      "This test version previews images."
+      "Please select an image or video."
     );
 
     return;
 
   }
 
-  const reader =
-    new FileReader();
+  /*
+    Current preview system is image based.
+    Images are previewed directly.
+  */
 
-  reader.onload = function(){
+  if(file.type.startsWith("image/")){
 
-    selectedMedia =
-      reader.result;
+    const reader =
+      new FileReader();
 
-    document.getElementById("previewImage")
-      .src = selectedMedia;
+    reader.onload = function(){
 
-    document.getElementById("mediaPreview")
-      .classList.add("show");
+      selectedMedia =
+        reader.result;
 
-  };
+      document.getElementById("previewImage")
+        .src = selectedMedia;
 
-  reader.readAsDataURL(file);
+      document.getElementById("mediaPreview")
+        .classList.add("show");
+
+    };
+
+    reader.readAsDataURL(file);
+
+  }else{
+
+    showToast(
+      "Video selected. Testing preview will be added later."
+    );
+
+  }
 
 }
 
@@ -2255,6 +2378,136 @@ function render(){
 
 
 /* =====================================================
+   COMMENT HTML
+===================================================== */
+
+function replyHTML(reply){
+
+  return `
+
+    <div class="reply">
+
+      <div class="avatar">
+
+        ${escapeHTML(
+          (reply.name || "Z")
+            .charAt(0)
+            .toUpperCase()
+        )}
+
+      </div>
+
+      <div class="comment-content">
+
+        <div class="comment-bubble">
+
+          <b>
+            ${escapeHTML(reply.name)}
+          </b>
+
+          <br>
+
+          ${escapeHTML(reply.text)}
+
+        </div>
+
+      </div>
+
+    </div>
+
+  `;
+
+}
+
+
+function commentHTML(comment,index,postId){
+
+  const replies =
+    (comment.replies || [])
+      .map(replyHTML)
+      .join("");
+
+  return `
+
+    <div class="comment">
+
+      <div class="avatar">
+
+        ${escapeHTML(
+          (comment.name || "Z")
+            .charAt(0)
+            .toUpperCase()
+        )}
+
+      </div>
+
+      <div class="comment-content">
+
+        <div class="comment-bubble">
+
+          <b>
+            ${escapeHTML(comment.name)}
+          </b>
+
+          <br>
+
+          ${escapeHTML(comment.text)}
+
+        </div>
+
+
+        <div class="comment-actions">
+
+          <button
+            class="comment-action"
+            onclick="showReplyBox('${postId}',${index})">
+
+            Reply
+
+          </button>
+
+        </div>
+
+
+        <div
+          id="reply-box-${postId}-${index}"
+          class="reply-box">
+
+          <input
+            id="reply-input-${postId}-${index}"
+            placeholder="Write a reply..."
+            onkeydown="
+              if(event.key==='Enter'){
+                addReply('${postId}',${index})
+              }
+            ">
+
+          <button
+            onclick="addReply('${postId}',${index})">
+
+            Reply
+
+          </button>
+
+        </div>
+
+
+        <div class="reply-list">
+
+          ${replies}
+
+        </div>
+
+      </div>
+
+    </div>
+
+  `;
+
+}
+
+
+/* =====================================================
    POST HTML
 ===================================================== */
 
@@ -2262,35 +2515,14 @@ function postHTML(post){
 
   const comments =
     (post.commentsList || [])
-      .map(comment => `
-
-        <div class="comment">
-
-          <div class="avatar">
-
-            ${escapeHTML(
-              (comment.name || "Z")
-                .charAt(0)
-                .toUpperCase()
-            )}
-
-          </div>
-
-          <div class="comment-bubble">
-
-            <b>
-              ${escapeHTML(comment.name)}
-            </b>
-
-            <br>
-
-            ${escapeHTML(comment.text)}
-
-          </div>
-
-        </div>
-
-      `)
+      .map(
+        (comment,index) =>
+          commentHTML(
+            comment,
+            index,
+            post.id
+          )
+      )
       .join("");
 
 
@@ -2312,6 +2544,7 @@ function postHTML(post){
       escapeHTML(post.group);
 
   }
+
 
   if(post.product){
 
@@ -2354,6 +2587,8 @@ function postHTML(post){
 
         </div>
 
+
+        <!-- THREE DOT REMAINS -->
 
         <button
           class="more-btn"
@@ -2430,6 +2665,8 @@ function postHTML(post){
 
       <!--
         EXACTLY FOUR OPTIONS
+        LIKE / COMMENT / SHARE / SAVE
+        NO MORE HERE
       -->
 
       <div class="post-actions">
@@ -2460,9 +2697,10 @@ function postHTML(post){
 
 
         <button
-          onclick="openPostMenu('${post.id}',event)">
+          class="${post.saved ? "active" : ""}"
+          onclick="quickSavePost('${post.id}')">
 
-          ⋯ More
+          🔖 Save
 
         </button>
 
@@ -2548,6 +2786,35 @@ function likePost(id){
 
 
 /* =====================================================
+   SAVE — FOURTH POST OPTION
+===================================================== */
+
+function quickSavePost(id){
+
+  const post =
+    posts.find(
+      p => p.id === id
+    );
+
+  if(!post) return;
+
+  post.saved =
+    !post.saved;
+
+  save();
+
+  render();
+
+  showToast(
+    post.saved
+    ? "Post saved"
+    : "Post removed from saved"
+  );
+
+}
+
+
+/* =====================================================
    COMMENT
 ===================================================== */
 
@@ -2595,7 +2862,9 @@ function addComment(id){
 
     name:"Zemivo User",
 
-    text:text
+    text:text,
+
+    replies:[]
 
   });
 
@@ -2604,6 +2873,101 @@ function addComment(id){
   save();
 
   render();
+
+}
+
+
+/* =====================================================
+   REPLY
+===================================================== */
+
+function showReplyBox(postId,commentIndex){
+
+  const box =
+    document.getElementById(
+      "reply-box-" +
+      postId +
+      "-" +
+      commentIndex
+    );
+
+  if(!box)
+    return;
+
+  box.classList.toggle("show");
+
+  if(box.classList.contains("show")){
+
+    const input =
+      document.getElementById(
+        "reply-input-" +
+        postId +
+        "-" +
+        commentIndex
+      );
+
+    if(input)
+      input.focus();
+
+  }
+
+}
+
+
+function addReply(postId,commentIndex){
+
+  const post =
+    posts.find(
+      p => p.id === postId
+    );
+
+  if(!post)
+    return;
+
+  if(!post.commentsList)
+    post.commentsList = [];
+
+  const comment =
+    post.commentsList[commentIndex];
+
+  if(!comment)
+    return;
+
+  const input =
+    document.getElementById(
+      "reply-input-" +
+      postId +
+      "-" +
+      commentIndex
+    );
+
+  if(!input)
+    return;
+
+  const text =
+    input.value.trim();
+
+  if(!text)
+    return;
+
+  if(!comment.replies)
+    comment.replies = [];
+
+  comment.replies.push({
+
+    name:"Zemivo User",
+
+    text:text
+
+  });
+
+  save();
+
+  render();
+
+  showToast(
+    "Reply added"
+  );
 
 }
 
@@ -2668,6 +3032,7 @@ function sharePost(id){
 
 /* =====================================================
    THREE DOT MENU
+   KEPT AS BEFORE
 ===================================================== */
 
 function openPostMenu(id,event){
@@ -2721,8 +3086,7 @@ document.addEventListener(
 
     if(
       !event.target.closest("#postMenu") &&
-      !event.target.closest(".more-btn") &&
-      !event.target.closest(".post-actions button:last-child")
+      !event.target.closest(".more-btn")
     ){
 
       menu.classList.remove("show");
@@ -2820,6 +3184,8 @@ function savePost(){
     !post.saved;
 
   save();
+
+  render();
 
   showToast(
     post.saved
