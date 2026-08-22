@@ -7,6 +7,7 @@
 <title>Zemivo — Home</title>
 
 <style>
+
 :root{
   --blue:#1877f2;
   --blue-dark:#0f5dcc;
@@ -151,6 +152,7 @@ button{
 
 /* =========================
    MIND BOX
+   ONLY MIND BOX
 ========================= */
 
 .mind-card{
@@ -191,38 +193,11 @@ button{
   background:#eef1f5;
 }
 
-.mind-options{
-  display:none;
-  grid-template-columns:repeat(4,1fr);
-  gap:7px;
-  margin-top:13px;
-}
-
-.mind-options.show{
-  display:grid;
-}
-
-.mind-option{
-  border:0;
-  background:#f8fafc;
-  padding:11px 5px;
-  border-radius:10px;
-}
-
-.mind-option:hover{
-  background:#eef2ff;
-}
-
-.mind-icon{
-  font-size:20px;
-  display:block;
-  margin-bottom:4px;
-}
-
-.mind-label{
-  font-size:13px;
-  font-weight:600;
-}
+/*
+  IMPORTANT:
+  Mind Box-এর বাইরে কোনো Photo/Live/Feeling/Location option নেই।
+  Mind Box-এ চাপ দিলে সরাসরি Composer খুলবে।
+*/
 
 /* =========================
    POST
@@ -281,6 +256,13 @@ button{
   background:#ddd;
 }
 
+.post-video{
+  width:100%;
+  display:block;
+  max-height:600px;
+  background:#000;
+}
+
 .post-extra{
   margin-top:9px;
   color:var(--muted);
@@ -299,6 +281,10 @@ button{
   font-size:13px;
   border-bottom:1px solid var(--line);
 }
+
+/* =========================
+   EXACTLY FOUR POST OPTIONS
+========================= */
 
 .post-actions{
   display:grid;
@@ -373,6 +359,10 @@ button{
   color:var(--blue);
 }
 
+/* =========================
+   REPLIES
+========================= */
+
 .reply-list{
   margin-left:14px;
 }
@@ -417,6 +407,10 @@ button{
   padding:0 12px;
   font-size:12px;
 }
+
+/* =========================
+   COMMENT BOX
+========================= */
 
 .comment-box{
   display:flex;
@@ -552,6 +546,10 @@ button{
   padding:18px 2px;
 }
 
+.post-textarea:focus{
+  outline:none;
+}
+
 .writer-tools{
   border:1px solid var(--line);
   border-radius:13px;
@@ -588,6 +586,10 @@ button{
   flex:none;
 }
 
+/* =========================
+   INSIDE COMPOSER QUICK TAGS
+========================= */
+
 .tags{
   display:flex;
   gap:7px;
@@ -602,6 +604,14 @@ button{
   padding:8px 11px;
 }
 
+.tag-btn:hover{
+  background:#f8fafc;
+}
+
+/* =========================
+   MEDIA PREVIEW
+========================= */
+
 .media-preview{
   display:none;
   position:relative;
@@ -614,7 +624,8 @@ button{
   display:block;
 }
 
-.media-preview img{
+.media-preview img,
+.media-preview video{
   display:block;
   width:100%;
   max-height:390px;
@@ -714,6 +725,12 @@ button{
   font-weight:700;
 }
 
+.primary:disabled{
+  background:#d8dde5;
+  color:#8c94a3;
+  cursor:not-allowed;
+}
+
 .secondary{
   border:0;
   background:#eef1f4;
@@ -811,6 +828,7 @@ button{
   .search{
     display:none;
   }
+
 }
 
 @media(max-width:520px){
@@ -828,14 +846,6 @@ button{
     padding:7px;
   }
 
-  .mind-options{
-    grid-template-columns:repeat(4,1fr);
-  }
-
-  .mind-label{
-    font-size:11px;
-  }
-
   .post-actions button{
     font-size:12px;
   }
@@ -847,11 +857,17 @@ button{
   .setting{
     align-items:flex-start;
   }
+
 }
+
 </style>
 </head>
 
 <body>
+
+<!-- =========================
+     TOP BAR
+========================= -->
 
 <header class="topbar">
 
@@ -878,6 +894,10 @@ button{
 
 <main class="layout">
 
+<!-- =========================
+     LEFT
+========================= -->
+
 <aside class="sidebar panel">
 
   <button class="sidebtn" onclick="goHome()">🏠 Home</button>
@@ -892,7 +912,16 @@ button{
 </aside>
 
 
+<!-- =========================
+     FEED
+========================= -->
+
 <section>
+
+  <!-- =========================
+       MIND BOX
+       ONLY THIS OPENS COMPOSER
+  ========================= -->
 
   <div class="mind-card card">
 
@@ -903,7 +932,7 @@ button{
       <button
         id="mindButton"
         class="mind-button"
-        onclick="toggleMindOptions()">
+        onclick="openComposer()">
 
         What's on your mind?
 
@@ -911,54 +940,17 @@ button{
 
     </div>
 
-    <div
-      id="mindOptions"
-      class="mind-options">
-
-      <button
-        class="mind-option"
-        onclick="openComposer('photo')">
-
-        <span class="mind-icon">🖼️</span>
-        <span class="mind-label">Photo</span>
-
-      </button>
-
-      <button
-        class="mind-option"
-        onclick="openComposer('live')">
-
-        <span class="mind-icon">🔴</span>
-        <span class="mind-label">Live</span>
-
-      </button>
-
-      <button
-        class="mind-option"
-        onclick="openComposer('feeling')">
-
-        <span class="mind-icon">😊</span>
-        <span class="mind-label">Feeling</span>
-
-      </button>
-
-      <button
-        class="mind-option"
-        onclick="openComposer('location')">
-
-        <span class="mind-icon">📍</span>
-        <span class="mind-label">Location</span>
-
-      </button>
-
-    </div>
-
   </div>
+
 
   <div id="feed"></div>
 
 </section>
 
+
+<!-- =========================
+     RIGHT
+========================= -->
 
 <aside class="right">
 
@@ -988,6 +980,11 @@ button{
 </main>
 
 
+<!-- =====================================================
+     COMPOSER
+     EVERYTHING IS INSIDE THE MIND BOX FLOW
+===================================================== -->
+
 <div
   id="composerModal"
   class="modal">
@@ -1012,6 +1009,9 @@ button{
 
     </div>
 
+
+    <!-- STEP BAR -->
+
     <div class="steps">
 
       <span
@@ -1025,6 +1025,10 @@ button{
 
     </div>
 
+
+    <!-- =================================================
+         STEP ONE
+    ================================================= -->
 
     <section id="stepOne">
 
@@ -1047,40 +1051,61 @@ button{
       </div>
 
 
+      <!--
+        DIRECT WRITING AREA
+        USER CAN WRITE HERE
+      -->
+
       <textarea
         id="postText"
         class="post-textarea"
-        placeholder="What's on your mind?"></textarea>
+        placeholder="What's on your mind?"
+        oninput="updateNextButton()"></textarea>
 
+
+      <!--
+        OPTIONS ARE INSIDE THE COMPOSER
+        NOT OUTSIDE THE MIND BOX
+      -->
 
       <div class="tags">
 
         <button
           class="tag-btn"
           onclick="mention()">
+
           @ Mention
+
         </button>
 
         <button
           class="tag-btn"
           onclick="hashtag()">
+
           # Hashtag
+
         </button>
 
         <button
           class="tag-btn"
           onclick="addGroup()">
+
           👥 Group
+
         </button>
 
         <button
           class="tag-btn"
           onclick="addProduct()">
+
           🔗 Product
+
         </button>
 
       </div>
 
+
+      <!-- MEDIA PREVIEW -->
 
       <div
         id="mediaPreview"
@@ -1098,6 +1123,12 @@ button{
           id="previewImage"
           alt="Preview">
 
+        <video
+          id="previewVideo"
+          controls
+          style="display:none">
+        </video>
+
       </div>
 
 
@@ -1108,6 +1139,10 @@ button{
         hidden
         onchange="selectMedia(event)">
 
+
+      <!--
+        ALL OPTIONS ARE INSIDE THE POST CREATOR
+      -->
 
       <div class="writer-tools">
 
@@ -1300,12 +1335,16 @@ button{
       </div>
 
 
+      <!-- NEXT -->
+
       <div class="nextbar">
 
         <div></div>
 
         <button
+          id="nextButton"
           class="primary"
+          disabled
           onclick="goToStepTwo()">
 
           Next →
@@ -1316,6 +1355,10 @@ button{
 
     </section>
 
+
+    <!-- =================================================
+         STEP TWO
+    ================================================= -->
 
     <section
       id="stepTwo"
@@ -1526,6 +1569,10 @@ button{
 </div>
 
 
+<!-- =====================================================
+     THREE DOT MENU
+===================================================== -->
+
 <div
   id="postMenu"
   class="menu">
@@ -1603,6 +1650,7 @@ let posts =
 
 let selectedPostId = null;
 let selectedMedia = "";
+let selectedMediaType = "";
 let selectedLocation = "";
 let selectedGroup = "";
 let selectedProduct = "";
@@ -1695,22 +1743,8 @@ function goHome(){
 
 
 /* =====================================================
-   MIND OPTIONS
-===================================================== */
-
-function toggleMindOptions(){
-
-  const options =
-    document.getElementById("mindOptions");
-
-  options.classList.toggle("show");
-
-}
-
-
-/* =====================================================
    COMPOSER
-   FIXED: DUPLICATE openComposer REMOVED
+   MIND BOX DIRECTLY OPENS THIS
 ===================================================== */
 
 function openComposer(kind=""){
@@ -1718,6 +1752,7 @@ function openComposer(kind=""){
   editingId = null;
 
   selectedMedia = "";
+  selectedMediaType = "";
   selectedLocation = "";
   selectedGroup = "";
   selectedProduct = "";
@@ -1727,6 +1762,18 @@ function openComposer(kind=""){
   document.getElementById("mediaPreview")
     .classList.remove("show");
 
+  document.getElementById("previewImage")
+    .src = "";
+
+  document.getElementById("previewVideo")
+    .src = "";
+
+  document.getElementById("previewImage")
+    .style.display = "block";
+
+  document.getElementById("previewVideo")
+    .style.display = "none";
+
   document.getElementById("mediaInput").value = "";
 
   document.getElementById("composerTitle")
@@ -1734,11 +1781,10 @@ function openComposer(kind=""){
 
   resetStepOne();
 
+  updateNextButton();
+
   document.getElementById("composerModal")
     .classList.add("show");
-
-  document.getElementById("mindOptions")
-    .classList.remove("show");
 
   if(kind === "photo"){
 
@@ -1754,10 +1800,38 @@ function openComposer(kind=""){
 }
 
 
+/* =====================================================
+   CLOSE COMPOSER
+===================================================== */
+
 function closeComposer(){
 
   document.getElementById("composerModal")
     .classList.remove("show");
+
+}
+
+
+/* =====================================================
+   NEXT BUTTON
+   ENABLE ONLY WHEN TEXT OR MEDIA EXISTS
+===================================================== */
+
+function updateNextButton(){
+
+  const text =
+    document.getElementById("postText")
+      .value
+      .trim();
+
+  const hasMedia =
+    !!selectedMedia;
+
+  const button =
+    document.getElementById("nextButton");
+
+  button.disabled =
+    !text && !hasMedia;
 
 }
 
@@ -1787,7 +1861,8 @@ function goToStepTwo(){
 
   const text =
     document.getElementById("postText")
-      .value.trim();
+      .value
+      .trim();
 
   if(!text && !selectedMedia){
 
@@ -1848,6 +1923,8 @@ function selectMedia(event){
       "For testing use a file below 8 MB."
     );
 
+    event.target.value = "";
+
     return;
 
   }
@@ -1861,11 +1938,20 @@ function selectMedia(event){
       "Please select an image or video."
     );
 
+    event.target.value = "";
+
     return;
 
   }
 
-  if(file.type.startsWith("image/")){
+
+  selectedMediaType =
+    file.type.startsWith("image/")
+    ? "image"
+    : "video";
+
+
+  if(selectedMediaType === "image"){
 
     const reader =
       new FileReader();
@@ -1875,11 +1961,25 @@ function selectMedia(event){
       selectedMedia =
         reader.result;
 
-      document.getElementById("previewImage")
-        .src = selectedMedia;
+      const image =
+        document.getElementById("previewImage");
+
+      const video =
+        document.getElementById("previewVideo");
+
+      image.src =
+        selectedMedia;
+
+      image.style.display =
+        "block";
+
+      video.style.display =
+        "none";
 
       document.getElementById("mediaPreview")
         .classList.add("show");
+
+      updateNextButton();
 
     };
 
@@ -1887,9 +1987,37 @@ function selectMedia(event){
 
   }else{
 
-    showToast(
-      "Video selected. Testing preview will be added later."
-    );
+    const reader =
+      new FileReader();
+
+    reader.onload = function(){
+
+      selectedMedia =
+        reader.result;
+
+      const image =
+        document.getElementById("previewImage");
+
+      const video =
+        document.getElementById("previewVideo");
+
+      image.style.display =
+        "none";
+
+      video.src =
+        selectedMedia;
+
+      video.style.display =
+        "block";
+
+      document.getElementById("mediaPreview")
+        .classList.add("show");
+
+      updateNextButton();
+
+    };
+
+    reader.readAsDataURL(file);
 
   }
 
@@ -1899,15 +2027,27 @@ function selectMedia(event){
 function removeMedia(){
 
   selectedMedia = "";
+  selectedMediaType = "";
 
   document.getElementById("previewImage")
     .src = "";
+
+  document.getElementById("previewVideo")
+    .src = "";
+
+  document.getElementById("previewImage")
+    .style.display = "block";
+
+  document.getElementById("previewVideo")
+    .style.display = "none";
 
   document.getElementById("mediaPreview")
     .classList.remove("show");
 
   document.getElementById("mediaInput")
     .value = "";
+
+  updateNextButton();
 
 }
 
@@ -1925,6 +2065,8 @@ function mention(){
 
   area.focus();
 
+  updateNextButton();
+
 }
 
 
@@ -1937,6 +2079,8 @@ function hashtag(){
 
   area.focus();
 
+  updateNextButton();
+
 }
 
 
@@ -1945,9 +2089,12 @@ function addFeeling(){
   const area =
     document.getElementById("postText");
 
-  area.value += " 😊 Feeling happy";
+  area.value +=
+    " 😊 Feeling happy";
 
   area.focus();
+
+  updateNextButton();
 
 }
 
@@ -1957,11 +2104,16 @@ function addGIF(){
   const area =
     document.getElementById("postText");
 
-  area.value += " [GIF]";
+  area.value +=
+    " [GIF]";
 
   area.focus();
 
-  showToast("GIF placeholder added");
+  showToast(
+    "GIF placeholder added"
+  );
+
+  updateNextButton();
 
 }
 
@@ -1975,6 +2127,8 @@ function addLiveInfo(){
     " 🔴 Live session";
 
   area.focus();
+
+  updateNextButton();
 
 }
 
@@ -2003,6 +2157,8 @@ function addPoll(){
 
     area.focus();
 
+    updateNextButton();
+
   }
 
 }
@@ -2022,6 +2178,8 @@ function addEvent(){
       "\n📅 Event: " + eventName;
 
     area.focus();
+
+    updateNextButton();
 
   }
 
@@ -2110,7 +2268,8 @@ function publishPost(){
 
   const text =
     document.getElementById("postText")
-      .value.trim();
+      .value
+      .trim();
 
   if(!text && !selectedMedia){
 
@@ -2131,6 +2290,10 @@ function publishPost(){
       .value;
 
 
+  /* =========================
+     EDIT EXISTING POST
+  ========================= */
+
   if(editingId){
 
     const post =
@@ -2140,13 +2303,29 @@ function publishPost(){
 
     if(post){
 
-      post.text = text;
-      post.media = selectedMedia;
-      post.location = selectedLocation;
-      post.group = selectedGroup;
-      post.product = selectedProduct;
-      post.audience = audience;
-      post.comments = comments;
+      post.text =
+        text;
+
+      post.media =
+        selectedMedia;
+
+      post.mediaType =
+        selectedMediaType;
+
+      post.location =
+        selectedLocation;
+
+      post.group =
+        selectedGroup;
+
+      post.product =
+        selectedProduct;
+
+      post.audience =
+        audience;
+
+      post.comments =
+        comments;
 
     }
 
@@ -2154,7 +2333,14 @@ function publishPost(){
       "Post updated"
     );
 
-  }else{
+  }
+
+  /* =========================
+     CREATE NEW POST
+     CAN BE DONE AGAIN AND AGAIN
+  ========================= */
+
+  else{
 
     const post = {
 
@@ -2165,6 +2351,8 @@ function publishPost(){
       text:text,
 
       media:selectedMedia,
+
+      mediaType:selectedMediaType,
 
       location:selectedLocation,
 
@@ -2236,11 +2424,11 @@ function render(){
 
       const combined =
         (
-          p.text +
+          (p.text || "") +
           " " +
-          p.location +
+          (p.location || "") +
           " " +
-          p.group
+          (p.group || "")
         ).toLowerCase();
 
       return combined.includes(search);
@@ -2282,7 +2470,8 @@ function render(){
 
 
 /* =====================================================
-   COMMENT HTML
+   REPLY HTML
+   MULTIPLE REPLIES SUPPORTED
 ===================================================== */
 
 function replyHTML(reply){
@@ -2323,6 +2512,10 @@ function replyHTML(reply){
 
 }
 
+
+/* =====================================================
+   COMMENT HTML
+===================================================== */
 
 function commentHTML(comment,index,postId){
 
@@ -2372,6 +2565,11 @@ function commentHTML(comment,index,postId){
 
         </div>
 
+
+        <!--
+          SAME COMMENT CAN HAVE
+          MANY REPLIES
+        -->
 
         <div
           id="reply-box-${postId}-${index}"
@@ -2458,6 +2656,38 @@ function postHTML(post){
   }
 
 
+  let mediaHTML = "";
+
+  if(post.media){
+
+    if(post.mediaType === "video"){
+
+      mediaHTML = `
+
+        <video
+          class="post-video"
+          controls
+          src="${post.media}">
+        </video>
+
+      `;
+
+    }else{
+
+      mediaHTML = `
+
+        <img
+          class="post-image"
+          src="${post.media}"
+          alt="Zemivo post">
+
+      `;
+
+    }
+
+  }
+
+
   return `
 
     <article
@@ -2530,18 +2760,7 @@ function postHTML(post){
       }
 
 
-      ${
-        post.media
-        ? `
-
-          <img
-            class="post-image"
-            src="${post.media}"
-            alt="Zemivo post">
-
-        `
-        : ""
-      }
+      ${mediaHTML}
 
 
       <div class="stats">
@@ -2564,6 +2783,11 @@ function postHTML(post){
 
       </div>
 
+
+      <!--
+        EXACTLY FOUR OPTIONS
+        LIKE / COMMENT / SHARE / SAVE
+      -->
 
       <div class="post-actions">
 
@@ -2653,6 +2877,7 @@ function postHTML(post){
 
 /* =====================================================
    LIKE
+   CAN BE USED ON MANY POSTS
 ===================================================== */
 
 function likePost(id){
@@ -2774,7 +2999,7 @@ function addComment(id){
 
 
 /* =====================================================
-   REPLY
+   REPLY BOX
 ===================================================== */
 
 function showReplyBox(postId,commentIndex){
@@ -2809,6 +3034,12 @@ function showReplyBox(postId,commentIndex){
 
 }
 
+
+/* =====================================================
+   ADD REPLY
+   SAME COMMENT CAN RECEIVE
+   UNLIMITED REPLIES
+===================================================== */
 
 function addReply(postId,commentIndex){
 
@@ -2849,6 +3080,13 @@ function addReply(postId,commentIndex){
   if(!comment.replies)
     comment.replies = [];
 
+
+  /*
+    IMPORTANT:
+    এখানে নতুন Reply যোগ হয়।
+    আগের Reply মুছে যায় না।
+  */
+
   comment.replies.push({
 
     name:"Zemivo User",
@@ -2856,6 +3094,8 @@ function addReply(postId,commentIndex){
     text:text
 
   });
+
+  input.value = "";
 
   save();
 
@@ -2870,6 +3110,7 @@ function addReply(postId,commentIndex){
 
 /* =====================================================
    SHARE
+   EVERY CLICK INCREASES SHARE COUNT
 ===================================================== */
 
 function sharePost(id){
@@ -3013,6 +3254,10 @@ function closeMenu(){
 }
 
 
+/* =====================================================
+   EDIT
+===================================================== */
+
 function editPost(){
 
   const post =
@@ -3020,10 +3265,14 @@ function editPost(){
 
   if(!post) return;
 
-  editingId = post.id;
+  editingId =
+    post.id;
 
   selectedMedia =
     post.media || "";
+
+  selectedMediaType =
+    post.mediaType || "";
 
   selectedLocation =
     post.location || "";
@@ -3035,7 +3284,8 @@ function editPost(){
     post.product || "";
 
   document.getElementById("postText")
-    .value = post.text || "";
+    .value =
+    post.text || "";
 
   document.getElementById("audience")
     .value =
@@ -3045,20 +3295,52 @@ function editPost(){
     .value =
     post.comments || "Public";
 
-  if(selectedMedia){
 
-    document.getElementById("previewImage")
-      .src = selectedMedia;
+  if(selectedMedia){
 
     document.getElementById("mediaPreview")
       .classList.add("show");
 
+    if(selectedMediaType === "video"){
+
+      document.getElementById("previewImage")
+        .style.display =
+        "none";
+
+      document.getElementById("previewVideo")
+        .style.display =
+        "block";
+
+      document.getElementById("previewVideo")
+        .src =
+        selectedMedia;
+
+    }else{
+
+      document.getElementById("previewImage")
+        .style.display =
+        "block";
+
+      document.getElementById("previewVideo")
+        .style.display =
+        "none";
+
+      document.getElementById("previewImage")
+        .src =
+        selectedMedia;
+
+    }
+
   }
 
+
   document.getElementById("composerTitle")
-    .textContent = "Edit post";
+    .textContent =
+    "Edit post";
 
   resetStepOne();
+
+  updateNextButton();
 
   document.getElementById("composerModal")
     .classList.add("show");
@@ -3067,6 +3349,10 @@ function editPost(){
 
 }
 
+
+/* =====================================================
+   SAVE POST
+===================================================== */
 
 function savePost(){
 
@@ -3093,6 +3379,10 @@ function savePost(){
 }
 
 
+/* =====================================================
+   PIN
+===================================================== */
+
 function pinPost(){
 
   const post =
@@ -3115,6 +3405,10 @@ function pinPost(){
 
 }
 
+
+/* =====================================================
+   COPY LINK
+===================================================== */
 
 function copyPostLink(){
 
@@ -3143,6 +3437,10 @@ function copyPostLink(){
 
 }
 
+
+/* =====================================================
+   PRIVACY
+===================================================== */
 
 function changePrivacy(){
 
@@ -3173,6 +3471,10 @@ function changePrivacy(){
 }
 
 
+/* =====================================================
+   COMMENT SETTINGS
+===================================================== */
+
 function changeComments(){
 
   const post =
@@ -3201,6 +3503,10 @@ function changeComments(){
 
 }
 
+
+/* =====================================================
+   PRODUCT
+===================================================== */
 
 function manageProduct(){
 
@@ -3231,6 +3537,10 @@ function manageProduct(){
 }
 
 
+/* =====================================================
+   ARCHIVE
+===================================================== */
+
 function archivePost(){
 
   const post =
@@ -3238,7 +3548,8 @@ function archivePost(){
 
   if(!post) return;
 
-  post.archived = true;
+  post.archived =
+    true;
 
   save();
 
@@ -3253,6 +3564,10 @@ function archivePost(){
 }
 
 
+/* =====================================================
+   NOTIFICATIONS
+===================================================== */
+
 function togglePostNotifications(){
 
   showToast(
@@ -3264,6 +3579,10 @@ function togglePostNotifications(){
 }
 
 
+/* =====================================================
+   REPORT
+===================================================== */
+
 function reportPost(){
 
   showToast(
@@ -3274,6 +3593,10 @@ function reportPost(){
 
 }
 
+
+/* =====================================================
+   DELETE
+===================================================== */
 
 function deletePost(){
 
@@ -3288,7 +3611,8 @@ function deletePost(){
     )
   ){
 
-    post.trashed = true;
+    post.trashed =
+      true;
 
     save();
 
