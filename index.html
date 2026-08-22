@@ -1824,25 +1824,43 @@ function openComposer(kind=""){
 
   }
 
-  if(kind === "live"){
+  function openComposer(kind=""){
+  editingId = null;
 
-    addLiveInfo();
+  selectedMedia = "";
+  selectedLocation = "";
+  selectedGroup = "";
+  selectedProduct = "";
 
+  document.getElementById("postText").value = "";
+
+  document.getElementById("mediaPreview")
+    .classList.remove("show");
+
+  document.getElementById("mediaInput").value = "";
+
+  document.getElementById("composerTitle")
+    .textContent = "Create post";
+
+  resetStepOne();
+
+  document.getElementById("composerModal")
+    .classList.add("show");
+
+  /*
+    Close the Mind options after entering composer.
+  */
+  document.getElementById("mindOptions")
+    .classList.remove("show");
+
+  if(kind === "photo"){
+    setTimeout(() => {
+      document.getElementById("mediaInput")
+        .click();
+    },150);
   }
-
-  if(kind === "feeling"){
-
-    addFeeling();
-
-  }
-
-  if(kind === "location"){
-
-    addLocation();
-
-  }
-
 }
+
 
 
 function closeComposer(){
