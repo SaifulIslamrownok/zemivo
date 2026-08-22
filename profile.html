@@ -629,6 +629,40 @@
        VOICE FUNCTION
        ========================= */
 
+    let availableVoices = [];
+
+
+    function loadVoices() {
+
+      if (
+        "speechSynthesis" in window
+      ) {
+
+        availableVoices =
+          speechSynthesis.getVoices();
+
+      }
+
+    }
+
+
+    loadVoices();
+
+
+    if (
+      "speechSynthesis" in window
+    ) {
+
+      speechSynthesis.onvoiceschanged =
+        function() {
+
+          loadVoices();
+
+        };
+
+    }
+
+
     function speakGreeting() {
 
       if (
@@ -644,7 +678,38 @@
       }
 
 
+      const button =
+        document.getElementById(
+          "voiceButton"
+        );
+
+
+      button.disabled = true;
+
+      button.textContent =
+        "🔊 Playing...";
+
+
       speechSynthesis.cancel();
+
+
+      /*
+        Android Chrome-এ speech engine
+        আটকে থাকলে resume করে চালু করা।
+      */
+
+      try {
+
+        speechSynthesis.resume();
+
+      } catch (e) {}
+
+
+      /*
+        Voice list আবার load করা।
+      */
+
+      loadVoices();
 
 
       const speech =
@@ -653,35 +718,25 @@
         );
 
 
-      /*
-        বাংলা হলে বাংলা voice চাইবে।
-      */
-
-      if (
+      speech.lang =
         selectedGreeting.language === "bn"
-      ) {
-
-        speech.lang = "bn-BD";
-
-      } else {
-
-        speech.lang =
-          selectedGreeting.language;
-
-      }
+          ? "bn-BD"
+          : selectedGreeting.language;
 
 
       speech.rate = 0.88;
 
       speech.pitch = 1;
 
-
-      const voices =
-        speechSynthesis.getVoices();
+      speech.volume = 1;
 
 
-      const matchingVoice =
-        voices.find(
+      /*
+        প্রথমে নির্দিষ্ট ভাষার voice খোঁজা।
+      */
+
+      let matchingVoice =
+        availableVoices.find(
           function(voice) {
 
             return voice.lang
@@ -694,6 +749,39 @@
         );
 
 
+      /*
+        বাংলা voice না পেলে Bengali voice
+        আলাদাভাবে খোঁজা।
+      */
+
+      if (
+        !matchingVoice &&
+        selectedGreeting.language === "bn"
+      ) {
+
+        matchingVoice =
+          availableVoices.find(
+            function(voice) {
+
+              const lang =
+                voice.lang.toLowerCase();
+
+              const name =
+                voice.name.toLowerCase();
+
+              return (
+                lang.includes("bn") ||
+                lang.includes("ben") ||
+                name.includes("bengali") ||
+                name.includes("bangla")
+              );
+
+            }
+          );
+
+      }
+
+
       if (matchingVoice) {
 
         speech.voice =
@@ -702,9 +790,72 @@
       }
 
 
-      speechSynthesis.speak(
-        speech
-      );
+      /*
+        Speech শেষ হলে Button আগের অবস্থায়।
+      */
+
+      speech.onend =
+        function() {
+
+          button.disabled = false;
+
+          button.textContent =
+            "🔊 Play Welcome";
+
+        };
+
+
+      /*
+        Error হলে Button আবার চালু হবে।
+      */
+
+      speech.onerror =
+        function() {
+
+          button.disabled = false;
+
+          button.textContent =
+            "🔊 Play Welcome";
+
+          /*
+            কিছু Android browser-এ voice
+            প্রথমবার fail করলে আবার resume করা।
+          */
+
+          try {
+
+            speechSynthesis.resume();
+
+          } catch (e) {}
+
+        };
+
+
+      /*
+        Android browser-এ click event-এর
+        ভেতরেই speech শুরু হচ্ছে।
+      */
+
+      try {
+
+        speechSynthesis.speak(
+          speech
+        );
+
+      } catch (error) {
+
+        console.error(error);
+
+        button.disabled = false;
+
+        button.textContent =
+          "🔊 Play Welcome";
+
+        alert(
+          "Voice playback could not start. Please try again."
+        );
+
+      }
 
     }
 
