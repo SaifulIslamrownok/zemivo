@@ -25,6 +25,9 @@
       align-items: center;
       justify-content: space-between;
       box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      position: sticky;
+      top: 0;
+      z-index: 100;
     }
 
     .logo {
@@ -33,8 +36,13 @@
       color: #2563eb;
     }
 
+    .nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
     .nav a {
-      margin-left: 12px;
       color: #2563eb;
       text-decoration: none;
       font-weight: bold;
@@ -59,20 +67,40 @@
       margin-bottom: 8px;
     }
 
+    .subtitle {
+      color: #666;
+    }
+
     .notification {
       display: flex;
       align-items: center;
       gap: 15px;
       padding: 16px 5px;
       border-bottom: 1px solid #eee;
+      transition: 0.2s;
     }
 
     .notification:last-child {
       border-bottom: none;
     }
 
+    .notification.new {
+      background: #eff6ff;
+      border-radius: 10px;
+      padding: 14px;
+      margin-bottom: 5px;
+    }
+
     .icon {
-      font-size: 30px;
+      width: 45px;
+      height: 45px;
+      border-radius: 50%;
+      background: #f0f2f5;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 25px;
+      flex-shrink: 0;
     }
 
     .text {
@@ -87,12 +115,7 @@
     .time {
       color: #777;
       font-size: 13px;
-    }
-
-    .new {
-      background: #eff6ff;
-      border-radius: 10px;
-      padding: 12px;
+      margin-top: 5px;
     }
 
     .mark-button {
@@ -103,12 +126,64 @@
       border-radius: 18px;
       cursor: pointer;
       font-weight: bold;
+      white-space: nowrap;
+    }
+
+    .mark-button:hover {
+      opacity: 0.9;
+    }
+
+    .mark-button.read {
+      background: #16a34a;
+    }
+
+    .empty {
+      text-align: center;
+      color: #777;
+      padding: 40px 15px;
+      display: none;
     }
 
     .footer {
       text-align: center;
       color: #777;
       padding: 25px;
+    }
+
+    @media (max-width: 600px) {
+
+      .topbar {
+        align-items: flex-start;
+        gap: 10px;
+        flex-direction: column;
+      }
+
+      .nav {
+        width: 100%;
+      }
+
+      .nav a {
+        font-size: 13px;
+      }
+
+      .notification {
+        gap: 10px;
+      }
+
+      .icon {
+        width: 40px;
+        height: 40px;
+        font-size: 21px;
+      }
+
+      .text {
+        font-size: 14px;
+      }
+
+      .mark-button {
+        padding: 7px 10px;
+        font-size: 12px;
+      }
     }
   </style>
 </head>
@@ -117,17 +192,20 @@
 
   <header class="topbar">
 
-    <div class="logo">Zemivo</div>
+    <div class="logo">
+      Zemivo
+    </div>
 
     <nav class="nav">
       <a href="index.html">🏠 Home</a>
       <a href="profile.html">👤 Profile</a>
       <a href="friends.html">👥 Friends</a>
-      <a href="videos.html">🎥 Videos</a>
+      <a href="feed.html">📰 Feed</a>
       <a href="messenger.html">💬 Messenger</a>
     </nav>
 
   </header>
+
 
   <main class="container">
 
@@ -135,101 +213,257 @@
 
       <h1>🔔 Notifications</h1>
 
-      <p>
+      <p class="subtitle">
         Stay updated with activity on your Zemivo account.
       </p>
 
     </div>
 
+
     <div class="card" id="notificationList">
+
+      <!-- LIKE -->
 
       <div class="notification new">
 
-        <div class="icon">❤️</div>
-
-        <div class="text">
-          <strong>Someone liked your post</strong>
-          Your Zemivo post received a new Like.
-          <div class="time">Just now</div>
+        <div class="icon">
+          ❤️
         </div>
 
-        <button class="mark-button">
+        <div class="text">
+
+          <strong>
+            Someone liked your post
+          </strong>
+
+          Your Zemivo post received a new Like.
+
+          <div class="time">
+            Just now
+          </div>
+
+        </div>
+
+        <button
+          class="mark-button"
+          type="button"
+        >
           Read
         </button>
 
       </div>
 
+
+      <!-- FRIEND REQUEST -->
+
       <div class="notification">
 
-        <div class="icon">👥</div>
-
-        <div class="text">
-          <strong>New friend request</strong>
-          Someone wants to connect with you.
-          <div class="time">5 minutes ago</div>
+        <div class="icon">
+          👥
         </div>
 
-        <button class="mark-button">
+        <div class="text">
+
+          <strong>
+            New friend request
+          </strong>
+
+          Someone wants to connect with you.
+
+          <div class="time">
+            5 minutes ago
+          </div>
+
+        </div>
+
+        <button
+          class="mark-button"
+          type="button"
+        >
           View
         </button>
 
       </div>
 
+
+      <!-- MESSAGE -->
+
       <div class="notification">
 
-        <div class="icon">💬</div>
-
-        <div class="text">
-          <strong>New message</strong>
-          You received a new Messenger message.
-          <div class="time">10 minutes ago</div>
+        <div class="icon">
+          💬
         </div>
 
-        <button class="mark-button">
+        <div class="text">
+
+          <strong>
+            New message
+          </strong>
+
+          You received a new Messenger message.
+
+          <div class="time">
+            10 minutes ago
+          </div>
+
+        </div>
+
+        <button
+          class="mark-button"
+          type="button"
+        >
           Open
         </button>
 
       </div>
 
+
+      <!-- CREATOR -->
+
       <div class="notification">
 
-        <div class="icon">🎥</div>
-
-        <div class="text">
-          <strong>New video</strong>
-          A creator you may like posted a new video.
-          <div class="time">30 minutes ago</div>
+        <div class="icon">
+          🎥
         </div>
 
-        <button class="mark-button">
+        <div class="text">
+
+          <strong>
+            New creator update
+          </strong>
+
+          A creator you may like posted new content.
+
+          <div class="time">
+            30 minutes ago
+          </div>
+
+        </div>
+
+        <button
+          class="mark-button"
+          type="button"
+        >
           View
         </button>
 
       </div>
 
+
+      <!-- EARNING -->
+
       <div class="notification">
 
-        <div class="icon">💰</div>
-
-        <div class="text">
-          <strong>Creator Zone update</strong>
-          Check your latest creator opportunities.
-          <div class="time">1 hour ago</div>
+        <div class="icon">
+          💰
         </div>
 
-        <button class="mark-button">
+        <div class="text">
+
+          <strong>
+            Creator Zone update
+          </strong>
+
+          Check your latest creator opportunities and earnings.
+
+          <div class="time">
+            1 hour ago
+          </div>
+
+        </div>
+
+        <button
+          class="mark-button"
+          type="button"
+        >
           View
+        </button>
+
+      </div>
+
+
+      <!-- WALLET -->
+
+      <div class="notification">
+
+        <div class="icon">
+          💳
+        </div>
+
+        <div class="text">
+
+          <strong>
+            Wallet update
+          </strong>
+
+          Your Zemivo Wallet has a new activity update.
+
+          <div class="time">
+            2 hours ago
+          </div>
+
+        </div>
+
+        <button
+          class="mark-button"
+          type="button"
+        >
+          View
+        </button>
+
+      </div>
+
+
+      <!-- OFFICIAL -->
+
+      <div class="notification">
+
+        <div class="icon">
+          🛡️
+        </div>
+
+        <div class="text">
+
+          <strong>
+            Zemivo Official
+          </strong>
+
+          Welcome to Zemivo. Stay connected, create and earn.
+
+          <div class="time">
+            Today
+          </div>
+
+        </div>
+
+        <button
+          class="mark-button"
+          type="button"
+        >
+          Read
         </button>
 
       </div>
 
     </div>
 
+
+    <div
+      id="emptyMessage"
+      class="card empty"
+    >
+      🎉 You're all caught up!
+      <br><br>
+      No new notifications.
+    </div>
+
   </main>
+
 
   <footer class="footer">
     © 2026 Zemivo — Connect. Create. Earn.
   </footer>
+
 
   <script>
 
@@ -241,11 +475,17 @@
       button.addEventListener("click", function() {
 
         const notification =
-          button.parentElement;
+          button.closest(".notification");
+
+        if (!notification) {
+          return;
+        }
 
         notification.classList.remove("new");
 
         button.textContent = "✓ Read";
+
+        button.classList.add("read");
 
       });
 
