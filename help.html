@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Zemivo - Help Center</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f6f8;
+      color: #222;
+    }
+
+    .topbar {
+      background: white;
+      padding: 15px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .logo {
+      font-size: 26px;
+      font-weight: bold;
+      color: #2563eb;
+    }
+
+    .nav {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .nav a {
+      color: #2563eb;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 14px;
+    }
+
+    .container {
+      max-width: 850px;
+      margin: 25px auto;
+      padding: 0 15px;
+    }
+
+    .hero {
+      background: white;
+      padding: 28px 20px;
+      border-radius: 16px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+      text-align: center;
+      margin-bottom: 18px;
+    }
+
+    .hero h1 {
+      color: #2563eb;
+      margin-bottom: 10px;
+      font-size: 30px;
+    }
+
+    .hero p {
+      color: #666;
+      line-height: 1.5;
+    }
+
+    .search-box {
+      margin-top: 18px;
+    }
+
+    .search-box input {
+      width: 100%;
+      padding: 14px 16px;
+      border: 1px solid #ddd;
+      border-radius: 25px;
+      outline: none;
+      font-size: 16px;
+    }
+
+    .card {
+      background: white;
+      padding: 20px;
+      margin-bottom: 18px;
+      border-radius: 15px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    }
+
+    .card h2 {
+      color: #2563eb;
+      margin-bottom: 15px;
+    }
+
+    .category {
+      padding: 15px;
+      border: 1px solid #eee;
+      border-radius: 12px;
+      margin-bottom: 10px;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .category:hover {
+      background: #f5f8ff;
+      border-color: #2563eb;
+    }
+
+    .category strong {
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    .category span {
+      color: #666;
+      font-size: 14px;
+    }
+
+    .faq {
+      border-bottom: 1px solid #eee;
+      padding: 14px 0;
+    }
+
+    .faq:last-child {
+      border-bottom: none;
+    }
+
+    .question {
+      width: 100%;
+      border: none;
+      background: none;
+      text-align: left;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      padding: 5px 0;
+      color: #222;
+    }
+
+    .answer {
+      display: none;
+      color: #666;
+      line-height: 1.6;
+      padding: 10px 0 3px;
+      font-size: 14px;
+    }
+
+    .answer.show {
+      display: block;
+    }
+
+    .support {
+      text-align: center;
+    }
+
+    .support p {
+      color: #666;
+      line-height: 1.5;
+      margin-bottom: 15px;
+    }
+
+    .button {
+      display: inline-block;
+      background: #2563eb;
+      color: white;
+      border: none;
+      padding: 11px 18px;
+      border-radius: 22px;
+      cursor: pointer;
+      text-decoration: none;
+      font-weight: bold;
+      margin: 4px;
+    }
+
+    .secondary {
+      background: #e5e7eb;
+      color: #222;
+    }
+
+    .footer {
+      text-align: center;
+      color: #777;
+      padding: 25px;
+    }
+
+    .no-result {
+      display: none;
+      text-align: center;
+      color: #777;
+      padding: 20px;
+    }
+
+    @media (max-width: 600px) {
+      .topbar {
+        padding: 13px;
+        align-items: flex-start;
+        gap: 10px;
+      }
+
+      .logo {
+        font-size: 23px;
+      }
+
+      .nav {
+        justify-content: flex-end;
+      }
+
+      .nav a {
+        font-size: 12px;
+      }
+
+      .hero h1 {
+        font-size: 26px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header class="topbar">
+
+    <div class="logo">
+      Zemivo
+    </div>
+
+    <nav class="nav">
+      <a href="index.html">🏠 Home</a>
+      <a href="feed.html">📰 Feed</a>
+      <a href="messenger.html">💬 Messenger</a>
+      <a href="settings.html">⚙️ Settings</a>
+    </nav>
+
+  </header>
+
+
+  <main class="container">
+
+    <section class="hero">
+
+      <h1>❓ Zemivo Help Center</h1>
+
+      <p>
+        Find answers, solve common problems,
+        and learn how to use Zemivo.
+      </p>
+
+      <div class="search-box">
+
+        <input
+          id="helpSearch"
+          type="text"
+          placeholder="🔎 Search for help..."
+        >
+
+      </div>
+
+    </section>
+
+
+    <section class="card">
+
+      <h2>📚 Help Categories</h2>
+
+      <div id="categories">
+
+        <div class="category searchable">
+          <strong>🔐 Account & Login</strong>
+          <span>
+            Login, signup, logout, password and account problems.
+          </span>
+        </div>
+
+        <div class="category searchable">
+          <strong>👤 Profile</strong>
+          <span>
+            Profile information, followers and profile settings.
+          </span>
+        </div>
+
+        <div class="category searchable">
+          <strong>📰 Posts & Feed</strong>
+          <span>
+            Creating posts, editing posts, deleting posts and feed problems.
+          </span>
+        </div>
+
+        <div class="category searchable">
+          <strong>💬 Messenger</strong>
+          <span>
+            Sending messages and managing conversations.
+          </span>
+        </div>
+
+        <div class="category searchable">
+          <strong>💰 Wallet & Payments</strong>
+          <span>
+            Wallet balance, payments, earnings and transactions.
+          </span>
+        </div>
+
+        <div class="category searchable">
+          <strong>🛡️ Safety & Reports</strong>
+          <span>
+            Reporting content, blocking users and staying safe.
+          </span>
+        </div>
+
+      </div>
+
+      <div
+        id="noResult"
+        class="no-result"
+      >
+        No matching help topic found.
+      </div>
+
+    </section>
+
+
+    <section class="card">
+
+      <h2>❓ Frequently Asked Questions</h2>
+
+
+      <div class="faq">
+
+        <button class="question">
+          How do I create a Zemivo account?
+        </button>
+
+        <div class="answer">
+          Open the signup page, enter your required information,
+          and complete the registration process.
+        </div>
+
+      </div>
+
+
+      <div class="faq">
+
+        <button class="question">
+          How do I create a post?
+        </button>
+
+        <div class="answer">
+          Open the Feed page, write your content in the post creator,
+          and press the Post button.
+        </div>
+
+      </div>
+
+
+      <div class="faq">
+
+        <button class="question">
+          Can I edit my post?
+        </button>
+
+        <div class="answer">
+          Posts created by your account can be edited from the
+          post menu when the editing system is available for that post.
+        </div>
+
+      </div>
+
+
+      <div class="faq">
+
+        <button class="question">
+          How can I send a message?
+        </button>
+
+        <div class="answer">
+          Open Messenger and use the message box to write and send
+          your message.
+        </div>
+
+      </div>
+
+
+      <div class="faq">
+
+        <button class="question">
+          Where can I find my Wallet?
+        </button>
+
+        <div class="answer">
+          Your Wallet page is used for viewing your Zemivo balance,
+          earnings, payment information and transaction-related features.
+        </div>
+
+      </div>
+
+
+      <div class="faq">
+
+        <button class="question">
+          How can I report a problem?
+        </button>
+
+        <div class="answer">
+          Use the appropriate support or reporting option when available.
+          Provide clear information about the problem so it can be reviewed.
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <section class="card support">
+
+      <h2>📩 Need More Help?</h2>
+
+      <p>
+        If you cannot find the answer you need,
+        continue to the available support options.
+      </p>
+
+      <a
+        href="index.html"
+        class="button"
+      >
+        🏠 Back to Home
+      </a>
+
+      <a
+        href="settings.html"
+        class="button secondary"
+      >
+        ⚙️ Settings
+      </a>
+
+    </section>
+
+  </main>
+
+
+  <footer class="footer">
+    © 2026 Zemivo — Connect. Create. Earn.
+  </footer>
+
+
+  <script>
+
+    /* FAQ */
+
+    const questions =
+      document.querySelectorAll(".question");
+
+    questions.forEach(function(question) {
+
+      question.addEventListener("click", function() {
+
+        const answer =
+          question.nextElementSibling;
+
+        answer.classList.toggle("show");
+
+      });
+
+    });
+
+
+    /* SEARCH */
+
+    const searchInput =
+      document.getElementById("helpSearch");
+
+    const categories =
+      document.querySelectorAll(".searchable");
+
+    const noResult =
+      document.getElementById("noResult");
+
+
+    searchInput.addEventListener(
+      "input",
+      function() {
+
+        const search =
+          searchInput.value
+            .toLowerCase()
+            .trim();
+
+        let found = false;
+
+
+        categories.forEach(function(category) {
+
+          const text =
+            category.textContent.toLowerCase();
+
+          if (
+            search === "" ||
+            text.includes(search)
+          ) {
+
+            category.style.display =
+              "block";
+
+            found = true;
+
+          } else {
+
+            category.style.display =
+              "none";
+
+          }
+
+        });
+
+
+        noResult.style.display =
+          found ? "none" : "block";
+
+      }
+    );
+
+  </script>
+
+</body>
+</html>
