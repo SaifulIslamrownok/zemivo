@@ -1,168 +1,1601 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Zemivo Messenger</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <style>
-    * {
-      box-sizing: border-box;
-    }
+<title>Zemivo Messages</title>
 
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #f4f6f8;
-    }
+<style>
+*{
+  box-sizing:border-box;
+}
 
-    .header {
-      background: white;
-      padding: 16px;
-      text-align: center;
-      color: #2563eb;
-      font-size: 27px;
-      font-weight: bold;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-    }
+body{
+  margin:0;
+  font-family:Arial,Helvetica,sans-serif;
+  background:#f0f2f5;
+  color:#17202a;
+}
 
-    .chat {
-      max-width: 650px;
-      height: calc(100vh - 70px);
-      margin: auto;
-      background: white;
-      display: flex;
-      flex-direction: column;
-    }
+button,
+input{
+  font-family:inherit;
+}
 
-    .person {
-      padding: 15px;
-      border-bottom: 1px solid #eee;
-      font-weight: bold;
-    }
+button{
+  cursor:pointer;
+}
 
-    .messages {
-      flex: 1;
-      padding: 18px;
-      overflow-y: auto;
-    }
+/* HEADER */
 
-    .message {
-      max-width: 75%;
-      padding: 12px 15px;
-      margin-bottom: 12px;
-      border-radius: 15px;
-      line-height: 1.4;
-    }
+.header{
+  height:62px;
+  background:#fff;
+  border-bottom:1px solid #ddd;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 16px;
+  position:sticky;
+  top:0;
+  z-index:100;
+}
 
-    .received {
-      background: #eef2f7;
-      margin-right: auto;
-    }
+.logo{
+  color:#2563eb;
+  font-size:27px;
+  font-weight:800;
+}
 
-    .sent {
-      background: #2563eb;
-      color: white;
-      margin-left: auto;
-    }
+.header-actions{
+  display:flex;
+  gap:8px;
+}
 
-    .composer {
-      display: flex;
-      gap: 10px;
-      padding: 12px;
-      border-top: 1px solid #eee;
-    }
+.header-button{
+  border:0;
+  width:40px;
+  height:40px;
+  border-radius:50%;
+  background:#f0f2f5;
+  font-size:18px;
+}
 
-    .composer input {
-      flex: 1;
-      padding: 13px;
-      border: 1px solid #ddd;
-      border-radius: 25px;
-      font-size: 16px;
-    }
+/* MAIN */
 
-    .send {
-      border: none;
-      border-radius: 25px;
-      padding: 0 20px;
-      background: #2563eb;
-      color: white;
-      font-weight: bold;
-      cursor: pointer;
-    }
-  </style>
+.app{
+  max-width:1100px;
+  height:calc(100vh - 62px);
+  margin:auto;
+  display:flex;
+  background:#fff;
+}
+
+/* USERS */
+
+.users-panel{
+  width:320px;
+  border-right:1px solid #ddd;
+  display:flex;
+  flex-direction:column;
+}
+
+.users-title{
+  padding:18px;
+  font-size:22px;
+  font-weight:bold;
+}
+
+.search-box{
+  padding:0 14px 14px;
+}
+
+.search-box input{
+  width:100%;
+  padding:12px 14px;
+  border:1px solid #ddd;
+  border-radius:22px;
+  outline:none;
+  font-size:15px;
+}
+
+.users-list{
+  flex:1;
+  overflow-y:auto;
+}
+
+.user-item{
+  width:100%;
+  border:0;
+  background:#fff;
+  padding:12px 14px;
+  display:flex;
+  align-items:center;
+  gap:11px;
+  text-align:left;
+}
+
+.user-item:hover{
+  background:#f0f2f5;
+}
+
+.user-item.active{
+  background:#e8f0ff;
+}
+
+.user-avatar{
+  width:46px;
+  height:46px;
+  flex-shrink:0;
+  border-radius:50%;
+  background:#2563eb;
+  color:#fff;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:bold;
+  font-size:17px;
+}
+
+.user-name{
+  font-weight:bold;
+  color:#17202a;
+}
+
+.user-email{
+  font-size:12px;
+  color:#777;
+  margin-top:3px;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+
+/* CHAT */
+
+.chat-panel{
+  flex:1;
+  display:flex;
+  flex-direction:column;
+  min-width:0;
+}
+
+.chat-person{
+  min-height:70px;
+  padding:12px 16px;
+  border-bottom:1px solid #eee;
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+.chat-person-name{
+  font-weight:bold;
+}
+
+.chat-person-status{
+  color:#777;
+  font-size:12px;
+  margin-top:3px;
+}
+
+.messages{
+  flex:1;
+  padding:18px;
+  overflow-y:auto;
+  background:#f8fafc;
+}
+
+.empty-chat{
+  height:100%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  color:#777;
+  padding:30px;
+}
+
+.message-row{
+  display:flex;
+  margin-bottom:10px;
+}
+
+.message-row.sent{
+  justify-content:flex-end;
+}
+
+.message-row.received{
+  justify-content:flex-start;
+}
+
+.message{
+  max-width:75%;
+  padding:10px 13px;
+  border-radius:16px;
+  line-height:1.45;
+  overflow-wrap:anywhere;
+}
+
+.message-row.sent .message{
+  background:#2563eb;
+  color:#fff;
+  border-bottom-right-radius:5px;
+}
+
+.message-row.received .message{
+  background:#e5e7eb;
+  color:#17202a;
+  border-bottom-left-radius:5px;
+}
+
+.message-time{
+  font-size:10px;
+  opacity:.7;
+  margin-top:5px;
+  text-align:right;
+}
+
+/* TRANSLATION AREA */
+
+.translation{
+  margin-top:6px;
+  padding-top:6px;
+  border-top:1px solid rgba(0,0,0,.12);
+  font-size:12px;
+}
+
+.translation-label{
+  font-weight:bold;
+  margin-bottom:3px;
+}
+
+/* COMPOSER */
+
+.composer{
+  padding:12px;
+  border-top:1px solid #ddd;
+  background:#fff;
+  display:flex;
+  gap:8px;
+  align-items:center;
+}
+
+.attach{
+  width:42px;
+  height:42px;
+  border:0;
+  border-radius:50%;
+  background:#f0f2f5;
+  font-size:18px;
+}
+
+.composer input{
+  flex:1;
+  min-width:0;
+  padding:12px 15px;
+  border:1px solid #ddd;
+  border-radius:24px;
+  outline:none;
+  font-size:16px;
+}
+
+.send{
+  border:0;
+  border-radius:23px;
+  padding:12px 19px;
+  background:#2563eb;
+  color:#fff;
+  font-weight:bold;
+}
+
+.send:disabled{
+  opacity:.6;
+}
+
+/* STATUS */
+
+.loading{
+  text-align:center;
+  color:#777;
+  padding:25px;
+}
+
+.error{
+  text-align:center;
+  color:#dc2626;
+  padding:20px;
+}
+
+.toast{
+  position:fixed;
+  left:50%;
+  bottom:22px;
+  transform:translateX(-50%);
+  background:#111827;
+  color:#fff;
+  padding:12px 18px;
+  border-radius:10px;
+  display:none;
+  z-index:999;
+  max-width:90%;
+  text-align:center;
+}
+
+.toast.show{
+  display:block;
+}
+
+/* NAV */
+
+.bottom-nav{
+  display:none;
+}
+
+/* MOBILE */
+
+@media(max-width:700px){
+
+  .app{
+    height:calc(100vh - 62px);
+  }
+
+  .users-panel{
+    width:100%;
+  }
+
+  .chat-panel{
+    display:none;
+  }
+
+  .app.chat-open .users-panel{
+    display:none;
+  }
+
+  .app.chat-open .chat-panel{
+    display:flex;
+  }
+
+  .back-button{
+    display:block;
+    border:0;
+    background:#f0f2f5;
+    width:38px;
+    height:38px;
+    border-radius:50%;
+    font-size:18px;
+  }
+
+  .users-title{
+    padding:14px;
+  }
+
+  .bottom-nav{
+    display:flex;
+    position:fixed;
+    left:0;
+    right:0;
+    bottom:0;
+    height:58px;
+    background:#fff;
+    border-top:1px solid #ddd;
+    z-index:200;
+  }
+
+  .bottom-nav a{
+    flex:1;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-decoration:none;
+    color:#17202a;
+    font-size:12px;
+  }
+
+  .bottom-nav a.active{
+    color:#2563eb;
+    font-weight:bold;
+  }
+
+}
+
+@media(min-width:701px){
+
+  .back-button{
+    display:none;
+  }
+
+}
+</style>
 </head>
 
 <body>
 
-  <div class="header">
+<header class="header">
+
+  <div class="logo">
     Zemivo
   </div>
 
-  <div class="chat">
+  <div class="header-actions">
 
-    <div class="person">
-      💬 Zemivo User
+    <button
+      class="header-button"
+      type="button"
+      onclick="location.href='notifications.html'"
+    >
+      🔔
+    </button>
+
+    <button
+      class="header-button"
+      type="button"
+      onclick="location.href='profile.html'"
+    >
+      👤
+    </button>
+
+  </div>
+
+</header>
+
+
+<main
+  id="app"
+  class="app"
+>
+
+  <!-- USERS -->
+
+  <section class="users-panel">
+
+    <div class="users-title">
+      Messages
     </div>
 
-    <div class="messages">
-      <div class="message received">
-        Hello! Welcome to Zemivo.
+    <div class="search-box">
+
+      <input
+        id="userSearch"
+        type="search"
+        placeholder="Search people..."
+      >
+
+    </div>
+
+    <div
+      id="usersList"
+      class="users-list"
+    >
+
+      <div class="loading">
+        Loading Zemivo users...
       </div>
+
     </div>
+
+  </section>
+
+
+  <!-- CHAT -->
+
+  <section class="chat-panel">
+
+    <div class="chat-person">
+
+      <button
+        id="backButton"
+        class="back-button"
+        type="button"
+      >
+        ←
+      </button>
+
+      <div
+        id="chatAvatar"
+        class="user-avatar"
+      >
+        Z
+      </div>
+
+      <div>
+
+        <div
+          id="chatName"
+          class="chat-person-name"
+        >
+          Select a person
+        </div>
+
+        <div
+          id="chatStatus"
+          class="chat-person-status"
+        >
+          Choose someone to start messaging
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <div
+      id="messages"
+      class="messages"
+    >
+
+      <div class="empty-chat">
+
+        <div>
+
+          <div style="font-size:42px;">
+            💬
+          </div>
+
+          <div style="font-weight:bold;margin-top:8px;">
+            Zemivo Messages
+          </div>
+
+          <div style="margin-top:5px;">
+            Select a person to start a conversation.
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
 
     <div class="composer">
+
+      <button
+        id="attachButton"
+        class="attach"
+        type="button"
+        title="Media coming with Storage integration"
+      >
+        📎
+      </button>
+
       <input
         id="messageInput"
         type="text"
         placeholder="Type a message..."
+        disabled
       >
 
       <button
         id="sendButton"
         class="send"
         type="button"
+        disabled
       >
         Send
       </button>
+
     </div>
 
-  </div>
+  </section>
 
-  <script>
-    const input = document.getElementById("messageInput");
-    const sendButton = document.getElementById("sendButton");
-    const messages = document.querySelector(".messages");
+</main>
 
-    function sendMessage() {
-      const text = input.value.trim();
 
-      if (text === "") {
-        return;
-      }
+<!-- MOBILE NAV -->
 
-      const message = document.createElement("div");
-      message.className = "message sent";
-      message.textContent = text;
+<nav class="bottom-nav">
 
-      messages.appendChild(message);
-      input.value = "";
-      messages.scrollTop = messages.scrollHeight;
-      input.focus();
+  <a href="index.html">
+    🏠<br>Home
+  </a>
+
+  <a href="feed.html">
+    📰<br>Feed
+  </a>
+
+  <a
+    href="messages.html"
+    class="active"
+  >
+    💬<br>Messages
+  </a>
+
+  <a href="profile.html">
+    👤<br>Profile
+  </a>
+
+</nav>
+
+
+<div
+  id="toast"
+  class="toast"
+></div>
+
+
+<script type="module">
+
+/*
+  =====================================================
+  ZEMIVO MESSAGES
+  Firebase Authentication + Firestore
+  =====================================================
+*/
+
+
+import {
+  initializeApp
+} from
+"https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
+
+
+import {
+  getAuth,
+  onAuthStateChanged
+} from
+"https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
+
+
+import {
+  getFirestore,
+  collection,
+  query,
+  orderBy,
+  onSnapshot,
+  addDoc,
+  serverTimestamp,
+  where
+} from
+"https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
+
+
+/* FIREBASE CONFIG */
+
+const firebaseConfig = {
+
+  apiKey:
+    "AIzaSyAxJUFBWm2fa0g3oxUWWqdfSTEAc-bRgfI",
+
+  authDomain:
+    "zemivo.firebaseapp.com",
+
+  projectId:
+    "zemivo",
+
+  storageBucket:
+    "zemivo.firebasestorage.app",
+
+  messagingSenderId:
+    "195335939691",
+
+  appId:
+    "1:195335939691:web:5fa5c62c53d0c0aefe732e",
+
+  measurementId:
+    "G-GNHH5S4H09"
+
+};
+
+
+const app =
+  initializeApp(firebaseConfig);
+
+
+const auth =
+  getAuth(app);
+
+
+const db =
+  getFirestore(app);
+
+
+/* ELEMENTS */
+
+const appElement =
+  document.getElementById("app");
+
+const usersList =
+  document.getElementById("usersList");
+
+const userSearch =
+  document.getElementById("userSearch");
+
+const messagesElement =
+  document.getElementById("messages");
+
+const messageInput =
+  document.getElementById("messageInput");
+
+const sendButton =
+  document.getElementById("sendButton");
+
+const attachButton =
+  document.getElementById("attachButton");
+
+const chatName =
+  document.getElementById("chatName");
+
+const chatStatus =
+  document.getElementById("chatStatus");
+
+const chatAvatar =
+  document.getElementById("chatAvatar");
+
+const backButton =
+  document.getElementById("backButton");
+
+const toast =
+  document.getElementById("toast");
+
+
+/* STATE */
+
+let currentUser = null;
+
+let allUsers = [];
+
+let selectedUser = null;
+
+let unsubscribeMessages = null;
+
+
+/* TOAST */
+
+function showToast(text){
+
+  toast.textContent = text;
+
+  toast.classList.add("show");
+
+  setTimeout(function(){
+
+    toast.classList.remove("show");
+
+  },2500);
+
+}
+
+
+/* ESCAPE HTML */
+
+function escapeHtml(value){
+
+  if(
+    value === undefined ||
+    value === null
+  ){
+
+    return "";
+
+  }
+
+  return String(value)
+    .replaceAll("&","&amp;")
+    .replaceAll("<","&lt;")
+    .replaceAll(">","&gt;")
+    .replaceAll('"',"&quot;")
+    .replaceAll("'","&#039;");
+
+}
+
+
+/* CREATE CHAT ID */
+
+function createChatId(uid1,uid2){
+
+  return [uid1,uid2]
+    .sort()
+    .join("_");
+
+}
+
+
+/* TIME */
+
+function formatTime(timestamp){
+
+  if(
+    !timestamp ||
+    !timestamp.toDate
+  ){
+
+    return "Sending...";
+
+  }
+
+  return timestamp
+    .toDate()
+    .toLocaleString();
+
+}
+
+
+/* AUTH */
+
+onAuthStateChanged(
+  auth,
+  async function(user){
+
+    if(!user){
+
+      showToast(
+        "Please log in first."
+      );
+
+      setTimeout(function(){
+
+        location.href =
+          "login.html";
+
+      },1200);
+
+      return;
+
     }
 
-    sendButton.addEventListener("click", sendMessage);
 
-    input.addEventListener("keydown", function(event) {
-      if (event.key === "Enter") {
-        sendMessage();
+    currentUser =
+      user;
+
+
+    await loadUsers();
+
+  }
+);
+
+
+/* LOAD USERS */
+
+async function loadUsers(){
+
+  usersList.innerHTML = `
+
+    <div class="loading">
+      Loading users...
+    </div>
+
+  `;
+
+
+  try{
+
+    /*
+      Profiles are loaded from the same
+      collection used by the Zemivo feed.
+    */
+
+    const profilesQuery =
+      query(
+        collection(
+          db,
+          "profiles"
+        )
+      );
+
+
+    onSnapshot(
+      profilesQuery,
+      function(snapshot){
+
+        allUsers = [];
+
+
+        snapshot.forEach(
+          function(profileSnapshot){
+
+            const profile =
+              profileSnapshot.data();
+
+
+            const uid =
+              profileSnapshot.id;
+
+
+            if(
+              currentUser &&
+              uid === currentUser.uid
+            ){
+
+              return;
+
+            }
+
+
+            allUsers.push({
+
+              uid:
+                uid,
+
+              displayName:
+                profile.displayName ||
+                profile.name ||
+                "Zemivo User",
+
+              email:
+                profile.email ||
+                ""
+
+            });
+
+          }
+        );
+
+
+        renderUsers(
+          allUsers
+        );
+
+      },
+      function(error){
+
+        console.error(
+          "Users error:",
+          error
+        );
+
+
+        usersList.innerHTML = `
+
+          <div class="error">
+            Could not load users.
+          </div>
+
+        `;
+
       }
-    });
-  </script>
-<nav>
-  <a href="index.html">🏠 Home</a>
-  <a href="profile.html">👤 Profile</a>
-  <a href="feed.html">📰 Feed</a>
-</nav>
+    );
+
+  }
+  catch(error){
+
+    console.error(error);
+
+    usersList.innerHTML = `
+
+      <div class="error">
+        Could not load users.
+      </div>
+
+    `;
+
+  }
+
+}
+
+
+/* RENDER USERS */
+
+function renderUsers(users){
+
+  usersList.innerHTML = "";
+
+
+  if(users.length === 0){
+
+    usersList.innerHTML = `
+
+      <div class="loading">
+        No other Zemivo users found yet.
+      </div>
+
+    `;
+
+    return;
+
+  }
+
+
+  users.forEach(
+    function(user){
+
+      const button =
+        document.createElement("button");
+
+
+      button.className =
+        "user-item";
+
+
+      if(
+        selectedUser &&
+        selectedUser.uid ===
+        user.uid
+      ){
+
+        button.classList.add(
+          "active"
+        );
+
+      }
+
+
+      const initial =
+        user.displayName
+          .charAt(0)
+          .toUpperCase();
+
+
+      button.innerHTML = `
+
+        <div class="user-avatar">
+          ${escapeHtml(initial)}
+        </div>
+
+        <div style="min-width:0;">
+
+          <div class="user-name">
+            ${escapeHtml(
+              user.displayName
+            )}
+          </div>
+
+          <div class="user-email">
+            ${escapeHtml(
+              user.email
+            )}
+          </div>
+
+        </div>
+
+      `;
+
+
+      button.addEventListener(
+        "click",
+        function(){
+
+          selectUser(
+            user
+          );
+
+        }
+      );
+
+
+      usersList.appendChild(
+        button
+      );
+
+    }
+  );
+
+}
+
+
+/* SEARCH */
+
+userSearch.addEventListener(
+  "input",
+  function(){
+
+    const search =
+      userSearch.value
+        .trim()
+        .toLowerCase();
+
+
+    if(!search){
+
+      renderUsers(
+        allUsers
+      );
+
+      return;
+
+    }
+
+
+    const filtered =
+      allUsers.filter(
+        function(user){
+
+          return (
+
+            user.displayName
+              .toLowerCase()
+              .includes(search)
+
+            ||
+
+            user.email
+              .toLowerCase()
+              .includes(search)
+
+          );
+
+        }
+      );
+
+
+    renderUsers(
+      filtered
+    );
+
+  }
+);
+
+
+/* SELECT USER */
+
+function selectUser(user){
+
+  selectedUser =
+    user;
+
+
+  chatName.textContent =
+    user.displayName;
+
+
+  chatStatus.textContent =
+    "Zemivo user";
+
+
+  chatAvatar.textContent =
+    user.displayName
+      .charAt(0)
+      .toUpperCase();
+
+
+  messageInput.disabled =
+    false;
+
+  sendButton.disabled =
+    false;
+
+
+  messageInput.focus();
+
+
+  appElement.classList.add(
+    "chat-open"
+  );
+
+
+  renderUsers(
+    allUsers
+  );
+
+
+  startMessageListener();
+
+}
+
+
+/* MESSAGE LISTENER */
+
+function startMessageListener(){
+
+  if(!selectedUser){
+
+    return;
+
+  }
+
+
+  if(unsubscribeMessages){
+
+    unsubscribeMessages();
+
+    unsubscribeMessages =
+      null;
+
+  }
+
+
+  messagesElement.innerHTML = `
+
+    <div class="loading">
+      Loading conversation...
+    </div>
+
+  `;
+
+
+  const chatId =
+    createChatId(
+      currentUser.uid,
+      selectedUser.uid
+    );
+
+
+  const messagesQuery =
+    query(
+      collection(
+        db,
+        "chats",
+        chatId,
+        "messages"
+      ),
+      orderBy(
+        "createdAt",
+        "asc"
+      )
+    );
+
+
+  unsubscribeMessages =
+    onSnapshot(
+      messagesQuery,
+      function(snapshot){
+
+        messagesElement.innerHTML =
+          "";
+
+
+        if(snapshot.empty){
+
+          messagesElement.innerHTML = `
+
+            <div class="empty-chat">
+
+              <div>
+
+                <div style="font-size:38px;">
+                  👋
+                </div>
+
+                <div style="font-weight:bold;margin-top:7px;">
+                  Start the conversation
+                </div>
+
+                <div style="margin-top:5px;color:#777;">
+                  Send your first message to
+                  ${escapeHtml(
+                    selectedUser.displayName
+                  )}.
+                </div>
+
+              </div>
+
+            </div>
+
+          `;
+
+          return;
+
+        }
+
+
+        snapshot.forEach(
+          function(messageSnapshot){
+
+            const message =
+              messageSnapshot.data();
+
+
+            renderMessage(
+              message
+            );
+
+          }
+        );
+
+
+        messagesElement.scrollTop =
+          messagesElement.scrollHeight;
+
+      },
+      function(error){
+
+        console.error(
+          "Message listener error:",
+          error
+        );
+
+
+        messagesElement.innerHTML = `
+
+          <div class="error">
+            Could not load messages.<br>
+            Please check Firestore permissions.
+          </div>
+
+        `;
+
+      }
+    );
+
+}
+
+
+/* RENDER MESSAGE */
+
+function renderMessage(message){
+
+  const isSent =
+    message.senderId ===
+    currentUser.uid;
+
+
+  const row =
+    document.createElement("div");
+
+
+  row.className =
+    "message-row " +
+    (
+      isSent
+      ?
+      "sent"
+      :
+      "received"
+    );
+
+
+  const bubble =
+    document.createElement("div");
+
+
+  bubble.className =
+    "message";
+
+
+  const original =
+    document.createElement("div");
+
+
+  original.textContent =
+    message.text || "";
+
+
+  bubble.appendChild(
+    original
+  );
+
+
+  /*
+    Translation UI is prepared now.
+    The actual AI translation service will be
+    connected later without rebuilding the page.
+  */
+
+  if(
+    message.translatedText
+  ){
+
+    const translation =
+      document.createElement("div");
+
+
+    translation.className =
+      "translation";
+
+
+    translation.innerHTML = `
+
+      <div class="translation-label">
+        🌍 Translation
+      </div>
+
+      ${escapeHtml(
+        message.translatedText
+      )}
+
+    `;
+
+
+    bubble.appendChild(
+      translation
+    );
+
+  }
+
+
+  const time =
+    document.createElement("div");
+
+
+  time.className =
+    "message-time";
+
+
+  time.textContent =
+    formatTime(
+      message.createdAt
+    );
+
+
+  bubble.appendChild(
+    time
+  );
+
+
+  row.appendChild(
+    bubble
+  );
+
+
+  messagesElement.appendChild(
+    row
+  );
+
+}
+
+
+/* SEND MESSAGE */
+
+async function sendMessage(){
+
+  if(
+    !currentUser ||
+    !selectedUser
+  ){
+
+    showToast(
+      "Select a person first."
+    );
+
+    return;
+
+  }
+
+
+  const text =
+    messageInput.value.trim();
+
+
+  if(!text){
+
+    return;
+
+  }
+
+
+  sendButton.disabled =
+    true;
+
+
+  const chatId =
+    createChatId(
+      currentUser.uid,
+      selectedUser.uid
+    );
+
+
+  try{
+
+    await addDoc(
+      collection(
+        db,
+        "chats",
+        chatId,
+        "messages"
+      ),
+      {
+
+        senderId:
+          currentUser.uid,
+
+        receiverId:
+          selectedUser.uid,
+
+        text:
+          text,
+
+        /*
+          Language detection and automatic
+          translation will be connected here.
+        */
+
+        sourceLanguage:
+          null,
+
+        targetLanguage:
+          null,
+
+        translatedText:
+          null,
+
+        createdAt:
+          serverTimestamp()
+
+      }
+    );
+
+
+    messageInput.value =
+      "";
+
+
+    messageInput.focus();
+
+  }
+  catch(error){
+
+    console.error(
+      "Send message error:",
+      error
+    );
+
+
+    showToast(
+      "Message could not be sent. Check Firestore permissions."
+    );
+
+  }
+
+
+  sendButton.disabled =
+    false;
+
+}
+
+
+/* SEND BUTTON */
+
+sendButton.addEventListener(
+  "click",
+  sendMessage
+);
+
+
+/* ENTER */
+
+messageInput.addEventListener(
+  "keydown",
+  function(event){
+
+    if(
+      event.key ===
+      "Enter"
+    ){
+
+      event.preventDefault();
+
+      sendMessage();
+
+    }
+
+  }
+);
+
+
+/* ATTACHMENT */
+
+attachButton.addEventListener(
+  "click",
+  function(){
+
+    showToast(
+      "Media messaging will be connected with Firebase Storage."
+    );
+
+  }
+);
+
+
+/* BACK */
+
+backButton.addEventListener(
+  "click",
+  function(){
+
+    appElement.classList.remove(
+      "chat-open"
+    );
+
+  }
+);
+
+
+/* CLEANUP */
+
+window.addEventListener(
+  "beforeunload",
+  function(){
+
+    if(unsubscribeMessages){
+
+      unsubscribeMessages();
+
+    }
+
+  }
+);
+
+</script>
+
 </body>
 </html>
