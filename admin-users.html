@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zemivo - User Management</title>
+
+<style>
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+body{
+  font-family:Arial,sans-serif;
+  background:#f4f6f8;
+  color:#222;
+}
+
+.topbar{
+  background:white;
+  padding:16px 20px;
+  box-shadow:0 2px 8px rgba(0,0,0,.08);
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.logo{
+  font-size:26px;
+  font-weight:bold;
+  color:#2563eb;
+}
+
+.admin-badge{
+  background:#eff6ff;
+  color:#2563eb;
+  padding:8px 13px;
+  border-radius:20px;
+  font-weight:bold;
+}
+
+.container{
+  max-width:1100px;
+  margin:25px auto;
+  padding:0 15px;
+}
+
+.card{
+  background:white;
+  padding:20px;
+  border-radius:15px;
+  margin-bottom:18px;
+  box-shadow:0 2px 8px rgba(0,0,0,.06);
+}
+
+h1{
+  color:#2563eb;
+  margin-bottom:8px;
+}
+
+.search{
+  width:100%;
+  padding:13px;
+  border:1px solid #ddd;
+  border-radius:10px;
+  margin-top:15px;
+  font-size:15px;
+}
+
+.stats{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:12px;
+  margin-top:18px;
+}
+
+.stat{
+  background:#f8fafc;
+  padding:18px;
+  text-align:center;
+  border-radius:12px;
+}
+
+.stat h2{
+  color:#2563eb;
+  margin-bottom:5px;
+}
+
+.user{
+  border:1px solid #eee;
+  border-radius:12px;
+  padding:17px;
+  margin-top:12px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:15px;
+}
+
+.user-info h3{
+  margin-bottom:5px;
+}
+
+.user-info p{
+  color:#666;
+  font-size:14px;
+  margin:3px 0;
+}
+
+.status{
+  display:inline-block;
+  padding:5px 10px;
+  border-radius:15px;
+  font-size:12px;
+  font-weight:bold;
+}
+
+.active{
+  background:#dcfce7;
+  color:#15803d;
+}
+
+.suspended{
+  background:#fee2e2;
+  color:#b91c1c;
+}
+
+.actions{
+  display:flex;
+  gap:7px;
+  flex-wrap:wrap;
+}
+
+button{
+  border:0;
+  padding:9px 13px;
+  border-radius:18px;
+  cursor:pointer;
+  font-weight:bold;
+}
+
+.view{
+  background:#2563eb;
+  color:white;
+}
+
+.suspend{
+  background:#dc2626;
+  color:white;
+}
+
+.restore{
+  background:#16a34a;
+  color:white;
+}
+
+.empty{
+  text-align:center;
+  padding:25px;
+  color:#777;
+}
+
+.back{
+  display:inline-block;
+  text-decoration:none;
+  color:#2563eb;
+  font-weight:bold;
+  margin-top:5px;
+}
+
+@media(max-width:700px){
+
+  .stats{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .user{
+    flex-direction:column;
+    align-items:flex-start;
+  }
+
+  .actions{
+    width:100%;
+  }
+
+  button{
+    flex:1;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header class="topbar">
+
+  <div class="logo">Zemivo</div>
+
+  <div class="admin-badge">
+    🛡️ Admin
+  </div>
+
+</header>
+
+<main class="container">
+
+  <div class="card">
+
+    <h1>👥 User Management</h1>
+
+    <p>
+      Manage Zemivo users, account status and moderation.
+    </p>
+
+    <input
+      class="search"
+      id="search"
+      type="text"
+      placeholder="🔍 Search users by name or email..."
+      oninput="searchUsers()"
+    >
+
+  </div>
+
+
+  <div class="card">
+
+    <h2>📊 User Statistics</h2>
+
+    <div class="stats">
+
+      <div class="stat">
+        <h2 id="totalUsers">3</h2>
+        <p>Total Users</p>
+      </div>
+
+      <div class="stat">
+        <h2 id="activeUsers">2</h2>
+        <p>Active</p>
+      </div>
+
+      <div class="stat">
+        <h2 id="suspendedUsers">1</h2>
+        <p>Suspended</p>
+      </div>
+
+      <div class="stat">
+        <h2>0</h2>
+        <p>Reported</p>
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <div class="card">
+
+    <h2>👤 Users</h2>
+
+    <div id="userList"></div>
+
+  </div>
+
+
+  <div class="card">
+
+    <a class="back" href="admin.html">
+      ← Back to Admin Dashboard
+    </a>
+
+  </div>
+
+</main>
+
+
+<script>
+
+let users = [
+
+  {
+    id:1,
+    name:"Zemivo User",
+    email:"user@example.com",
+    status:"active"
+  },
+
+  {
+    id:2,
+    name:"Creator User",
+    email:"creator@example.com",
+    status:"active"
+  },
+
+  {
+    id:3,
+    name:"Test Account",
+    email:"test@example.com",
+    status:"suspended"
+  }
+
+];
+
+
+function renderUsers(list = users){
+
+  const userList =
+    document.getElementById("userList");
+
+  userList.innerHTML = "";
+
+
+  if(list.length === 0){
+
+    userList.innerHTML =
+      '<div class="empty">No users found.</div>';
+
+    return;
+
+  }
+
+
+  list.forEach(function(user){
+
+    const div =
+      document.createElement("div");
+
+    div.className = "user";
+
+    div.innerHTML = `
+
+      <div class="user-info">
+
+        <h3>👤 ${user.name}</h3>
+
+        <p>📧 ${user.email}</p>
+
+        <p>
+          Status:
+          <span class="status ${user.status}">
+            ${user.status === "active"
+              ? "Active"
+              : "Suspended"}
+          </span>
+        </p>
+
+      </div>
+
+      <div class="actions">
+
+        <button
+          class="view"
+          onclick="viewUser(${user.id})">
+          View
+        </button>
+
+        ${
+          user.status === "active"
+
+          ?
+
+          `<button
+             class="suspend"
+             onclick="changeStatus(${user.id},'suspended')">
+             Suspend
+           </button>`
+
+          :
+
+          `<button
+             class="restore"
+             onclick="changeStatus(${user.id},'active')">
+             Restore
+           </button>`
+        }
+
+      </div>
+
+    `;
+
+    userList.appendChild(div);
+
+  });
+
+
+  updateStats();
+
+}
+
+
+function viewUser(id){
+
+  const user =
+    users.find(function(u){
+      return u.id === id;
+    });
+
+
+  if(!user) return;
+
+
+  alert(
+    "User Profile\n\n" +
+    "Name: " + user.name + "\n" +
+    "Email: " + user.email + "\n" +
+    "Status: " + user.status
+  );
+
+}
+
+
+function changeStatus(id,status){
+
+  const user =
+    users.find(function(u){
+      return u.id === id;
+    });
+
+
+  if(!user) return;
+
+
+  if(status === "suspended"){
+
+    const confirmSuspend =
+      confirm(
+        "Are you sure you want to suspend " +
+        user.name +
+        "?"
+      );
+
+    if(!confirmSuspend) return;
+
+  }
+
+
+  user.status = status;
+
+  renderUsers();
+
+
+}
+
+
+function searchUsers(){
+
+  const query =
+    document
+      .getElementById("search")
+      .value
+      .toLowerCase()
+      .trim();
+
+
+  const filtered =
+    users.filter(function(user){
+
+      return (
+        user.name.toLowerCase().includes(query) ||
+        user.email.toLowerCase().includes(query)
+      );
+
+    });
+
+
+  renderUsers(filtered);
+
+}
+
+
+function updateStats(){
+
+  const active =
+    users.filter(function(user){
+      return user.status === "active";
+    }).length;
+
+
+  const suspended =
+    users.filter(function(user){
+      return user.status === "suspended";
+    }).length;
+
+
+  document.getElementById("totalUsers")
+    .textContent = users.length;
+
+  document.getElementById("activeUsers")
+    .textContent = active;
+
+  document.getElementById("suspendedUsers")
+    .textContent = suspended;
+
+}
+
+
+renderUsers();
+
+</script>
+
+</body>
+</html>
