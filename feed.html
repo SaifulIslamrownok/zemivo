@@ -100,12 +100,27 @@ button{
 .composer textarea{
   width:100%;
   min-height:90px;
+  height:auto;
   resize:none;
-  border:0;
-  outline:0;
+  border:0 !important;
+  outline:0 !important;
+  box-shadow:none !important;
+  background:transparent;
+  appearance:none;
+  -webkit-appearance:none;
   font-size:18px;
+  line-height:1.5;
   padding:8px 4px;
-  background:#fff;
+  margin:0;
+  color:#17202a;
+}
+
+.composer textarea:focus,
+.composer textarea:active,
+.composer textarea:hover{
+  border:0 !important;
+  outline:0 !important;
+  box-shadow:none !important;
 }
 
 .composer textarea::placeholder{
@@ -476,10 +491,25 @@ button{
 
 .comment-form input{
   flex:1;
-  border:1px solid #ddd;
-  border-radius:20px;
-  padding:10px 13px;
-  outline:none;
+  width:100%;
+  min-width:0;
+  border:1px solid #d9dde3;
+  outline:none !important;
+  box-shadow:none !important;
+  border-radius:22px;
+  padding:10px 15px;
+  background:#fff;
+  color:#17202a;
+  font-size:14px;
+  appearance:none;
+  -webkit-appearance:none;
+}
+
+.comment-form input:focus,
+.comment-form input:active{
+  border-color:#2563eb;
+  outline:none !important;
+  box-shadow:0 0 0 2px rgba(37,99,235,.08) !important;
 }
 
 .comment-form button{
