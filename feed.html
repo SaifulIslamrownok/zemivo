@@ -469,8 +469,8 @@ button{
 .comment{
   background:#f0f2f5;
   border-radius:12px;
-  padding:8px 11px;
-  margin-bottom:7px;
+  padding:9px 11px;
+  margin-bottom:9px;
 }
 
 .comment-name{
@@ -480,7 +480,87 @@ button{
 
 .comment-text{
   font-size:14px;
-  margin-top:2px;
+  margin-top:3px;
+  white-space:pre-wrap;
+  overflow-wrap:anywhere;
+}
+
+.comment-actions{
+  display:flex;
+  align-items:center;
+  flex-wrap:wrap;
+  gap:4px;
+  margin-top:6px;
+}
+
+.comment-action{
+  border:0;
+  background:transparent;
+  color:#555;
+  font-size:12px;
+  font-weight:600;
+  padding:4px 6px;
+  border-radius:7px;
+}
+
+.comment-action:hover{
+  background:#e4e6e9;
+}
+
+.comment-action.active{
+  color:#2563eb;
+}
+
+.comment-action.delete-action{
+  color:#dc2626;
+}
+
+.replies{
+  margin-top:7px;
+  margin-left:20px;
+  border-left:2px solid #d9dde3;
+  padding-left:9px;
+}
+
+.reply{
+  background:#fff;
+  border-radius:10px;
+  padding:8px 10px;
+  margin-bottom:6px;
+}
+
+.reply .comment-name{
+  font-size:12px;
+}
+
+.reply .comment-text{
+  font-size:13px;
+}
+
+.reply-form{
+  display:flex;
+  gap:6px;
+  margin-top:7px;
+}
+
+.reply-form input{
+  flex:1;
+  min-width:0;
+  border:1px solid #d9dde3;
+  outline:none;
+  border-radius:18px;
+  padding:8px 12px;
+  background:#fff;
+  font-size:13px;
+}
+
+.reply-form button{
+  border:0;
+  background:#2563eb;
+  color:#fff;
+  border-radius:18px;
+  padding:0 12px;
+  font-size:13px;
 }
 
 .comment-form{
@@ -638,6 +718,10 @@ button{
 
   .post-info{
     gap:10px;
+  }
+
+  .replies{
+    margin-left:10px;
   }
 
 }
@@ -963,7 +1047,7 @@ button{
 >
 
 
-<!-- EDIT MODAL -->
+<!-- EDIT POST MODAL -->
 
 <div
   id="editModal"
@@ -1034,6 +1118,7 @@ import {
   getDoc,
   setDoc,
   updateDoc,
+  deleteDoc,
   query,
   orderBy,
   onSnapshot,
@@ -1220,26 +1305,11 @@ function escapeHtml(value){
   }
 
   return String(value)
-    .replaceAll(
-      "&",
-      "&amp;"
-    )
-    .replaceAll(
-      "<",
-      "&lt;"
-    )
-    .replaceAll(
-      ">",
-      "&gt;"
-    )
-    .replaceAll(
-      '"',
-      "&quot;"
-    )
-    .replaceAll(
-      "'",
-      "&#039;"
-    );
+    .replaceAll("&","&amp;")
+    .replaceAll("<","&lt;")
+    .replaceAll(">","&gt;")
+    .replaceAll('"',"&quot;")
+    .replaceAll("'","&#039;");
 
 }
 
@@ -1394,11 +1464,9 @@ onAuthStateChanged(
 
 
       currentAvatar.textContent =
-        (
-          currentProfile.displayName
-        )
-        .charAt(0)
-        .toUpperCase();
+        currentProfile.displayName
+          .charAt(0)
+          .toUpperCase();
 
     }
 
@@ -1432,37 +1500,17 @@ function startFeedListener(){
   `;
 
 
-  let postsQuery;
-
-
-  try{
-
-    postsQuery =
-      query(
-        collection(
-          db,
-          "posts"
-        ),
-        orderBy(
-          "createdAt",
-          "desc"
-        )
-      );
-
-  }
-  catch(error){
-
-    console.error(error);
-
-    feed.innerHTML = `
-      <div class="empty">
-        Could not prepare Zemivo Feed.
-      </div>
-    `;
-
-    return;
-
-  }
+  const postsQuery =
+    query(
+      collection(
+        db,
+        "posts"
+      ),
+      orderBy(
+        "createdAt",
+        "desc"
+      )
+    );
 
 
   unsubscribeFeed =
@@ -1473,6 +1521,7 @@ function startFeedListener(){
 
         const posts = [];
 
+
         snapshot.forEach(
           function(postSnapshot){
 
@@ -1482,12 +1531,6 @@ function startFeedListener(){
             const postId =
               postSnapshot.id;
 
-
-            /*
-             Show published posts
-             and old posts that do
-             not have a status field.
-            */
 
             if(
               post.status === "trash" ||
@@ -1524,7 +1567,8 @@ function startFeedListener(){
         }
 
 
-        feed.innerHTML = "";
+        feed.innerHTML =
+          "";
 
 
         posts.forEach(
@@ -1564,7 +1608,7 @@ function startFeedListener(){
 }
 
 
-/* RENDER */
+/* RENDER POST */
 
 function renderPost(
   postId,
@@ -1988,15 +2032,15 @@ function renderPost(
 
       <div class="comment-form">
 
-    <input
-  type="text"
-  placeholder="Write a comment..."
-  data-comment-input
-  spellcheck="false"
-  autocomplete="off"
-  autocorrect="off"
-  autocapitalize="sentences"
->
+        <input
+          type="text"
+          placeholder="Write a comment..."
+          data-comment-input
+          spellcheck="false"
+          autocomplete="off"
+          autocorrect="off"
+          autocapitalize="sentences"
+        >
 
         <button
           data-comment-button
@@ -2023,7 +2067,7 @@ function renderPost(
   );
 
 
-  /* ACTIONS */
+  /* POST ACTIONS */
 
   article.addEventListener(
     "click",
@@ -2285,8 +2329,7 @@ function renderPost(
       async function(event){
 
         if(
-          event.key ===
-          "Enter"
+          event.key === "Enter"
         ){
 
           event.preventDefault();
@@ -2306,7 +2349,7 @@ function renderPost(
 }
 
 
-/* CLOSE MENU */
+/* CLOSE POST MENU */
 
 document.addEventListener(
   "click",
@@ -2478,8 +2521,7 @@ function previewSelectedFile(){
 
 
       if(
-        selectedFileType ===
-        "image"
+        selectedFileType === "image"
       ){
 
         imagePreview.src =
@@ -2573,9 +2615,7 @@ document
     "click",
     function(){
 
-      insertTextAtCursor(
-        "#"
-      );
+      insertTextAtCursor("#");
 
       postText.focus();
 
@@ -2597,9 +2637,7 @@ document
     "click",
     function(){
 
-      insertTextAtCursor(
-        "@"
-      );
+      insertTextAtCursor("@");
 
       postText.focus();
 
@@ -2637,9 +2675,7 @@ document
 
 /* INSERT TEXT */
 
-function insertTextAtCursor(
-  text
-){
+function insertTextAtCursor(text){
 
   const start =
     postText.selectionStart;
@@ -2719,13 +2755,6 @@ publishButton.addEventListener(
       postText.value.trim();
 
 
-    /*
-     IMPORTANT:
-     For this testing version,
-     media is only previewed locally.
-     Text post is saved normally.
-    */
-
     if(
       !text &&
       !selectedFile
@@ -2740,16 +2769,9 @@ publishButton.addEventListener(
     }
 
 
-    /*
-     To keep Firestore safe,
-     prevent large media from being
-     saved directly as Base64.
-    */
-
     if(
       selectedFile &&
-      selectedFile.size >
-      700000
+      selectedFile.size > 700000
     ){
 
       showToast(
@@ -2774,9 +2796,7 @@ publishButton.addEventListener(
         null;
 
 
-      if(
-        selectedFile
-      ){
+      if(selectedFile){
 
         mediaPreviewData =
           await readFileAsDataURL(
@@ -2851,19 +2871,12 @@ publishButton.addEventListener(
       };
 
 
-      const postRef =
-        await addDoc(
-          collection(
-            db,
-            "posts"
-          ),
-          postData
-        );
-
-
-      console.log(
-        "Post created:",
-        postRef.id
+      await addDoc(
+        collection(
+          db,
+          "posts"
+        ),
+        postData
       );
 
 
@@ -2896,7 +2909,7 @@ publishButton.addEventListener(
       else{
 
         showToast(
-          "Post could not be published. Check browser console/Firebase."
+          "Post could not be published."
         );
 
       }
@@ -2918,9 +2931,7 @@ publishButton.addEventListener(
 
 /* FILE READER */
 
-function readFileAsDataURL(
-  file
-){
+function readFileAsDataURL(file){
 
   return new Promise(
     function(resolve,reject){
@@ -2942,9 +2953,7 @@ function readFileAsDataURL(
       reader.onerror =
         function(error){
 
-          reject(
-            error
-          );
+          reject(error);
 
         };
 
@@ -3010,7 +3019,7 @@ function clearComposer(){
 }
 
 
-/* LIKE */
+/* POST LIKE */
 
 async function toggleLike(
   postId,
@@ -3031,9 +3040,7 @@ async function toggleLike(
 
 
   const liked =
-    Array.isArray(
-      post.likedBy
-    ) &&
+    Array.isArray(post.likedBy) &&
     post.likedBy.includes(
       currentUser.uid
     );
@@ -3097,9 +3104,7 @@ async function toggleLike(
 
 /* SPARK */
 
-async function sparkPost(
-  postId
-){
+async function sparkPost(postId){
 
   if(!currentUser){
     return;
@@ -3167,9 +3172,7 @@ async function sharePost(
       );
 
 
-    if(
-      navigator.share
-    ){
+    if(navigator.share){
 
       await navigator.share({
 
@@ -3186,9 +3189,7 @@ async function sharePost(
       });
 
     }
-    else if(
-      navigator.clipboard
-    ){
+    else if(navigator.clipboard){
 
       await navigator.clipboard.writeText(
         shareUrl
@@ -3230,9 +3231,7 @@ async function sharePost(
 
 /* COPY LINK */
 
-async function copyPostLink(
-  postId
-){
+async function copyPostLink(postId){
 
   const url =
     location.origin +
@@ -3269,9 +3268,7 @@ async function copyPostLink(
 
 /* SAVE */
 
-async function savePost(
-  postId
-){
+async function savePost(postId){
 
   if(!currentUser){
     return;
@@ -3321,7 +3318,7 @@ async function savePost(
 }
 
 
-/* EDIT */
+/* EDIT POST */
 
 function openEditModal(
   postId,
@@ -3435,9 +3432,7 @@ saveEdit.addEventListener(
 
 /* TRASH */
 
-async function moveToTrash(
-  postId
-){
+async function moveToTrash(postId){
 
   if(!currentUser){
     return;
@@ -3498,9 +3493,7 @@ async function moveToTrash(
 
 /* ARCHIVE */
 
-async function archivePost(
-  postId
-){
+async function archivePost(postId){
 
   try{
 
@@ -3543,7 +3536,12 @@ async function archivePost(
 }
 
 
-/* COMMENT */
+/* ===========================
+   COMMENTS
+   =========================== */
+
+
+/* SUBMIT COMMENT */
 
 async function submitComment(
   postId,
@@ -3586,7 +3584,16 @@ async function submitComment(
         text:
           text,
 
+        likes:
+          0,
+
+        likedBy:
+          [],
+
         createdAt:
+          serverTimestamp(),
+
+        updatedAt:
           serverTimestamp()
 
       }
@@ -3673,41 +3680,11 @@ function loadComments(
       snapshot.forEach(
         function(commentSnapshot){
 
-          const comment =
-            commentSnapshot.data();
-
-
-          const div =
-            document.createElement(
-              "div"
-            );
-
-
-          div.className =
-            "comment";
-
-
-          div.innerHTML = `
-
-            <div class="comment-name">
-              ${escapeHtml(
-                comment.displayName ||
-                "Zemivo User"
-              )}
-            </div>
-
-            <div class="comment-text">
-              ${formatPostText(
-                comment.text ||
-                ""
-              )}
-            </div>
-
-          `;
-
-
-          commentsList.appendChild(
-            div
+          renderComment(
+            postId,
+            commentSnapshot.id,
+            commentSnapshot.data(),
+            commentsList
           );
 
         }
@@ -3728,6 +3705,1119 @@ function loadComments(
 }
 
 
+/* RENDER COMMENT */
+
+function renderComment(
+  postId,
+  commentId,
+  comment,
+  commentsList
+){
+
+  const div =
+    document.createElement(
+      "div"
+    );
+
+
+  div.className =
+    "comment";
+
+
+  const isOwner =
+    currentUser &&
+    comment.uid ===
+    currentUser.uid;
+
+
+  const liked =
+    Array.isArray(comment.likedBy) &&
+    currentUser &&
+    comment.likedBy.includes(
+      currentUser.uid
+    );
+
+
+  const likes =
+    Number(
+      comment.likes || 0
+    );
+
+
+  div.innerHTML = `
+
+    <div class="comment-name">
+      ${escapeHtml(
+        comment.displayName ||
+        "Zemivo User"
+      )}
+    </div>
+
+    <div
+      class="comment-text"
+      data-comment-text
+    >
+      ${formatPostText(
+        comment.text || ""
+      )}
+    </div>
+
+    <div class="comment-actions">
+
+      <button
+        class="comment-action ${liked ? "active" : ""}"
+        data-comment-action="like"
+        type="button"
+      >
+        ${liked ? "❤️ Unlike" : "♡ Like"}
+        ${likes > 0 ? "(" + likes + ")" : ""}
+      </button>
+
+      <button
+        class="comment-action"
+        data-comment-action="reply"
+        type="button"
+      >
+        ↩ Reply
+      </button>
+
+      ${
+        isOwner
+        ?
+        `
+          <button
+            class="comment-action"
+            data-comment-action="edit"
+            type="button"
+          >
+            ✏️ Edit
+          </button>
+
+          <button
+            class="comment-action delete-action"
+            data-comment-action="delete"
+            type="button"
+          >
+            🗑️ Delete
+          </button>
+        `
+        :
+        ""
+      }
+
+    </div>
+
+    <div
+      class="replies"
+      data-replies
+    ></div>
+
+    <div
+      class="reply-form"
+      data-reply-form
+      style="display:none;"
+    >
+
+      <input
+        type="text"
+        placeholder="Write a reply..."
+        data-reply-input
+        autocomplete="off"
+        autocorrect="off"
+        spellcheck="false"
+      >
+
+      <button
+        type="button"
+        data-reply-button
+      >
+        Send
+      </button>
+
+    </div>
+
+  `;
+
+
+  commentsList.appendChild(
+    div
+  );
+
+
+  loadReplies(
+    postId,
+    commentId,
+    div
+  );
+
+
+  const actionButtons =
+    div.querySelectorAll(
+      "[data-comment-action]"
+    );
+
+
+  actionButtons.forEach(
+    function(button){
+
+      button.addEventListener(
+        "click",
+        async function(){
+
+          const action =
+            button.dataset.commentAction;
+
+
+          if(
+            action === "like"
+          ){
+
+            await toggleCommentLike(
+              postId,
+              commentId,
+              comment
+            );
+
+          }
+
+
+          if(
+            action === "reply"
+          ){
+
+            const form =
+              div.querySelector(
+                "[data-reply-form]"
+              );
+
+            const input =
+              div.querySelector(
+                "[data-reply-input]"
+              );
+
+
+            if(form){
+
+              form.style.display =
+                form.style.display ===
+                "none"
+                ?
+                "flex"
+                :
+                "none";
+
+            }
+
+
+            if(
+              input &&
+              form &&
+              form.style.display === "flex"
+            ){
+
+              input.focus();
+
+            }
+
+          }
+
+
+          if(
+            action === "edit"
+          ){
+
+            if(!isOwner){
+              return;
+            }
+
+            await editComment(
+              postId,
+              commentId,
+              comment
+            );
+
+          }
+
+
+          if(
+            action === "delete"
+          ){
+
+            if(!isOwner){
+              return;
+            }
+
+            await deleteComment(
+              postId,
+              commentId
+            );
+
+          }
+
+        }
+      );
+
+    }
+  );
+
+
+  const replyButton =
+    div.querySelector(
+      "[data-reply-button]"
+    );
+
+
+  const replyInput =
+    div.querySelector(
+      "[data-reply-input]"
+    );
+
+
+  if(
+    replyButton &&
+    replyInput
+  ){
+
+    replyButton.addEventListener(
+      "click",
+      async function(){
+
+        await submitReply(
+          postId,
+          commentId,
+          replyInput
+        );
+
+      }
+    );
+
+
+    replyInput.addEventListener(
+      "keydown",
+      async function(event){
+
+        if(
+          event.key === "Enter"
+        ){
+
+          event.preventDefault();
+
+          await submitReply(
+            postId,
+            commentId,
+            replyInput
+          );
+
+        }
+
+      }
+    );
+
+  }
+
+}
+
+
+/* COMMENT LIKE / UNLIKE */
+
+async function toggleCommentLike(
+  postId,
+  commentId,
+  comment
+){
+
+  if(!currentUser){
+    return;
+  }
+
+
+  const ref =
+    doc(
+      db,
+      "posts",
+      postId,
+      "comments",
+      commentId
+    );
+
+
+  const liked =
+    Array.isArray(comment.likedBy) &&
+    comment.likedBy.includes(
+      currentUser.uid
+    );
+
+
+  try{
+
+    if(liked){
+
+      await updateDoc(
+        ref,
+        {
+
+          likes:
+            increment(-1),
+
+          likedBy:
+            arrayRemove(
+              currentUser.uid
+            )
+
+        }
+      );
+
+    }
+    else{
+
+      await updateDoc(
+        ref,
+        {
+
+          likes:
+            increment(1),
+
+          likedBy:
+            arrayUnion(
+              currentUser.uid
+            )
+
+        }
+      );
+
+    }
+
+  }
+  catch(error){
+
+    console.error(
+      "Comment like error:",
+      error
+    );
+
+    showToast(
+      "Could not update comment reaction."
+    );
+
+  }
+
+}
+
+
+/* EDIT COMMENT */
+
+async function editComment(
+  postId,
+  commentId,
+  comment
+){
+
+  const newText =
+    prompt(
+      "Edit your comment:",
+      comment.text || ""
+    );
+
+
+  if(
+    newText === null
+  ){
+
+    return;
+
+  }
+
+
+  const text =
+    newText.trim();
+
+
+  if(!text){
+
+    showToast(
+      "Comment cannot be empty."
+    );
+
+    return;
+
+  }
+
+
+  try{
+
+    await updateDoc(
+      doc(
+        db,
+        "posts",
+        postId,
+        "comments",
+        commentId
+      ),
+      {
+
+        text:
+          text,
+
+        updatedAt:
+          serverTimestamp()
+
+      }
+    );
+
+
+    showToast(
+      "Comment updated."
+    );
+
+  }
+  catch(error){
+
+    console.error(
+      "Edit comment error:",
+      error
+    );
+
+    showToast(
+      "Could not edit comment."
+    );
+
+  }
+
+}
+
+
+/* DELETE COMMENT */
+
+async function deleteComment(
+  postId,
+  commentId
+){
+
+  if(
+    !confirm(
+      "Delete this comment?"
+    )
+  ){
+
+    return;
+
+  }
+
+
+  try{
+
+    await deleteDoc(
+      doc(
+        db,
+        "posts",
+        postId,
+        "comments",
+        commentId
+      )
+    );
+
+
+    await updateDoc(
+      doc(
+        db,
+        "posts",
+        postId
+      ),
+      {
+
+        commentsCount:
+          increment(-1)
+
+      }
+    );
+
+
+    showToast(
+      "Comment deleted."
+    );
+
+  }
+  catch(error){
+
+    console.error(
+      "Delete comment error:",
+      error
+    );
+
+    showToast(
+      "Could not delete comment."
+    );
+
+  }
+
+}
+
+
+/* ===========================
+   REPLIES
+   =========================== */
+
+
+/* SUBMIT REPLY */
+
+async function submitReply(
+  postId,
+  commentId,
+  input
+){
+
+  if(!currentUser){
+    return;
+  }
+
+
+  const text =
+    input.value.trim();
+
+
+  if(!text){
+    return;
+  }
+
+
+  try{
+
+    await addDoc(
+      collection(
+        db,
+        "posts",
+        postId,
+        "comments",
+        commentId,
+        "replies"
+      ),
+      {
+
+        uid:
+          currentUser.uid,
+
+        displayName:
+          currentProfile?.displayName ||
+          currentUser.displayName ||
+          "Zemivo User",
+
+        text:
+          text,
+
+        likes:
+          0,
+
+        likedBy:
+          [],
+
+        createdAt:
+          serverTimestamp(),
+
+        updatedAt:
+          serverTimestamp()
+
+      }
+    );
+
+
+    input.value =
+      "";
+
+  }
+  catch(error){
+
+    console.error(
+      "Reply error:",
+      error
+    );
+
+    showToast(
+      "Could not send reply."
+    );
+
+  }
+
+}
+
+
+/* LOAD REPLIES */
+
+function loadReplies(
+  postId,
+  commentId,
+  commentElement
+){
+
+  const repliesContainer =
+    commentElement.querySelector(
+      "[data-replies]"
+    );
+
+
+  if(!repliesContainer){
+    return;
+  }
+
+
+  const repliesQuery =
+    query(
+      collection(
+        db,
+        "posts",
+        postId,
+        "comments",
+        commentId,
+        "replies"
+      ),
+      orderBy(
+        "createdAt",
+        "asc"
+      )
+    );
+
+
+  onSnapshot(
+    repliesQuery,
+
+    function(snapshot){
+
+      repliesContainer.innerHTML =
+        "";
+
+
+      snapshot.forEach(
+        function(replySnapshot){
+
+          renderReply(
+            postId,
+            commentId,
+            replySnapshot.id,
+            replySnapshot.data(),
+            repliesContainer
+          );
+
+        }
+      );
+
+    },
+
+    function(error){
+
+      console.error(
+        "Reply listener error:",
+        error
+      );
+
+    }
+  );
+
+}
+
+
+/* RENDER REPLY */
+
+function renderReply(
+  postId,
+  commentId,
+  replyId,
+  reply,
+  repliesContainer
+){
+
+  const div =
+    document.createElement(
+      "div"
+    );
+
+
+  div.className =
+    "reply";
+
+
+  const isOwner =
+    currentUser &&
+    reply.uid ===
+    currentUser.uid;
+
+
+  const liked =
+    Array.isArray(reply.likedBy) &&
+    currentUser &&
+    reply.likedBy.includes(
+      currentUser.uid
+    );
+
+
+  const likes =
+    Number(
+      reply.likes || 0
+    );
+
+
+  div.innerHTML = `
+
+    <div class="comment-name">
+      ${escapeHtml(
+        reply.displayName ||
+        "Zemivo User"
+      )}
+    </div>
+
+    <div
+      class="comment-text"
+      data-reply-text
+    >
+      ${formatPostText(
+        reply.text || ""
+      )}
+    </div>
+
+    <div class="comment-actions">
+
+      <button
+        class="comment-action ${liked ? "active" : ""}"
+        data-reply-action="like"
+        type="button"
+      >
+        ${liked ? "❤️ Unlike" : "♡ Like"}
+        ${likes > 0 ? "(" + likes + ")" : ""}
+      </button>
+
+      ${
+        isOwner
+        ?
+        `
+          <button
+            class="comment-action"
+            data-reply-action="edit"
+            type="button"
+          >
+            ✏️ Edit
+          </button>
+
+          <button
+            class="comment-action delete-action"
+            data-reply-action="delete"
+            type="button"
+          >
+            🗑️ Delete
+          </button>
+        `
+        :
+        ""
+      }
+
+    </div>
+
+  `;
+
+
+  repliesContainer.appendChild(
+    div
+  );
+
+
+  div
+    .querySelectorAll(
+      "[data-reply-action]"
+    )
+    .forEach(
+      function(button){
+
+        button.addEventListener(
+          "click",
+          async function(){
+
+            const action =
+              button.dataset.replyAction;
+
+
+            if(
+              action === "like"
+            ){
+
+              await toggleReplyLike(
+                postId,
+                commentId,
+                replyId,
+                reply
+              );
+
+            }
+
+
+            if(
+              action === "edit"
+            ){
+
+              if(!isOwner){
+                return;
+              }
+
+              await editReply(
+                postId,
+                commentId,
+                replyId,
+                reply
+              );
+
+            }
+
+
+            if(
+              action === "delete"
+            ){
+
+              if(!isOwner){
+                return;
+              }
+
+              await deleteReply(
+                postId,
+                commentId,
+                replyId
+              );
+
+            }
+
+          }
+        );
+
+      }
+    );
+
+}
+
+
+/* REPLY LIKE / UNLIKE */
+
+async function toggleReplyLike(
+  postId,
+  commentId,
+  replyId,
+  reply
+){
+
+  if(!currentUser){
+    return;
+  }
+
+
+  const ref =
+    doc(
+      db,
+      "posts",
+      postId,
+      "comments",
+      commentId,
+      "replies",
+      replyId
+    );
+
+
+  const liked =
+    Array.isArray(reply.likedBy) &&
+    reply.likedBy.includes(
+      currentUser.uid
+    );
+
+
+  try{
+
+    if(liked){
+
+      await updateDoc(
+        ref,
+        {
+
+          likes:
+            increment(-1),
+
+          likedBy:
+            arrayRemove(
+              currentUser.uid
+            )
+
+        }
+      );
+
+    }
+    else{
+
+      await updateDoc(
+        ref,
+        {
+
+          likes:
+            increment(1),
+
+          likedBy:
+            arrayUnion(
+              currentUser.uid
+            )
+
+        }
+      );
+
+    }
+
+  }
+  catch(error){
+
+    console.error(
+      "Reply like error:",
+      error
+    );
+
+    showToast(
+      "Could not update reply reaction."
+    );
+
+  }
+
+}
+
+
+/* EDIT REPLY */
+
+async function editReply(
+  postId,
+  commentId,
+  replyId,
+  reply
+){
+
+  const newText =
+    prompt(
+      "Edit your reply:",
+      reply.text || ""
+    );
+
+
+  if(
+    newText === null
+  ){
+
+    return;
+
+  }
+
+
+  const text =
+    newText.trim();
+
+
+  if(!text){
+
+    showToast(
+      "Reply cannot be empty."
+    );
+
+    return;
+
+  }
+
+
+  try{
+
+    await updateDoc(
+      doc(
+        db,
+        "posts",
+        postId,
+        "comments",
+        commentId,
+        "replies",
+        replyId
+      ),
+      {
+
+        text:
+          text,
+
+        updatedAt:
+          serverTimestamp()
+
+      }
+    );
+
+
+    showToast(
+      "Reply updated."
+    );
+
+  }
+  catch(error){
+
+    console.error(
+      "Edit reply error:",
+      error
+    );
+
+    showToast(
+      "Could not edit reply."
+    );
+
+  }
+
+}
+
+
+/* DELETE REPLY */
+
+async function deleteReply(
+  postId,
+  commentId,
+  replyId
+){
+
+  if(
+    !confirm(
+      "Delete this reply?"
+    )
+  ){
+
+    return;
+
+  }
+
+
+  try{
+
+    await deleteDoc(
+      doc(
+        db,
+        "posts",
+        postId,
+        "comments",
+        commentId,
+        "replies",
+        replyId
+      )
+    );
+
+
+    showToast(
+      "Reply deleted."
+    );
+
+  }
+  catch(error){
+
+    console.error(
+      "Delete reply error:",
+      error
+    );
+
+    showToast(
+      "Could not delete reply."
+    );
+
+  }
+
+}
+
+
 /* ADMIN */
 
 adminPublish.addEventListener(
@@ -3737,8 +4827,7 @@ adminPublish.addEventListener(
     if(
       !currentUser ||
       !currentProfile ||
-      currentProfile.role !==
-      "admin"
+      currentProfile.role !== "admin"
     ){
 
       showToast(
@@ -3830,6 +4919,7 @@ adminPublish.addEventListener(
 
       adminText.value =
         "";
+
 
       showToast(
         "Official announcement published."
