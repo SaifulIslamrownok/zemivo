@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Zemivo AI Business Assistant</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, sans-serif;
+}
+
+body{
+    background:#f5f7fb;
+    color:#1f2937;
+}
+
+.header{
+    background:#ffffff;
+    border-bottom:1px solid #e5e7eb;
+    padding:18px 25px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    position:sticky;
+    top:0;
+    z-index:10;
+}
+
+.logo{
+    font-size:22px;
+    font-weight:bold;
+}
+
+.logo span{
+    color:#2563eb;
+}
+
+.header button{
+    border:none;
+    background:#2563eb;
+    color:white;
+    padding:10px 18px;
+    border-radius:8px;
+    cursor:pointer;
+}
+
+.container{
+    display:flex;
+    min-height:calc(100vh - 70px);
+}
+
+.sidebar{
+    width:240px;
+    background:#111827;
+    padding:25px 15px;
+    color:white;
+}
+
+.sidebar h3{
+    margin-bottom:25px;
+    padding-left:10px;
+}
+
+.sidebar a{
+    display:block;
+    color:#d1d5db;
+    text-decoration:none;
+    padding:13px 12px;
+    margin:5px 0;
+    border-radius:7px;
+}
+
+.sidebar a:hover,
+.sidebar a.active{
+    background:#2563eb;
+    color:white;
+}
+
+.main{
+    flex:1;
+    padding:30px;
+}
+
+.welcome{
+    margin-bottom:25px;
+}
+
+.welcome h1{
+    font-size:28px;
+    margin-bottom:8px;
+}
+
+.welcome p{
+    color:#6b7280;
+}
+
+.stats{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:18px;
+    margin-bottom:25px;
+}
+
+.card{
+    background:white;
+    border-radius:12px;
+    padding:20px;
+    box-shadow:0 2px 10px rgba(0,0,0,.05);
+}
+
+.stat-title{
+    color:#6b7280;
+    font-size:14px;
+    margin-bottom:10px;
+}
+
+.stat-value{
+    font-size:26px;
+    font-weight:bold;
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:2fr 1fr;
+    gap:20px;
+}
+
+.card h2{
+    font-size:19px;
+    margin-bottom:18px;
+}
+
+.order{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:14px 0;
+    border-bottom:1px solid #eee;
+}
+
+.order:last-child{
+    border-bottom:none;
+}
+
+.customer{
+    font-weight:bold;
+}
+
+.product{
+    font-size:13px;
+    color:#6b7280;
+    margin-top:4px;
+}
+
+.status{
+    padding:6px 10px;
+    border-radius:20px;
+    font-size:12px;
+    background:#dcfce7;
+    color:#166534;
+}
+
+.ai-box{
+    background:#eef2ff;
+    border-radius:12px;
+    padding:20px;
+    margin-top:20px;
+}
+
+.ai-box h2{
+    color:#3730a3;
+}
+
+.message{
+    background:white;
+    padding:12px;
+    border-radius:8px;
+    margin:10px 0;
+}
+
+.ai-response{
+    background:#e0e7ff;
+}
+
+.quick-actions{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:10px;
+}
+
+.quick-actions button{
+    padding:12px;
+    border:1px solid #e5e7eb;
+    background:white;
+    border-radius:8px;
+    cursor:pointer;
+}
+
+.quick-actions button:hover{
+    background:#f3f4f6;
+}
+
+@media(max-width:900px){
+    .stats{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .grid{
+        grid-template-columns:1fr;
+    }
+
+    .sidebar{
+        width:200px;
+    }
+}
+
+@media(max-width:650px){
+    .container{
+        display:block;
+    }
+
+    .sidebar{
+        width:100%;
+    }
+
+    .stats{
+        grid-template-columns:1fr;
+    }
+
+    .main{
+        padding:18px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header class="header">
+
+    <div class="logo">
+        <span>Zemivo</span> AI Business
+    </div>
+
+    <button onclick="alert('Business account setup will be connected later.')">
+        Business Account
+    </button>
+
+</header>
+
+<div class="container">
+
+    <aside class="sidebar">
+
+        <h3>Business Menu</h3>
+
+        <a href="#" class="active">Dashboard</a>
+        <a href="#">AI Customer Chat</a>
+        <a href="#">Orders</a>
+        <a href="#">Products</a>
+        <a href="#">Stock</a>
+        <a href="#">Customers</a>
+        <a href="#">Invoices</a>
+        <a href="#">Payments</a>
+        <a href="#">Follow-up</a>
+        <a href="#">Reports</a>
+        <a href="#">Settings</a>
+
+    </aside>
+
+    <main class="main">
+
+        <section class="welcome">
+
+            <h1>AI Business Assistant</h1>
+
+            <p>
+                আপনার customer-এর message থেকে order,
+                invoice, payment এবং follow-up পরিচালনা করুন।
+            </p>
+
+        </section>
+
+        <section class="stats">
+
+            <div class="card">
+                <div class="stat-title">আজকের Order</div>
+                <div class="stat-value">24</div>
+            </div>
+
+            <div class="card">
+                <div class="stat-title">আজকের বিক্রি</div>
+                <div class="stat-value">৳48,500</div>
+            </div>
+
+            <div class="card">
+                <div class="stat-title">Pending Payment</div>
+                <div class="stat-value">৳8,200</div>
+            </div>
+
+            <div class="card">
+                <div class="stat-title">Low Stock</div>
+                <div class="stat-value">7</div>
+            </div>
+
+        </section>
+
+        <section class="grid">
+
+            <div class="card">
+
+                <h2>Recent Orders</h2>
+
+                <div class="order">
+                    <div>
+                        <div class="customer">Rahim Ahmed</div>
+                        <div class="product">
+                            Black Shirt — L Size
+                        </div>
+                    </div>
+
+                    <span class="status">Confirmed</span>
+                </div>
+
+                <div class="order">
+                    <div>
+                        <div class="customer">Karim Hasan</div>
+                        <div class="product">
+                            Blue Panjabi — XL
+                        </div>
+                    </div>
+
+                    <span class="status">Processing</span>
+                </div>
+
+                <div class="order">
+                    <div>
+                        <div class="customer">Nusrat Jahan</div>
+                        <div class="product">
+                            Cotton Dress — M
+                        </div>
+                    </div>
+
+                    <span class="status">Confirmed</span>
+                </div>
+
+            </div>
+
+            <div class="card">
+
+                <h2>Quick Actions</h2>
+
+                <div class="quick-actions">
+
+                    <button>+ Add Product</button>
+                    <button>New Order</button>
+                    <button>Create Invoice</button>
+                    <button>View Customers</button>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <section class="ai-box">
+
+            <h2>🤖 AI Customer Assistant</h2>
+
+            <div class="message">
+                <strong>Customer:</strong>
+                এই জামাটার দাম কত?
+            </div>
+
+            <div class="message ai-response">
+                <strong>AI:</strong>
+                এই জামাটির দাম ৳1,250।
+                আপনার কোন Size এবং Color প্রয়োজন?
+            </div>
+
+            <div class="message">
+                <strong>Customer:</strong>
+                L size, কালোটা চাই।
+            </div>
+
+            <div class="message ai-response">
+                <strong>AI:</strong>
+                অবশ্যই। Black, L Size available আছে।
+                আমি কি আপনার Order তৈরি করে দেব?
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+</body>
+</html>
