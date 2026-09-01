@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="bn">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -19,16 +19,18 @@ body{
     color:#1f2937;
 }
 
+/* HEADER */
 .header{
+    height:70px;
     background:#ffffff;
     border-bottom:1px solid #e5e7eb;
-    padding:18px 25px;
     display:flex;
     justify-content:space-between;
     align-items:center;
+    padding:0 25px;
     position:sticky;
     top:0;
-    z-index:10;
+    z-index:100;
 }
 
 .logo{
@@ -40,29 +42,44 @@ body{
     color:#2563eb;
 }
 
-.header button{
+.header-right{
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.region{
+    border:1px solid #d1d5db;
+    background:white;
+    padding:9px 12px;
+    border-radius:8px;
+}
+
+.account-btn{
     border:none;
     background:#2563eb;
     color:white;
-    padding:10px 18px;
+    padding:10px 17px;
     border-radius:8px;
     cursor:pointer;
 }
 
+/* MAIN LAYOUT */
 .container{
     display:flex;
     min-height:calc(100vh - 70px);
 }
 
+/* SIDEBAR */
 .sidebar{
-    width:240px;
+    width:245px;
     background:#111827;
     padding:25px 15px;
     color:white;
 }
 
 .sidebar h3{
-    margin-bottom:25px;
+    margin-bottom:20px;
     padding-left:10px;
 }
 
@@ -70,8 +87,8 @@ body{
     display:block;
     color:#d1d5db;
     text-decoration:none;
-    padding:13px 12px;
-    margin:5px 0;
+    padding:12px;
+    margin:4px 0;
     border-radius:7px;
 }
 
@@ -81,9 +98,11 @@ body{
     color:white;
 }
 
+/* MAIN */
 .main{
     flex:1;
     padding:30px;
+    max-width:1600px;
 }
 
 .welcome{
@@ -91,7 +110,7 @@ body{
 }
 
 .welcome h1{
-    font-size:28px;
+    font-size:29px;
     margin-bottom:8px;
 }
 
@@ -99,11 +118,12 @@ body{
     color:#6b7280;
 }
 
+/* STATS */
 .stats{
     display:grid;
     grid-template-columns:repeat(4,1fr);
     gap:18px;
-    margin-bottom:25px;
+    margin-bottom:22px;
 }
 
 .card{
@@ -124,12 +144,14 @@ body{
     font-weight:bold;
 }
 
+/* GRID */
 .grid{
     display:grid;
     grid-template-columns:2fr 1fr;
     gap:20px;
 }
 
+/* ORDERS */
 .card h2{
     font-size:19px;
     margin-bottom:18px;
@@ -165,28 +187,7 @@ body{
     color:#166534;
 }
 
-.ai-box{
-    background:#eef2ff;
-    border-radius:12px;
-    padding:20px;
-    margin-top:20px;
-}
-
-.ai-box h2{
-    color:#3730a3;
-}
-
-.message{
-    background:white;
-    padding:12px;
-    border-radius:8px;
-    margin:10px 0;
-}
-
-.ai-response{
-    background:#e0e7ff;
-}
-
+/* QUICK ACTIONS */
 .quick-actions{
     display:grid;
     grid-template-columns:repeat(2,1fr);
@@ -205,7 +206,61 @@ body{
     background:#f3f4f6;
 }
 
-@media(max-width:900px){
+/* AI CHAT */
+.ai-box{
+    background:#eef2ff;
+    border-radius:12px;
+    padding:20px;
+    margin-top:20px;
+}
+
+.ai-box h2{
+    color:#3730a3;
+}
+
+.message{
+    background:white;
+    padding:13px;
+    border-radius:8px;
+    margin:10px 0;
+    line-height:1.5;
+}
+
+.ai-response{
+    background:#e0e7ff;
+}
+
+/* GLOBAL SETTINGS */
+.global-card{
+    margin-top:20px;
+}
+
+.global-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:12px;
+}
+
+.global-item{
+    border:1px solid #e5e7eb;
+    padding:14px;
+    border-radius:8px;
+    background:#fafafa;
+}
+
+.global-item small{
+    display:block;
+    color:#6b7280;
+    margin-bottom:5px;
+}
+
+.global-item strong{
+    font-size:15px;
+}
+
+/* RESPONSIVE */
+@media(max-width:1000px){
+
     .stats{
         grid-template-columns:repeat(2,1fr);
     }
@@ -214,12 +269,13 @@ body{
         grid-template-columns:1fr;
     }
 
-    .sidebar{
-        width:200px;
+    .global-grid{
+        grid-template-columns:repeat(2,1fr);
     }
 }
 
-@media(max-width:650px){
+@media(max-width:700px){
+
     .container{
         display:block;
     }
@@ -228,7 +284,24 @@ body{
         width:100%;
     }
 
+    .header{
+        height:auto;
+        min-height:70px;
+        flex-wrap:wrap;
+        gap:10px;
+        padding:12px 15px;
+    }
+
+    .header-right{
+        width:100%;
+        justify-content:flex-end;
+    }
+
     .stats{
+        grid-template-columns:1fr;
+    }
+
+    .global-grid{
         grid-template-columns:1fr;
     }
 
@@ -241,115 +314,259 @@ body{
 
 <body>
 
+<!-- HEADER -->
+
 <header class="header">
 
     <div class="logo">
         <span>Zemivo</span> AI Business
     </div>
 
-    <button onclick="alert('Business account setup will be connected later.')">
-        Business Account
-    </button>
+    <div class="header-right">
+
+        <select class="region">
+            <option>🌍 Global</option>
+            <option>🇧🇩 Bangladesh</option>
+            <option>🇮🇳 India</option>
+            <option>🇺🇸 United States</option>
+            <option>🇬🇧 United Kingdom</option>
+            <option>🇸🇦 Saudi Arabia</option>
+            <option>🇦🇪 United Arab Emirates</option>
+            <option>🇯🇵 Japan</option>
+            <option>🇩🇪 Germany</option>
+            <option>🇫🇷 France</option>
+            <option>🇨🇦 Canada</option>
+            <option>🇦🇺 Australia</option>
+        </select>
+
+        <button class="account-btn"
+        onclick="alert('Business account setup will be connected later.')">
+            Business Account
+        </button>
+
+    </div>
 
 </header>
 
+
+<!-- MAIN CONTAINER -->
+
 <div class="container">
+
+
+    <!-- SIDEBAR -->
 
     <aside class="sidebar">
 
-        <h3>Business Menu</h3>
+        <h3>Business Assistant</h3>
 
         <a href="#" class="active">Dashboard</a>
+
         <a href="#">AI Customer Chat</a>
+
         <a href="#">Orders</a>
+
         <a href="#">Products</a>
-        <a href="#">Stock</a>
+
+        <a href="#">Inventory</a>
+
         <a href="#">Customers</a>
+
         <a href="#">Invoices</a>
+
         <a href="#">Payments</a>
+
+        <a href="#">Delivery</a>
+
         <a href="#">Follow-up</a>
-        <a href="#">Reports</a>
-        <a href="#">Settings</a>
+
+        <a href="#">Analytics</a>
+
+        <a href="#">AI Settings</a>
+
+        <a href="#">Language & Region</a>
+
+        <a href="#">Business Settings</a>
 
     </aside>
 
+
+    <!-- MAIN CONTENT -->
+
     <main class="main">
+
+
+        <!-- WELCOME -->
 
         <section class="welcome">
 
             <h1>AI Business Assistant</h1>
 
             <p>
-                আপনার customer-এর message থেকে order,
-                invoice, payment এবং follow-up পরিচালনা করুন।
+                Manage customer conversations, orders, invoices,
+                inventory, payments and follow-ups with AI.
             </p>
 
         </section>
 
+
+        <!-- BUSINESS STATS -->
+
         <section class="stats">
 
             <div class="card">
-                <div class="stat-title">আজকের Order</div>
-                <div class="stat-value">24</div>
+
+                <div class="stat-title">
+                    Today's Orders
+                </div>
+
+                <div class="stat-value">
+                    24
+                </div>
+
             </div>
 
-            <div class="card">
-                <div class="stat-title">আজকের বিক্রি</div>
-                <div class="stat-value">৳48,500</div>
-            </div>
 
             <div class="card">
-                <div class="stat-title">Pending Payment</div>
-                <div class="stat-value">৳8,200</div>
+
+                <div class="stat-title">
+                    Today's Sales
+                </div>
+
+                <div class="stat-value">
+                    $4,850
+                </div>
+
             </div>
 
+
             <div class="card">
-                <div class="stat-title">Low Stock</div>
-                <div class="stat-value">7</div>
+
+                <div class="stat-title">
+                    Pending Payments
+                </div>
+
+                <div class="stat-value">
+                    $820
+                </div>
+
+            </div>
+
+
+            <div class="card">
+
+                <div class="stat-title">
+                    Low Stock Products
+                </div>
+
+                <div class="stat-value">
+                    7
+                </div>
+
             </div>
 
         </section>
 
+
+        <!-- ORDERS + ACTIONS -->
+
         <section class="grid">
+
+
+            <!-- RECENT ORDERS -->
 
             <div class="card">
 
                 <h2>Recent Orders</h2>
 
+
                 <div class="order">
+
                     <div>
-                        <div class="customer">Rahim Ahmed</div>
-                        <div class="product">
-                            Black Shirt — L Size
+
+                        <div class="customer">
+                            Alex Johnson
                         </div>
+
+                        <div class="product">
+                            Classic Shirt — Size L
+                        </div>
+
                     </div>
 
-                    <span class="status">Confirmed</span>
+                    <span class="status">
+                        Confirmed
+                    </span>
+
                 </div>
 
+
                 <div class="order">
+
                     <div>
-                        <div class="customer">Karim Hasan</div>
-                        <div class="product">
-                            Blue Panjabi — XL
+
+                        <div class="customer">
+                            Maria Garcia
                         </div>
+
+                        <div class="product">
+                            Cotton Dress — Size M
+                        </div>
+
                     </div>
 
-                    <span class="status">Processing</span>
+                    <span class="status">
+                        Processing
+                    </span>
+
                 </div>
 
+
                 <div class="order">
+
                     <div>
-                        <div class="customer">Nusrat Jahan</div>
-                        <div class="product">
-                            Cotton Dress — M
+
+                        <div class="customer">
+                            Ahmed Khan
                         </div>
+
+                        <div class="product">
+                            Premium Jacket — Size XL
+                        </div>
+
                     </div>
 
-                    <span class="status">Confirmed</span>
+                    <span class="status">
+                        Confirmed
+                    </span>
+
+                </div>
+
+
+                <div class="order">
+
+                    <div>
+
+                        <div class="customer">
+                            Yuki Tanaka
+                        </div>
+
+                        <div class="product">
+                            Casual Shirt — Size M
+                        </div>
+
+                    </div>
+
+                    <span class="status">
+                        Shipped
+                    </span>
+
                 </div>
 
             </div>
+
+
+            <!-- QUICK ACTIONS -->
 
             <div class="card">
 
@@ -357,10 +574,21 @@ body{
 
                 <div class="quick-actions">
 
-                    <button>+ Add Product</button>
-                    <button>New Order</button>
-                    <button>Create Invoice</button>
-                    <button>View Customers</button>
+                    <button>
+                        + Add Product
+                    </button>
+
+                    <button>
+                        New Order
+                    </button>
+
+                    <button>
+                        Create Invoice
+                    </button>
+
+                    <button>
+                        View Customers
+                    </button>
 
                 </div>
 
@@ -368,37 +596,112 @@ body{
 
         </section>
 
+
+        <!-- AI CUSTOMER CHAT -->
+
         <section class="ai-box">
 
-            <h2>🤖 AI Customer Assistant</h2>
+            <h2>
+                🤖 AI Customer Assistant
+            </h2>
+
 
             <div class="message">
+
                 <strong>Customer:</strong>
-                এই জামাটার দাম কত?
+
+                How much is this shirt?
+
             </div>
 
+
             <div class="message ai-response">
+
                 <strong>AI:</strong>
-                এই জামাটির দাম ৳1,250।
-                আপনার কোন Size এবং Color প্রয়োজন?
+
+                This shirt is $25.
+                Which size and color would you like?
+
             </div>
+
 
             <div class="message">
+
                 <strong>Customer:</strong>
-                L size, কালোটা চাই।
+
+                I want size L in black.
+
             </div>
 
+
             <div class="message ai-response">
+
                 <strong>AI:</strong>
-                অবশ্যই। Black, L Size available আছে।
-                আমি কি আপনার Order তৈরি করে দেব?
+
+                Black, Size L is available.
+                Shall I create the order for you?
+
             </div>
 
         </section>
 
+
+        <!-- GLOBAL BUSINESS SETTINGS -->
+
+        <section class="card global-card">
+
+            <h2>
+                🌍 Business Region & Localization
+            </h2>
+
+            <div class="global-grid">
+
+
+                <div class="global-item">
+
+                    <small>Country / Region</small>
+
+                    <strong>Global</strong>
+
+                </div>
+
+
+                <div class="global-item">
+
+                    <small>Business Language</small>
+
+                    <strong>Auto Detect</strong>
+
+                </div>
+
+
+                <div class="global-item">
+
+                    <small>Currency</small>
+
+                    <strong>Auto / Local Currency</strong>
+
+                </div>
+
+
+                <div class="global-item">
+
+                    <small>Timezone</small>
+
+                    <strong>Auto Detect</strong>
+
+                </div>
+
+
+            </div>
+
+        </section>
+
+
     </main>
 
 </div>
+
 
 </body>
 </html>
