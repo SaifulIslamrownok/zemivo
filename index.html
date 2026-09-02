@@ -152,7 +152,6 @@ button{
 
 /* =========================
    MIND BOX
-   ONLY MIND BOX
 ========================= */
 
 .mind-card{
@@ -192,12 +191,6 @@ button{
 .mind-button:hover{
   background:#eef1f5;
 }
-
-/*
-  IMPORTANT:
-  Mind Box-এর বাইরে কোনো Photo/Live/Feeling/Location option নেই।
-  Mind Box-এ চাপ দিলে সরাসরি Composer খুলবে।
-*/
 
 /* =========================
    POST
@@ -506,6 +499,47 @@ button{
 }
 
 /* =========================
+   NEW POST HEADER
+========================= */
+
+.new-post-head{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  min-height:42px;
+}
+
+.new-post-title{
+  flex:1;
+  text-align:center;
+  font-size:19px;
+  font-weight:700;
+}
+
+.new-post-close{
+  width:38px;
+  height:38px;
+  border:0;
+  border-radius:50%;
+  background:#f1f3f5;
+  font-size:24px;
+  line-height:1;
+}
+
+.new-post-next{
+  border:0;
+  background:transparent;
+  color:#98a2b3;
+  font-weight:700;
+  font-size:15px;
+  min-width:50px;
+}
+
+.new-post-next.enabled{
+  color:var(--blue);
+}
+
+/* =========================
    STEPS
 ========================= */
 
@@ -534,74 +568,45 @@ button{
   display:flex;
   align-items:center;
   gap:10px;
+  padding:4px 0 10px;
 }
 
 .post-textarea{
   width:100%;
-  min-height:150px;
+  min-height:145px;
   resize:none;
   border:0;
   outline:0;
-  font-size:18px;
-  padding:18px 2px;
+  font-size:19px;
+  padding:10px 0;
+  background:#fff;
+}
+
+.post-textarea::placeholder{
+  color:#98a2b3;
 }
 
 .post-textarea:focus{
   outline:none;
 }
 
-.writer-tools{
-  border:1px solid var(--line);
-  border-radius:13px;
-  overflow:hidden;
-}
-
-.writer-tool{
-  width:100%;
-  display:flex;
-  align-items:center;
-  gap:12px;
-  border:0;
-  border-bottom:1px solid var(--line);
-  background:#fff;
-  padding:14px;
-  text-align:left;
-}
-
-.writer-tool:last-child{
-  border-bottom:0;
-}
-
-.writer-tool:hover{
-  background:#f8fafc;
-}
-
-.tool-icon{
-  width:39px;
-  height:39px;
-  border-radius:50%;
-  background:#eef2ff;
-  display:grid;
-  place-items:center;
-  flex:none;
-}
-
 /* =========================
-   INSIDE COMPOSER QUICK TAGS
+   NEW QUICK TAGS
 ========================= */
 
 .tags{
   display:flex;
   gap:7px;
   flex-wrap:wrap;
-  margin:9px 0;
+  margin:6px 0 12px;
 }
 
 .tag-btn{
-  border:1px solid var(--line);
+  border:1px solid #e4e7ec;
   background:#fff;
   border-radius:20px;
   padding:8px 11px;
+  color:#344054;
 }
 
 .tag-btn:hover{
@@ -643,6 +648,212 @@ button{
   border-radius:50%;
   background:rgba(0,0,0,.7);
   color:#fff;
+}
+
+/* =========================
+   NEW MEDIA TOOLS
+========================= */
+
+.writer-tools{
+  border-top:1px solid #eef0f3;
+  border-bottom:1px solid #eef0f3;
+  padding:8px 0;
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:5px;
+}
+
+.writer-tool{
+  width:100%;
+  min-height:66px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:5px;
+  border:0;
+  background:#fff;
+  border-radius:10px;
+  padding:8px 4px;
+  text-align:center;
+}
+
+.writer-tool:hover{
+  background:#f8fafc;
+}
+
+.writer-tool .small{
+  display:none;
+}
+
+.tool-icon{
+  width:34px;
+  height:34px;
+  border-radius:50%;
+  background:#eef2ff;
+  display:grid;
+  place-items:center;
+  flex:none;
+}
+
+.writer-tool b{
+  font-size:12px;
+}
+
+/* =========================
+   EXTRA TOOLS
+   REMAIN AVAILABLE
+========================= */
+
+.writer-extra-tools{
+  display:none;
+  margin-top:8px;
+  border:1px solid var(--line);
+  border-radius:12px;
+  overflow:hidden;
+}
+
+.writer-extra-tools.show{
+  display:block;
+}
+
+.writer-extra-tools .writer-tool{
+  flex-direction:row;
+  justify-content:flex-start;
+  text-align:left;
+  border-bottom:1px solid var(--line);
+  min-height:auto;
+  padding:12px;
+}
+
+.writer-extra-tools .writer-tool:last-child{
+  border-bottom:0;
+}
+
+.writer-extra-tools .writer-tool .small{
+  display:block;
+}
+
+/* =========================
+   SHARING CHIPS
+========================= */
+
+.share-settings{
+  display:flex;
+  gap:7px;
+  flex-wrap:wrap;
+  padding:12px 0 2px;
+}
+
+.share-chip{
+  border:1px solid #e4e7ec;
+  background:#fff;
+  color:#344054;
+  border-radius:18px;
+  padding:7px 10px;
+  font-size:13px;
+}
+
+.share-chip:hover{
+  background:#f8fafc;
+}
+
+/* =========================
+   BUTTONS
+========================= */
+
+.nextbar{
+  display:flex;
+  justify-content:space-between;
+  gap:8px;
+  margin-top:15px;
+}
+
+.primary{
+  border:0;
+  background:var(--blue);
+  color:#fff;
+  border-radius:10px;
+  padding:11px 22px;
+  font-weight:700;
+}
+
+.primary:disabled{
+  background:#d8dde5;
+  color:#8c94a3;
+  cursor:not-allowed;
+}
+
+.secondary{
+  border:0;
+  background:#eef1f4;
+  border-radius:10px;
+  padding:11px 19px;
+}
+
+/* =========================
+   DRAFT SHEET
+========================= */
+
+.draft-modal{
+  position:fixed;
+  inset:0;
+  z-index:400;
+  background:rgba(0,0,0,.55);
+  display:none;
+  align-items:flex-end;
+  justify-content:center;
+}
+
+.draft-modal.show{
+  display:flex;
+}
+
+.draft-sheet{
+  width:min(720px,100%);
+  background:#fff;
+  border-radius:20px 20px 0 0;
+  padding:22px 18px 25px;
+}
+
+.draft-sheet h3{
+  margin:0 0 8px;
+  font-size:20px;
+}
+
+.draft-sheet p{
+  margin:0 0 18px;
+  color:var(--muted);
+  font-size:14px;
+}
+
+.draft-option{
+  width:100%;
+  border:0;
+  background:#fff;
+  display:flex;
+  align-items:center;
+  gap:12px;
+  padding:14px 4px;
+  text-align:left;
+  border-radius:10px;
+}
+
+.draft-option:hover{
+  background:#f8fafc;
+}
+
+.draft-option .draft-icon{
+  width:40px;
+  height:40px;
+  border-radius:50%;
+  background:#f2f4f7;
+  display:grid;
+  place-items:center;
+}
+
+.draft-option.discard{
+  color:var(--danger);
 }
 
 /* =========================
@@ -706,39 +917,6 @@ button{
 }
 
 /* =========================
-   BUTTONS
-========================= */
-
-.nextbar{
-  display:flex;
-  justify-content:space-between;
-  gap:8px;
-  margin-top:15px;
-}
-
-.primary{
-  border:0;
-  background:var(--blue);
-  color:#fff;
-  border-radius:10px;
-  padding:11px 22px;
-  font-weight:700;
-}
-
-.primary:disabled{
-  background:#d8dde5;
-  color:#8c94a3;
-  cursor:not-allowed;
-}
-
-.secondary{
-  border:0;
-  background:#eef1f4;
-  border-radius:10px;
-  padding:11px 19px;
-}
-
-/* =========================
    THREE DOT MENU
 ========================= */
 
@@ -784,7 +962,7 @@ button{
 
 .toast{
   position:fixed;
-  z-index:300;
+  z-index:500;
   bottom:20px;
   left:50%;
   transform:translateX(-50%);
@@ -858,6 +1036,24 @@ button{
     align-items:flex-start;
   }
 
+  .writer-tools{
+    grid-template-columns:repeat(4,1fr);
+  }
+
+  .writer-tool{
+    min-height:62px;
+  }
+
+  .writer-tool b{
+    font-size:11px;
+  }
+
+  .tool-icon{
+    width:31px;
+    height:31px;
+    font-size:12px;
+  }
+
 }
 
 </style>
@@ -918,11 +1114,6 @@ button{
 
 <section>
 
-  <!-- =========================
-       MIND BOX
-       ONLY THIS OPENS COMPOSER
-  ========================= -->
-
   <div class="mind-card card">
 
     <div class="mind-row">
@@ -982,7 +1173,6 @@ button{
 
 <!-- =====================================================
      COMPOSER
-     EVERYTHING IS INSIDE THE MIND BOX FLOW
 ===================================================== -->
 
 <div
@@ -991,19 +1181,29 @@ button{
 
   <div class="sheet">
 
-    <div class="grab"></div>
+    <!-- NEW POST HEADER -->
 
-    <div class="modal-head">
-
-      <h2 id="composerTitle">
-        Create post
-      </h2>
+    <div class="new-post-head">
 
       <button
-        class="close"
+        class="new-post-close"
         onclick="closeComposer()">
 
         ×
+
+      </button>
+
+      <div class="new-post-title">
+        New post
+      </div>
+
+      <button
+        id="topNextButton"
+        class="new-post-next"
+        disabled
+        onclick="goToStepTwo()">
+
+        Next
 
       </button>
 
@@ -1042,19 +1242,10 @@ button{
 
           <b>Zemivo User</b>
 
-          <div class="small">
-            Create your post
-          </div>
-
         </div>
 
       </div>
 
-
-      <!--
-        DIRECT WRITING AREA
-        USER CAN WRITE HERE
-      -->
 
       <textarea
         id="postText"
@@ -1063,42 +1254,39 @@ button{
         oninput="updateNextButton()"></textarea>
 
 
-      <!--
-        OPTIONS ARE INSIDE THE COMPOSER
-        NOT OUTSIDE THE MIND BOX
-      -->
+      <!-- QUICK TAGS -->
 
       <div class="tags">
 
         <button
           class="tag-btn"
-          onclick="mention()">
+          onclick="addMusic()">
 
-          @ Mention
-
-        </button>
-
-        <button
-          class="tag-btn"
-          onclick="hashtag()">
-
-          # Hashtag
+          🎵 Music
 
         </button>
 
         <button
           class="tag-btn"
-          onclick="addGroup()">
+          onclick="addCollaborate()">
 
-          👥 Group
+          👥 Tag / collaborate
 
         </button>
 
         <button
           class="tag-btn"
-          onclick="addProduct()">
+          onclick="addLocation()">
 
-          🔗 Product
+          📍 Location
+
+        </button>
+
+        <button
+          class="tag-btn"
+          onclick="addFeeling()">
+
+          😊
 
         </button>
 
@@ -1140,9 +1328,7 @@ button{
         onchange="selectMedia(event)">
 
 
-      <!--
-        ALL OPTIONS ARE INSIDE THE POST CREATOR
-      -->
+      <!-- MAIN MEDIA TOOLS -->
 
       <div class="writer-tools">
 
@@ -1152,15 +1338,7 @@ button{
 
           <div class="tool-icon">🖼️</div>
 
-          <div>
-
-            <b>Photo / Video</b>
-
-            <div class="small">
-              Add photo or video
-            </div>
-
-          </div>
+          <b>Gallery</b>
 
         </button>
 
@@ -1173,57 +1351,7 @@ button{
             GIF
           </div>
 
-          <div>
-
-            <b>GIF</b>
-
-            <div class="small">
-              Add a GIF
-            </div>
-
-          </div>
-
-        </button>
-
-
-        <button
-          class="writer-tool"
-          onclick="addFeeling()">
-
-          <div class="tool-icon">
-            😊
-          </div>
-
-          <div>
-
-            <b>Feeling / Activity</b>
-
-            <div class="small">
-              Tell people how you feel
-            </div>
-
-          </div>
-
-        </button>
-
-
-        <button
-          class="writer-tool"
-          onclick="addLocation()">
-
-          <div class="tool-icon">
-            📍
-          </div>
-
-          <div>
-
-            <b>Location</b>
-
-            <div class="small">
-              Add your location
-            </div>
-
-          </div>
+          <b>GIF</b>
 
         </button>
 
@@ -1236,15 +1364,7 @@ button{
             🔴
           </div>
 
-          <div>
-
-            <b>Live</b>
-
-            <div class="small">
-              Prepare a live post
-            </div>
-
-          </div>
+          <b>Live</b>
 
         </button>
 
@@ -1257,14 +1377,56 @@ button{
             🎨
           </div>
 
+          <b>Background</b>
+
+        </button>
+
+      </div>
+
+
+      <!-- REMAINING EXISTING TOOLS -->
+
+      <div
+        id="extraWriterTools"
+        class="writer-extra-tools">
+
+        <button
+          class="writer-tool"
+          onclick="mention()">
+
+          <div class="tool-icon">@</div>
+
           <div>
+            <b>Mention</b>
+            <div class="small">Mention someone</div>
+          </div>
 
-            <b>Background</b>
+        </button>
 
-            <div class="small">
-              Choose post background
-            </div>
 
+        <button
+          class="writer-tool"
+          onclick="hashtag()">
+
+          <div class="tool-icon">#</div>
+
+          <div>
+            <b>Hashtag</b>
+            <div class="small">Add a hashtag</div>
+          </div>
+
+        </button>
+
+
+        <button
+          class="writer-tool"
+          onclick="addGroup()">
+
+          <div class="tool-icon">👥</div>
+
+          <div>
+            <b>Group</b>
+            <div class="small">Publish inside a group</div>
           </div>
 
         </button>
@@ -1274,18 +1436,11 @@ button{
           class="writer-tool"
           onclick="addPoll()">
 
-          <div class="tool-icon">
-            📊
-          </div>
+          <div class="tool-icon">📊</div>
 
           <div>
-
             <b>Poll</b>
-
-            <div class="small">
-              Create a poll
-            </div>
-
+            <div class="small">Create a poll</div>
           </div>
 
         </button>
@@ -1295,18 +1450,11 @@ button{
           class="writer-tool"
           onclick="addEvent()">
 
-          <div class="tool-icon">
-            📅
-          </div>
+          <div class="tool-icon">📅</div>
 
           <div>
-
             <b>Event</b>
-
-            <div class="small">
-              Add an event
-            </div>
-
+            <div class="small">Add an event</div>
           </div>
 
         </button>
@@ -1316,18 +1464,11 @@ button{
           class="writer-tool"
           onclick="addProduct()">
 
-          <div class="tool-icon">
-            🔗
-          </div>
+          <div class="tool-icon">🔗</div>
 
           <div>
-
             <b>Affiliate Product</b>
-
-            <div class="small">
-              Add product or affiliate link
-            </div>
-
+            <div class="small">Add product or affiliate link</div>
           </div>
 
         </button>
@@ -1335,7 +1476,50 @@ button{
       </div>
 
 
-      <!-- NEXT -->
+      <!-- MORE OPTIONS -->
+
+      <button
+        class="secondary"
+        style="width:100%;margin-top:8px"
+        onclick="toggleExtraTools()">
+
+        + More options
+
+      </button>
+
+
+      <!-- SHARING -->
+
+      <div class="share-settings">
+
+        <button
+          class="share-chip"
+          onclick="setAudiencePublic()">
+
+          🌍 Public
+
+        </button>
+
+        <button
+          class="share-chip"
+          onclick="showToast('Instagram sharing is off')">
+
+          📷 Instagram Off
+
+        </button>
+
+        <button
+          class="share-chip"
+          onclick="showToast('Threads sharing is off')">
+
+          Threads Off
+
+        </button>
+
+      </div>
+
+
+      <!-- OLD NEXT BUTTON REMAINS FUNCTIONAL -->
 
       <div class="nextbar">
 
@@ -1570,6 +1754,92 @@ button{
 
 
 <!-- =====================================================
+     DRAFT CONFIRMATION
+===================================================== -->
+
+<div
+  id="draftModal"
+  class="draft-modal">
+
+  <div class="draft-sheet">
+
+    <h3>
+      Want to finish your post later?
+    </h3>
+
+    <p>
+      You can save your post as a draft or discard it.
+    </p>
+
+
+    <button
+      class="draft-option"
+      onclick="saveDraft()">
+
+      <div class="draft-icon">
+        💾
+      </div>
+
+      <div>
+
+        <b>Save as draft</b>
+
+        <div class="small">
+          Keep your post and finish it later.
+        </div>
+
+      </div>
+
+    </button>
+
+
+    <button
+      class="draft-option discard"
+      onclick="discardComposer()">
+
+      <div class="draft-icon">
+        🗑️
+      </div>
+
+      <div>
+
+        <b>Discard post</b>
+
+        <div class="small">
+          Delete what you have written.
+        </div>
+
+      </div>
+
+    </button>
+
+
+    <button
+      class="draft-option"
+      onclick="continueEditing()">
+
+      <div class="draft-icon">
+        ✏️
+      </div>
+
+      <div>
+
+        <b>Continue editing</b>
+
+        <div class="small">
+          Return to your post.
+        </div>
+
+      </div>
+
+    </button>
+
+  </div>
+
+</div>
+
+
+<!-- =====================================================
      THREE DOT MENU
 ===================================================== -->
 
@@ -1642,6 +1912,9 @@ button{
 
 const STORAGE_KEY =
   "zemivo_complete_posts_v1";
+
+const DRAFT_KEY =
+  "zemivo_post_draft_v1";
 
 let posts =
   JSON.parse(
@@ -1744,7 +2017,6 @@ function goHome(){
 
 /* =====================================================
    COMPOSER
-   MIND BOX DIRECTLY OPENS THIS
 ===================================================== */
 
 function openComposer(kind=""){
@@ -1776,9 +2048,6 @@ function openComposer(kind=""){
 
   document.getElementById("mediaInput").value = "";
 
-  document.getElementById("composerTitle")
-    .textContent = "Create post";
-
   resetStepOne();
 
   updateNextButton();
@@ -1806,6 +2075,20 @@ function openComposer(kind=""){
 
 function closeComposer(){
 
+  const text =
+    document.getElementById("postText")
+      .value
+      .trim();
+
+  if(text || selectedMedia){
+
+    document.getElementById("draftModal")
+      .classList.add("show");
+
+    return;
+
+  }
+
   document.getElementById("composerModal")
     .classList.remove("show");
 
@@ -1813,8 +2096,82 @@ function closeComposer(){
 
 
 /* =====================================================
+   DRAFT
+===================================================== */
+
+function saveDraft(){
+
+  const draft = {
+
+    text:
+      document.getElementById("postText")
+        .value,
+
+    media:
+      selectedMedia,
+
+    mediaType:
+      selectedMediaType,
+
+    location:
+      selectedLocation,
+
+    group:
+      selectedGroup,
+
+    product:
+      selectedProduct,
+
+    savedAt:
+      Date.now()
+
+  };
+
+  localStorage.setItem(
+    DRAFT_KEY,
+    JSON.stringify(draft)
+  );
+
+  document.getElementById("draftModal")
+    .classList.remove("show");
+
+  document.getElementById("composerModal")
+    .classList.remove("show");
+
+  showToast(
+    "Post saved as draft"
+  );
+
+}
+
+
+function discardComposer(){
+
+  localStorage.removeItem(DRAFT_KEY);
+
+  document.getElementById("draftModal")
+    .classList.remove("show");
+
+  document.getElementById("composerModal")
+    .classList.remove("show");
+
+  showToast(
+    "Post discarded"
+  );
+
+}
+
+
+function continueEditing(){
+
+  document.getElementById("draftModal")
+    .classList.remove("show");
+
+}
+
+
+/* =====================================================
    NEXT BUTTON
-   ENABLE ONLY WHEN TEXT OR MEDIA EXISTS
 ===================================================== */
 
 function updateNextButton(){
@@ -1827,11 +2184,25 @@ function updateNextButton(){
   const hasMedia =
     !!selectedMedia;
 
+  const disabled =
+    !text && !hasMedia;
+
   const button =
     document.getElementById("nextButton");
 
+  const topButton =
+    document.getElementById("topNextButton");
+
   button.disabled =
-    !text && !hasMedia;
+    disabled;
+
+  topButton.disabled =
+    disabled;
+
+  topButton.classList.toggle(
+    "enabled",
+    !disabled
+  );
 
 }
 
@@ -2250,6 +2621,60 @@ function addProduct(){
 
 
 /* =====================================================
+   NEW QUICK OPTIONS
+===================================================== */
+
+function addMusic(){
+
+  const area =
+    document.getElementById("postText");
+
+  area.value +=
+    " 🎵 Music";
+
+  area.focus();
+
+  updateNextButton();
+
+}
+
+
+function addCollaborate(){
+
+  const area =
+    document.getElementById("postText");
+
+  area.value +=
+    " 👥 Collaborate";
+
+  area.focus();
+
+  updateNextButton();
+
+}
+
+
+function toggleExtraTools(){
+
+  document.getElementById("extraWriterTools")
+    .classList.toggle("show");
+
+}
+
+
+function setAudiencePublic(){
+
+  document.getElementById("audience")
+    .value = "Public";
+
+  showToast(
+    "Audience set to Public"
+  );
+
+}
+
+
+/* =====================================================
    TOGGLE
 ===================================================== */
 
@@ -2289,10 +2714,6 @@ function publishPost(){
     document.getElementById("commentPermission")
       .value;
 
-
-  /* =========================
-     EDIT EXISTING POST
-  ========================= */
 
   if(editingId){
 
@@ -2334,11 +2755,6 @@ function publishPost(){
     );
 
   }
-
-  /* =========================
-     CREATE NEW POST
-     CAN BE DONE AGAIN AND AGAIN
-  ========================= */
 
   else{
 
@@ -2392,11 +2808,14 @@ function publishPost(){
 
   }
 
+  localStorage.removeItem(DRAFT_KEY);
+
   save();
 
   render();
 
-  closeComposer();
+  document.getElementById("composerModal")
+    .classList.remove("show");
 
 }
 
@@ -2471,7 +2890,6 @@ function render(){
 
 /* =====================================================
    REPLY HTML
-   MULTIPLE REPLIES SUPPORTED
 ===================================================== */
 
 function replyHTML(reply){
@@ -2565,11 +2983,6 @@ function commentHTML(comment,index,postId){
 
         </div>
 
-
-        <!--
-          SAME COMMENT CAN HAVE
-          MANY REPLIES
-        -->
 
         <div
           id="reply-box-${postId}-${index}"
@@ -2784,11 +3197,6 @@ function postHTML(post){
       </div>
 
 
-      <!--
-        EXACTLY FOUR OPTIONS
-        LIKE / COMMENT / SHARE / SAVE
-      -->
-
       <div class="post-actions">
 
         <button
@@ -2877,7 +3285,6 @@ function postHTML(post){
 
 /* =====================================================
    LIKE
-   CAN BE USED ON MANY POSTS
 ===================================================== */
 
 function likePost(id){
@@ -3035,12 +3442,6 @@ function showReplyBox(postId,commentIndex){
 }
 
 
-/* =====================================================
-   ADD REPLY
-   SAME COMMENT CAN RECEIVE
-   UNLIMITED REPLIES
-===================================================== */
-
 function addReply(postId,commentIndex){
 
   const post =
@@ -3080,13 +3481,6 @@ function addReply(postId,commentIndex){
   if(!comment.replies)
     comment.replies = [];
 
-
-  /*
-    IMPORTANT:
-    এখানে নতুন Reply যোগ হয়।
-    আগের Reply মুছে যায় না।
-  */
-
   comment.replies.push({
 
     name:"Zemivo User",
@@ -3110,7 +3504,6 @@ function addReply(postId,commentIndex){
 
 /* =====================================================
    SHARE
-   EVERY CLICK INCREASES SHARE COUNT
 ===================================================== */
 
 function sharePost(id){
@@ -3333,10 +3726,6 @@ function editPost(){
 
   }
 
-
-  document.getElementById("composerTitle")
-    .textContent =
-    "Edit post";
 
   resetStepOne();
 
