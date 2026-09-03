@@ -468,34 +468,11 @@ button{
 
 .sheet{
   width:min(720px,100%);
-  max-height:94vh;
+  max-height:100vh;
   overflow:auto;
   background:#fff;
-  border-radius:20px 20px 0 0;
+  border-radius:24px 24px 0 0;
   padding:18px;
-}
-
-.grab{
-  width:45px;
-  height:5px;
-  background:#cbd0d7;
-  border-radius:10px;
-  margin:0 auto 13px;
-}
-
-.modal-head{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-}
-
-.close{
-  width:37px;
-  height:37px;
-  border:0;
-  border-radius:50%;
-  background:#f1f3f5;
-  font-size:22px;
 }
 
 /* =========================
@@ -506,24 +483,27 @@ button{
   display:flex;
   align-items:center;
   justify-content:space-between;
-  min-height:42px;
+  min-height:50px;
+  position:relative;
 }
 
 .new-post-title{
   flex:1;
   text-align:center;
-  font-size:19px;
+  font-size:22px;
   font-weight:700;
+  color:#111827;
 }
 
 .new-post-close{
-  width:38px;
-  height:38px;
+  width:40px;
+  height:40px;
   border:0;
   border-radius:50%;
   background:#f1f3f5;
-  font-size:24px;
+  font-size:26px;
   line-height:1;
+  color:#111827;
 }
 
 .new-post-next{
@@ -531,8 +511,8 @@ button{
   background:transparent;
   color:#98a2b3;
   font-weight:700;
-  font-size:15px;
-  min-width:50px;
+  font-size:16px;
+  min-width:55px;
 }
 
 .new-post-next.enabled{
@@ -541,12 +521,11 @@ button{
 
 /* =========================
    STEPS
+   HIDDEN FOR CLEAN DESIGN
 ========================= */
 
 .steps{
-  display:flex;
-  gap:6px;
-  margin:12px 0 18px;
+  display:none;
 }
 
 .steps span{
@@ -567,19 +546,59 @@ button{
 .writer-user{
   display:flex;
   align-items:center;
-  gap:10px;
-  padding:4px 0 10px;
+  gap:12px;
+  padding:16px 0 12px;
 }
+
+.writer-user .avatar{
+  width:52px;
+  height:52px;
+  font-size:20px;
+}
+
+.writer-user b{
+  font-size:19px;
+}
+
+/* =========================
+   QUICK TAGS
+========================= */
+
+.tags{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+  margin:8px 0 8px;
+}
+
+.tag-btn{
+  border:1px solid #e4e7ec;
+  background:#fff;
+  border-radius:22px;
+  padding:9px 13px;
+  color:#344054;
+  font-size:15px;
+  white-space:nowrap;
+}
+
+.tag-btn:hover{
+  background:#f8fafc;
+}
+
+/* =========================
+   TEXT AREA
+========================= */
 
 .post-textarea{
   width:100%;
-  min-height:145px;
+  min-height:240px;
   resize:none;
   border:0;
   outline:0;
-  font-size:19px;
-  padding:10px 0;
+  font-size:21px;
+  padding:18px 0 10px;
   background:#fff;
+  color:#111827;
 }
 
 .post-textarea::placeholder{
@@ -588,29 +607,6 @@ button{
 
 .post-textarea:focus{
   outline:none;
-}
-
-/* =========================
-   NEW QUICK TAGS
-========================= */
-
-.tags{
-  display:flex;
-  gap:7px;
-  flex-wrap:wrap;
-  margin:6px 0 12px;
-}
-
-.tag-btn{
-  border:1px solid #e4e7ec;
-  background:#fff;
-  border-radius:20px;
-  padding:8px 11px;
-  color:#344054;
-}
-
-.tag-btn:hover{
-  background:#f8fafc;
 }
 
 /* =========================
@@ -651,26 +647,26 @@ button{
 }
 
 /* =========================
-   NEW MEDIA TOOLS
+   MEDIA TOOLS
 ========================= */
 
 .writer-tools{
   border-top:1px solid #eef0f3;
   border-bottom:1px solid #eef0f3;
-  padding:8px 0;
+  padding:10px 0;
   display:grid;
   grid-template-columns:repeat(4,1fr);
-  gap:5px;
+  gap:4px;
 }
 
 .writer-tool{
   width:100%;
-  min-height:66px;
+  min-height:74px;
   display:flex;
   flex-direction:column;
   align-items:center;
   justify-content:center;
-  gap:5px;
+  gap:6px;
   border:0;
   background:#fff;
   border-radius:10px;
@@ -687,51 +683,27 @@ button{
 }
 
 .tool-icon{
-  width:34px;
-  height:34px;
+  width:38px;
+  height:38px;
   border-radius:50%;
   background:#eef2ff;
   display:grid;
   place-items:center;
   flex:none;
+  font-size:16px;
 }
 
 .writer-tool b{
-  font-size:12px;
+  font-size:13px;
 }
 
 /* =========================
    EXTRA TOOLS
-   REMAIN AVAILABLE
+   KEPT HIDDEN
 ========================= */
 
 .writer-extra-tools{
   display:none;
-  margin-top:8px;
-  border:1px solid var(--line);
-  border-radius:12px;
-  overflow:hidden;
-}
-
-.writer-extra-tools.show{
-  display:block;
-}
-
-.writer-extra-tools .writer-tool{
-  flex-direction:row;
-  justify-content:flex-start;
-  text-align:left;
-  border-bottom:1px solid var(--line);
-  min-height:auto;
-  padding:12px;
-}
-
-.writer-extra-tools .writer-tool:last-child{
-  border-bottom:0;
-}
-
-.writer-extra-tools .writer-tool .small{
-  display:block;
 }
 
 /* =========================
@@ -740,18 +712,18 @@ button{
 
 .share-settings{
   display:flex;
-  gap:7px;
+  gap:8px;
   flex-wrap:wrap;
-  padding:12px 0 2px;
+  padding:14px 0 2px;
 }
 
 .share-chip{
   border:1px solid #e4e7ec;
   background:#fff;
   color:#344054;
-  border-radius:18px;
-  padding:7px 10px;
-  font-size:13px;
+  border-radius:20px;
+  padding:8px 12px;
+  font-size:14px;
 }
 
 .share-chip:hover{
@@ -1029,29 +1001,90 @@ button{
   }
 
   .sheet{
-    padding:15px;
+    padding:14px 16px 18px;
+    border-radius:24px 24px 0 0;
   }
 
-  .setting{
-    align-items:flex-start;
+  .new-post-title{
+    font-size:22px;
+  }
+
+  .new-post-close{
+    width:40px;
+    height:40px;
+    font-size:25px;
+  }
+
+  .new-post-next{
+    font-size:16px;
+  }
+
+  .writer-user{
+    padding:15px 0 10px;
+  }
+
+  .writer-user .avatar{
+    width:50px;
+    height:50px;
+  }
+
+  .writer-user b{
+    font-size:18px;
+  }
+
+  .tags{
+    gap:7px;
+    margin:6px 0;
+  }
+
+  .tag-btn{
+    font-size:15px;
+    padding:8px 11px;
+  }
+
+  .post-textarea{
+    min-height:235px;
+    font-size:21px;
+    padding:15px 0 10px;
   }
 
   .writer-tools{
     grid-template-columns:repeat(4,1fr);
+    padding:10px 0;
   }
 
   .writer-tool{
-    min-height:62px;
+    min-height:72px;
   }
 
   .writer-tool b{
-    font-size:11px;
+    font-size:12px;
   }
 
   .tool-icon{
-    width:31px;
-    height:31px;
-    font-size:12px;
+    width:36px;
+    height:36px;
+    font-size:13px;
+  }
+
+  .share-settings{
+    padding-top:13px;
+  }
+
+  .share-chip{
+    font-size:14px;
+    padding:8px 11px;
+  }
+
+  /* Hide the old bottom Next area.
+     Top Next remains functional. */
+
+  #stepOne > .nextbar{
+    display:none;
+  }
+
+  .setting{
+    align-items:flex-start;
   }
 
 }
@@ -1210,7 +1243,10 @@ button{
     </div>
 
 
-    <!-- STEP BAR -->
+    <!-- STEP BAR
+         KEPT FOR EXISTING JS
+         HIDDEN VISUALLY
+    -->
 
     <div class="steps">
 
@@ -1232,6 +1268,8 @@ button{
 
     <section id="stepOne">
 
+      <!-- USER -->
+
       <div class="writer-user">
 
         <div class="avatar">
@@ -1247,14 +1285,9 @@ button{
       </div>
 
 
-      <textarea
-        id="postText"
-        class="post-textarea"
-        placeholder="What's on your mind?"
-        oninput="updateNextButton()"></textarea>
-
-
-      <!-- QUICK TAGS -->
+      <!-- QUICK OPTIONS
+           NOW ABOVE TEXT
+      -->
 
       <div class="tags">
 
@@ -1291,6 +1324,15 @@ button{
         </button>
 
       </div>
+
+
+      <!-- MAIN TEXT -->
+
+      <textarea
+        id="postText"
+        class="post-textarea"
+        placeholder="What's on your mind?"
+        oninput="updateNextButton()"></textarea>
 
 
       <!-- MEDIA PREVIEW -->
@@ -1384,7 +1426,12 @@ button{
       </div>
 
 
-      <!-- REMAINING EXISTING TOOLS -->
+      <!--
+        MORE OPTIONS BUTTON REMOVED.
+        EXISTING EXTRA TOOLS ARE KEPT HIDDEN
+        SO THEIR JAVASCRIPT DOES NOT AFFECT
+        ANY OTHER PART OF THE PROJECT.
+      -->
 
       <div
         id="extraWriterTools"
@@ -1476,18 +1523,6 @@ button{
       </div>
 
 
-      <!-- MORE OPTIONS -->
-
-      <button
-        class="secondary"
-        style="width:100%;margin-top:8px"
-        onclick="toggleExtraTools()">
-
-        + More options
-
-      </button>
-
-
       <!-- SHARING -->
 
       <div class="share-settings">
@@ -1508,20 +1543,18 @@ button{
 
         </button>
 
-        <button
-          class="share-chip"
-          onclick="showToast('Threads sharing is off')">
-
-          Threads Off
-
-        </button>
-
       </div>
 
 
-      <!-- OLD NEXT BUTTON REMAINS FUNCTIONAL -->
+      <!--
+        OLD BOTTOM NEXT BUTTON
+        REMOVED FROM DISPLAY.
+        TOP NEXT IS NOW THE MAIN NEXT BUTTON.
+      -->
 
-      <div class="nextbar">
+      <div
+        class="nextbar"
+        style="display:none">
 
         <div></div>
 
@@ -2193,8 +2226,10 @@ function updateNextButton(){
   const topButton =
     document.getElementById("topNextButton");
 
-  button.disabled =
-    disabled;
+  if(button){
+    button.disabled =
+      disabled;
+  }
 
   topButton.disabled =
     disabled;
