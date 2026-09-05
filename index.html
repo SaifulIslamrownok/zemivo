@@ -4093,6 +4093,31 @@ document.getElementById("composerModal")
 render();
 
 </script>
+<!-- ZEMIVO FIREBASE AUTH CONNECTION -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
+  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
 
+  const firebaseConfig = {
+    apiKey: "AIzaSyAxJUFBWm2fa0g3oxUWWqdfSTEAc-bRgfI",
+    authDomain: "zemivo.firebaseapp.com",
+    projectId: "zemivo",
+    storageBucket: "zemivo.firebasestorage.app",
+    messagingSenderId: "195335939691",
+    appId: "1:195335939691:web:5fa5c62c53d0c0aefe732e",
+    measurementId: "G-GNHH5S4H09"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+
+  // Current logged-in Zemivo user
+  window.zemivoAuth = auth;
+  window.zemivoCurrentUser = null;
+
+  onAuthStateChanged(auth, (user) => {
+    window.zemivoCurrentUser = user || null;
+  });
+</script>
 </body>
 </html>
