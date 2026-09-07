@@ -4105,7 +4105,7 @@ render();
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
   import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
-
+import { getFirestore } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
   const firebaseConfig = {
     apiKey: "AIzaSyAxJUFBWm2fa0g3oxUWWqdfSTEAc-bRgfI",
     authDomain: "zemivo.firebaseapp.com",
@@ -4118,7 +4118,7 @@ render();
 
   const app = initializeApp(firebaseConfig);
   const auth = getAuth(app);
-
+const db = getFirestore(app);
   // Current logged-in Zemivo user
   window.zemivoAuth = auth;
   window.zemivoCurrentUser = null;
