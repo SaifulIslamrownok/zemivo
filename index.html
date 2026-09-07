@@ -2725,11 +2725,86 @@ function toggle(button){
 ===================================================== */
 
 async function publishPost(){
+  const text=document.getElementById("postText").value.trim();
 
-  const text =
-    document.getElementById("postText")
-      .value
-      .trim();
+  if(!text && !selectedMedia){
+    showToast("Write something or add a photo first.");
+    return;
+  }
+
+  const audience=document.getElementById("audience").value;
+  const comments=document.getElementById("commentPermission").value;
+
+  if(editingId){
+    const post=posts.find(p=>p.id===editingId);
+
+    if(post){
+      post.text=text;
+      post.media=selectedMedia;
+      post.mediaType=selectedMediaType;
+      post.location=selectedLocation;
+      post.group=selectedGroup;
+      post.product=selectedProduct;
+      post.audience=audience;
+      post.comments=comments;
+    }
+
+    showToast("Post updated");
+  }else{
+    const currentUser=window.zemivoCurrentUser;
+
+    const post={
+      id:createId(),
+      author:currentUser?.displayName||"Zemivo User",
+      authorId:currentUser?.uid||null,
+      text,
+      media:selectedMedia,
+      mediaType:selectedMediaType,
+      location:selectedLocation,
+      group:selectedGroup,
+      product:selectedProduct,
+      audience,
+      comments,
+      createdAt:Date.now(),
+      likes:0,
+      liked:false,
+      shares:0,
+      saved:false,
+      pinned:false,
+      commentsList:[],
+      archived:false,
+      trashed:false
+    };
+
+    posts.unshift(post);
+
+    /* FIRESTORE: SAVE POST */
+    try{
+      if(window.zemivoDb && currentUser){
+        const { collection, doc, setDoc } =
+          await import("https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js");
+
+        await setDoc(
+          doc(collection(window.zemivoDb,"posts"),post.id),
+          post
+        );
+
+        showToast("Post shared and saved to Firestore");
+      }else{
+        showToast("Post shared locally");
+      }
+    }catch(error){
+      console.error("Firestore post save error:",error);
+      showToast("Post shared, but Firestore save failed");
+    }
+  }
+
+  localStorage.removeItem(DRAFT_KEY);
+  save();
+  render();
+
+  document.getElementById("composerModal").classList.remove("show");
+}
 
   if(!text && !selectedMedia){
 
