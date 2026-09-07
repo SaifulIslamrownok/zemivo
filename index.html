@@ -4118,7 +4118,7 @@ import { getFirestore } from "https://www.gstatic.com/firebasejs/12.1.0/firebase
 
   const app = initializeApp(firebaseConfig);
   const auth = getAuth(app);
-const db = getFirestore(app);
+window.zemivoDb = getFirestore(app);
   // Current logged-in Zemivo user
   window.zemivoAuth = auth;
   window.zemivoCurrentUser = null;
