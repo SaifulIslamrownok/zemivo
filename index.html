@@ -3,354 +3,35 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
-
 <title>Zemivo — Home</title>
 
 <style>
+:root{--blue:#1877f2;--bg:#f0f2f5;--card:#fff;--text:#111827;--muted:#667085;--line:#e4e7ec;--danger:#dc2626;--green:#16a34a;--shadow:0 4px 18px rgba(16,24,40,.08)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);font-family:Arial,Helvetica,sans-serif;color:var(--text)}
+button,input,textarea,select{font:inherit}
+button{cursor:pointer}
 
-:root{
-  --blue:#1877f2;
-  --blue-dark:#0f5dcc;
-  --bg:#f0f2f5;
-  --card:#fff;
-  --text:#111827;
-  --muted:#667085;
-  --line:#e4e7ec;
-  --danger:#dc2626;
-  --green:#16a34a;
-  --orange:#f59e0b;
-  --purple:#7c3aed;
-  --shadow:0 4px 18px rgba(16,24,40,.08);
-}
+.topbar{position:sticky;top:0;z-index:50;height:62px;background:#fff;border-bottom:1px solid var(--line);display:flex;align-items:center;padding:0 14px;gap:12px}
+.brand{font-size:27px;font-weight:800;color:var(--blue);letter-spacing:-1px}
+.search{flex:1;max-width:430px;background:#f2f4f7;border:0;border-radius:22px;padding:11px 15px;outline:0}
+.nav{display:flex;gap:6px;margin-left:auto}.nav button{border:0;background:transparent;border-radius:12px;padding:10px 13px;font-size:20px}.nav button:hover{background:#f2f4f7}
 
-*{
-  box-sizing:border-box;
-}
+.layout{max-width:1120px;margin:auto;display:grid;grid-template-columns:220px minmax(0,620px) 240px;gap:18px;padding:18px}
+.panel,.card{background:var(--card);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow)}
+.sidebar{position:sticky;top:80px;height:max-content;padding:10px}.sidebtn{display:flex;width:100%;align-items:center;gap:10px;border:0;background:transparent;padding:12px;border-radius:11px;text-align:left}.sidebtn:hover{background:#f2f4f7}
 
-html{
-  scroll-behavior:smooth;
-}
+.composer{padding:16px;margin-bottom:14px;transform:perspective(1000px) translateZ(0);transition:.2s}.composer:hover{transform:perspective(1000px) translateZ(2px)}
+.avatar{width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,#1877f2,#7c3aed);color:#fff;display:grid;place-items:center;font-weight:700;flex:none}
+.compose-row{display:flex;gap:10px;align-items:center}.mind{flex:1;border:1px solid #e5e7eb;background:#f7f8fa;border-radius:22px;padding:12px 16px;color:#687385;cursor:text}
+.compose-tools{display:flex;gap:6px;margin-top:12px;flex-wrap:wrap}.tool{border:0;background:#f8fafc;padding:9px 12px;border-radius:12px}.tool:hover{background:#eef2ff}
 
-body{
-  margin:0;
-  background:var(--bg);
-  font-family:Arial,Helvetica,sans-serif;
-  color:var(--text);
-}
+.post{margin-bottom:14px;overflow:hidden}.post-head{display:flex;align-items:center;padding:14px 15px;gap:10px}.post-meta{flex:1}.post-name{font-weight:700}.post-time{font-size:12px;color:var(--muted);margin-top:3px}.dots{border:0;background:transparent;font-size:23px;border-radius:50%;width:36px;height:36px}.dots:hover{background:#f2f4f7}
+.post-body{padding:0 15px 13px;line-height:1.55;white-space:pre-wrap}.post-img{display:block;width:100%;max-height:620px;object-fit:cover;background:#e5e7eb}.tag{color:var(--blue);font-weight:600}
+.stats{display:flex;justify-content:space-between;color:var(--muted);font-size:13px;padding:8px 15px;border-bottom:1px solid var(--line)}
+.actions{display:grid;grid-template-columns:repeat(4,1fr);padding:5px}.actions button{border:0;background:transparent;padding:10px;border-radius:10px}.actions button:hover{background:#f4f6f8}.actions button.active{color:var(--blue);font-weight:700}
 
-button,
-input,
-textarea,
-select{
-  font:inherit;
-}
-
-button{
-  cursor:pointer;
-}
-
-/* =========================
-   TOP BAR
-========================= */
-
-.topbar{
-  position:sticky;
-  top:0;
-  z-index:50;
-  height:62px;
-  background:#fff;
-  border-bottom:1px solid var(--line);
-  display:flex;
-  align-items:center;
-  padding:0 14px;
-  gap:12px;
-}
-
-.brand{
-  font-size:28px;
-  font-weight:800;
-  color:var(--blue);
-  letter-spacing:-1px;
-}
-
-.search{
-  flex:1;
-  max-width:430px;
-  background:#f2f4f7;
-  border:0;
-  border-radius:22px;
-  padding:11px 15px;
-  outline:0;
-}
-
-.nav{
-  display:flex;
-  gap:5px;
-  margin-left:auto;
-}
-
-.nav button{
-  border:0;
-  background:transparent;
-  border-radius:12px;
-  padding:10px 12px;
-  font-size:20px;
-}
-
-.nav button:hover{
-  background:#f2f4f7;
-}
-
-/* =========================
-   LAYOUT
-========================= */
-
-.layout{
-  width:100%;
-  max-width:1180px;
-  margin:auto;
-  display:grid;
-  grid-template-columns:220px minmax(0,650px) 240px;
-  gap:18px;
-  padding:18px;
-}
-
-.panel,
-.card{
-  background:var(--card);
-  border:1px solid var(--line);
-  border-radius:16px;
-  box-shadow:var(--shadow);
-}
-
-/* =========================
-   SIDEBAR
-========================= */
-
-.sidebar{
-  height:max-content;
-  position:sticky;
-  top:78px;
-  padding:9px;
-}
-
-.sidebtn{
-  width:100%;
-  display:flex;
-  gap:10px;
-  align-items:center;
-  padding:12px;
-  border:0;
-  background:transparent;
-  border-radius:10px;
-  text-align:left;
-}
-
-.sidebtn:hover{
-  background:#f1f3f5;
-}
-
-/* =========================
-   MIND BOX
-========================= */
-
-.mind-card{
-  padding:15px;
-  margin-bottom:15px;
-}
-
-.mind-row{
-  display:flex;
-  align-items:center;
-  gap:10px;
-}
-
-.avatar{
-  width:43px;
-  height:43px;
-  border-radius:50%;
-  display:grid;
-  place-items:center;
-  flex:none;
-  color:#fff;
-  font-weight:700;
-  background:linear-gradient(135deg,#1877f2,#7c3aed);
-}
-
-.mind-button{
-  flex:1;
-  border:1px solid #e5e7eb;
-  background:#f7f8fa;
-  color:#667085;
-  border-radius:25px;
-  text-align:left;
-  padding:13px 17px;
-  cursor:pointer;
-}
-
-.mind-button:hover{
-  background:#eef1f5;
-}
-
-/* =========================
-   POST
-========================= */
-
-.post{
-  overflow:hidden;
-  margin-bottom:15px;
-}
-
-.post-head{
-  display:flex;
-  gap:10px;
-  align-items:center;
-  padding:14px;
-}
-
-.post-info{
-  flex:1;
-}
-
-.post-name{
-  font-weight:700;
-}
-
-.post-time{
-  color:var(--muted);
-  font-size:12px;
-  margin-top:3px;
-}
-
-.more-btn{
-  width:38px;
-  height:38px;
-  border:0;
-  background:transparent;
-  border-radius:50%;
-  font-size:23px;
-}
-
-.more-btn:hover{
-  background:#f1f3f5;
-}
-
-.post-text{
-  padding:0 15px 13px;
-  line-height:1.55;
-  white-space:pre-wrap;
-}
-
-.post-image{
-  width:100%;
-  display:block;
-  max-height:600px;
-  object-fit:cover;
-  background:#ddd;
-}
-
-.post-video{
-  width:100%;
-  display:block;
-  max-height:600px;
-  background:#000;
-}
-
-.post-extra{
-  margin-top:9px;
-  color:var(--muted);
-  font-size:13px;
-}
-
-/* =========================
-   STATS
-========================= */
-
-.stats{
-  display:flex;
-  justify-content:space-between;
-  padding:9px 15px;
-  color:var(--muted);
-  font-size:13px;
-  border-bottom:1px solid var(--line);
-}
-
-/* =========================
-   EXACTLY FOUR POST OPTIONS
-========================= */
-
-.post-actions{
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  padding:5px;
-}
-
-.post-actions button{
-  border:0;
-  background:transparent;
-  padding:11px 4px;
-  border-radius:9px;
-}
-
-.post-actions button:hover{
-  background:#f2f4f7;
-}
-
-.post-actions button.active{
-  color:var(--blue);
-  font-weight:700;
-}
-
-/* =========================
-   COMMENTS
-========================= */
-
-.comments{
-  padding:0 15px 14px;
-}
-
-.comment{
-  display:flex;
-  gap:8px;
-  margin-top:9px;
-}
-
-.comment .avatar{
-  width:32px;
-  height:32px;
-  font-size:12px;
-}
-
-.comment-content{
-  flex:1;
-  min-width:0;
-}
-
-.comment-bubble{
-  background:#f1f3f5;
-  border-radius:14px;
-  padding:8px 11px;
-}
-
-.comment-actions{
-  display:flex;
-  gap:12px;
-  margin-top:4px;
-  padding-left:8px;
-}
-
-.comment-action{
-  border:0;
-  background:transparent;
-  color:#667085;
-  font-size:12px;
-  font-weight:600;
-  padding:3px 4px;
-}
-
-.comment-action:hover{
-  color:var(--blue);
-}
+.comments{padding:0 15px 13px}.comment{display:flex;gap:8px;margin-top:8px}.bubble{background:#f2f4f7;border-radius:14px;padding:8px 11px;flex:1}.comment-input{display:flex;gap:7px;margin-top:10px}.comment-input input{flex:1;border:1px solid var(--line);border-radius:20px;padding:9px 12px;outline:0}.comment-input button{border:0;border-radius:20px;background:var(--blue);color:#fff;padding:0 14px}
 
 /* =========================
    REPLIES
@@ -401,1380 +82,381 @@ button{
   font-size:12px;
 }
 
-/* =========================
-   COMMENT BOX
-========================= */
-
-.comment-box{
+.reply-actions{
   display:flex;
-  gap:7px;
-  margin-top:10px;
-}
-
-.comment-box input{
-  flex:1;
-  min-width:0;
-  border:1px solid var(--line);
-  outline:0;
-  border-radius:20px;
-  padding:9px 12px;
-}
-
-.comment-box button{
-  border:0;
-  background:var(--blue);
-  color:white;
-  border-radius:20px;
-  padding:0 15px;
-}
-
-/* =========================
-   RIGHT
-========================= */
-
-.right .card{
-  padding:15px;
-  margin-bottom:15px;
-}
-
-.small{
-  font-size:13px;
-  color:var(--muted);
-}
-
-.tool-row{
-  display:flex;
-  gap:9px;
-  padding:8px 0;
-}
-
-/* =========================
-   MODAL
-========================= */
-
-.modal{
-  position:fixed;
-  inset:0;
-  z-index:100;
-  background:rgba(0,0,0,.55);
-  display:none;
-  align-items:flex-end;
-  justify-content:center;
-}
-
-.modal.show{
-  display:flex;
-}
-
-.sheet{
-  width:min(720px,100%);
-  max-height:100vh;
-  overflow:auto;
-  background:#fff;
-  border-radius:24px 24px 0 0;
-  padding:18px;
-}
-
-/* =========================
-   NEW POST HEADER
-========================= */
-
-.new-post-head{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  min-height:50px;
-  position:relative;
-}
-
-.new-post-title{
-  flex:1;
-  text-align:center;
-  font-size:22px;
-  font-weight:700;
-  color:#111827;
-}
-
-.new-post-close{
-  width:40px;
-  height:40px;
-  border:0;
-  border-radius:50%;
-  background:#f1f3f5;
-  font-size:26px;
-  line-height:1;
-  color:#111827;
-}
-
-.new-post-next{
-  border:0;
-  background:transparent;
-  color:#98a2b3;
-  font-weight:700;
-  font-size:16px;
-  min-width:55px;
-}
-
-.new-post-next.enabled{
-  color:var(--blue);
-}
-
-/* =========================
-   STEPS
-   HIDDEN FOR CLEAN DESIGN
-========================= */
-
-.steps{
-  display:none;
-}
-
-.steps span{
-  height:5px;
-  flex:1;
-  border-radius:10px;
-  background:#e5e7eb;
-}
-
-.steps span.active{
-  background:var(--blue);
-}
-
-/* =========================
-   STEP 1
-========================= */
-
-.writer-user{
-  display:flex;
-  align-items:center;
-  gap:12px;
-  padding:16px 0 12px;
-}
-
-.writer-user .avatar{
-  width:52px;
-  height:52px;
-  font-size:20px;
-}
-
-.writer-user b{
-  font-size:19px;
-}
-
-/* =========================
-   QUICK TAGS
-========================= */
-
-.tags{
-  display:flex;
-  gap:8px;
-  flex-wrap:wrap;
-  margin:8px 0 8px;
-}
-
-.tag-btn{
-  border:1px solid #e4e7ec;
-  background:#fff;
-  border-radius:22px;
-  padding:9px 13px;
-  color:#344054;
-  font-size:15px;
-  white-space:nowrap;
-}
-
-.tag-btn:hover{
-  background:#f8fafc;
-}
-
-/* =========================
-   TEXT AREA
-========================= */
-
-.post-textarea{
-  width:100%;
-  min-height:240px;
-  resize:none;
-  border:0;
-  outline:0;
-  font-size:21px;
-  padding:18px 0 10px;
-  background:#fff;
-  color:#111827;
-}
-
-.post-textarea::placeholder{
-  color:#98a2b3;
-}
-
-.post-textarea:focus{
-  outline:none;
-}
-
-/* =========================
-   MEDIA PREVIEW
-========================= */
-
-.media-preview{
-  display:none;
-  position:relative;
-  margin:10px 0;
-  border-radius:13px;
-  overflow:hidden;
-}
-
-.media-preview.show{
-  display:block;
-}
-
-.media-preview img,
-.media-preview video{
-  display:block;
-  width:100%;
-  max-height:390px;
-  object-fit:cover;
-}
-
-.remove-media{
-  position:absolute;
-  right:8px;
-  top:8px;
-  z-index:3;
-  width:34px;
-  height:34px;
-  border:0;
-  border-radius:50%;
-  background:rgba(0,0,0,.7);
-  color:#fff;
-}
-
-/* =========================
-   MEDIA TOOLS
-========================= */
-
-.writer-tools{
-  border-top:1px solid #eef0f3;
-  border-bottom:1px solid #eef0f3;
-  padding:10px 0;
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
   gap:4px;
-}
-
-.writer-tool{
-  width:100%;
-  min-height:74px;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  gap:6px;
-  border:0;
-  background:#fff;
-  border-radius:10px;
-  padding:8px 4px;
-  text-align:center;
-}
-
-.writer-tool:hover{
-  background:#f8fafc;
-}
-
-.writer-tool .small{
-  display:none;
-}
-
-.tool-icon{
-  width:38px;
-  height:38px;
-  border-radius:50%;
-  background:#eef2ff;
-  display:grid;
-  place-items:center;
-  flex:none;
-  font-size:16px;
-}
-
-.writer-tool b{
-  font-size:13px;
-}
-
-/* =========================
-   EXTRA TOOLS
-   KEPT HIDDEN
-========================= */
-
-.writer-extra-tools{
-  display:none;
-}
-
-/* =========================
-   SHARING CHIPS
-========================= */
-
-.share-settings{
-  display:flex;
-  gap:8px;
   flex-wrap:wrap;
-  padding:14px 0 2px;
+  margin-top:4px;
 }
 
-.share-chip{
-  border:1px solid #e4e7ec;
-  background:#fff;
-  color:#344054;
-  border-radius:20px;
-  padding:8px 12px;
-  font-size:14px;
-}
-
-.share-chip:hover{
-  background:#f8fafc;
-}
-
-/* =========================
-   BUTTONS
-========================= */
-
-.nextbar{
-  display:flex;
-  justify-content:space-between;
-  gap:8px;
-  margin-top:15px;
-}
-
-.primary{
+.reply-action{
   border:0;
-  background:var(--blue);
-  color:#fff;
-  border-radius:10px;
-  padding:11px 22px;
+  background:transparent;
+  color:var(--muted);
+  padding:3px 6px;
+  border-radius:8px;
+  font-size:12px;
+}
+
+.reply-action:hover{
+  background:#f2f4f7;
+}
+
+.reply-action.active{
+  color:var(--blue);
   font-weight:700;
 }
 
-.primary:disabled{
-  background:#d8dde5;
-  color:#8c94a3;
-  cursor:not-allowed;
+.reply-list .reply-list{
+  margin-left:14px;
 }
 
-.secondary{
-  border:0;
-  background:#eef1f4;
-  border-radius:10px;
-  padding:11px 19px;
-}
+.right{height:max-content}.right .card{padding:15px;margin-bottom:14px}.mini{display:flex;gap:10px;align-items:center;padding:8px 0}.small{font-size:13px;color:var(--muted)}
 
-/* =========================
-   DRAFT SHEET
-========================= */
-
-.draft-modal{
-  position:fixed;
-  inset:0;
-  z-index:400;
-  background:rgba(0,0,0,.55);
-  display:none;
-  align-items:flex-end;
-  justify-content:center;
-}
-
-.draft-modal.show{
-  display:flex;
-}
-
-.draft-sheet{
-  width:min(720px,100%);
-  background:#fff;
-  border-radius:20px 20px 0 0;
-  padding:22px 18px 25px;
-}
-
-.draft-sheet h3{
-  margin:0 0 8px;
-  font-size:20px;
-}
-
-.draft-sheet p{
-  margin:0 0 18px;
-  color:var(--muted);
-  font-size:14px;
-}
-
-.draft-option{
-  width:100%;
-  border:0;
-  background:#fff;
-  display:flex;
-  align-items:center;
-  gap:12px;
-  padding:14px 4px;
-  text-align:left;
-  border-radius:10px;
-}
-
-.draft-option:hover{
-  background:#f8fafc;
-}
-
-.draft-option .draft-icon{
-  width:40px;
-  height:40px;
-  border-radius:50%;
-  background:#f2f4f7;
-  display:grid;
-  place-items:center;
-}
-
-.draft-option.discard{
-  color:var(--danger);
-}
-
-/* =========================
-   STEP 2
-========================= */
-
-.settings{
-  display:none;
-}
-
-.settings.show{
-  display:block;
-}
-
-.setting{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:15px;
-  padding:14px 0;
-  border-bottom:1px solid var(--line);
-}
-
-.setting:last-child{
-  border-bottom:0;
-}
-
-.setting select{
-  border:1px solid var(--line);
-  border-radius:9px;
-  padding:8px;
-}
-
-.toggle{
-  width:48px;
-  height:27px;
-  border:0;
-  border-radius:20px;
-  background:#cbd5e1;
-  position:relative;
-}
-
-.toggle:after{
-  content:"";
-  width:21px;
-  height:21px;
-  position:absolute;
-  top:3px;
-  left:3px;
-  border-radius:50%;
-  background:white;
-  transition:.2s;
-}
-
-.toggle.on{
-  background:var(--blue);
-}
-
-.toggle.on:after{
-  left:24px;
-}
-
-/* =========================
-   THREE DOT MENU
-========================= */
-
-.menu{
-  position:fixed;
-  z-index:200;
-  display:none;
-  min-width:260px;
-  max-height:80vh;
-  overflow:auto;
-  background:#fff;
-  border:1px solid var(--line);
-  border-radius:14px;
-  box-shadow:0 15px 45px rgba(0,0,0,.2);
-  padding:7px;
-}
-
-.menu.show{
-  display:block;
-}
-
-.menu button{
-  display:block;
-  width:100%;
-  border:0;
-  background:transparent;
-  text-align:left;
-  padding:11px;
-  border-radius:9px;
-}
-
-.menu button:hover{
-  background:#f1f3f5;
-}
-
-.danger{
-  color:var(--danger);
-}
-
-/* =========================
-   TOAST
-========================= */
-
-.toast{
-  position:fixed;
-  z-index:500;
-  bottom:20px;
-  left:50%;
-  transform:translateX(-50%);
-  background:#111827;
-  color:#fff;
-  padding:12px 17px;
-  border-radius:12px;
-  display:none;
-}
-
-.toast.show{
-  display:block;
-}
-
-/* =========================
-   EMPTY
-========================= */
-
-.empty{
-  text-align:center;
-  padding:40px 20px;
-  color:var(--muted);
-}
-
-/* =========================
-   MOBILE
-========================= */
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.52);z-index:100;display:none;align-items:flex-end;justify-content:center}.modal.show{display:flex}.sheet{width:min(700px,100%);max-height:94vh;overflow:auto;background:#fff;border-radius:20px 20px 0 0;padding:18px}.grab{width:48px;height:5px;background:#c7cdd6;border-radius:9px;margin:0 auto 12px}.modal-title{display:flex;align-items:center;justify-content:space-between}.close{border:0;background:#f2f4f7;width:36px;height:36px;border-radius:50%;font-size:22px}
+.stepbar{display:flex;gap:7px;margin:10px 0}.stepbar span{flex:1;height:5px;background:#e5e7eb;border-radius:8px}.stepbar span.on{background:var(--blue)}
+.composer-large{border:0;outline:0;width:100%;min-height:160px;resize:none;font-size:18px;padding:8px 2px}.media-preview{display:none;border-radius:14px;overflow:hidden;margin:8px 0;position:relative}.media-preview.show{display:block}.media-preview img{width:100%;max-height:380px;object-fit:cover}.remove-media{position:absolute;right:8px;top:8px;border:0;background:rgba(0,0,0,.65);color:#fff;border-radius:50%;width:34px;height:34px}
+.chips{display:flex;gap:7px;overflow:auto;padding:6px 0}.chip{white-space:nowrap;border:1px solid var(--line);background:#fff;border-radius:20px;padding:9px 12px}.chip.active{background:#e8f1ff;color:var(--blue);border-color:#b7d3ff}
+.nextbar{display:flex;justify-content:flex-end;margin-top:10px}.primary{border:0;background:var(--blue);color:#fff;padding:11px 22px;border-radius:11px;font-weight:700}.secondary{border:0;background:#eef2f6;padding:11px 18px;border-radius:11px}
+.settings{display:none}.settings.show{display:block}.setting{display:flex;justify-content:space-between;gap:12px;align-items:center;padding:14px 0;border-bottom:1px solid var(--line)}.setting:last-child{border:0}
+.setting select,.setting input{border:1px solid var(--line);border-radius:9px;padding:8px}
+.toggle{width:48px;height:27px;border-radius:20px;background:#cbd5e1;border:0;position:relative}.toggle:after{content:"";position:absolute;width:21px;height:21px;top:3px;left:3px;border-radius:50%;background:#fff;transition:.2s}.toggle.on{background:var(--blue)}.toggle.on:after{left:24px}
+.toast{position:fixed;left:50%;bottom:20px;transform:translateX(-50%);background:#111827;color:#fff;padding:12px 16px;border-radius:12px;z-index:200;display:none;max-width:90%;text-align:center}.toast.show{display:block}
+.menu{position:fixed;z-index:150;background:#fff;border:1px solid var(--line);box-shadow:0 15px 45px rgba(0,0,0,.18);border-radius:14px;padding:7px;display:none;min-width:240px}.menu.show{display:block}.menu button{display:block;width:100%;border:0;background:transparent;text-align:left;padding:11px;border-radius:9px}.menu button:hover{background:#f2f4f7}.danger{color:var(--danger)}
+.admin-only{display:none}.admin .admin-only{display:block}
 
 @media(max-width:900px){
-
-  .layout{
-    grid-template-columns:1fr;
-    max-width:680px;
-  }
-
-  .sidebar,
-  .right{
-    display:none;
-  }
-
-  .search{
-    display:none;
-  }
-
+  .layout{grid-template-columns:1fr;max-width:680px}
+  .sidebar,.right{display:none}
+  .topbar{position:sticky}
+  .nav{gap:0}
+  .nav button{padding:9px}
+  .search{display:none}
 }
 
 @media(max-width:520px){
-
-  .layout{
-    padding:8px;
-  }
-
-  .brand{
-    font-size:23px;
-  }
-
-  .nav button{
-    font-size:17px;
-    padding:7px;
-  }
-
-  .post-actions button{
-    font-size:12px;
-  }
-
-  .sheet{
-    padding:14px 16px 18px;
-    border-radius:24px 24px 0 0;
-  }
-
-  .new-post-title{
-    font-size:22px;
-  }
-
-  .new-post-close{
-    width:40px;
-    height:40px;
-    font-size:25px;
-  }
-
-  .new-post-next{
-    font-size:16px;
-  }
-
-  .writer-user{
-    padding:15px 0 10px;
-  }
-
-  .writer-user .avatar{
-    width:50px;
-    height:50px;
-  }
-
-  .writer-user b{
-    font-size:18px;
-  }
-
-  .tags{
-    gap:7px;
-    margin:6px 0;
-  }
-
-  .tag-btn{
-    font-size:15px;
-    padding:8px 11px;
-  }
-
-  .post-textarea{
-    min-height:235px;
-    font-size:21px;
-    padding:15px 0 10px;
-  }
-
-  .writer-tools{
-    grid-template-columns:repeat(4,1fr);
-    padding:10px 0;
-  }
-
-  .writer-tool{
-    min-height:72px;
-  }
-
-  .writer-tool b{
-    font-size:12px;
-  }
-
-  .tool-icon{
-    width:36px;
-    height:36px;
-    font-size:13px;
-  }
-
-  .share-settings{
-    padding-top:13px;
-  }
-
-  .share-chip{
-    font-size:14px;
-    padding:8px 11px;
-  }
-
-  /* Hide the old bottom Next area.
-     Top Next remains functional. */
-
-  #stepOne > .nextbar{
-    display:none;
-  }
-
-  .setting{
-    align-items:flex-start;
-  }
-
+  .layout{padding:9px}
+  .card{border-radius:13px}
+  .topbar{height:56px}
+  .brand{font-size:23px}
+  .nav button{font-size:18px;padding:8px}
+  .actions button{font-size:13px;padding:9px 3px}
+  .sheet{padding:15px}
 }
-
 </style>
 </head>
 
 <body>
 
-<!-- =========================
-     TOP BAR
-========================= -->
-
 <header class="topbar">
-
   <div class="brand">Zemivo</div>
-
-  <input
-    id="search"
-    class="search"
-    placeholder="Search Zemivo">
+  <input id="search" class="search" placeholder="Search Zemivo">
 
   <nav class="nav">
-
-    <button onclick="goHome()">⌂</button>
-    <button onclick="showToast('Reels')">▣</button>
-    <button onclick="showToast('Friends')">♧</button>
-    <button onclick="showToast('Marketplace')">🛍</button>
-    <button onclick="showToast('Notifications')">🔔</button>
-    <button onclick="showToast('Profile')">◉</button>
-
+    <button title="Home" onclick="scrollTo({top:0,behavior:'smooth'})">⌂</button>
+    <button title="Reels" onclick="toast('Reels module ready for the next phase')">▣</button>
+    <button title="Friends" onclick="toast('Friends')">♧</button>
+    <button title="Marketplace" onclick="toast('Marketplace')">⌂</button>
+    <button title="Notifications" onclick="toast('Notifications')">🔔</button>
+    <button title="Profile" onclick="toast('Profile')">◉</button>
   </nav>
-
 </header>
-
 
 <main class="layout">
 
-<!-- =========================
-     LEFT
-========================= -->
+  <aside class="sidebar panel">
+    <button class="sidebtn" onclick="toast('Home')">🏠 Home</button>
+    <button class="sidebtn" onclick="toast('Friends')">👥 Friends</button>
+    <button class="sidebtn" onclick="toast('Groups')">👨‍👩‍👧 Groups</button>
+    <button class="sidebtn" onclick="toast('Saved')">🔖 Saved</button>
+    <button class="sidebtn" onclick="toast('Marketplace')">🛍️ Marketplace</button>
+    <button class="sidebtn" onclick="toast('Messenger')">💬 Messenger</button>
+    <button class="sidebtn" onclick="toast('Notifications')">🔔 Notifications</button>
+    <button class="sidebtn" onclick="toast('Settings')">⚙️ Settings</button>
+    <button class="sidebtn admin-only" onclick="adminBroadcast()">📢 Admin broadcast</button>
+  </aside>
 
-<aside class="sidebar panel">
+  <section>
 
-  <button class="sidebtn" onclick="goHome()">🏠 Home</button>
-  <button class="sidebtn" onclick="showToast('Friends')">👥 Friends</button>
-  <button class="sidebtn" onclick="showToast('Groups')">👨‍👩‍👧 Groups</button>
-  <button class="sidebtn" onclick="showToast('Saved')">🔖 Saved</button>
-  <button class="sidebtn" onclick="showToast('Marketplace')">🛍️ Marketplace</button>
-  <button class="sidebtn" onclick="showToast('Messenger')">💬 Messenger</button>
-  <button class="sidebtn" onclick="showToast('Notifications')">🔔 Notifications</button>
-  <button class="sidebtn" onclick="showToast('Settings')">⚙️ Settings</button>
+    <div class="composer card">
 
-</aside>
+      <div class="compose-row">
+        <div class="avatar" id="meAvatar">Z</div>
+        <div class="mind" onclick="openComposer()">What's on your mind?</div>
+      </div>
 
-
-<!-- =========================
-     FEED
-========================= -->
-
-<section>
-
-  <div class="mind-card card">
-
-    <div class="mind-row">
-
-      <div class="avatar">Z</div>
-
-      <button
-        id="mindButton"
-        class="mind-button"
-        onclick="openComposer()">
-
-        What's on your mind?
-
-      </button>
+      <div class="compose-tools">
+        <button class="tool" onclick="openComposer('photo')">🖼️ Photo/video</button>
+        <button class="tool" onclick="openComposer('live')">🔴 Live</button>
+        <button class="tool" onclick="openComposer('feeling')">😊 Feeling/activity</button>
+        <button class="tool" onclick="openComposer('location')">📍 Location</button>
+      </div>
 
     </div>
 
-  </div>
+    <div id="feed"></div>
 
+  </section>
 
-  <div id="feed"></div>
+  <aside class="right">
 
-</section>
+    <div class="card">
+      <b>Zemivo updates</b>
+      <p class="small">
+        This prototype keeps test posts in your browser.
+        Firestore can be connected later after the complete page structure is finished.
+      </p>
+    </div>
 
+    <div class="card">
+      <b>Quick tools</b>
+      <div class="mini">💰 <span>Coin & creator tools</span></div>
+      <div class="mini">🔗 <span>Affiliate partners</span></div>
+      <div class="mini">🚚 <span>Drop-shipping partners</span></div>
+      <div class="mini">🛡️ <span>Safety & moderation</span></div>
+    </div>
 
-<!-- =========================
-     RIGHT
-========================= -->
-
-<aside class="right">
-
-  <div class="card">
-
-    <b>Zemivo</b>
-
-    <p class="small">
-      Your social platform.
-    </p>
-
-  </div>
-
-  <div class="card">
-
-    <b>Quick tools</b>
-
-    <div class="tool-row">💰 Coin & Creator</div>
-    <div class="tool-row">🔗 Affiliate</div>
-    <div class="tool-row">🚚 Drop-shipping</div>
-    <div class="tool-row">🛡️ Safety</div>
-
-  </div>
-
-</aside>
+  </aside>
 
 </main>
 
 
-<!-- =====================================================
-     COMPOSER
-===================================================== -->
+<!-- POST COMPOSER -->
 
-<div
-  id="composerModal"
-  class="modal">
+<div id="composerModal" class="modal">
 
   <div class="sheet">
 
-    <!-- NEW POST HEADER -->
+    <div class="grab"></div>
 
-    <div class="new-post-head">
+    <div class="modal-title">
+      <h2 id="composerTitle">Create post</h2>
+      <button class="close" onclick="closeModal('composerModal')">×</button>
+    </div>
 
-      <button
-        class="new-post-close"
-        onclick="closeComposer()">
-
-        ×
-
-      </button>
-
-      <div class="new-post-title">
-        New post
-      </div>
-
-      <button
-        id="topNextButton"
-        class="new-post-next"
-        disabled
-        onclick="goToStepTwo()">
-
-        Next
-
-      </button>
-
+    <div class="stepbar">
+      <span id="s1" class="on"></span>
+      <span id="s2"></span>
     </div>
 
 
-    <!-- STEP BAR
-         KEPT FOR EXISTING JS
-         HIDDEN VISUALLY
-    -->
+    <section id="composeStep1">
 
-    <div class="steps">
-
-      <span
-        id="stepOneBar"
-        class="active">
-      </span>
-
-      <span
-        id="stepTwoBar">
-      </span>
-
-    </div>
-
-
-    <!-- =================================================
-         STEP ONE
-    ================================================= -->
-
-    <section id="stepOne">
-
-      <!-- USER -->
-
-      <div class="writer-user">
-
-        <div class="avatar">
-          Z
-        </div>
-
+      <div class="compose-row">
+        <div class="avatar">Z</div>
         <div>
-
           <b>Zemivo User</b>
-
+          <div class="small">Create something for your audience</div>
         </div>
-
       </div>
-
-
-      <!-- QUICK OPTIONS
-           NOW ABOVE TEXT
-      -->
-
-      <div class="tags">
-
-        <button
-          class="tag-btn"
-          onclick="addMusic()">
-
-          🎵 Music
-
-        </button>
-
-        <button
-          class="tag-btn"
-          onclick="addCollaborate()">
-
-          👥 Tag / collaborate
-
-        </button>
-
-        <button
-          class="tag-btn"
-          onclick="addLocation()">
-
-          📍 Location
-
-        </button>
-
-        <button
-          class="tag-btn"
-          onclick="addFeeling()">
-
-          😊
-
-        </button>
-
-      </div>
-
-
-      <!-- MAIN TEXT -->
 
       <textarea
         id="postText"
-        class="post-textarea"
+        class="composer-large"
         placeholder="What's on your mind?"
-        oninput="updateNextButton()"></textarea>
+      ></textarea>
 
 
-      <!-- MEDIA PREVIEW -->
+      <div class="chips">
 
-      <div
-        id="mediaPreview"
-        class="media-preview">
-
-        <button
-          class="remove-media"
-          onclick="removeMedia()">
-
-          ×
-
+        <button class="chip" onclick="insertText('@')">
+          @ Mention
         </button>
 
-        <img
-          id="previewImage"
-          alt="Preview">
+        <button class="chip" onclick="insertText('#')">
+          # Hashtag
+        </button>
 
-        <video
-          id="previewVideo"
-          controls
-          style="display:none">
-        </video>
+        <button class="chip" onclick="addLocation()">
+          📍 Location
+        </button>
+
+        <button class="chip" onclick="addGroup()">
+          👥 Group
+        </button>
+
+        <button class="chip" onclick="addProduct()">
+          🔗 Product
+        </button>
 
       </div>
 
 
+      <div id="mediaPreview" class="media-preview">
+        <button class="remove-media" onclick="clearMedia()">×</button>
+        <img id="previewImg">
+      </div>
+
       <input
-        id="mediaInput"
+        id="galleryInput"
         type="file"
         accept="image/*,video/*"
         hidden
-        onchange="selectMedia(event)">
+        onchange="handleMedia(event)"
+      >
 
 
-      <!-- MAIN MEDIA TOOLS -->
-
-      <div class="writer-tools">
+      <div class="compose-tools">
 
         <button
-          class="writer-tool"
-          onclick="document.getElementById('mediaInput').click()">
-
-          <div class="tool-icon">🖼️</div>
-
-          <b>Gallery</b>
-
+          class="tool"
+          onclick="document.getElementById('galleryInput').click()"
+        >
+          🖼️ Gallery
         </button>
 
-
-        <button
-          class="writer-tool"
-          onclick="addGIF()">
-
-          <div class="tool-icon">
-            GIF
-          </div>
-
-          <b>GIF</b>
-
-        </button>
-
-
-        <button
-          class="writer-tool"
-          onclick="addLiveInfo()">
-
-          <div class="tool-icon">
-            🔴
-          </div>
-
-          <b>Live</b>
-
-        </button>
-
-
-        <button
-          class="writer-tool"
-          onclick="addBackground()">
-
-          <div class="tool-icon">
-            🎨
-          </div>
-
-          <b>Background</b>
-
-        </button>
-
-      </div>
-
-
-      <!--
-        MORE OPTIONS BUTTON REMOVED.
-        EXISTING EXTRA TOOLS ARE KEPT HIDDEN
-        SO THEIR JAVASCRIPT DOES NOT AFFECT
-        ANY OTHER PART OF THE PROJECT.
-      -->
-
-      <div
-        id="extraWriterTools"
-        class="writer-extra-tools">
-
-        <button
-          class="writer-tool"
-          onclick="mention()">
-
-          <div class="tool-icon">@</div>
-
-          <div>
-            <b>Mention</b>
-            <div class="small">Mention someone</div>
-          </div>
-
-        </button>
-
-
-        <button
-          class="writer-tool"
-          onclick="hashtag()">
-
-          <div class="tool-icon">#</div>
-
-          <div>
-            <b>Hashtag</b>
-            <div class="small">Add a hashtag</div>
-          </div>
-
-        </button>
-
-
-        <button
-          class="writer-tool"
-          onclick="addGroup()">
-
-          <div class="tool-icon">👥</div>
-
-          <div>
-            <b>Group</b>
-            <div class="small">Publish inside a group</div>
-          </div>
-
-        </button>
-
-
-        <button
-          class="writer-tool"
-          onclick="addPoll()">
-
-          <div class="tool-icon">📊</div>
-
-          <div>
-            <b>Poll</b>
-            <div class="small">Create a poll</div>
-          </div>
-
-        </button>
-
-
-        <button
-          class="writer-tool"
-          onclick="addEvent()">
-
-          <div class="tool-icon">📅</div>
-
-          <div>
-            <b>Event</b>
-            <div class="small">Add an event</div>
-          </div>
-
-        </button>
-
-
-        <button
-          class="writer-tool"
-          onclick="addProduct()">
-
-          <div class="tool-icon">🔗</div>
-
-          <div>
-            <b>Affiliate Product</b>
-            <div class="small">Add product or affiliate link</div>
-          </div>
-
-        </button>
-
-      </div>
-
-
-      <!-- SHARING -->
-
-      <div class="share-settings">
-
-        <button
-          class="share-chip"
-          onclick="setAudiencePublic()">
-
-          🌍 Public
-
+        <button class="tool" onclick="addGif()">
+          GIF
         </button>
 
         <button
-          class="share-chip"
-          onclick="showToast('Instagram sharing is off')">
-
-          📷 Instagram Off
-
+          class="tool"
+          onclick="toast('Live setup opened')"
+        >
+          🔴 Live
         </button>
 
-      </div>
-
-
-      <!--
-        OLD BOTTOM NEXT BUTTON
-        REMOVED FROM DISPLAY.
-        TOP NEXT IS NOW THE MAIN NEXT BUTTON.
-      -->
-
-      <div
-        class="nextbar"
-        style="display:none">
-
-        <div></div>
-
         <button
-          id="nextButton"
-          class="primary"
-          disabled
-          onclick="goToStepTwo()">
-
-          Next →
-
+          class="tool"
+          onclick="toast('Background selector opened')"
+        >
+          🎨 Background
         </button>
 
-      </div>
-
-    </section>
-
-
-    <!-- =================================================
-         STEP TWO
-    ================================================= -->
-
-    <section
-      id="stepTwo"
-      class="settings">
-
-      <h3>
-        Post settings
-      </h3>
-
-
-      <div class="setting">
-
-        <div>
-
-          <b>🌍 Audience</b>
-
-          <div class="small">
-            Who can see your post?
-          </div>
-
-        </div>
-
-        <select id="audience">
-
-          <option>Public</option>
-          <option>Friends</option>
-          <option>Only me</option>
-
-        </select>
-
-      </div>
-
-
-      <div class="setting">
-
-        <div>
-
-          <b>💬 Comments</b>
-
-          <div class="small">
-            Who can comment?
-          </div>
-
-        </div>
-
-        <select id="commentPermission">
-
-          <option>Public</option>
-          <option>Friends</option>
-          <option>Off</option>
-
-        </select>
-
-      </div>
-
-
-      <div class="setting">
-
-        <div>
-
-          <b>📖 Share to Story</b>
-
-          <div class="small">
-            Also publish to your story
-          </div>
-
-        </div>
-
         <button
-          class="toggle"
-          onclick="toggle(this)">
-        </button>
-
-      </div>
-
-
-      <div class="setting">
-
-        <div>
-
-          <b>💰 Monetization</b>
-
-          <div class="small">
-            Enable creator earning
-          </div>
-
-        </div>
-
-        <button
-          class="toggle"
-          onclick="toggle(this)">
-        </button>
-
-      </div>
-
-
-      <div class="setting">
-
-        <div>
-
-          <b>🔗 Affiliate</b>
-
-          <div class="small">
-            Attach affiliate product
-          </div>
-
-        </div>
-
-        <button
-          class="secondary"
-          onclick="addProduct()">
-
-          Add
-
-        </button>
-
-      </div>
-
-
-      <div class="setting">
-
-        <div>
-
-          <b>👥 Group</b>
-
-          <div class="small">
-            Publish inside a group
-          </div>
-
-        </div>
-
-        <button
-          class="secondary"
-          onclick="addGroup()">
-
-          Choose
-
-        </button>
-
-      </div>
-
-
-      <div class="setting">
-
-        <div>
-
-          <b>🤖 AI Label</b>
-
-          <div class="small">
-            Mark AI-generated content
-          </div>
-
-        </div>
-
-        <button
-          class="toggle"
-          onclick="toggle(this)">
-        </button>
-
-      </div>
-
-
-      <div class="setting">
-
-        <div>
-
-          <b>🔔 Notifications</b>
-
-          <div class="small">
-            Notify people about this post
-          </div>
-
-        </div>
-
-        <button
-          class="toggle on"
-          onclick="toggle(this)">
+          class="tool"
+          onclick="addFeeling()"
+        >
+          😊 Feeling
         </button>
 
       </div>
 
 
       <div class="nextbar">
+        <button class="primary" onclick="nextPostStep()">
+          Next
+        </button>
+      </div>
+
+    </section>
+
+
+    <section id="composeStep2" class="settings">
+
+      <div class="setting">
+        <div>
+          <b>Post audience</b>
+          <div class="small">Who can see this post?</div>
+        </div>
+
+        <select id="audience">
+          <option>Public</option>
+          <option>Friends</option>
+          <option>Only me</option>
+        </select>
+      </div>
+
+
+      <div class="setting">
+        <div>
+          <b>Who can comment</b>
+          <div class="small">Choose who may comment</div>
+        </div>
+
+        <select id="comments">
+          <option>Public</option>
+          <option>Friends</option>
+          <option>Off</option>
+        </select>
+      </div>
+
+
+      <div class="setting">
+        <div>
+          <b>Share to Story</b>
+          <div class="small">Add this post to your story</div>
+        </div>
+
+        <button
+          id="storyToggle"
+          class="toggle"
+          onclick="toggle(this)"
+        ></button>
+      </div>
+
+
+      <div class="setting">
+        <div>
+          <b>Schedule post</b>
+          <div class="small">Publish now or schedule later</div>
+        </div>
+
+        <input id="schedule" type="datetime-local">
+      </div>
+
+
+      <div class="setting">
+        <div>
+          <b>Monetization</b>
+          <div class="small">Enable creator monetization tools</div>
+        </div>
+
+        <button class="toggle" onclick="toggle(this)"></button>
+      </div>
+
+
+      <div class="setting">
+        <div>
+          <b>Add AI Label</b>
+          <div class="small">Label realistic AI-made content</div>
+        </div>
+
+        <button class="toggle" onclick="toggle(this)"></button>
+      </div>
+
+
+      <div class="setting">
+        <div>
+          <b>Affiliate product</b>
+          <div class="small">Attach a product link</div>
+        </div>
+
+        <button class="secondary" onclick="addProduct()">
+          Add
+        </button>
+      </div>
+
+
+      <div class="setting">
+        <div>
+          <b>Group</b>
+          <div class="small">Publish to a selected group</div>
+        </div>
+
+        <button class="secondary" onclick="addGroup()">
+          Choose
+        </button>
+      </div>
+
+
+      <div
+        class="nextbar"
+        style="justify-content:space-between"
+      >
 
         <button
           class="secondary"
-          onclick="backToStepOne()">
-
-          ← Back
-
+          onclick="previousPostStep()"
+        >
+          Back
         </button>
-
 
         <button
           class="primary"
-          onclick="publishPost()">
-
-          Share Post
-
+          onclick="publishPost()"
+        >
+          Share
         </button>
 
       </div>
@@ -1786,1173 +468,832 @@ button{
 </div>
 
 
-<!-- =====================================================
-     DRAFT CONFIRMATION
-===================================================== -->
+<!-- THREE DOT MENU -->
 
-<div
-  id="draftModal"
-  class="draft-modal">
+<div id="postMenu" class="menu">
 
-  <div class="draft-sheet">
-
-    <h3>
-      Want to finish your post later?
-    </h3>
-
-    <p>
-      You can save your post as a draft or discard it.
-    </p>
-
-
-    <button
-      class="draft-option"
-      onclick="saveDraft()">
-
-      <div class="draft-icon">
-        💾
-      </div>
-
-      <div>
-
-        <b>Save as draft</b>
-
-        <div class="small">
-          Keep your post and finish it later.
-        </div>
-
-      </div>
-
-    </button>
-
-
-    <button
-      class="draft-option discard"
-      onclick="discardComposer()">
-
-      <div class="draft-icon">
-        🗑️
-      </div>
-
-      <div>
-
-        <b>Discard post</b>
-
-        <div class="small">
-          Delete what you have written.
-        </div>
-
-      </div>
-
-    </button>
-
-
-    <button
-      class="draft-option"
-      onclick="continueEditing()">
-
-      <div class="draft-icon">
-        ✏️
-      </div>
-
-      <div>
-
-        <b>Continue editing</b>
-
-        <div class="small">
-          Return to your post.
-        </div>
-
-      </div>
-
-    </button>
-
-  </div>
-
-</div>
-
-
-<!-- =====================================================
-     THREE DOT MENU
-===================================================== -->
-
-<div
-  id="postMenu"
-  class="menu">
-
-  <button onclick="editPost()">
+  <button onclick="editSelected()">
     ✏️ Edit post
   </button>
 
-  <button onclick="savePost()">
+  <button onclick="saveSelected()">
     🔖 Save post
   </button>
 
-  <button onclick="pinPost()">
-    📌 Pin post
+  <button onclick="manageProductSelected()">
+    🔗 Manage product link
   </button>
 
-  <button onclick="copyPostLink()">
-    📋 Copy post link
+  <button onclick="commentSettingsSelected()">
+    💬 Who can comment
   </button>
 
-  <button onclick="changePrivacy()">
+  <button onclick="privacySelected()">
     🌍 Edit privacy
   </button>
 
-  <button onclick="changeComments()">
-    💬 Comment settings
-  </button>
-
-  <button onclick="manageProduct()">
-    🔗 Manage product
-  </button>
-
-  <button onclick="archivePost()">
-    🗄️ Archive post
-  </button>
-
-  <button onclick="togglePostNotifications()">
-    🔔 Notifications
-  </button>
-
-  <button onclick="reportPost()">
-    ⚠️ Report post
+  <button onclick="archiveSelected()">
+    🗄️ Move to archive
   </button>
 
   <button
+    onclick="trashSelected()"
     class="danger"
-    onclick="deletePost()">
-
+  >
     🗑️ Move to trash
+  </button>
 
+  <button onclick="toggleNotificationsSelected()">
+    🔕 Toggle notifications
+  </button>
+
+  <button onclick="copySelectedLink()">
+    📋 Copy link
+  </button>
+
+  <button onclick="sparkSelected()">
+    ✨ Spark
+  </button>
+
+  <button
+    class="admin-only"
+    onclick="adminBoostSelected()"
+  >
+    📢 Admin broadcast
   </button>
 
 </div>
 
 
-<div
-  id="toast"
-  class="toast">
-</div>
+<div id="toast" class="toast"></div>
 
 
 <script>
+"use strict";
 
-/* =====================================================
-   DATA
-===================================================== */
+const KEY="zemivo_test_posts_v5";
 
-const STORAGE_KEY =
-  "zemivo_complete_posts_v1";
+let posts=JSON.parse(
+  localStorage.getItem(KEY)||"[]"
+);
 
-const DRAFT_KEY =
-  "zemivo_post_draft_v1";
+let selectedPostId=null;
+let selectedMedia="";
+let selectedProduct="";
+let selectedGroup="";
+let selectedLocation="";
+let editingId=null;
 
-let posts =
-  JSON.parse(
-    localStorage.getItem(STORAGE_KEY) || "[]"
-  );
+let isAdmin=
+  localStorage.getItem("zemivo_role")==="admin";
 
-let selectedPostId = null;
-let selectedMedia = "";
-let selectedMediaType = "";
-let selectedLocation = "";
-let selectedGroup = "";
-let selectedProduct = "";
-let editingId = null;
+document.body.classList.toggle(
+  "admin",
+  isAdmin
+);
 
 
-/* =====================================================
-   SAVE
-===================================================== */
+function uid(){
+  return Date.now().toString(36)+
+    Math.random().toString(36).slice(2,8);
+}
+
 
 function save(){
-
   localStorage.setItem(
-    STORAGE_KEY,
+    KEY,
     JSON.stringify(posts)
   );
+}
+
+
+function esc(s){
+  return String(s??"").replace(
+    /[&<>"']/g,
+    m=>({
+      "&":"&amp;",
+      "<":"&lt;",
+      ">":"&gt;",
+      '"':"&quot;",
+      "'":"&#039;"
+    }[m])
+  );
+}
+
+
+function formatText(s){
+
+  return esc(s)
+    .replace(
+      /(^|[\s])(@[A-Za-z0-9_]+)/g,
+      '$1<span class="tag">$2</span>'
+    )
+    .replace(
+      /(^|[\s])(#[A-Za-z0-9_\u0980-\u09ff]+)/g,
+      '$1<span class="tag">$2</span>'
+    );
 
 }
 
 
-/* =====================================================
-   ID
-===================================================== */
+function toast(t){
 
-function createId(){
-
-  return Date.now().toString(36)
-    +
-    Math.random()
-      .toString(36)
-      .substring(2,9);
-
-}
-
-
-/* =====================================================
-   ESCAPE
-===================================================== */
-
-function escapeHTML(value){
-
-  return String(value || "")
-    .replace(/&/g,"&amp;")
-    .replace(/</g,"&lt;")
-    .replace(/>/g,"&gt;")
-    .replace(/"/g,"&quot;")
-    .replace(/'/g,"&#039;");
-
-}
-
-
-/* =====================================================
-   TOAST
-===================================================== */
-
-function showToast(message){
-
-  const toast =
+  const el=
     document.getElementById("toast");
 
-  toast.textContent =
-    message;
+  el.textContent=t;
+  el.classList.add("show");
 
-  toast.classList.add("show");
+  clearTimeout(window.__toast);
 
-  clearTimeout(window.toastTimer);
-
-  window.toastTimer =
-    setTimeout(() => {
-
-      toast.classList.remove("show");
-
-    },2200);
+  window.__toast=
+    setTimeout(
+      ()=>el.classList.remove("show"),
+      2200
+    );
 
 }
 
 
-/* =====================================================
-   HOME
-===================================================== */
-
-function goHome(){
-
-  window.scrollTo({
-    top:0,
-    behavior:"smooth"
-  });
-
+function openModal(id){
+  document
+    .getElementById(id)
+    .classList.add("show");
 }
 
 
-/* =====================================================
-   COMPOSER
-===================================================== */
+function closeModal(id){
+  document
+    .getElementById(id)
+    .classList.remove("show");
+}
+
 
 function openComposer(kind=""){
 
-  editingId = null;
+  editingId=null;
 
-  selectedMedia = "";
-  selectedMediaType = "";
-  selectedLocation = "";
-  selectedGroup = "";
-  selectedProduct = "";
+  selectedMedia="";
+  selectedProduct="";
+  selectedGroup="";
+  selectedLocation="";
 
-  document.getElementById("postText").value = "";
+  document.getElementById(
+    "postText"
+  ).value="";
 
-  document.getElementById("mediaPreview")
+  document
+    .getElementById("mediaPreview")
     .classList.remove("show");
 
-  document.getElementById("previewImage")
-    .src = "";
+  document.getElementById(
+    "composeStep1"
+  ).style.display="block";
 
-  document.getElementById("previewVideo")
-    .src = "";
+  document
+    .getElementById("composeStep2")
+    .classList.remove("show");
 
-  document.getElementById("previewImage")
-    .style.display = "block";
+  document
+    .getElementById("s1")
+    .classList.add("on");
 
-  document.getElementById("previewVideo")
-    .style.display = "none";
+  document
+    .getElementById("s2")
+    .classList.remove("on");
 
-  document.getElementById("mediaInput").value = "";
+  document.getElementById(
+    "composerTitle"
+  ).textContent=
+    kind==="photo"
+      ?"Create photo/video post"
+      :"Create post";
 
-  resetStepOne();
-
-  updateNextButton();
-
-  document.getElementById("composerModal")
-    .classList.add("show");
-
-  if(kind === "photo"){
-
-    setTimeout(() => {
-
-      document.getElementById("mediaInput")
-        .click();
-
-    },150);
-
-  }
+  openModal("composerModal");
 
 }
 
 
-/* =====================================================
-   CLOSE COMPOSER
-===================================================== */
+function insertText(x){
 
-function closeComposer(){
-
-  const text =
-    document.getElementById("postText")
-      .value
-      .trim();
-
-  if(text || selectedMedia){
-
-    document.getElementById("draftModal")
-      .classList.add("show");
-
-    return;
-
-  }
-
-  document.getElementById("composerModal")
-    .classList.remove("show");
-
-}
-
-
-/* =====================================================
-   DRAFT
-===================================================== */
-
-function saveDraft(){
-
-  const draft = {
-
-    text:
-      document.getElementById("postText")
-        .value,
-
-    media:
-      selectedMedia,
-
-    mediaType:
-      selectedMediaType,
-
-    location:
-      selectedLocation,
-
-    group:
-      selectedGroup,
-
-    product:
-      selectedProduct,
-
-    savedAt:
-      Date.now()
-
-  };
-
-  localStorage.setItem(
-    DRAFT_KEY,
-    JSON.stringify(draft)
-  );
-
-  document.getElementById("draftModal")
-    .classList.remove("show");
-
-  document.getElementById("composerModal")
-    .classList.remove("show");
-
-  showToast(
-    "Post saved as draft"
-  );
-
-}
-
-
-function discardComposer(){
-
-  localStorage.removeItem(DRAFT_KEY);
-
-  document.getElementById("draftModal")
-    .classList.remove("show");
-
-  document.getElementById("composerModal")
-    .classList.remove("show");
-
-  showToast(
-    "Post discarded"
-  );
-
-}
-
-
-function continueEditing(){
-
-  document.getElementById("draftModal")
-    .classList.remove("show");
-
-}
-
-
-/* =====================================================
-   NEXT BUTTON
-===================================================== */
-
-function updateNextButton(){
-
-  const text =
-    document.getElementById("postText")
-      .value
-      .trim();
-
-  const hasMedia =
-    !!selectedMedia;
-
-  const disabled =
-    !text && !hasMedia;
-
-  const button =
-    document.getElementById("nextButton");
-
-  const topButton =
-    document.getElementById("topNextButton");
-
-  if(button){
-    button.disabled =
-      disabled;
-  }
-
-  topButton.disabled =
-    disabled;
-
-  topButton.classList.toggle(
-    "enabled",
-    !disabled
-  );
-
-}
-
-
-/* =====================================================
-   STEP CONTROL
-===================================================== */
-
-function resetStepOne(){
-
-  document.getElementById("stepOne")
-    .style.display = "block";
-
-  document.getElementById("stepTwo")
-    .classList.remove("show");
-
-  document.getElementById("stepOneBar")
-    .classList.add("active");
-
-  document.getElementById("stepTwoBar")
-    .classList.remove("active");
-
-}
-
-
-function goToStepTwo(){
-
-  const text =
-    document.getElementById("postText")
-      .value
-      .trim();
-
-  if(!text && !selectedMedia){
-
-    showToast(
-      "Write something or add a photo first."
+  const a=
+    document.getElementById(
+      "postText"
     );
 
-    return;
-
-  }
-
-  document.getElementById("stepOne")
-    .style.display = "none";
-
-  document.getElementById("stepTwo")
-    .classList.add("show");
-
-  document.getElementById("stepOneBar")
-    .classList.remove("active");
-
-  document.getElementById("stepTwoBar")
-    .classList.add("active");
-
-}
-
-
-function backToStepOne(){
-
-  document.getElementById("stepTwo")
-    .classList.remove("show");
-
-  document.getElementById("stepOne")
-    .style.display = "block";
-
-  document.getElementById("stepTwoBar")
-    .classList.remove("active");
-
-  document.getElementById("stepOneBar")
-    .classList.add("active");
-
-}
-
-
-/* =====================================================
-   MEDIA
-===================================================== */
-
-function selectMedia(event){
-
-  const file =
-    event.target.files[0];
-
-  if(!file) return;
-
-  if(file.size > 8 * 1024 * 1024){
-
-    showToast(
-      "For testing use a file below 8 MB."
-    );
-
-    event.target.value = "";
-
-    return;
-
-  }
-
-  if(
-    !file.type.startsWith("image/") &&
-    !file.type.startsWith("video/")
-  ){
-
-    showToast(
-      "Please select an image or video."
-    );
-
-    event.target.value = "";
-
-    return;
-
-  }
-
-
-  selectedMediaType =
-    file.type.startsWith("image/")
-    ? "image"
-    : "video";
-
-
-  if(selectedMediaType === "image"){
-
-    const reader =
-      new FileReader();
-
-    reader.onload = function(){
-
-      selectedMedia =
-        reader.result;
-
-      const image =
-        document.getElementById("previewImage");
-
-      const video =
-        document.getElementById("previewVideo");
-
-      image.src =
-        selectedMedia;
-
-      image.style.display =
-        "block";
-
-      video.style.display =
-        "none";
-
-      document.getElementById("mediaPreview")
-        .classList.add("show");
-
-      updateNextButton();
-
-    };
-
-    reader.readAsDataURL(file);
-
-  }else{
-
-    const reader =
-      new FileReader();
-
-    reader.onload = function(){
-
-      selectedMedia =
-        reader.result;
-
-      const image =
-        document.getElementById("previewImage");
-
-      const video =
-        document.getElementById("previewVideo");
-
-      image.style.display =
-        "none";
-
-      video.src =
-        selectedMedia;
-
-      video.style.display =
-        "block";
-
-      document.getElementById("mediaPreview")
-        .classList.add("show");
-
-      updateNextButton();
-
-    };
-
-    reader.readAsDataURL(file);
-
-  }
-
-}
-
-
-function removeMedia(){
-
-  selectedMedia = "";
-  selectedMediaType = "";
-
-  document.getElementById("previewImage")
-    .src = "";
-
-  document.getElementById("previewVideo")
-    .src = "";
-
-  document.getElementById("previewImage")
-    .style.display = "block";
-
-  document.getElementById("previewVideo")
-    .style.display = "none";
-
-  document.getElementById("mediaPreview")
-    .classList.remove("show");
-
-  document.getElementById("mediaInput")
-    .value = "";
-
-  updateNextButton();
-
-}
-
-
-/* =====================================================
-   WRITER TOOLS
-===================================================== */
-
-function mention(){
-
-  const area =
-    document.getElementById("postText");
-
-  area.value += " @";
-
-  area.focus();
-
-  updateNextButton();
-
-}
-
-
-function hashtag(){
-
-  const area =
-    document.getElementById("postText");
-
-  area.value += " #";
-
-  area.focus();
-
-  updateNextButton();
-
-}
-
-
-function addFeeling(){
-
-  const area =
-    document.getElementById("postText");
-
-  area.value +=
-    " 😊 Feeling happy";
-
-  area.focus();
-
-  updateNextButton();
-
-}
-
-
-function addGIF(){
-
-  const area =
-    document.getElementById("postText");
-
-  area.value +=
-    " [GIF]";
-
-  area.focus();
-
-  showToast(
-    "GIF placeholder added"
-  );
-
-  updateNextButton();
-
-}
-
-
-function addLiveInfo(){
-
-  const area =
-    document.getElementById("postText");
-
-  area.value +=
-    " 🔴 Live session";
-
-  area.focus();
-
-  updateNextButton();
-
-}
-
-
-function addBackground(){
-
-  showToast(
-    "Background selector prepared."
-  );
-
-}
-
-
-function addPoll(){
-
-  const question =
-    prompt("Poll question");
-
-  if(question){
-
-    const area =
-      document.getElementById("postText");
-
-    area.value +=
-      "\n📊 Poll: " + question;
-
-    area.focus();
-
-    updateNextButton();
-
-  }
-
-}
-
-
-function addEvent(){
-
-  const eventName =
-    prompt("Event name");
-
-  if(eventName){
-
-    const area =
-      document.getElementById("postText");
-
-    area.value +=
-      "\n📅 Event: " + eventName;
-
-    area.focus();
-
-    updateNextButton();
-
-  }
+  a.focus();
+  a.value+=x;
 
 }
 
 
 function addLocation(){
 
-  const value =
-    prompt(
-      "Enter location"
+  selectedLocation=
+    prompt("Location name")
+    ||selectedLocation;
+
+  if(selectedLocation)
+    toast(
+      "Location added: "+
+      selectedLocation
     );
-
-  if(value){
-
-    selectedLocation =
-      value.trim();
-
-    showToast(
-      "Location added"
-    );
-
-  }
 
 }
 
 
 function addGroup(){
 
-  const value =
-    prompt(
-      "Enter group name"
+  selectedGroup=
+    prompt("Group name")
+    ||selectedGroup;
+
+  if(selectedGroup)
+    toast(
+      "Group added: "+
+      selectedGroup
     );
-
-  if(value){
-
-    selectedGroup =
-      value.trim();
-
-    showToast(
-      "Group added"
-    );
-
-  }
 
 }
 
 
 function addProduct(){
 
-  const value =
-    prompt(
-      "Product / Affiliate URL"
+  selectedProduct=
+    prompt("Affiliate/product URL")
+    ||selectedProduct;
+
+  if(selectedProduct)
+    toast("Product link attached");
+
+}
+
+
+function addFeeling(){
+
+  document.getElementById(
+    "postText"
+  ).value+=" 😊";
+
+  document.getElementById(
+    "postText"
+  ).focus();
+
+}
+
+
+function addGif(){
+
+  document.getElementById(
+    "postText"
+  ).value+=" [GIF]";
+
+  toast("GIF placeholder added");
+
+}
+
+
+function handleMedia(e){
+
+  const f=e.target.files[0];
+
+  if(!f)
+    return;
+
+  if(
+    f.size >
+    5*1024*1024
+  ){
+
+    toast(
+      "For this browser-only test, use an image under 5 MB."
     );
 
-  if(value){
-
-    selectedProduct =
-      value.trim();
-
-    showToast(
-      "Affiliate product added"
-    );
+    return;
 
   }
 
-}
+  const r=new FileReader();
 
+  r.onload=()=>{
 
-/* =====================================================
-   NEW QUICK OPTIONS
-===================================================== */
+    selectedMedia=r.result;
 
-function addMusic(){
+    document.getElementById(
+      "previewImg"
+    ).src=selectedMedia;
 
-  const area =
-    document.getElementById("postText");
+    document.getElementById(
+      "mediaPreview"
+    ).classList.add("show");
 
-  area.value +=
-    " 🎵 Music";
+  };
 
-  area.focus();
-
-  updateNextButton();
-
-}
-
-
-function addCollaborate(){
-
-  const area =
-    document.getElementById("postText");
-
-  area.value +=
-    " 👥 Collaborate";
-
-  area.focus();
-
-  updateNextButton();
+  r.readAsDataURL(f);
 
 }
 
 
-function toggleExtraTools(){
+function clearMedia(){
 
-  document.getElementById("extraWriterTools")
-    .classList.toggle("show");
+  selectedMedia="";
 
-}
+  document.getElementById(
+    "mediaPreview"
+  ).classList.remove("show");
 
-
-function setAudiencePublic(){
-
-  document.getElementById("audience")
-    .value = "Public";
-
-  showToast(
-    "Audience set to Public"
-  );
+  document.getElementById(
+    "galleryInput"
+  ).value="";
 
 }
 
 
-/* =====================================================
-   TOGGLE
-===================================================== */
+function toggle(b){
+  b.classList.toggle("on");
+}
 
-function toggle(button){
 
-  button.classList.toggle("on");
+function nextPostStep(){
+
+  document.getElementById(
+    "composeStep1"
+  ).style.display="none";
+
+  document.getElementById(
+    "composeStep2"
+  ).classList.add("show");
+
+  document.getElementById(
+    "s1"
+  ).classList.remove("on");
+
+  document.getElementById(
+    "s2"
+  ).classList.add("on");
 
 }
 
 
-/* =====================================================
-   PUBLISH
-===================================================== */
+function previousPostStep(){
 
-async function publishPost(){
-  const text=document.getElementById("postText").value.trim();
+  document.getElementById(
+    "composeStep2"
+  ).classList.remove("show");
+
+  document.getElementById(
+    "composeStep1"
+  ).style.display="block";
+
+  document.getElementById(
+    "s2"
+  ).classList.remove("on");
+
+  document.getElementById(
+    "s1"
+  ).classList.add("on");
+
+}
+
+
+function publishPost(){
+
+  const text=
+    document.getElementById(
+      "postText"
+    ).value.trim();
 
   if(!text && !selectedMedia){
-    showToast("Write something or add a photo first.");
+
+    toast(
+      "Write something or add a photo/video first."
+    );
+
     return;
+
   }
 
-  const audience=document.getElementById("audience").value;
-  const comments=document.getElementById("commentPermission").value;
+
+  const p={
+
+    id:editingId||uid(),
+
+    author:"Zemivo User",
+
+    text,
+
+    media:selectedMedia,
+
+    product:selectedProduct,
+
+    group:selectedGroup,
+
+    location:selectedLocation,
+
+    audience:
+      document.getElementById(
+        "audience"
+      ).value,
+
+    comments:
+      document.getElementById(
+        "comments"
+      ).value,
+
+    createdAt:
+      editingId
+        ?(
+          posts.find(
+            x=>x.id===editingId
+          )?.createdAt ||
+          Date.now()
+        )
+        :Date.now(),
+
+    likes:
+      editingId
+        ?(
+          posts.find(
+            x=>x.id===editingId
+          )?.likes||0
+        )
+        :0,
+
+    commentsList:
+      editingId
+        ?(
+          posts.find(
+            x=>x.id===editingId
+          )?.commentsList||[]
+        )
+        :[],
+
+    shares:
+      editingId
+        ?(
+          posts.find(
+            x=>x.id===editingId
+          )?.shares||0
+        )
+        :0,
+
+    sparks:
+      editingId
+        ?(
+          posts.find(
+            x=>x.id===editingId
+          )?.sparks||0
+        )
+        :0,
+
+    liked:false,
+    sparked:false,
+    archived:false,
+    trashed:false,
+    saved:false,
+    broadcast:false
+
+  };
+
 
   if(editingId){
-    const post=posts.find(p=>p.id===editingId);
 
-    if(post){
-      post.text=text;
-      post.media=selectedMedia;
-      post.mediaType=selectedMediaType;
-      post.location=selectedLocation;
-      post.group=selectedGroup;
-      post.product=selectedProduct;
-      post.audience=audience;
-      post.comments=comments;
-    }
+    const i=
+      posts.findIndex(
+        x=>x.id===editingId
+      );
 
-    showToast("Post updated");
+    if(i>=0)
+      posts[i]=p;
+
   }else{
-    const currentUser=window.zemivoCurrentUser;
 
-    const post={
-      id:createId(),
-      author:currentUser?.displayName||"Zemivo User",
-      authorId:currentUser?.uid||null,
-      text,
-      media:selectedMedia,
-      mediaType:selectedMediaType,
-      location:selectedLocation,
-      group:selectedGroup,
-      product:selectedProduct,
-      audience,
-      comments,
-      createdAt:Date.now(),
-      likes:0,
-      liked:false,
-      shares:0,
-      saved:false,
-      pinned:false,
-      commentsList:[],
-      archived:false,
-      trashed:false
-    };
+    posts.unshift(p);
 
-    posts.unshift(post);
-
-    /* FIRESTORE: SAVE POST */
-    try{
-      if(window.zemivoDb && currentUser){
-        const { collection, doc, setDoc } =
-          await import("https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js");
-
-        await setDoc(
-          doc(collection(window.zemivoDb,"posts"),post.id),
-          post
-        );
-
-        showToast("Post shared and saved to Firestore");
-      }else{
-        showToast("Post shared locally");
-      }
-    }catch(error){
-      console.error("Firestore post save error:",error);
-      showToast("Post shared, but Firestore save failed");
-    }
   }
 
-  localStorage.removeItem(DRAFT_KEY);
+
   save();
   render();
 
-  document.getElementById("composerModal").classList.remove("show");
+  closeModal(
+    "composerModal"
+  );
+
+  toast(
+    editingId
+      ?"Post updated"
+      :"Post shared successfully"
+  );
+
+  editingId=null;
+
 }
 
-/* =====================================================
-   RENDER
-===================================================== */
 
 function render(){
 
-  const feed =
-    document.getElementById("feed");
+  const feed=
+    document.getElementById(
+      "feed"
+    );
 
-  const search =
-    document.getElementById("search")
-      .value
-      .trim()
-      .toLowerCase();
+  const q=
+    document.getElementById(
+      "search"
+    ).value.toLowerCase();
 
-  const visible =
-    posts.filter(p => {
+  const visible=
+    posts
+      .filter(
+        p=>!p.trashed&&!p.archived
+      )
+      .filter(
+        p=>
+          (
+            p.text+
+            " "+
+            p.group+
+            " "+
+            p.location
+          )
+          .toLowerCase()
+          .includes(q)
+      );
 
-      if(p.trashed || p.archived)
-        return false;
-
-      const combined =
-        (
-          (p.text || "") +
-          " " +
-          (p.location || "") +
-          " " +
-          (p.group || "")
-        ).toLowerCase();
-
-      return combined.includes(search);
-
-    });
-
-
-  if(!visible.length){
-
-    feed.innerHTML = `
-
-      <div class="card empty">
-
-        <div style="font-size:42px">
-          📝
-        </div>
-
-        <h3>No posts yet</h3>
-
-        <p>
-          Create your first Zemivo post.
-        </p>
-
-      </div>
-
-    `;
-
-    return;
-
-  }
-
-
-  feed.innerHTML =
+  feed.innerHTML=
     visible
       .map(postHTML)
-      .join("");
+      .join("")
+      ||
+      '<div class="card" style="padding:30px;text-align:center;color:#667085">No posts yet. Create your first post.</div>';
 
 }
 
 
-/* =====================================================
-   REPLY HTML
-===================================================== */
+function postHTML(p){
 
-function replyHTML(reply){
+  const comments=
+    (p.commentsList||[])
+      .map(
+        (c,index)=>
+          commentHTML(
+            c,
+            index,
+            p.id
+          )
+      )
+      .join("");
+
+
+  const media=
+    p.media
+      ?`<img class="post-img" src="${p.media}" alt="Post media">`
+      :"";
+
+
+  const extras=[
+    p.location
+      ?`📍 ${esc(p.location)}`
+      :"",
+
+    p.group
+      ?`👥 ${esc(p.group)}`
+      :"",
+
+    p.product
+      ?`🔗 Affiliate`
+      :"",
+
+    p.broadcast
+      ?`📢 Admin broadcast`
+      :""
+
+  ]
+  .filter(Boolean)
+  .join(" · ");
+
 
   return `
 
-    <div class="reply">
+    <article
+      class="post card"
+      id="post-${p.id}"
+    >
 
-      <div class="avatar">
+      <div class="post-head">
 
-        ${escapeHTML(
-          (reply.name || "Z")
-            .charAt(0)
-            .toUpperCase()
-        )}
+        <div class="avatar">
+          Z
+        </div>
 
-      </div>
+        <div class="post-meta">
 
-      <div class="comment-content">
+          <div class="post-name">
+            ${esc(p.author)}
+          </div>
 
-        <div class="comment-bubble">
-
-          <b>
-            ${escapeHTML(reply.name)}
-          </b>
-
-          <br>
-
-          ${escapeHTML(reply.text)}
+          <div class="post-time">
+            ${new Date(p.createdAt).toLocaleString()}
+            ·
+            ${esc(p.audience||"Public")}
+          </div>
 
         </div>
 
+        <button
+          class="dots"
+          onclick="openPostMenu('${p.id}',event)"
+        >
+          ⋯
+        </button>
+
       </div>
 
-    </div>
+
+      ${
+        p.text
+          ?`
+            <div class="post-body">
+
+              ${formatText(p.text)}
+
+              ${
+                extras
+                  ?`
+                    <div
+                      class="small"
+                      style="margin-top:9px"
+                    >
+                      ${extras}
+                    </div>
+                  `
+                  :""
+              }
+
+            </div>
+          `
+          :`
+            ${
+              extras
+                ?`
+                  <div class="post-body">
+                    <div class="small">
+                      ${extras}
+                    </div>
+                  </div>
+                `
+                :""
+            }
+          `
+      }
+
+
+      ${media}
+
+
+      <div class="stats">
+
+        <span>
+          ${p.likes||0} Likes
+        </span>
+
+        <span>
+          ${(p.commentsList||[]).length||0}
+          Comments ·
+          ${p.shares||0}
+          Shares ·
+          ${p.sparks||0}
+          Sparks
+        </span>
+
+      </div>
+
+
+      <div class="actions">
+
+        <button
+          class="${p.liked?"active":""}"
+          onclick="likePost('${p.id}')"
+        >
+          👍 Like
+        </button>
+
+        <button
+          onclick="focusComment('${p.id}')"
+        >
+          💬 Comment
+        </button>
+
+        <button
+          onclick="sharePost('${p.id}')"
+        >
+          ↗ Share
+        </button>
+
+        <button
+          class="${p.sparked?"active":""}"
+          onclick="sparkPost('${p.id}')"
+        >
+          ✨ Spark
+        </button>
+
+      </div>
+
+
+      <div class="comments">
+
+        ${comments}
+
+
+        ${
+          p.comments!=="Off"
+            ?`
+              <div class="comment-input">
+
+                <input
+                  id="ci-${p.id}"
+                  placeholder="Write a comment..."
+                  onkeydown="
+                    if(event.key==='Enter')
+                      addComment('${p.id}')
+                  "
+                >
+
+                <button
+                  onclick="addComment('${p.id}')"
+                >
+                  Send
+                </button>
+
+              </div>
+            `
+            :`
+              <div class="small">
+                Comments are turned off.
+              </div>
+            `
+        }
+
+      </div>
+
+    </article>
 
   `;
 
 }
 
 
-/* =====================================================
+/* =========================
    COMMENT HTML
-===================================================== */
+========================= */
 
-function commentHTML(comment,index,postId){
+function commentHTML(
+  comment,
+  index,
+  postId
+){
 
-  const replies =
-    (comment.replies || [])
-      .map(replyHTML)
+  const replies=
+    (comment.replies||[])
+      .map(
+        (reply,replyIndex)=>
+          replyHTML(
+            reply,
+            postId,
+            String(index)+
+            "-"+
+            String(replyIndex)
+          )
+      )
       .join("");
+
 
   return `
 
     <div class="comment">
 
       <div class="avatar">
-
-        ${escapeHTML(
-          (comment.name || "Z")
-            .charAt(0)
-            .toUpperCase()
-        )}
-
+        U
       </div>
+
 
       <div class="comment-content">
 
-        <div class="comment-bubble">
+        <div class="bubble">
 
           <b>
-            ${escapeHTML(comment.name)}
+            ${esc(
+              comment.name||
+              "Zemivo User"
+            )}
           </b>
 
           <br>
 
-          ${escapeHTML(comment.text)}
+          ${esc(
+            comment.text||""
+          )}
 
         </div>
 
@@ -2960,11 +1301,15 @@ function commentHTML(comment,index,postId){
         <div class="comment-actions">
 
           <button
-            class="comment-action"
-            onclick="showReplyBox('${postId}',${index})">
-
-            Reply
-
+            class="reply-action"
+            onclick="
+              showReplyBox(
+                '${postId}',
+                '${index}'
+              )
+            "
+          >
+            💬 Reply
           </button>
 
         </div>
@@ -2972,22 +1317,31 @@ function commentHTML(comment,index,postId){
 
         <div
           id="reply-box-${postId}-${index}"
-          class="reply-box">
+          class="reply-box"
+        >
 
           <input
             id="reply-input-${postId}-${index}"
             placeholder="Write a reply..."
             onkeydown="
               if(event.key==='Enter'){
-                addReply('${postId}',${index})
+                addReply(
+                  '${postId}',
+                  '${index}'
+                )
               }
-            ">
+            "
+          >
 
           <button
-            onclick="addReply('${postId}',${index})">
-
+            onclick="
+              addReply(
+                '${postId}',
+                '${index}'
+              )
+            "
+          >
             Reply
-
           </button>
 
         </div>
@@ -3008,417 +1362,355 @@ function commentHTML(comment,index,postId){
 }
 
 
-/* =====================================================
-   POST HTML
-===================================================== */
+/* =========================
+   RECURSIVE REPLY HTML
+========================= */
 
-function postHTML(post){
+function replyHTML(
+  reply,
+  postId,
+  path
+){
 
-  const comments =
-    (post.commentsList || [])
+  const replies=
+    (reply.replies||[])
       .map(
-        (comment,index) =>
-          commentHTML(
-            comment,
-            index,
-            post.id
+        (child,index)=>
+          replyHTML(
+            child,
+            postId,
+            path+"-"+index
           )
       )
       .join("");
 
 
-  let extras = "";
-
-  if(post.location){
-
-    extras +=
-      "📍 " +
-      escapeHTML(post.location) +
-      " ";
-
-  }
-
-  if(post.group){
-
-    extras +=
-      " · 👥 " +
-      escapeHTML(post.group);
-
-  }
-
-
-  if(post.product){
-
-    extras +=
-      " · 🔗 Affiliate";
-
-  }
-
-
-  let mediaHTML = "";
-
-  if(post.media){
-
-    if(post.mediaType === "video"){
-
-      mediaHTML = `
-
-        <video
-          class="post-video"
-          controls
-          src="${post.media}">
-        </video>
-
-      `;
-
-    }else{
-
-      mediaHTML = `
-
-        <img
-          class="post-image"
-          src="${post.media}"
-          alt="Zemivo post">
-
-      `;
-
-    }
-
-  }
-
-
   return `
 
-    <article
-      class="post card"
-      id="post-${post.id}">
+    <div class="reply">
 
-      <div class="post-head">
+      <div class="avatar">
 
-        <div class="avatar">
-          Z
-        </div>
-
-        <div class="post-info">
-
-          <div class="post-name">
-            ${escapeHTML(post.author)}
-          </div>
-
-          <div class="post-time">
-
-            ${new Date(post.createdAt)
-              .toLocaleString()}
-
-            ·
-
-            ${escapeHTML(
-              post.audience || "Public"
-            )}
-
-          </div>
-
-        </div>
-
-
-        <button
-          class="more-btn"
-          onclick="openPostMenu('${post.id}',event)">
-
-          ⋯
-
-        </button>
+        ${esc(
+          (reply.name||"Z")
+            .charAt(0)
+            .toUpperCase()
+        )}
 
       </div>
 
 
-      ${
-        post.text
-        ? `
+      <div class="comment-content">
 
-          <div class="post-text">
+        <div class="bubble">
 
-            ${escapeHTML(post.text)}
+          <b>
+            ${esc(
+              reply.name||
+              "Zemivo User"
+            )}
+          </b>
+
+          <br>
+
+          ${esc(
+            reply.text||""
+          )}
+
+        </div>
+
+
+        <div class="reply-actions">
+
+          <button
+            class="
+              reply-action
+              ${reply.liked?"active":""}
+            "
+            onclick="
+              likeReply(
+                '${postId}',
+                '${path}'
+              )
+            "
+          >
 
             ${
-              extras
-              ? `
-
-                <div class="post-extra">
-                  ${extras}
-                </div>
-
-              `
-              : ""
+              reply.liked
+                ?"❤️ Unlike"
+                :"👍 Like"
             }
 
-          </div>
+            ${
+              reply.likes
+                ?" "+reply.likes
+                :""
+            }
 
-        `
-        : ""
-      }
-
-
-      ${mediaHTML}
-
-
-      <div class="stats">
-
-        <span>
-          👍 ${post.likes || 0} Likes
-        </span>
-
-        <span>
-
-          ${(post.commentsList || []).length}
-          Comments
-
-          ·
-
-          ${post.shares || 0}
-          Shares
-
-        </span>
-
-      </div>
+          </button>
 
 
-      <div class="post-actions">
-
-        <button
-          class="${post.liked ? "active" : ""}"
-          onclick="likePost('${post.id}')">
-
-          👍 Like
-
-        </button>
-
-
-        <button
-          onclick="focusComment('${post.id}')">
-
-          💬 Comment
-
-        </button>
+          <button
+            class="reply-action"
+            onclick="
+              showReplyBox(
+                '${postId}',
+                '${path}'
+              )
+            "
+          >
+            💬 Reply
+          </button>
 
 
-        <button
-          onclick="sharePost('${post.id}')">
-
-          ↗ Share
-
-        </button>
-
-
-        <button
-          class="${post.saved ? "active" : ""}"
-          onclick="quickSavePost('${post.id}')">
-
-          🔖 Save
-
-        </button>
-
-      </div>
+          <button
+            class="reply-action"
+            onclick="
+              editReply(
+                '${postId}',
+                '${path}'
+              )
+            "
+          >
+            ✏️ Edit
+          </button>
 
 
-      <div class="comments">
+          <button
+            class="reply-action"
+            onclick="
+              deleteReply(
+                '${postId}',
+                '${path}'
+              )
+            "
+          >
+            🗑️ Delete
+          </button>
 
-        ${comments}
+        </div>
 
 
-        ${
-          post.comments !== "Off"
-          ? `
+        <div
+          id="reply-box-${postId}-${path}"
+          class="reply-box"
+        >
 
-            <div class="comment-box">
+          <input
+            id="reply-input-${postId}-${path}"
+            placeholder="Write a reply..."
+            onkeydown="
+              if(event.key==='Enter'){
+                addReply(
+                  '${postId}',
+                  '${path}'
+                )
+              }
+            "
+          >
 
-              <input
-                id="comment-${post.id}"
-                placeholder="Write a comment..."
-                onkeydown="
-                  if(event.key==='Enter'){
-                    addComment('${post.id}')
-                  }
-                ">
+          <button
+            onclick="
+              addReply(
+                '${postId}',
+                '${path}'
+              )
+            "
+          >
+            Reply
+          </button>
 
-              <button
-                onclick="addComment('${post.id}')">
+        </div>
 
-                Send
 
-              </button>
+        <div class="reply-list">
 
-            </div>
+          ${replies}
 
-          `
-          : `
-
-            <div class="small">
-              Comments are turned off.
-            </div>
-
-          `
-        }
+        </div>
 
       </div>
 
-    </article>
+    </div>
 
   `;
 
 }
 
 
-/* =====================================================
-   LIKE
-===================================================== */
+/* =========================
+   POST FUNCTIONS
+========================= */
+
+function find(id){
+  return posts.find(
+    p=>p.id===id
+  );
+}
+
 
 function likePost(id){
 
-  const post =
-    posts.find(
-      p => p.id === id
-    );
+  const p=find(id);
 
-  if(!post) return;
+  if(!p)
+    return;
 
-  post.liked =
-    !post.liked;
+  p.liked=!p.liked;
 
-  post.likes =
+  p.likes=
     Math.max(
       0,
-      (post.likes || 0) +
-      (post.liked ? 1 : -1)
+      (p.likes||0)+
+      (p.liked?1:-1)
     );
 
   save();
-
   render();
 
 }
 
 
-/* =====================================================
-   SAVE
-===================================================== */
+function sparkPost(id){
 
-function quickSavePost(id){
+  const p=find(id);
 
-  const post =
-    posts.find(
-      p => p.id === id
+  if(!p)
+    return;
+
+  p.sparked=!p.sparked;
+
+  p.sparks=
+    Math.max(
+      0,
+      (p.sparks||0)+
+      (p.sparked?1:-1)
     );
 
-  if(!post) return;
+  save();
+  render();
 
-  post.saved =
-    !post.saved;
+}
+
+
+function sharePost(id){
+
+  const p=find(id);
+
+  if(!p)
+    return;
+
+  p.shares=
+    (p.shares||0)+1;
 
   save();
 
+  navigator.clipboard?.writeText(
+    location.href.split("#")[0]+
+    "#post-"+id
+  );
+
   render();
 
-  showToast(
-    post.saved
-    ? "Post saved"
-    : "Post removed from saved"
+  toast(
+    "Post link copied and share count updated"
   );
 
 }
 
 
-/* =====================================================
-   COMMENT
-===================================================== */
-
 function focusComment(id){
 
-  const input =
-    document.getElementById(
-      "comment-" + id
-    );
-
-  if(input){
-
-    input.focus();
-
-  }
+  document
+    .getElementById("ci-"+id)
+    ?.focus();
 
 }
 
 
+/* =========================
+   ADD COMMENT
+========================= */
+
 function addComment(id){
 
-  const input =
+  const i=
     document.getElementById(
-      "comment-" + id
+      "ci-"+id
     );
 
-  const post =
-    posts.find(
-      p => p.id === id
-    );
+  const p=find(id);
 
-  if(!post || !input)
+  if(!p||!i)
     return;
 
-  const text =
-    input.value.trim();
+  const t=
+    i.value.trim();
 
-  if(!text)
+  if(!t)
     return;
 
-  if(!post.commentsList)
-    post.commentsList = [];
+  if(!p.commentsList)
+    p.commentsList=[];
 
-  post.commentsList.push({
+
+  p.commentsList.push({
 
     name:"Zemivo User",
 
-    text:text,
+    text:t,
 
     replies:[]
 
   });
 
-  input.value = "";
+
+  i.value="";
 
   save();
-
   render();
+
+  setTimeout(
+    ()=>focusComment(id),
+    30
+  );
 
 }
 
 
-/* =====================================================
-   REPLY BOX
-===================================================== */
+/* =========================
+   SHOW REPLY BOX
+========================= */
 
+function showReplyBox(
+  postId,
+  path
+){
 
-
-function showReplyBox(postId,path){
-
-  const box =
+  const box=
     document.getElementById(
-      "reply-box-" +
-      postId +
-      "-" +
+      "reply-box-"+
+      postId+
+      "-"+
       path
     );
 
   if(!box)
     return;
 
+
   box.classList.toggle("show");
 
-  if(box.classList.contains("show")){
 
-    const input =
+  if(
+    box.classList.contains("show")
+  ){
+
+    const input=
       document.getElementById(
-        "reply-input-" +
-        postId +
-        "-" +
+        "reply-input-"+
+        postId+
+        "-"+
         path
       );
 
@@ -3430,39 +1722,55 @@ function showReplyBox(postId,path){
 }
 
 
-function addReply(postId,path){
+/* =========================
+   ADD REPLY
+========================= */
 
-  const post =
+function addReply(
+  postId,
+  path
+){
+
+  const post=
     posts.find(
-      p => p.id === postId
+      p=>p.id===postId
     );
 
   if(!post)
     return;
 
   if(!post.commentsList)
-    post.commentsList = [];
+    post.commentsList=[];
 
-  const parts =
+
+  const parts=
     String(path)
       .split("-")
       .map(Number);
 
-  const commentIndex =
+
+  const commentIndex=
     parts.shift();
 
-  let parent =
-    post.commentsList[commentIndex];
+
+  let parent=
+    post.commentsList[
+      commentIndex
+    ];
+
 
   if(!parent)
     return;
 
-  for(const index of parts){
+
+  for(
+    const index of parts
+  ){
 
     if(!parent.replies)
-      parent.replies = [];
+      parent.replies=[];
 
-    parent =
+    parent=
       parent.replies[index];
 
     if(!parent)
@@ -3470,25 +1778,29 @@ function addReply(postId,path){
 
   }
 
-  const input =
+
+  const input=
     document.getElementById(
-      "reply-input-" +
-      postId +
-      "-" +
+      "reply-input-"+
+      postId+
+      "-"+
       path
     );
 
   if(!input)
     return;
 
-  const text =
+
+  const text=
     input.value.trim();
 
   if(!text)
     return;
 
+
   if(!parent.replies)
-    parent.replies = [];
+    parent.replies=[];
+
 
   parent.replies.push({
 
@@ -3496,139 +1808,359 @@ function addReply(postId,path){
 
     text:text,
 
+    likes:0,
+
+    liked:false,
+
     replies:[]
 
   });
 
-  input.value = "";
+
+  input.value="";
 
   save();
-
   render();
 
-  showToast(
+  showReplyBox(
+    postId,
+    path
+  );
+
+  showToastSafe(
     "Reply added"
   );
 
 }
 
-/* =====================================================
-   SHARE
-===================================================== */
 
-function sharePost(id){
+/* =========================
+   GET REPLY BY PATH
+========================= */
 
-  const post =
+function getReplyByPath(
+  postId,
+  path
+){
+
+  const post=
     posts.find(
-      p => p.id === id
+      p=>p.id===postId
+    );
+
+  if(!post)
+    return null;
+
+
+  const parts=
+    String(path)
+      .split("-")
+      .map(Number);
+
+
+  const commentIndex=
+    parts.shift();
+
+
+  let parent=
+    post.commentsList?.[
+      commentIndex
+    ];
+
+
+  if(!parent)
+    return null;
+
+
+  for(
+    const index of parts
+  ){
+
+    if(!parent.replies)
+      return null;
+
+    parent=
+      parent.replies[index];
+
+    if(!parent)
+      return null;
+
+  }
+
+
+  return parent;
+
+}
+
+
+/* =========================
+   LIKE / UNLIKE REPLY
+========================= */
+
+function likeReply(
+  postId,
+  path
+){
+
+  const reply=
+    getReplyByPath(
+      postId,
+      path
+    );
+
+  if(!reply)
+    return;
+
+
+  reply.liked=
+    !reply.liked;
+
+
+  reply.likes=
+    Math.max(
+      0,
+      (reply.likes||0)+
+      (reply.liked?1:-1)
+    );
+
+
+  save();
+  render();
+
+}
+
+
+/* =========================
+   EDIT REPLY
+========================= */
+
+function editReply(
+  postId,
+  path
+){
+
+  const reply=
+    getReplyByPath(
+      postId,
+      path
+    );
+
+  if(!reply)
+    return;
+
+
+  const newText=
+    prompt(
+      "Edit your reply",
+      reply.text||""
+    );
+
+
+  if(newText===null)
+    return;
+
+
+  const text=
+    newText.trim();
+
+
+  if(!text){
+
+    showToastSafe(
+      "Reply cannot be empty"
+    );
+
+    return;
+
+  }
+
+
+  reply.text=text;
+
+  save();
+  render();
+
+  showToastSafe(
+    "Reply updated"
+  );
+
+}
+
+
+/* =========================
+   DELETE REPLY
+========================= */
+
+function deleteReply(
+  postId,
+  path
+){
+
+  const post=
+    posts.find(
+      p=>p.id===postId
     );
 
   if(!post)
     return;
 
-  post.shares =
-    (post.shares || 0) + 1;
 
-  save();
+  const parts=
+    String(path)
+      .split("-")
+      .map(Number);
 
-  render();
 
-  const link =
-    location.href.split("#")[0]
-    +
-    "#post-"
-    +
-    id;
+  const commentIndex=
+    parts.shift();
 
-  if(navigator.clipboard){
 
-    navigator.clipboard
-      .writeText(link)
-      .then(() => {
+  let parent=
+    post.commentsList?.[
+      commentIndex
+    ];
 
-        showToast(
-          "Post link copied"
-        );
 
-      })
-      .catch(() => {
+  if(!parent)
+    return;
 
-        showToast(
-          "Share count updated"
-        );
 
-      });
+  if(parts.length===0)
+    return;
 
-  }else{
 
-    showToast(
-      "Share count updated"
-    );
+  for(
+    let i=0;
+    i<parts.length-1;
+    i++
+  ){
+
+    if(!parent.replies)
+      return;
+
+
+    parent=
+      parent.replies[
+        parts[i]
+      ];
+
+
+    if(!parent)
+      return;
 
   }
+
+
+  const replyIndex=
+    parts[
+      parts.length-1
+    ];
+
+
+  if(
+    !parent.replies||
+    !parent.replies[
+      replyIndex
+    ]
+  )
+    return;
+
+
+  if(
+    !confirm(
+      "Delete this reply?"
+    )
+  )
+    return;
+
+
+  parent.replies.splice(
+    replyIndex,
+    1
+  );
+
+
+  save();
+  render();
+
+  showToastSafe(
+    "Reply deleted"
+  );
 
 }
 
 
-/* =====================================================
-   THREE DOT MENU
-===================================================== */
+/* =========================
+   SAFE TOAST
+========================= */
 
-function openPostMenu(id,event){
+function showToastSafe(
+  message
+){
 
-  event.stopPropagation();
+  toast(message);
 
-  selectedPostId = id;
+}
 
-  const menu =
-    document.getElementById("postMenu");
 
-  let left =
-    event.clientX;
+/* =========================
+   POST MENU
+========================= */
 
-  let top =
-    event.clientY;
+function openPostMenu(
+  id,
+  e
+){
 
-  if(left + 270 >
-     window.innerWidth){
+  e.stopPropagation();
 
-    left =
-      window.innerWidth - 278;
+  selectedPostId=id;
 
-  }
+  const m=
+    document.getElementById(
+      "postMenu"
+    );
 
-  if(top + 450 >
-     window.innerHeight){
 
-    top =
-      window.innerHeight - 458;
+  m.style.left=
+    Math.min(
+      window.innerWidth-255,
+      e.clientX
+    )+"px";
 
-  }
 
-  menu.style.left =
-    Math.max(8,left) + "px";
+  m.style.top=
+    Math.min(
+      window.innerHeight-480,
+      e.clientY
+    )+"px";
 
-  menu.style.top =
-    Math.max(8,top) + "px";
 
-  menu.classList.add("show");
+  m.classList.add("show");
 
 }
 
 
 document.addEventListener(
   "click",
-  function(event){
-
-    const menu =
-      document.getElementById("postMenu");
+  e=>{
 
     if(
-      !event.target.closest("#postMenu") &&
-      !event.target.closest(".more-btn")
+      !e.target.closest(
+        "#postMenu"
+      ) &&
+      !e.target.closest(
+        ".dots"
+      )
     ){
 
-      menu.classList.remove("show");
+      document
+        .getElementById(
+          "postMenu"
+        )
+        .classList.remove(
+          "show"
+        );
 
     }
 
@@ -3636,463 +2168,548 @@ document.addEventListener(
 );
 
 
-/* =====================================================
-   MENU ACTIONS
-===================================================== */
+/* =========================
+   EDIT POST
+========================= */
 
-function getSelectedPost(){
+function editSelected(){
 
-  return posts.find(
-    p => p.id === selectedPostId
+  const p=find(
+    selectedPostId
   );
 
-}
+  if(!p)
+    return;
 
+  editingId=p.id;
 
-function closeMenu(){
+  document.getElementById(
+    "postText"
+  ).value=p.text||"";
 
-  document.getElementById("postMenu")
-    .classList.remove("show");
-
-}
-
-
-/* =====================================================
-   EDIT
-===================================================== */
-
-function editPost(){
-
-  const post =
-    getSelectedPost();
-
-  if(!post) return;
-
-  editingId =
-    post.id;
-
-  selectedMedia =
-    post.media || "";
-
-  selectedMediaType =
-    post.mediaType || "";
-
-  selectedLocation =
-    post.location || "";
-
-  selectedGroup =
-    post.group || "";
-
-  selectedProduct =
-    post.product || "";
-
-  document.getElementById("postText")
-    .value =
-    post.text || "";
-
-  document.getElementById("audience")
-    .value =
-    post.audience || "Public";
-
-  document.getElementById("commentPermission")
-    .value =
-    post.comments || "Public";
+  selectedMedia=p.media||"";
 
 
   if(selectedMedia){
 
-    document.getElementById("mediaPreview")
-      .classList.add("show");
+    document.getElementById(
+      "previewImg"
+    ).src=selectedMedia;
 
-    if(selectedMediaType === "video"){
-
-      document.getElementById("previewImage")
-        .style.display =
-        "none";
-
-      document.getElementById("previewVideo")
-        .style.display =
-        "block";
-
-      document.getElementById("previewVideo")
-        .src =
-        selectedMedia;
-
-    }else{
-
-      document.getElementById("previewImage")
-        .style.display =
-        "block";
-
-      document.getElementById("previewVideo")
-        .style.display =
-        "none";
-
-      document.getElementById("previewImage")
-        .src =
-        selectedMedia;
-
-    }
+    document.getElementById(
+      "mediaPreview"
+    ).classList.add("show");
 
   }
 
 
-  resetStepOne();
+  document.getElementById(
+    "composeStep1"
+  ).style.display="block";
 
-  updateNextButton();
 
-  document.getElementById("composerModal")
-    .classList.add("show");
+  document.getElementById(
+    "composeStep2"
+  ).classList.remove("show");
 
-  closeMenu();
+
+  document.getElementById(
+    "s1"
+  ).classList.add("on");
+
+
+  document.getElementById(
+    "s2"
+  ).classList.remove("on");
+
+
+  document.getElementById(
+    "composerTitle"
+  ).textContent="Edit post";
+
+
+  document.getElementById(
+    "postMenu"
+  ).classList.remove("show");
+
+
+  openModal(
+    "composerModal"
+  );
 
 }
 
 
-/* =====================================================
+/* =========================
    SAVE POST
-===================================================== */
+========================= */
 
-function savePost(){
+function saveSelected(){
 
-  const post =
-    getSelectedPost();
+  const p=find(
+    selectedPostId
+  );
 
-  if(!post) return;
+  if(!p)
+    return;
 
-  post.saved =
-    !post.saved;
+  p.saved=!p.saved;
 
   save();
 
-  render();
-
-  showToast(
-    post.saved
-    ? "Post saved"
-    : "Post removed from saved"
+  toast(
+    p.saved
+      ?"Post saved"
+      :"Post removed from saved"
   );
 
-  closeMenu();
-
-}
-
-
-/* =====================================================
-   PIN
-===================================================== */
-
-function pinPost(){
-
-  const post =
-    getSelectedPost();
-
-  if(!post) return;
-
-  post.pinned =
-    !post.pinned;
-
-  save();
-
-  showToast(
-    post.pinned
-    ? "Post pinned"
-    : "Post unpinned"
-  );
-
-  closeMenu();
-
-}
-
-
-/* =====================================================
-   COPY LINK
-===================================================== */
-
-function copyPostLink(){
-
-  const link =
-    location.href.split("#")[0]
-    +
-    "#post-"
-    +
-    selectedPostId;
-
-  if(navigator.clipboard){
-
-    navigator.clipboard
-      .writeText(link)
-      .then(() => {
-
-        showToast(
-          "Post link copied"
-        );
-
-      });
-
-  }
-
-  closeMenu();
-
-}
-
-
-/* =====================================================
-   PRIVACY
-===================================================== */
-
-function changePrivacy(){
-
-  const post =
-    getSelectedPost();
-
-  if(!post) return;
-
-  const value =
-    prompt(
-      "Public / Friends / Only me",
-      post.audience || "Public"
+  document
+    .getElementById(
+      "postMenu"
+    )
+    .classList.remove(
+      "show"
     );
 
-  if(value){
-
-    post.audience =
-      value;
-
-    save();
-
-    render();
-
-  }
-
-  closeMenu();
-
 }
 
 
-/* =====================================================
-   COMMENT SETTINGS
-===================================================== */
-
-function changeComments(){
-
-  const post =
-    getSelectedPost();
-
-  if(!post) return;
-
-  const value =
-    prompt(
-      "Public / Friends / Off",
-      post.comments || "Public"
-    );
-
-  if(value){
-
-    post.comments =
-      value;
-
-    save();
-
-    render();
-
-  }
-
-  closeMenu();
-
-}
-
-
-/* =====================================================
+/* =========================
    PRODUCT
-===================================================== */
+========================= */
 
-function manageProduct(){
+function manageProductSelected(){
 
-  const post =
-    getSelectedPost();
+  addProduct();
 
-  if(!post) return;
+  const p=find(
+    selectedPostId
+  );
 
-  const value =
-    prompt(
-      "Affiliate product URL",
-      post.product || ""
-    );
+  if(p){
 
-  if(value !== null){
-
-    post.product =
-      value.trim();
+    p.product=
+      selectedProduct;
 
     save();
-
     render();
 
   }
 
-  closeMenu();
+  document
+    .getElementById(
+      "postMenu"
+    )
+    .classList.remove(
+      "show"
+    );
 
 }
 
 
-/* =====================================================
+/* =========================
+   COMMENT SETTINGS
+========================= */
+
+function commentSettingsSelected(){
+
+  const p=find(
+    selectedPostId
+  );
+
+  if(!p)
+    return;
+
+
+  const v=
+    prompt(
+      "Who can comment? Public / Friends / Off",
+      p.comments||"Public"
+    );
+
+
+  if(v){
+
+    p.comments=v;
+
+    save();
+    render();
+
+  }
+
+
+  document
+    .getElementById(
+      "postMenu"
+    )
+    .classList.remove(
+      "show"
+    );
+
+}
+
+
+/* =========================
+   PRIVACY
+========================= */
+
+function privacySelected(){
+
+  const p=find(
+    selectedPostId
+  );
+
+  if(!p)
+    return;
+
+
+  const v=
+    prompt(
+      "Audience? Public / Friends / Only me",
+      p.audience||"Public"
+    );
+
+
+  if(v){
+
+    p.audience=v;
+
+    save();
+    render();
+
+  }
+
+
+  document
+    .getElementById(
+      "postMenu"
+    )
+    .classList.remove(
+      "show"
+    );
+
+}
+
+
+/* =========================
    ARCHIVE
-===================================================== */
+========================= */
 
-function archivePost(){
+function archiveSelected(){
 
-  const post =
-    getSelectedPost();
-
-  if(!post) return;
-
-  post.archived =
-    true;
-
-  save();
-
-  render();
-
-  showToast(
-    "Post moved to archive"
+  const p=find(
+    selectedPostId
   );
 
-  closeMenu();
+  if(p){
+
+    p.archived=true;
+
+    save();
+    render();
+
+    toast(
+      "Post moved to archive"
+    );
+
+  }
+
+  document
+    .getElementById(
+      "postMenu"
+    )
+    .classList.remove(
+      "show"
+    );
 
 }
 
 
-/* =====================================================
-   NOTIFICATIONS
-===================================================== */
+/* =========================
+   TRASH
+========================= */
 
-function togglePostNotifications(){
+function trashSelected(){
 
-  showToast(
-    "Post notifications updated"
+  const p=find(
+    selectedPostId
   );
 
-  closeMenu();
-
-}
-
-
-/* =====================================================
-   REPORT
-===================================================== */
-
-function reportPost(){
-
-  showToast(
-    "Report submitted for review"
-  );
-
-  closeMenu();
-
-}
-
-
-/* =====================================================
-   DELETE
-===================================================== */
-
-function deletePost(){
-
-  const post =
-    getSelectedPost();
-
-  if(!post) return;
 
   if(
+    p &&
     confirm(
       "Move this post to trash?"
     )
   ){
 
-    post.trashed =
-      true;
+    p.trashed=true;
 
     save();
-
     render();
 
-    showToast(
+    toast(
       "Post moved to trash"
     );
 
   }
 
-  closeMenu();
+
+  document
+    .getElementById(
+      "postMenu"
+    )
+    .classList.remove(
+      "show"
+    );
 
 }
 
 
-/* =====================================================
-   SEARCH
-===================================================== */
+/* =========================
+   NOTIFICATIONS
+========================= */
 
-document.getElementById("search")
+function toggleNotificationsSelected(){
+
+  toast(
+    "Post notification setting updated"
+  );
+
+  document
+    .getElementById(
+      "postMenu"
+    )
+    .classList.remove(
+      "show"
+    );
+
+}
+
+
+/* =========================
+   COPY LINK
+========================= */
+
+async function copySelectedLink(){
+
+  const url=
+    location.href.split("#")[0]+
+    "#post-"+selectedPostId;
+
+
+  try{
+
+    await navigator.clipboard.writeText(
+      url
+    );
+
+    toast(
+      "Link copied"
+    );
+
+  }catch{
+
+    toast(url);
+
+  }
+
+
+  document
+    .getElementById(
+      "postMenu"
+    )
+    .classList.remove(
+      "show"
+    );
+
+}
+
+
+/* =========================
+   SPARK MENU
+========================= */
+
+function sparkSelected(){
+
+  sparkPost(
+    selectedPostId
+  );
+
+  document
+    .getElementById(
+      "postMenu"
+    )
+    .classList.remove(
+      "show"
+    );
+
+}
+
+
+/* =========================
+   ADMIN
+========================= */
+
+function adminBroadcast(){
+
+  if(!isAdmin){
+
+    toast(
+      "Admin permission required"
+    );
+
+    return;
+
+  }
+
+
+  const t=
+    prompt(
+      "Admin broadcast message"
+    );
+
+
+  if(!t)
+    return;
+
+
+  posts.unshift({
+
+    id:uid(),
+
+    author:"Zemivo Admin",
+
+    text:t,
+
+    media:"",
+
+    product:"",
+
+    group:"",
+
+    location:"",
+
+    audience:"Public",
+
+    comments:"Public",
+
+    createdAt:Date.now(),
+
+    likes:0,
+
+    commentsList:[],
+
+    shares:0,
+
+    sparks:0,
+
+    liked:false,
+
+    sparked:false,
+
+    archived:false,
+
+    trashed:false,
+
+    saved:false,
+
+    broadcast:true
+
+  });
+
+
+  save();
+  render();
+
+  toast(
+    "Admin broadcast published"
+  );
+
+}
+
+
+function adminBoostSelected(){
+
+  if(!isAdmin){
+
+    toast(
+      "Admin permission required"
+    );
+
+    return;
+
+  }
+
+
+  const p=find(
+    selectedPostId
+  );
+
+
+  if(p){
+
+    p.broadcast=true;
+    p.audience="Public";
+
+    save();
+    render();
+
+    toast(
+      "Admin broadcast enabled"
+    );
+
+  }
+
+
+  document
+    .getElementById(
+      "postMenu"
+    )
+    .classList.remove(
+      "show"
+    );
+
+}
+
+
+/* =========================
+   SEARCH
+========================= */
+
+document
+  .getElementById(
+    "search"
+  )
   .addEventListener(
     "input",
     render
   );
 
 
-/* =====================================================
-   MODAL BACKDROP
-===================================================== */
+/* Optional test admin switch:
+   localStorage.setItem(
+     'zemivo_role',
+     'admin'
+   );
+   location.reload();
 
-document.getElementById("composerModal")
-  .addEventListener(
-    "click",
-    function(event){
+   Remove it with:
+   localStorage.removeItem(
+     'zemivo_role'
+   );
+*/
 
-      if(
-        event.target.id ===
-        "composerModal"
-      ){
 
-        closeComposer();
-
-      }
-
-    }
+if(isAdmin)
+  toast(
+    "Admin test mode enabled"
   );
 
-
-/* =====================================================
-   INITIAL
-===================================================== */
 
 render();
 
 </script>
-<!-- ZEMIVO FIREBASE AUTH CONNECTION -->
-<script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
-  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
-import { getFirestore } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
-  const firebaseConfig = {
-    apiKey: "AIzaSyAxJUFBWm2fa0g3oxUWWqdfSTEAc-bRgfI",
-    authDomain: "zemivo.firebaseapp.com",
-    projectId: "zemivo",
-    storageBucket: "zemivo.firebasestorage.app",
-    messagingSenderId: "195335939691",
-    appId: "1:195335939691:web:5fa5c62c53d0c0aefe732e",
-    measurementId: "G-GNHH5S4H09"
-  };
 
-  const app = initializeApp(firebaseConfig);
-  const auth = getAuth(app);
-window.zemivoDb = getFirestore(app);
-  // Current logged-in Zemivo user
-  window.zemivoAuth = auth;
-  window.zemivoCurrentUser = null;
-
-  onAuthStateChanged(auth, (user) => {
-    window.zemivoCurrentUser = user || null;
-  });
-</script>
 </body>
 </html>
