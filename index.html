@@ -3828,7 +3828,7 @@ function saveReplyEdit(postId,path){
 }
 
 
-function deleteReply(postId,path){
+  function deleteReply(postId,path){
 
   const post =
     posts.find(
@@ -3846,67 +3846,54 @@ function deleteReply(postId,path){
   const commentIndex =
     parts.shift();
 
-  if(
-    !post.commentsList ||
-    !post.commentsList[commentIndex]
-  )
+  const comment =
+    post.commentsList?.[commentIndex];
+
+  if(!comment)
     return;
 
-  if(!parts.length){
+  if(!parts.length)
+    return;
 
-    if(
-      !confirm(
-        "Delete this reply?"
-      )
-    )
-      return;
+  let parent =
+    comment;
 
-    post.commentsList[commentIndex]
-      .replies = [];
+  for(let i=0;i<parts.length-1;i++){
 
-  }else{
-
-    let parent =
-      post.commentsList[commentIndex];
-
-    for(let i=0;i<parts.length-1;i++){
-
-      const index =
-        parts[i];
-
-      if(
-        !parent.replies ||
-        !parent.replies[index]
-      )
-        return;
-
-      parent =
-        parent.replies[index];
-
-    }
-
-    const targetIndex =
-      parts[parts.length-1];
+    const index =
+      parts[i];
 
     if(
       !parent.replies ||
-      !parent.replies[targetIndex]
+      !parent.replies[index]
     )
       return;
 
-    if(
-      !confirm(
-        "Delete this reply?"
-      )
-    )
-      return;
-
-    parent.replies.splice(
-      targetIndex,
-      1
-    );
+    parent =
+      parent.replies[index];
 
   }
+
+  const targetIndex =
+    parts[parts.length-1];
+
+  if(
+    !parent.replies ||
+    !parent.replies[targetIndex]
+  )
+    return;
+
+  if(
+    !confirm(
+      "Delete this reply?"
+    )
+  )
+    return;
+
+  parent.replies.splice(
+    targetIndex,
+    1
+  );
 
   save();
 
@@ -3917,62 +3904,7 @@ function deleteReply(postId,path){
   );
 
 }
-/* =====================================================
-   SHARE
-===================================================== */
 
-function sharePost(id){
-
-  const post =
-    posts.find(
-      p => p.id === id
-    );
-
-  if(!post)
-    return;
-
-  post.shares =
-    (post.shares || 0) + 1;
-
-  save();
-
-  render();
-
-  const link =
-    location.href.split("#")[0]
-    +
-    "#post-"
-    +
-    id;
-
-  if(navigator.clipboard){
-
-    navigator.clipboard
-      .writeText(link)
-      .then(() => {
-
-        showToast(
-          "Post link copied"
-        );
-
-      })
-      .catch(() => {
-
-        showToast(
-          "Share count updated"
-        );
-
-      });
-
-  }else{
-
-    showToast(
-      "Share count updated"
-    );
-
-  }
-
-}
 
 
 /* =====================================================
