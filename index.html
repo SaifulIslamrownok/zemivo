@@ -3654,15 +3654,12 @@ function addReply(postId,path){
     parent.replies = [];
 
   parent.replies.push({
-
-    name:"Zemivo User",
-
-    text:text,
-
-    replies:[]
-
-  });
-
+  name:"Zemivo User",
+  text:text,
+  replies:[],
+  likes:0,
+  liked:false
+});
 
   input.value = "";
 
