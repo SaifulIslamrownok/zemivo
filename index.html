@@ -3083,11 +3083,11 @@ function commentHTML(comment,index,postId){
   const replies =
   (comment.replies || [])
     .map(
-      (reply,index) =>
+      (reply,replyIndex) =>
         replyHTML(
           reply,
           postId,
-          index.toString()
+          index + "-" + replyIndex
         )
     )
     .join("");
