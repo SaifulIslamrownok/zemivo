@@ -392,14 +392,63 @@ button{
   font-size:13px;
 }
 
-.reply-box button{
+.reply-actions{
+  display:flex;
+  gap:10px;
+  margin-top:3px;
+  padding-left:6px;
+}
+
+.reply-action{
   border:0;
-  background:var(--blue);
-  color:white;
+  background:transparent;
+  color:#667085;
+  font-size:11px;
+  font-weight:600;
+  padding:2px 3px;
+}
+
+.reply-action:hover{
+  color:var(--blue);
+}
+
+.reply-action.active{
+  color:var(--blue);
+}
+
+.reply-edit-box{
+  display:none;
+  gap:6px;
+  margin-top:6px;
+}
+
+.reply-edit-box.show{
+  display:flex;
+}
+
+.reply-edit-box input{
+  flex:1;
+  min-width:0;
+  border:1px solid var(--line);
+  outline:0;
   border-radius:18px;
-  padding:0 12px;
+  padding:6px 9px;
   font-size:12px;
 }
+
+.reply-edit-box button{
+  border:0;
+  background:var(--blue);
+  color:#fff;
+  border-radius:18px;
+  padding:0 10px;
+  font-size:11px;
+}
+
+.reply-list .reply-list{
+  margin-left:20px;
+}
+
 
 /* =========================
    COMMENT BOX
@@ -2878,7 +2927,22 @@ function render(){
    REPLY HTML
 ===================================================== */
 
-function replyHTML(reply){
+function replyHTML(reply,postId,path){
+
+  const replies =
+    (reply.replies || [])
+      .map(
+        (child,index) =>
+          replyHTML(
+            child,
+            postId,
+            path + "-" + index
+          )
+      )
+      .join("");
+
+  const likes =
+    reply.likes || 0;
 
   return `
 
@@ -2899,12 +2963,106 @@ function replyHTML(reply){
         <div class="comment-bubble">
 
           <b>
-            ${escapeHTML(reply.name)}
+            ${escapeHTML(reply.name || "Zemivo User")}
           </b>
 
           <br>
 
           ${escapeHTML(reply.text)}
+
+        </div>
+
+
+        <div class="reply-actions">
+
+          <button
+            class="reply-action ${reply.liked ? "active" : ""}"
+            onclick="likeReply('${postId}','${path}')">
+
+            👍 ${reply.liked ? "Unlike" : "Like"}
+            ${likes ? "(" + likes + ")" : ""}
+
+          </button>
+
+
+          <button
+            class="reply-action"
+            onclick="showReplyBox('${postId}','${path}')">
+
+            💬 Reply
+
+          </button>
+
+
+          <button
+            class="reply-action"
+            onclick="editReply('${postId}','${path}')">
+
+            ✏️ Edit
+
+          </button>
+
+
+          <button
+            class="reply-action"
+            onclick="deleteReply('${postId}','${path}')">
+
+            🗑️ Delete
+
+          </button>
+
+        </div>
+
+
+        <div
+          id="reply-edit-${postId}-${path}"
+          class="reply-edit-box">
+
+          <input
+            id="reply-edit-input-${postId}-${path}"
+            value="${escapeHTML(reply.text)}"
+            onkeydown="
+              if(event.key==='Enter'){
+                saveReplyEdit('${postId}','${path}')
+              }
+            ">
+
+          <button
+            onclick="saveReplyEdit('${postId}','${path}')">
+
+            Save
+
+          </button>
+
+        </div>
+
+
+        <div
+          id="reply-box-${postId}-${path}"
+          class="reply-box">
+
+          <input
+            id="reply-input-${postId}-${path}"
+            placeholder="Write a reply..."
+            onkeydown="
+              if(event.key==='Enter'){
+                addReply('${postId}','${path}')
+              }
+            ">
+
+          <button
+            onclick="addReply('${postId}','${path}')">
+
+            Reply
+
+          </button>
+
+        </div>
+
+
+        <div class="reply-list">
+
+          ${replies}
 
         </div>
 
@@ -2916,7 +3074,6 @@ function replyHTML(reply){
 
 }
 
-
 /* =====================================================
    COMMENT HTML
 ===================================================== */
@@ -2924,10 +3081,16 @@ function replyHTML(reply){
 function commentHTML(comment,index,postId){
 
   const replies =
-    (comment.replies || [])
-      .map(replyHTML)
-      .join("");
-
+  (comment.replies || [])
+    .map(
+      (reply,index) =>
+        replyHTML(
+          reply,
+          postId,
+          index.toString()
+        )
+    )
+    .join("");
   return `
 
     <div class="comment">
