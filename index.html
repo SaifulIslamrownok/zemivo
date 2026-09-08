@@ -3663,6 +3663,7 @@ function addReply(postId,path){
 
   });
 
+
   input.value = "";
 
   save();
@@ -3674,7 +3675,251 @@ function addReply(postId,path){
   );
 
 }
+/* =====================================================
+   REPLY ACTIONS
+===================================================== */
 
+function getReplyByPath(postId,path){
+
+  const post =
+    posts.find(
+      p => p.id === postId
+    );
+
+  if(!post)
+    return null;
+
+  const parts =
+    String(path)
+      .split("-")
+      .map(Number);
+
+  const commentIndex =
+    parts.shift();
+
+  let reply =
+    post.commentsList?.[commentIndex];
+
+  if(!reply)
+    return null;
+
+  for(const index of parts){
+
+    if(!reply.replies)
+      return null;
+
+    reply =
+      reply.replies[index];
+
+    if(!reply)
+      return null;
+
+  }
+
+  return reply;
+
+}
+
+
+function likeReply(postId,path){
+
+  const reply =
+    getReplyByPath(
+      postId,
+      path
+    );
+
+  if(!reply)
+    return;
+
+  if(typeof reply.likes !== "number")
+    reply.likes = 0;
+
+  if(typeof reply.liked !== "boolean")
+    reply.liked = false;
+
+  reply.liked =
+    !reply.liked;
+
+  reply.likes =
+    Math.max(
+      0,
+      reply.likes +
+      (reply.liked ? 1 : -1)
+    );
+
+  save();
+
+  render();
+
+}
+
+
+function editReply(postId,path){
+
+  const box =
+    document.getElementById(
+      "reply-edit-" +
+      postId +
+      "-" +
+      path
+    );
+
+  if(!box)
+    return;
+
+  box.classList.toggle("show");
+
+  if(box.classList.contains("show")){
+
+    const input =
+      document.getElementById(
+        "reply-edit-input-" +
+        postId +
+        "-" +
+        path
+      );
+
+    if(input){
+
+      input.focus();
+      input.select();
+
+    }
+
+  }
+
+}
+
+
+function saveReplyEdit(postId,path){
+
+  const reply =
+    getReplyByPath(
+      postId,
+      path
+    );
+
+  const input =
+    document.getElementById(
+      "reply-edit-input-" +
+      postId +
+      "-" +
+      path
+    );
+
+  if(!reply || !input)
+    return;
+
+  const text =
+    input.value.trim();
+
+  if(!text)
+    return;
+
+  reply.text =
+    text;
+
+  save();
+
+  render();
+
+  showToast(
+    "Reply updated"
+  );
+
+}
+
+
+function deleteReply(postId,path){
+
+  const post =
+    posts.find(
+      p => p.id === postId
+    );
+
+  if(!post)
+    return;
+
+  const parts =
+    String(path)
+      .split("-")
+      .map(Number);
+
+  const commentIndex =
+    parts.shift();
+
+  if(
+    !post.commentsList ||
+    !post.commentsList[commentIndex]
+  )
+    return;
+
+  if(!parts.length){
+
+    if(
+      !confirm(
+        "Delete this reply?"
+      )
+    )
+      return;
+
+    post.commentsList[commentIndex]
+      .replies = [];
+
+  }else{
+
+    let parent =
+      post.commentsList[commentIndex];
+
+    for(let i=0;i<parts.length-1;i++){
+
+      const index =
+        parts[i];
+
+      if(
+        !parent.replies ||
+        !parent.replies[index]
+      )
+        return;
+
+      parent =
+        parent.replies[index];
+
+    }
+
+    const targetIndex =
+      parts[parts.length-1];
+
+    if(
+      !parent.replies ||
+      !parent.replies[targetIndex]
+    )
+      return;
+
+    if(
+      !confirm(
+        "Delete this reply?"
+      )
+    )
+      return;
+
+    parent.replies.splice(
+      targetIndex,
+      1
+    );
+
+  }
+
+  save();
+
+  render();
+
+  showToast(
+    "Reply deleted"
+  );
+
+}
 /* =====================================================
    SHARE
 ===================================================== */
