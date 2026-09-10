@@ -1340,13 +1340,17 @@ button{
 
       <div class="tags">
 
-        <button
-          class="tag-btn"
-          onclick="addMusic()">
+        function addMusic(){
+  const area =
+    document.getElementById("postText");
 
-          🎵 Music
+  area.value +=
+    " 🎵 Music";
 
-        </button>
+  area.focus();
+
+  updateNextButton();
+}
 
         <button
           class="tag-btn"
@@ -1362,15 +1366,17 @@ button{
 
           📍 Location
 
-        </button>
+        function addFeeling(){
+  const area =
+    document.getElementById("postText");
 
-        <button
-          class="tag-btn"
-          onclick="addFeeling()">
+  area.value +=
+    " 😊 Feeling happy";
 
-          😊
+  area.focus();
 
-        </button>
+  updateNextButton();
+}
 
       </div>
 
@@ -1576,13 +1582,14 @@ button{
 
       <div class="share-settings">
 
-        <button
-          class="share-chip"
-          onclick="setAudiencePublic()">
+     function setAudiencePublic(){
+  document.getElementById("audience")
+    .value = "Public";
 
-          🌍 Public
-
-        </button>
+  showToast(
+    "Audience set to Public"
+  );
+}
 
         <button
           class="share-chip"
