@@ -1340,20 +1340,7 @@ button{
 
       <div class="tags">
 
-        function addMusic(){
-  const area =
-    document.getElementById("postText");
-
-  area.value +=
-    " 🎵 Music";
-
-  area.focus();
-
-  updateNextButton();
-}
-
-        <button
-          class="tag-btn"
+                  class="tag-btn"
           onclick="addCollaborate()">
 
           👥 Tag / collaborate
@@ -1366,17 +1353,6 @@ button{
 
           📍 Location
 
-        function addFeeling(){
-  const area =
-    document.getElementById("postText");
-
-  area.value +=
-    " 😊 Feeling happy";
-
-  area.focus();
-
-  updateNextButton();
-}
 
       </div>
 
@@ -1600,8 +1576,27 @@ button{
         </button>
 
       </div>
+<div class="share-settings">
 
+  <div class="share-settings">
 
+  <button
+    class="share-chip"
+    onclick="setAudiencePublic()">
+
+    🌍 Public
+
+  </button>
+
+  <button
+    class="share-chip"
+    onclick="showToast('Instagram sharing is off')">
+
+    📷 Instagram Off
+
+  </button>
+
+</div>
       <!--
         OLD BOTTOM NEXT BUTTON
         REMOVED FROM DISPLAY.
@@ -2753,16 +2748,6 @@ function toggleExtraTools(){
 }
 
 
-function setAudiencePublic(){
-
-  document.getElementById("audience")
-    .value = "Public";
-
-  showToast(
-    "Audience set to Public"
-  );
-
-}
 
 
 /* =====================================================
