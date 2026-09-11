@@ -1576,24 +1576,23 @@ button{
 
       <div class="share-settings">
 
-     function setAudiencePublic(){
-  document.getElementById("audience")
-    .value = "Public";
+  <button
+    class="share-chip"
+    onclick="setAudiencePublic()">
 
-  showToast(
-    "Audience set to Public"
-  );
-}
+    🌍 Public
 
-        <button
-          class="share-chip"
-          onclick="showToast('Instagram sharing is off')">
+  </button>
 
-          📷 Instagram Off
+  <button
+    class="share-chip"
+    onclick="showToast('Instagram sharing is off')">
 
-        </button>
+    📷 Instagram Off
 
-      </div>
+  </button>
+
+</div>
 <div class="share-settings">
 
   <button
