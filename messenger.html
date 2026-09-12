@@ -1,12 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Zemivo Messages</title>
 
 <style>
+
 *{
   box-sizing:border-box;
 }
@@ -237,7 +239,7 @@ button{
   text-align:right;
 }
 
-/* TRANSLATION AREA */
+/* TRANSLATION */
 
 .translation{
   margin-top:6px;
@@ -407,6 +409,7 @@ button{
   }
 
 }
+
 </style>
 </head>
 
@@ -595,11 +598,12 @@ button{
   </a>
 
   <a
-  href="messenger.html"
-  class="active"
->
-  💬<br>Messages
-</a>
+    href="messenger.html"
+    class="active"
+  >
+    💬<br>Messages
+  </a>
+
   <a href="profile.html">
     👤<br>Profile
   </a>
@@ -615,26 +619,16 @@ button{
 
 <script type="module">
 
-/*
-  =====================================================
-  ZEMIVO MESSAGES
-  Firebase Authentication + Firestore
-  =====================================================
-*/
-
-
 import {
   initializeApp
 } from
 "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
-
 
 import {
   getAuth,
   onAuthStateChanged
 } from
 "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
-
 
 import {
   getFirestore,
@@ -643,8 +637,7 @@ import {
   orderBy,
   onSnapshot,
   addDoc,
-  serverTimestamp,
-  where
+  serverTimestamp
 } from
 "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
 
@@ -680,10 +673,8 @@ const firebaseConfig = {
 const app =
   initializeApp(firebaseConfig);
 
-
 const auth =
   getAuth(app);
-
 
 const db =
   getFirestore(app);
@@ -779,7 +770,7 @@ function escapeHtml(value){
 }
 
 
-/* CREATE CHAT ID */
+/* CHAT ID */
 
 function createChatId(uid1,uid2){
 
@@ -833,10 +824,8 @@ onAuthStateChanged(
 
     }
 
-
     currentUser =
       user;
-
 
     await loadUsers();
 
@@ -856,13 +845,7 @@ async function loadUsers(){
 
   `;
 
-
   try{
-
-    /*
-      Profiles are loaded from the same
-      collection used by the Zemivo feed.
-    */
 
     const profilesQuery =
       query(
@@ -872,13 +855,11 @@ async function loadUsers(){
         )
       );
 
-
     onSnapshot(
       profilesQuery,
       function(snapshot){
 
         allUsers = [];
-
 
         snapshot.forEach(
           function(profileSnapshot){
@@ -886,10 +867,8 @@ async function loadUsers(){
             const profile =
               profileSnapshot.data();
 
-
             const uid =
               profileSnapshot.id;
-
 
             if(
               currentUser &&
@@ -899,7 +878,6 @@ async function loadUsers(){
               return;
 
             }
-
 
             allUsers.push({
 
@@ -920,7 +898,6 @@ async function loadUsers(){
           }
         );
 
-
         renderUsers(
           allUsers
         );
@@ -932,7 +909,6 @@ async function loadUsers(){
           "Users error:",
           error
         );
-
 
         usersList.innerHTML = `
 
@@ -969,7 +945,6 @@ function renderUsers(users){
 
   usersList.innerHTML = "";
 
-
   if(users.length === 0){
 
     usersList.innerHTML = `
@@ -984,17 +959,14 @@ function renderUsers(users){
 
   }
 
-
   users.forEach(
     function(user){
 
       const button =
         document.createElement("button");
 
-
       button.className =
         "user-item";
-
 
       if(
         selectedUser &&
@@ -1008,12 +980,10 @@ function renderUsers(users){
 
       }
 
-
       const initial =
         user.displayName
           .charAt(0)
           .toUpperCase();
-
 
       button.innerHTML = `
 
@@ -1039,7 +1009,6 @@ function renderUsers(users){
 
       `;
 
-
       button.addEventListener(
         "click",
         function(){
@@ -1050,7 +1019,6 @@ function renderUsers(users){
 
         }
       );
-
 
       usersList.appendChild(
         button
@@ -1073,7 +1041,6 @@ userSearch.addEventListener(
         .trim()
         .toLowerCase();
 
-
     if(!search){
 
       renderUsers(
@@ -1083,7 +1050,6 @@ userSearch.addEventListener(
       return;
 
     }
-
 
     const filtered =
       allUsers.filter(
@@ -1106,7 +1072,6 @@ userSearch.addEventListener(
         }
       );
 
-
     renderUsers(
       filtered
     );
@@ -1122,20 +1087,16 @@ function selectUser(user){
   selectedUser =
     user;
 
-
   chatName.textContent =
     user.displayName;
 
-
   chatStatus.textContent =
     "Zemivo user";
-
 
   chatAvatar.textContent =
     user.displayName
       .charAt(0)
       .toUpperCase();
-
 
   messageInput.disabled =
     false;
@@ -1143,19 +1104,15 @@ function selectUser(user){
   sendButton.disabled =
     false;
 
-
   messageInput.focus();
-
 
   appElement.classList.add(
     "chat-open"
   );
 
-
   renderUsers(
     allUsers
   );
-
 
   startMessageListener();
 
@@ -1172,7 +1129,6 @@ function startMessageListener(){
 
   }
 
-
   if(unsubscribeMessages){
 
     unsubscribeMessages();
@@ -1182,7 +1138,6 @@ function startMessageListener(){
 
   }
 
-
   messagesElement.innerHTML = `
 
     <div class="loading">
@@ -1191,13 +1146,11 @@ function startMessageListener(){
 
   `;
 
-
   const chatId =
     createChatId(
       currentUser.uid,
       selectedUser.uid
     );
-
 
   const messagesQuery =
     query(
@@ -1213,7 +1166,6 @@ function startMessageListener(){
       )
     );
 
-
   unsubscribeMessages =
     onSnapshot(
       messagesQuery,
@@ -1221,7 +1173,6 @@ function startMessageListener(){
 
         messagesElement.innerHTML =
           "";
-
 
         if(snapshot.empty){
 
@@ -1256,13 +1207,11 @@ function startMessageListener(){
 
         }
 
-
         snapshot.forEach(
           function(messageSnapshot){
 
             const message =
               messageSnapshot.data();
-
 
             renderMessage(
               message
@@ -1270,7 +1219,6 @@ function startMessageListener(){
 
           }
         );
-
 
         messagesElement.scrollTop =
           messagesElement.scrollHeight;
@@ -1282,7 +1230,6 @@ function startMessageListener(){
           "Message listener error:",
           error
         );
-
 
         messagesElement.innerHTML = `
 
@@ -1307,10 +1254,8 @@ function renderMessage(message){
     message.senderId ===
     currentUser.uid;
 
-
   const row =
     document.createElement("div");
-
 
   row.className =
     "message-row " +
@@ -1322,33 +1267,22 @@ function renderMessage(message){
       "received"
     );
 
-
   const bubble =
     document.createElement("div");
-
 
   bubble.className =
     "message";
 
-
   const original =
     document.createElement("div");
 
-
   original.textContent =
     message.text || "";
-
 
   bubble.appendChild(
     original
   );
 
-
-  /*
-    Translation UI is prepared now.
-    The actual AI translation service will be
-    connected later without rebuilding the page.
-  */
 
   if(
     message.translatedText
@@ -1357,10 +1291,8 @@ function renderMessage(message){
     const translation =
       document.createElement("div");
 
-
     translation.className =
       "translation";
-
 
     translation.innerHTML = `
 
@@ -1374,7 +1306,6 @@ function renderMessage(message){
 
     `;
 
-
     bubble.appendChild(
       translation
     );
@@ -1385,26 +1316,21 @@ function renderMessage(message){
   const time =
     document.createElement("div");
 
-
   time.className =
     "message-time";
-
 
   time.textContent =
     formatTime(
       message.createdAt
     );
 
-
   bubble.appendChild(
     time
   );
 
-
   row.appendChild(
     bubble
   );
-
 
   messagesElement.appendChild(
     row
@@ -1430,10 +1356,8 @@ async function sendMessage(){
 
   }
 
-
   const text =
     messageInput.value.trim();
-
 
   if(!text){
 
@@ -1441,17 +1365,14 @@ async function sendMessage(){
 
   }
 
-
   sendButton.disabled =
     true;
-
 
   const chatId =
     createChatId(
       currentUser.uid,
       selectedUser.uid
     );
-
 
   try{
 
@@ -1473,11 +1394,6 @@ async function sendMessage(){
         text:
           text,
 
-        /*
-          Language detection and automatic
-          translation will be connected here.
-        */
-
         sourceLanguage:
           null,
 
@@ -1493,10 +1409,8 @@ async function sendMessage(){
       }
     );
 
-
     messageInput.value =
       "";
-
 
     messageInput.focus();
 
@@ -1508,13 +1422,11 @@ async function sendMessage(){
       error
     );
 
-
     showToast(
       "Message could not be sent. Check Firestore permissions."
     );
 
   }
-
 
   sendButton.disabled =
     false;
