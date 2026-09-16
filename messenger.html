@@ -13,8 +13,12 @@
   box-sizing:border-box;
 }
 
+html,
 body{
   margin:0;
+  padding:0;
+  width:100%;
+  height:100%;
   font-family:Arial,Helvetica,sans-serif;
   background:#f0f2f5;
   color:#17202a;
@@ -39,9 +43,11 @@ button{
   align-items:center;
   justify-content:space-between;
   padding:0 16px;
-  position:sticky;
+  position:fixed;
   top:0;
-  z-index:100;
+  left:0;
+  right:0;
+  z-index:500;
 }
 
 .logo{
@@ -67,11 +73,16 @@ button{
 /* MAIN */
 
 .app{
+  position:fixed;
+  top:62px;
+  left:0;
+  right:0;
+  bottom:0;
   max-width:1100px;
-  height:calc(100vh - 62px);
   margin:auto;
   display:flex;
   background:#fff;
+  overflow:hidden;
 }
 
 /* USERS */
@@ -81,6 +92,7 @@ button{
   border-right:1px solid #ddd;
   display:flex;
   flex-direction:column;
+  min-height:0;
 }
 
 .users-title{
@@ -104,6 +116,7 @@ button{
 
 .users-list{
   flex:1;
+  min-height:0;
   overflow-y:auto;
 }
 
@@ -158,18 +171,23 @@ button{
 
 .chat-panel{
   flex:1;
+  min-width:0;
+  min-height:0;
   display:flex;
   flex-direction:column;
-  min-width:0;
+  position:relative;
 }
 
 .chat-person{
+  height:70px;
   min-height:70px;
   padding:12px 16px;
   border-bottom:1px solid #eee;
   display:flex;
   align-items:center;
   gap:10px;
+  background:#fff;
+  z-index:20;
 }
 
 .chat-person-name{
@@ -257,17 +275,22 @@ button{
 /* COMPOSER */
 
 .composer{
+  min-height:66px;
   padding:12px;
   border-top:1px solid #ddd;
   background:#fff;
   display:flex;
   gap:8px;
   align-items:center;
+  flex-shrink:0;
+  position:relative;
+  z-index:100;
 }
 
 .attach{
   width:42px;
   height:42px;
+  flex-shrink:0;
   border:0;
   border-radius:50%;
   background:#f0f2f5;
@@ -277,17 +300,21 @@ button{
 .composer input{
   flex:1;
   min-width:0;
-  padding:12px 15px;
+  height:42px;
+  padding:10px 15px;
   border:1px solid #ddd;
   border-radius:24px;
   outline:none;
   font-size:16px;
+  background:#fff;
 }
 
 .send{
+  height:42px;
+  flex-shrink:0;
   border:0;
   border-radius:23px;
-  padding:12px 19px;
+  padding:0 19px;
   background:#2563eb;
   color:#fff;
   font-weight:bold;
@@ -314,14 +341,14 @@ button{
 .toast{
   position:fixed;
   left:50%;
-  bottom:22px;
+  bottom:80px;
   transform:translateX(-50%);
   background:#111827;
   color:#fff;
   padding:12px 18px;
   border-radius:10px;
   display:none;
-  z-index:999;
+  z-index:1000;
   max-width:90%;
   text-align:center;
 }
@@ -340,24 +367,66 @@ button{
 
 @media(max-width:700px){
 
-.app{
-  height:calc(100vh - 62px - 58px);
-}
-
-  .users-panel{
+  .app{
+    top:62px;
+    bottom:58px;
     width:100%;
   }
 
+  .users-panel{
+    width:100%;
+    border-right:0;
+  }
+
   .chat-panel{
-    display:none;
+    width:100%;
+    min-width:100%;
   }
 
   .app.chat-open .users-panel{
     display:none;
   }
 
-  .app.chat-open .chat-panel{
-    display:flex;
+  .app:not(.chat-open) .chat-panel{
+    display:none;
+  }
+
+  .chat-person{
+    height:70px;
+    min-height:70px;
+  }
+
+  .messages{
+    padding:15px;
+    padding-bottom:15px;
+  }
+
+  .composer{
+    position:fixed;
+    left:0;
+    right:0;
+    bottom:58px;
+    width:100%;
+    min-height:66px;
+    padding:10px;
+    z-index:600;
+  }
+
+  .composer input{
+    font-size:16px;
+  }
+
+  .send{
+    padding:0 15px;
+  }
+
+  .attach{
+    width:40px;
+    height:40px;
+  }
+
+  .app.chat-open .messages{
+    padding-bottom:82px;
   }
 
   .back-button{
@@ -368,6 +437,7 @@ button{
     height:38px;
     border-radius:50%;
     font-size:18px;
+    flex-shrink:0;
   }
 
   .users-title{
@@ -383,7 +453,7 @@ button{
     height:58px;
     background:#fff;
     border-top:1px solid #ddd;
-    z-index:200;
+    z-index:700;
   }
 
   .bottom-nav a{
@@ -1095,15 +1165,15 @@ async function selectUser(user){
       .charAt(0)
       .toUpperCase();
 
-  messageInput.disabled =
-    false;
-
-  sendButton.disabled =
-    false;
-
   appElement.classList.add(
     "chat-open"
   );
+
+  messageInput.disabled =
+    true;
+
+  sendButton.disabled =
+    true;
 
   renderUsers(
     allUsers
@@ -1116,12 +1186,6 @@ async function selectUser(user){
     );
 
   try{
-
-    /*
-    Create the parent chat document.
-    The Firestore Rules require the chat
-    to contain exactly two members.
-    */
 
     const chatRef =
       doc(
@@ -1144,6 +1208,12 @@ async function selectUser(user){
         merge:true
       }
     );
+
+    messageInput.disabled =
+      false;
+
+    sendButton.disabled =
+      false;
 
     messageInput.focus();
 
@@ -1433,11 +1503,6 @@ async function sendMessage(){
 
   try{
 
-    /*
-    Make sure the parent chat exists
-    before creating the message.
-    */
-
     const chatRef =
       doc(
         db,
@@ -1570,6 +1635,15 @@ backButton.addEventListener(
     appElement.classList.remove(
       "chat-open"
     );
+
+    if(unsubscribeMessages){
+
+      unsubscribeMessages();
+
+      unsubscribeMessages =
+        null;
+
+    }
 
   }
 );
