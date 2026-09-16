@@ -449,8 +449,6 @@ button{
   class="app"
 >
 
-  <!-- USERS -->
-
   <section class="users-panel">
 
     <div class="users-title">
@@ -480,8 +478,6 @@ button{
 
   </section>
 
-
-  <!-- CHAT -->
 
   <section class="chat-panel">
 
@@ -585,8 +581,6 @@ button{
 </main>
 
 
-<!-- MOBILE NAV -->
-
 <nav class="bottom-nav">
 
   <a href="index.html">
@@ -637,6 +631,8 @@ import {
   orderBy,
   onSnapshot,
   addDoc,
+  doc,
+  setDoc,
   serverTimestamp
 } from
 "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
@@ -1082,7 +1078,7 @@ userSearch.addEventListener(
 
 /* SELECT USER */
 
-function selectUser(user){
+async function selectUser(user){
 
   selectedUser =
     user;
@@ -1104,8 +1100,6 @@ function selectUser(user){
   sendButton.disabled =
     false;
 
-  messageInput.focus();
-
   appElement.classList.add(
     "chat-open"
   );
@@ -1114,7 +1108,69 @@ function selectUser(user){
     allUsers
   );
 
-  startMessageListener();
+  const chatId =
+    createChatId(
+      currentUser.uid,
+      selectedUser.uid
+    );
+
+  try{
+
+    /*
+    Create the parent chat document.
+    The Firestore Rules require the chat
+    to contain exactly two members.
+    */
+
+    const chatRef =
+      doc(
+        db,
+        "chats",
+        chatId
+      );
+
+    await setDoc(
+      chatRef,
+      {
+        members: [
+          currentUser.uid,
+          selectedUser.uid
+        ],
+        updatedAt:
+          serverTimestamp()
+      },
+      {
+        merge:true
+      }
+    );
+
+    messageInput.focus();
+
+    startMessageListener();
+
+  }
+  catch(error){
+
+    console.error(
+      "Chat setup error:",
+      error
+    );
+
+    messageInput.disabled =
+      true;
+
+    sendButton.disabled =
+      true;
+
+    messagesElement.innerHTML = `
+
+      <div class="error">
+        Could not open this conversation.
+      </div>
+
+    `;
+
+  }
 
 }
 
@@ -1376,6 +1432,33 @@ async function sendMessage(){
 
   try{
 
+    /*
+    Make sure the parent chat exists
+    before creating the message.
+    */
+
+    const chatRef =
+      doc(
+        db,
+        "chats",
+        chatId
+      );
+
+    await setDoc(
+      chatRef,
+      {
+        members: [
+          currentUser.uid,
+          selectedUser.uid
+        ],
+        updatedAt:
+          serverTimestamp()
+      },
+      {
+        merge:true
+      }
+    );
+
     await addDoc(
       collection(
         db,
@@ -1423,7 +1506,7 @@ async function sendMessage(){
     );
 
     showToast(
-      "Message could not be sent. Check Firestore permissions."
+      "Message could not be sent."
     );
 
   }
