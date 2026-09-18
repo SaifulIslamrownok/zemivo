@@ -1175,10 +1175,31 @@ async function selectUser(user){
   chatStatus.textContent =
     "Zemivo user";
 
+if(user.photoURL){
+
+  chatAvatar.textContent = "";
+
+  chatAvatar.style.backgroundImage =
+    `url("${escapeHtml(user.photoURL)}")`;
+
+  chatAvatar.style.backgroundSize =
+    "cover";
+
+  chatAvatar.style.backgroundPosition =
+    "center";
+
+}
+else{
+
+  chatAvatar.style.backgroundImage =
+    "none";
+
   chatAvatar.textContent =
     user.displayName
       .charAt(0)
       .toUpperCase();
+
+}
 
   appElement.classList.add(
     "chat-open"
