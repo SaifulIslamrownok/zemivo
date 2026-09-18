@@ -151,6 +151,7 @@ button{
   justify-content:center;
   font-weight:bold;
   font-size:17px;
+  object-fit:cover;
 }
 
 .user-name{
@@ -946,21 +947,26 @@ async function loadUsers(){
 
             }
 
-            allUsers.push({
+          allUsers.push({
 
-              uid:
-                uid,
+  uid:
+    uid,
 
-              displayName:
-                profile.displayName ||
-                profile.name ||
-                "Zemivo User",
+  displayName:
+    profile.displayName ||
+    profile.name ||
+    "Zemivo User",
 
-              email:
-                profile.email ||
-                ""
+  email:
+    profile.email ||
+    "",
 
-            });
+  photoURL:
+    profile.photoURL ||
+    profile.photoUrl ||
+    ""
+
+});
 
           }
         );
@@ -1047,35 +1053,44 @@ function renderUsers(users){
 
       }
 
-      const initial =
+    const initial =
+  user.displayName
+    .charAt(0)
+    .toUpperCase();
+
+button.innerHTML = `
+
+  ${
+    user.photoURL
+    ?
+    `<img
+      src="${escapeHtml(user.photoURL)}"
+      class="user-avatar"
+      alt=""
+    >`
+    :
+    `<div class="user-avatar">
+      ${escapeHtml(initial)}
+    </div>`
+  }
+
+  <div style="min-width:0;">
+
+    <div class="user-name">
+      ${escapeHtml(
         user.displayName
-          .charAt(0)
-          .toUpperCase();
+      )}
+    </div>
 
-      button.innerHTML = `
+    <div class="user-email">
+      ${escapeHtml(
+        user.email
+      )}
+    </div>
 
-        <div class="user-avatar">
-          ${escapeHtml(initial)}
-        </div>
+  </div>
 
-        <div style="min-width:0;">
-
-          <div class="user-name">
-            ${escapeHtml(
-              user.displayName
-            )}
-          </div>
-
-          <div class="user-email">
-            ${escapeHtml(
-              user.email
-            )}
-          </div>
-
-        </div>
-
-      `;
-
+`;
       button.addEventListener(
         "click",
         function(){
