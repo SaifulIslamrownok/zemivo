@@ -1424,11 +1424,20 @@ function startMessageListener(){
 
   }
 
-  if(unsubscribeMessages){
+if(unsubscribeMessages){
 
   unsubscribeMessages();
 
   unsubscribeMessages =
+    null;
+
+}
+
+if(unsubscribePresence){
+
+  unsubscribePresence();
+
+  unsubscribePresence =
     null;
 
 }
