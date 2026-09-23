@@ -1424,6 +1424,17 @@ function startMessageListener(){
 
   }
 
+  messagesElement.innerHTML = `
+
+if(unsubscribeMessages){
+
+  unsubscribeMessages();
+
+  unsubscribeMessages =
+    null;
+
+}
+
 if(unsubscribePresence){
 
   unsubscribePresence();
@@ -1432,9 +1443,6 @@ if(unsubscribePresence){
     null;
 
 }
-
-  messagesElement.innerHTML = `
-
     <div class="loading">
       Loading conversation...
     </div>
