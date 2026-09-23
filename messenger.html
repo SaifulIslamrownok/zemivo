@@ -709,6 +709,15 @@ import {
 } from
 "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
 
+import {
+  getDatabase,
+  ref,
+  set,
+  onValue,
+  onDisconnect,
+  serverTimestamp as databaseServerTimestamp
+} from
+"https://www.gstatic.com/firebasejs/12.1.0/firebase-database.js";
 
 /* FIREBASE CONFIG */
 
@@ -746,6 +755,12 @@ const auth =
 
 const db =
   getFirestore(app);
+
+const rtdb =
+  getDatabase(
+    app,
+    "https://zemivo-default-rtdb.asia-southeast1.firebasedatabase.app"
+  );
 
 
 /* ELEMENTS */
@@ -796,6 +811,8 @@ let allUsers = [];
 let selectedUser = null;
 
 let unsubscribeMessages = null;
+
+let unsubscribePresence = null;
 
 
 /* TOAST */
@@ -893,13 +910,69 @@ onAuthStateChanged(
     }
 
     currentUser =
-      user;
+  user;
 
-    await loadUsers();
+setupPresence();
+
+await loadUsers();
 
   }
 );
+/* ONLINE / OFFLINE PRESENCE */
 
+function setupPresence(){
+
+  const connectedRef =
+    ref(
+      rtdb,
+      ".info/connected"
+    );
+
+  const myStatusRef =
+    ref(
+      rtdb,
+      "status/" + currentUser.uid
+    );
+
+  onValue(
+    connectedRef,
+    function(snapshot){
+
+      if(snapshot.val() !== true){
+
+        return;
+
+      }
+
+      onDisconnect(
+        myStatusRef
+      ).set({
+
+        state:
+          "offline",
+
+        lastChanged:
+          databaseServerTimestamp()
+
+      });
+
+      set(
+        myStatusRef,
+        {
+
+          state:
+            "online",
+
+          lastChanged:
+            databaseServerTimestamp()
+
+        }
+      );
+
+    }
+  );
+
+}
 
 /* LOAD USERS */
 
@@ -1173,7 +1246,66 @@ async function selectUser(user){
     user.displayName;
 
   chatStatus.textContent =
-    "Zemivo user";
+  "Checking status...";
+
+if(unsubscribePresence){
+
+  unsubscribePresence();
+
+  unsubscribePresence =
+    null;
+
+}
+
+const selectedStatusRef =
+  ref(
+    rtdb,
+    "status/" + user.uid
+  );
+
+unsubscribePresence =
+  onValue(
+    selectedStatusRef,
+    function(snapshot){
+
+      const status =
+        snapshot.val();
+
+      if(
+        status &&
+        status.state === "online"
+      ){
+
+        chatStatus.textContent =
+          "🟢 Online";
+
+        return;
+
+      }
+
+      if(
+        status &&
+        status.lastChanged
+      ){
+
+        const lastSeen =
+          new Date(
+            status.lastChanged
+          );
+
+        chatStatus.textContent =
+          "Last seen " +
+          lastSeen.toLocaleString();
+
+        return;
+
+      }
+
+      chatStatus.textContent =
+        "Offline";
+
+    }
+  );
 
 if(user.photoURL){
 
@@ -1292,14 +1424,23 @@ function startMessageListener(){
 
   }
 
-  if(unsubscribeMessages){
+if(unsubscribeMessages){
 
-    unsubscribeMessages();
+  unsubscribeMessages();
 
-    unsubscribeMessages =
-      null;
+  unsubscribeMessages =
+    null;
 
-  }
+}
+
+if(unsubscribePresence){
+
+  unsubscribePresence();
+
+  unsubscribePresence =
+    null;
+
+}
 
   messagesElement.innerHTML = `
 
