@@ -705,6 +705,8 @@ import {
   addDoc,
   doc,
   setDoc,
+  updateDoc,
+  deleteDoc,
   serverTimestamp
 } from
 "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
@@ -1589,18 +1591,19 @@ function startMessageListener(){
         }
 
 
-        snapshot.forEach(
-          function(messageSnapshot){
+snapshot.forEach(
+  function(messageSnapshot){
 
-            const message =
-              messageSnapshot.data();
+    const message =
+      messageSnapshot.data();
 
-            renderMessage(
-              message
-            );
+    renderMessage(
+      message,
+      messageSnapshot.id
+    );
 
-          }
-        );
+  }
+);
 
 
         messagesElement.scrollTop =
@@ -1627,11 +1630,202 @@ function startMessageListener(){
     );
 
 }
+/* EDIT MESSAGE */
 
+async function editMessage(
+  messageId,
+  oldText
+){
+
+  if(
+    !currentUser ||
+    !selectedUser
+  ){
+
+    return;
+
+  }
+
+
+  const newText =
+    prompt(
+      "Edit your message:",
+      oldText
+    );
+
+
+  if(
+    newText === null
+  ){
+
+    return;
+
+  }
+
+
+  const cleanedText =
+    newText.trim();
+
+
+  if(!cleanedText){
+
+    showToast(
+      "Message cannot be empty."
+    );
+
+    return;
+
+  }
+
+
+  if(
+    cleanedText === oldText
+  ){
+
+    return;
+
+  }
+
+
+  const chatId =
+    createChatId(
+      currentUser.uid,
+      selectedUser.uid
+    );
+
+
+  try{
+
+    const messageRef =
+      doc(
+        db,
+        "chats",
+        chatId,
+        "messages",
+        messageId
+      );
+
+
+    await updateDoc(
+      messageRef,
+      {
+
+        text:
+          cleanedText,
+
+        edited:
+          true,
+
+        editedAt:
+          serverTimestamp(),
+
+        translatedText:
+          null
+
+      }
+    );
+
+
+    showToast(
+      "Message edited."
+    );
+
+  }
+  catch(error){
+
+    console.error(
+      "Edit message error:",
+      error
+    );
+
+    showToast(
+      "Message could not be edited."
+    );
+
+  }
+
+}
+
+
+/* DELETE MESSAGE */
+
+async function deleteMessage(
+  messageId
+){
+
+  if(
+    !currentUser ||
+    !selectedUser
+  ){
+
+    return;
+
+  }
+
+
+  const confirmed =
+    confirm(
+      "Delete this message?"
+    );
+
+
+  if(!confirmed){
+
+    return;
+
+  }
+
+
+  const chatId =
+    createChatId(
+      currentUser.uid,
+      selectedUser.uid
+    );
+
+
+  try{
+
+    const messageRef =
+      doc(
+        db,
+        "chats",
+        chatId,
+        "messages",
+        messageId
+      );
+
+
+    await deleteDoc(
+      messageRef
+    );
+
+
+    showToast(
+      "Message deleted."
+    );
+
+  }
+  catch(error){
+
+    console.error(
+      "Delete message error:",
+      error
+    );
+
+    showToast(
+      "Message could not be deleted."
+    );
+
+  }
+
+}
 
 /* RENDER MESSAGE */
 
-function renderMessage(message){
+function renderMessage(
+  message,
+  messageId
+){
 
   const isSent =
     message.senderId ===
@@ -1730,6 +1924,152 @@ function renderMessage(message){
   );
 
 
+  /* EDITED LABEL */
+
+  if(
+    message.edited === true
+  ){
+
+    const editedLabel =
+      document.createElement(
+        "span"
+      );
+
+    editedLabel.textContent =
+      " · edited";
+
+    editedLabel.style.fontSize =
+      "10px";
+
+    editedLabel.style.opacity =
+      "0.7";
+
+    time.appendChild(
+      editedLabel
+    );
+
+  }
+
+
+  /* EDIT + DELETE */
+
+  if(
+    isSent
+  ){
+
+    const actions =
+      document.createElement(
+        "div"
+      );
+
+    actions.style.display =
+      "flex";
+
+    actions.style.gap =
+      "6px";
+
+    actions.style.marginTop =
+      "6px";
+
+    actions.style.justifyContent =
+      "flex-end";
+
+
+    const editButton =
+      document.createElement(
+        "button"
+      );
+
+    editButton.type =
+      "button";
+
+    editButton.textContent =
+      "✏️ Edit";
+
+    editButton.style.border =
+      "0";
+
+    editButton.style.borderRadius =
+      "8px";
+
+    editButton.style.padding =
+      "4px 8px";
+
+    editButton.style.cursor =
+      "pointer";
+
+    editButton.style.fontSize =
+      "11px";
+
+
+    editButton.addEventListener(
+      "click",
+      function(){
+
+        editMessage(
+          messageId,
+          message.text || ""
+        );
+
+      }
+    );
+
+
+    const deleteButton =
+      document.createElement(
+        "button"
+      );
+
+    deleteButton.type =
+      "button";
+
+    deleteButton.textContent =
+      "🗑️ Delete";
+
+    deleteButton.style.border =
+      "0";
+
+    deleteButton.style.borderRadius =
+      "8px";
+
+    deleteButton.style.padding =
+      "4px 8px";
+
+    deleteButton.style.cursor =
+      "pointer";
+
+    deleteButton.style.fontSize =
+      "11px";
+
+
+    deleteButton.addEventListener(
+      "click",
+      function(){
+
+        deleteMessage(
+          messageId
+        );
+
+      }
+    );
+
+
+    actions.appendChild(
+      editButton
+    );
+
+    actions.appendChild(
+      deleteButton
+    );
+
+
+    bubble.appendChild(
+      actions
+    );
+
+  }
+
+
   row.appendChild(
     bubble
   );
@@ -1740,7 +2080,6 @@ function renderMessage(message){
   );
 
 }
-
 
 /* SEND MESSAGE */
 
