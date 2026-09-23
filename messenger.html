@@ -719,6 +719,7 @@ import {
 } from
 "https://www.gstatic.com/firebasejs/12.1.0/firebase-database.js";
 
+
 /* FIREBASE CONFIG */
 
 const firebaseConfig = {
@@ -819,15 +820,23 @@ let unsubscribePresence = null;
 
 function showToast(text){
 
-  toast.textContent = text;
+  toast.textContent =
+    text;
 
-  toast.classList.add("show");
+  toast.classList.add(
+    "show"
+  );
 
-  setTimeout(function(){
+  setTimeout(
+    function(){
 
-    toast.classList.remove("show");
+      toast.classList.remove(
+        "show"
+      );
 
-  },2500);
+    },
+    2500
+  );
 
 }
 
@@ -846,20 +855,41 @@ function escapeHtml(value){
   }
 
   return String(value)
-    .replaceAll("&","&amp;")
-    .replaceAll("<","&lt;")
-    .replaceAll(">","&gt;")
-    .replaceAll('"',"&quot;")
-    .replaceAll("'","&#039;");
+    .replaceAll(
+      "&",
+      "&amp;"
+    )
+    .replaceAll(
+      "<",
+      "&lt;"
+    )
+    .replaceAll(
+      ">",
+      "&gt;"
+    )
+    .replaceAll(
+      '"',
+      "&quot;"
+    )
+    .replaceAll(
+      "'",
+      "&#039;"
+    );
 
 }
 
 
 /* CHAT ID */
 
-function createChatId(uid1,uid2){
+function createChatId(
+  uid1,
+  uid2
+){
 
-  return [uid1,uid2]
+  return [
+    uid1,
+    uid2
+  ]
     .sort()
     .join("_");
 
@@ -898,26 +928,31 @@ onAuthStateChanged(
         "Please log in first."
       );
 
-      setTimeout(function(){
+      setTimeout(
+        function(){
 
-        location.href =
-          "login.html";
+          location.href =
+            "login.html";
 
-      },1200);
+        },
+        1200
+      );
 
       return;
 
     }
 
     currentUser =
-  user;
+      user;
 
-setupPresence();
+    setupPresence();
 
-await loadUsers();
+    await loadUsers();
 
   }
 );
+
+
 /* ONLINE / OFFLINE PRESENCE */
 
 function setupPresence(){
@@ -931,14 +966,17 @@ function setupPresence(){
   const myStatusRef =
     ref(
       rtdb,
-      "status/" + currentUser.uid
+      "status/" +
+      currentUser.uid
     );
 
   onValue(
     connectedRef,
     function(snapshot){
 
-      if(snapshot.val() !== true){
+      if(
+        snapshot.val() !== true
+      ){
 
         return;
 
@@ -946,7 +984,8 @@ function setupPresence(){
 
       onDisconnect(
         myStatusRef
-      ).set({
+      )
+      .set({
 
         state:
           "offline",
@@ -973,6 +1012,7 @@ function setupPresence(){
   );
 
 }
+
 
 /* LOAD USERS */
 
@@ -1013,33 +1053,34 @@ async function loadUsers(){
 
             if(
               currentUser &&
-              uid === currentUser.uid
+              uid ===
+              currentUser.uid
             ){
 
               return;
 
             }
 
-          allUsers.push({
+            allUsers.push({
 
-  uid:
-    uid,
+              uid:
+                uid,
 
-  displayName:
-    profile.displayName ||
-    profile.name ||
-    "Zemivo User",
+              displayName:
+                profile.displayName ||
+                profile.name ||
+                "Zemivo User",
 
-  email:
-    profile.email ||
-    "",
+              email:
+                profile.email ||
+                "",
 
-  photoURL:
-    profile.photoURL ||
-    profile.photoUrl ||
-    ""
+              photoURL:
+                profile.photoURL ||
+                profile.photoUrl ||
+                ""
 
-});
+            });
 
           }
         );
@@ -1070,7 +1111,9 @@ async function loadUsers(){
   }
   catch(error){
 
-    console.error(error);
+    console.error(
+      error
+    );
 
     usersList.innerHTML = `
 
@@ -1089,9 +1132,12 @@ async function loadUsers(){
 
 function renderUsers(users){
 
-  usersList.innerHTML = "";
+  usersList.innerHTML =
+    "";
 
-  if(users.length === 0){
+  if(
+    users.length === 0
+  ){
 
     usersList.innerHTML = `
 
@@ -1109,7 +1155,9 @@ function renderUsers(users){
     function(user){
 
       const button =
-        document.createElement("button");
+        document.createElement(
+          "button"
+        );
 
       button.className =
         "user-item";
@@ -1126,44 +1174,49 @@ function renderUsers(users){
 
       }
 
-    const initial =
-  user.displayName
-    .charAt(0)
-    .toUpperCase();
-
-button.innerHTML = `
-
-  ${
-    user.photoURL
-    ?
-    `<img
-      src="${escapeHtml(user.photoURL)}"
-      class="user-avatar"
-      alt=""
-    >`
-    :
-    `<div class="user-avatar">
-      ${escapeHtml(initial)}
-    </div>`
-  }
-
-  <div style="min-width:0;">
-
-    <div class="user-name">
-      ${escapeHtml(
+      const initial =
         user.displayName
-      )}
-    </div>
+          .charAt(0)
+          .toUpperCase();
 
-    <div class="user-email">
-      ${escapeHtml(
-        user.email
-      )}
-    </div>
+      button.innerHTML = `
 
-  </div>
+        ${
+          user.photoURL
+          ?
+          `<img
+            src="${escapeHtml(
+              user.photoURL
+            )}"
+            class="user-avatar"
+            alt=""
+          >`
+          :
+          `<div class="user-avatar">
+            ${escapeHtml(
+              initial
+            )}
+          </div>`
+        }
 
-`;
+        <div style="min-width:0;">
+
+          <div class="user-name">
+            ${escapeHtml(
+              user.displayName
+            )}
+          </div>
+
+          <div class="user-email">
+            ${escapeHtml(
+              user.email
+            )}
+          </div>
+
+        </div>
+
+      `;
+
       button.addEventListener(
         "click",
         function(){
@@ -1214,13 +1267,17 @@ userSearch.addEventListener(
 
             user.displayName
               .toLowerCase()
-              .includes(search)
+              .includes(
+                search
+              )
 
             ||
 
             user.email
               .toLowerCase()
-              .includes(search)
+              .includes(
+                search
+              )
 
           );
 
@@ -1246,92 +1303,106 @@ async function selectUser(user){
     user.displayName;
 
   chatStatus.textContent =
-  "Checking status...";
+    "Checking status...";
 
-if(unsubscribePresence){
 
-  unsubscribePresence();
+  if(
+    unsubscribePresence
+  ){
+
+    unsubscribePresence();
+
+    unsubscribePresence =
+      null;
+
+  }
+
+
+  const selectedStatusRef =
+    ref(
+      rtdb,
+      "status/" +
+      user.uid
+    );
+
 
   unsubscribePresence =
-    null;
+    onValue(
+      selectedStatusRef,
+      function(snapshot){
 
-}
+        const status =
+          snapshot.val();
 
-const selectedStatusRef =
-  ref(
-    rtdb,
-    "status/" + user.uid
-  );
+        if(
+          status &&
+          status.state ===
+          "online"
+        ){
 
-unsubscribePresence =
-  onValue(
-    selectedStatusRef,
-    function(snapshot){
+          chatStatus.textContent =
+            "🟢 Online";
 
-      const status =
-        snapshot.val();
+          return;
 
-      if(
-        status &&
-        status.state === "online"
-      ){
+        }
 
-        chatStatus.textContent =
-          "🟢 Online";
+        if(
+          status &&
+          status.lastChanged
+        ){
 
-        return;
+          const lastSeen =
+            new Date(
+              status.lastChanged
+            );
 
-      }
+          chatStatus.textContent =
+            "Last seen " +
+            lastSeen.toLocaleString();
 
-      if(
-        status &&
-        status.lastChanged
-      ){
+          return;
 
-        const lastSeen =
-          new Date(
-            status.lastChanged
-          );
+        }
 
         chatStatus.textContent =
-          "Last seen " +
-          lastSeen.toLocaleString();
-
-        return;
+          "Offline";
 
       }
+    );
 
-      chatStatus.textContent =
-        "Offline";
 
-    }
-  );
+  if(
+    user.photoURL
+  ){
 
-if(user.photoURL){
+    chatAvatar.textContent =
+      "";
 
-  chatAvatar.textContent = "";
+    chatAvatar.style.backgroundImage =
+      `url("${escapeHtml(
+        user.photoURL
+      )}")`;
 
-  chatAvatar.style.backgroundImage =
-    `url("${escapeHtml(user.photoURL)}")`;
+    chatAvatar.style.backgroundSize =
+      "cover";
 
-  chatAvatar.style.backgroundSize =
-    "cover";
+    chatAvatar.style.backgroundPosition =
+      "center";
 
-  chatAvatar.style.backgroundPosition =
-    "center";
+  }
+  else{
 
-}
-else{
+    chatAvatar.style.backgroundImage =
+      "none";
 
-  chatAvatar.style.backgroundImage =
-    "none";
+    chatAvatar.textContent =
+      user.displayName
+        .charAt(0)
+        .toUpperCase();
 
-  chatAvatar.textContent =
-    user.displayName
-      .charAt(0)
-      .toUpperCase();
+  }
 
-}
 
   appElement.classList.add(
     "chat-open"
@@ -1347,11 +1418,13 @@ else{
     allUsers
   );
 
+
   const chatId =
     createChatId(
       currentUser.uid,
       selectedUser.uid
     );
+
 
   try{
 
@@ -1361,6 +1434,7 @@ else{
         "chats",
         chatId
       );
+
 
     await setDoc(
       chatRef,
@@ -1376,6 +1450,7 @@ else{
         merge:true
       }
     );
+
 
     messageInput.disabled =
       false;
@@ -1418,22 +1493,28 @@ else{
 
 function startMessageListener(){
 
-  if(!selectedUser){
+  if(
+    !selectedUser
+  ){
 
     return;
 
   }
 
-if(unsubscribePresence){
 
-  unsubscribePresence();
+  if(
+    unsubscribeMessages
+  ){
 
-  unsubscribePresence =
-    null;
+    unsubscribeMessages();
 
-}
+    unsubscribeMessages =
+      null;
 
-messagesElement.innerHTML = `
+  }
+
+
+  messagesElement.innerHTML = `
 
     <div class="loading">
       Loading conversation...
@@ -1441,11 +1522,13 @@ messagesElement.innerHTML = `
 
   `;
 
+
   const chatId =
     createChatId(
       currentUser.uid,
       selectedUser.uid
     );
+
 
   const messagesQuery =
     query(
@@ -1461,6 +1544,7 @@ messagesElement.innerHTML = `
       )
     );
 
+
   unsubscribeMessages =
     onSnapshot(
       messagesQuery,
@@ -1469,7 +1553,9 @@ messagesElement.innerHTML = `
         messagesElement.innerHTML =
           "";
 
-        if(snapshot.empty){
+        if(
+          snapshot.empty
+        ){
 
           messagesElement.innerHTML = `
 
@@ -1502,6 +1588,7 @@ messagesElement.innerHTML = `
 
         }
 
+
         snapshot.forEach(
           function(messageSnapshot){
 
@@ -1514,6 +1601,7 @@ messagesElement.innerHTML = `
 
           }
         );
+
 
         messagesElement.scrollTop =
           messagesElement.scrollHeight;
@@ -1549,8 +1637,11 @@ function renderMessage(message){
     message.senderId ===
     currentUser.uid;
 
+
   const row =
-    document.createElement("div");
+    document.createElement(
+      "div"
+    );
 
   row.className =
     "message-row " +
@@ -1562,17 +1653,25 @@ function renderMessage(message){
       "received"
     );
 
+
   const bubble =
-    document.createElement("div");
+    document.createElement(
+      "div"
+    );
 
   bubble.className =
     "message";
 
+
   const original =
-    document.createElement("div");
+    document.createElement(
+      "div"
+    );
 
   original.textContent =
-    message.text || "";
+    message.text ||
+    "";
+
 
   bubble.appendChild(
     original
@@ -1584,10 +1683,13 @@ function renderMessage(message){
   ){
 
     const translation =
-      document.createElement("div");
+      document.createElement(
+        "div"
+      );
 
     translation.className =
       "translation";
+
 
     translation.innerHTML = `
 
@@ -1601,6 +1703,7 @@ function renderMessage(message){
 
     `;
 
+
     bubble.appendChild(
       translation
     );
@@ -1609,7 +1712,9 @@ function renderMessage(message){
 
 
   const time =
-    document.createElement("div");
+    document.createElement(
+      "div"
+    );
 
   time.className =
     "message-time";
@@ -1619,13 +1724,16 @@ function renderMessage(message){
       message.createdAt
     );
 
+
   bubble.appendChild(
     time
   );
 
+
   row.appendChild(
     bubble
   );
+
 
   messagesElement.appendChild(
     row
@@ -1651,8 +1759,10 @@ async function sendMessage(){
 
   }
 
+
   const text =
     messageInput.value.trim();
+
 
   if(!text){
 
@@ -1660,14 +1770,17 @@ async function sendMessage(){
 
   }
 
+
   sendButton.disabled =
     true;
+
 
   const chatId =
     createChatId(
       currentUser.uid,
       selectedUser.uid
     );
+
 
   try{
 
@@ -1677,6 +1790,7 @@ async function sendMessage(){
         "chats",
         chatId
       );
+
 
     await setDoc(
       chatRef,
@@ -1692,6 +1806,7 @@ async function sendMessage(){
         merge:true
       }
     );
+
 
     await addDoc(
       collection(
@@ -1726,6 +1841,7 @@ async function sendMessage(){
       }
     );
 
+
     messageInput.value =
       "";
 
@@ -1744,6 +1860,7 @@ async function sendMessage(){
     );
 
   }
+
 
   sendButton.disabled =
     false;
@@ -1804,11 +1921,26 @@ backButton.addEventListener(
       "chat-open"
     );
 
-    if(unsubscribeMessages){
+
+    if(
+      unsubscribeMessages
+    ){
 
       unsubscribeMessages();
 
       unsubscribeMessages =
+        null;
+
+    }
+
+
+    if(
+      unsubscribePresence
+    ){
+
+      unsubscribePresence();
+
+      unsubscribePresence =
         null;
 
     }
@@ -1823,9 +1955,20 @@ window.addEventListener(
   "beforeunload",
   function(){
 
-    if(unsubscribeMessages){
+    if(
+      unsubscribeMessages
+    ){
 
       unsubscribeMessages();
+
+    }
+
+
+    if(
+      unsubscribePresence
+    ){
+
+      unsubscribePresence();
 
     }
 
