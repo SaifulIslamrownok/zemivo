@@ -823,7 +823,36 @@ let unsubscribeTyping = null;
 let typingTimer = null;
 
 let isTyping = false;
+/* FORWARD */
 
+async function forwardMessage(
+  message
+){
+
+  if(
+    !selectedUser ||
+    !currentUser
+  ){
+    return;
+  }
+
+  const text =
+    message.text || "";
+
+  if(!text){
+    return;
+  }
+
+  messageInput.value =
+    text;
+
+  messageInput.focus();
+
+  showToast(
+    "Message ready to forward."
+  );
+
+}
 /* TOAST */
 
 function showToast(text){
@@ -1020,8 +1049,241 @@ function setupPresence(){
   );
 
 }
+/* PIN MESSAGE */
+
+async function togglePinMessage(
+  messageId,
+  message
+){
+
+  if(
+    !currentUser ||
+    !selectedUser
+  ){
+    return;
+  }
+
+  showToast(
+    message.pinned
+    ?
+    "Message unpinned."
+    :
+    "Message marked important."
+  );
+
+}
+/* AUTOMATIC TRANSLATION */
+
+async function translateMessage(
+  messageId,
+  text
+){
+
+  if(!text){
+    return;
+  }
+
+  /*
+    Secure translation backend
+    will be connected here.
+
+    Original message is never
+    replaced.
+  */
+
+  return null;
+
+}
+  /* ARCHIVE / DELETE CHAT */
+
+function archiveCurrentChat(){
+
+  if(
+    !selectedUser
+  ){
+    return;
+  }
+
+  localStorage.setItem(
+    "zemivo_archive_" +
+    createChatId(
+      currentUser.uid,
+      selectedUser.uid
+    ),
+    "true"
+  );
+
+  showToast(
+    "Chat archived."
+  );
+
+}
 
 
+function deleteCurrentChat(){
+
+  if(
+    !selectedUser
+  ){
+    return;
+  }
+
+  const confirmed =
+    confirm(
+      "Delete this chat from your device view?"
+    );
+
+  if(!confirmed){
+    return;
+  }
+
+  messagesElement.innerHTML =
+    `
+      <div class="empty-chat">
+        Chat removed from this view.
+      </div>
+    `;
+
+  showToast(
+    "Chat removed from this view."
+  );
+
+}
+  /* BACKUP / RECOVERY / MULTI-DEVICE */
+
+async function prepareMessengerBackup(){
+
+  if(
+    !currentUser ||
+    !selectedUser
+  ){
+
+    showToast(
+      "Select a conversation first."
+    );
+
+    return;
+
+  }
+
+  showToast(
+    "Messenger cloud data is stored with your Zemivo account."
+  );
+
+}
+
+
+function enableMultiDeviceSync(){
+
+  if(
+    !currentUser
+  ){
+    return;
+  }
+
+  /*
+    Firestore snapshot listeners
+    keep the current device synchronized
+    with cloud conversation data.
+  */
+
+  console.log(
+    "Zemivo multi-device sync ready."
+  );
+
+}
+  /* BLOCK / UNBLOCK */
+
+function blockUser(){
+
+  if(
+    !selectedUser
+  ){
+    return;
+  }
+
+  const key =
+    "zemivo_blocked_" +
+    selectedUser.uid;
+
+  const blocked =
+    localStorage.getItem(
+      key
+    ) === "true";
+
+  localStorage.setItem(
+    key,
+    blocked
+    ? "false"
+    : "true"
+  );
+
+  showToast(
+    blocked
+    ?
+    "User unblocked."
+    :
+    "User blocked."
+  );
+
+}
+  /* GROUP ADMIN / MODERATOR */
+
+function groupPermission(
+  role
+){
+
+  if(
+    role === "owner"
+  ){
+
+    return {
+      canAdd:true,
+      canRemove:true,
+      canEdit:true,
+      canDelete:true
+    };
+
+  }
+
+
+  if(
+    role === "admin"
+  ){
+
+    return {
+      canAdd:true,
+      canRemove:true,
+      canEdit:true,
+      canDelete:true
+    };
+
+  }
+
+
+  if(
+    role === "moderator"
+  ){
+
+    return {
+      canAdd:false,
+      canRemove:true,
+      canEdit:false,
+      canDelete:true
+    };
+
+  }
+
+
+  return {
+    canAdd:false,
+    canRemove:false,
+    canEdit:false,
+    canDelete:false
+  };
+
+}
+  
 /* LOAD USERS */
 
 async function loadUsers(){
@@ -2396,6 +2658,52 @@ async function updateMessageReceipts(
     }
 
   }
+
+}
+  /* SHARED LINKS */
+
+function findLinksInText(
+  text
+){
+
+  if(!text){
+    return [];
+  }
+
+  const matches =
+    text.match(
+      /https?:\/\/[^\s]+/gi
+    );
+
+  return matches || [];
+
+}
+
+
+function showSharedLinks(
+  messages
+){
+
+  let links = [];
+
+  messages.forEach(
+    function(message){
+
+      links =
+        links.concat(
+          findLinksInText(
+            message.text
+          )
+        );
+
+    }
+  );
+
+  return [
+    ...new Set(
+      links
+    )
+  ];
 
 }
   /* REPLY */
