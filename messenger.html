@@ -1606,6 +1606,17 @@ snapshot.forEach(
 );
 
 
+/* Mark incoming messages as Delivered + Read */
+
+updateMessageReceipts(
+  snapshot
+);
+
+
+messagesElement.scrollTop =
+  messagesElement.scrollHeight;
+
+
         messagesElement.scrollTop =
           messagesElement.scrollHeight;
 
@@ -1905,23 +1916,75 @@ function renderMessage(
   }
 
 
-  const time =
-    document.createElement(
-      "div"
-    );
-
-  time.className =
-    "message-time";
-
-  time.textContent =
-    formatTime(
-      message.createdAt
-    );
-
-
-  bubble.appendChild(
-    time
+const time =
+  document.createElement(
+    "div"
   );
+
+time.className =
+  "message-time";
+
+time.textContent =
+  formatTime(
+    message.createdAt
+  );
+
+
+/* MESSAGE DELIVERY / READ STATUS */
+
+if(
+  isSent
+){
+
+  const status =
+    document.createElement(
+      "span"
+    );
+
+  status.style.marginLeft =
+    "5px";
+
+  status.style.fontSize =
+    "10px";
+
+  status.style.fontWeight =
+    "bold";
+
+
+  if(
+    message.readAt
+  ){
+
+    status.textContent =
+      "✓✓ Read";
+
+  }
+  else if(
+    message.deliveredAt
+  ){
+
+    status.textContent =
+      "✓✓ Delivered";
+
+  }
+  else{
+
+    status.textContent =
+      "✓ Sent";
+
+  }
+
+
+  time.appendChild(
+    status
+  );
+
+}
+
+
+bubble.appendChild(
+  time
+);
 
 
   /* EDITED LABEL */
@@ -2080,7 +2143,126 @@ function renderMessage(
   );
 
 }
+/* UPDATE MESSAGE DELIVERY / READ STATUS */
 
+async function updateMessageReceipts(
+  snapshot
+){
+
+  if(
+    !currentUser ||
+    !selectedUser
+  ){
+
+    return;
+
+  }
+
+
+  const updates = [];
+
+
+  snapshot.forEach(
+    function(messageSnapshot){
+
+      const message =
+        messageSnapshot.data();
+
+      const messageId =
+        messageSnapshot.id;
+
+
+      /* Only incoming messages */
+
+      if(
+        message.senderId !==
+        currentUser.uid
+      ){
+
+        const messageRef =
+          doc(
+            db,
+            "chats",
+            createChatId(
+              currentUser.uid,
+              selectedUser.uid
+            ),
+            "messages",
+            messageId
+          );
+
+
+        const receiptData = {};
+
+
+        /* Delivered */
+
+        if(
+          !message.deliveredAt
+        ){
+
+          receiptData.deliveredAt =
+            serverTimestamp();
+
+        }
+
+
+        /* Read */
+
+        if(
+          !message.readAt
+        ){
+
+          receiptData.readAt =
+            serverTimestamp();
+
+        }
+
+
+        if(
+          Object.keys(
+            receiptData
+          ).length > 0
+        ){
+
+          updates.push(
+            updateDoc(
+              messageRef,
+              receiptData
+            )
+          );
+
+        }
+
+      }
+
+    }
+  );
+
+
+  if(
+    updates.length > 0
+  ){
+
+    try{
+
+      await Promise.all(
+        updates
+      );
+
+    }
+    catch(error){
+
+      console.error(
+        "Message receipt update error:",
+        error
+      );
+
+    }
+
+  }
+
+}
 /* SEND MESSAGE */
 
 async function sendMessage(){
@@ -2174,9 +2356,15 @@ async function sendMessage(){
         translatedText:
           null,
 
-        createdAt:
-          serverTimestamp()
+   
+createdAt:
+  serverTimestamp(),
 
+deliveredAt:
+  null,
+
+readAt:
+  null
       }
     );
 
