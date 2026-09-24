@@ -813,10 +813,16 @@ let allUsers = [];
 
 let selectedUser = null;
 
+et unsubscribePresence = null;
 let unsubscribeMessages = null;
 
 let unsubscribePresence = null;
 
+let unsubscribeTyping = null;
+
+let typingTimer = null;
+
+let isTyping = false;
 
 /* TOAST */
 
@@ -1292,7 +1298,98 @@ userSearch.addEventListener(
 
   }
 );
+/* TYPING */
 
+function setTyping(value){
+
+  if(
+    !currentUser ||
+    !selectedUser
+  ){
+    return;
+  }
+
+  const typingRef =
+    ref(
+      rtdb,
+      "typing/" +
+      createChatId(
+        currentUser.uid,
+        selectedUser.uid
+      ) +
+      "/" +
+      currentUser.uid
+    );
+
+  set(
+    typingRef,
+    {
+      typing:
+        value,
+      updatedAt:
+        databaseServerTimestamp()
+    }
+  );
+
+}
+
+
+function startTypingListener(){
+
+  if(
+    unsubscribeTyping
+  ){
+    unsubscribeTyping();
+    unsubscribeTyping =
+      null;
+  }
+
+  if(
+    !selectedUser
+  ){
+    return;
+  }
+
+  const typingRef =
+    ref(
+      rtdb,
+      "typing/" +
+      createChatId(
+        currentUser.uid,
+        selectedUser.uid
+      ) +
+      "/" +
+      selectedUser.uid
+    );
+
+  unsubscribeTyping =
+    onValue(
+      typingRef,
+      function(snapshot){
+
+        const data =
+          snapshot.val();
+
+        if(
+          data &&
+          data.typing === true
+        ){
+
+          chatStatus.textContent =
+            "✍️ Typing...";
+
+        }
+        else{
+
+          chatStatus.textContent =
+            "Online";
+
+        }
+
+      }
+    );
+
+}
 
 /* SELECT USER */
 
@@ -1463,6 +1560,8 @@ async function selectUser(user){
     messageInput.focus();
 
     startMessageListener();
+
+startTypingListener();
 
   }
   catch(error){
@@ -1830,7 +1929,43 @@ async function deleteMessage(
   }
 
 }
+const replyButton =
+  document.createElement(
+    "button"
+  );
 
+replyButton.type =
+  "button";
+
+replyButton.textContent =
+  "↩️ Reply";
+
+replyButton.style.border =
+  "0";
+
+replyButton.style.borderRadius =
+  "8px";
+
+replyButton.style.padding =
+  "4px 8px";
+
+replyButton.style.cursor =
+  "pointer";
+
+replyButton.addEventListener(
+  "click",
+  function(){
+
+    replyToMessage(
+      message
+    );
+
+  }
+);
+
+actions.appendChild(
+  replyButton
+);
 /* RENDER MESSAGE */
 
 function renderMessage(
@@ -2263,6 +2398,24 @@ async function updateMessageReceipts(
   }
 
 }
+  /* REPLY */
+
+function replyToMessage(
+  message
+){
+
+  messageInput.value =
+    "↩️ " +
+    (message.text || "") +
+    "\n";
+
+  messageInput.focus();
+
+  showToast(
+    "Replying to message."
+  );
+
+}
 /* SEND MESSAGE */
 
 async function sendMessage(){
@@ -2344,11 +2497,17 @@ async function sendMessage(){
         receiverId:
           selectedUser.uid,
 
-        text:
-          text,
+   text:
+  text,
 
-        sourceLanguage:
-          null,
+replyTo:
+  null,
+
+replyText:
+  null,
+
+sourceLanguage:
+  null,
 
         targetLanguage:
           null,
