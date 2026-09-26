@@ -3040,9 +3040,7 @@ function changeWorld(
     profile;
 
 
-  /* Three.js may still be loading.
-     Never allow a touch/click to
-     crash the page. */
+  /* THREE.JS COLORS */
 
   if(
     typeof THREE !==
@@ -3059,16 +3057,109 @@ function changeWorld(
         profile.secondary
       );
 
+
+    /* IMMEDIATE WORLD UPDATE */
+
+    if(
+      pointLight
+    ){
+
+      pointLight.color.set(
+        profile.color
+      );
+
+      pointLight.intensity =
+        2.8 *
+        profile.intensity;
+
+    }
+
+
+    if(
+      secondaryLight
+    ){
+
+      secondaryLight.color.set(
+        profile.secondary
+      );
+
+      secondaryLight.intensity =
+        2.2 *
+        profile.intensity;
+
+    }
+
+
+    if(
+      particleSystem
+    ){
+
+      particleSystem.material.color.set(
+        profile.color
+      );
+
+    }
+
+
+    if(
+      core
+    ){
+
+      core.material.color.set(
+        profile.color
+      );
+
+      core.material.emissive.set(
+        profile.color
+      );
+
+      core.material.emissiveIntensity =
+        .5 *
+        profile.intensity;
+
+    }
+
+
+    if(
+      ring1
+    ){
+
+      ring1.material.color.set(
+        profile.color
+      );
+
+    }
+
+
+    if(
+      ring2
+    ){
+
+      ring2.material.color.set(
+        profile.secondary
+      );
+
+    }
+
+
+    if(
+      ring3
+    ){
+
+      ring3.material.color.set(
+        profile.color
+      );
+
+    }
+
   }
 
 
-/* BODY THEME */
+  /* BODY THEME */
 
-body.className =
-  "theme-" +
-  mode;
-
-
+  body.className =
+    "theme-" +
+    mode;
 
 
   /* BUTTON STATE */
@@ -3131,6 +3222,8 @@ body.className =
   );
 
 }
+
+
 
 
 /* =========================================================
