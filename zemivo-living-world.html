@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <meta
+    name="description"
+    content="Zemivo Living 3D World"
+  >
+
+  <meta
+    name="referrer"
+    content="strict-origin-when-cross-origin"
+  >
+
+  <title>Zemivo Living 3D World</title>
+
+  <style>
+
+    *{
+      box-sizing:border-box;
+    }
+
+    html,
+    body{
+      width:100%;
+      height:100%;
+      margin:0;
+      padding:0;
+      overflow:hidden;
+    }
+
+    body{
+      font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+      background:
+        #020617;
+
+      color:#ffffff;
+    }
+
+    #worldCanvas{
+      position:fixed;
+      inset:0;
+
+      width:100%;
+      height:100%;
+
+      display:block;
+    }
+
+    .overlay{
+      position:fixed;
+      inset:0;
+
+      pointer-events:none;
+    }
+
+    .topbar{
+      position:absolute;
+
+      top:18px;
+      left:18px;
+      right:18px;
+
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+
+      gap:12px;
+    }
+
+    .brand{
+      padding:12px 16px;
+
+      border:1px solid
+        rgba(255,255,255,.16);
+
+      border-radius:18px;
+
+      background:
+        rgba(15,23,42,.48);
+
+      backdrop-filter:
+        blur(16px);
+
+      -webkit-backdrop-filter:
+        blur(16px);
+
+      box-shadow:
+        0 12px 40px
+        rgba(0,0,0,.28);
+
+      pointer-events:auto;
+    }
+
+    .brand-title{
+      font-size:20px;
+      font-weight:800;
+      letter-spacing:.3px;
+    }
+
+    .brand-subtitle{
+      margin-top:3px;
+
+      font-size:11px;
+
+      color:
+        rgba(255,255,255,.68);
+    }
+
+    .security{
+      padding:10px 14px;
+
+      border:1px solid
+        rgba(255,255,255,.14);
+
+      border-radius:16px;
+
+      background:
+        rgba(15,23,42,.42);
+
+      backdrop-filter:
+        blur(14px);
+
+      -webkit-backdrop-filter:
+        blur(14px);
+
+      font-size:11px;
+
+      color:
+        rgba(255,255,255,.76);
+
+      pointer-events:auto;
+    }
+
+    .controls{
+      position:absolute;
+
+      left:50%;
+      bottom:28px;
+
+      transform:
+        translateX(-50%);
+
+      width:
+        min(94%,900px);
+
+      padding:12px;
+
+      display:flex;
+
+      justify-content:center;
+
+      flex-wrap:wrap;
+
+      gap:8px;
+
+      border:1px solid
+        rgba(255,255,255,.14);
+
+      border-radius:22px;
+
+      background:
+        rgba(15,23,42,.48);
+
+      backdrop-filter:
+        blur(18px);
+
+      -webkit-backdrop-filter:
+        blur(18px);
+
+      box-shadow:
+        0 20px 70px
+        rgba(0,0,0,.35);
+
+      pointer-events:auto;
+    }
+
+    .world-button{
+      border:1px solid
+        rgba(255,255,255,.12);
+
+      background:
+        rgba(255,255,255,.07);
+
+      color:#ffffff;
+
+      padding:10px 14px;
+
+      border-radius:14px;
+
+      font-size:13px;
+
+      cursor:pointer;
+
+      transition:
+        transform .2s ease,
+        background .2s ease,
+        border-color .2s ease;
+    }
+
+    .world-button:hover{
+      transform:
+        translateY(-2px);
+
+      background:
+        rgba(255,255,255,.13);
+    }
+
+    .world-button.active{
+      background:
+        rgba(255,255,255,.18);
+
+      border-color:
+        rgba(255,255,255,.35);
+    }
+
+    .world-info{
+      position:absolute;
+
+      left:22px;
+      bottom:30px;
+
+      width:
+        min(280px,42%);
+
+      padding:16px;
+
+      border:1px solid
+        rgba(255,255,255,.12);
+
+      border-radius:18px;
+
+      background:
+        rgba(15,23,42,.38);
+
+      backdrop-filter:
+        blur(16px);
+
+      -webkit-backdrop-filter:
+        blur(16px);
+
+      pointer-events:none;
+    }
+
+    .world-label{
+      font-size:11px;
+
+      text-transform:uppercase;
+
+      letter-spacing:1.4px;
+
+      color:
+        rgba(255,255,255,.55);
+    }
+
+    .world-name{
+      margin-top:5px;
+
+      font-size:23px;
+
+      font-weight:800;
+    }
+
+    .world-description{
+      margin-top:6px;
+
+      font-size:12px;
+
+      line-height:1.5;
+
+      color:
+        rgba(255,255,255,.70);
+    }
+
+    .loading{
+      position:fixed;
+
+      inset:0;
+
+      display:flex;
+
+      align-items:center;
+
+      justify-content:center;
+
+      background:
+        #020617;
+
+      color:
+        rgba(255,255,255,.78);
+
+      font-size:14px;
+
+      z-index:20;
+
+      transition:
+        opacity .5s ease;
+    }
+
+    .loading.hidden{
+      opacity:0;
+
+      pointer-events:none;
+    }
+
+    @media(max-width:700px){
+
+      .topbar{
+        top:10px;
+        left:10px;
+        right:10px;
+      }
+
+      .brand{
+        padding:10px 12px;
+      }
+
+      .brand-title{
+        font-size:17px;
+      }
+
+      .security{
+        padding:8px 10px;
+        font-size:10px;
+      }
+
+      .world-info{
+        left:10px;
+        bottom:105px;
+
+        width:
+          calc(100% - 20px);
+      }
+
+      .controls{
+        bottom:10px;
+
+        width:
+          calc(100% - 20px);
+
+        border-radius:18px;
+
+        padding:9px;
+      }
+
+      .world-button{
+        padding:9px 11px;
+        font-size:12px;
+      }
+
+    }
+
+  </style>
+
+</head>
+
+
+<body>
+
+  <canvas
+    id="worldCanvas"
+  ></canvas>
+
+
+  <div
+    id="loading"
+    class="loading"
+  >
+    Loading Zemivo Living 3D World...
+  </div>
+
+
+  <div
+    class="overlay"
+  >
+
+    <div
+      class="topbar"
+    >
+
+      <div
+        class="brand"
+      >
+
+        <div
+          class="brand-title"
+        >
+          Zemivo
+        </div>
+
+        <div
+          class="brand-subtitle"
+        >
+          Living 3D World
+        </div>
+
+      </div>
+
+
+      <div
+        id="securityStatus"
+        class="security"
+      >
+        🔒 Isolated visual engine
+      </div>
+
+    </div>
+
+
+    <div
+      id="worldInfo"
+      class="world-info"
+    >
+
+      <div
+        class="world-label"
+      >
+        Current Environment
+      </div>
+
+      <div
+        id="worldName"
+        class="world-name"
+      >
+        Personal
+      </div>
+
+      <div
+        id="worldDescription"
+        class="world-description"
+      >
+        A subtle cinematic environment
+        designed to keep the content
+        as the main focus.
+      </div>
+
+    </div>
+
+
+    <div
+      id="controls"
+      class="controls"
+    >
+
+      <button
+        class="world-button active"
+        type="button"
+        data-world="personal"
+      >
+        Personal
+      </button>
+
+      <button
+        class="world-button"
+        type="button"
+        data-world="ocean"
+      >
+        Ocean
+      </button>
+
+      <button
+        class="world-button"
+        type="button"
+        data-world="nature"
+      >
+        Nature
+      </button>
+
+      <button
+        class="world-button"
+        type="button"
+        data-world="music"
+      >
+        Music
+      </button>
+
+      <button
+        class="world-button"
+        type="button"
+        data-world="gaming"
+      >
+        Gaming
+      </button>
+
+      <button
+        class="world-button"
+        type="button"
+        data-world="automotive"
+      >
+        Automotive
+      </button>
+
+      <button
+        class="world-button"
+        type="button"
+        data-world="product"
+      >
+        Product
+      </button>
+
+      <button
+        class="world-button"
+        type="button"
+        data-world="space"
+      >
+        Space
+      </button>
+
+    </div>
+
+  </div>
+
+
+  <!--
+    The 3D engine will be connected here
+    in the second file.
+  -->
+
+  <script
+    type="module"
+    src="zemivo-living-world.js"
+  ></script>
+
+</body>
+
+</html>
