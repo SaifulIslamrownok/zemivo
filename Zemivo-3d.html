@@ -2184,25 +2184,13 @@ let secondaryLight;
 let currentProfile =
   WORLD_PROFILES.personal;
 
-let targetColor =
-  new THREE.Color(
-    currentProfile.color
-  );
+let targetColor = null;
 
-let targetSecondary =
-  new THREE.Color(
-    currentProfile.secondary
-  );
+let targetSecondary = null;
 
-let currentColor =
-  new THREE.Color(
-    currentProfile.color
-  );
+let currentColor = null;
 
-let currentSecondary =
-  new THREE.Color(
-    currentProfile.secondary
-  );
+let currentSecondary = null;
 
 let mouseX = 0;
 let mouseY = 0;
@@ -2222,9 +2210,37 @@ function startLivingWorld(){
     "undefined"
   ){
 
+    console.error(
+      "Three.js could not be loaded."
+    );
+
     return;
 
   }
+
+
+  /* Create Three.js colors only
+     after Three.js has loaded. */
+
+  targetColor =
+    new THREE.Color(
+      currentProfile.color
+    );
+
+  targetSecondary =
+    new THREE.Color(
+      currentProfile.secondary
+    );
+
+  currentColor =
+    new THREE.Color(
+      currentProfile.color
+    );
+
+  currentSecondary =
+    new THREE.Color(
+      currentProfile.secondary
+    );
 
 
   const canvas =
@@ -3310,13 +3326,30 @@ window.ZemivoLivingWorld = {
 
 /* =========================================================
    INITIAL WORLD
+   Wait until Three.js is fully loaded.
 ========================================================= */
 
-changeWorld(
-  "personal"
+window.addEventListener(
+  "load",
+  function(){
+
+    setTimeout(
+      function(){
+
+        if(
+          typeof THREE !==
+          "undefined"
+        ){
+
+          changeWorld(
+            "personal"
+          );
+
+        }
+
+      },
+      100
+    );
+
+  }
 );
-
-</script>
-
-</body>
-</html>
