@@ -3040,16 +3040,33 @@ function changeWorld(
     profile;
 
 
-  targetColor =
-    new THREE.Color(
-      profile.color
-    );
+  /* Three.js may still be loading.
+     Never allow a touch/click to
+     crash the page. */
+
+  if(
+    typeof THREE !==
+    "undefined"
+  ){
+
+    targetColor =
+      new THREE.Color(
+        profile.color
+      );
+
+    targetSecondary =
+      new THREE.Color(
+        profile.secondary
+      );
+
+  }
 
 
-  targetSecondary =
-    new THREE.Color(
-      profile.secondary
-    );
+  /* BODY THEME */
+
+  body.className =
+    "theme-" +
+    mode;
 
 
   /* BODY THEME */
