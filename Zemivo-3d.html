@@ -5,7 +5,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Zemivo 3D Cinematic</title>
+<title>Zemivo Living 3D World</title>
 
 <style>
 
@@ -17,745 +17,1179 @@ html,
 body{
   margin:0;
   width:100%;
-  height:100%;
-  overflow:hidden;
+  min-height:100%;
   font-family:Arial,Helvetica,sans-serif;
-  background:#020617;
+  background:#02040b;
   color:#fff;
+  overflow-x:hidden;
 }
 
 body{
-  position:relative;
+  min-height:100vh;
 }
 
-/* 3D BACKGROUND */
+/* =========================================================
+   3D WORLD
+========================================================= */
 
-#scene{
+#world{
   position:fixed;
   inset:0;
   z-index:0;
+  overflow:hidden;
+  background:
+    radial-gradient(
+      circle at 50% 45%,
+      rgba(37,99,235,.18),
+      transparent 38%
+    ),
+    #02040b;
+  transition:
+    background 1.2s ease,
+    filter 1.2s ease;
 }
 
-canvas{
+#threeCanvas{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
   display:block;
 }
 
-/* CINEMATIC LIGHT */
+/* =========================================================
+   ATMOSPHERE
+========================================================= */
 
-.light{
-  position:fixed;
-  width:420px;
-  height:420px;
-  border-radius:50%;
-  filter:blur(90px);
-  opacity:.22;
+.atmosphere{
+  position:absolute;
+  inset:-20%;
   pointer-events:none;
-  z-index:1;
+  opacity:.75;
+  transition:
+    background 1.2s ease,
+    opacity 1.2s ease,
+    transform 1.2s ease;
 }
 
-.light.one{
-  background:#2563eb;
-  left:-120px;
+.atmosphere::before,
+.atmosphere::after{
+  content:"";
+  position:absolute;
+  border-radius:50%;
+  filter:blur(80px);
+}
+
+.atmosphere::before{
+  width:45vw;
+  height:45vw;
+  left:5%;
   top:10%;
+  background:rgba(37,99,235,.20);
 }
 
-.light.two{
-  background:#9333ea;
-  right:-120px;
-  bottom:0;
+.atmosphere::after{
+  width:40vw;
+  height:40vw;
+  right:5%;
+  bottom:5%;
+  background:rgba(139,92,246,.15);
 }
 
-.light.three{
-  background:#06b6d4;
-  left:42%;
-  top:-160px;
-}
+/* =========================================================
+   HEADER
+========================================================= */
 
-/* APP */
+.header{
+  position:fixed;
+  top:0;
+  left:0;
+  right:0;
+  height:68px;
+  z-index:20;
 
-.zemivo-app{
-  position:relative;
-  z-index:5;
-  width:100%;
-  height:100%;
-  display:flex;
-  flex-direction:column;
-}
-
-/* TOP BAR */
-
-.topbar{
-  height:72px;
-  flex-shrink:0;
   display:flex;
   align-items:center;
   justify-content:space-between;
-  padding:0 24px;
+
+  padding:0 22px;
+
+  background:rgba(5,8,18,.45);
   border-bottom:1px solid rgba(255,255,255,.10);
-  background:rgba(2,6,23,.48);
-  backdrop-filter:blur(22px);
-  -webkit-backdrop-filter:blur(22px);
-}
 
-.brand{
-  display:flex;
-  align-items:center;
-  gap:12px;
-}
-
-.brand-mark{
-  width:42px;
-  height:42px;
-  border-radius:13px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:24px;
-  font-weight:900;
-  background:
-    linear-gradient(
-      135deg,
-      #22d3ee,
-      #2563eb,
-      #a855f7
-    );
-  box-shadow:
-    0 0 25px rgba(59,130,246,.45);
-}
-
-.brand-name{
-  font-size:25px;
-  font-weight:800;
-  letter-spacing:.3px;
-}
-
-.brand-sub{
-  font-size:10px;
-  color:#94a3b8;
-  margin-top:2px;
-}
-
-.top-actions{
-  display:flex;
-  gap:8px;
-}
-
-.top-button{
-  width:42px;
-  height:42px;
-  border:1px solid rgba(255,255,255,.12);
-  border-radius:50%;
-  background:rgba(255,255,255,.07);
-  color:#fff;
-  font-size:17px;
-  cursor:pointer;
-}
-
-/* MAIN */
-
-.main{
-  flex:1;
-  min-height:0;
-  display:flex;
-}
-
-/* SIDE */
-
-.sidebar{
-  width:235px;
-  flex-shrink:0;
-  padding:22px 14px;
-  border-right:1px solid rgba(255,255,255,.09);
-  background:rgba(2,6,23,.34);
   backdrop-filter:blur(20px);
   -webkit-backdrop-filter:blur(20px);
 }
 
-.nav-title{
-  padding:0 12px 12px;
-  font-size:10px;
-  color:#64748b;
-  text-transform:uppercase;
-  letter-spacing:1.5px;
-}
-
-.nav-item{
-  width:100%;
-  border:1px solid transparent;
-  background:transparent;
-  color:#cbd5e1;
-  padding:12px;
-  border-radius:12px;
+.logo{
   display:flex;
   align-items:center;
-  gap:11px;
-  margin-bottom:5px;
-  cursor:pointer;
-  text-align:left;
+  gap:10px;
+  font-size:25px;
+  font-weight:900;
+  letter-spacing:.5px;
 }
 
-.nav-item:hover{
-  background:rgba(255,255,255,.06);
-}
+.logo-orb{
+  width:35px;
+  height:35px;
+  border-radius:50%;
 
-.nav-item.active{
   background:
-    linear-gradient(
-      90deg,
-      rgba(37,99,235,.30),
-      rgba(139,92,246,.12)
+    radial-gradient(
+      circle at 35% 30%,
+      #fff,
+      #60a5fa 20%,
+      #2563eb 45%,
+      #7c3aed 75%,
+      transparent 76%
     );
-  border-color:rgba(96,165,250,.25);
-  color:#fff;
+
   box-shadow:
-    inset 0 0 25px rgba(37,99,235,.08);
+    0 0 18px rgba(59,130,246,.8),
+    0 0 40px rgba(124,58,237,.35);
+
+  animation:
+    logoPulse 3s ease-in-out infinite;
 }
 
-.nav-icon{
-  width:25px;
-  text-align:center;
+@keyframes logoPulse{
+
+  0%,100%{
+    transform:scale(1);
+  }
+
+  50%{
+    transform:scale(1.08);
+  }
+
 }
 
-/* CONTENT */
-
-.content{
-  flex:1;
-  min-width:0;
-  overflow:auto;
-  padding:28px;
+.header-right{
+  display:flex;
+  align-items:center;
+  gap:9px;
 }
 
-/* HERO */
+.header-button{
+  width:40px;
+  height:40px;
 
-.hero{
-  position:relative;
-  min-height:220px;
-  border-radius:26px;
-  overflow:hidden;
-  padding:32px;
   border:1px solid rgba(255,255,255,.12);
+  border-radius:50%;
+
+  background:rgba(255,255,255,.06);
+  color:#fff;
+
+  font-size:17px;
+
+  cursor:pointer;
+
+  transition:
+    transform .25s ease,
+    background .25s ease;
+}
+
+.header-button:hover{
+  transform:translateY(-2px);
+  background:rgba(255,255,255,.12);
+}
+
+/* =========================================================
+   MAIN LAYOUT
+========================================================= */
+
+.layout{
+  position:relative;
+  z-index:5;
+
+  width:100%;
+  min-height:100vh;
+
+  display:grid;
+  grid-template-columns:230px minmax(0,1fr) 280px;
+
+  gap:20px;
+
+  padding:
+    92px
+    22px
+    30px;
+}
+
+/* =========================================================
+   GLASS
+========================================================= */
+
+.glass{
   background:
     linear-gradient(
       135deg,
-      rgba(15,23,42,.88),
-      rgba(30,41,59,.48)
+      rgba(255,255,255,.09),
+      rgba(255,255,255,.035)
     );
+
+  border:1px solid rgba(255,255,255,.11);
+
   box-shadow:
-    0 25px 80px rgba(0,0,0,.38),
+    0 20px 60px rgba(0,0,0,.28),
     inset 0 1px 0 rgba(255,255,255,.08);
+
   backdrop-filter:blur(22px);
   -webkit-backdrop-filter:blur(22px);
 }
 
-.hero::before{
-  content:"";
-  position:absolute;
-  width:320px;
-  height:320px;
-  right:-100px;
-  top:-150px;
-  border-radius:50%;
-  background:
-    radial-gradient(
-      circle,
-      rgba(59,130,246,.45),
-      transparent 65%
-    );
+/* =========================================================
+   SIDEBAR
+========================================================= */
+
+.sidebar{
+  align-self:start;
+
+  border-radius:24px;
+  padding:15px;
+
+  position:sticky;
+  top:90px;
 }
 
-.hero::after{
+.sidebar-title{
+  font-size:11px;
+  color:rgba(255,255,255,.45);
+  text-transform:uppercase;
+  letter-spacing:1.5px;
+  padding:7px 11px 12px;
+}
+
+.nav-button{
+  width:100%;
+
+  border:1px solid transparent;
+  border-radius:14px;
+
+  background:transparent;
+  color:rgba(255,255,255,.78);
+
+  padding:12px 12px;
+
+  display:flex;
+  align-items:center;
+  gap:11px;
+
+  text-align:left;
+  font-size:14px;
+
+  cursor:pointer;
+
+  transition:
+    background .25s ease,
+    transform .25s ease,
+    color .25s ease;
+}
+
+.nav-button:hover{
+  background:rgba(255,255,255,.07);
+  color:#fff;
+  transform:translateX(3px);
+}
+
+.nav-button.active{
+  background:
+    linear-gradient(
+      90deg,
+      rgba(37,99,235,.32),
+      rgba(124,58,237,.15)
+    );
+
+  border-color:rgba(96,165,250,.18);
+  color:#fff;
+}
+
+.nav-icon{
+  width:28px;
+  text-align:center;
+  font-size:17px;
+}
+
+/* =========================================================
+   CENTER
+========================================================= */
+
+.center{
+  min-width:0;
+}
+
+.hero{
+  min-height:350px;
+
+  border-radius:30px;
+
+  padding:30px;
+
+  position:relative;
+  overflow:hidden;
+
+  display:flex;
+  flex-direction:column;
+  justify-content:flex-end;
+}
+
+.hero::before{
   content:"";
+
   position:absolute;
-  width:220px;
-  height:220px;
-  right:25%;
-  bottom:-150px;
-  border-radius:50%;
+  inset:0;
+
   background:
     radial-gradient(
-      circle,
-      rgba(168,85,247,.38),
-      transparent 65%
+      circle at 75% 30%,
+      rgba(96,165,250,.22),
+      transparent 30%
+    ),
+    radial-gradient(
+      circle at 30% 70%,
+      rgba(124,58,237,.17),
+      transparent 35%
     );
+
+  pointer-events:none;
 }
 
 .hero-content{
   position:relative;
   z-index:2;
-  max-width:620px;
 }
 
-.hero-label{
-  color:#67e8f9;
-  font-size:12px;
+.eyebrow{
+  font-size:11px;
   font-weight:bold;
+
   letter-spacing:2px;
+
+  color:#93c5fd;
+
   text-transform:uppercase;
 }
 
 .hero h1{
-  margin:10px 0 8px;
-  font-size:clamp(32px,5vw,58px);
-  line-height:1;
-}
+  margin:9px 0 10px;
 
-.hero h1 span{
-  background:
-    linear-gradient(
-      90deg,
-      #67e8f9,
-      #60a5fa,
-      #c084fc
-    );
-  -webkit-background-clip:text;
-  background-clip:text;
-  color:transparent;
+  font-size:
+    clamp(32px,5vw,62px);
+
+  line-height:.98;
+
+  max-width:700px;
 }
 
 .hero p{
-  color:#cbd5e1;
-  line-height:1.6;
-  max-width:520px;
   margin:0;
+
+  max-width:650px;
+
+  color:rgba(255,255,255,.66);
+
+  font-size:15px;
+  line-height:1.65;
 }
 
-.hero-buttons{
-  display:flex;
-  gap:10px;
-  margin-top:20px;
-  flex-wrap:wrap;
-}
+/* =========================================================
+   CONTROL PANEL
+========================================================= */
 
-.primary{
-  border:0;
-  padding:11px 18px;
-  border-radius:12px;
-  color:#fff;
-  font-weight:bold;
-  background:
-    linear-gradient(
-      100deg,
-      #2563eb,
-      #7c3aed
-    );
-  box-shadow:
-    0 10px 30px rgba(37,99,235,.30);
-  cursor:pointer;
-}
+.control-panel{
+  margin-top:18px;
 
-.secondary{
-  border:1px solid rgba(255,255,255,.14);
-  padding:11px 18px;
-  border-radius:12px;
-  color:#e2e8f0;
-  background:rgba(255,255,255,.06);
-  cursor:pointer;
-}
+  padding:18px;
 
-/* SECTION */
+  border-radius:22px;
+}
 
 .section-title{
-  margin:25px 0 12px;
-  display:flex;
-  align-items:end;
-  justify-content:space-between;
+  font-size:13px;
+  font-weight:bold;
+  margin-bottom:12px;
 }
 
-.section-title h2{
-  margin:0;
-  font-size:19px;
-}
-
-.section-title span{
-  color:#64748b;
-  font-size:12px;
-}
-
-/* CARDS */
-
-.cards{
+.mode-grid{
   display:grid;
   grid-template-columns:
-    repeat(
-      auto-fit,
-      minmax(220px,1fr)
-    );
-  gap:14px;
+    repeat(4,minmax(0,1fr));
+
+  gap:9px;
 }
 
-.card{
-  position:relative;
-  min-height:170px;
-  border-radius:20px;
-  padding:18px;
-  overflow:hidden;
-  border:1px solid rgba(255,255,255,.10);
-  background:
-    linear-gradient(
-      145deg,
-      rgba(15,23,42,.80),
-      rgba(15,23,42,.42)
-    );
-  box-shadow:
-    0 18px 45px rgba(0,0,0,.28),
-    inset 0 1px 0 rgba(255,255,255,.06);
-  backdrop-filter:blur(18px);
-  -webkit-backdrop-filter:blur(18px);
+.mode-button{
+  min-height:76px;
+
+  border:1px solid rgba(255,255,255,.09);
+  border-radius:16px;
+
+  background:rgba(255,255,255,.045);
+
+  color:#fff;
+
+  cursor:pointer;
+
+  padding:9px;
+
   transition:
-    transform .35s ease,
-    border-color .35s ease,
-    box-shadow .35s ease;
+    transform .25s ease,
+    background .3s ease,
+    border-color .3s ease;
 }
 
-.card:hover{
-  transform:
-    translateY(-7px)
-    perspective(700px)
-    rotateX(2deg);
-  border-color:rgba(96,165,250,.30);
-  box-shadow:
-    0 25px 55px rgba(0,0,0,.38),
-    0 0 30px rgba(37,99,235,.10);
+.mode-button:hover{
+  transform:translateY(-3px);
+  background:rgba(255,255,255,.09);
 }
 
-.card-glow{
-  position:absolute;
-  width:120px;
-  height:120px;
-  border-radius:50%;
-  right:-45px;
-  top:-45px;
-  filter:blur(30px);
-  opacity:.32;
-}
-
-.card:nth-child(1) .card-glow{
-  background:#2563eb;
-}
-
-.card:nth-child(2) .card-glow{
-  background:#9333ea;
-}
-
-.card:nth-child(3) .card-glow{
-  background:#06b6d4;
-}
-
-.card:nth-child(4) .card-glow{
-  background:#f59e0b;
-}
-
-.card-icon{
-  position:relative;
-  width:45px;
-  height:45px;
-  border-radius:14px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  background:rgba(255,255,255,.08);
-  border:1px solid rgba(255,255,255,.10);
-  font-size:20px;
-}
-
-.card h3{
-  margin:14px 0 6px;
-  position:relative;
-}
-
-.card p{
-  position:relative;
-  margin:0;
-  color:#94a3b8;
-  font-size:12px;
-  line-height:1.5;
-}
-
-/* POST PREVIEW */
-
-.post{
-  margin-top:14px;
-  border-radius:22px;
-  overflow:hidden;
-  border:1px solid rgba(255,255,255,.10);
-  background:rgba(15,23,42,.65);
-  box-shadow:
-    0 20px 50px rgba(0,0,0,.30);
-  backdrop-filter:blur(20px);
-}
-
-.post-head{
-  padding:15px;
-  display:flex;
-  align-items:center;
-  gap:10px;
-}
-
-.avatar{
-  width:42px;
-  height:42px;
-  border-radius:50%;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-weight:bold;
+.mode-button.active{
   background:
     linear-gradient(
       135deg,
-      #06b6d4,
-      #2563eb,
-      #9333ea
+      rgba(37,99,235,.35),
+      rgba(124,58,237,.25)
     );
+
+  border-color:
+    rgba(96,165,250,.55);
+
+  box-shadow:
+    0 0 25px rgba(59,130,246,.12);
+}
+
+.mode-icon{
+  display:block;
+  font-size:23px;
+  margin-bottom:6px;
+}
+
+.mode-name{
+  display:block;
+  font-size:11px;
+  font-weight:bold;
+}
+
+/* =========================================================
+   LIVE STATUS
+========================================================= */
+
+.live-status{
+  margin-top:14px;
+
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+
+  gap:10px;
+
+  padding:12px 14px;
+
+  border-radius:15px;
+
+  background:rgba(0,0,0,.18);
+
+  border:1px solid rgba(255,255,255,.07);
+}
+
+.live-left{
+  display:flex;
+  align-items:center;
+  gap:9px;
+}
+
+.live-dot{
+  width:8px;
+  height:8px;
+  border-radius:50%;
+  background:#34d399;
+
+  box-shadow:
+    0 0 12px rgba(52,211,153,.9);
+
+  animation:
+    livePulse 1.6s infinite;
+}
+
+@keyframes livePulse{
+
+  0%,100%{
+    opacity:1;
+    transform:scale(1);
+  }
+
+  50%{
+    opacity:.45;
+    transform:scale(.7);
+  }
+
+}
+
+#worldMode{
+  font-weight:bold;
+}
+
+#worldMood{
+  color:rgba(255,255,255,.55);
+  font-size:11px;
+}
+
+/* =========================================================
+   FEED CARD
+========================================================= */
+
+.feed-card{
+  margin-top:18px;
+
+  border-radius:24px;
+
+  padding:20px;
+
+  transition:
+    transform .5s ease,
+    box-shadow .5s ease;
+}
+
+.feed-card:hover{
+  transform:translateY(-3px);
+
+  box-shadow:
+    0 30px 80px rgba(0,0,0,.35);
+}
+
+.feed-header{
+  display:flex;
+  align-items:center;
+  gap:11px;
+}
+
+.avatar{
+  width:44px;
+  height:44px;
+
+  border-radius:50%;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  background:
+    linear-gradient(
+      135deg,
+      #2563eb,
+      #7c3aed
+    );
+
+  font-weight:bold;
+
   box-shadow:
     0 0 20px rgba(59,130,246,.25);
 }
 
-.post-name{
+.feed-name{
   font-weight:bold;
 }
 
-.post-time{
-  color:#64748b;
+.feed-time{
+  color:rgba(255,255,255,.42);
   font-size:11px;
   margin-top:3px;
 }
 
-.post-body{
-  padding:0 15px 15px;
-  color:#cbd5e1;
-  line-height:1.5;
+.feed-text{
+  margin:18px 0;
+
+  color:rgba(255,255,255,.82);
+
+  line-height:1.65;
 }
 
-.post-visual{
-  height:230px;
-  margin:0 15px;
-  border-radius:17px;
+.content-preview{
+  min-height:170px;
+
+  border-radius:19px;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
   position:relative;
   overflow:hidden;
+
   background:
-    linear-gradient(
-      135deg,
-      #0f172a,
-      #172554,
-      #312e81
-    );
+    radial-gradient(
+      circle at 30% 30%,
+      rgba(59,130,246,.25),
+      transparent 30%
+    ),
+    rgba(255,255,255,.035);
+
+  border:1px solid rgba(255,255,255,.08);
 }
 
-.post-visual::before{
-  content:"";
-  position:absolute;
-  inset:-50%;
-  background:
-    conic-gradient(
-      from 0deg,
-      transparent,
-      rgba(34,211,238,.45),
-      transparent,
-      rgba(168,85,247,.42),
-      transparent
-    );
-  animation:
-    rotateGlow 12s linear infinite;
-}
+.preview-orb{
+  width:90px;
+  height:90px;
 
-.post-visual::after{
-  content:"ZEMIVO";
-  position:absolute;
-  left:50%;
-  top:50%;
-  transform:translate(-50%,-50%);
-  font-size:42px;
-  font-weight:900;
-  letter-spacing:5px;
-  color:rgba(255,255,255,.10);
-}
-
-@keyframes rotateGlow{
-  to{
-    transform:rotate(360deg);
-  }
-}
-
-.post-actions{
-  display:flex;
-  justify-content:space-around;
-  padding:13px;
-  color:#94a3b8;
-  font-size:13px;
-}
-
-/* 3D FLOATING ORB */
-
-.orb{
-  position:absolute;
-  right:8%;
-  top:20%;
-  width:130px;
-  height:130px;
   border-radius:50%;
+
   background:
     radial-gradient(
       circle at 30% 25%,
       #fff,
-      #67e8f9 5%,
-      #2563eb 28%,
-      #312e81 60%,
-      #020617 72%
+      #60a5fa 18%,
+      #2563eb 45%,
+      #7c3aed 72%,
+      transparent 74%
     );
+
   box-shadow:
-    0 0 35px rgba(59,130,246,.65),
-    0 0 100px rgba(124,58,237,.35);
+    0 0 30px rgba(59,130,246,.65),
+    0 0 90px rgba(124,58,237,.25);
+
   animation:
-    floatOrb 5s ease-in-out infinite;
+    previewFloat 4s ease-in-out infinite;
 }
 
-.orb::before{
-  content:"";
-  position:absolute;
-  inset:-18px;
-  border:1px solid rgba(103,232,249,.32);
-  border-radius:50%;
-  transform:rotate(25deg) scaleY(.35);
-}
+@keyframes previewFloat{
 
-.orb::after{
-  content:"";
-  position:absolute;
-  inset:-28px;
-  border:1px solid rgba(168,85,247,.22);
-  border-radius:50%;
-  transform:rotate(-35deg) scaleY(.25);
-}
-
-@keyframes floatOrb{
-
-  0%,
-  100%{
+  0%,100%{
     transform:
       translateY(0)
-      rotate(0deg);
+      scale(1);
   }
 
   50%{
     transform:
-      translateY(-18px)
-      rotate(8deg);
+      translateY(-10px)
+      scale(1.05);
   }
 
 }
 
-/* MOBILE */
+.feed-actions{
+  display:flex;
+  gap:8px;
 
-@media(max-width:800px){
+  margin-top:15px;
+}
+
+.feed-action{
+  border:0;
+
+  padding:9px 13px;
+
+  border-radius:12px;
+
+  background:rgba(255,255,255,.05);
+
+  color:rgba(255,255,255,.68);
+
+  cursor:pointer;
+}
+
+/* =========================================================
+   RIGHT PANEL
+========================================================= */
+
+.right-panel{
+  align-self:start;
+
+  position:sticky;
+  top:90px;
+
+  display:flex;
+  flex-direction:column;
+  gap:15px;
+}
+
+.info-card{
+  border-radius:22px;
+  padding:18px;
+}
+
+.info-title{
+  font-size:13px;
+  font-weight:bold;
+  margin-bottom:14px;
+}
+
+.signal{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+
+  padding:9px 0;
+
+  border-bottom:1px solid rgba(255,255,255,.06);
+
+  font-size:12px;
+}
+
+.signal:last-child{
+  border-bottom:0;
+}
+
+.signal-label{
+  color:rgba(255,255,255,.55);
+}
+
+.signal-value{
+  font-weight:bold;
+}
+
+.status-good{
+  color:#34d399;
+}
+
+.ai-box{
+  border-radius:22px;
+  padding:18px;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(124,58,237,.17),
+      rgba(37,99,235,.10)
+    );
+
+  border:1px solid rgba(139,92,246,.20);
+}
+
+.ai-title{
+  display:flex;
+  align-items:center;
+  gap:8px;
+
+  font-weight:bold;
+}
+
+.ai-description{
+  margin-top:9px;
+
+  color:rgba(255,255,255,.58);
+
+  font-size:12px;
+  line-height:1.6;
+}
+
+.ai-badge{
+  display:inline-flex;
+
+  margin-top:12px;
+
+  padding:6px 9px;
+
+  border-radius:10px;
+
+  background:rgba(255,255,255,.07);
+
+  font-size:10px;
+
+  color:#c4b5fd;
+}
+
+/* =========================================================
+   BOTTOM NAV
+========================================================= */
+
+.mobile-nav{
+  display:none;
+}
+
+/* =========================================================
+   WORLD THEMES
+========================================================= */
+
+/* OCEAN */
+
+body.theme-ocean #world{
+  background:
+    radial-gradient(
+      circle at 50% 45%,
+      rgba(14,165,233,.26),
+      transparent 38%
+    ),
+    #01131d;
+}
+
+body.theme-ocean .atmosphere::before{
+  background:rgba(14,165,233,.22);
+}
+
+body.theme-ocean .atmosphere::after{
+  background:rgba(6,182,212,.18);
+}
+
+/* NATURE */
+
+body.theme-nature #world{
+  background:
+    radial-gradient(
+      circle at 45% 40%,
+      rgba(34,197,94,.20),
+      transparent 38%
+    ),
+    #03110a;
+}
+
+body.theme-nature .atmosphere::before{
+  background:rgba(34,197,94,.22);
+}
+
+body.theme-nature .atmosphere::after{
+  background:rgba(16,185,129,.16);
+}
+
+/* MUSIC */
+
+body.theme-music #world{
+  background:
+    radial-gradient(
+      circle at 50% 45%,
+      rgba(217,70,239,.23),
+      transparent 38%
+    ),
+    #10030f;
+}
+
+body.theme-music .atmosphere::before{
+  background:rgba(217,70,239,.23);
+}
+
+body.theme-music .atmosphere::after{
+  background:rgba(99,102,241,.20);
+}
+
+/* GAMING */
+
+body.theme-gaming #world{
+  background:
+    radial-gradient(
+      circle at 50% 45%,
+      rgba(6,182,212,.22),
+      transparent 38%
+    ),
+    #020810;
+}
+
+body.theme-gaming .atmosphere::before{
+  background:rgba(6,182,212,.23);
+}
+
+body.theme-gaming .atmosphere::after{
+  background:rgba(236,72,153,.17);
+}
+
+/* CAR */
+
+body.theme-car #world{
+  background:
+    radial-gradient(
+      circle at 50% 45%,
+      rgba(148,163,184,.18),
+      transparent 38%
+    ),
+    #07090d;
+}
+
+body.theme-car .atmosphere::before{
+  background:rgba(148,163,184,.20);
+}
+
+body.theme-car .atmosphere::after{
+  background:rgba(59,130,246,.14);
+}
+
+/* PRODUCT */
+
+body.theme-product #world{
+  background:
+    radial-gradient(
+      circle at 50% 45%,
+      rgba(245,158,11,.16),
+      transparent 38%
+    ),
+    #100b03;
+}
+
+body.theme-product .atmosphere::before{
+  background:rgba(245,158,11,.18);
+}
+
+body.theme-product .atmosphere::after{
+  background:rgba(251,191,36,.12);
+}
+
+/* SPACE */
+
+body.theme-space #world{
+  background:
+    radial-gradient(
+      circle at 50% 45%,
+      rgba(99,102,241,.23),
+      transparent 38%
+    ),
+    #03020d;
+}
+
+body.theme-space .atmosphere::before{
+  background:rgba(99,102,241,.22);
+}
+
+body.theme-space .atmosphere::after{
+  background:rgba(168,85,247,.18);
+}
+
+/* PERSONAL */
+
+body.theme-personal #world{
+  background:
+    radial-gradient(
+      circle at 50% 45%,
+      rgba(59,130,246,.13),
+      transparent 38%
+    ),
+    #05070d;
+}
+
+body.theme-personal .atmosphere::before{
+  background:rgba(59,130,246,.12);
+}
+
+body.theme-personal .atmosphere::after{
+  background:rgba(148,163,184,.08);
+}
+
+/* =========================================================
+   TRANSITION
+========================================================= */
+
+.world-transition{
+  position:fixed;
+  inset:0;
+
+  z-index:50;
+
+  pointer-events:none;
+
+  background:#fff;
+
+  opacity:0;
+
+  transition:opacity .35s ease;
+}
+
+.world-transition.active{
+  opacity:.035;
+}
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media(max-width:1050px){
+
+  .layout{
+    grid-template-columns:190px minmax(0,1fr);
+  }
+
+  .right-panel{
+    display:none;
+  }
+
+}
+
+@media(max-width:760px){
+
+  .header{
+    padding:0 14px;
+  }
+
+  .logo{
+    font-size:21px;
+  }
+
+  .header-button{
+    width:36px;
+    height:36px;
+  }
+
+  .layout{
+    display:block;
+
+    padding:
+      82px
+      12px
+      82px;
+  }
 
   .sidebar{
     display:none;
   }
 
-  .content{
-    padding:16px;
-  }
-
-  .topbar{
-    height:62px;
-    padding:0 14px;
-  }
-
-  .brand-name{
-    font-size:21px;
-  }
-
-  .brand-sub{
-    display:none;
-  }
-
-  .orb{
-    width:75px;
-    height:75px;
-    right:8%;
-    top:12%;
-  }
-
   .hero{
-    padding:24px;
-    min-height:250px;
+    min-height:320px;
+    padding:22px;
+    border-radius:24px;
   }
 
-  .cards{
+  .mode-grid{
     grid-template-columns:
       repeat(2,minmax(0,1fr));
   }
 
+  .control-panel,
+  .feed-card{
+    border-radius:20px;
+  }
+
+  .mobile-nav{
+    position:fixed;
+
+    left:10px;
+    right:10px;
+    bottom:10px;
+
+    height:62px;
+
+    z-index:30;
+
+    display:flex;
+
+    border-radius:20px;
+
+    background:rgba(8,11,20,.78);
+
+    border:1px solid rgba(255,255,255,.10);
+
+    backdrop-filter:blur(22px);
+    -webkit-backdrop-filter:blur(22px);
+
+    box-shadow:
+      0 15px 40px rgba(0,0,0,.35);
+  }
+
+  .mobile-nav button{
+    flex:1;
+
+    border:0;
+
+    background:transparent;
+
+    color:rgba(255,255,255,.58);
+
+    font-size:10px;
+
+    cursor:pointer;
+  }
+
+  .mobile-nav button.active{
+    color:#fff;
+  }
+
+  .mobile-nav-icon{
+    display:block;
+    font-size:20px;
+    margin-bottom:3px;
+  }
+
 }
 
-@media(max-width:500px){
-
-  .cards{
-    grid-template-columns:1fr;
-  }
+@media(max-width:430px){
 
   .hero h1{
-    font-size:36px;
+    font-size:34px;
   }
 
-  .post-visual{
-    height:180px;
+  .hero p{
+    font-size:13px;
   }
 
-  .top-button{
-    width:38px;
-    height:38px;
+  .mode-button{
+    min-height:70px;
+  }
+
+  .feed-actions{
+    overflow-x:auto;
+  }
+
+}
+
+/* =========================================================
+   REDUCED MOTION
+========================================================= */
+
+@media(prefers-reduced-motion:reduce){
+
+  *,
+  *::before,
+  *::after{
+    animation-duration:.01ms !important;
+    animation-iteration-count:1 !important;
+    scroll-behavior:auto !important;
+    transition-duration:.01ms !important;
   }
 
 }
 
 </style>
-
 </head>
 
-<body>
 
-<div id="scene"></div>
+<body class="theme-personal">
 
-<div class="light one"></div>
-<div class="light two"></div>
-<div class="light three"></div>
 
-<div class="zemivo-app">
+<!-- =======================================================
+     3D WORLD
+======================================================== -->
 
-<header class="topbar">
+<div id="world">
 
-  <div class="brand">
+  <canvas id="threeCanvas"></canvas>
 
-    <div class="brand-mark">
-      Z
-    </div>
+  <div class="atmosphere"></div>
 
-    <div>
+</div>
 
-      <div class="brand-name">
-        Zemivo
-      </div>
 
-      <div class="brand-sub">
-        Your Global Digital Life
-      </div>
+<div
+  id="worldTransition"
+  class="world-transition"
+></div>
 
-    </div>
+
+<!-- =======================================================
+     HEADER
+======================================================== -->
+
+<header class="header">
+
+  <div class="logo">
+
+    <div class="logo-orb"></div>
+
+    <span>Zemivo</span>
 
   </div>
 
-  <div class="top-actions">
 
-    <button class="top-button">
+  <div class="header-right">
+
+    <button
+      class="header-button"
+      type="button"
+      title="Notifications"
+    >
       🔔
     </button>
 
-    <button class="top-button">
-      💬
-    </button>
-
-    <button class="top-button">
+    <button
+      class="header-button"
+      type="button"
+      title="Profile"
+    >
       👤
     </button>
 
@@ -764,477 +1198,1577 @@ canvas{
 </header>
 
 
-<main class="main">
+<!-- =======================================================
+     MAIN
+======================================================== -->
+
+<main class="layout">
 
 
-<aside class="sidebar">
+  <!-- =====================================================
+       SIDEBAR
+  ====================================================== -->
 
-  <div class="nav-title">
-    Zemivo World
-  </div>
+  <aside class="sidebar glass">
 
-  <button class="nav-item active">
-    <span class="nav-icon">🏠</span>
-    Home
-  </button>
-
-  <button class="nav-item">
-    <span class="nav-icon">👥</span>
-    Friends
-  </button>
-
-  <button class="nav-item">
-    <span class="nav-icon">◈</span>
-    Groups
-  </button>
-
-  <button class="nav-item">
-    <span class="nav-icon">🛍️</span>
-    Marketplace
-  </button>
-
-  <button class="nav-item">
-    <span class="nav-icon">🎫</span>
-    Events
-  </button>
-
-  <button class="nav-item">
-    <span class="nav-icon">💬</span>
-    Messenger
-  </button>
-
-  <button class="nav-item">
-    <span class="nav-icon">🎮</span>
-    Gaming
-  </button>
-
-  <button class="nav-item">
-    <span class="nav-icon">✨</span>
-    Creator
-  </button>
-
-</aside>
-
-
-<section class="content">
-
-
-<div class="hero">
-
-  <div class="orb"></div>
-
-  <div class="hero-content">
-
-    <div class="hero-label">
-      ZEMIVO 3D EXPERIENCE
+    <div class="sidebar-title">
+      Zemivo World
     </div>
 
-    <h1>
-      Your world.
-      <br>
-      <span>More alive.</span>
-    </h1>
 
-    <p>
-      Connect, create, share, earn and explore
-      inside a cinematic digital world built for
-      people everywhere.
-    </p>
+    <button
+      class="nav-button active"
+      type="button"
+    >
 
-    <div class="hero-buttons">
+      <span class="nav-icon">🌐</span>
 
-      <button class="primary">
-        Enter Zemivo
-      </button>
+      <span>Living World</span>
 
-      <button class="secondary">
-        Explore World
-      </button>
-
-    </div>
-
-  </div>
-
-</div>
+    </button>
 
 
-<div class="section-title">
+    <button
+      class="nav-button"
+      type="button"
+    >
 
-  <h2>
-    Zemivo Experiences
-  </h2>
+      <span class="nav-icon">🏠</span>
 
-  <span>
-    Connected • Creative • Global
-  </span>
+      <span>Home</span>
 
-</div>
-
-
-<div class="cards">
+    </button>
 
 
-<div class="card">
+    <button
+      class="nav-button"
+      type="button"
+    >
 
-  <div class="card-glow"></div>
+      <span class="nav-icon">👥</span>
 
-  <div class="card-icon">
-    🌎
-  </div>
+      <span>Friends</span>
 
-  <h3>
-    Social World
-  </h3>
-
-  <p>
-    Meet people, share moments and
-    discover communities around the world.
-  </p>
-
-</div>
+    </button>
 
 
-<div class="card">
+    <button
+      class="nav-button"
+      type="button"
+    >
 
-  <div class="card-glow"></div>
+      <span class="nav-icon">💬</span>
 
-  <div class="card-icon">
-    🎨
-  </div>
+      <span>Messenger</span>
 
-  <h3>
-    Create
-  </h3>
-
-  <p>
-    Turn your ideas, photos, videos and
-    stories into beautiful experiences.
-  </p>
-
-</div>
+    </button>
 
 
-<div class="card">
+    <button
+      class="nav-button"
+      type="button"
+    >
 
-  <div class="card-glow"></div>
+      <span class="nav-icon">🛍️</span>
 
-  <div class="card-icon">
-    💎
-  </div>
+      <span>Marketplace</span>
 
-  <h3>
-    Creator
-  </h3>
-
-  <p>
-    Build your audience and unlock
-    opportunities from your creativity.
-  </p>
-
-</div>
+    </button>
 
 
-<div class="card">
+    <button
+      class="nav-button"
+      type="button"
+    >
 
-  <div class="card-glow"></div>
+      <span class="nav-icon">🎮</span>
 
-  <div class="card-icon">
-    🎮
-  </div>
+      <span>Gaming</span>
 
-  <h3>
-    Play & Earn
-  </h3>
-
-  <p>
-    Discover games, rewards and
-    interactive experiences.
-  </p>
-
-</div>
+    </button>
 
 
-</div>
+    <button
+      class="nav-button"
+      type="button"
+    >
+
+      <span class="nav-icon">🎬</span>
+
+      <span>Creator</span>
+
+    </button>
 
 
-<div class="section-title">
+    <button
+      class="nav-button"
+      type="button"
+    >
 
-  <h2>
-    Cinematic Feed
-  </h2>
+      <span class="nav-icon">⚙️</span>
 
-  <span>
-    Preview
-  </span>
+      <span>Settings</span>
 
-</div>
+    </button>
+
+  </aside>
 
 
-<article class="post">
+  <!-- =====================================================
+       CENTER
+  ====================================================== -->
 
-  <div class="post-head">
+  <section class="center">
 
-    <div class="avatar">
-      Z
-    </div>
 
-    <div>
+    <div class="hero glass">
 
-      <div class="post-name">
-        Zemivo World
-      </div>
+      <div class="hero-content">
 
-      <div class="post-time">
-        Global Community • Just now
+        <div class="eyebrow">
+          Zemivo Living 3D World
+        </div>
+
+        <h1>
+          Your content.
+          A world that reacts.
+        </h1>
+
+        <p>
+          Zemivo is designed so your content does not simply
+          appear on a screen. The surrounding world can
+          intelligently adapt to its mood, subject, color,
+          movement and atmosphere.
+        </p>
+
       </div>
 
     </div>
 
-  </div>
 
-  <div class="post-body">
+    <!-- CONTENT MODES -->
 
-    The future of social media can feel
-    more alive, immersive and connected.
+    <div class="control-panel glass">
 
-  </div>
-
-  <div class="post-visual"></div>
-
-  <div class="post-actions">
-
-    <span>
-      ❤️ Like
-    </span>
-
-    <span>
-      💬 Comment
-    </span>
-
-    <span>
-      ↗ Share
-    </span>
-
-    <span>
-      🔖 Save
-    </span>
-
-  </div>
-
-</article>
+      <div class="section-title">
+        Experience a Living World
+      </div>
 
 
-</section>
+      <div
+        id="modeGrid"
+        class="mode-grid"
+      >
+
+
+        <button
+          class="mode-button active"
+          type="button"
+          data-mode="personal"
+        >
+
+          <span class="mode-icon">
+            👤
+          </span>
+
+          <span class="mode-name">
+            Personal
+          </span>
+
+        </button>
+
+
+        <button
+          class="mode-button"
+          type="button"
+          data-mode="ocean"
+        >
+
+          <span class="mode-icon">
+            🌊
+          </span>
+
+          <span class="mode-name">
+            Ocean
+          </span>
+
+        </button>
+
+
+        <button
+          class="mode-button"
+          type="button"
+          data-mode="nature"
+        >
+
+          <span class="mode-icon">
+            🌿
+          </span>
+
+          <span class="mode-name">
+            Nature
+          </span>
+
+        </button>
+
+
+        <button
+          class="mode-button"
+          type="button"
+          data-mode="music"
+        >
+
+          <span class="mode-icon">
+            🎵
+          </span>
+
+          <span class="mode-name">
+            Music
+          </span>
+
+        </button>
+
+
+        <button
+          class="mode-button"
+          type="button"
+          data-mode="gaming"
+        >
+
+          <span class="mode-icon">
+            🎮
+          </span>
+
+          <span class="mode-name">
+            Gaming
+          </span>
+
+        </button>
+
+
+        <button
+          class="mode-button"
+          type="button"
+          data-mode="car"
+        >
+
+          <span class="mode-icon">
+            🚗
+          </span>
+
+          <span class="mode-name">
+            Automotive
+          </span>
+
+        </button>
+
+
+        <button
+          class="mode-button"
+          type="button"
+          data-mode="product"
+        >
+
+          <span class="mode-icon">
+            🛍️
+          </span>
+
+          <span class="mode-name">
+            Product
+          </span>
+
+        </button>
+
+
+        <button
+          class="mode-button"
+          type="button"
+          data-mode="space"
+        >
+
+          <span class="mode-icon">
+            🚀
+          </span>
+
+          <span class="mode-name">
+            Space
+          </span>
+
+        </button>
+
+
+      </div>
+
+
+      <div class="live-status">
+
+        <div class="live-left">
+
+          <span class="live-dot"></span>
+
+          <span>
+            Living World:
+            <strong id="worldMode">
+              Personal
+            </strong>
+          </span>
+
+        </div>
+
+
+        <span id="worldMood">
+          Subtle cinematic ambience
+        </span>
+
+      </div>
+
+    </div>
+
+
+    <!-- DEMO FEED -->
+
+    <article class="feed-card glass">
+
+      <div class="feed-header">
+
+        <div class="avatar">
+          Z
+        </div>
+
+        <div>
+
+          <div class="feed-name">
+            Zemivo Creator
+          </div>
+
+          <div class="feed-time">
+            Living World Demo
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <div class="feed-text">
+
+        Imagine posting a beautiful ocean video.
+        Instead of showing only the video,
+        Zemivo can gently transform the surrounding
+        atmosphere into a cinematic ocean-inspired world.
+
+      </div>
+
+
+      <div class="content-preview">
+
+        <div class="preview-orb"></div>
+
+      </div>
+
+
+      <div class="feed-actions">
+
+        <button
+          class="feed-action"
+          type="button"
+        >
+          ❤️ Like
+        </button>
+
+        <button
+          class="feed-action"
+          type="button"
+        >
+          💬 Comment
+        </button>
+
+        <button
+          class="feed-action"
+          type="button"
+        >
+          ↗ Share
+        </button>
+
+      </div>
+
+    </article>
+
+  </section>
+
+
+  <!-- =====================================================
+       RIGHT PANEL
+  ====================================================== -->
+
+  <aside class="right-panel">
+
+
+    <div class="info-card glass">
+
+      <div class="info-title">
+        World Signals
+      </div>
+
+
+      <div class="signal">
+
+        <span class="signal-label">
+          Content
+        </span>
+
+        <span
+          id="signalContent"
+          class="signal-value"
+        >
+          Personal
+        </span>
+
+      </div>
+
+
+      <div class="signal">
+
+        <span class="signal-label">
+          Mood
+        </span>
+
+        <span
+          id="signalMood"
+          class="signal-value"
+        >
+          Calm
+        </span>
+
+      </div>
+
+
+      <div class="signal">
+
+        <span class="signal-label">
+          Motion
+        </span>
+
+        <span
+          id="signalMotion"
+          class="signal-value"
+        >
+          Subtle
+        </span>
+
+      </div>
+
+
+      <div class="signal">
+
+        <span class="signal-label">
+          Lighting
+        </span>
+
+        <span
+          id="signalLighting"
+          class="signal-value"
+        >
+          Soft
+        </span>
+
+      </div>
+
+
+      <div class="signal">
+
+        <span class="signal-label">
+          Engine
+        </span>
+
+        <span class="signal-value status-good">
+          Active
+        </span>
+
+      </div>
+
+    </div>
+
+
+    <div class="ai-box">
+
+      <div class="ai-title">
+
+        <span>🧠</span>
+
+        <span>
+          AI-Ready Content Layer
+        </span>
+
+      </div>
+
+
+      <div class="ai-description">
+
+        The future architecture can analyze content
+        and produce a safe visual profile such as
+        mood, colors, motion, environment and intensity.
+        The 3D engine uses that profile without giving
+        AI direct access to Zemivo's database or controls.
+
+      </div>
+
+
+      <div class="ai-badge">
+        SECURITY-FIRST DESIGN
+      </div>
+
+    </div>
+
+
+  </aside>
 
 </main>
 
-</div>
+
+<!-- =======================================================
+     MOBILE NAV
+======================================================== -->
+
+<nav class="mobile-nav">
+
+  <button
+    type="button"
+    class="active"
+  >
+
+    <span class="mobile-nav-icon">
+      🌐
+    </span>
+
+    World
+
+  </button>
 
 
-<script src="https://cdn.jsdelivr.net/npm/three@0.179.1/build/three.min.js"></script>
+  <button type="button">
+
+    <span class="mobile-nav-icon">
+      🏠
+    </span>
+
+    Home
+
+  </button>
+
+
+  <button type="button">
+
+    <span class="mobile-nav-icon">
+      💬
+    </span>
+
+    Chat
+
+  </button>
+
+
+  <button type="button">
+
+    <span class="mobile-nav-icon">
+      👤
+    </span>
+
+    Profile
+
+  </button>
+
+</nav>
+
 
 <script>
 
-/* THREE.JS CINEMATIC WORLD */
+/* =========================================================
+   ZEMIVO LIVING 3D WORLD
+   SAFE CLIENT-SIDE PROTOTYPE
 
-const scene =
-  new THREE.Scene();
+   IMPORTANT:
+   This prototype does NOT connect to Firebase.
+   It does NOT contain an AI secret key.
+   It does NOT access user databases.
+========================================================= */
 
-scene.fog =
-  new THREE.FogExp2(
-    0x020617,
-    0.035
+
+/* =========================================================
+   WORLD PROFILES
+
+   In the future, a secure backend/AI service can generate
+   these values from real user content.
+
+   AI should return visual instructions only.
+========================================================= */
+
+const WORLD_PROFILES = {
+
+  personal:{
+
+    name:
+      "Personal",
+
+    mood:
+      "Calm",
+
+    motion:
+      "Subtle",
+
+    lighting:
+      "Soft",
+
+    color:
+      0x3b82f6,
+
+    secondary:
+      0x7c3aed,
+
+    particleSpeed:
+      0.0007,
+
+    rotationSpeed:
+      0.00035,
+
+    intensity:
+      0.55,
+
+    description:
+      "Subtle cinematic ambience"
+
+  },
+
+
+  ocean:{
+
+    name:
+      "Ocean",
+
+    mood:
+      "Peaceful",
+
+    motion:
+      "Flowing",
+
+    lighting:
+      "Cool",
+
+    color:
+      0x06b6d4,
+
+    secondary:
+      0x0ea5e9,
+
+    particleSpeed:
+      0.0015,
+
+    rotationSpeed:
+      0.00065,
+
+    intensity:
+      1,
+
+    description:
+      "Water-inspired cinematic atmosphere"
+
+  },
+
+
+  nature:{
+
+    name:
+      "Nature",
+
+    mood:
+      "Fresh",
+
+    motion:
+      "Organic",
+
+    lighting:
+      "Natural",
+
+    color:
+      0x22c55e,
+
+    secondary:
+      0x10b981,
+
+    particleSpeed:
+      0.001,
+
+    rotationSpeed:
+      0.00045,
+
+    intensity:
+      .8,
+
+    description:
+      "Natural green cinematic ambience"
+
+  },
+
+
+  music:{
+
+    name:
+      "Music",
+
+    mood:
+      "Energetic",
+
+    motion:
+      "Audio-reactive",
+
+    lighting:
+      "Dynamic",
+
+    color:
+      0xd946ef,
+
+    secondary:
+      0x6366f1,
+
+    particleSpeed:
+      0.0028,
+
+    rotationSpeed:
+      0.0012,
+
+    intensity:
+      1.15,
+
+    description:
+      "Rhythm-inspired visual movement"
+
+  },
+
+
+  gaming:{
+
+    name:
+      "Gaming",
+
+    mood:
+      "Energetic",
+
+    motion:
+      "Fast",
+
+    lighting:
+      "Neon",
+
+    color:
+      0x06b6d4,
+
+    secondary:
+      0xec4899,
+
+    particleSpeed:
+      0.003,
+
+    rotationSpeed:
+      0.0015,
+
+    intensity:
+      1.25,
+
+    description:
+      "Futuristic gaming atmosphere"
+
+  },
+
+
+  car:{
+
+    name:
+      "Automotive",
+
+    mood:
+      "Powerful",
+
+    motion:
+      "Smooth",
+
+    lighting:
+      "Metallic",
+
+    color:
+      0x94a3b8,
+
+    secondary:
+      0x3b82f6,
+
+    particleSpeed:
+      0.0012,
+
+    rotationSpeed:
+      0.0008,
+
+    intensity:
+      .95,
+
+    description:
+      "Premium metallic environment"
+
+  },
+
+
+  product:{
+
+    name:
+      "Product",
+
+    mood:
+      "Premium",
+
+    motion:
+      "Elegant",
+
+    lighting:
+      "Studio",
+
+    color:
+      0xf59e0b,
+
+    secondary:
+      0xfbbf24,
+
+    particleSpeed:
+      0.0007,
+
+    rotationSpeed:
+      0.00035,
+
+    intensity:
+      .75,
+
+    description:
+      "Premium product presentation"
+
+  },
+
+
+  space:{
+
+    name:
+      "Space",
+
+    mood:
+      "Immersive",
+
+    motion:
+      "Cosmic",
+
+    lighting:
+      "Deep",
+
+    color:
+      0x6366f1,
+
+    secondary:
+      0xa855f7,
+
+    particleSpeed:
+      0.0018,
+
+    rotationSpeed:
+      0.0007,
+
+    intensity:
+      1,
+
+    description:
+      "Deep cosmic atmosphere"
+
+  }
+
+};
+
+
+/* =========================================================
+   DOM
+========================================================= */
+
+const body =
+  document.body;
+
+const modeButtons =
+  document.querySelectorAll(
+    ".mode-button"
+  );
+
+const worldMode =
+  document.getElementById(
+    "worldMode"
+  );
+
+const worldMood =
+  document.getElementById(
+    "worldMood"
+  );
+
+const signalContent =
+  document.getElementById(
+    "signalContent"
+  );
+
+const signalMood =
+  document.getElementById(
+    "signalMood"
+  );
+
+const signalMotion =
+  document.getElementById(
+    "signalMotion"
+  );
+
+const signalLighting =
+  document.getElementById(
+    "signalLighting"
+  );
+
+const worldTransition =
+  document.getElementById(
+    "worldTransition"
   );
 
 
-const camera =
-  new THREE.PerspectiveCamera(
-    60,
-    window.innerWidth /
-    window.innerHeight,
-    0.1,
-    100
+/* =========================================================
+   THREE.JS
+========================================================= */
+
+const script =
+  document.createElement(
+    "script"
   );
 
-camera.position.z =
-  7;
+script.src =
+  "https://cdn.jsdelivr.net/npm/three@0.179.1/build/three.min.js";
 
+script.onload =
+  startLivingWorld;
 
-const renderer =
-  new THREE.WebGLRenderer({
-    antialias:true,
-    alpha:true
-  });
+script.onerror =
+  function(){
 
-renderer.setPixelRatio(
-  Math.min(
-    window.devicePixelRatio,
-    2
-  )
+    console.error(
+      "Three.js could not be loaded."
+    );
+
+  };
+
+document.head.appendChild(
+  script
 );
 
-renderer.setSize(
-  window.innerWidth,
-  window.innerHeight
-);
 
-document
-  .getElementById("scene")
-  .appendChild(renderer.domElement);
+/* =========================================================
+   3D VARIABLES
+========================================================= */
 
+let scene;
+let camera;
+let renderer;
 
-/* PARTICLES */
+let particleSystem;
+let core;
+let ring1;
+let ring2;
+let ring3;
 
-const particleCount =
-  900;
+let pointLight;
+let secondaryLight;
 
-const geometry =
-  new THREE.BufferGeometry();
+let currentProfile =
+  WORLD_PROFILES.personal;
 
-const positions =
-  new Float32Array(
-    particleCount * 3
+let targetColor =
+  new THREE.Color(
+    currentProfile.color
   );
 
-for(
-  let i = 0;
-  i < particleCount;
-  i++
-){
-
-  positions[i * 3] =
-    (Math.random() - .5) * 28;
-
-  positions[i * 3 + 1] =
-    (Math.random() - .5) * 18;
-
-  positions[i * 3 + 2] =
-    (Math.random() - .5) * 18;
-
-}
-
-geometry.setAttribute(
-  "position",
-  new THREE.BufferAttribute(
-    positions,
-    3
-  )
-);
-
-
-const material =
-  new THREE.PointsMaterial({
-
-    color:0x67e8f9,
-
-    size:.035,
-
-    transparent:true,
-
-    opacity:.75,
-
-    depthWrite:false
-
-  });
-
-
-const particles =
-  new THREE.Points(
-    geometry,
-    material
+let targetSecondary =
+  new THREE.Color(
+    currentProfile.secondary
   );
 
-scene.add(
-  particles
-);
-
-
-/* FLOATING WIREFRAME */
-
-const ringGeometry =
-  new THREE.TorusGeometry(
-    3.2,
-    .012,
-    8,
-    120
+let currentColor =
+  new THREE.Color(
+    currentProfile.color
   );
 
-const ringMaterial =
-  new THREE.MeshBasicMaterial({
-    color:0x3b82f6,
-    transparent:true,
-    opacity:.28
-  });
-
-const ring =
-  new THREE.Mesh(
-    ringGeometry,
-    ringMaterial
+let currentSecondary =
+  new THREE.Color(
+    currentProfile.secondary
   );
-
-ring.rotation.x =
-  Math.PI / 2.4;
-
-scene.add(
-  ring
-);
-
-
-/* SECOND RING */
-
-const ring2 =
-  ring.clone();
-
-ring2.scale.set(
-  .72,
-  .72,
-  .72
-);
-
-ring2.rotation.x =
-  Math.PI / 1.8;
-
-ring2.rotation.z =
-  .7;
-
-ring2.material =
-  ringMaterial.clone();
-
-ring2.material.color.setHex(
-  0xa855f7
-);
-
-scene.add(
-  ring2
-);
-
-
-/* ANIMATION */
 
 let mouseX = 0;
 let mouseY = 0;
 
-window.addEventListener(
-  "mousemove",
-  function(event){
+let smoothMouseX = 0;
+let smoothMouseY = 0;
 
-    mouseX =
-      (
-        event.clientX /
-        window.innerWidth
-        - .5
-      );
 
-    mouseY =
-      (
-        event.clientY /
-        window.innerHeight
-        - .5
-      );
+/* =========================================================
+   START
+========================================================= */
+
+function startLivingWorld(){
+
+  if(
+    typeof THREE ===
+    "undefined"
+  ){
+
+    return;
 
   }
-);
 
+
+  const canvas =
+    document.getElementById(
+      "threeCanvas"
+    );
+
+
+  scene =
+    new THREE.Scene();
+
+
+  scene.fog =
+    new THREE.FogExp2(
+      0x02040b,
+      0.0015
+    );
+
+
+  camera =
+    new THREE.PerspectiveCamera(
+      55,
+      window.innerWidth /
+      window.innerHeight,
+      0.1,
+      1000
+    );
+
+
+  camera.position.z =
+    8;
+
+
+  renderer =
+    new THREE.WebGLRenderer({
+
+      canvas:
+        canvas,
+
+      antialias:
+        true,
+
+      alpha:
+        true,
+
+      powerPreference:
+        "high-performance"
+
+    });
+
+
+  renderer.setPixelRatio(
+    Math.min(
+      window.devicePixelRatio,
+      2
+    )
+  );
+
+
+  renderer.setSize(
+    window.innerWidth,
+    window.innerHeight
+  );
+
+
+  renderer.outputColorSpace =
+    THREE.SRGBColorSpace;
+
+
+  createLights();
+
+  createParticles();
+
+  createCore();
+
+  createRings();
+
+  createStars();
+
+  window.addEventListener(
+    "resize",
+    onResize
+  );
+
+
+  window.addEventListener(
+    "mousemove",
+    onMouseMove,
+    { passive:true }
+  );
+
+
+  animate();
+
+}
+
+
+/* =========================================================
+   LIGHTS
+========================================================= */
+
+function createLights(){
+
+  const ambient =
+    new THREE.AmbientLight(
+      0xffffff,
+      .12
+    );
+
+  scene.add(
+    ambient
+  );
+
+
+  pointLight =
+    new THREE.PointLight(
+      currentProfile.color,
+      2.8,
+      25
+    );
+
+  pointLight.position.set(
+    2,
+    2,
+    4
+  );
+
+  scene.add(
+    pointLight
+  );
+
+
+  secondaryLight =
+    new THREE.PointLight(
+      currentProfile.secondary,
+      2.2,
+      22
+    );
+
+  secondaryLight.position.set(
+    -3,
+    -2,
+    2
+  );
+
+  scene.add(
+    secondaryLight
+  );
+
+}
+
+
+/* =========================================================
+   PARTICLES
+========================================================= */
+
+function createParticles(){
+
+  const count =
+    window.innerWidth < 700
+    ? 550
+    : 1100;
+
+
+  const positions =
+    new Float32Array(
+      count * 3
+    );
+
+
+  const sizes =
+    new Float32Array(
+      count
+    );
+
+
+  for(
+    let i = 0;
+    i < count;
+    i++
+  ){
+
+    const radius =
+      3 +
+      Math.random() * 7;
+
+
+    const angle =
+      Math.random() *
+      Math.PI *
+      2;
+
+
+    const height =
+      (
+        Math.random() -
+        .5
+      ) * 8;
+
+
+    positions[
+      i * 3
+    ] =
+      Math.cos(angle) *
+      radius;
+
+
+    positions[
+      i * 3 + 1
+    ] =
+      height;
+
+
+    positions[
+      i * 3 + 2
+    ] =
+      Math.sin(angle) *
+      radius;
+
+
+    sizes[i] =
+      1 +
+      Math.random() * 3;
+
+  }
+
+
+  const geometry =
+    new THREE.BufferGeometry();
+
+
+  geometry.setAttribute(
+    "position",
+    new THREE.BufferAttribute(
+      positions,
+      3
+    )
+  );
+
+
+  geometry.setAttribute(
+    "size",
+    new THREE.BufferAttribute(
+      sizes,
+      1
+    )
+  );
+
+
+  const material =
+    new THREE.PointsMaterial({
+
+      color:
+        currentProfile.color,
+
+      size:
+        .025,
+
+      transparent:
+        true,
+
+      opacity:
+        .7,
+
+      blending:
+        THREE.AdditiveBlending,
+
+      depthWrite:
+        false
+
+    });
+
+
+  particleSystem =
+    new THREE.Points(
+      geometry,
+      material
+    );
+
+
+  scene.add(
+    particleSystem
+  );
+
+}
+
+
+/* =========================================================
+   CORE
+========================================================= */
+
+function createCore(){
+
+  const geometry =
+    new THREE.IcosahedronGeometry(
+      1.15,
+      4
+    );
+
+
+  const material =
+    new THREE.MeshStandardMaterial({
+
+      color:
+        currentProfile.color,
+
+      emissive:
+        currentProfile.color,
+
+      emissiveIntensity:
+        .5,
+
+      metalness:
+        .45,
+
+      roughness:
+        .22,
+
+      transparent:
+        true,
+
+      opacity:
+        .82
+
+    });
+
+
+  core =
+    new THREE.Mesh(
+      geometry,
+      material
+    );
+
+
+  scene.add(
+    core
+  );
+
+}
+
+
+/* =========================================================
+   RINGS
+========================================================= */
+
+function createRings(){
+
+  const geometry =
+    new THREE.TorusGeometry(
+      1.55,
+      .018,
+      12,
+      100
+    );
+
+
+  const material =
+    new THREE.MeshBasicMaterial({
+
+      color:
+        currentProfile.color,
+
+      transparent:
+        true,
+
+      opacity:
+        .65
+
+    });
+
+
+  ring1 =
+    new THREE.Mesh(
+      geometry,
+      material
+    );
+
+
+  ring2 =
+    new THREE.Mesh(
+      geometry.clone(),
+      material.clone()
+    );
+
+
+  ring3 =
+    new THREE.Mesh(
+      geometry.clone(),
+      material.clone()
+    );
+
+
+  ring1.rotation.x =
+    Math.PI / 2;
+
+
+  ring2.rotation.y =
+    Math.PI / 2;
+
+
+  ring3.rotation.z =
+    Math.PI / 2;
+
+
+  ring2.scale.setScalar(
+    .78
+  );
+
+
+  ring3.scale.setScalar(
+    1.22
+  );
+
+
+  scene.add(
+    ring1,
+    ring2,
+    ring3
+  );
+
+}
+
+
+/* =========================================================
+   STARS
+========================================================= */
+
+function createStars(){
+
+  const count =
+    220;
+
+
+  const geometry =
+    new THREE.BufferGeometry();
+
+
+  const positions =
+    new Float32Array(
+      count * 3
+    );
+
+
+  for(
+    let i = 0;
+    i < count;
+    i++
+  ){
+
+    positions[
+      i * 3
+    ] =
+      (
+        Math.random() -
+        .5
+      ) * 22;
+
+
+    positions[
+      i * 3 + 1
+    ] =
+      (
+        Math.random() -
+        .5
+      ) * 14;
+
+
+    positions[
+      i * 3 + 2
+    ] =
+      (
+        Math.random() -
+        .5
+      ) * 18;
+
+  }
+
+
+  geometry.setAttribute(
+    "position",
+    new THREE.BufferAttribute(
+      positions,
+      3
+    )
+  );
+
+
+  const material =
+    new THREE.PointsMaterial({
+
+      color:
+        0xffffff,
+
+      size:
+        .018,
+
+      transparent:
+        true,
+
+      opacity:
+        .45
+
+    });
+
+
+  const stars =
+    new THREE.Points(
+      geometry,
+      material
+    );
+
+
+  scene.add(
+    stars
+  );
+
+}
+
+
+/* =========================================================
+   MOUSE
+========================================================= */
+
+function onMouseMove(event){
+
+  mouseX =
+    (
+      event.clientX /
+      window.innerWidth
+    ) * 2 - 1;
+
+
+  mouseY =
+    (
+      event.clientY /
+      window.innerHeight
+    ) * 2 - 1;
+
+}
+
+
+/* =========================================================
+   ANIMATION
+========================================================= */
 
 function animate(){
 
@@ -1242,39 +2776,220 @@ function animate(){
     animate
   );
 
+
+  if(
+    !renderer ||
+    !scene ||
+    !camera
+  ){
+
+    return;
+
+  }
+
+
+  smoothMouseX +=
+    (
+      mouseX -
+      smoothMouseX
+    ) * .035;
+
+
+  smoothMouseY +=
+    (
+      mouseY -
+      smoothMouseY
+    ) * .035;
+
+
+  currentColor.lerp(
+    targetColor,
+    .025
+  );
+
+
+  currentSecondary.lerp(
+    targetSecondary,
+    .025
+  );
+
+
   const time =
-    performance.now() *
-    0.0003;
+    performance.now();
 
-  particles.rotation.y =
-    time * .35;
 
-  particles.rotation.x =
-    time * .12;
+  /* PARTICLES */
 
-  ring.rotation.z =
-    time * .8;
+  if(
+    particleSystem
+  ){
 
-  ring2.rotation.z =
-    -time * .55;
+    particleSystem.rotation.y +=
+      currentProfile.particleSpeed;
+
+
+    particleSystem.rotation.x =
+      Math.sin(
+        time * .00008
+      ) * .04;
+
+
+    particleSystem.material.color
+      .copy(
+        currentColor
+      );
+
+  }
+
+
+  /* CORE */
+
+  if(
+    core
+  ){
+
+    core.rotation.x +=
+      currentProfile.rotationSpeed;
+
+
+    core.rotation.y +=
+      currentProfile.rotationSpeed *
+      1.5;
+
+
+    const pulse =
+      1 +
+      Math.sin(
+        time * .0012
+      ) *
+      .035 *
+      currentProfile.intensity;
+
+
+    core.scale.setScalar(
+      pulse
+    );
+
+
+    core.material.color
+      .copy(
+        currentColor
+      );
+
+
+    core.material.emissive
+      .copy(
+        currentColor
+      );
+
+  }
+
+
+  /* RINGS */
+
+  if(
+    ring1 &&
+    ring2 &&
+    ring3
+  ){
+
+    ring1.rotation.z +=
+      currentProfile.rotationSpeed;
+
+
+    ring2.rotation.x -=
+      currentProfile.rotationSpeed *
+      1.2;
+
+
+    ring3.rotation.y +=
+      currentProfile.rotationSpeed *
+      .7;
+
+
+    ring1.material.color
+      .copy(
+        currentColor
+      );
+
+
+    ring2.material.color
+      .copy(
+        currentSecondary
+      );
+
+
+    ring3.material.color
+      .copy(
+        currentColor
+      );
+
+  }
+
+
+  /* LIGHTS */
+
+  if(
+    pointLight &&
+    secondaryLight
+  ){
+
+    pointLight.color
+      .copy(
+        currentColor
+      );
+
+
+    secondaryLight.color
+      .copy(
+        currentSecondary
+      );
+
+
+    pointLight.position.x =
+      2 +
+      smoothMouseX * 2;
+
+
+    pointLight.position.y =
+      2 -
+      smoothMouseY * 1.5;
+
+
+    secondaryLight.position.x =
+      -3 -
+      smoothMouseX;
+
+
+    secondaryLight.position.y =
+      -2 +
+      smoothMouseY;
+
+  }
+
+
+  /* CAMERA */
 
   camera.position.x +=
     (
-      mouseX * .35 -
+      smoothMouseX * .35 -
       camera.position.x
     ) * .025;
 
+
   camera.position.y +=
     (
-      -mouseY * .25 -
+      -smoothMouseY * .25 -
       camera.position.y
     ) * .025;
+
 
   camera.lookAt(
     0,
     0,
     0
   );
+
 
   renderer.render(
     scene,
@@ -1283,27 +2998,322 @@ function animate(){
 
 }
 
-animate();
+
+/* =========================================================
+   CHANGE WORLD
+========================================================= */
+
+function changeWorld(
+  mode
+){
+
+  const profile =
+    WORLD_PROFILES[
+      mode
+    ];
 
 
-/* RESPONSIVE */
+  if(!profile){
 
-window.addEventListener(
-  "resize",
-  function(){
+    return;
 
-    camera.aspect =
-      window.innerWidth /
-      window.innerHeight;
+  }
 
-    camera.updateProjectionMatrix();
 
-    renderer.setSize(
-      window.innerWidth,
-      window.innerHeight
+  currentProfile =
+    profile;
+
+
+  targetColor =
+    new THREE.Color(
+      profile.color
+    );
+
+
+  targetSecondary =
+    new THREE.Color(
+      profile.secondary
+    );
+
+
+  /* BODY THEME */
+
+  body.className =
+    "theme-" +
+    mode;
+
+
+  /* BUTTON STATE */
+
+  modeButtons.forEach(
+    function(button){
+
+      button.classList.toggle(
+        "active",
+        button.dataset.mode ===
+        mode
+      );
+
+    }
+  );
+
+
+  /* STATUS */
+
+  worldMode.textContent =
+    profile.name;
+
+
+  worldMood.textContent =
+    profile.description;
+
+
+  signalContent.textContent =
+    profile.name;
+
+
+  signalMood.textContent =
+    profile.mood;
+
+
+  signalMotion.textContent =
+    profile.motion;
+
+
+  signalLighting.textContent =
+    profile.lighting;
+
+
+  /* TRANSITION */
+
+  worldTransition.classList.add(
+    "active"
+  );
+
+
+  setTimeout(
+    function(){
+
+      worldTransition.classList.remove(
+        "active"
+      );
+
+    },
+    180
+  );
+
+}
+
+
+/* =========================================================
+   MODE BUTTONS
+========================================================= */
+
+modeButtons.forEach(
+  function(button){
+
+    button.addEventListener(
+      "click",
+      function(){
+
+        changeWorld(
+          button.dataset.mode
+        );
+
+      }
     );
 
   }
+);
+
+
+/* =========================================================
+   RESIZE
+========================================================= */
+
+function onResize(){
+
+  if(
+    !camera ||
+    !renderer
+  ){
+
+    return;
+
+  }
+
+
+  camera.aspect =
+    window.innerWidth /
+    window.innerHeight;
+
+
+  camera.updateProjectionMatrix();
+
+
+  renderer.setSize(
+    window.innerWidth,
+    window.innerHeight
+  );
+
+
+  renderer.setPixelRatio(
+    Math.min(
+      window.devicePixelRatio,
+      2
+    )
+  );
+
+}
+
+
+/* =========================================================
+   DEMO CONTENT ANALYZER
+
+   This is intentionally local and safe.
+
+   Later a secure backend/AI service can replace this
+   function and return the same type of visual profile.
+
+   AI must NOT receive database/admin/wallet access.
+========================================================= */
+
+function analyzeContentDemo(
+  content
+){
+
+  const text =
+    String(
+      content || ""
+    ).toLowerCase();
+
+
+  if(
+    text.includes("ocean") ||
+    text.includes("sea") ||
+    text.includes("water")
+  ){
+
+    return "ocean";
+
+  }
+
+
+  if(
+    text.includes("tree") ||
+    text.includes("forest") ||
+    text.includes("nature")
+  ){
+
+    return "nature";
+
+  }
+
+
+  if(
+    text.includes("music") ||
+    text.includes("song") ||
+    text.includes("dance")
+  ){
+
+    return "music";
+
+  }
+
+
+  if(
+    text.includes("game") ||
+    text.includes("gaming")
+  ){
+
+    return "gaming";
+
+  }
+
+
+  if(
+    text.includes("car") ||
+    text.includes("vehicle")
+  ){
+
+    return "car";
+
+  }
+
+
+  if(
+    text.includes("product") ||
+    text.includes("shop") ||
+    text.includes("buy")
+  ){
+
+    return "product";
+
+  }
+
+
+  if(
+    text.includes("space") ||
+    text.includes("planet") ||
+    text.includes("star")
+  ){
+
+    return "space";
+
+  }
+
+
+  return "personal";
+
+}
+
+
+/* =========================================================
+   FUTURE AI CONNECTION CONTRACT
+
+   Later, secure backend can return:
+
+   {
+     mode: "ocean",
+     mood: "peaceful",
+     motion: "flowing",
+     lighting: "cool",
+     intensity: 0.8,
+     primaryColor: "#06b6d4",
+     secondaryColor: "#0ea5e9"
+   }
+
+   The browser will only consume the safe visual result.
+
+   No secret API key belongs in this file.
+========================================================= */
+
+window.ZemivoLivingWorld = {
+
+  changeWorld:
+    changeWorld,
+
+  analyzeContentDemo:
+    analyzeContentDemo,
+
+  getCurrentProfile:
+    function(){
+
+      return {
+        ...currentProfile
+      };
+
+    }
+
+};
+
+
+/* =========================================================
+   INITIAL WORLD
+========================================================= */
+
+changeWorld(
+  "personal"
 );
 
 </script>
