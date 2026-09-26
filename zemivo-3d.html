@@ -2249,3 +2249,830 @@ function startLivingWorld(){
       2
     )
   );
+
+
+  renderer.setSize(
+    window.innerWidth,
+    window.innerHeight
+  );
+
+
+  if(
+    "outputColorSpace" in
+    renderer
+  ){
+
+    renderer.outputColorSpace =
+      THREE.SRGBColorSpace;
+
+  }
+
+
+  createLights();
+  createParticles();
+  createCore();
+  createRings();
+  createStars();
+
+
+  window.addEventListener(
+    "resize",
+    onResize
+  );
+
+
+  window.addEventListener(
+    "mousemove",
+    onMouseMove,
+    {
+      passive:true
+    }
+  );
+
+
+  animate();
+
+}
+
+
+/* =========================================================
+   LIGHTS
+========================================================= */
+
+function createLights(){
+
+  const ambient =
+    new THREE.AmbientLight(
+      0xffffff,
+      .12
+    );
+
+  scene.add(
+    ambient
+  );
+
+
+  pointLight =
+    new THREE.PointLight(
+      currentProfile.color,
+      2.8,
+      25
+    );
+
+  pointLight.position.set(
+    2,
+    2,
+    4
+  );
+
+  scene.add(
+    pointLight
+  );
+
+
+  secondaryLight =
+    new THREE.PointLight(
+      currentProfile.secondary,
+      2.2,
+      22
+    );
+
+  secondaryLight.position.set(
+    -3,
+    -2,
+    2
+  );
+
+  scene.add(
+    secondaryLight
+  );
+
+}
+
+
+/* =========================================================
+   PARTICLES
+========================================================= */
+
+function createParticles(){
+
+  const count =
+    window.innerWidth < 700
+    ? 550
+    : 1100;
+
+
+  const positions =
+    new Float32Array(
+      count * 3
+    );
+
+
+  for(
+    let i = 0;
+    i < count;
+    i++
+  ){
+
+    const radius =
+      3 +
+      Math.random() * 7;
+
+    const angle =
+      Math.random() *
+      Math.PI *
+      2;
+
+    const height =
+      (
+        Math.random() -
+        .5
+      ) * 8;
+
+
+    positions[
+      i * 3
+    ] =
+      Math.cos(angle) *
+      radius;
+
+
+    positions[
+      i * 3 + 1
+    ] =
+      height;
+
+
+    positions[
+      i * 3 + 2
+    ] =
+      Math.sin(angle) *
+      radius;
+
+  }
+
+
+  const geometry =
+    new THREE.BufferGeometry();
+
+
+  geometry.setAttribute(
+    "position",
+    new THREE.BufferAttribute(
+      positions,
+      3
+    )
+  );
+
+
+  const material =
+    new THREE.PointsMaterial({
+
+      color:
+        currentProfile.color,
+
+      size:
+        .025,
+
+      transparent:true,
+
+      opacity:.7,
+
+      blending:
+        THREE.AdditiveBlending,
+
+      depthWrite:false
+
+    });
+
+
+  particleSystem =
+    new THREE.Points(
+      geometry,
+      material
+    );
+
+
+  scene.add(
+    particleSystem
+  );
+
+}
+
+
+/* =========================================================
+   CORE
+========================================================= */
+
+function createCore(){
+
+  const geometry =
+    new THREE.IcosahedronGeometry(
+      1.15,
+      4
+    );
+
+
+  const material =
+    new THREE.MeshStandardMaterial({
+
+      color:
+        currentProfile.color,
+
+      emissive:
+        currentProfile.color,
+
+      emissiveIntensity:.5,
+
+      metalness:.45,
+
+      roughness:.22,
+
+      transparent:true,
+
+      opacity:.82
+
+    });
+
+
+  core =
+    new THREE.Mesh(
+      geometry,
+      material
+    );
+
+
+  scene.add(
+    core
+  );
+
+}
+
+
+/* =========================================================
+   RINGS
+========================================================= */
+
+function createRings(){
+
+  const geometry =
+    new THREE.TorusGeometry(
+      1.55,
+      .018,
+      12,
+      100
+    );
+
+
+  ring1 =
+    new THREE.Mesh(
+      geometry,
+      new THREE.MeshBasicMaterial({
+
+        color:
+          currentProfile.color,
+
+        transparent:true,
+
+        opacity:.65
+
+      })
+    );
+
+
+  ring2 =
+    new THREE.Mesh(
+      geometry.clone(),
+      new THREE.MeshBasicMaterial({
+
+        color:
+          currentProfile.secondary,
+
+        transparent:true,
+
+        opacity:.65
+
+      })
+    );
+
+
+  ring3 =
+    new THREE.Mesh(
+      geometry.clone(),
+      new THREE.MeshBasicMaterial({
+
+        color:
+          currentProfile.color,
+
+        transparent:true,
+
+        opacity:.65
+
+      })
+    );
+
+
+  ring1.rotation.x =
+    Math.PI / 2;
+
+  ring2.rotation.y =
+    Math.PI / 2;
+
+  ring3.rotation.z =
+    Math.PI / 2;
+
+
+  ring2.scale.setScalar(
+    .78
+  );
+
+  ring3.scale.setScalar(
+    1.22
+  );
+
+
+  scene.add(
+    ring1,
+    ring2,
+    ring3
+  );
+
+}
+
+
+/* =========================================================
+   STARS
+========================================================= */
+
+function createStars(){
+
+  const count =
+    220;
+
+
+  const geometry =
+    new THREE.BufferGeometry();
+
+
+  const positions =
+    new Float32Array(
+      count * 3
+    );
+
+
+  for(
+    let i = 0;
+    i < count;
+    i++
+  ){
+
+    positions[
+      i * 3
+    ] =
+      (
+        Math.random() -
+        .5
+      ) * 22;
+
+
+    positions[
+      i * 3 + 1
+    ] =
+      (
+        Math.random() -
+        .5
+      ) * 14;
+
+
+    positions[
+      i * 3 + 2
+    ] =
+      (
+        Math.random() -
+        .5
+      ) * 18;
+
+  }
+
+
+  geometry.setAttribute(
+    "position",
+    new THREE.BufferAttribute(
+      positions,
+      3
+    )
+  );
+
+
+  const stars =
+    new THREE.Points(
+      geometry,
+
+      new THREE.PointsMaterial({
+
+        color:0xffffff,
+
+        size:.018,
+
+        transparent:true,
+
+        opacity:.45
+
+      })
+    );
+
+
+  scene.add(
+    stars
+  );
+
+}
+
+
+/* =========================================================
+   MOUSE
+========================================================= */
+
+function onMouseMove(event){
+
+  mouseX =
+    (
+      event.clientX /
+      window.innerWidth
+    ) * 2 - 1;
+
+
+  mouseY =
+    (
+      event.clientY /
+      window.innerHeight
+    ) * 2 - 1;
+
+}
+
+
+/* =========================================================
+   ANIMATION
+========================================================= */
+
+function animate(){
+
+  requestAnimationFrame(
+    animate
+  );
+
+
+  if(
+    !renderer ||
+    !scene ||
+    !camera ||
+    !currentColor ||
+    !targetColor
+  ){
+
+    return;
+
+  }
+
+
+  smoothMouseX +=
+    (
+      mouseX -
+      smoothMouseX
+    ) * .035;
+
+
+  smoothMouseY +=
+    (
+      mouseY -
+      smoothMouseY
+    ) * .035;
+
+
+  currentColor.lerp(
+    targetColor,
+    .025
+  );
+
+
+  currentSecondary.lerp(
+    targetSecondary,
+    .025
+  );
+
+
+  const time =
+    performance.now();
+
+
+  if(
+    particleSystem
+  ){
+
+    particleSystem.rotation.y +=
+      currentProfile.particleSpeed;
+
+    particleSystem.rotation.x =
+      Math.sin(
+        time * .00008
+      ) * .04;
+
+    particleSystem.material.color.copy(
+      currentColor
+    );
+
+  }
+
+
+  if(core){
+
+    core.rotation.x +=
+      currentProfile.rotationSpeed;
+
+    core.rotation.y +=
+      currentProfile.rotationSpeed *
+      1.5;
+
+
+    const pulse =
+      1 +
+      Math.sin(
+        time * .0012
+      ) *
+      .035 *
+      currentProfile.intensity;
+
+
+    core.scale.setScalar(
+      pulse
+    );
+
+
+    core.material.color.copy(
+      currentColor
+    );
+
+    core.material.emissive.copy(
+      currentColor
+    );
+
+  }
+
+
+  if(
+    ring1 &&
+    ring2 &&
+    ring3
+  ){
+
+    ring1.rotation.z +=
+      currentProfile.rotationSpeed;
+
+    ring2.rotation.x -=
+      currentProfile.rotationSpeed *
+      1.2;
+
+    ring3.rotation.y +=
+      currentProfile.rotationSpeed *
+      .7;
+
+
+    ring1.material.color.copy(
+      currentColor
+    );
+
+    ring2.material.color.copy(
+      currentSecondary
+    );
+
+    ring3.material.color.copy(
+      currentColor
+    );
+
+  }
+
+
+  if(
+    pointLight &&
+    secondaryLight
+  ){
+
+    pointLight.color.copy(
+      currentColor
+    );
+
+    secondaryLight.color.copy(
+      currentSecondary
+    );
+
+
+    pointLight.position.x =
+      2 +
+      smoothMouseX * 2;
+
+
+    pointLight.position.y =
+      2 -
+      smoothMouseY * 1.5;
+
+
+    secondaryLight.position.x =
+      -3 -
+      smoothMouseX;
+
+
+    secondaryLight.position.y =
+      -2 +
+      smoothMouseY;
+
+  }
+
+
+  camera.position.x +=
+    (
+      smoothMouseX * .35 -
+      camera.position.x
+    ) * .025;
+
+
+  camera.position.y +=
+    (
+      -smoothMouseY * .25 -
+      camera.position.y
+    ) * .025;
+
+
+  camera.lookAt(
+    0,
+    0,
+    0
+  );
+
+
+  renderer.render(
+    scene,
+    camera
+  );
+
+}
+
+
+/* =========================================================
+   RESIZE
+========================================================= */
+
+function onResize(){
+
+  if(
+    !camera ||
+    !renderer
+  ){
+    return;
+  }
+
+
+  camera.aspect =
+    window.innerWidth /
+    window.innerHeight;
+
+
+  camera.updateProjectionMatrix();
+
+
+  renderer.setSize(
+    window.innerWidth,
+    window.innerHeight
+  );
+
+
+  renderer.setPixelRatio(
+    Math.min(
+      window.devicePixelRatio,
+      2
+    )
+  );
+
+}
+
+
+/* =========================================================
+   CONTENT ANALYZER
+========================================================= */
+
+function analyzeContentDemo(
+  content
+){
+
+  const text =
+    String(
+      content || ""
+    ).toLowerCase();
+
+
+  if(
+    text.includes("ocean") ||
+    text.includes("sea") ||
+    text.includes("water")
+  ){
+    return "ocean";
+  }
+
+
+  if(
+    text.includes("tree") ||
+    text.includes("forest") ||
+    text.includes("nature")
+  ){
+    return "nature";
+  }
+
+
+  if(
+    text.includes("music") ||
+    text.includes("song") ||
+    text.includes("dance")
+  ){
+    return "music";
+  }
+
+
+  if(
+    text.includes("game") ||
+    text.includes("gaming")
+  ){
+    return "gaming";
+  }
+
+
+  if(
+    text.includes("car") ||
+    text.includes("vehicle")
+  ){
+    return "car";
+  }
+
+
+  if(
+    text.includes("product") ||
+    text.includes("shop") ||
+    text.includes("buy")
+  ){
+    return "product";
+  }
+
+
+  if(
+    text.includes("space") ||
+    text.includes("planet") ||
+    text.includes("star")
+  ){
+    return "space";
+  }
+
+
+  return "personal";
+
+}
+
+
+/* =========================================================
+   PUBLIC API
+========================================================= */
+
+window.ZemivoLivingWorld = {
+
+  changeWorld:
+    changeWorld,
+
+  analyzeContentDemo:
+    analyzeContentDemo,
+
+  getCurrentProfile:
+    function(){
+
+      return {
+        ...currentProfile
+      };
+
+    }
+
+};
+
+
+/* =========================================================
+   START
+========================================================= */
+
+changeWorld(
+  "personal"
+);
+
+
+/* THREE.JS STARTS INDEPENDENTLY */
+
+loadThreeJS();
+
+</script>
+
+</body>
+</html>
