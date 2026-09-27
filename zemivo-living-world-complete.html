@@ -1,0 +1,3052 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1.0"
+>
+
+<title>Zemivo Living 3D World Complete</title>
+
+<style>
+
+*{
+  box-sizing:border-box;
+}
+
+html,
+body{
+  margin:0;
+  width:100%;
+  height:100%;
+  overflow:hidden;
+  font-family:Arial,Helvetica,sans-serif;
+  background:#02040a;
+  color:#fff;
+}
+
+#worldCanvas{
+  position:fixed;
+  inset:0;
+  width:100%;
+  height:100%;
+  display:block;
+}
+
+.ui{
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+}
+
+.topbar{
+  position:absolute;
+  top:0;
+  left:0;
+  right:0;
+  height:68px;
+  padding:0 18px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  background:linear-gradient(
+    to bottom,
+    rgba(2,4,10,.78),
+    rgba(2,4,10,0)
+  );
+}
+
+.logo{
+  font-size:25px;
+  font-weight:900;
+  color:#60a5fa;
+  letter-spacing:.3px;
+}
+
+.badge{
+  padding:7px 12px;
+  border-radius:20px;
+  background:rgba(255,255,255,.08);
+  border:1px solid rgba(255,255,255,.15);
+  backdrop-filter:blur(12px);
+  color:#cbd5e1;
+  font-size:11px;
+}
+
+.info{
+  position:absolute;
+  top:82px;
+  left:18px;
+  padding:13px 16px;
+  border-radius:16px;
+  background:rgba(0,0,0,.32);
+  border:1px solid rgba(255,255,255,.12);
+  backdrop-filter:blur(14px);
+}
+
+.world-name{
+  font-size:20px;
+  font-weight:800;
+  text-transform:capitalize;
+}
+
+.world-meta{
+  margin-top:4px;
+  color:#cbd5e1;
+  font-size:12px;
+}
+
+.control{
+  position:absolute;
+  left:50%;
+  bottom:22px;
+  transform:translateX(-50%);
+  width:min(96%,900px);
+  padding:13px;
+  border-radius:20px;
+  background:rgba(4,8,16,.62);
+  border:1px solid rgba(255,255,255,.12);
+  backdrop-filter:blur(18px);
+  pointer-events:auto;
+}
+
+.buttons{
+  display:flex;
+  flex-wrap:wrap;
+  gap:7px;
+  justify-content:center;
+}
+
+button{
+  border:1px solid rgba(255,255,255,.12);
+  background:rgba(255,255,255,.07);
+  color:#fff;
+  border-radius:12px;
+  padding:9px 12px;
+  cursor:pointer;
+  font-size:12px;
+}
+
+button:hover{
+  background:rgba(255,255,255,.15);
+}
+
+button.active{
+  background:#2563eb;
+  border-color:#60a5fa;
+}
+
+.input-row{
+  margin-top:10px;
+  display:flex;
+  gap:7px;
+}
+
+.input-row textarea{
+  flex:1;
+  min-width:0;
+  resize:none;
+  height:45px;
+  padding:12px;
+  border-radius:12px;
+  border:1px solid rgba(255,255,255,.12);
+  background:rgba(0,0,0,.35);
+  color:#fff;
+  outline:none;
+}
+
+.action{
+  background:#2563eb;
+  font-weight:800;
+}
+
+.media-row{
+  display:flex;
+  gap:7px;
+  margin-top:8px;
+  flex-wrap:wrap;
+}
+
+.file-label{
+  display:flex;
+  align-items:center;
+  padding:9px 12px;
+  border-radius:12px;
+  background:rgba(255,255,255,.07);
+  border:1px solid rgba(255,255,255,.12);
+  font-size:12px;
+  cursor:pointer;
+}
+
+.file-label input{
+  display:none;
+}
+
+.status{
+  position:absolute;
+  right:18px;
+  top:82px;
+  max-width:250px;
+  padding:10px 13px;
+  border-radius:14px;
+  background:rgba(0,0,0,.35);
+  border:1px solid rgba(255,255,255,.1);
+  backdrop-filter:blur(12px);
+  color:#cbd5e1;
+  font-size:11px;
+}
+
+.loading{
+  position:fixed;
+  inset:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:#02040a;
+  z-index:100;
+  transition:opacity .5s;
+}
+
+.loading.hidden{
+  opacity:0;
+  pointer-events:none;
+}
+
+.loader-box{
+  text-align:center;
+}
+
+.loader-title{
+  font-size:25px;
+  font-weight:900;
+  color:#60a5fa;
+}
+
+.loader-text{
+  margin-top:7px;
+  color:#94a3b8;
+  font-size:12px;
+}
+
+@media(max-width:700px){
+
+  .topbar{
+    height:58px;
+    padding:0 12px;
+  }
+
+  .logo{
+    font-size:21px;
+  }
+
+  .info{
+    top:68px;
+    left:10px;
+  }
+
+  .status{
+    top:68px;
+    right:10px;
+    max-width:180px;
+  }
+
+  .control{
+    bottom:8px;
+    padding:9px;
+    border-radius:16px;
+  }
+
+  .input-row{
+    flex-direction:column;
+  }
+
+  .input-row textarea{
+    height:42px;
+  }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<canvas id="worldCanvas"></canvas>
+
+
+<div
+  id="loading"
+  class="loading"
+>
+
+  <div class="loader-box">
+
+    <div class="loader-title">
+      Zemivo
+    </div>
+
+    <div class="loader-text">
+      Loading Living 3D World...
+    </div>
+
+  </div>
+
+</div>
+
+
+<div class="ui">
+
+
+  <div class="topbar">
+
+    <div class="logo">
+      Zemivo
+    </div>
+
+    <div class="badge">
+      Living 3D World
+    </div>
+
+  </div>
+
+
+  <div class="info">
+
+    <div
+      id="worldName"
+      class="world-name"
+    >
+      Personal
+    </div>
+
+    <div
+      id="worldMeta"
+      class="world-meta"
+    >
+      Calm · Soft
+    </div>
+
+  </div>
+
+
+  <div
+    id="status"
+    class="status"
+  >
+    Ready
+  </div>
+
+
+  <div class="control">
+
+
+    <div class="buttons">
+
+      <button
+        data-world="personal"
+        class="world-button"
+      >
+        Personal
+      </button>
+
+      <button
+        data-world="ocean"
+        class="world-button"
+      >
+        Ocean
+      </button>
+
+      <button
+        data-world="nature"
+        class="world-button"
+      >
+        Nature
+      </button>
+
+      <button
+        data-world="music"
+        class="world-button"
+      >
+        Music
+      </button>
+
+      <button
+        data-world="gaming"
+        class="world-button"
+      >
+        Gaming
+      </button>
+
+      <button
+        data-world="automotive"
+        class="world-button"
+      >
+        Automotive
+      </button>
+
+      <button
+        data-world="product"
+        class="world-button"
+      >
+        Product
+      </button>
+
+      <button
+        data-world="space"
+        class="world-button"
+      >
+        Space
+      </button>
+
+    </div>
+
+
+    <div class="input-row">
+
+      <textarea
+        id="textInput"
+        placeholder="Write or paste content..."
+      ></textarea>
+
+      <button
+        id="analyzeButton"
+        class="action"
+      >
+        ✨ React
+      </button>
+
+    </div>
+
+
+    <div class="media-row">
+
+      <label class="file-label">
+
+        🖼️ Image
+
+        <input
+          id="imageInput"
+          type="file"
+          accept="image/*"
+        >
+
+      </label>
+
+
+      <label class="file-label">
+
+        🎬 Video
+
+        <input
+          id="videoInput"
+          type="file"
+          accept="video/*"
+        >
+
+      </label>
+
+
+      <label class="file-label">
+
+        🎵 Audio
+
+        <input
+          id="audioInput"
+          type="file"
+          accept="audio/*"
+        >
+
+      </label>
+
+    </div>
+
+
+  </div>
+
+
+</div>
+
+
+<script type="module">
+
+import * as THREE from
+"https://cdn.jsdelivr.net/npm/three@0.179.1/build/three.module.js";
+
+
+/* =========================
+   ELEMENTS
+========================= */
+
+const canvas =
+  document.getElementById(
+    "worldCanvas"
+  );
+
+const loading =
+  document.getElementById(
+    "loading"
+  );
+
+const worldName =
+  document.getElementById(
+    "worldName"
+  );
+
+const worldMeta =
+  document.getElementById(
+    "worldMeta"
+  );
+
+const status =
+  document.getElementById(
+    "status"
+  );
+
+const textInput =
+  document.getElementById(
+    "textInput"
+  );
+
+const analyzeButton =
+  document.getElementById(
+    "analyzeButton"
+  );
+
+const imageInput =
+  document.getElementById(
+    "imageInput"
+  );
+
+const videoInput =
+  document.getElementById(
+    "videoInput"
+  );
+
+const audioInput =
+  document.getElementById(
+    "audioInput"
+  );
+
+
+/* =========================
+   CONFIG
+========================= */
+
+const VERSION =
+  "3.0.0";
+
+
+const MODES = [
+
+  "personal",
+  "ocean",
+  "nature",
+  "music",
+  "gaming",
+  "automotive",
+  "product",
+  "space"
+
+];
+
+
+const profiles = {
+
+  personal:{
+    mood:"calm",
+    motion:"soft",
+    colors:[
+      "#2563eb",
+      "#64748b",
+      "#94a3b8"
+    ],
+    intensity:.35
+  },
+
+  ocean:{
+    mood:"peaceful",
+    motion:"flowing",
+    colors:[
+      "#0284c7",
+      "#06b6d4",
+      "#0ea5e9"
+    ],
+    intensity:.75
+  },
+
+  nature:{
+    mood:"fresh",
+    motion:"organic",
+    colors:[
+      "#16a34a",
+      "#22c55e",
+      "#84cc16"
+    ],
+    intensity:.65
+  },
+
+  music:{
+    mood:"energetic",
+    motion:"rhythmic",
+    colors:[
+      "#a855f7",
+      "#ec4899",
+      "#6366f1"
+    ],
+    intensity:.9
+  },
+
+  gaming:{
+    mood:"energetic",
+    motion:"dynamic",
+    colors:[
+      "#7c3aed",
+      "#2563eb",
+      "#06b6d4"
+    ],
+    intensity:1
+  },
+
+  automotive:{
+    mood:"powerful",
+    motion:"fast",
+    colors:[
+      "#ef4444",
+      "#f97316",
+      "#64748b"
+    ],
+    intensity:.85
+  },
+
+  product:{
+    mood:"premium",
+    motion:"smooth",
+    colors:[
+      "#f8fafc",
+      "#94a3b8",
+      "#6366f1"
+    ],
+    intensity:.5
+  },
+
+  space:{
+    mood:"mysterious",
+    motion:"cosmic",
+    colors:[
+      "#312e81",
+      "#4f46e5",
+      "#7c3aed"
+    ],
+    intensity:.9
+
+  }
+
+};
+
+
+/* =========================
+   SCENE
+========================= */
+
+const scene =
+  new THREE.Scene();
+
+
+scene.fog =
+  new THREE.FogExp2(
+    0x02040a,
+    .025
+  );
+
+
+const camera =
+  new THREE.PerspectiveCamera(
+    65,
+    window.innerWidth /
+    window.innerHeight,
+    .1,
+    100
+  );
+
+
+camera.position.z =
+  8;
+
+
+const renderer =
+  new THREE.WebGLRenderer({
+
+    canvas:
+      canvas,
+
+    antialias:
+      true,
+
+    alpha:
+      true
+
+  });
+
+
+renderer.setPixelRatio(
+  Math.min(
+    window.devicePixelRatio,
+    2
+  )
+);
+
+
+renderer.setSize(
+  window.innerWidth,
+  window.innerHeight
+);
+
+
+renderer.outputColorSpace =
+  THREE.SRGBColorSpace;
+
+
+/* =========================
+   LIGHTS
+========================= */
+
+const ambient =
+  new THREE.AmbientLight(
+    0xffffff,
+    .5
+  );
+
+
+scene.add(
+  ambient
+);
+
+
+const light1 =
+  new THREE.PointLight(
+    0x60a5fa,
+    30,
+    30
+  );
+
+
+light1.position.set(
+  4,
+  3,
+  5
+);
+
+
+scene.add(
+  light1
+);
+
+
+const light2 =
+  new THREE.PointLight(
+    0xa855f7,
+    20,
+    25
+  );
+
+
+light2.position.set(
+  -4,
+  -2,
+  2
+);
+
+
+scene.add(
+  light2
+);
+
+
+/* =========================
+   CORE
+========================= */
+
+const core =
+  new THREE.Mesh(
+
+    new THREE.IcosahedronGeometry(
+      1.15,
+      2
+    ),
+
+    new THREE.MeshStandardMaterial({
+
+      color:
+        0x2563eb,
+
+      metalness:
+        .65,
+
+      roughness:
+        .2,
+
+      emissive:
+        0x2563eb,
+
+      emissiveIntensity:
+        .35
+
+    })
+
+  );
+
+
+scene.add(
+  core
+);
+
+
+/* =========================
+   RINGS
+========================= */
+
+const rings =
+  [];
+
+
+for(
+  let i = 0;
+  i < 5;
+  i++
+){
+
+  const ring =
+    new THREE.Mesh(
+
+      new THREE.TorusGeometry(
+        1.8 +
+        i * .35,
+        .018,
+        12,
+        100
+      ),
+
+      new THREE.MeshBasicMaterial({
+
+        color:
+          0x60a5fa,
+
+        transparent:
+          true,
+
+        opacity:
+          .45
+
+      })
+
+    );
+
+
+  ring.rotation.x =
+    Math.random() *
+    Math.PI;
+
+
+  ring.rotation.y =
+    Math.random() *
+    Math.PI;
+
+
+  scene.add(
+    ring
+  );
+
+
+  rings.push(
+    ring
+  );
+
+}
+
+
+/* =========================
+   PARTICLES
+========================= */
+
+const particleCount =
+  1800;
+
+
+const particleGeometry =
+  new THREE.BufferGeometry();
+
+
+const particlePositions =
+  new Float32Array(
+    particleCount * 3
+  );
+
+
+for(
+  let i = 0;
+  i < particleCount;
+  i++
+){
+
+  const radius =
+    3 +
+    Math.random() * 8;
+
+
+  const angle =
+    Math.random() *
+    Math.PI *
+    2;
+
+
+  const y =
+    (
+      Math.random() -
+      .5
+    ) * 10;
+
+
+  particlePositions[
+    i * 3
+  ] =
+    Math.cos(angle) *
+    radius;
+
+
+  particlePositions[
+    i * 3 + 1
+  ] =
+    y;
+
+
+  particlePositions[
+    i * 3 + 2
+  ] =
+    Math.sin(angle) *
+    radius;
+
+}
+
+
+particleGeometry.setAttribute(
+
+  "position",
+
+  new THREE.BufferAttribute(
+    particlePositions,
+    3
+  )
+
+);
+
+
+const particles =
+  new THREE.Points(
+
+    particleGeometry,
+
+    new THREE.PointsMaterial({
+
+      color:
+        0x60a5fa,
+
+      size:
+        .025,
+
+      transparent:
+        true,
+
+      opacity:
+        .65
+
+    })
+
+  );
+
+
+scene.add(
+  particles
+);
+
+
+/* =========================
+   STARS
+========================= */
+
+const starGeometry =
+  new THREE.BufferGeometry();
+
+
+const starPositions =
+  new Float32Array(
+    900 * 3
+  );
+
+
+for(
+  let i = 0;
+  i < 900;
+  i++
+){
+
+  starPositions[
+    i * 3
+  ] =
+    (
+      Math.random() -
+      .5
+    ) * 40;
+
+
+  starPositions[
+    i * 3 + 1
+  ] =
+    (
+      Math.random() -
+      .5
+    ) * 25;
+
+
+  starPositions[
+    i * 3 + 2
+  ] =
+    (
+      Math.random() -
+      .5
+    ) * 40;
+
+}
+
+
+starGeometry.setAttribute(
+
+  "position",
+
+  new THREE.BufferAttribute(
+    starPositions,
+    3
+  )
+
+);
+
+
+const stars =
+  new THREE.Points(
+
+    starGeometry,
+
+    new THREE.PointsMaterial({
+
+      color:
+        0xffffff,
+
+      size:
+        .018,
+
+      transparent:
+        true,
+
+      opacity:
+        .5
+
+    })
+
+  );
+
+
+scene.add(
+  stars
+);
+
+
+/* =========================
+   STATE
+========================= */
+
+let currentMode =
+  "personal";
+
+
+let currentProfile =
+  profiles.personal;
+
+
+let targetProfile =
+  profiles.personal;
+
+
+let targetColors =
+  profiles.personal.colors;
+
+
+let audioReactive =
+  0;
+
+
+let mouseX =
+  0;
+
+
+let mouseY =
+  0;
+
+
+let targetMouseX =
+  0;
+
+
+let targetMouseY =
+  0;
+
+
+/* =========================
+   UTILITIES
+========================= */
+
+function hexToRGB(
+  hex
+){
+
+  const value =
+    hex.replace(
+      "#",
+      ""
+    );
+
+
+  return {
+
+    r:
+      parseInt(
+        value.substring(
+          0,
+          2
+        ),
+        16
+      ),
+
+    g:
+      parseInt(
+        value.substring(
+          2,
+          4
+        ),
+        16
+      ),
+
+    b:
+      parseInt(
+        value.substring(
+          4,
+          6
+        ),
+        16
+      )
+
+  };
+
+}
+
+
+function rgbToHex(
+  r,
+  g,
+  b
+){
+
+  return (
+
+    "#" +
+
+    [r,g,b]
+      .map(
+        function(v){
+
+          return Math
+            .round(v)
+            .toString(16)
+            .padStart(
+              2,
+              "0"
+            );
+
+        }
+      )
+      .join("")
+
+  );
+
+}
+
+
+function blendColors(
+  colors
+){
+
+  if(
+    !colors ||
+    colors.length === 0
+  ){
+
+    return targetColors;
+
+  }
+
+
+  return colors
+    .slice(0,3)
+    .map(
+      function(c){
+
+        return rgbToHex(
+          c.r,
+          c.g,
+          c.b
+        );
+
+      }
+    );
+
+}
+
+
+/* =========================
+   CONTENT ANALYSIS
+========================= */
+
+function analyzeContent(
+  input = {}
+){
+
+  const text =
+    String(
+      input.text ||
+      ""
+    )
+    .toLowerCase();
+
+
+  const tags =
+    Array.isArray(
+      input.tags
+    )
+    ?
+    input.tags
+      .join(" ")
+      .toLowerCase()
+    :
+    "";
+
+
+  const context =
+    String(
+      input.context ||
+      ""
+    )
+    .toLowerCase();
+
+
+  const combined =
+    text +
+    " " +
+    tags +
+    " " +
+    context;
+
+
+  const scores = {
+
+    personal:
+      1,
+
+    ocean:
+      0,
+
+    nature:
+      0,
+
+    music:
+      0,
+
+    gaming:
+      0,
+
+    automotive:
+      0,
+
+    product:
+      0,
+
+    space:
+      0
+
+  };
+
+
+  const keywords = {
+
+    ocean:[
+      "ocean",
+      "sea",
+      "water",
+      "wave",
+      "beach",
+      "river",
+      "lake",
+      "সমুদ্র",
+      "পানি",
+      "সাগর",
+      "海",
+      "海洋",
+      "القرآن"
+    ],
+
+    nature:[
+      "nature",
+      "forest",
+      "tree",
+      "green",
+      "flower",
+      "mountain",
+      "garden",
+      "প্রকৃতি",
+      "গাছ",
+      "ফুল",
+      "পাহাড়",
+      "自然",
+      "طبيعة"
+    ],
+
+    music:[
+      "music",
+      "song",
+      "concert",
+      "piano",
+      "guitar",
+      "beat",
+      "melody",
+      "music",
+      "গান",
+      "সঙ্গীত",
+      "音楽",
+      "موسيقى"
+    ],
+
+    gaming:[
+      "game",
+      "gaming",
+      "gamer",
+      "esports",
+      "console",
+      "playstation",
+      "xbox",
+      "steam",
+      "গেম",
+      "गेम",
+      "游戏"
+    ],
+
+    automotive:[
+      "car",
+      "cars",
+      "automotive",
+      "vehicle",
+      "motor",
+      "racing",
+      "bike",
+      "গাড়ি",
+      "মোটর",
+      "سيارة"
+    ],
+
+    product:[
+      "product",
+      "shopping",
+      "store",
+      "sale",
+      "luxury",
+      "fashion",
+      "buy",
+      "পণ্য",
+      "কেনাকাটা",
+      "منتج"
+    ],
+
+    space:[
+      "space",
+      "planet",
+      "galaxy",
+      "universe",
+      "star",
+      "cosmic",
+      "nasa",
+      "মহাকাশ",
+      "গ্রহ",
+      "নক্ষত্র",
+      "宇宙",
+      "فضاء"
+    ],
+
+    personal:[
+      "family",
+      "friend",
+      "self",
+      "life",
+      "personal",
+      "আমার",
+      "পরিবার",
+      "বন্ধু",
+      "生活"
+    ]
+
+  };
+
+
+  MODES.forEach(
+    function(mode){
+
+      keywords[mode]
+        .forEach(
+          function(word){
+
+            if(
+              combined.includes(
+                word
+              )
+            ){
+
+              scores[mode] += 2;
+
+            }
+
+          }
+        );
+
+    }
+  );
+
+
+  if(
+    input.contentType ===
+    "audio"
+  ){
+
+    scores.music += 4;
+
+  }
+
+
+  if(
+    input.contentType ===
+    "video"
+  ){
+
+    scores.personal += .2;
+
+  }
+
+
+  if(
+    input.contentType ===
+    "image"
+  ){
+
+    scores.personal += .2;
+
+  }
+
+
+  if(
+    Number(
+      input.audioEnergy ||
+      0
+    ) > .7
+  ){
+
+    scores.music += 3;
+    scores.gaming += 1;
+
+  }
+
+
+  if(
+    Number(
+      input.motionLevel ||
+      0
+    ) > .7
+  ){
+
+    scores.gaming += 2;
+    scores.automotive += 1;
+    scores.music += 1;
+
+  }
+
+
+  let bestMode =
+    "personal";
+
+
+  let bestScore =
+    scores.personal;
+
+
+  MODES.forEach(
+    function(mode){
+
+      if(
+        scores[mode] >
+        bestScore
+      ){
+
+        bestMode =
+          mode;
+
+        bestScore =
+          scores[mode];
+
+      }
+
+    }
+  );
+
+
+  let mood =
+    "calm";
+
+
+  if(
+    bestMode ===
+    "ocean"
+  ){
+
+    mood =
+      "peaceful";
+
+  }
+
+
+  if(
+    bestMode ===
+    "nature"
+  ){
+
+    mood =
+      "fresh";
+
+  }
+
+
+  if(
+    bestMode ===
+    "music"
+  ){
+
+    mood =
+      "energetic";
+
+  }
+
+
+  if(
+    bestMode ===
+    "gaming"
+  ){
+
+    mood =
+      "energetic";
+
+  }
+
+
+  if(
+    bestMode ===
+    "automotive"
+  ){
+
+    mood =
+      "powerful";
+
+  }
+
+
+  if(
+    bestMode ===
+    "product"
+  ){
+
+    mood =
+      "premium";
+
+  }
+
+
+  if(
+    bestMode ===
+    "space"
+  ){
+
+    mood =
+      "mysterious";
+
+  }
+
+
+  if(
+    combined.includes(
+      "romantic"
+    ) ||
+    combined.includes(
+      "love"
+    ) ||
+    combined.includes(
+      "ভালোবাসা"
+    )
+  ){
+
+    mood =
+      "romantic";
+
+  }
+
+
+  let motion =
+    "soft";
+
+
+  const energy =
+    Number(
+      input.audioEnergy ||
+      input.motionLevel ||
+      0
+    );
+
+
+  if(
+    energy > .75
+  ){
+
+    motion =
+      "dynamic";
+
+  }
+  else if(
+    energy > .45
+  ){
+
+    motion =
+      "flowing";
+
+  }
+
+
+  return {
+
+    mode:
+      bestMode,
+
+    mood:
+      mood,
+
+    motion:
+      motion,
+
+    colors:
+      blendColors(
+        input.dominantColors
+      ),
+
+    intensity:
+      Math.min(
+        1,
+        Math.max(
+          .2,
+          profiles[bestMode].intensity +
+          energy * .25
+        )
+      )
+
+  };
+
+}
+
+
+/* =========================
+   APPLY PROFILE
+========================= */
+
+function applyContentVisualProfile(
+  profile
+){
+
+  if(
+    !profile
+  ){
+
+    return;
+
+  }
+
+
+  const mode =
+    MODES.includes(
+      profile.mode
+    )
+    ?
+    profile.mode
+    :
+    "personal";
+
+
+  currentMode =
+    mode;
+
+
+  targetProfile =
+    profiles[mode];
+
+
+  currentProfile = {
+
+    ...profiles[mode],
+
+    mood:
+      profile.mood ||
+      profiles[mode].mood,
+
+    motion:
+      profile.motion ||
+      profiles[mode].motion,
+
+    intensity:
+      profile.intensity ||
+      profiles[mode].intensity
+
+  };
+
+
+  if(
+    Array.isArray(
+      profile.colors
+    ) &&
+    profile.colors.length
+  ){
+
+    targetColors =
+      profile.colors;
+
+  }
+  else{
+
+    targetColors =
+      profiles[mode].colors;
+
+  }
+
+
+  worldName.textContent =
+    mode;
+
+
+  worldMeta.textContent =
+    currentProfile.mood +
+    " · " +
+    currentProfile.motion;
+
+
+  status.textContent =
+    "Zemivo is reacting to content";
+
+
+  document
+    .querySelectorAll(
+      ".world-button"
+    )
+    .forEach(
+      function(button){
+
+        button.classList.toggle(
+          "active",
+          button.dataset.world ===
+          mode
+        );
+
+      }
+    );
+
+}
+
+
+/* =========================
+   CHANGE WORLD
+========================= */
+
+function changeWorld(
+  mode
+){
+
+  if(
+    !MODES.includes(
+      mode
+    )
+  ){
+
+    mode =
+      "personal";
+
+  }
+
+
+  applyContentVisualProfile({
+
+    mode:
+      mode,
+
+    mood:
+      profiles[mode].mood,
+
+    motion:
+      profiles[mode].motion,
+
+    colors:
+      profiles[mode].colors,
+
+    intensity:
+      profiles[mode].intensity
+
+  });
+
+}
+
+
+/* =========================
+   IMAGE ANALYSIS
+========================= */
+
+function analyzeImage(
+  file
+){
+
+  return new Promise(
+    function(resolve){
+
+      const url =
+        URL.createObjectURL(
+          file
+        );
+
+
+      const image =
+        new Image();
+
+
+      image.onload =
+        function(){
+
+          const canvas =
+            document.createElement(
+              "canvas"
+            );
+
+
+          const size =
+            120;
+
+
+          const ratio =
+            Math.min(
+              size /
+              image.width,
+
+              size /
+              image.height,
+
+              1
+            );
+
+
+          canvas.width =
+            Math.max(
+              1,
+              Math.floor(
+                image.width *
+                ratio
+              )
+            );
+
+
+          canvas.height =
+            Math.max(
+              1,
+              Math.floor(
+                image.height *
+                ratio
+              )
+            );
+
+
+          const ctx =
+            canvas.getContext(
+              "2d",
+              {
+                willReadFrequently:true
+              }
+            );
+
+
+          ctx.drawImage(
+            image,
+            0,
+            0,
+            canvas.width,
+            canvas.height
+          );
+
+
+          const data =
+            ctx.getImageData(
+              0,
+              0,
+              canvas.width,
+              canvas.height
+            ).data;
+
+
+          const buckets = {};
+
+
+          for(
+            let i = 0;
+            i < data.length;
+            i += 16
+          ){
+
+            const r =
+              data[i];
+
+            const g =
+              data[i + 1];
+
+            const b =
+              data[i + 2];
+
+
+            const key =
+              Math.round(r / 32) +
+              "," +
+              Math.round(g / 32) +
+              "," +
+              Math.round(b / 32);
+
+
+            buckets[key] =
+              (
+                buckets[key] ||
+                0
+              ) + 1;
+
+          }
+
+
+          const colors =
+            Object.keys(
+              buckets
+            )
+            .sort(
+              function(a,b){
+
+                return (
+                  buckets[b] -
+                  buckets[a]
+                );
+
+              }
+            )
+            .slice(0,5)
+            .map(
+              function(key){
+
+                const p =
+                  key
+                    .split(",")
+                    .map(Number);
+
+
+                return {
+
+                  r:
+                    p[0] * 32,
+
+                  g:
+                    p[1] * 32,
+
+                  b:
+                    p[2] * 32
+
+                };
+
+              }
+            );
+
+
+          URL.revokeObjectURL(
+            url
+          );
+
+
+          resolve(
+            colors
+          );
+
+        };
+
+
+      image.onerror =
+        function(){
+
+          URL.revokeObjectURL(
+            url
+          );
+
+          resolve(
+            []
+          );
+
+        };
+
+
+      image.src =
+        url;
+
+    }
+  );
+
+}
+
+
+/* =========================
+   VIDEO ANALYSIS
+========================= */
+
+async function analyzeVideo(
+  file
+){
+
+  const url =
+    URL.createObjectURL(
+      file
+    );
+
+
+  const video =
+    document.createElement(
+      "video"
+    );
+
+
+  video.muted =
+    true;
+
+  video.playsInline =
+    true;
+
+  video.src =
+    url;
+
+
+  await new Promise(
+    function(resolve){
+
+      video.onloadedmetadata =
+        resolve;
+
+    }
+  );
+
+
+  const duration =
+    video.duration;
+
+
+  const samples =
+    [];
+
+
+  const count =
+    Math.min(
+      5,
+      Math.max(
+        3,
+        Math.floor(
+          duration
+        )
+      )
+    );
+
+
+  for(
+    let i = 0;
+    i < count;
+    i++
+  ){
+
+    const time =
+      duration *
+      (
+        i /
+        Math.max(
+          1,
+          count - 1
+        )
+      );
+
+
+    const frame =
+      await captureVideoFrame(
+        video,
+        time
+      );
+
+
+    if(frame){
+
+      samples.push(
+        frame
+      );
+
+    }
+
+  }
+
+
+  let colors =
+    [];
+
+
+  const buckets = {};
+
+
+  samples.forEach(
+    function(canvas){
+
+      const ctx =
+        canvas.getContext(
+          "2d",
+          {
+            willReadFrequently:true
+          }
+        );
+
+
+      const data =
+        ctx.getImageData(
+          0,
+          0,
+          canvas.width,
+          canvas.height
+        ).data;
+
+
+      for(
+        let i = 0;
+        i < data.length;
+        i += 16
+      ){
+
+        const r =
+          data[i];
+
+        const g =
+          data[i + 1];
+
+        const b =
+          data[i + 2];
+
+
+        const key =
+          Math.round(r / 32) +
+          "," +
+          Math.round(g / 32) +
+          "," +
+          Math.round(b / 32);
+
+
+        buckets[key] =
+          (
+            buckets[key] ||
+            0
+          ) + 1;
+
+      }
+
+    }
+  );
+
+
+  colors =
+    Object.keys(
+      buckets
+    )
+    .sort(
+      function(a,b){
+
+        return (
+          buckets[b] -
+          buckets[a]
+        );
+
+      }
+    )
+    .slice(0,5)
+    .map(
+      function(key){
+
+        const p =
+          key
+            .split(",")
+            .map(Number);
+
+
+        return {
+
+          r:
+            p[0] * 32,
+
+          g:
+            p[1] * 32,
+
+          b:
+            p[2] * 32
+
+        };
+
+      }
+    );
+
+
+  URL.revokeObjectURL(
+    url
+  );
+
+
+  return {
+
+    colors:
+      colors,
+
+    motion:
+      Math.min(
+        1,
+        duration > 0
+        ?
+        samples.length /
+        5
+        :
+        .3
+      )
+
+  };
+
+}
+
+
+function captureVideoFrame(
+  video,
+  time
+){
+
+  return new Promise(
+    function(resolve){
+
+      function done(){
+
+        video.removeEventListener(
+          "seeked",
+          done
+        );
+
+
+        const canvas =
+          document.createElement(
+            "canvas"
+          );
+
+
+        const size =
+          120;
+
+
+        const ratio =
+          Math.min(
+            size /
+            video.videoWidth,
+
+            size /
+            video.videoHeight,
+
+            1
+          );
+
+
+        canvas.width =
+          Math.max(
+            1,
+            Math.floor(
+              video.videoWidth *
+              ratio
+            )
+          );
+
+
+        canvas.height =
+          Math.max(
+            1,
+            Math.floor(
+              video.videoHeight *
+              ratio
+            )
+          );
+
+
+        const ctx =
+          canvas.getContext(
+            "2d"
+          );
+
+
+        ctx.drawImage(
+          video,
+          0,
+          0,
+          canvas.width,
+          canvas.height
+        );
+
+
+        resolve(
+          canvas
+        );
+
+      }
+
+
+      video.addEventListener(
+        "seeked",
+        done
+      );
+
+
+      video.currentTime =
+        Math.min(
+          time,
+          Math.max(
+            0,
+            video.duration -
+            .05
+          )
+        );
+
+    }
+  );
+
+}
+
+
+/* =========================
+   AUDIO ANALYSIS
+========================= */
+
+async function analyzeAudio(
+  file
+){
+
+  try{
+
+    const AudioContextClass =
+      window.AudioContext ||
+      window.webkitAudioContext;
+
+
+    if(
+      !AudioContextClass
+    ){
+
+      return {
+
+        energy:
+          .5,
+
+        tempo:
+          100
+
+      };
+
+    }
+
+
+    const context =
+      new AudioContextClass();
+
+
+    const arrayBuffer =
+      await file.arrayBuffer();
+
+
+    const audioBuffer =
+      await context.decodeAudioData(
+        arrayBuffer
+      );
+
+
+    const data =
+      audioBuffer.getChannelData(
+        0
+      );
+
+
+    const step =
+      Math.max(
+        1,
+        Math.floor(
+          data.length /
+          100000
+        )
+      );
+
+
+    let total =
+      0;
+
+    let count =
+      0;
+
+
+    for(
+      let i = 0;
+      i < data.length;
+      i += step
+    ){
+
+      total +=
+        data[i] *
+        data[i];
+
+
+      count++;
+
+    }
+
+
+    const rms =
+      Math.sqrt(
+        total /
+        Math.max(
+          1,
+          count
+        )
+      );
+
+
+    const energy =
+      Math.min(
+        1,
+        rms * 4
+      );
+
+
+    await context.close();
+
+
+    return {
+
+      energy:
+        energy,
+
+      tempo:
+        90 +
+        energy * 60
+
+    };
+
+  }
+  catch(error){
+
+    console.error(
+      error
+    );
+
+
+    return {
+
+      energy:
+        .5,
+
+      tempo:
+        100
+
+    };
+
+  }
+
+}
+
+
+/* =========================
+   TEXT
+========================= */
+
+analyzeButton.addEventListener(
+  "click",
+  function(){
+
+    const profile =
+      analyzeContent({
+
+        text:
+          textInput.value,
+
+        contentType:
+          "text"
+
+      });
+
+
+    applyContentVisualProfile(
+      profile
+    );
+
+  }
+);
+
+
+/* =========================
+   IMAGE
+========================= */
+
+imageInput.addEventListener(
+  "change",
+  async function(){
+
+    const file =
+      imageInput.files[0];
+
+
+    if(!file){
+
+      return;
+
+    }
+
+
+    status.textContent =
+      "Analyzing image...";
+
+
+    const colors =
+      await analyzeImage(
+        file
+      );
+
+
+    const profile =
+      analyzeContent({
+
+        text:
+          textInput.value,
+
+        contentType:
+          "image",
+
+        dominantColors:
+          colors
+
+      });
+
+
+    applyContentVisualProfile(
+      profile
+    );
+
+  }
+);
+
+
+/* =========================
+   VIDEO
+========================= */
+
+videoInput.addEventListener(
+  "change",
+  async function(){
+
+    const file =
+      videoInput.files[0];
+
+
+    if(!file){
+
+      return;
+
+    }
+
+
+    status.textContent =
+      "Analyzing video...";
+
+
+    const result =
+      await analyzeVideo(
+        file
+      );
+
+
+    const profile =
+      analyzeContent({
+
+        text:
+          textInput.value,
+
+        contentType:
+          "video",
+
+        dominantColors:
+          result.colors,
+
+        motionLevel:
+          result.motion
+
+      });
+
+
+    applyContentVisualProfile(
+      profile
+    );
+
+  }
+);
+
+
+/* =========================
+   AUDIO
+========================= */
+
+audioInput.addEventListener(
+  "change",
+  async function(){
+
+    const file =
+      audioInput.files[0];
+
+
+    if(!file){
+
+      return;
+
+    }
+
+
+    status.textContent =
+      "Analyzing audio...";
+
+
+    const result =
+      await analyzeAudio(
+        file
+      );
+
+
+    const profile =
+      analyzeContent({
+
+        text:
+          textInput.value,
+
+        contentType:
+          "audio",
+
+        audioEnergy:
+          result.energy,
+
+        audioTempo:
+          result.tempo
+
+      });
+
+
+    applyContentVisualProfile(
+      profile
+    );
+
+  }
+);
+
+
+/* =========================
+   WORLD BUTTONS
+========================= */
+
+document
+  .querySelectorAll(
+    ".world-button"
+  )
+  .forEach(
+    function(button){
+
+      button.addEventListener(
+        "click",
+        function(){
+
+          changeWorld(
+            button.dataset.world
+          );
+
+        }
+      );
+
+    }
+  );
+
+
+/* =========================
+   MOUSE
+========================= */
+
+window.addEventListener(
+  "pointermove",
+  function(event){
+
+    targetMouseX =
+      (
+        event.clientX /
+        window.innerWidth -
+        .5
+      );
+
+
+    targetMouseY =
+      (
+        event.clientY /
+        window.innerHeight -
+        .5
+      );
+
+  }
+);
+
+
+/* =========================
+   ANIMATION
+========================= */
+
+const clock =
+  new THREE.Clock();
+
+
+function animate(){
+
+  requestAnimationFrame(
+    animate
+  );
+
+
+  const elapsed =
+    clock.getElapsedTime();
+
+
+  mouseX +=
+    (
+      targetMouseX -
+      mouseX
+    ) * .04;
+
+
+  mouseY +=
+    (
+      targetMouseY -
+      mouseY
+    ) * .04;
+
+
+  const intensity =
+    currentProfile.intensity;
+
+
+  core.rotation.x =
+    elapsed *
+    .18;
+
+
+  core.rotation.y =
+    elapsed *
+    .28;
+
+
+  const scale =
+    1 +
+    Math.sin(
+      elapsed * 1.8
+    ) *
+    .08 *
+    intensity +
+    audioReactive *
+    .18;
+
+
+  core.scale.set(
+    scale,
+    scale,
+    scale
+  );
+
+
+  rings.forEach(
+    function(ring,index){
+
+      ring.rotation.x +=
+        .0015 *
+        (
+          index + 1
+        ) *
+        intensity;
+
+
+      ring.rotation.y +=
+        .002 *
+        (
+          index + 1
+        ) *
+        intensity;
+
+
+      ring.scale.setScalar(
+        1 +
+        Math.sin(
+          elapsed *
+          .8 +
+          index
+        ) *
+        .05 *
+        intensity
+      );
+
+    }
+  );
+
+
+  particles.rotation.y =
+    elapsed *
+    .008 *
+    intensity;
+
+
+  particles.rotation.x =
+    mouseY *
+    .15;
+
+
+  stars.rotation.y =
+    elapsed *
+    .002;
+
+
+  camera.position.x +=
+    (
+      mouseX *
+      .7 -
+      camera.position.x
+    ) * .025;
+
+
+  camera.position.y +=
+    (
+      -mouseY *
+      .5 -
+      camera.position.y
+    ) * .025;
+
+
+  camera.lookAt(
+    0,
+    0,
+    0
+  );
+
+
+  /* COLOR TRANSITION */
+
+  const primary =
+    hexToRGB(
+      targetColors[0] ||
+      "#2563eb"
+    );
+
+
+  const color =
+    new THREE.Color(
+      primary.r / 255,
+      primary.g / 255,
+      primary.b / 255
+    );
+
+
+  core.material.color.lerp(
+    color,
+    .025
+  );
+
+
+  core.material.emissive.lerp(
+    color,
+    .025
+  );
+
+
+  light1.color.lerp(
+    color,
+    .02
+  );
+
+
+  rings.forEach(
+    function(ring){
+
+      ring.material.color.lerp(
+        color,
+        .02
+      );
+
+    }
+  );
+
+
+  particles.material.color.lerp(
+    color,
+    .02
+  );
+
+
+  renderer.render(
+    scene,
+    camera
+  );
+
+}
+
+
+animate();
+
+
+/* =========================
+   RESIZE
+========================= */
+
+window.addEventListener(
+  "resize",
+  function(){
+
+    camera.aspect =
+      window.innerWidth /
+      window.innerHeight;
+
+
+    camera.updateProjectionMatrix();
+
+
+    renderer.setSize(
+      window.innerWidth,
+      window.innerHeight
+    );
+
+  }
+);
+
+
+/* =========================
+   PUBLIC API
+========================= */
+
+window.ZemivoLivingWorld =
+  Object.freeze({
+
+    version:
+      VERSION,
+
+    changeWorld:
+      changeWorld,
+
+    analyzeContent:
+      analyzeContent,
+
+    applyContentVisualProfile:
+      applyContentVisualProfile,
+
+    getCurrentProfile:
+      function(){
+
+        return {
+          ...currentProfile
+        };
+
+      },
+
+    getSupportedCapabilities:
+      function(){
+
+        return {
+
+          text:
+            true,
+
+          image:
+            true,
+
+          video:
+            true,
+
+          audio:
+            true,
+
+          worlds:
+            [
+              ...MODES
+            ]
+
+        };
+
+      }
+
+  });
+
+
+/* =========================
+   START
+========================= */
+
+changeWorld(
+  "personal"
+);
+
+
+setTimeout(
+  function(){
+
+    loading.classList.add(
+      "hidden"
+    );
+
+  },
+  700
+);
+
+</script>
+
+</body>
+
+</html>
