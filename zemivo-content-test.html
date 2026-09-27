@@ -10,7 +10,7 @@
   content="width=device-width, initial-scale=1.0"
 >
 
-<title>Zemivo Automatic Content Test</title>
+<title>Zemivo Living 3D — Content Connected</title>
 
 <style>
 
@@ -29,63 +29,97 @@ body{
     Helvetica,
     sans-serif;
 
-  background:
-    radial-gradient(
-      circle at top,
-      #172554,
-      #020617 65%
-    );
+  background:#020617;
 
   color:#fff;
 
+}
+
+.page{
+
+  min-height:100vh;
+
   display:flex;
 
-  align-items:center;
-
-  justify-content:center;
-
-  padding:20px;
+  flex-direction:column;
 
 }
 
-.panel{
+.top{
 
-  width:100%;
-
-  max-width:650px;
-
-  padding:25px;
-
-  border:1px solid
-    rgba(255,255,255,.15);
-
-  border-radius:24px;
+  padding:16px;
 
   background:
-    rgba(255,255,255,.08);
+    rgba(2,6,23,.96);
 
-  backdrop-filter:
-    blur(20px);
+  border-bottom:
+    1px solid
+    rgba(255,255,255,.12);
 
-  box-shadow:
-    0 25px 80px
-    rgba(0,0,0,.45);
+  position:relative;
+
+  z-index:10;
 
 }
 
-h1{
+.title{
 
-  margin:0 0 8px;
+  font-size:22px;
 
-  font-size:28px;
+  font-weight:800;
 
 }
 
 .subtitle{
 
-  color:#cbd5e1;
+  margin-top:4px;
 
-  margin-bottom:20px;
+  color:#94a3b8;
+
+  font-size:13px;
+
+}
+
+.world{
+
+  flex:1;
+
+  min-height:420px;
+
+  position:relative;
+
+  overflow:hidden;
+
+}
+
+#worldFrame{
+
+  width:100%;
+
+  height:100%;
+
+  min-height:520px;
+
+  border:0;
+
+  display:block;
+
+}
+
+.control{
+
+  position:relative;
+
+  z-index:20;
+
+  padding:16px;
+
+  background:
+    rgba(2,6,23,.96);
+
+  border-top:
+    1px solid
+    rgba(255,255,255,.12);
 
 }
 
@@ -93,23 +127,22 @@ textarea{
 
   width:100%;
 
-  min-height:150px;
+  min-height:100px;
 
-  resize:vertical;
+  padding:14px;
 
-  padding:16px;
-
-  border-radius:16px;
+  border-radius:14px;
 
   border:1px solid
-    rgba(255,255,255,.18);
+    rgba(255,255,255,.15);
 
-  background:
-    rgba(0,0,0,.25);
+  background:#0f172a;
 
   color:#fff;
 
   outline:none;
+
+  resize:vertical;
 
   font-size:16px;
 
@@ -117,35 +150,35 @@ textarea{
 
 textarea::placeholder{
 
-  color:#94a3b8;
+  color:#64748b;
 
 }
 
-button{
+.analyze{
 
   width:100%;
 
-  margin-top:14px;
+  margin-top:10px;
 
-  padding:14px;
+  padding:13px;
 
   border:0;
 
-  border-radius:14px;
+  border-radius:13px;
 
   background:#2563eb;
 
   color:#fff;
 
-  font-size:16px;
-
   font-weight:bold;
+
+  font-size:16px;
 
   cursor:pointer;
 
 }
 
-button:hover{
+.analyze:hover{
 
   background:#1d4ed8;
 
@@ -153,41 +186,43 @@ button:hover{
 
 .result{
 
-  margin-top:20px;
+  margin-top:12px;
 
-  padding:18px;
+  display:grid;
 
-  border-radius:16px;
+  grid-template-columns:
+    repeat(3,1fr);
+
+  gap:8px;
+
+}
+
+.card{
+
+  padding:10px;
+
+  border-radius:10px;
 
   background:
-    rgba(0,0,0,.22);
+    rgba(255,255,255,.06);
 
-}
-
-.row{
-
-  display:flex;
-
-  justify-content:space-between;
-
-  gap:15px;
-
-  padding:8px 0;
-
-  border-bottom:1px solid
+  border:
+    1px solid
     rgba(255,255,255,.08);
 
-}
-
-.row:last-child{
-
-  border-bottom:0;
+  text-align:center;
 
 }
 
 .label{
 
+  display:block;
+
   color:#94a3b8;
+
+  font-size:11px;
+
+  margin-bottom:4px;
 
 }
 
@@ -195,59 +230,30 @@ button:hover{
 
   font-weight:bold;
 
-  text-align:right;
+  text-transform:capitalize;
 
 }
 
-.examples{
+.status{
 
-  display:grid;
-
-  grid-template-columns:
-    repeat(2,1fr);
-
-  gap:8px;
-
-  margin-top:15px;
-
-}
-
-.example{
-
-  padding:10px;
-
-  border-radius:10px;
-
-  border:1px solid
-    rgba(255,255,255,.12);
-
-  background:
-    rgba(255,255,255,.06);
-
-  color:#e2e8f0;
-
-  cursor:pointer;
-
-}
-
-.example:hover{
-
-  background:
-    rgba(255,255,255,.12);
-
-}
-
-.back{
-
-  display:block;
+  margin-top:10px;
 
   text-align:center;
 
-  margin-top:18px;
+  color:#94a3b8;
 
-  color:#93c5fd;
+  font-size:12px;
 
-  text-decoration:none;
+}
+
+@media(max-width:600px){
+
+  .result{
+
+    grid-template-columns:
+      1fr 1fr 1fr;
+
+  }
 
 }
 
@@ -259,207 +265,128 @@ button:hover{
 <body>
 
 
-<div class="panel">
+<div class="page">
 
-  <h1>
-    🌍 Zemivo Content Intelligence
-  </h1>
 
-  <div class="subtitle">
-    Automatic Content → Living 3D World
+  <div class="top">
+
+    <div class="title">
+      🌍 Zemivo Living 3D
+    </div>
+
+    <div class="subtitle">
+      Content → Understanding → Living Environment
+    </div>
+
   </div>
 
 
-  <textarea
-    id="contentInput"
-    placeholder="Write or paste any content here...
+  <div class="world">
+
+    <iframe
+      id="worldFrame"
+      src="zemivo-living-world.html"
+      title="Zemivo Living 3D World"
+    ></iframe>
+
+  </div>
+
+
+  <div class="control">
+
+    <textarea
+      id="contentInput"
+      placeholder="Write something...
 
 Example:
-I am walking beside the beautiful ocean today."
-  ></textarea>
+I am walking beside the beautiful ocean and watching the waves."
+    ></textarea>
 
-
-  <button
-    id="analyzeButton"
-    type="button"
-  >
-    ✨ Analyze Content
-  </button>
-
-
-  <div class="examples">
 
     <button
-      class="example"
+      id="analyzeButton"
+      class="analyze"
       type="button"
-      data-text="I am walking beside the beautiful ocean and watching the waves."
     >
-      🌊 Ocean
+      ✨ Make Zemivo React
     </button>
 
-    <button
-      class="example"
-      type="button"
-      data-text="The green forest, mountains, river and flowers look beautiful."
-    >
-      🌳 Nature
-    </button>
 
-    <button
-      class="example"
-      type="button"
-      data-text="This music has an amazing beat and makes me want to dance."
-    >
-      🎵 Music
-    </button>
-
-    <button
-      class="example"
-      type="button"
-      data-text="This new game has an amazing battle, powerful character and futuristic technology."
-    >
-      🎮 Gaming
-    </button>
-
-    <button
-      class="example"
-      type="button"
-      data-text="This new sports car has incredible speed and a powerful engine."
-    >
-      🚗 Car
-    </button>
-
-    <button
-      class="example"
-      type="button"
-      data-text="This premium luxury watch is elegant and exclusive."
-    >
-      💎 Product
-    </button>
-
-    <button
-      class="example"
-      type="button"
-      data-text="The astronaut is travelling through the galaxy toward another planet."
-    >
-      🚀 Space
-    </button>
-
-    <button
-      class="example"
-      type="button"
-      data-text="Today I am sharing a simple moment from my life with my friends."
-    >
-      👤 Personal
-    </button>
-
-  </div>
+    <div class="result">
 
 
-  <div
-    id="result"
-    class="result"
-  >
+      <div class="card">
 
-    <div class="row">
+        <span class="label">
+          World
+        </span>
 
-      <span class="label">
-        World
-      </span>
+        <span
+          id="world"
+          class="value"
+        >
+          —
+        </span>
 
-      <span
-        id="world"
-        class="value"
-      >
-        —
-      </span>
+      </div>
+
+
+      <div class="card">
+
+        <span class="label">
+          Mood
+        </span>
+
+        <span
+          id="mood"
+          class="value"
+        >
+          —
+        </span>
+
+      </div>
+
+
+      <div class="card">
+
+        <span class="label">
+          Motion
+        </span>
+
+        <span
+          id="motion"
+          class="value"
+        >
+          —
+        </span>
+
+      </div>
+
 
     </div>
 
 
-    <div class="row">
-
-      <span class="label">
-        Mood
-      </span>
-
-      <span
-        id="mood"
-        class="value"
-      >
-        —
-      </span>
-
-    </div>
-
-
-    <div class="row">
-
-      <span class="label">
-        Motion
-      </span>
-
-      <span
-        id="motion"
-        class="value"
-      >
-        —
-      </span>
-
-    </div>
-
-
-    <div class="row">
-
-      <span class="label">
-        Language / Script
-      </span>
-
-      <span
-        id="script"
-        class="value"
-      >
-        —
-      </span>
-
-    </div>
-
-
-    <div class="row">
-
-      <span class="label">
-        Confidence Signal
-      </span>
-
-      <span
-        id="strength"
-        class="value"
-      >
-        —
-      </span>
-
+    <div
+      id="status"
+      class="status"
+    >
+      Write content and press the button.
     </div>
 
   </div>
 
-
-  <a
-    class="back"
-    href="zemivo-living-world.html"
-  >
-    ← Open Living 3D World
-  </a>
 
 </div>
 
 
-<script type="module">
+<script>
 
-import
-  "./zemivo-living-world.js";
+const worldFrame =
+  document.getElementById(
+    "worldFrame"
+  );
 
-
-const input =
+const contentInput =
   document.getElementById(
     "contentInput"
   );
@@ -484,60 +411,64 @@ const motion =
     "motion"
   );
 
-const script =
+const status =
   document.getElementById(
-    "script"
-  );
-
-const strength =
-  document.getElementById(
-    "strength"
+    "status"
   );
 
 
-function analyze(){
+function getLivingWorld(){
+
+  try{
+
+    return worldFrame
+      .contentWindow
+      .ZemivoLivingWorld || null;
+
+  }
+  catch(error){
+
+    return null;
+
+  }
+
+}
+
+
+function analyzeContent(){
 
   const text =
-    input.value.trim();
+    contentInput.value.trim();
+
 
   if(!text){
 
-    world.textContent =
-      "Write something first";
-
-    mood.textContent =
-      "—";
-
-    motion.textContent =
-      "—";
-
-    script.textContent =
-      "—";
-
-    strength.textContent =
-      "—";
+    status.textContent =
+      "Please write some content first.";
 
     return;
 
   }
 
 
-  if(
-    !window.ZemivoLivingWorld
-  ){
+  const engine =
+    getLivingWorld();
 
-    world.textContent =
-      "Engine not loaded";
+
+  if(!engine){
+
+    status.textContent =
+      "3D World is still loading. Please try again.";
 
     return;
 
   }
 
 
-  const result =
-    window
-      .ZemivoLivingWorld
-      .applyContentVisualProfile({
+  try{
+
+    const result =
+      engine.applyContentVisualProfile({
 
         text:
           text,
@@ -548,66 +479,68 @@ function analyze(){
       });
 
 
-  const profile =
-    result.profile;
-
-  const analysis =
-    result.analysis;
+    const profile =
+      result.profile;
 
 
-  world.textContent =
-    profile.mode;
+    world.textContent =
+      profile.mode;
 
-  mood.textContent =
-    profile.mood;
+    mood.textContent =
+      profile.mood;
 
-  motion.textContent =
-    profile.motion;
-
-
-  script.textContent =
-    analysis.scripts.length
-      ? analysis.scripts.join(", ")
-      : "Unknown";
+    motion.textContent =
+      profile.motion;
 
 
-  strength.textContent =
-    Math.round(
-      analysis.semanticStrength *
-      100
-    ) + "%";
+    status.textContent =
+      "✓ Zemivo World reacted to your content.";
+
+  }
+  catch(error){
+
+    console.error(error);
+
+    status.textContent =
+      "Could not analyze this content.";
+
+  }
 
 }
 
 
 analyzeButton.addEventListener(
   "click",
-  analyze
+  analyzeContent
 );
 
 
-document
-  .querySelectorAll(
-    ".example"
-  )
-  .forEach(
-    function(button){
+contentInput.addEventListener(
+  "keydown",
+  function(event){
 
-      button.addEventListener(
-        "click",
-        function(){
+    if(
+      event.key === "Enter" &&
+      event.ctrlKey
+    ){
 
-          input.value =
-            button.dataset.text;
-
-          analyze();
-
-        }
-      );
+      analyzeContent();
 
     }
-  );
 
+  }
+);
+
+
+worldFrame.addEventListener(
+  "load",
+  function(){
+
+    status.textContent =
+      "✓ Living 3D World connected.";
+
+  }
+);
 
 </script>
 
