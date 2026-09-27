@@ -1,17 +1,30 @@
-/* =========================================================
-   ZEMIVO LIVING 3D WORLD
-   Global Visual Engine
-   Version: 1.0.0
-   ========================================================= */
+/*
+  ZEMIVO LIVING 3D WORLD
+  Global Content Understanding Foundation
+  Version: 2.0.0
+
+  Security:
+  - No Firebase
+  - No Auth
+  - No Firestore
+  - No RTDB
+  - No Storage
+  - No Admin access
+  - No Wallet / ZMV access
+  - No direct AI/model access
+
+  The engine only converts validated content signals
+  into a safe visual profile.
+*/
 
 
 /* =========================================================
-   1. BASIC SECURITY / VALIDATION
-   ========================================================= */
+   CORE
+========================================================= */
 
-const ENGINE_VERSION = "1.0.0";
+const ENGINE_VERSION = "2.0.0";
 
-const ALLOWED_MODES = Object.freeze([
+const MODES = [
   "personal",
   "ocean",
   "nature",
@@ -20,370 +33,1140 @@ const ALLOWED_MODES = Object.freeze([
   "automotive",
   "product",
   "space"
-]);
+];
 
-const ALLOWED_MOODS = Object.freeze([
+const MOODS = [
+  "neutral",
   "calm",
-  "fresh",
+  "happy",
+  "romantic",
+  "dramatic",
   "energetic",
-  "premium",
+  "luxury",
+  "mysterious",
   "futuristic",
-  "cinematic"
-]);
+  "peaceful",
+  "warm",
+  "cool"
+];
 
-const ALLOWED_MOTION = Object.freeze([
-  "subtle",
+const MOTIONS = [
+  "slow",
+  "gentle",
   "flow",
   "pulse",
-  "energy",
-  "orbit"
-]);
+  "dynamic",
+  "orbit",
+  "wave",
+  "minimal"
+];
 
 
 /* =========================================================
-   2. WORLD PROFILES
-   ========================================================= */
+   GLOBAL VISUAL PROFILES
+========================================================= */
 
-const WORLD_PROFILES = Object.freeze({
+const WORLD_PROFILES = {
 
   personal: {
     mode: "personal",
-    mood: "calm",
-    motion: "subtle",
-
-    primary: "#4f8cff",
-    secondary: "#8b5cf6",
-
-    intensity: 0.35,
-
-    name: "Personal",
-
-    description:
-      "A subtle cinematic environment designed to keep personal content as the main focus."
+    mood: "neutral",
+    motion: "minimal",
+    primary: "#2563eb",
+    secondary: "#60a5fa",
+    intensity: 0.28,
+    lighting: 0.75,
+    depth: 0.45,
+    particleDensity: 0.35,
+    cameraMotion: 0.12
   },
-
 
   ocean: {
     mode: "ocean",
-    mood: "fresh",
-    motion: "flow",
-
-    primary: "#087fbd",
+    mood: "calm",
+    motion: "wave",
+    primary: "#0284c7",
     secondary: "#38bdf8",
-
-    intensity: 0.75,
-
-    name: "Ocean",
-
-    description:
-      "A flowing blue environment inspired by oceans, water and open horizons."
+    intensity: 0.62,
+    lighting: 0.8,
+    depth: 0.8,
+    particleDensity: 0.7,
+    cameraMotion: 0.22
   },
-
 
   nature: {
     mode: "nature",
-    mood: "fresh",
+    mood: "peaceful",
     motion: "flow",
-
-    primary: "#15803d",
-    secondary: "#22c55e",
-
-    intensity: 0.68,
-
-    name: "Nature",
-
-    description:
-      "A fresh cinematic environment inspired by forests, leaves, sky and natural landscapes."
+    primary: "#16a34a",
+    secondary: "#4ade80",
+    intensity: 0.58,
+    lighting: 0.82,
+    depth: 0.76,
+    particleDensity: 0.62,
+    cameraMotion: 0.18
   },
-
 
   music: {
     mode: "music",
     mood: "energetic",
     motion: "pulse",
-
-    primary: "#a855f7",
+    primary: "#9333ea",
     secondary: "#ec4899",
-
-    intensity: 0.85,
-
-    name: "Music",
-
-    description:
-      "An audio-inspired environment with rhythmic motion and energetic visual pulses."
+    intensity: 0.82,
+    lighting: 0.9,
+    depth: 0.68,
+    particleDensity: 0.9,
+    cameraMotion: 0.3
   },
-
 
   gaming: {
     mode: "gaming",
     mood: "futuristic",
-    motion: "energy",
-
+    motion: "dynamic",
     primary: "#06b6d4",
-    secondary: "#7c3aed",
-
-    intensity: 0.95,
-
-    name: "Gaming",
-
-    description:
-      "A futuristic high-energy environment designed for gaming and interactive content."
+    secondary: "#8b5cf6",
+    intensity: 0.9,
+    lighting: 0.95,
+    depth: 0.86,
+    particleDensity: 1,
+    cameraMotion: 0.38
   },
-
 
   automotive: {
     mode: "automotive",
-    mood: "premium",
-    motion: "orbit",
-
+    mood: "luxury",
+    motion: "dynamic",
     primary: "#64748b",
     secondary: "#38bdf8",
-
-    intensity: 0.70,
-
-    name: "Automotive",
-
-    description:
-      "A premium metallic environment inspired by cars, speed, technology and motion."
+    intensity: 0.7,
+    lighting: 0.86,
+    depth: 0.92,
+    particleDensity: 0.5,
+    cameraMotion: 0.26
   },
-
 
   product: {
     mode: "product",
-    mood: "premium",
-    motion: "subtle",
-
+    mood: "luxury",
+    motion: "slow",
     primary: "#f59e0b",
-    secondary: "#f8fafc",
-
-    intensity: 0.55,
-
-    name: "Product",
-
-    description:
-      "A clean premium environment designed to make products feel visually important."
+    secondary: "#fde68a",
+    intensity: 0.52,
+    lighting: 1,
+    depth: 0.88,
+    particleDensity: 0.28,
+    cameraMotion: 0.1
   },
-
 
   space: {
     mode: "space",
-    mood: "cinematic",
+    mood: "mysterious",
     motion: "orbit",
-
-    primary: "#312e81",
-    secondary: "#06b6d4",
-
-    intensity: 0.90,
-
-    name: "Space",
-
-    description:
-      "A deep cinematic environment inspired by space, stars, technology and the universe."
+    primary: "#4f46e5",
+    secondary: "#a78bfa",
+    intensity: 0.76,
+    lighting: 0.72,
+    depth: 1,
+    particleDensity: 0.95,
+    cameraMotion: 0.32
   }
 
-});
+};
 
 
 /* =========================================================
-   3. SAFE HELPERS
-   ========================================================= */
+   SAFE HELPERS
+========================================================= */
 
-function safeNumber(
-  value,
-  fallback,
-  minimum,
-  maximum
-){
+function clamp(value, min, max){
 
   const number =
     Number(value);
 
-  if(
-    !Number.isFinite(number)
-  ){
-
-    return fallback;
-
+  if(!Number.isFinite(number)){
+    return min;
   }
 
   return Math.min(
-    maximum,
-    Math.max(
-      minimum,
-      number
-    )
+    max,
+    Math.max(min, number)
   );
 
 }
 
 
-function safeMode(value){
+function safeText(value){
 
   if(
     typeof value !== "string"
   ){
-
-    return "personal";
-
+    return "";
   }
 
-  if(
-    !ALLOWED_MODES.includes(value)
-  ){
-
-    return "personal";
-
-  }
-
-  return value;
+  return value
+    .normalize("NFKC")
+    .slice(0, 10000);
 
 }
 
 
-function safeMood(value){
+function safeArray(value){
 
-  if(
-    typeof value !== "string"
-  ){
-
-    return "calm";
-
+  if(!Array.isArray(value)){
+    return [];
   }
 
-  if(
-    !ALLOWED_MOODS.includes(value)
-  ){
-
-    return "calm";
-
-  }
-
-  return value;
+  return value
+    .slice(0, 100)
+    .filter(
+      item =>
+        typeof item === "string"
+    )
+    .map(
+      item =>
+        item
+          .normalize("NFKC")
+          .slice(0, 300)
+    );
 
 }
 
 
-function safeMotion(value){
+function safeMode(mode){
 
-  if(
-    typeof value !== "string"
-  ){
-
-    return "subtle";
-
-  }
-
-  if(
-    !ALLOWED_MOTION.includes(value)
-  ){
-
-    return "subtle";
-
-  }
-
-  return value;
+  return MODES.includes(mode)
+    ? mode
+    : "personal";
 
 }
 
 
-function safeColor(
-  value,
-  fallback
-){
+function safeMood(mood){
+
+  return MOODS.includes(mood)
+    ? mood
+    : "neutral";
+
+}
+
+
+function safeMotion(motion){
+
+  return MOTIONS.includes(motion)
+    ? motion
+    : "minimal";
+
+}
+
+
+function safeColor(color){
 
   if(
-    typeof value !== "string"
+    typeof color !== "string"
   ){
-
-    return fallback;
-
+    return "#2563eb";
   }
 
-  const validHex =
-    /^#[0-9a-fA-F]{6}$/;
+  const value =
+    color.trim();
 
   if(
-    !validHex.test(value)
+    /^#[0-9a-fA-F]{6}$/.test(value)
   ){
-
-    return fallback;
-
+    return value;
   }
 
-  return value;
+  return "#2563eb";
 
 }
 
 
 /* =========================================================
-   4. VISUAL PROFILE VALIDATION
-   ========================================================= */
+   COLOR UTILITIES
+========================================================= */
 
-function validateVisualProfile(
-  input
-){
+function hexToRgb(hex){
 
-  const source =
-    input &&
-    typeof input === "object"
-      ?
-    input
-      :
-    {};
-
-
-  const mode =
-    safeMode(
-      source.mode
-    );
-
-
-  const base =
-    WORLD_PROFILES[mode];
-
+  const value =
+    safeColor(hex)
+      .replace("#","");
 
   return {
 
+    r:
+      parseInt(
+        value.slice(0,2),
+        16
+      ),
+
+    g:
+      parseInt(
+        value.slice(2,4),
+        16
+      ),
+
+    b:
+      parseInt(
+        value.slice(4,6),
+        16
+      )
+
+  };
+
+}
+
+
+function rgbToHex(r,g,b){
+
+  return "#" +
+    [r,g,b]
+      .map(
+        value =>
+          Math.round(
+            clamp(
+              value,
+              0,
+              255
+            )
+          )
+          .toString(16)
+          .padStart(2,"0")
+      )
+      .join("");
+
+}
+
+
+function blendColors(
+  colorA,
+  colorB,
+  amount
+){
+
+  const a =
+    hexToRgb(colorA);
+
+  const b =
+    hexToRgb(colorB);
+
+  const t =
+    clamp(
+      amount,
+      0,
+      1
+    );
+
+  return rgbToHex(
+
+    a.r +
+      (b.r - a.r) * t,
+
+    a.g +
+      (b.g - a.g) * t,
+
+    a.b +
+      (b.b - a.b) * t
+
+  );
+
+}
+
+
+/* =========================================================
+   LANGUAGE / SCRIPT DETECTION
+   Language detection is only a hint.
+   It does NOT decide the visual world.
+========================================================= */
+
+function detectScripts(text){
+
+  const value =
+    safeText(text);
+
+  const result = [];
+
+  const tests = [
+
+    [
+      "Latin",
+      /[A-Za-zÀ-ÖØ-öø-ÿ]/
+    ],
+
+    [
+      "Bengali",
+      /[\u0980-\u09FF]/
+    ],
+
+    [
+      "Arabic",
+      /[\u0600-\u06FF]/
+    ],
+
+    [
+      "Persian",
+      /[\u067E-\u06FF]/
+    ],
+
+    [
+      "Urdu",
+      /[\u0600-\u06FF]/
+    ],
+
+    [
+      "Devanagari",
+      /[\u0900-\u097F]/
+    ],
+
+    [
+      "Cyrillic",
+      /[\u0400-\u04FF]/
+    ],
+
+    [
+      "Greek",
+      /[\u0370-\u03FF]/
+    ],
+
+    [
+      "Hebrew",
+      /[\u0590-\u05FF]/
+    ],
+
+    [
+      "Thai",
+      /[\u0E00-\u0E7F]/
+    ],
+
+    [
+      "Georgian",
+      /[\u10A0-\u10FF]/
+    ],
+
+    [
+      "Armenian",
+      /[\u0530-\u058F]/
+    ],
+
+    [
+      "Ethiopic",
+      /[\u1200-\u137F]/
+    ],
+
+    [
+      "Hangul",
+      /[\uAC00-\uD7AF]/
+    ],
+
+    [
+      "CJK",
+      /[\u4E00-\u9FFF]/
+    ],
+
+    [
+      "Hiragana",
+      /[\u3040-\u309F]/
+    ],
+
+    [
+      "Katakana",
+      /[\u30A0-\u30FF]/
+    ]
+
+  ];
+
+  for(
+    const test of tests
+  ){
+
+    if(
+      test[1].test(value)
+    ){
+
+      result.push(
+        test[0]
+      );
+
+    }
+
+  }
+
+  return result;
+
+}
+
+
+/* =========================================================
+   GLOBAL SEMANTIC SIGNALS
+========================================================= */
+
+const SEMANTIC_SIGNAL_MAP = {
+
+  ocean: {
+
+    terms: [
+      "ocean",
+      "sea",
+      "beach",
+      "wave",
+      "waves",
+      "island",
+      "diving",
+      "surf",
+      "marine",
+      "water",
+      "সমুদ্র",
+      "সাগর",
+      "ঢেউ",
+      "পানি",
+      "समुद्र",
+      "समुद्रतट",
+      "بحر",
+      "محيط",
+      "海",
+      "海洋",
+      "바다"
+    ],
+
     mode:
-      mode,
+      "ocean"
 
-    mood:
-      safeMood(
-        source.mood ||
-        base.mood
-      ),
+  },
 
-    motion:
-      safeMotion(
-        source.motion ||
-        base.motion
-      ),
+
+  nature: {
+
+    terms: [
+      "nature",
+      "forest",
+      "tree",
+      "trees",
+      "mountain",
+      "river",
+      "lake",
+      "flower",
+      "flowers",
+      "garden",
+      "rain",
+      "green",
+      "wildlife",
+      "animal",
+      "animals",
+      "জঙ্গল",
+      "বন",
+      "গাছ",
+      "পাহাড়",
+      "নদী",
+      "ফুল",
+      "বৃষ্টি",
+      "प्रकृति",
+      "वन",
+      "पहाड़",
+      "नदी",
+      "طبيعة",
+      "غابة",
+      "جبل",
+      "طبيعة",
+      "自然",
+      "森林",
+      "山",
+      "강",
+      "산"
+    ],
+
+    mode:
+      "nature"
+
+  },
+
+
+  music: {
+
+    terms: [
+      "music",
+      "song",
+      "sing",
+      "singer",
+      "concert",
+      "beat",
+      "dance",
+      "dj",
+      "album",
+      "guitar",
+      "piano",
+      "drum",
+      "মিউজিক",
+      "গান",
+      "গায়ক",
+      "নাচ",
+      "সুর",
+      "संगीत",
+      "गाना",
+      "नृत्य",
+      "موسيقى",
+      "أغنية",
+      "رقص",
+      "音楽",
+      "歌",
+      "음악",
+      "노래"
+    ],
+
+    mode:
+      "music"
+
+  },
+
+
+  gaming: {
+
+    terms: [
+      "game",
+      "gaming",
+      "gamer",
+      "play",
+      "player",
+      "esports",
+      "console",
+      "arcade",
+      "battle",
+      "level",
+      "quest",
+      "character",
+      "গেম",
+      "গেমিং",
+      "খেলা",
+      "গেমার",
+      "संगीत",
+      "गेम",
+      "खेल",
+      "لعبة",
+      "ألعاب",
+      "游戏",
+      "遊戲",
+      "게임"
+    ],
+
+    mode:
+      "gaming"
+
+  },
+
+
+  automotive: {
+
+    terms: [
+      "car",
+      "cars",
+      "vehicle",
+      "automotive",
+      "motorcycle",
+      "bike",
+      "engine",
+      "racing",
+      "race",
+      "speed",
+      "driving",
+      "truck",
+      "গাড়ি",
+      "মোটরসাইকেল",
+      "রেস",
+      "গতি",
+      "वाहन",
+      "कार",
+      "रेस",
+      "سيارة",
+      "سباق",
+      "سيارات",
+      "車",
+      "自動車",
+      "자동차"
+    ],
+
+    mode:
+      "automotive"
+
+  },
+
+
+  product: {
+
+    terms: [
+      "product",
+      "shop",
+      "shopping",
+      "store",
+      "sale",
+      "buy",
+      "sell",
+      "price",
+      "brand",
+      "fashion",
+      "clothing",
+      "phone",
+      "laptop",
+      "watch",
+      "beauty",
+      "product review",
+      "পণ্য",
+      "দোকান",
+      "কেনাকাটা",
+      "বিক্রি",
+      "দাম",
+      "ফ্যাশন",
+      "পোশাক",
+      "সৌন্দর্য",
+      "उत्पाद",
+      "दुकान",
+      "खरीद",
+      "बिक्री",
+      "منتج",
+      "متجر",
+      "شراء",
+      "بيع",
+      "商品",
+      "购物",
+      "製品",
+      "제품",
+      "쇼핑"
+    ],
+
+    mode:
+      "product"
+
+  },
+
+
+  space: {
+
+    terms: [
+      "space",
+      "planet",
+      "planets",
+      "galaxy",
+      "galaxies",
+      "universe",
+      "star",
+      "stars",
+      "moon",
+      "mars",
+      "cosmos",
+      "astronaut",
+      "rocket",
+      "nasa",
+      "মহাকাশ",
+      "গ্রহ",
+      "নক্ষত্র",
+      "চাঁদ",
+      "মঙ্গল",
+      "বিশ্বব্রহ্মাণ্ড",
+      "अंतरिक्ष",
+      "ग्रह",
+      "चंद्रमा",
+      "ब्रह्मांड",
+      "فضاء",
+      "كوكب",
+      "قمر",
+      "كون",
+      "宇宙",
+      "惑星",
+      "月",
+      "우주",
+      "행성"
+    ],
+
+    mode:
+      "space"
+
+  }
+
+};
+
+
+/* =========================================================
+   MOOD SIGNALS
+========================================================= */
+
+const MOOD_SIGNALS = {
+
+  calm: [
+    "calm",
+    "peace",
+    "peaceful",
+    "relax",
+    "relaxing",
+    "quiet",
+    "meditation",
+    "sleep",
+    "শান্ত",
+    "শান্তি",
+    "আরাম",
+    "ধ্যান",
+    "सुकून",
+    "शांति",
+    "هدوء",
+    "سلام",
+    "平静",
+    "安静"
+  ],
+
+  happy: [
+    "happy",
+    "happiness",
+    "joy",
+    "fun",
+    "smile",
+    "laugh",
+    "celebration",
+    "party",
+    "আনন্দ",
+    "হাসি",
+    "উৎসব",
+    "खुशी",
+    "मुस्कान",
+    "فرح",
+    "سعادة",
+    "笑",
+    "楽しい"
+  ],
+
+  romantic: [
+    "love",
+    "romantic",
+    "romance",
+    "couple",
+    "wedding",
+    "heart",
+    "valentine",
+    "ভালোবাসা",
+    "প্রেম",
+    "বিয়ে",
+    "হৃদয়",
+    "प्यार",
+    "शादी",
+    "حب",
+    "رومانسية",
+    "愛",
+    "恋"
+  ],
+
+  dramatic: [
+    "dramatic",
+    "dark",
+    "danger",
+    "storm",
+    "fire",
+    "war",
+    "tragedy",
+    "ভয়",
+    "ঝড়",
+    "আগুন",
+    "বিপদ",
+    "युद्ध",
+    "तूफान",
+    "خطر",
+    "عاصفة",
+    "火",
+    "嵐"
+  ],
+
+  energetic: [
+    "energy",
+    "energetic",
+    "fast",
+    "action",
+    "sport",
+    "football",
+    "cricket",
+    "fitness",
+    "workout",
+    "race",
+    "দ্রুত",
+    "শক্তি",
+    "খেলাধুলা",
+    "ফুটবল",
+    "ক্রিকেট",
+    "ऊर्जा",
+    "खेल",
+    "طاقة",
+    "رياضة",
+    "エネルギー"
+  ],
+
+  luxury: [
+    "luxury",
+    "premium",
+    "expensive",
+    "exclusive",
+    "elegant",
+    "royal",
+    "luxurious",
+    "লাক্সারি",
+    "প্রিমিয়াম",
+    "দামী",
+    "অভিজাত",
+    "विलासिता",
+    "प्रीमियम",
+    "فاخر",
+    "راقي",
+    "高級"
+  ],
+
+  futuristic: [
+    "future",
+    "futuristic",
+    "technology",
+    "tech",
+    "robot",
+    "ai",
+    "cyber",
+    "digital",
+    "innovation",
+    "ভবিষ্যৎ",
+    "প্রযুক্তি",
+    "রোবট",
+    "ডিজিটাল",
+    "भविष्य",
+    "तकनीक",
+    "روبوت",
+    "تقنية",
+    "未来",
+    "テクノロジー"
+  ],
+
+  mysterious: [
+    "mystery",
+    "mysterious",
+    "unknown",
+    "secret",
+    "space",
+    "dark",
+    "cosmic",
+    "রহস্য",
+    "অজানা",
+    "গোপন",
+    "महस्य",
+    "रहस्य",
+    "غامض",
+    "سر",
+    "神秘"
+  ]
+
+};
+
+
+/* =========================================================
+   MOTION SIGNALS
+========================================================= */
+
+const MOTION_SIGNALS = {
+
+  slow: [
+    "slow",
+    "calm",
+    "sleep",
+    "meditation",
+    "শান্ত",
+    "ঘুম",
+    "ধ্যান"
+  ],
+
+  gentle: [
+    "soft",
+    "gentle",
+    "peace",
+    "romantic",
+    "ভালোবাসা",
+    "নরম",
+    "শান্তি"
+  ],
+
+  flow: [
+    "river",
+    "water",
+    "wind",
+    "cloud",
+    "nature",
+    "ocean",
+    "নদী",
+    "পানি",
+    "বাতাস",
+    "মেঘ",
+    "সমুদ্র"
+  ],
+
+  pulse: [
+    "music",
+    "beat",
+    "song",
+    "dance",
+    "মিউজিক",
+    "গান",
+    "নাচ"
+  ],
+
+  dynamic: [
+    "gaming",
+    "game",
+    "race",
+    "sport",
+    "action",
+    "fast",
+    "গেম",
+    "রেস",
+    "খেলাধুলা",
+    "দ্রুত"
+  ],
+
+  orbit: [
+    "space",
+    "planet",
+    "galaxy",
+    "cosmos",
+    "মহাকাশ",
+    "গ্রহ",
+    "নক্ষত্র"
+  ]
+
+};
+
+
+/* =========================================================
+   TERM MATCHING
+========================================================= */
+
+function normalizeForMatching(text){
+
+  return safeText(text)
+    .toLocaleLowerCase()
+    .replace(
+      /[.,!?;:()[\]{}"'“”‘’/\\|_+=*#@~`<>-]/g,
+      " "
+    )
+    .replace(
+      /\s+/g,
+      " "
+    )
+    .trim();
+
+}
+
+
+function scoreTerms(
+  text,
+  terms
+){
+
+  const normalized =
+    normalizeForMatching(
+      text
+    );
+
+  if(!normalized){
+    return 0;
+  }
+
+  let score = 0;
+
+  for(
+    const term of terms
+  ){
+
+    const normalizedTerm =
+      normalizeForMatching(
+        term
+      );
+
+    if(
+      !normalizedTerm
+    ){
+      continue;
+    }
+
+    if(
+      normalized.includes(
+        normalizedTerm
+      )
+    ){
+
+      score +=
+        normalizedTerm.length > 5
+        ? 2
+        : 1;
+
+    }
+
+  }
+
+  return score;
+
+}
+
+
+/* =========================================================
+   COLOR ANALYSIS
+========================================================= */
+
+function analyzePalette(
+  dominantColors
+){
+
+  if(
+    !Array.isArray(
+      dominantColors
+    ) ||
+    dominantColors.length === 0
+  ){
+
+    return {
+      primary: null,
+      secondary: null,
+      strength: 0
+    };
+
+  }
+
+  const valid =
+    dominantColors
+      .filter(
+        color =>
+          typeof color === "string" &&
+          /^#[0-9a-fA-F]{6}$/.test(
+            color.trim()
+          )
+      )
+      .slice(
+        0,
+        5
+      );
+
+  if(
+    valid.length === 0
+  ){
+
+    return {
+      primary: null,
+      secondary: null,
+      strength: 0
+    };
+
+  }
+
+  return {
 
     primary:
-      safeColor(
-        source.primary,
-        base.primary
-      ),
+      valid[0],
 
     secondary:
-      safeColor(
-        source.secondary,
-        base.secondary
-      ),
+      valid[1] ||
+      valid[0],
 
-    intensity:
-      safeNumber(
-        source.intensity,
-        base.intensity,
+    strength:
+      clamp(
+        valid.length / 5,
         0,
         1
-      ),
-
-    name:
-      base.name,
-
-    description:
-      base.description
+      )
 
   };
 
@@ -391,8 +1174,121 @@ function validateVisualProfile(
 
 
 /* =========================================================
-   5. DOM ELEMENTS
-   ========================================================= */
+   VISUAL PROFILE VALIDATION
+========================================================= */
+
+function validateVisualProfile(
+  profile
+){
+
+  const source =
+    profile || {};
+
+  return {
+
+    mode:
+      safeMode(
+        source.mode
+      ),
+
+    mood:
+      safeMood(
+        source.mood
+      ),
+
+    motion:
+      safeMotion(
+        source.motion
+      ),
+
+    primary:
+      safeColor(
+        source.primary
+      ),
+
+    secondary:
+      safeColor(
+        source.secondary
+      ),
+
+    intensity:
+      clamp(
+        source.intensity,
+        0.05,
+        1
+      ),
+
+    lighting:
+      clamp(
+        source.lighting,
+        0.2,
+        1
+      ),
+
+    depth:
+      clamp(
+        source.depth,
+        0.1,
+        1
+      ),
+
+    particleDensity:
+      clamp(
+        source.particleDensity,
+        0,
+        1
+      ),
+
+    cameraMotion:
+      clamp(
+        source.cameraMotion,
+        0,
+        1
+      )
+
+  };
+
+}
+
+
+/* =========================================================
+   THREE.JS STATE
+========================================================= */
+
+let THREE = null;
+
+let scene = null;
+let camera = null;
+let renderer = null;
+
+let core = null;
+let rings = [];
+let particles = [];
+let stars = [];
+
+let ambientLight = null;
+let mainLight = null;
+let pointLight = null;
+
+let animationStarted = false;
+
+let currentProfile =
+  validateVisualProfile(
+    WORLD_PROFILES.personal
+  );
+
+let targetProfile =
+  validateVisualProfile(
+    WORLD_PROFILES.personal
+  );
+
+let pointerX = 0;
+let pointerY = 0;
+
+
+/* =========================================================
+   DOM
+========================================================= */
 
 const canvas =
   document.getElementById(
@@ -404,192 +1300,114 @@ const loading =
     "loading"
   );
 
-const securityStatus =
-  document.getElementById(
-    "securityStatus"
-  );
-
 const worldName =
   document.getElementById(
     "worldName"
   );
 
-const worldDescription =
+const worldMood =
   document.getElementById(
-    "worldDescription"
+    "worldMood"
   );
 
-const controls =
+const worldMotion =
   document.getElementById(
-    "controls"
+    "worldMotion"
   );
 
 
 /* =========================================================
-   6. ENGINE STATE
-   ========================================================= */
+   WORLD LABELS
+========================================================= */
 
-let THREE = null;
-
-let renderer = null;
-
-let scene = null;
-
-let camera = null;
-
-let clock = null;
-
-let animationFrame = null;
-
-let initialized = false;
-
-let currentProfile =
-  validateVisualProfile({
-    mode: "personal"
-  });
-
-
-let core = null;
-
-let innerCore = null;
-
-let outerRing = null;
-
-let secondRing = null;
-
-let particleSystem = null;
-
-let starSystem = null;
-
-let ambientLight = null;
-
-let mainLight = null;
-
-let secondaryLight = null;
-
-let pointerX = 0;
-
-let pointerY = 0;
-
-let targetPointerX = 0;
-
-let targetPointerY = 0;
-
-
-/* =========================================================
-   7. CREATE COLOR
-   ========================================================= */
-
-function makeColor(
-  hex
+function updateWorldLabels(
+  profile
 ){
 
-  return new THREE.Color(
-    hex
-  );
+  if(worldName){
+
+    worldName.textContent =
+      profile.mode
+        .charAt(0)
+        .toUpperCase() +
+      profile.mode.slice(1);
+
+  }
+
+  if(worldMood){
+
+    worldMood.textContent =
+      profile.mood;
+
+  }
+
+  if(worldMotion){
+
+    worldMotion.textContent =
+      profile.motion;
+
+  }
 
 }
 
 
 /* =========================================================
-   8. LOAD THREE.JS
-   ========================================================= */
+   THREE.JS LOADER
+========================================================= */
 
 async function loadThreeJS(){
 
-  if(
-    THREE
-  ){
+  if(THREE){
 
-    return;
+    return THREE;
 
   }
 
-
-  try{
-
-    const module =
-      await import(
-        "https://cdn.jsdelivr.net/npm/three@0.179.1/build/three.module.js"
-      );
-
-
-    THREE =
-      module;
-
-
-    initializeScene();
-
-
-  }
-  catch(error){
-
-    console.error(
-      "Zemivo 3D engine failed:",
-      error
+  THREE =
+    await import(
+      "https://cdn.jsdelivr.net/npm/three@0.179.1/build/three.module.js"
     );
 
-
-    if(
-      loading
-    ){
-
-      loading.textContent =
-        "Zemivo 3D engine could not load.";
-
-    }
-
-  }
+  return THREE;
 
 }
 
 
 /* =========================================================
-   9. INITIALIZE SCENE
-   ========================================================= */
+   INITIALIZE WORLD
+========================================================= */
 
-function initializeScene(){
+async function initializeWorld(){
 
-  if(
-    initialized
-  ){
+  await loadThreeJS();
 
-    return;
-
-  }
-
-
-  if(
-    !canvas
-  ){
+  if(!canvas){
 
     return;
 
   }
-
 
   scene =
     new THREE.Scene();
 
-
-  scene.background =
-    new THREE.Color(
-      "#020617"
+  scene.fog =
+    new THREE.FogExp2(
+      0x020617,
+      0.025
     );
 
 
   camera =
     new THREE.PerspectiveCamera(
-      55,
+      60,
       window.innerWidth /
-      window.innerHeight,
+        window.innerHeight,
       0.1,
-      1000
+      100
     );
 
-
   camera.position.z =
-    8;
+    7;
 
 
   renderer =
@@ -613,7 +1431,7 @@ function initializeScene(){
   renderer.setPixelRatio(
     Math.min(
       window.devicePixelRatio || 1,
-      2
+      1.75
     )
   );
 
@@ -624,76 +1442,17 @@ function initializeScene(){
   );
 
 
-  clock =
-    new THREE.Clock();
+  renderer.outputColorSpace =
+    THREE.SRGBColorSpace;
 
 
-  createLights();
-
-  createCore();
-
-  createRings();
-
-  createParticles();
-
-  createStars();
-
-
-  window.addEventListener(
-    "resize",
-    handleResize,
-    {
-      passive:true
-    }
-  );
-
-
-  window.addEventListener(
-    "pointermove",
-    handlePointerMove,
-    {
-      passive:true
-    }
-  );
-
-
-  initialized =
-    true;
-
-
-  if(
-    loading
-  ){
-
-    loading.classList.add(
-      "hidden"
-    );
-
-  }
-
-
-  applyVisualProfile(
-    currentProfile
-  );
-
-
-  animate();
-
-}
-
-
-/* =========================================================
-   10. LIGHTS
-   ========================================================= */
-
-function createLights(){
+  /* LIGHTS */
 
   ambientLight =
     new THREE.AmbientLight(
-      "#ffffff",
-      1.2
+      0xffffff,
+      0.7
     );
-
 
   scene.add(
     ambientLight
@@ -701,68 +1460,83 @@ function createLights(){
 
 
   mainLight =
-    new THREE.PointLight(
-      "#ffffff",
-      18,
-      30
+    new THREE.DirectionalLight(
+      0xffffff,
+      1.2
     );
-
 
   mainLight.position.set(
     4,
-    4,
+    5,
     6
   );
-
 
   scene.add(
     mainLight
   );
 
 
-  secondaryLight =
+  pointLight =
     new THREE.PointLight(
-      "#ffffff",
-      12,
-      25
+      0x60a5fa,
+      3,
+      20
     );
 
-
-  secondaryLight.position.set(
-    -5,
-    -2,
+  pointLight.position.set(
+    0,
+    0,
     3
   );
 
-
   scene.add(
-    secondaryLight
+    pointLight
   );
+
+
+  createCore();
+  createRings();
+  createParticles();
+  createStars();
+
+  setupPointer();
+  setupResize();
+
+  animationStarted =
+    true;
+
+  animate();
+
+  if(loading){
+
+    loading.style.display =
+      "none";
+
+  }
 
 }
 
 
 /* =========================================================
-   11. MAIN CORE
-   ========================================================= */
+   CORE
+========================================================= */
 
 function createCore(){
 
   const geometry =
     new THREE.IcosahedronGeometry(
-      1.55,
-      5
+      1.35,
+      4
     );
-
 
   const material =
     new THREE.MeshPhysicalMaterial({
 
       color:
-        "#4f8cff",
+        currentProfile.primary,
 
       emissive:
-        "#1d4ed8",
+        currentProfile.primary,
 
       emissiveIntensity:
         0.45,
@@ -771,16 +1545,15 @@ function createCore(){
         0.28,
 
       metalness:
-        0.18,
+        0.35,
 
       transparent:
         true,
 
       opacity:
-        0.92
+        0.9
 
     });
-
 
   core =
     new THREE.Mesh(
@@ -788,151 +1561,90 @@ function createCore(){
       material
     );
 
-
   scene.add(
     core
   );
 
-
-  const innerGeometry =
-    new THREE.IcosahedronGeometry(
-      1.05,
-      3
-    );
-
-
-  const innerMaterial =
-    new THREE.MeshBasicMaterial({
-
-      color:
-        "#ffffff",
-
-      transparent:
-        true,
-
-      opacity:
-        0.08
-
-    });
-
-
-  innerCore =
-    new THREE.Mesh(
-      innerGeometry,
-      innerMaterial
-    );
-
-
-  scene.add(
-    innerCore
-  );
-
 }
 
 
 /* =========================================================
-   12. RINGS
-   ========================================================= */
+   RINGS
+========================================================= */
 
 function createRings(){
 
-  const ringGeometry =
-    new THREE.TorusGeometry(
-      2.1,
-      0.035,
-      16,
-      160
+  for(
+    let i = 0;
+    i < 4;
+    i++
+  ){
+
+    const geometry =
+      new THREE.TorusGeometry(
+        1.8 + i * 0.42,
+        0.018 + i * 0.006,
+        12,
+        160
+      );
+
+    const material =
+      new THREE.MeshBasicMaterial({
+
+        color:
+          currentProfile.secondary,
+
+        transparent:
+          true,
+
+        opacity:
+          0.55 - i * 0.08
+
+      });
+
+    const ring =
+      new THREE.Mesh(
+        geometry,
+        material
+      );
+
+    ring.rotation.x =
+      Math.random() *
+      Math.PI;
+
+    ring.rotation.y =
+      Math.random() *
+      Math.PI;
+
+    scene.add(
+      ring
     );
 
-
-  const ringMaterial =
-    new THREE.MeshBasicMaterial({
-
-      color:
-        "#4f8cff",
-
-      transparent:
-        true,
-
-      opacity:
-        0.55
-
-    });
-
-
-  outerRing =
-    new THREE.Mesh(
-      ringGeometry,
-      ringMaterial
+    rings.push(
+      ring
     );
 
-
-  outerRing.rotation.x =
-    Math.PI * 0.42;
-
-
-  scene.add(
-    outerRing
-  );
-
-
-  const secondGeometry =
-    new THREE.TorusGeometry(
-      2.65,
-      0.018,
-      12,
-      140
-    );
-
-
-  const secondMaterial =
-    new THREE.MeshBasicMaterial({
-
-      color:
-        "#8b5cf6",
-
-      transparent:
-        true,
-
-      opacity:
-        0.30
-
-    });
-
-
-  secondRing =
-    new THREE.Mesh(
-      secondGeometry,
-      secondMaterial
-    );
-
-
-  secondRing.rotation.y =
-    Math.PI * 0.32;
-
-
-  scene.add(
-    secondRing
-  );
+  }
 
 }
 
 
 /* =========================================================
-   13. PARTICLES
-   ========================================================= */
+   PARTICLES
+========================================================= */
 
 function createParticles(){
 
   const count =
     900;
 
+  const geometry =
+    new THREE.BufferGeometry();
 
   const positions =
     new Float32Array(
       count * 3
     );
-
 
   for(
     let i = 0;
@@ -941,52 +1653,33 @@ function createParticles(){
   ){
 
     const radius =
-      3.2 +
-      Math.random() * 5.5;
+      2.5 +
+      Math.random() * 7;
 
-
-    const theta =
+    const angle =
       Math.random() *
       Math.PI *
       2;
 
-
-    const phi =
-      Math.acos(
-        2 *
+    const height =
+      (
         Math.random() -
-        1
-      );
+        0.5
+      ) *
+      7;
 
+    positions[i * 3] =
+      Math.cos(angle) *
+      radius;
 
-    positions[
-      i * 3
-    ] =
-      radius *
-      Math.sin(phi) *
-      Math.cos(theta);
+    positions[i * 3 + 1] =
+      height;
 
-
-    positions[
-      i * 3 + 1
-    ] =
-      radius *
-      Math.sin(phi) *
-      Math.sin(theta);
-
-
-    positions[
-      i * 3 + 2
-    ] =
-      radius *
-      Math.cos(phi);
+    positions[i * 3 + 2] =
+      Math.sin(angle) *
+      radius;
 
   }
-
-
-  const geometry =
-    new THREE.BufferGeometry();
-
 
   geometry.setAttribute(
     "position",
@@ -1001,16 +1694,16 @@ function createParticles(){
     new THREE.PointsMaterial({
 
       color:
-        "#ffffff",
+        currentProfile.secondary,
 
       size:
-        0.025,
+        0.035,
 
       transparent:
         true,
 
       opacity:
-        0.65,
+        0.55,
 
       depthWrite:
         false
@@ -1018,35 +1711,39 @@ function createParticles(){
     });
 
 
-  particleSystem =
+  const points =
     new THREE.Points(
       geometry,
       material
     );
 
-
   scene.add(
-    particleSystem
+    points
+  );
+
+  particles.push(
+    points
   );
 
 }
 
 
 /* =========================================================
-   14. STARS
-   ========================================================= */
+   STARS
+========================================================= */
 
 function createStars(){
 
   const count =
-    500;
+    450;
 
+  const geometry =
+    new THREE.BufferGeometry();
 
   const positions =
     new Float32Array(
       count * 3
     );
-
 
   for(
     let i = 0;
@@ -1054,32 +1751,25 @@ function createStars(){
     i++
   ){
 
-    positions[
-      i * 3
-    ] =
-      (Math.random() - 0.5)
-      * 80;
+    positions[i * 3] =
+      (
+        Math.random() -
+        0.5
+      ) * 40;
 
+    positions[i * 3 + 1] =
+      (
+        Math.random() -
+        0.5
+      ) * 25;
 
-    positions[
-      i * 3 + 1
-    ] =
-      (Math.random() - 0.5)
-      * 80;
-
-
-    positions[
-      i * 3 + 2
-    ] =
-      (Math.random() - 0.5)
-      * 80;
+    positions[i * 3 + 2] =
+      (
+        Math.random() -
+        0.5
+      ) * 40;
 
   }
-
-
-  const geometry =
-    new THREE.BufferGeometry();
-
 
   geometry.setAttribute(
     "position",
@@ -1094,7 +1784,7 @@ function createStars(){
     new THREE.PointsMaterial({
 
       color:
-        "#ffffff",
+        0xffffff,
 
       size:
         0.018,
@@ -1103,70 +1793,134 @@ function createStars(){
         true,
 
       opacity:
-        0.45,
-
-      depthWrite:
-        false
+        0.65
 
     });
 
 
-  starSystem =
+  const starField =
     new THREE.Points(
       geometry,
       material
     );
 
-
   scene.add(
-    starSystem
+    starField
+  );
+
+  stars.push(
+    starField
   );
 
 }
 
 
 /* =========================================================
-   15. APPLY VISUAL PROFILE
-   ========================================================= */
+   POINTER
+========================================================= */
+
+function setupPointer(){
+
+  window.addEventListener(
+    "pointermove",
+    function(event){
+
+      pointerX =
+        (
+          event.clientX /
+          window.innerWidth
+        ) * 2 - 1;
+
+      pointerY =
+        (
+          event.clientY /
+          window.innerHeight
+        ) * 2 - 1;
+
+    },
+    {
+      passive: true
+    }
+  );
+
+}
+
+
+/* =========================================================
+   RESIZE
+========================================================= */
+
+function setupResize(){
+
+  window.addEventListener(
+    "resize",
+    function(){
+
+      if(
+        !camera ||
+        !renderer
+      ){
+
+        return;
+
+      }
+
+      camera.aspect =
+        window.innerWidth /
+        window.innerHeight;
+
+      camera.updateProjectionMatrix();
+
+      renderer.setSize(
+        window.innerWidth,
+        window.innerHeight
+      );
+
+    }
+  );
+
+}
+
+
+/* =========================================================
+   APPLY VISUAL PROFILE
+========================================================= */
 
 function applyVisualProfile(
-  input
+  profile,
+  immediate = false
 ){
 
-  const profile =
+  targetProfile =
     validateVisualProfile(
-      input
+      profile
     );
 
+  if(immediate){
 
-  currentProfile =
-    profile;
+    currentProfile =
+      {
+        ...targetProfile
+      };
 
-
-  if(
-    worldName
-  ){
-
-    worldName.textContent =
-      profile.name;
+    updateVisualObjects();
 
   }
 
+  updateWorldLabels(
+    targetProfile
+  );
 
-  if(
-    worldDescription
-  ){
-
-    worldDescription.textContent =
-      profile.description;
-
-  }
+}
 
 
-  if(
-    !initialized ||
-    !THREE
-  ){
+/* =========================================================
+   VISUAL OBJECT UPDATE
+========================================================= */
+
+function updateVisualObjects(){
+
+  if(!THREE){
 
     return;
 
@@ -1174,20 +1928,17 @@ function applyVisualProfile(
 
 
   const primary =
-    makeColor(
-      profile.primary
+    new THREE.Color(
+      currentProfile.primary
     );
-
 
   const secondary =
-    makeColor(
-      profile.secondary
+    new THREE.Color(
+      currentProfile.secondary
     );
 
 
-  if(
-    core
-  ){
+  if(core){
 
     core.material.color =
       primary;
@@ -1196,618 +1947,291 @@ function applyVisualProfile(
       primary;
 
     core.material.emissiveIntensity =
-      0.28 +
-      profile.intensity *
+      0.18 +
+      currentProfile.intensity *
       0.55;
 
-  }
-
-
-  if(
-    innerCore
-  ){
-
-    innerCore.material.color =
-      secondary;
-
-  }
-
-
-  if(
-    outerRing
-  ){
-
-    outerRing.material.color =
-      primary;
-
-    outerRing.material.opacity =
-      0.25 +
-      profile.intensity *
-      0.45;
-
-  }
-
-
-  if(
-    secondRing
-  ){
-
-    secondRing.material.color =
-      secondary;
-
-    secondRing.material.opacity =
-      0.18 +
-      profile.intensity *
-      0.30;
-
-  }
-
-
-  if(
-    particleSystem
-  ){
-
-    particleSystem.material.color =
-      primary;
-
-    particleSystem.material.opacity =
-      0.35 +
-      profile.intensity *
-      0.40;
-
-  }
-
-
-  if(
-    mainLight
-  ){
-
-    mainLight.color =
-      primary;
-
-    mainLight.intensity =
-      10 +
-      profile.intensity *
-      16;
-
-  }
-
-
-  if(
-    secondaryLight
-  ){
-
-    secondaryLight.color =
-      secondary;
-
-    secondaryLight.intensity =
-      8 +
-      profile.intensity *
-      12;
-
-  }
-
-
-  if(
-    scene
-  ){
-
-    scene.background =
-      new THREE.Color(
-        "#020617"
-      );
-
-  }
-
-
-  updateButtons();
-
-}
-
-
-/* =========================================================
-   16. CHANGE WORLD
-   ========================================================= */
-
-function changeWorld(
-  mode
-){
-
-  const safe =
-    safeMode(
-      mode
+    core.scale.setScalar(
+      0.95 +
+      currentProfile.depth *
+      0.18
     );
 
-
-  const profile =
-    WORLD_PROFILES[
-      safe
-    ];
-
-
-  applyVisualProfile(
-    profile
-  );
-
-}
-
-
-/* =========================================================
-   17. BUTTON STATE
-   ========================================================= */
-
-function updateButtons(){
-
-  if(
-    !controls
-  ){
-
-    return;
-
   }
-
-
-  const buttons =
-    controls.querySelectorAll(
-      "[data-world]"
-    );
-
-
-  buttons.forEach(
-    function(button){
-
-      const mode =
-        button.getAttribute(
-          "data-world"
-        );
-
-
-      button.classList.toggle(
-        "active",
-        mode ===
-        currentProfile.mode
-      );
-
-    }
-  );
-
-}
-
-
-/* =========================================================
-   18. CONTENT ANALYZER
-   ========================================================= */
-
-function analyzeContentDemo(
-  content
-){
-
-  const text =
-    typeof content === "string"
-      ?
-    content.toLowerCase()
-      :
-    "";
-
-
-  if(
-    text.length === 0
-  ){
-
-    return validateVisualProfile({
-      mode:
-        "personal"
-    });
-
-  }
-
-
-  const rules = [
-
-    {
-      mode:
-        "ocean",
-
-      words:[
-        "ocean",
-        "sea",
-        "beach",
-        "wave",
-        "water",
-        "underwater",
-        "সমুদ্র",
-        "সাগর",
-        "পানি"
-      ]
-    },
-
-
-    {
-      mode:
-        "nature",
-
-      words:[
-        "nature",
-        "forest",
-        "tree",
-        "garden",
-        "mountain",
-        "river",
-        "flower",
-        "green",
-        "প্রকৃতি",
-        "বন",
-        "গাছ",
-        "ফুল"
-      ]
-    },
-
-
-    {
-      mode:
-        "music",
-
-      words:[
-        "music",
-        "song",
-        "sing",
-        "concert",
-        "beat",
-        "guitar",
-        "piano",
-        "গান",
-        "সঙ্গীত"
-      ]
-    },
-
-
-    {
-      mode:
-        "gaming",
-
-      words:[
-        "game",
-        "gaming",
-        "player",
-        "level",
-        "battle",
-        "esports",
-        "গেম",
-        "গেমিং"
-      ]
-    },
-
-
-    {
-      mode:
-        "automotive",
-
-      words:[
-        "car",
-        "cars",
-        "automotive",
-        "vehicle",
-        "engine",
-        "racing",
-        "গাড়ি",
-        "গাড়ি"
-      ]
-    },
-
-
-    {
-      mode:
-        "product",
-
-      words:[
-        "product",
-        "shopping",
-        "store",
-        "sale",
-        "price",
-        "brand",
-        "পণ্য",
-        "কেনাকাটা"
-      ]
-    },
-
-
-    {
-      mode:
-        "space",
-
-      words:[
-        "space",
-        "planet",
-        "galaxy",
-        "star",
-        "universe",
-        "cosmos",
-        "মহাকাশ",
-        "গ্রহ"
-      ]
-    }
-
-  ];
 
 
   for(
-    const rule of rules
+    const ring of rings
   ){
 
-    for(
-      const word of rule.words
-    ){
+    ring.material.color =
+      secondary;
 
-      if(
-        text.includes(word)
-      ){
-
-        return validateVisualProfile(
-          WORLD_PROFILES[
-            rule.mode
-          ]
-        );
-
-      }
-
-    }
+    ring.material.opacity =
+      0.18 +
+      currentProfile.intensity *
+      0.5;
 
   }
 
 
-  return validateVisualProfile({
-    mode:
-      "personal"
-  });
+  for(
+    const particle of particles
+  ){
+
+    particle.material.color =
+      secondary;
+
+    particle.material.opacity =
+      0.18 +
+      currentProfile.particleDensity *
+      0.55;
+
+    particle.material.size =
+      0.018 +
+      currentProfile.particleDensity *
+      0.035;
+
+  }
+
+
+  if(pointLight){
+
+    pointLight.color =
+      primary;
+
+    pointLight.intensity =
+      1.5 +
+      currentProfile.lighting *
+      2.5;
+
+  }
+
+
+  if(ambientLight){
+
+    ambientLight.intensity =
+      0.3 +
+      currentProfile.lighting *
+      0.7;
+
+  }
 
 }
 
 
 /* =========================================================
-   19. POINTER
-   ========================================================= */
+   SMOOTH PROFILE TRANSITION
+========================================================= */
 
-function handlePointerMove(
-  event
+function lerp(
+  a,
+  b,
+  amount
 ){
 
-  targetPointerX =
-    (
-      event.clientX /
-      window.innerWidth
-    ) * 2 - 1;
-
-
-  targetPointerY =
-    (
-      event.clientY /
-      window.innerHeight
-    ) * 2 - 1;
-
-}
-
-
-/* =========================================================
-   20. RESIZE
-   ========================================================= */
-
-function handleResize(){
-
-  if(
-    !camera ||
-    !renderer
-  ){
-
-    return;
-
-  }
-
-
-  camera.aspect =
-    window.innerWidth /
-    window.innerHeight;
-
-
-  camera.updateProjectionMatrix();
-
-
-  renderer.setSize(
-    window.innerWidth,
-    window.innerHeight
-  );
-
-
-  renderer.setPixelRatio(
-    Math.min(
-      window.devicePixelRatio || 1,
-      2
-    )
+  return (
+    a +
+    (b - a) *
+    amount
   );
 
 }
 
 
-/* =========================================================
-   21. ANIMATION
-   ========================================================= */
+function updateProfileSmoothly(){
 
-function animate(){
+  const amount =
+    0.035;
 
-  animationFrame =
-    requestAnimationFrame(
-      animate
+  currentProfile.intensity =
+    lerp(
+      currentProfile.intensity,
+      targetProfile.intensity,
+      amount
+    );
+
+  currentProfile.lighting =
+    lerp(
+      currentProfile.lighting,
+      targetProfile.lighting,
+      amount
+    );
+
+  currentProfile.depth =
+    lerp(
+      currentProfile.depth,
+      targetProfile.depth,
+      amount
+    );
+
+  currentProfile.particleDensity =
+    lerp(
+      currentProfile.particleDensity,
+      targetProfile.particleDensity,
+      amount
+    );
+
+  currentProfile.cameraMotion =
+    lerp(
+      currentProfile.cameraMotion,
+      targetProfile.cameraMotion,
+      amount
     );
 
 
-  if(
-    !clock ||
-    !renderer ||
-    !scene ||
-    !camera
-  ){
+  currentProfile.primary =
+    blendColors(
+      currentProfile.primary,
+      targetProfile.primary,
+      amount
+    );
+
+  currentProfile.secondary =
+    blendColors(
+      currentProfile.secondary,
+      targetProfile.secondary,
+      amount
+    );
+
+
+  currentProfile.mode =
+    targetProfile.mode;
+
+  currentProfile.mood =
+    targetProfile.mood;
+
+  currentProfile.motion =
+    targetProfile.motion;
+
+
+  updateVisualObjects();
+
+}
+
+
+/* =========================================================
+   ANIMATION
+========================================================= */
+
+let clock =
+  0;
+
+function animate(){
+
+  if(!animationStarted){
 
     return;
 
   }
 
+  requestAnimationFrame(
+    animate
+  );
 
-  const elapsed =
-    clock.getElapsedTime();
+  clock +=
+    0.008;
 
-
-  pointerX +=
-    (
-      targetPointerX -
-      pointerX
-    ) * 0.035;
+  updateProfileSmoothly();
 
 
-  pointerY +=
-    (
-      targetPointerY -
-      pointerY
-    ) * 0.035;
-
-
-  const intensity =
-    currentProfile.intensity;
-
-
-  if(
-    core
-  ){
-
-    core.rotation.x =
-      elapsed *
-      0.12;
-
-
-    core.rotation.y =
-      elapsed *
-      0.18;
-
+  if(core){
 
     const pulse =
       1 +
       Math.sin(
-        elapsed *
-        (
+        clock * (
           1.2 +
-          intensity *
+          currentProfile.intensity *
           2
         )
       ) *
-      0.035 *
-      intensity;
-
+      0.025 *
+      currentProfile.intensity;
 
     core.scale.setScalar(
       pulse
     );
 
-  }
+    core.rotation.x +=
+      0.0015 +
+      currentProfile.cameraMotion *
+      0.002;
 
-
-  if(
-    innerCore
-  ){
-
-    innerCore.rotation.x =
-      -elapsed *
-      0.16;
-
-
-    innerCore.rotation.y =
-      elapsed *
-      0.22;
-
-  }
-
-
-  if(
-    outerRing
-  ){
-
-    outerRing.rotation.z =
-      elapsed *
-      (
-        0.10 +
-        intensity *
-        0.16
-      );
-
-  }
-
-
-  if(
-    secondRing
-  ){
-
-    secondRing.rotation.x =
-      elapsed *
-      (
-        0.07 +
-        intensity *
-        0.12
-      );
-
-    secondRing.rotation.z =
-      -elapsed *
-      0.09;
-
-  }
-
-
-  if(
-    particleSystem
-  ){
-
-    particleSystem.rotation.y =
-      elapsed *
-      (
-        0.008 +
-        intensity *
-        0.022
-      );
-
-    particleSystem.rotation.x =
-      pointerY *
-      0.08;
-
-  }
-
-
-  if(
-    starSystem
-  ){
-
-    starSystem.rotation.y =
-      elapsed *
+    core.rotation.y +=
+      0.002 +
+      currentProfile.intensity *
       0.003;
 
   }
 
 
-  if(
-    camera
-  ){
+  rings.forEach(
+    function(ring,index){
+
+      const direction =
+        index % 2 === 0
+        ? 1
+        : -1;
+
+      ring.rotation.x +=
+        direction *
+        (
+          0.001 +
+          currentProfile.cameraMotion *
+          0.003
+        );
+
+      ring.rotation.z +=
+        direction *
+        0.0008;
+
+    }
+  );
+
+
+  particles.forEach(
+    function(points){
+
+      points.rotation.y +=
+        0.0004 +
+        currentProfile.cameraMotion *
+        0.0015;
+
+      points.rotation.x +=
+        0.00015;
+
+    }
+  );
+
+
+  stars.forEach(
+    function(star){
+
+      star.rotation.y +=
+        0.00008;
+
+    }
+  );
+
+
+  if(camera){
 
     camera.position.x +=
       (
         pointerX *
-        0.45 -
+        currentProfile.cameraMotion *
+        0.6 -
         camera.position.x
       ) * 0.025;
-
 
     camera.position.y +=
       (
         -pointerY *
-        0.30 -
+        currentProfile.cameraMotion *
+        0.35 -
         camera.position.y
       ) * 0.025;
-
 
     camera.lookAt(
       0,
@@ -1818,29 +2242,733 @@ function animate(){
   }
 
 
-  renderer.render(
-    scene,
-    camera
-  );
+  if(renderer){
+
+    renderer.render(
+      scene,
+      camera
+    );
+
+  }
 
 }
 
 
 /* =========================================================
-   22. BUTTON EVENTS
-   ========================================================= */
+   MANUAL WORLD CONTROL
+========================================================= */
 
-if(
-  controls
+function changeWorld(
+  mode
 ){
 
-  const buttons =
-    controls.querySelectorAll(
-      "[data-world]"
+  const safe =
+    safeMode(
+      mode
+    );
+
+  const profile =
+    WORLD_PROFILES[
+      safe
+    ];
+
+  applyVisualProfile(
+    profile
+  );
+
+  return getCurrentProfile();
+
+}
+
+
+/* =========================================================
+   GLOBAL CONTENT ANALYZER
+========================================================= */
+
+function analyzeContent(
+  input = {}
+){
+
+  const data =
+    input || {};
+
+
+  const text =
+    safeText(
+      data.text
+    );
+
+  const tags =
+    safeArray(
+      data.tags
+    );
+
+  const context =
+    safeArray(
+      data.context
     );
 
 
-  buttons.forEach(
+  const combinedText =
+    [
+      text,
+      ...tags,
+      ...context
+    ]
+    .join(" ");
+
+
+  const scripts =
+    detectScripts(
+      text
+    );
+
+
+  const contentType =
+    typeof data.contentType === "string"
+      ? data.contentType
+          .toLowerCase()
+      : "text";
+
+
+  /*
+    MODE SCORING
+  */
+
+  const modeScores = {
+
+    personal: 0,
+    ocean: 0,
+    nature: 0,
+    music: 0,
+    gaming: 0,
+    automotive: 0,
+    product: 0,
+    space: 0
+
+  };
+
+
+  for(
+    const key of Object.keys(
+      SEMANTIC_SIGNAL_MAP
+    )
+  ){
+
+    const signal =
+      SEMANTIC_SIGNAL_MAP[key];
+
+    const score =
+      scoreTerms(
+        combinedText,
+        signal.terms
+      );
+
+    modeScores[
+      signal.mode
+    ] += score;
+
+  }
+
+
+  /*
+    CONTENT TYPE SIGNAL
+  */
+
+  if(
+    contentType === "audio"
+  ){
+
+    modeScores.music +=
+      5;
+
+  }
+
+
+  if(
+    contentType === "video"
+  ){
+
+    modeScores.personal +=
+      0.5;
+
+  }
+
+
+  if(
+    contentType === "image"
+  ){
+
+    modeScores.product +=
+      0.3;
+
+  }
+
+
+  if(
+    contentType === "mixed"
+  ){
+
+    modeScores.personal +=
+      0.4;
+
+  }
+
+
+  /*
+    SELECT MODE
+  */
+
+  let selectedMode =
+    "personal";
+
+  let highestScore =
+    0;
+
+  for(
+    const mode of Object.keys(
+      modeScores
+    )
+  ){
+
+    if(
+      modeScores[mode] >
+      highestScore
+    ){
+
+      highestScore =
+        modeScores[mode];
+
+      selectedMode =
+        mode;
+
+    }
+
+  }
+
+
+  /*
+    MOOD
+  */
+
+  const moodScores = {};
+
+  for(
+    const mood of Object.keys(
+      MOOD_SIGNALS
+    )
+  ){
+
+    moodScores[mood] =
+      scoreTerms(
+        combinedText,
+        MOOD_SIGNALS[mood]
+      );
+
+  }
+
+
+  let selectedMood =
+    "neutral";
+
+  let highestMood =
+    0;
+
+  for(
+    const mood of Object.keys(
+      moodScores
+    )
+  ){
+
+    if(
+      moodScores[mood] >
+      highestMood
+    ){
+
+      highestMood =
+        moodScores[mood];
+
+      selectedMood =
+        mood;
+
+    }
+
+  }
+
+
+  /*
+    MOTION
+  */
+
+  const motionScores = {};
+
+  for(
+    const motion of Object.keys(
+      MOTION_SIGNALS
+    )
+  ){
+
+    motionScores[motion] =
+      scoreTerms(
+        combinedText,
+        MOTION_SIGNALS[motion]
+      );
+
+  }
+
+
+  let selectedMotion =
+    "minimal";
+
+  let highestMotion =
+    0;
+
+  for(
+    const motion of Object.keys(
+      motionScores
+    )
+  ){
+
+    if(
+      motionScores[motion] >
+      highestMotion
+    ){
+
+      highestMotion =
+        motionScores[motion];
+
+      selectedMotion =
+        motion;
+
+    }
+
+  }
+
+
+  /*
+    AUDIO SIGNALS
+  */
+
+  const audioEnergy =
+    clamp(
+      data.audioEnergy,
+      0,
+      1
+    );
+
+  const audioTempo =
+    clamp(
+      data.audioTempo,
+      0,
+      240
+    );
+
+
+  if(
+    audioEnergy > 0.7
+  ){
+
+    selectedMotion =
+      "pulse";
+
+    selectedMood =
+      "energetic";
+
+  }
+
+
+  if(
+    audioTempo > 125
+  ){
+
+    selectedMotion =
+      "pulse";
+
+  }
+
+
+  /*
+    VIDEO MOTION
+  */
+
+  const motionLevel =
+    clamp(
+      data.motionLevel,
+      0,
+      1
+    );
+
+
+  if(
+    motionLevel > 0.75
+  ){
+
+    selectedMotion =
+      "dynamic";
+
+  }
+
+
+  /*
+    PALETTE
+  */
+
+  const palette =
+    analyzePalette(
+      data.dominantColors
+    );
+
+
+  const baseProfile =
+    WORLD_PROFILES[
+      selectedMode
+    ];
+
+
+  let primary =
+    baseProfile.primary;
+
+  let secondary =
+    baseProfile.secondary;
+
+
+  if(
+    palette.primary
+  ){
+
+    primary =
+      blendColors(
+        primary,
+        palette.primary,
+        0.62
+      );
+
+  }
+
+
+  if(
+    palette.secondary
+  ){
+
+    secondary =
+      blendColors(
+        secondary,
+        palette.secondary,
+        0.55
+      );
+
+  }
+
+
+  /*
+    SIGNAL STRENGTH
+  */
+
+  const semanticStrength =
+    clamp(
+      highestScore / 12,
+      0,
+      1
+    );
+
+
+  const visualIntensity =
+    clamp(
+
+      baseProfile.intensity *
+
+      (
+        0.72 +
+        semanticStrength *
+        0.28
+      )
+
+      +
+
+      motionLevel *
+      0.08
+
+      +
+
+      audioEnergy *
+      0.08,
+
+      0.08,
+      1
+
+    );
+
+
+  /*
+    GLOBAL PROFILE
+
+    This is the important boundary:
+    future AI/server systems can provide
+    structured semantic signals here,
+    but the visual engine itself only
+    accepts validated data.
+  */
+
+  const profile =
+    validateVisualProfile({
+
+      mode:
+        selectedMode,
+
+      mood:
+        selectedMood,
+
+      motion:
+        selectedMotion,
+
+      primary:
+        primary,
+
+      secondary:
+        secondary,
+
+      intensity:
+        visualIntensity,
+
+      lighting:
+        clamp(
+          baseProfile.lighting +
+          audioEnergy * 0.12,
+          0.2,
+          1
+        ),
+
+      depth:
+        clamp(
+          baseProfile.depth +
+          semanticStrength * 0.1,
+          0.1,
+          1
+        ),
+
+      particleDensity:
+        clamp(
+          baseProfile.particleDensity +
+          motionLevel * 0.15 +
+          audioEnergy * 0.12,
+          0,
+          1
+        ),
+
+      cameraMotion:
+        clamp(
+          baseProfile.cameraMotion +
+          motionLevel * 0.12,
+          0,
+          1
+        )
+
+    });
+
+
+  return {
+
+    profile:
+      profile,
+
+    analysis: {
+
+      contentType:
+        contentType,
+
+      scripts:
+        scripts,
+
+      modeScores:
+        modeScores,
+
+      moodScores:
+        moodScores,
+
+      motionScores:
+        motionScores,
+
+      semanticStrength:
+        semanticStrength,
+
+      palette:
+        palette
+
+    }
+
+  };
+
+}
+
+
+/* =========================================================
+   AUTOMATIC VISUAL APPLICATION
+========================================================= */
+
+function applyContentVisualProfile(
+  input
+){
+
+  const result =
+    analyzeContent(
+      input
+    );
+
+  applyVisualProfile(
+    result.profile
+  );
+
+  return result;
+
+}
+
+
+/* =========================================================
+   DEMO ANALYZER
+========================================================= */
+
+function analyzeContentDemo(
+  text
+){
+
+  return applyContentVisualProfile({
+
+    text:
+      safeText(text),
+
+    contentType:
+      "text"
+
+  });
+
+}
+
+
+/* =========================================================
+   CURRENT PROFILE
+========================================================= */
+
+function getCurrentProfile(){
+
+  return {
+    ...currentProfile
+  };
+
+}
+
+
+/* =========================================================
+   CAPABILITIES
+========================================================= */
+
+function getSupportedCapabilities(){
+
+  return {
+
+    version:
+      ENGINE_VERSION,
+
+    globalArchitecture:
+      true,
+
+    multilingualReady:
+      true,
+
+    languageIndependentSemanticInput:
+      true,
+
+    scriptDetection:
+      true,
+
+    contentTypes: [
+      "text",
+      "image",
+      "video",
+      "audio",
+      "mixed"
+    ],
+
+    visualSignals: [
+
+      "semantic content",
+      "content type",
+      "dominant colors",
+      "motion level",
+      "audio energy",
+      "audio tempo",
+      "tags",
+      "context"
+
+    ],
+
+    worlds:
+      [...MODES],
+
+    moods:
+      [...MOODS],
+
+    motions:
+      [...MOTIONS],
+
+    databaseAccess:
+      false,
+
+    authenticationAccess:
+      false,
+
+    walletAccess:
+      false,
+
+    adminAccess:
+      false,
+
+    directAIModelAccess:
+      false
+
+  };
+
+}
+
+
+/* =========================================================
+   PUBLIC API
+========================================================= */
+
+window.ZemivoLivingWorld = Object.freeze({
+
+  version:
+    ENGINE_VERSION,
+
+  changeWorld:
+    changeWorld,
+
+  analyzeContentDemo:
+    analyzeContentDemo,
+
+  analyzeContent:
+    analyzeContent,
+
+  applyContentVisualProfile:
+    applyContentVisualProfile,
+
+  getCurrentProfile:
+    getCurrentProfile,
+
+  getSupportedCapabilities:
+    getSupportedCapabilities
+
+});
+
+
+/* =========================================================
+   MANUAL BUTTONS
+========================================================= */
+
+document
+  .querySelectorAll(
+    "[data-world]"
+  )
+  .forEach(
     function(button){
 
       button.addEventListener(
@@ -1848,10 +2976,7 @@ if(
         function(){
 
           const mode =
-            button.getAttribute(
-              "data-world"
-            );
-
+            button.dataset.world;
 
           changeWorld(
             mode
@@ -1863,81 +2988,30 @@ if(
     }
   );
 
-}
-
 
 /* =========================================================
-   23. PUBLIC CONTENT API
-   ========================================================= */
-
-function applyContentVisualProfile(
-  visualProfile
-){
-
-  const safeProfile =
-    validateVisualProfile(
-      visualProfile
-    );
-
-
-  applyVisualProfile(
-    safeProfile
-  );
-
-}
-
-
-/* =========================================================
-   24. PUBLIC API
-   ========================================================= */
-
-Object.freeze(
-
-  window.ZemivoLivingWorld = {
-
-    version:
-      ENGINE_VERSION,
-
-    changeWorld:
-      changeWorld,
-
-    analyzeContentDemo:
-      analyzeContentDemo,
-
-    applyContentVisualProfile:
-      applyContentVisualProfile,
-
-    getCurrentProfile:
-      function(){
-
-        return {
-          ...currentProfile
-        };
-
-      }
-
-  }
-
-);
-
-
-/* =========================================================
-   25. START ENGINE
-   ========================================================= */
-
-if(
-  securityStatus
-){
-
-  securityStatus.textContent =
-    "🔒 Isolated visual engine";
-
-}
-
+   START
+========================================================= */
 
 changeWorld(
   "personal"
 );
 
+initializeWorld()
+  .catch(
+    function(error){
 
-loadThreeJS();
+      console.error(
+        "Zemivo Living World initialization failed:",
+        error
+      );
+
+      if(loading){
+
+        loading.textContent =
+          "3D World could not start.";
+
+      }
+
+    }
+  );
