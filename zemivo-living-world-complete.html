@@ -1107,6 +1107,176 @@ let targetMouseY =
 
 
 /* =========================
+   LIVING VARIATION ENGINE
+========================= */
+
+let variation = {
+
+  seed:
+    Math.random() * 1000,
+
+  colorShift:
+    0,
+
+  lightEnergy:
+    1,
+
+  particleScale:
+    1,
+
+  cameraDepth:
+    8,
+
+  cameraDrift:
+    .2,
+
+  ringSpread:
+    1,
+
+  animationSpeed:
+    1
+
+};
+
+
+function createVariation(
+  intensity = .5
+){
+
+  const safeIntensity =
+    Math.min(
+      1,
+      Math.max(
+        .2,
+        Number(intensity) || .5
+      )
+    );
+
+
+  variation = {
+
+    seed:
+      Math.random() * 1000,
+
+    colorShift:
+      (
+        Math.random() -
+        .5
+      ) *
+      35 *
+      safeIntensity,
+
+    lightEnergy:
+      .82 +
+      Math.random() *
+      .42 *
+      safeIntensity,
+
+    particleScale:
+      .82 +
+      Math.random() *
+      .45 *
+      safeIntensity,
+
+    cameraDepth:
+      7.2 +
+      Math.random() *
+      2.2,
+
+    cameraDrift:
+      .12 +
+      Math.random() *
+      .35 *
+      safeIntensity,
+
+    ringSpread:
+      .88 +
+      Math.random() *
+      .28 *
+      safeIntensity,
+
+    animationSpeed:
+      .82 +
+      Math.random() *
+      .5 *
+      safeIntensity
+
+  };
+
+
+  rings.forEach(
+    function(ring,index){
+
+      ring.rotation.x =
+        Math.random() *
+        Math.PI;
+
+      ring.rotation.y =
+        Math.random() *
+        Math.PI;
+
+      ring.rotation.z =
+        Math.random() *
+        Math.PI;
+
+      ring.position.x =
+        (
+          Math.random() -
+          .5
+        ) *
+        variation.ringSpread *
+        index *
+        .12;
+
+      ring.position.y =
+        (
+          Math.random() -
+          .5
+        ) *
+        variation.ringSpread *
+        index *
+        .12;
+
+      ring.position.z =
+        (
+          Math.random() -
+          .5
+        ) *
+        variation.ringSpread *
+        index *
+        .12;
+
+    }
+  );
+
+
+  camera.position.z =
+    variation.cameraDepth;
+
+
+  particles.scale.setScalar(
+    variation.particleScale
+  );
+
+
+  light1.intensity =
+    30 *
+    variation.lightEnergy;
+
+  light2.intensity =
+    20 *
+    variation.lightEnergy;
+
+}
+
+
+/* Create a fresh visual variation */
+
+createVariation(
+  profiles.personal.intensity
+);
+
+/* =========================
    UTILITIES
 ========================= */
 
@@ -1710,8 +1880,13 @@ function applyContentVisualProfile(
 
 
   targetProfile =
-    profiles[mode];
+  profiles[mode];
 
+
+createVariation(
+  profile.intensity ||
+  profiles[mode].intensity
+);
 
   currentProfile = {
 
@@ -2778,14 +2953,26 @@ function animate(){
     currentProfile.intensity;
 
 
-  core.rotation.x =
-    elapsed *
-    .18;
+core.rotation.x =
+  elapsed *
+  .18 *
+  variation.animationSpeed;
 
 
-  core.rotation.y =
+core.rotation.y =
+  elapsed *
+  .28 *
+  variation.animationSpeed;
+
+
+core.rotation.z =
+  Math.sin(
     elapsed *
-    .28;
+    .35 *
+    variation.animationSpeed +
+    variation.seed
+  ) *
+  .12;
 
 
   const scale =
@@ -2840,10 +3027,20 @@ function animate(){
   );
 
 
-  particles.rotation.y =
+particles.rotation.y =
+  elapsed *
+  .008 *
+  intensity *
+  variation.animationSpeed;
+
+particles.rotation.z =
+  Math.sin(
     elapsed *
-    .008 *
-    intensity;
+    .18 *
+    variation.animationSpeed +
+    variation.seed
+  ) *
+  .08;
 
 
   particles.rotation.x =
@@ -2856,21 +3053,41 @@ function animate(){
     .002;
 
 
-  camera.position.x +=
-    (
-      mouseX *
-      .7 -
-      camera.position.x
-    ) * .025;
+  const cinematicDriftX =
+  Math.sin(
+    elapsed *
+    .18 *
+    variation.animationSpeed +
+    variation.seed
+  ) *
+  variation.cameraDrift;
+
+const cinematicDriftY =
+  Math.cos(
+    elapsed *
+    .15 *
+    variation.animationSpeed +
+    variation.seed
+  ) *
+  variation.cameraDrift;
 
 
-  camera.position.y +=
-    (
-      -mouseY *
-      .5 -
-      camera.position.y
-    ) * .025;
+camera.position.x +=
+  (
+    mouseX *
+    .7 +
+    cinematicDriftX -
+    camera.position.x
+  ) * .025;
 
+
+camera.position.y +=
+  (
+    -mouseY *
+    .5 +
+    cinematicDriftY -
+    camera.position.y
+  ) * .025;
 
   camera.lookAt(
     0,
