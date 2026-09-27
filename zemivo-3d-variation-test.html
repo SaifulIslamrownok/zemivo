@@ -1,0 +1,1396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1.0"
+>
+
+<title>Zemivo 3D Variation Engine</title>
+
+<style>
+
+*{
+  box-sizing:border-box;
+}
+
+html,
+body{
+  width:100%;
+  height:100%;
+  margin:0;
+  overflow:hidden;
+  font-family:Arial,Helvetica,sans-serif;
+  background:#02040a;
+  color:#fff;
+}
+
+#worldCanvas{
+  position:fixed;
+  inset:0;
+  width:100%;
+  height:100%;
+  display:block;
+}
+
+.ui{
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+}
+
+.topbar{
+  position:absolute;
+  top:18px;
+  left:18px;
+  right:18px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+}
+
+.brand{
+  padding:11px 17px;
+  border:1px solid rgba(255,255,255,.18);
+  border-radius:18px;
+  background:rgba(10,15,28,.38);
+  backdrop-filter:blur(16px);
+  box-shadow:0 12px 40px rgba(0,0,0,.25);
+}
+
+.brand strong{
+  font-size:20px;
+  letter-spacing:.5px;
+}
+
+.brand span{
+  display:block;
+  margin-top:3px;
+  font-size:11px;
+  opacity:.65;
+}
+
+.status{
+  padding:10px 14px;
+  border:1px solid rgba(255,255,255,.16);
+  border-radius:16px;
+  background:rgba(10,15,28,.35);
+  backdrop-filter:blur(14px);
+  font-size:12px;
+}
+
+.panel{
+  position:absolute;
+  left:18px;
+  bottom:18px;
+  width:min(390px,calc(100% - 36px));
+  padding:17px;
+  border:1px solid rgba(255,255,255,.16);
+  border-radius:24px;
+  background:rgba(8,13,25,.42);
+  backdrop-filter:blur(18px);
+  box-shadow:0 20px 70px rgba(0,0,0,.35);
+  pointer-events:auto;
+}
+
+.title{
+  font-size:18px;
+  font-weight:700;
+}
+
+.description{
+  margin-top:5px;
+  font-size:12px;
+  line-height:1.5;
+  opacity:.7;
+}
+
+.controls{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
+  margin-top:14px;
+}
+
+button{
+  border:1px solid rgba(255,255,255,.14);
+  border-radius:14px;
+  padding:11px 10px;
+  background:rgba(255,255,255,.07);
+  color:#fff;
+  cursor:pointer;
+  font-weight:600;
+}
+
+button:hover{
+  background:rgba(255,255,255,.13);
+}
+
+button:active{
+  transform:scale(.98);
+}
+
+#variationInfo{
+  margin-top:13px;
+  padding-top:12px;
+  border-top:1px solid rgba(255,255,255,.1);
+  font-size:12px;
+  line-height:1.7;
+  opacity:.78;
+}
+
+#loading{
+  position:fixed;
+  inset:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:#02040a;
+  z-index:20;
+  transition:opacity .5s ease;
+}
+
+#loading.hide{
+  opacity:0;
+  pointer-events:none;
+}
+
+.loaderBox{
+  text-align:center;
+}
+
+.loaderBox strong{
+  font-size:22px;
+}
+
+.loaderBox div{
+  margin-top:8px;
+  font-size:12px;
+  opacity:.55;
+}
+
+@media(max-width:600px){
+
+  .topbar{
+    top:10px;
+    left:10px;
+    right:10px;
+  }
+
+  .brand{
+    padding:9px 13px;
+  }
+
+  .brand strong{
+    font-size:17px;
+  }
+
+  .status{
+    padding:8px 10px;
+    font-size:10px;
+  }
+
+  .panel{
+    left:10px;
+    bottom:10px;
+    width:calc(100% - 20px);
+  }
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<canvas id="worldCanvas"></canvas>
+
+<div id="loading">
+
+  <div class="loaderBox">
+
+    <strong>
+      Zemivo
+    </strong>
+
+    <div>
+      Creating Living 3D World...
+    </div>
+
+  </div>
+
+</div>
+
+
+<div class="ui">
+
+  <div class="topbar">
+
+    <div class="brand">
+
+      <strong>
+        Zemivo
+      </strong>
+
+      <span>
+        Living 3D Variation Engine
+      </span>
+
+    </div>
+
+    <div
+      id="status"
+      class="status"
+    >
+      Variation 01
+    </div>
+
+  </div>
+
+
+  <div class="panel">
+
+    <div class="title">
+      Dynamic 3D Experience
+    </div>
+
+    <div class="description">
+      একই World প্রতিবার একইভাবে আসবে না।
+      Environment নিজে variation তৈরি করবে।
+    </div>
+
+
+    <div class="controls">
+
+      <button
+        id="newVariation"
+        type="button"
+      >
+        ✨ New Variation
+      </button>
+
+      <button
+        id="autoMode"
+        type="button"
+      >
+        🔄 Auto Variation
+      </button>
+
+      <button
+        id="ocean"
+        type="button"
+      >
+        🌊 Ocean
+      </button>
+
+      <button
+        id="nature"
+        type="button"
+      >
+        🌿 Nature
+      </button>
+
+      <button
+        id="space"
+        type="button"
+      >
+        🌌 Space
+      </button>
+
+      <button
+        id="gaming"
+        type="button"
+      >
+        🎮 Gaming
+      </button>
+
+    </div>
+
+
+    <div id="variationInfo">
+      Loading variation...
+    </div>
+
+  </div>
+
+</div>
+
+
+<script type="module">
+
+import * as THREE from
+"https://cdn.jsdelivr.net/npm/three@0.179.1/build/three.module.js";
+
+
+/* =========================
+   BASIC SETUP
+========================= */
+
+const canvas =
+  document.getElementById(
+    "worldCanvas"
+  );
+
+const loading =
+  document.getElementById(
+    "loading"
+  );
+
+const status =
+  document.getElementById(
+    "status"
+  );
+
+const variationInfo =
+  document.getElementById(
+    "variationInfo"
+  );
+
+
+const scene =
+  new THREE.Scene();
+
+scene.fog =
+  new THREE.FogExp2(
+    0x050816,
+    0.025
+  );
+
+
+const camera =
+  new THREE.PerspectiveCamera(
+    55,
+    window.innerWidth /
+    window.innerHeight,
+    0.1,
+    1000
+  );
+
+camera.position.set(
+  0,
+  1.5,
+  8
+);
+
+
+const renderer =
+  new THREE.WebGLRenderer({
+    canvas:canvas,
+    antialias:true,
+    alpha:false
+  });
+
+renderer.setPixelRatio(
+  Math.min(
+    window.devicePixelRatio,
+    2
+  )
+);
+
+renderer.setSize(
+  window.innerWidth,
+  window.innerHeight
+);
+
+renderer.outputColorSpace =
+  THREE.SRGBColorSpace;
+
+
+/* =========================
+   LIGHTS
+========================= */
+
+const ambientLight =
+  new THREE.AmbientLight(
+    0xffffff,
+    0.65
+  );
+
+scene.add(
+  ambientLight
+);
+
+
+const mainLight =
+  new THREE.PointLight(
+    0x6ea8ff,
+    18,
+    40
+  );
+
+mainLight.position.set(
+  4,
+  4,
+  5
+);
+
+scene.add(
+  mainLight
+);
+
+
+const secondLight =
+  new THREE.PointLight(
+    0x9b7cff,
+    14,
+    35
+  );
+
+secondLight.position.set(
+  -5,
+  1,
+  -3
+);
+
+scene.add(
+  secondLight
+);
+
+
+/* =========================
+   WORLD OBJECTS
+========================= */
+
+const worldGroup =
+  new THREE.Group();
+
+scene.add(
+  worldGroup
+);
+
+
+const coreGroup =
+  new THREE.Group();
+
+worldGroup.add(
+  coreGroup
+);
+
+
+const coreGeometry =
+  new THREE.IcosahedronGeometry(
+    1.15,
+    2
+  );
+
+const coreMaterial =
+  new THREE.MeshPhysicalMaterial({
+    color:0x4f8cff,
+    roughness:.2,
+    metalness:.55,
+    transparent:true,
+    opacity:.92,
+    emissive:0x101c55,
+    emissiveIntensity:.8
+  });
+
+
+const core =
+  new THREE.Mesh(
+    coreGeometry,
+    coreMaterial
+  );
+
+coreGroup.add(
+  core
+);
+
+
+/* =========================
+   RINGS
+========================= */
+
+const rings = [];
+
+for(
+  let i = 0;
+  i < 4;
+  i++
+){
+
+  const geometry =
+    new THREE.TorusGeometry(
+      1.65 + i * .35,
+      .018 + i * .006,
+      12,
+      160
+    );
+
+  const material =
+    new THREE.MeshBasicMaterial({
+      color:0x70a7ff,
+      transparent:true,
+      opacity:.5
+    });
+
+  const ring =
+    new THREE.Mesh(
+      geometry,
+      material
+    );
+
+  ring.rotation.x =
+    Math.random() * Math.PI;
+
+  ring.rotation.y =
+    Math.random() * Math.PI;
+
+  coreGroup.add(
+    ring
+  );
+
+  rings.push(
+    ring
+  );
+
+}
+
+
+/* =========================
+   PARTICLES
+========================= */
+
+const particleCount =
+  1300;
+
+const particleGeometry =
+  new THREE.BufferGeometry();
+
+const positions =
+  new Float32Array(
+    particleCount * 3
+  );
+
+const scales =
+  new Float32Array(
+    particleCount
+  );
+
+
+for(
+  let i = 0;
+  i < particleCount;
+  i++
+){
+
+  const radius =
+    3 +
+    Math.random() * 9;
+
+  const angle =
+    Math.random() *
+    Math.PI * 2;
+
+  const y =
+    (Math.random() - .5) *
+    9;
+
+  positions[i * 3] =
+    Math.cos(angle) *
+    radius;
+
+  positions[i * 3 + 1] =
+    y;
+
+  positions[i * 3 + 2] =
+    Math.sin(angle) *
+    radius;
+
+  scales[i] =
+    .5 +
+    Math.random() * 2;
+
+}
+
+
+particleGeometry.setAttribute(
+  "position",
+  new THREE.BufferAttribute(
+    positions,
+    3
+  )
+);
+
+particleGeometry.setAttribute(
+  "scale",
+  new THREE.BufferAttribute(
+    scales,
+    1
+  )
+);
+
+
+const particleMaterial =
+  new THREE.PointsMaterial({
+    color:0x8ab8ff,
+    size:.035,
+    transparent:true,
+    opacity:.75,
+    depthWrite:false
+  });
+
+
+const particles =
+  new THREE.Points(
+    particleGeometry,
+    particleMaterial
+  );
+
+worldGroup.add(
+  particles
+);
+
+
+/* =========================
+   STAR FIELD
+========================= */
+
+const starCount =
+  900;
+
+const starGeometry =
+  new THREE.BufferGeometry();
+
+const starPositions =
+  new Float32Array(
+    starCount * 3
+  );
+
+
+for(
+  let i = 0;
+  i < starCount;
+  i++
+){
+
+  starPositions[i * 3] =
+    (Math.random() - .5) * 80;
+
+  starPositions[i * 3 + 1] =
+    (Math.random() - .5) * 50;
+
+  starPositions[i * 3 + 2] =
+    (Math.random() - .5) * 80;
+
+}
+
+
+starGeometry.setAttribute(
+  "position",
+  new THREE.BufferAttribute(
+    starPositions,
+    3
+  )
+);
+
+
+const starMaterial =
+  new THREE.PointsMaterial({
+    color:0xffffff,
+    size:.025,
+    transparent:true,
+    opacity:.65
+  });
+
+
+const stars =
+  new THREE.Points(
+    starGeometry,
+    starMaterial
+  );
+
+scene.add(
+  stars
+);
+
+
+/* =========================
+   WORLD PRESETS
+========================= */
+
+const worlds = {
+
+  ocean:{
+    name:"Ocean",
+    colors:[
+      0x087ea4,
+      0x1557c0,
+      0x55c8e8
+    ],
+    speed:.35,
+    camera:.35,
+    particle:.85
+  },
+
+  nature:{
+    name:"Nature",
+    colors:[
+      0x1f8a5b,
+      0x36b56e,
+      0x8fd694
+    ],
+    speed:.22,
+    camera:.18,
+    particle:.55
+  },
+
+  space:{
+    name:"Space",
+    colors:[
+      0x35217d,
+      0x6845d8,
+      0x9b7cff
+    ],
+    speed:.14,
+    camera:.45,
+    particle:1
+  },
+
+  gaming:{
+    name:"Gaming",
+    colors:[
+      0xd12cff,
+      0x306cff,
+      0x21e7d2
+    ],
+    speed:.8,
+    camera:.75,
+    particle:1.4
+  }
+
+};
+
+
+/* =========================
+   VARIATION STATE
+========================= */
+
+let currentWorld =
+  "space";
+
+let variationNumber =
+  0;
+
+let autoVariation =
+  false;
+
+let autoTimer =
+  null;
+
+
+let variation = {
+
+  rotationSpeed:0.3,
+
+  cameraRadius:8,
+
+  cameraHeight:1.5,
+
+  particleSize:.035,
+
+  particleOpacity:.75,
+
+  ringSpeed:.4,
+
+  coreScale:1,
+
+  lightIntensity:18,
+
+  fogDensity:.025,
+
+  worldColor:0x6845d8,
+
+  secondaryColor:0x9b7cff
+
+};
+
+
+/* =========================
+   RANDOM HELPERS
+========================= */
+
+function randomBetween(
+  min,
+  max
+){
+
+  return (
+    min +
+    Math.random() *
+    (max - min)
+  );
+
+}
+
+
+function randomItem(
+  array
+){
+
+  return array[
+    Math.floor(
+      Math.random() *
+      array.length
+    )
+  ];
+
+}
+
+
+/* =========================
+   CREATE VARIATION
+========================= */
+
+function createVariation(){
+
+  const world =
+    worlds[currentWorld];
+
+  variationNumber++;
+
+
+  variation =
+  {
+
+    rotationSpeed:
+      world.speed *
+      randomBetween(
+        .55,
+        1.65
+      ),
+
+    cameraRadius:
+      randomBetween(
+        7.2,
+        9.5
+      ),
+
+    cameraHeight:
+      randomBetween(
+        .5,
+        2.7
+      ),
+
+    particleSize:
+      randomBetween(
+        .018,
+        .055
+      ) *
+      world.particle,
+
+    particleOpacity:
+      randomBetween(
+        .45,
+        .95
+      ),
+
+    ringSpeed:
+      randomBetween(
+        .2,
+        1
+      ),
+
+    coreScale:
+      randomBetween(
+        .82,
+        1.2
+      ),
+
+    lightIntensity:
+      randomBetween(
+        11,
+        24
+      ),
+
+    fogDensity:
+      randomBetween(
+        .014,
+        .032
+      ),
+
+    worldColor:
+      randomItem(
+        world.colors
+      ),
+
+    secondaryColor:
+      randomItem(
+        world.colors
+      )
+
+  };
+
+
+  applyVariation();
+
+  updateInfo();
+
+}
+
+
+/* =========================
+   APPLY VARIATION
+========================= */
+
+function applyVariation(){
+
+  coreMaterial.color.setHex(
+    variation.worldColor
+  );
+
+  coreMaterial.emissive.setHex(
+    variation.secondaryColor
+  );
+
+
+  particleMaterial.color.setHex(
+    variation.secondaryColor
+  );
+
+  particleMaterial.size =
+    variation.particleSize;
+
+  particleMaterial.opacity =
+    variation.particleOpacity;
+
+
+  rings.forEach(
+    function(ring){
+
+      ring.material.color.setHex(
+        variation.worldColor
+      );
+
+      ring.material.opacity =
+        randomBetween(
+          .3,
+          .75
+        );
+
+    }
+  );
+
+
+  mainLight.color.setHex(
+    variation.worldColor
+  );
+
+  mainLight.intensity =
+    variation.lightIntensity;
+
+
+  secondLight.color.setHex(
+    variation.secondaryColor
+  );
+
+  secondLight.intensity =
+    variation.lightIntensity *
+    .75;
+
+
+  scene.fog.density =
+    variation.fogDensity;
+
+
+  core.scale.setScalar(
+    variation.coreScale
+  );
+
+}
+
+
+/* =========================
+   WORLD CHANGE
+========================= */
+
+function changeWorld(
+  worldName
+){
+
+  if(
+    !worlds[worldName]
+  ){
+
+    return;
+
+  }
+
+  currentWorld =
+    worldName;
+
+  createVariation();
+
+}
+
+
+/* =========================
+   AUTO VARIATION
+========================= */
+
+function toggleAutoVariation(){
+
+  autoVariation =
+    !autoVariation;
+
+
+  if(
+    autoVariation
+  ){
+
+    document.getElementById(
+      "autoMode"
+    ).textContent =
+      "⏸ Stop Auto";
+
+    createVariation();
+
+    autoTimer =
+      setInterval(
+        function(){
+
+          createVariation();
+
+        },
+        7000
+      );
+
+  }
+  else{
+
+    document.getElementById(
+      "autoMode"
+    ).textContent =
+      "🔄 Auto Variation";
+
+    clearInterval(
+      autoTimer
+    );
+
+    autoTimer =
+      null;
+
+  }
+
+}
+
+
+/* =========================
+   INFO
+========================= */
+
+function updateInfo(){
+
+  const world =
+    worlds[currentWorld];
+
+  status.textContent =
+    "Variation " +
+    String(
+      variationNumber
+    ).padStart(
+      2,
+      "0"
+    );
+
+
+  variationInfo.innerHTML =
+
+    "<strong>" +
+    world.name +
+    "</strong>" +
+
+    "<br>" +
+
+    "World variation: " +
+    variationNumber +
+
+    "<br>" +
+
+    "Motion: " +
+    variation.rotationSpeed.toFixed(2) +
+
+    "<br>" +
+
+    "Camera depth: " +
+    variation.cameraRadius.toFixed(1) +
+
+    "<br>" +
+
+    "Light intensity: " +
+    variation.lightIntensity.toFixed(1);
+
+}
+
+
+/* =========================
+   BUTTONS
+========================= */
+
+document.getElementById(
+  "newVariation"
+).addEventListener(
+  "click",
+  function(){
+
+    createVariation();
+
+  }
+);
+
+
+document.getElementById(
+  "autoMode"
+).addEventListener(
+  "click",
+  function(){
+
+    toggleAutoVariation();
+
+  }
+);
+
+
+document.getElementById(
+  "ocean"
+).addEventListener(
+  "click",
+  function(){
+
+    changeWorld(
+      "ocean"
+    );
+
+  }
+);
+
+
+document.getElementById(
+  "nature"
+).addEventListener(
+  "click",
+  function(){
+
+    changeWorld(
+      "nature"
+    );
+
+  }
+);
+
+
+document.getElementById(
+  "space"
+).addEventListener(
+  "click",
+  function(){
+
+    changeWorld(
+      "space"
+    );
+
+  }
+);
+
+
+document.getElementById(
+  "gaming"
+).addEventListener(
+  "click",
+  function(){
+
+    changeWorld(
+      "gaming"
+    );
+
+  }
+);
+
+
+/* =========================
+   ANIMATION
+========================= */
+
+let elapsed =
+  0;
+
+
+function animate(){
+
+  requestAnimationFrame(
+    animate
+  );
+
+  elapsed +=
+    0.016;
+
+
+  const speed =
+    variation.rotationSpeed;
+
+
+  core.rotation.x +=
+    .0015 * speed;
+
+  core.rotation.y +=
+    .0022 * speed;
+
+
+  rings.forEach(
+    function(
+      ring,
+      index
+    ){
+
+      ring.rotation.x +=
+        .002 *
+        variation.ringSpeed *
+        (index % 2 === 0 ? 1 : -1);
+
+      ring.rotation.z +=
+        .0015 *
+        variation.ringSpeed;
+
+    }
+  );
+
+
+  particles.rotation.y +=
+    .00025 *
+    speed;
+
+  particles.rotation.x =
+    Math.sin(
+      elapsed *
+      .12 *
+      speed
+    ) *
+    .08;
+
+
+  stars.rotation.y +=
+    .00005;
+
+
+  camera.position.x =
+    Math.sin(
+      elapsed *
+      .08 *
+      speed
+    ) *
+    variation.cameraRadius *
+    .12;
+
+
+  camera.position.y =
+    variation.cameraHeight +
+    Math.sin(
+      elapsed *
+      .11 *
+      speed
+    ) *
+    .35;
+
+
+  camera.position.z =
+    variation.cameraRadius;
+
+
+  camera.lookAt(
+    0,
+    0,
+    0
+  );
+
+
+  renderer.render(
+    scene,
+    camera
+  );
+
+}
+
+
+animate();
+
+
+/* =========================
+   RESIZE
+========================= */
+
+window.addEventListener(
+  "resize",
+  function(){
+
+    camera.aspect =
+      window.innerWidth /
+      window.innerHeight;
+
+    camera.updateProjectionMatrix();
+
+    renderer.setSize(
+      window.innerWidth,
+      window.innerHeight
+    );
+
+  }
+);
+
+
+/* =========================
+   START
+========================= */
+
+createVariation();
+
+setTimeout(
+  function(){
+
+    loading.classList.add(
+      "hide"
+    );
+
+  },
+  700
+);
+
+
+/* =========================
+   PUBLIC API
+========================= */
+
+window.Zemivo3DVariation =
+  Object.freeze({
+
+    version:"1.0.0",
+
+    createVariation,
+
+    changeWorld,
+
+    getState:function(){
+
+      return {
+
+        world:
+          currentWorld,
+
+        variation:
+          variationNumber,
+
+        auto:
+          autoVariation
+
+      };
+
+    }
+
+  });
+
+</script>
+
+</body>
+</html>
