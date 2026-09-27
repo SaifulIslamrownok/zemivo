@@ -10,7 +10,9 @@
   content="width=device-width, initial-scale=1.0"
 >
 
-<title>Zemivo Living 3D World Complete</title>
+<title>
+  Zemivo Living 3D World Complete
+</title>
 
 <style>
 
@@ -20,252 +22,795 @@
 
 html,
 body{
-  margin:0;
   width:100%;
   height:100%;
+  margin:0;
   overflow:hidden;
-  font-family:Arial,Helvetica,sans-serif;
-  background:#02040a;
+}
+
+body{
+  font-family:
+    Arial,
+    Helvetica,
+    sans-serif;
+
+  background:
+    #020617;
+
   color:#fff;
 }
+
+/* =========================================================
+   WORLD CANVAS
+========================================================= */
 
 #worldCanvas{
+
   position:fixed;
+
   inset:0;
+
   width:100%;
   height:100%;
+
   display:block;
-}
 
-.ui{
-  position:fixed;
-  inset:0;
-  pointer-events:none;
-}
+  z-index:0;
 
-.topbar{
-  position:absolute;
-  top:0;
-  left:0;
-  right:0;
-  height:68px;
-  padding:0 18px;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  background:linear-gradient(
-    to bottom,
-    rgba(2,4,10,.78),
-    rgba(2,4,10,0)
-  );
-}
-
-.logo{
-  font-size:25px;
-  font-weight:900;
-  color:#60a5fa;
-  letter-spacing:.3px;
-}
-
-.badge{
-  padding:7px 12px;
-  border-radius:20px;
-  background:rgba(255,255,255,.08);
-  border:1px solid rgba(255,255,255,.15);
-  backdrop-filter:blur(12px);
-  color:#cbd5e1;
-  font-size:11px;
-}
-
-.info{
-  position:absolute;
-  top:82px;
-  left:18px;
-  padding:13px 16px;
-  border-radius:16px;
-  background:rgba(0,0,0,.32);
-  border:1px solid rgba(255,255,255,.12);
-  backdrop-filter:blur(14px);
-}
-
-.world-name{
-  font-size:20px;
-  font-weight:800;
-  text-transform:capitalize;
-}
-
-.world-meta{
-  margin-top:4px;
-  color:#cbd5e1;
-  font-size:12px;
-}
-
-.control{
-  position:absolute;
-  left:50%;
-  bottom:22px;
-  transform:translateX(-50%);
-  width:min(96%,900px);
-  padding:13px;
-  border-radius:20px;
-  background:rgba(4,8,16,.62);
-  border:1px solid rgba(255,255,255,.12);
-  backdrop-filter:blur(18px);
-  pointer-events:auto;
-}
-
-.buttons{
-  display:flex;
-  flex-wrap:wrap;
-  gap:7px;
-  justify-content:center;
-}
-
-button{
-  border:1px solid rgba(255,255,255,.12);
-  background:rgba(255,255,255,.07);
-  color:#fff;
-  border-radius:12px;
-  padding:9px 12px;
-  cursor:pointer;
-  font-size:12px;
-}
-
-button:hover{
-  background:rgba(255,255,255,.15);
-}
-
-button.active{
-  background:#2563eb;
-  border-color:#60a5fa;
-}
-
-.input-row{
-  margin-top:10px;
-  display:flex;
-  gap:7px;
-}
-
-.input-row textarea{
-  flex:1;
-  min-width:0;
-  resize:none;
-  height:45px;
-  padding:12px;
-  border-radius:12px;
-  border:1px solid rgba(255,255,255,.12);
-  background:rgba(0,0,0,.35);
-  color:#fff;
   outline:none;
+
 }
 
-.action{
-  background:#2563eb;
-  font-weight:800;
-}
+/* =========================================================
+   CINEMATIC OVERLAY
+========================================================= */
 
-.media-row{
-  display:flex;
-  gap:7px;
-  margin-top:8px;
-  flex-wrap:wrap;
-}
+.cinematic-overlay{
 
-.file-label{
-  display:flex;
-  align-items:center;
-  padding:9px 12px;
-  border-radius:12px;
-  background:rgba(255,255,255,.07);
-  border:1px solid rgba(255,255,255,.12);
-  font-size:12px;
-  cursor:pointer;
-}
-
-.file-label input{
-  display:none;
-}
-
-.status{
-  position:absolute;
-  right:18px;
-  top:82px;
-  max-width:250px;
-  padding:10px 13px;
-  border-radius:14px;
-  background:rgba(0,0,0,.35);
-  border:1px solid rgba(255,255,255,.1);
-  backdrop-filter:blur(12px);
-  color:#cbd5e1;
-  font-size:11px;
-}
-
-.loading{
   position:fixed;
+
   inset:0;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  background:#02040a;
-  z-index:100;
-  transition:opacity .5s;
-}
 
-.loading.hidden{
-  opacity:0;
+  z-index:1;
+
   pointer-events:none;
+
+  background:
+    radial-gradient(
+      circle at 50% 50%,
+      transparent 0%,
+      rgba(0,0,0,.04) 42%,
+      rgba(0,0,0,.28) 100%
+    );
+
+  mix-blend-mode:normal;
+
 }
 
-.loader-box{
-  text-align:center;
+/* =========================================================
+   LOADER
+========================================================= */
+
+.loader{
+
+  position:fixed;
+
+  inset:0;
+
+  z-index:1000;
+
+  display:flex;
+
+  align-items:center;
+
+  justify-content:center;
+
+  flex-direction:column;
+
+  gap:10px;
+
+  background:
+    radial-gradient(
+      circle at center,
+      #102044 0%,
+      #050b18 48%,
+      #02040a 100%
+    );
+
+  transition:
+    opacity .8s ease,
+    visibility .8s ease;
+
+}
+
+.loader.hidden{
+
+  opacity:0;
+
+  visibility:hidden;
+
 }
 
 .loader-title{
-  font-size:25px;
-  font-weight:900;
-  color:#60a5fa;
+
+  font-size:34px;
+
+  font-weight:800;
+
+  letter-spacing:.5px;
+
 }
 
 .loader-text{
-  margin-top:7px;
-  color:#94a3b8;
-  font-size:12px;
+
+  font-size:13px;
+
+  color:#aab8d0;
+
 }
+
+/* =========================================================
+   UI
+========================================================= */
+
+.ui{
+
+  position:fixed;
+
+  inset:0;
+
+  z-index:10;
+
+  pointer-events:none;
+
+}
+
+.topbar{
+
+  position:absolute;
+
+  top:16px;
+  left:16px;
+  right:16px;
+
+  display:flex;
+
+  align-items:center;
+
+  justify-content:space-between;
+
+  gap:12px;
+
+}
+
+.brand-area{
+
+  display:flex;
+
+  align-items:center;
+
+  gap:10px;
+
+}
+
+.logo{
+
+  font-size:25px;
+
+  font-weight:800;
+
+  letter-spacing:.2px;
+
+  text-shadow:
+    0 0 18px rgba(96,165,250,.35);
+
+}
+
+.badge{
+
+  padding:7px 11px;
+
+  border:1px solid rgba(255,255,255,.16);
+
+  border-radius:999px;
+
+  background:
+    rgba(15,23,42,.38);
+
+  backdrop-filter:
+    blur(16px);
+
+  -webkit-backdrop-filter:
+    blur(16px);
+
+  font-size:11px;
+
+  color:#cbd5e1;
+
+}
+
+.status{
+
+  padding:7px 11px;
+
+  border:1px solid rgba(255,255,255,.13);
+
+  border-radius:999px;
+
+  background:
+    rgba(15,23,42,.38);
+
+  backdrop-filter:
+    blur(16px);
+
+  -webkit-backdrop-filter:
+    blur(16px);
+
+  color:#b9c6d9;
+
+  font-size:11px;
+
+  transition:
+    color .3s ease,
+    border-color .3s ease;
+
+}
+
+.status.active{
+
+  color:#dbeafe;
+
+  border-color:
+    rgba(96,165,250,.38);
+
+}
+
+/* =========================================================
+   WORLD INFO
+========================================================= */
+
+.world-info{
+
+  position:absolute;
+
+  left:18px;
+
+  bottom:18px;
+
+  max-width:
+    min(420px, calc(100vw - 36px));
+
+  padding:15px 17px;
+
+  border:
+    1px solid rgba(255,255,255,.12);
+
+  border-radius:18px;
+
+  background:
+    rgba(2,6,23,.40);
+
+  backdrop-filter:
+    blur(18px);
+
+  -webkit-backdrop-filter:
+    blur(18px);
+
+  box-shadow:
+    0 15px 50px rgba(0,0,0,.25);
+
+}
+
+.world-name{
+
+  font-size:23px;
+
+  font-weight:800;
+
+}
+
+.world-meta{
+
+  margin-top:5px;
+
+  color:#aebbd0;
+
+  font-size:12px;
+
+}
+
+.world-description{
+
+  margin-top:7px;
+
+  color:#d1d9e6;
+
+  font-size:11px;
+
+  line-height:1.5;
+
+  opacity:.85;
+
+}
+
+/* =========================================================
+   CONTROL PANEL
+========================================================= */
+
+.panel{
+
+  position:absolute;
+
+  right:18px;
+
+  top:80px;
+
+  width:
+    min(390px, calc(100vw - 36px));
+
+  max-height:
+    calc(100vh - 110px);
+
+  overflow:auto;
+
+  padding:14px;
+
+  border:
+    1px solid rgba(255,255,255,.12);
+
+  border-radius:20px;
+
+  background:
+    rgba(2,6,23,.42);
+
+  backdrop-filter:
+    blur(20px);
+
+  -webkit-backdrop-filter:
+    blur(20px);
+
+  box-shadow:
+    0 20px 70px rgba(0,0,0,.25);
+
+  pointer-events:auto;
+
+  scrollbar-width:thin;
+
+}
+
+.panel-title{
+
+  font-size:12px;
+
+  color:#aebbd0;
+
+  margin-bottom:9px;
+
+  font-weight:700;
+
+  letter-spacing:.4px;
+
+  text-transform:uppercase;
+
+}
+
+/* =========================================================
+   WORLD BUTTONS
+========================================================= */
+
+.buttons{
+
+  display:grid;
+
+  grid-template-columns:
+    repeat(4, 1fr);
+
+  gap:7px;
+
+  margin-bottom:12px;
+
+}
+
+.world-button{
+
+  border:
+    1px solid rgba(255,255,255,.11);
+
+  border-radius:11px;
+
+  background:
+    rgba(255,255,255,.055);
+
+  color:#dce6f5;
+
+  padding:9px 6px;
+
+  font-size:11px;
+
+  cursor:pointer;
+
+  transition:
+    transform .2s ease,
+    background .2s ease,
+    border-color .2s ease,
+    box-shadow .2s ease;
+
+}
+
+.world-button:hover{
+
+  transform:
+    translateY(-1px);
+
+  background:
+    rgba(255,255,255,.10);
+
+}
+
+.world-button.active{
+
+  background:
+    rgba(96,165,250,.17);
+
+  border-color:
+    rgba(96,165,250,.45);
+
+  box-shadow:
+    0 0 20px rgba(96,165,250,.12);
+
+}
+
+/* =========================================================
+   INPUTS
+========================================================= */
+
+.input-row{
+
+  display:flex;
+
+  gap:8px;
+
+  margin-top:9px;
+
+}
+
+#textInput{
+
+  flex:1;
+
+  min-width:0;
+
+  min-height:76px;
+
+  resize:vertical;
+
+  padding:11px;
+
+  border:
+    1px solid rgba(255,255,255,.13);
+
+  border-radius:13px;
+
+  outline:none;
+
+  color:#fff;
+
+  background:
+    rgba(255,255,255,.055);
+
+  font-family:inherit;
+
+  font-size:12px;
+
+}
+
+#textInput::placeholder{
+
+  color:#7f8da3;
+
+}
+
+#textInput:focus{
+
+  border-color:
+    rgba(96,165,250,.45);
+
+}
+
+.action{
+
+  align-self:stretch;
+
+  min-width:82px;
+
+  border:0;
+
+  border-radius:13px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #2563eb,
+      #7c3aed
+    );
+
+  color:#fff;
+
+  font-weight:700;
+
+  font-size:11px;
+
+  cursor:pointer;
+
+  box-shadow:
+    0 8px 30px rgba(37,99,235,.18);
+
+  transition:
+    transform .2s ease,
+    filter .2s ease;
+
+}
+
+.action:hover{
+
+  transform:
+    translateY(-1px);
+
+  filter:
+    brightness(1.08);
+
+}
+
+/* =========================================================
+   MEDIA INPUTS
+========================================================= */
+
+.media-row{
+
+  display:grid;
+
+  grid-template-columns:
+    repeat(3,1fr);
+
+  gap:7px;
+
+  margin-top:9px;
+
+}
+
+.file-label{
+
+  display:flex;
+
+  align-items:center;
+
+  justify-content:center;
+
+  min-height:36px;
+
+  padding:7px;
+
+  border:
+    1px solid rgba(255,255,255,.10);
+
+  border-radius:10px;
+
+  background:
+    rgba(255,255,255,.045);
+
+  color:#cbd5e1;
+
+  font-size:10px;
+
+  cursor:pointer;
+
+  text-align:center;
+
+}
+
+.file-label:hover{
+
+  background:
+    rgba(255,255,255,.09);
+
+}
+
+.file-label input{
+
+  display:none;
+
+}
+
+/* =========================================================
+   REACTION INFO
+========================================================= */
+
+.reaction-grid{
+
+  display:grid;
+
+  grid-template-columns:
+    repeat(3,1fr);
+
+  gap:7px;
+
+  margin-top:10px;
+
+}
+
+.reaction-card{
+
+  padding:9px;
+
+  border:
+    1px solid rgba(255,255,255,.08);
+
+  border-radius:11px;
+
+  background:
+    rgba(255,255,255,.035);
+
+}
+
+.reaction-label{
+
+  font-size:9px;
+
+  color:#7f8da3;
+
+  text-transform:uppercase;
+
+  letter-spacing:.4px;
+
+}
+
+.reaction-value{
+
+  margin-top:4px;
+
+  font-size:11px;
+
+  font-weight:700;
+
+  color:#e2e8f0;
+
+  overflow:hidden;
+
+  text-overflow:ellipsis;
+
+  white-space:nowrap;
+
+}
+
+/* =========================================================
+   HINT
+========================================================= */
+
+.hint{
+
+  margin-top:9px;
+
+  color:#7f8da3;
+
+  font-size:10px;
+
+  line-height:1.45;
+
+}
+
+/* =========================================================
+   MOBILE
+========================================================= */
 
 @media(max-width:700px){
 
   .topbar{
-    height:58px;
-    padding:0 12px;
+
+    top:10px;
+    left:10px;
+    right:10px;
+
   }
 
   .logo{
+
     font-size:21px;
+
   }
 
-  .info{
-    top:68px;
-    left:10px;
+  .badge{
+
+    display:none;
+
   }
 
   .status{
-    top:68px;
-    right:10px;
-    max-width:180px;
+
+    font-size:10px;
+
   }
 
-  .control{
-    bottom:8px;
-    padding:9px;
-    border-radius:16px;
+  .panel{
+
+    top:auto;
+
+    left:10px;
+    right:10px;
+
+    bottom:10px;
+
+    width:auto;
+
+    max-height:
+      48vh;
+
+    border-radius:17px;
+
+    padding:11px;
+
+  }
+
+  .buttons{
+
+    grid-template-columns:
+      repeat(4,1fr);
+
+    gap:5px;
+
+  }
+
+  .world-button{
+
+    padding:8px 3px;
+
+    font-size:9px;
+
   }
 
   .input-row{
-    flex-direction:column;
+
+    gap:6px;
+
   }
 
-  .input-row textarea{
-    height:42px;
+  #textInput{
+
+    min-height:62px;
+
+    font-size:11px;
+
+  }
+
+  .action{
+
+    min-width:68px;
+
+  }
+
+  .world-info{
+
+    left:10px;
+
+    bottom:
+      calc(48vh + 20px);
+
+    padding:11px 13px;
+
+    max-width:
+      calc(100vw - 20px);
+
+  }
+
+  .world-name{
+
+    font-size:18px;
+
+  }
+
+  .world-description{
+
+    display:none;
+
   }
 
 }
@@ -278,46 +823,70 @@ button.active{
 <body>
 
 
-<canvas id="worldCanvas"></canvas>
+<canvas
+  id="worldCanvas"
+></canvas>
 
+
+<div class="cinematic-overlay"></div>
+
+
+<!-- =======================================================
+     LOADER
+======================================================= -->
 
 <div
-  id="loading"
-  class="loading"
+  id="loader"
+  class="loader"
 >
 
-  <div class="loader-box">
+  <div class="loader-title">
+    Zemivo
+  </div>
 
-    <div class="loader-title">
-      Zemivo
-    </div>
-
-    <div class="loader-text">
-      Loading Living 3D World...
-    </div>
-
+  <div class="loader-text">
+    Loading Living 3D World...
   </div>
 
 </div>
 
+
+<!-- =======================================================
+     UI
+======================================================= -->
 
 <div class="ui">
 
 
   <div class="topbar">
 
-    <div class="logo">
-      Zemivo
+    <div class="brand-area">
+
+      <div class="logo">
+        Zemivo
+      </div>
+
+      <div class="badge">
+        Living 3D World
+      </div>
+
     </div>
 
-    <div class="badge">
-      Living 3D World
+
+    <div
+      id="status"
+      class="status"
+    >
+      Ready
     </div>
 
   </div>
 
 
-  <div class="info">
+  <div
+    id="worldInfo"
+    class="world-info"
+  >
 
     <div
       id="worldName"
@@ -333,18 +902,22 @@ button.active{
       Calm · Soft
     </div>
 
+    <div
+      id="worldDescription"
+      class="world-description"
+    >
+      A subtle personal environment that adapts without
+      overpowering the content.
+    </div>
+
   </div>
 
 
-  <div
-    id="status"
-    class="status"
-  >
-    Ready
-  </div>
+  <div class="panel">
 
-
-  <div class="control">
+    <div class="panel-title">
+      Living Environment
+    </div>
 
 
     <div class="buttons">
@@ -352,6 +925,7 @@ button.active{
       <button
         data-world="personal"
         class="world-button"
+        type="button"
       >
         Personal
       </button>
@@ -359,6 +933,7 @@ button.active{
       <button
         data-world="ocean"
         class="world-button"
+        type="button"
       >
         Ocean
       </button>
@@ -366,6 +941,7 @@ button.active{
       <button
         data-world="nature"
         class="world-button"
+        type="button"
       >
         Nature
       </button>
@@ -373,6 +949,7 @@ button.active{
       <button
         data-world="music"
         class="world-button"
+        type="button"
       >
         Music
       </button>
@@ -380,6 +957,7 @@ button.active{
       <button
         data-world="gaming"
         class="world-button"
+        type="button"
       >
         Gaming
       </button>
@@ -387,6 +965,7 @@ button.active{
       <button
         data-world="automotive"
         class="world-button"
+        type="button"
       >
         Automotive
       </button>
@@ -394,6 +973,7 @@ button.active{
       <button
         data-world="product"
         class="world-button"
+        type="button"
       >
         Product
       </button>
@@ -401,6 +981,7 @@ button.active{
       <button
         data-world="space"
         class="world-button"
+        type="button"
       >
         Space
       </button>
@@ -418,6 +999,7 @@ button.active{
       <button
         id="analyzeButton"
         class="action"
+        type="button"
       >
         ✨ React
       </button>
@@ -468,45 +1050,126 @@ button.active{
     </div>
 
 
-  </div>
+    <div class="reaction-grid">
 
+      <div class="reaction-card">
+
+        <div class="reaction-label">
+          World
+        </div>
+
+        <div
+          id="resultWorld"
+          class="reaction-value"
+        >
+          Personal
+        </div>
+
+      </div>
+
+
+      <div class="reaction-card">
+
+        <div class="reaction-label">
+          Mood
+        </div>
+
+        <div
+          id="resultMood"
+          class="reaction-value"
+        >
+          Calm
+        </div>
+
+      </div>
+
+
+      <div class="reaction-card">
+
+        <div class="reaction-label">
+          Motion
+        </div>
+
+        <div
+          id="resultMotion"
+          class="reaction-value"
+        >
+          Soft
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <div class="hint">
+
+      Zemivo automatically varies lighting, depth, camera,
+      particles, color, movement and environment while
+      keeping the content itself visually dominant.
+
+    </div>
+
+  </div>
 
 </div>
 
 
 <script type="module">
 
+/* =========================================================
+   THREE.JS
+========================================================= */
+
 import * as THREE from
 "https://cdn.jsdelivr.net/npm/three@0.179.1/build/three.module.js";
 
 
-/* =========================
-   ELEMENTS
-========================= */
+/* =========================================================
+   VERSION
+========================================================= */
+
+/*
+  Existing 3.0.0 foundation is preserved.
+  New capabilities are additive.
+*/
+
+const VERSION =
+  "3.0.0";
+
+
+/* =========================================================
+   DOM
+========================================================= */
 
 const canvas =
   document.getElementById(
     "worldCanvas"
   );
 
-const loading =
+const loader =
   document.getElementById(
-    "loading"
+    "loader"
   );
 
-const worldName =
+const statusElement =
+  document.getElementById(
+    "status"
+  );
+
+const worldNameElement =
   document.getElementById(
     "worldName"
   );
 
-const worldMeta =
+const worldMetaElement =
   document.getElementById(
     "worldMeta"
   );
 
-const status =
+const worldDescriptionElement =
   document.getElementById(
-    "status"
+    "worldDescription"
   );
 
 const textInput =
@@ -534,126 +1197,636 @@ const audioInput =
     "audioInput"
   );
 
+const resultWorld =
+  document.getElementById(
+    "resultWorld"
+  );
 
-/* =========================
-   CONFIG
-========================= */
+const resultMood =
+  document.getElementById(
+    "resultMood"
+  );
 
-const VERSION =
-  "3.0.0";
+const resultMotion =
+  document.getElementById(
+    "resultMotion"
+  );
 
 
-const MODES = [
-
-  "personal",
-  "ocean",
-  "nature",
-  "music",
-  "gaming",
-  "automotive",
-  "product",
-  "space"
-
-];
-
+/* =========================================================
+   WORLD PROFILES
+========================================================= */
 
 const profiles = {
 
-  personal:{
-    mood:"calm",
-    motion:"soft",
+  personal: {
+
+    name:"Personal",
+
+    mood:"Calm",
+
+    motion:"Soft",
+
+    description:
+      "A subtle personal environment that adapts without overpowering the content.",
+
     colors:[
       "#2563eb",
-      "#64748b",
-      "#94a3b8"
+      "#60a5fa",
+      "#c4b5fd"
     ],
-    intensity:.35
+
+    fog:"#020617",
+
+    intensity:.34,
+
+    speed:.42
+
   },
 
-  ocean:{
-    mood:"peaceful",
-    motion:"flowing",
+
+  ocean: {
+
+    name:"Ocean",
+
+    mood:"Calm",
+
+    motion:"Flowing",
+
+    description:
+      "Cool atmospheric movement inspired by water, depth and open space.",
+
     colors:[
       "#0284c7",
       "#06b6d4",
+      "#38bdf8",
       "#0ea5e9"
     ],
-    intensity:.75
+
+    fog:"#021827",
+
+    intensity:.58,
+
+    speed:.72
+
   },
 
-  nature:{
-    mood:"fresh",
-    motion:"organic",
+
+  nature: {
+
+    name:"Nature",
+
+    mood:"Fresh",
+
+    motion:"Organic",
+
+    description:
+      "Soft green-blue depth with organic movement and natural atmospheric variation.",
+
     colors:[
       "#16a34a",
       "#22c55e",
+      "#14b8a6",
       "#84cc16"
     ],
-    intensity:.65
+
+    fog:"#03170d",
+
+    intensity:.52,
+
+    speed:.58
+
   },
 
-  music:{
-    mood:"energetic",
-    motion:"rhythmic",
-    colors:[
-      "#a855f7",
-      "#ec4899",
-      "#6366f1"
-    ],
-    intensity:.9
-  },
 
-  gaming:{
-    mood:"energetic",
-    motion:"dynamic",
+  music: {
+
+    name:"Music",
+
+    mood:"Energetic",
+
+    motion:"Audio Reactive",
+
+    description:
+      "A responsive visual field designed to react to rhythm, energy and movement.",
+
     colors:[
       "#7c3aed",
+      "#ec4899",
+      "#06b6d4",
+      "#8b5cf6"
+    ],
+
+    fog:"#10051d",
+
+    intensity:.78,
+
+    speed:1.05
+
+  },
+
+
+  gaming: {
+
+    name:"Gaming",
+
+    mood:"Energetic",
+
+    motion:"Dynamic",
+
+    description:
+      "A futuristic environment with stronger motion, depth and reactive lighting.",
+
+    colors:[
       "#2563eb",
+      "#7c3aed",
+      "#ec4899",
       "#06b6d4"
     ],
-    intensity:1
+
+    fog:"#080518",
+
+    intensity:.86,
+
+    speed:1.18
+
   },
 
-  automotive:{
-    mood:"powerful",
-    motion:"fast",
+
+  automotive: {
+
+    name:"Automotive",
+
+    mood:"Powerful",
+
+    motion:"Fast",
+
+    description:
+      "A cinematic high-speed atmosphere with directional movement and depth.",
+
     colors:[
-      "#ef4444",
+      "#dc2626",
       "#f97316",
-      "#64748b"
+      "#3b82f6",
+      "#f8fafc"
     ],
-    intensity:.85
+
+    fog:"#120606",
+
+    intensity:.82,
+
+    speed:1.28
+
   },
 
-  product:{
-    mood:"premium",
-    motion:"smooth",
+
+  product: {
+
+    name:"Product",
+
+    mood:"Premium",
+
+    motion:"Elegant",
+
+    description:
+      "A controlled premium environment designed to keep product content visually dominant.",
+
     colors:[
-      "#f8fafc",
+      "#e5e7eb",
       "#94a3b8",
-      "#6366f1"
+      "#60a5fa",
+      "#c4b5fd"
     ],
-    intensity:.5
+
+    fog:"#090b12",
+
+    intensity:.42,
+
+    speed:.38
+
   },
 
-  space:{
-    mood:"mysterious",
-    motion:"cosmic",
+
+  space: {
+
+    name:"Space",
+
+    mood:"Cosmic",
+
+    motion:"Floating",
+
+    description:
+      "A deep cinematic space environment with stars, atmospheric depth and slow motion.",
+
     colors:[
       "#312e81",
       "#4f46e5",
-      "#7c3aed"
+      "#7c3aed",
+      "#06b6d4"
     ],
-    intensity:.9
+
+    fog:"#030313",
+
+    intensity:.68,
+
+    speed:.62
 
   }
 
 };
 
 
-/* =========================
+const allowedModes =
+  Object.keys(
+    profiles
+  );
+
+
+const allowedMoods = [
+  "Calm",
+  "Fresh",
+  "Energetic",
+  "Powerful",
+  "Premium",
+  "Cosmic"
+];
+
+
+const allowedMotions = [
+  "Soft",
+  "Flowing",
+  "Organic",
+  "Audio Reactive",
+  "Dynamic",
+  "Fast",
+  "Elegant",
+  "Floating"
+];
+
+
+/* =========================================================
+   SAFE HELPERS
+========================================================= */
+
+function clamp(
+  value,
+  min,
+  max
+){
+
+  const number =
+    Number(value);
+
+  if(
+    !Number.isFinite(number)
+  ){
+
+    return min;
+
+  }
+
+  return Math.min(
+    max,
+    Math.max(
+      min,
+      number
+    )
+  );
+
+}
+
+
+function safeText(
+  value,
+  maxLength=5000
+){
+
+  if(
+    typeof value !== "string"
+  ){
+
+    return "";
+
+  }
+
+  return value
+    .replace(
+      /[\u0000-\u0008\u000B\u000C\u000E-\u001F]/g,
+      " "
+    )
+    .slice(
+      0,
+      maxLength
+    );
+
+}
+
+
+function safeArray(
+  value
+){
+
+  if(
+    !Array.isArray(value)
+  ){
+
+    return [];
+
+  }
+
+  return value
+    .slice(
+      0,
+      32
+    )
+    .map(
+      item =>
+        safeText(
+          String(item),
+          300
+        )
+    );
+
+}
+
+
+function safeMode(
+  mode
+){
+
+  return allowedModes.includes(
+    mode
+  )
+    ?
+    mode
+    :
+    "personal";
+
+}
+
+
+function safeMood(
+  mood
+){
+
+  return allowedMoods.includes(
+    mood
+  )
+    ?
+    mood
+    :
+    "Calm";
+
+}
+
+
+function safeMotion(
+  motion
+){
+
+  return allowedMotions.includes(
+    motion
+  )
+    ?
+    motion
+    :
+    "Soft";
+
+}
+
+
+function safeColor(
+  value
+){
+
+  if(
+    typeof value !== "string"
+  ){
+
+    return "#2563eb";
+
+  }
+
+  const valueTrimmed =
+    value.trim();
+
+  if(
+    /^#[0-9a-fA-F]{6}$/.test(
+      valueTrimmed
+    )
+  ){
+
+    return valueTrimmed;
+
+  }
+
+  return "#2563eb";
+
+}
+
+
+/* =========================================================
+   COLOR HELPERS
+========================================================= */
+
+function hexToRGB(
+  hex
+){
+
+  const safe =
+    safeColor(
+      hex
+    ).replace(
+      "#",
+      ""
+    );
+
+  return {
+
+    r:
+      parseInt(
+        safe.slice(0,2),
+        16
+      ),
+
+    g:
+      parseInt(
+        safe.slice(2,4),
+        16
+      ),
+
+    b:
+      parseInt(
+        safe.slice(4,6),
+        16
+      )
+
+  };
+
+}
+
+
+function rgbToHex(
+  r,
+  g,
+  b
+){
+
+  const rr =
+    clamp(
+      Math.round(r),
+      0,
+      255
+    );
+
+  const gg =
+    clamp(
+      Math.round(g),
+      0,
+      255
+    );
+
+  const bb =
+    clamp(
+      Math.round(b),
+      0,
+      255
+    );
+
+  return "#" +
+    [rr,gg,bb]
+      .map(
+        value =>
+          value
+            .toString(16)
+            .padStart(2,"0")
+      )
+      .join("");
+
+}
+
+
+function blendColors(
+  colorA,
+  colorB,
+  amount
+){
+
+  const a =
+    hexToRGB(
+      colorA
+    );
+
+  const b =
+    hexToRGB(
+      colorB
+    );
+
+  const t =
+    clamp(
+      amount,
+      0,
+      1
+    );
+
+  return rgbToHex(
+
+    a.r +
+      (
+        b.r -
+        a.r
+      ) * t,
+
+    a.g +
+      (
+        b.g -
+        a.g
+      ) * t,
+
+    a.b +
+      (
+        b.b -
+        a.b
+      ) * t
+
+  );
+
+}
+
+
+function hexToThree(
+  hex
+){
+
+  return new THREE.Color(
+    safeColor(
+      hex
+    )
+  );
+
+}
+
+
+/* =========================================================
+   HSL COLOR VARIATION
+========================================================= */
+
+function varyHex(
+  hex,
+  hueShift=0,
+  saturationMultiplier=1,
+  lightnessShift=0
+){
+
+  const color =
+    hexToThree(
+      hex
+    );
+
+  color.offsetHSL(
+    hueShift,
+    0,
+    0
+  );
+
+  const hsl = {};
+
+  color.getHSL(
+    hsl
+  );
+
+  hsl.s =
+    clamp(
+      hsl.s *
+      saturationMultiplier,
+      0,
+      1
+    );
+
+  hsl.l =
+    clamp(
+      hsl.l +
+      lightnessShift,
+      0,
+      1
+    );
+
+  color.setHSL(
+    hsl.h,
+    hsl.s,
+    hsl.l
+  );
+
+  return "#" +
+    color
+      .getHexString();
+
+}
+
+
+/* =========================================================
    SCENE
-========================= */
+========================================================= */
 
 const scene =
   new THREE.Scene();
@@ -661,8 +1834,8 @@ const scene =
 
 scene.fog =
   new THREE.FogExp2(
-    0x02040a,
-    .025
+    "#020617",
+    .035
   );
 
 
@@ -670,34 +1843,37 @@ const camera =
   new THREE.PerspectiveCamera(
     65,
     window.innerWidth /
-    window.innerHeight,
+      window.innerHeight,
     .1,
     100
   );
 
 
-camera.position.z =
-  8;
+camera.position.set(
+  0,
+  0,
+  8
+);
 
 
 const renderer =
   new THREE.WebGLRenderer({
 
-    canvas:
-      canvas,
+    canvas:canvas,
 
-    antialias:
-      true,
+    antialias:true,
 
-    alpha:
-      true
+    alpha:false,
+
+    powerPreference:
+      "high-performance"
 
   });
 
 
 renderer.setPixelRatio(
   Math.min(
-    window.devicePixelRatio,
+    window.devicePixelRatio || 1,
     2
   )
 );
@@ -713,156 +1889,283 @@ renderer.outputColorSpace =
   THREE.SRGBColorSpace;
 
 
-/* =========================
-   LIGHTS
-========================= */
+renderer.toneMapping =
+  THREE.ACESFilmicToneMapping;
 
-const ambient =
+
+renderer.toneMappingExposure =
+  1.05;
+
+
+/* =========================================================
+   LIGHTS
+========================================================= */
+
+const ambientLight =
   new THREE.AmbientLight(
     0xffffff,
-    .5
+    .55
   );
 
 
 scene.add(
-  ambient
+  ambientLight
 );
 
 
-const light1 =
+const lightA =
   new THREE.PointLight(
     0x60a5fa,
-    30,
+    4.0,
+    35
+  );
+
+
+lightA.position.set(
+  4,
+  2,
+  6
+);
+
+
+scene.add(
+  lightA
+);
+
+
+const lightB =
+  new THREE.PointLight(
+    0xa78bfa,
+    3.0,
+    35
+  );
+
+
+lightB.position.set(
+  -4,
+  -2,
+  3
+);
+
+
+scene.add(
+  lightB
+);
+
+
+const lightC =
+  new THREE.PointLight(
+    0x22d3ee,
+    2.0,
     30
   );
 
 
-light1.position.set(
+lightC.position.set(
+  0,
   4,
-  3,
-  5
+  -2
 );
 
 
 scene.add(
-  light1
+  lightC
 );
 
 
-const light2 =
-  new THREE.PointLight(
-    0xa855f7,
-    20,
-    25
+/* =========================================================
+   WORLD GROUP
+========================================================= */
+
+const worldGroup =
+  new THREE.Group();
+
+
+scene.add(
+  worldGroup
+);
+
+
+/* =========================================================
+   CORE
+========================================================= */
+
+const coreGeometry =
+  new THREE.IcosahedronGeometry(
+    1.25,
+    4
   );
 
 
-light2.position.set(
-  -4,
-  -2,
-  2
-);
+const coreMaterial =
+  new THREE.MeshStandardMaterial({
 
+    color:0x2563eb,
 
-scene.add(
-  light2
-);
+    roughness:.26,
 
+    metalness:.18,
 
-/* =========================
-   CORE
-========================= */
+    transparent:true,
+
+    opacity:.92
+
+  });
+
 
 const core =
   new THREE.Mesh(
-
-    new THREE.IcosahedronGeometry(
-      1.15,
-      2
-    ),
-
-    new THREE.MeshStandardMaterial({
-
-      color:
-        0x2563eb,
-
-      metalness:
-        .65,
-
-      roughness:
-        .2,
-
-      emissive:
-        0x2563eb,
-
-      emissiveIntensity:
-        .35
-
-    })
-
+    coreGeometry,
+    coreMaterial
   );
 
 
-scene.add(
+worldGroup.add(
   core
 );
 
 
-/* =========================
-   RINGS
-========================= */
+/* =========================================================
+   CORE INNER
+========================================================= */
 
-const rings =
-  [];
+const innerGeometry =
+  new THREE.IcosahedronGeometry(
+    .94,
+    3
+  );
+
+
+const innerMaterial =
+  new THREE.MeshBasicMaterial({
+
+    color:0x60a5fa,
+
+    transparent:true,
+
+    opacity:.20,
+
+    wireframe:true
+
+  });
+
+
+const innerCore =
+  new THREE.Mesh(
+    innerGeometry,
+    innerMaterial
+  );
+
+
+worldGroup.add(
+  innerCore
+);
+
+
+/* =========================================================
+   CORE HALO
+========================================================= */
+
+const haloGeometry =
+  new THREE.IcosahedronGeometry(
+    1.58,
+    2
+  );
+
+
+const haloMaterial =
+  new THREE.MeshBasicMaterial({
+
+    color:0x2563eb,
+
+    transparent:true,
+
+    opacity:.055,
+
+    wireframe:true,
+
+    depthWrite:false
+
+  });
+
+
+const coreHalo =
+  new THREE.Mesh(
+    haloGeometry,
+    haloMaterial
+  );
+
+
+worldGroup.add(
+  coreHalo
+);
+
+
+/* =========================================================
+   RINGS
+========================================================= */
+
+const rings = [];
 
 
 for(
-  let i = 0;
-  i < 5;
+  let i=0;
+  i<6;
   i++
 ){
 
+  const ringGeometry =
+    new THREE.TorusGeometry(
+      1.8 +
+        i * .38,
+      .012 +
+        i * .006,
+      12,
+      160
+    );
+
+
+  const ringMaterial =
+    new THREE.MeshBasicMaterial({
+
+      color:
+        i % 2 === 0
+        ?
+        0x60a5fa
+        :
+        0xa78bfa,
+
+      transparent:true,
+
+      opacity:
+        .28 -
+        i * .022,
+
+      depthWrite:false
+
+    });
+
+
   const ring =
     new THREE.Mesh(
-
-      new THREE.TorusGeometry(
-        1.8 +
-        i * .35,
-        .018,
-        12,
-        100
-      ),
-
-      new THREE.MeshBasicMaterial({
-
-        color:
-          0x60a5fa,
-
-        transparent:
-          true,
-
-        opacity:
-          .45
-
-      })
-
+      ringGeometry,
+      ringMaterial
     );
 
 
   ring.rotation.x =
-    Math.random() *
-    Math.PI;
-
+    Math.PI / 2 +
+    i * .19;
 
   ring.rotation.y =
-    Math.random() *
-    Math.PI;
+    i * .31;
 
+  ring.rotation.z =
+    i * .13;
 
-  scene.add(
+  worldGroup.add(
     ring
   );
-
 
   rings.push(
     ring
@@ -871,16 +2174,138 @@ for(
 }
 
 
-/* =========================
+/* =========================================================
+   GLOW SPRITE
+========================================================= */
+
+function createGlowTexture(){
+
+  const glowCanvas =
+    document.createElement(
+      "canvas"
+    );
+
+  glowCanvas.width =
+    256;
+
+  glowCanvas.height =
+    256;
+
+  const ctx =
+    glowCanvas.getContext(
+      "2d"
+    );
+
+  if(!ctx){
+
+    return null;
+
+  }
+
+  const gradient =
+    ctx.createRadialGradient(
+      128,
+      128,
+      5,
+      128,
+      128,
+      128
+    );
+
+  gradient.addColorStop(
+    0,
+    "rgba(255,255,255,.9)"
+  );
+
+  gradient.addColorStop(
+    .12,
+    "rgba(255,255,255,.55)"
+  );
+
+  gradient.addColorStop(
+    .35,
+    "rgba(120,170,255,.22)"
+  );
+
+  gradient.addColorStop(
+    1,
+    "rgba(0,0,0,0)"
+  );
+
+  ctx.fillStyle =
+    gradient;
+
+  ctx.fillRect(
+    0,
+    0,
+    256,
+    256
+  );
+
+  return new THREE.CanvasTexture(
+    glowCanvas
+  );
+
+}
+
+
+const glowTexture =
+  createGlowTexture();
+
+
+let glowSprite =
+  null;
+
+
+if(glowTexture){
+
+  const glowMaterial =
+    new THREE.SpriteMaterial({
+
+      map:
+        glowTexture,
+
+      color:
+        0x2563eb,
+
+      transparent:true,
+
+      opacity:.24,
+
+      depthWrite:false,
+
+      blending:
+        THREE.AdditiveBlending
+
+    });
+
+
+  glowSprite =
+    new THREE.Sprite(
+      glowMaterial
+    );
+
+
+  glowSprite.scale.set(
+    8,
+    8,
+    1
+  );
+
+
+  worldGroup.add(
+    glowSprite
+  );
+
+}
+
+
+/* =========================================================
    PARTICLES
-========================= */
+========================================================= */
 
 const particleCount =
   1800;
-
-
-const particleGeometry =
-  new THREE.BufferGeometry();
 
 
 const particlePositions =
@@ -889,15 +2314,27 @@ const particlePositions =
   );
 
 
+const particleBase =
+  new Float32Array(
+    particleCount * 3
+  );
+
+
+const particleVelocity =
+  new Float32Array(
+    particleCount * 3
+  );
+
+
 for(
-  let i = 0;
-  i < particleCount;
+  let i=0;
+  i<particleCount;
   i++
 ){
 
   const radius =
-    3 +
-    Math.random() * 8;
+    3.2 +
+    Math.random() * 10;
 
 
   const angle =
@@ -910,64 +2347,105 @@ for(
     (
       Math.random() -
       .5
-    ) * 10;
+    ) *
+    10;
 
 
-  particlePositions[
-    i * 3
-  ] =
+  const x =
     Math.cos(angle) *
     radius;
 
 
-  particlePositions[
-    i * 3 + 1
-  ] =
-    y;
-
-
-  particlePositions[
-    i * 3 + 2
-  ] =
+  const z =
     Math.sin(angle) *
     radius;
+
+
+  const index =
+    i * 3;
+
+
+  particlePositions[index] =
+    x;
+
+  particlePositions[index+1] =
+    y;
+
+  particlePositions[index+2] =
+    z;
+
+
+  particleBase[index] =
+    x;
+
+  particleBase[index+1] =
+    y;
+
+  particleBase[index+2] =
+    z;
+
+
+  particleVelocity[index] =
+    (
+      Math.random() -
+      .5
+    ) * .012;
+
+  particleVelocity[index+1] =
+    (
+      Math.random() -
+      .5
+    ) * .018;
+
+  particleVelocity[index+2] =
+    (
+      Math.random() -
+      .5
+    ) * .012;
 
 }
 
 
+const particleGeometry =
+  new THREE.BufferGeometry();
+
+
 particleGeometry.setAttribute(
-
   "position",
-
   new THREE.BufferAttribute(
     particlePositions,
     3
   )
-
 );
+
+
+const particleMaterial =
+  new THREE.PointsMaterial({
+
+    color:
+      0x60a5fa,
+
+    size:
+      .035,
+
+    transparent:true,
+
+    opacity:.60,
+
+    depthWrite:false,
+
+    blending:
+      THREE.AdditiveBlending,
+
+    sizeAttenuation:true
+
+  });
 
 
 const particles =
   new THREE.Points(
-
     particleGeometry,
-
-    new THREE.PointsMaterial({
-
-      color:
-        0x60a5fa,
-
-      size:
-        .025,
-
-      transparent:
-        true,
-
-      opacity:
-        .65
-
-    })
-
+    particleMaterial
   );
 
 
@@ -976,88 +2454,188 @@ scene.add(
 );
 
 
-/* =========================
+/* =========================================================
+   ATMOSPHERIC DUST
+========================================================= */
+
+const dustCount =
+  420;
+
+
+const dustPositions =
+  new Float32Array(
+    dustCount * 3
+  );
+
+
+for(
+  let i=0;
+  i<dustCount;
+  i++
+){
+
+  const index =
+    i * 3;
+
+  dustPositions[index] =
+    (
+      Math.random() -
+      .5
+    ) * 15;
+
+  dustPositions[index+1] =
+    (
+      Math.random() -
+      .5
+    ) * 9;
+
+  dustPositions[index+2] =
+    (
+      Math.random() -
+      .5
+    ) * 12;
+
+}
+
+
+const dustGeometry =
+  new THREE.BufferGeometry();
+
+
+dustGeometry.setAttribute(
+  "position",
+  new THREE.BufferAttribute(
+    dustPositions,
+    3
+  )
+);
+
+
+const dustMaterial =
+  new THREE.PointsMaterial({
+
+    color:
+      0x94a3b8,
+
+    size:
+      .018,
+
+    transparent:true,
+
+    opacity:.20,
+
+    depthWrite:false,
+
+    blending:
+      THREE.AdditiveBlending
+
+  });
+
+
+const dust =
+  new THREE.Points(
+    dustGeometry,
+    dustMaterial
+  );
+
+
+scene.add(
+  dust
+);
+
+
+/* =========================================================
    STARS
-========================= */
+========================================================= */
+
+const starCount =
+  900;
+
+
+const starPositions =
+  new Float32Array(
+    starCount * 3
+  );
+
+
+for(
+  let i=0;
+  i<starCount;
+  i++
+){
+
+  const index =
+    i * 3;
+
+  const radius =
+    15 +
+    Math.random() *
+    30;
+
+  const theta =
+    Math.random() *
+    Math.PI *
+    2;
+
+  const phi =
+    Math.acos(
+      2 *
+      Math.random() -
+      1
+    );
+
+  starPositions[index] =
+    radius *
+    Math.sin(phi) *
+    Math.cos(theta);
+
+  starPositions[index+1] =
+    radius *
+    Math.cos(phi);
+
+  starPositions[index+2] =
+    radius *
+    Math.sin(phi) *
+    Math.sin(theta);
+
+}
+
 
 const starGeometry =
   new THREE.BufferGeometry();
 
 
-const starPositions =
-  new Float32Array(
-    900 * 3
-  );
-
-
-for(
-  let i = 0;
-  i < 900;
-  i++
-){
-
-  starPositions[
-    i * 3
-  ] =
-    (
-      Math.random() -
-      .5
-    ) * 40;
-
-
-  starPositions[
-    i * 3 + 1
-  ] =
-    (
-      Math.random() -
-      .5
-    ) * 25;
-
-
-  starPositions[
-    i * 3 + 2
-  ] =
-    (
-      Math.random() -
-      .5
-    ) * 40;
-
-}
-
-
 starGeometry.setAttribute(
-
   "position",
-
   new THREE.BufferAttribute(
     starPositions,
     3
   )
-
 );
+
+
+const starMaterial =
+  new THREE.PointsMaterial({
+
+    color:
+      0xffffff,
+
+    size:
+      .055,
+
+    transparent:true,
+
+    opacity:.50,
+
+    depthWrite:false
+
+  });
 
 
 const stars =
   new THREE.Points(
-
     starGeometry,
-
-    new THREE.PointsMaterial({
-
-      color:
-        0xffffff,
-
-      size:
-        .018,
-
-      transparent:
-        true,
-
-      opacity:
-        .5
-
-    })
-
+    starMaterial
   );
 
 
@@ -1066,9 +2644,9 @@ scene.add(
 );
 
 
-/* =========================
+/* =========================================================
    STATE
-========================= */
+========================================================= */
 
 let currentMode =
   "personal";
@@ -1090,6 +2668,18 @@ let audioReactive =
   0;
 
 
+let targetReaction =
+  0;
+
+
+let contentMotion =
+  0;
+
+
+let targetContentMotion =
+  0;
+
+
 let mouseX =
   0;
 
@@ -1106,16 +2696,26 @@ let targetMouseY =
   0;
 
 
-/* =========================
-   LIVING VARIATION ENGINE
-========================= */
+let pointerDown =
+  false;
+
+
+/* =========================================================
+   VARIATION STATE
+========================================================= */
 
 let variation = {
 
   seed:
     Math.random() * 1000,
 
-  colorShift:
+  hueShift:
+    0,
+
+  saturation:
+    1,
+
+  brightness:
     0,
 
   lightEnergy:
@@ -1124,813 +2724,368 @@ let variation = {
   particleScale:
     1,
 
+  particleDrift:
+    1,
+
   cameraDepth:
     8,
 
+  cameraFov:
+    65,
+
   cameraDrift:
+    .2,
+
+  cameraOrbitX:
+    .2,
+
+  cameraOrbitY:
     .2,
 
   ringSpread:
     1,
 
   animationSpeed:
-    1
+    1,
+
+  pulseStrength:
+    .3,
+
+  fogDensity:
+    .035,
+
+  glowStrength:
+    .24,
+
+  environmentScale:
+    1,
+
+  starTwinkle:
+    .3,
+
+  phase:
+    Math.random() * Math.PI * 2
 
 };
 
 
+let targetCameraDepth =
+  variation.cameraDepth;
+
+
+let targetCameraFov =
+  variation.cameraFov;
+
+
+let nextVariationAt =
+  performance.now() +
+  10000;
+
+
+const VARIATION_INTERVAL =
+  10000;
+
+
+/* =========================================================
+   VARIATION ENGINE
+========================================================= */
+
 function createVariation(
-  intensity = .5
+  intensity=.5
 ){
 
-  const safeIntensity =
-    Math.min(
-      1,
-      Math.max(
-        .2,
-        Number(intensity) || .5
-      )
+  const power =
+    clamp(
+      intensity,
+      .15,
+      1
     );
 
 
-  variation = {
-
-    seed:
-      Math.random() * 1000,
-
-    colorShift:
-      (
-        Math.random() -
-        .5
-      ) *
-      35 *
-      safeIntensity,
-
-    lightEnergy:
-      .82 +
-      Math.random() *
-      .42 *
-      safeIntensity,
-
-    particleScale:
-      .82 +
-      Math.random() *
-      .45 *
-      safeIntensity,
-
-    cameraDepth:
-      7.2 +
-      Math.random() *
-      2.2,
-
-    cameraDrift:
-      .12 +
-      Math.random() *
-      .35 *
-      safeIntensity,
-
-    ringSpread:
-      .88 +
-      Math.random() *
-      .28 *
-      safeIntensity,
-
-    animationSpeed:
-      .82 +
-      Math.random() *
-      .5 *
-      safeIntensity
-
-  };
+  variation.seed =
+    Math.random() * 100000;
 
 
-  rings.forEach(
-    function(ring,index){
-
-      ring.rotation.x =
-        Math.random() *
-        Math.PI;
-
-      ring.rotation.y =
-        Math.random() *
-        Math.PI;
-
-      ring.rotation.z =
-        Math.random() *
-        Math.PI;
-
-      ring.position.x =
-        (
-          Math.random() -
-          .5
-        ) *
-        variation.ringSpread *
-        index *
-        .12;
-
-      ring.position.y =
-        (
-          Math.random() -
-          .5
-        ) *
-        variation.ringSpread *
-        index *
-        .12;
-
-      ring.position.z =
-        (
-          Math.random() -
-          .5
-        ) *
-        variation.ringSpread *
-        index *
-        .12;
-
-    }
-  );
+  variation.hueShift =
+    (
+      Math.random() -
+      .5
+    ) *
+    .06 *
+    power;
 
 
-  camera.position.z =
+  variation.saturation =
+    0.88 +
+    Math.random() *
+    .28 *
+    power;
+
+
+  variation.brightness =
+    (
+      Math.random() -
+      .5
+    ) *
+    .10 *
+    power;
+
+
+  variation.lightEnergy =
+    .78 +
+    Math.random() *
+    .52 *
+    power;
+
+
+  variation.particleScale =
+    .78 +
+    Math.random() *
+    .48 *
+    power;
+
+
+  variation.particleDrift =
+    .65 +
+    Math.random() *
+    .85 *
+    power;
+
+
+  variation.cameraDepth =
+    6.8 +
+    Math.random() *
+    3.4;
+
+
+  variation.cameraFov =
+    59 +
+    Math.random() *
+    13;
+
+
+  variation.cameraDrift =
+    .12 +
+    Math.random() *
+    .38 *
+    power;
+
+
+  variation.cameraOrbitX =
+    (
+      Math.random() -
+      .5
+    ) *
+    .7;
+
+
+  variation.cameraOrbitY =
+    (
+      Math.random() -
+      .5
+    ) *
+    .45;
+
+
+  variation.ringSpread =
+    .78 +
+    Math.random() *
+    .52;
+
+
+  variation.animationSpeed =
+    .70 +
+    Math.random() *
+    .72 *
+    (
+      .7 +
+      power
+    );
+
+
+  variation.pulseStrength =
+    .15 +
+    Math.random() *
+    .55 *
+    power;
+
+
+  variation.fogDensity =
+    .018 +
+    Math.random() *
+    .032;
+
+
+  variation.glowStrength =
+    .14 +
+    Math.random() *
+    .22;
+
+
+  variation.environmentScale =
+    .88 +
+    Math.random() *
+    .28;
+
+
+  variation.starTwinkle =
+    .15 +
+    Math.random() *
+    .55;
+
+
+  variation.phase =
+    Math.random() *
+    Math.PI *
+    2;
+
+
+  targetCameraDepth =
     variation.cameraDepth;
 
 
-  particles.scale.setScalar(
-    variation.particleScale
-  );
-
-
-  light1.intensity =
-  30 *
-  variation.lightEnergy;
-
-light2.intensity =
-  20 *
-  variation.lightEnergy;
-
-
-/* LIVING ENVIRONMENT VARIATION */
-
-light1.position.x =
-  3 +
-  Math.sin(
-    variation.seed
-  ) *
-  2;
-
-light1.position.y =
-  2 +
-  Math.cos(
-    variation.seed
-  ) *
-  2;
-
-light1.position.z =
-  4 +
-  Math.sin(
-    variation.seed * .7
-  ) *
-  2;
-
-
-light2.position.x =
-  -3 +
-  Math.cos(
-    variation.seed
-  ) *
-  2;
-
-light2.position.y =
-  -2 +
-  Math.sin(
-    variation.seed * .8
-  ) *
-  2;
-
-light2.position.z =
-  2 +
-  Math.cos(
-    variation.seed * .6
-  ) *
-  2;
-
-
-particles.material.size =
-  .025 *
-  variation.particleScale;
-
-
-particles.material.opacity =
-  .52 +
-  (
-    variation.particleScale -
-    .82
-  ) *
-  .35;
-
-
-stars.material.size =
-  .014 +
-  Math.random() *
-  .012;
-
-
-stars.material.opacity =
-  .35 +
-  Math.random() *
-  .35;
-  
-
-}
-
-
-/* Create a fresh visual variation */
-
-createVariation(
-  profiles.personal.intensity
-);
-
-/* =========================
-   UTILITIES
-========================= */
-
-function hexToRGB(
-  hex
-){
-
-  const value =
-    hex.replace(
-      "#",
-      ""
-    );
-
-
-  return {
-
-    r:
-      parseInt(
-        value.substring(
-          0,
-          2
-        ),
-        16
-      ),
-
-    g:
-      parseInt(
-        value.substring(
-          2,
-          4
-        ),
-        16
-      ),
-
-    b:
-      parseInt(
-        value.substring(
-          4,
-          6
-        ),
-        16
-      )
-
-  };
-
-}
-
-
-function rgbToHex(
-  r,
-  g,
-  b
-){
-
-  return (
-
-    "#" +
-
-    [r,g,b]
-      .map(
-        function(v){
-
-          return Math
-            .round(v)
-            .toString(16)
-            .padStart(
-              2,
-              "0"
-            );
-
-        }
-      )
-      .join("")
-
-  );
-
-}
-
-
-function blendColors(
-  colors
-){
-
-  if(
-    !colors ||
-    colors.length === 0
-  ){
-
-    return targetColors;
-
-  }
-
-
-  return colors
-    .slice(0,3)
-    .map(
-      function(c){
-
-        return rgbToHex(
-          c.r,
-          c.g,
-          c.b
-        );
-
-      }
-    );
-
-}
-
-
-/* =========================
-   CONTENT ANALYSIS
-========================= */
-
-function analyzeContent(
-  input = {}
-){
-
-  const text =
-    String(
-      input.text ||
-      ""
-    )
-    .toLowerCase();
-
-
-  const tags =
-    Array.isArray(
-      input.tags
-    )
-    ?
-    input.tags
-      .join(" ")
-      .toLowerCase()
-    :
-    "";
-
-
-  const context =
-    String(
-      input.context ||
-      ""
-    )
-    .toLowerCase();
-
-
-  const combined =
-    text +
-    " " +
-    tags +
-    " " +
-    context;
-
-
-  const scores = {
-
-    personal:
-      1,
-
-    ocean:
-      0,
-
-    nature:
-      0,
-
-    music:
-      0,
-
-    gaming:
-      0,
-
-    automotive:
-      0,
-
-    product:
-      0,
-
-    space:
-      0
-
-  };
-
-
-  const keywords = {
-
-    ocean:[
-      "ocean",
-      "sea",
-      "water",
-      "wave",
-      "beach",
-      "river",
-      "lake",
-      "সমুদ্র",
-      "পানি",
-      "সাগর",
-      "海",
-      "海洋",
-      "القرآن"
-    ],
-
-    nature:[
-      "nature",
-      "forest",
-      "tree",
-      "green",
-      "flower",
-      "mountain",
-      "garden",
-      "প্রকৃতি",
-      "গাছ",
-      "ফুল",
-      "পাহাড়",
-      "自然",
-      "طبيعة"
-    ],
-
-    music:[
-      "music",
-      "song",
-      "concert",
-      "piano",
-      "guitar",
-      "beat",
-      "melody",
-      "music",
-      "গান",
-      "সঙ্গীত",
-      "音楽",
-      "موسيقى"
-    ],
-
-    gaming:[
-      "game",
-      "gaming",
-      "gamer",
-      "esports",
-      "console",
-      "playstation",
-      "xbox",
-      "steam",
-      "গেম",
-      "गेम",
-      "游戏"
-    ],
-
-    automotive:[
-      "car",
-      "cars",
-      "automotive",
-      "vehicle",
-      "motor",
-      "racing",
-      "bike",
-      "গাড়ি",
-      "মোটর",
-      "سيارة"
-    ],
-
-    product:[
-      "product",
-      "shopping",
-      "store",
-      "sale",
-      "luxury",
-      "fashion",
-      "buy",
-      "পণ্য",
-      "কেনাকাটা",
-      "منتج"
-    ],
-
-    space:[
-      "space",
-      "planet",
-      "galaxy",
-      "universe",
-      "star",
-      "cosmic",
-      "nasa",
-      "মহাকাশ",
-      "গ্রহ",
-      "নক্ষত্র",
-      "宇宙",
-      "فضاء"
-    ],
-
-    personal:[
-      "family",
-      "friend",
-      "self",
-      "life",
-      "personal",
-      "আমার",
-      "পরিবার",
-      "বন্ধু",
-      "生活"
-    ]
-
-  };
-
-
-  MODES.forEach(
-    function(mode){
-
-      keywords[mode]
-        .forEach(
-          function(word){
-
-            if(
-              combined.includes(
-                word
-              )
-            ){
-
-              scores[mode] += 2;
-
-            }
-
-          }
-        );
+  targetCameraFov =
+    variation.cameraFov;
+
+
+  /*
+    Each ring gets a different
+    position/rotation so the
+    environment never feels
+    like the exact same scene.
+  */
+
+  rings.forEach(
+    function(
+      ring,
+      index
+    ){
+
+      const direction =
+        index % 2 === 0
+        ?
+        1
+        :
+        -1;
+
+
+      ring.userData.targetX =
+        (
+          Math.random() -
+          .5
+        ) *
+        .42 *
+        power;
+
+      ring.userData.targetY =
+        (
+          Math.random() -
+          .5
+        ) *
+        .42 *
+        power;
+
+      ring.userData.targetZ =
+        (
+          Math.random() -
+          .5
+        ) *
+        .55 *
+        power;
+
+      ring.userData.speed =
+        (
+          .45 +
+          Math.random() *
+          .85
+        ) *
+        direction;
+
+      ring.userData.phase =
+        Math.random() *
+        Math.PI *
+        2;
+
+      ring.userData.scale =
+        (
+          .85 +
+          Math.random() *
+          .30
+        ) *
+        variation.ringSpread;
 
     }
   );
 
 
-  if(
-    input.contentType ===
-    "audio"
-  ){
-
-    scores.music += 4;
-
-  }
-
-
-  if(
-    input.contentType ===
-    "video"
-  ){
-
-    scores.personal += .2;
-
-  }
-
-
-  if(
-    input.contentType ===
-    "image"
-  ){
-
-    scores.personal += .2;
-
-  }
-
-
-  if(
-    Number(
-      input.audioEnergy ||
-      0
-    ) > .7
-  ){
-
-    scores.music += 3;
-    scores.gaming += 1;
-
-  }
-
-
-  if(
-    Number(
-      input.motionLevel ||
-      0
-    ) > .7
-  ){
-
-    scores.gaming += 2;
-    scores.automotive += 1;
-    scores.music += 1;
-
-  }
-
-
-  let bestMode =
-    "personal";
-
-
-  let bestScore =
-    scores.personal;
-
-
-  MODES.forEach(
-    function(mode){
-
-      if(
-        scores[mode] >
-        bestScore
-      ){
-
-        bestMode =
-          mode;
-
-        bestScore =
-          scores[mode];
-
-      }
-
-    }
-  );
-
-
-  let mood =
-    "calm";
-
-
-  if(
-    bestMode ===
-    "ocean"
-  ){
-
-    mood =
-      "peaceful";
-
-  }
-
-
-  if(
-    bestMode ===
-    "nature"
-  ){
-
-    mood =
-      "fresh";
-
-  }
-
-
-  if(
-    bestMode ===
-    "music"
-  ){
-
-    mood =
-      "energetic";
-
-  }
-
-
-  if(
-    bestMode ===
-    "gaming"
-  ){
-
-    mood =
-      "energetic";
-
-  }
-
-
-  if(
-    bestMode ===
-    "automotive"
-  ){
-
-    mood =
-      "powerful";
-
-  }
-
-
-  if(
-    bestMode ===
-    "product"
-  ){
-
-    mood =
-      "premium";
-
-  }
-
-
-  if(
-    bestMode ===
-    "space"
-  ){
-
-    mood =
-      "mysterious";
-
-  }
-
-
-  if(
-    combined.includes(
-      "romantic"
-    ) ||
-    combined.includes(
-      "love"
-    ) ||
-    combined.includes(
-      "ভালোবাসা"
-    )
-  ){
-
-    mood =
-      "romantic";
-
-  }
-
-
-  let motion =
-    "soft";
-
-
-  const energy =
-    Number(
-      input.audioEnergy ||
-      input.motionLevel ||
-      0
-    );
-
-
-  if(
-    energy > .75
-  ){
-
-    motion =
-      "dynamic";
-
-  }
-  else if(
-    energy > .45
-  ){
-
-    motion =
-      "flowing";
-
-  }
-
-
-  return {
-
-    mode:
-      bestMode,
-
-    mood:
-      mood,
-
-    motion:
-      motion,
-
-    colors:
-      blendColors(
-        input.dominantColors
-      ),
-
-    intensity:
-      Math.min(
-        1,
-        Math.max(
-          .2,
-          profiles[bestMode].intensity +
-          energy * .25
-        )
-      )
-
-  };
+  /*
+    Light positions also change.
+  */
+
+  lightA.position.x =
+    (
+      Math.random() -
+      .5
+    ) * 9;
+
+  lightA.position.y =
+    1 +
+    Math.random() * 5;
+
+  lightA.position.z =
+    2 +
+    Math.random() * 7;
+
+
+  lightB.position.x =
+    (
+      Math.random() -
+      .5
+    ) * 9;
+
+  lightB.position.y =
+    -2 -
+    Math.random() * 3;
+
+  lightB.position.z =
+    1 +
+    Math.random() * 6;
+
+
+  lightC.position.x =
+    (
+      Math.random() -
+      .5
+    ) * 8;
+
+  lightC.position.y =
+    (
+      Math.random() -
+      .5
+    ) * 7;
+
+  lightC.position.z =
+    -1 -
+    Math.random() * 4;
+
+
+  nextVariationAt =
+    performance.now() +
+    VARIATION_INTERVAL +
+    Math.random() * 8000;
 
 }
 
 
-/* =========================
-   APPLY PROFILE
-========================= */
+/* =========================================================
+   COLOR APPLICATION
+========================================================= */
 
-function applyContentVisualProfile(
-  profile
-){
+function applyVariationColors(){
 
   if(
-    !profile
+    !targetColors ||
+    !targetColors.length
   ){
 
     return;
@@ -1938,79 +3093,1134 @@ function applyContentVisualProfile(
   }
 
 
-  const mode =
-    MODES.includes(
-      profile.mode
-    )
-    ?
-    profile.mode
-    :
-    "personal";
+  const colors =
+    targetColors.map(
+      function(
+        color,
+        index
+      ){
+
+        return varyHex(
+          color,
+          variation.hueShift +
+            index * .008,
+          variation.saturation,
+          variation.brightness
+        );
+
+      }
+    );
 
 
-  currentMode =
-    mode;
+  const colorA =
+    hexToThree(
+      colors[0]
+    );
 
 
-  targetProfile =
-  profiles[mode];
+  const colorB =
+    hexToThree(
+      colors[
+        Math.min(
+          1,
+          colors.length - 1
+        )
+      ]
+    );
 
 
-createVariation(
-  profile.intensity ||
-  profiles[mode].intensity
-);
+  const colorC =
+    hexToThree(
+      colors[
+        Math.min(
+          2,
+          colors.length - 1
+        )
+      ]
+    );
 
-  currentProfile = {
 
-    ...profiles[mode],
+  coreMaterial.color.lerp(
+    colorA,
+    .08
+  );
 
-    mood:
-      profile.mood ||
-      profiles[mode].mood,
 
-    motion:
-      profile.motion ||
-      profiles[mode].motion,
+  innerMaterial.color.lerp(
+    colorB,
+    .08
+  );
 
-    intensity:
-      profile.intensity ||
-      profiles[mode].intensity
+
+  haloMaterial.color.lerp(
+    colorC,
+    .06
+  );
+
+
+  if(glowSprite){
+
+    glowSprite.material.color.lerp(
+      colorA,
+      .06
+    );
+
+  }
+
+
+  lightA.color.lerp(
+    colorA,
+    .05
+  );
+
+
+  lightB.color.lerp(
+    colorB,
+    .05
+  );
+
+
+  lightC.color.lerp(
+    colorC,
+    .05
+  );
+
+
+  particleMaterial.color.lerp(
+    colorB,
+    .045
+  );
+
+
+  dustMaterial.color.lerp(
+    colorC,
+    .035
+  );
+
+
+  rings.forEach(
+    function(
+      ring,
+      index
+    ){
+
+      const chosen =
+        colors[
+          index %
+          colors.length
+        ];
+
+      ring.material.color.lerp(
+        hexToThree(
+          chosen
+        ),
+        .055
+      );
+
+    }
+  );
+
+}
+
+
+/* =========================================================
+   CONTENT KEYWORDS
+========================================================= */
+
+const semanticSignals = {
+
+  ocean:[
+    "ocean",
+    "sea",
+    "water",
+    "wave",
+    "waves",
+    "beach",
+    "marine",
+    "river",
+    "lake",
+    "blue water",
+    "সমুদ্র",
+    "সাগর",
+    "পানি",
+    "জল",
+    "ঢেউ",
+    "নদী",
+    "بحر",
+    "ماء",
+    "محيط",
+    "海",
+    "水",
+    "海洋",
+    "바다",
+    "물"
+  ],
+
+
+  nature:[
+    "nature",
+    "forest",
+    "tree",
+    "trees",
+    "green",
+    "mountain",
+    "garden",
+    "flower",
+    "flowers",
+    "wildlife",
+    "earth",
+    "প্রকৃতি",
+    "বন",
+    "গাছ",
+    "সবুজ",
+    "পাহাড়",
+    "ফুল",
+    "জঙ্গল",
+    "طبيعة",
+    "غابة",
+    "شجرة",
+    "طبيعت",
+    "自然",
+    "森林",
+    "木",
+    "自然",
+    "숲",
+    "나무"
+  ],
+
+
+  music:[
+    "music",
+    "song",
+    "sound",
+    "beat",
+    "beats",
+    "rhythm",
+    "melody",
+    "singer",
+    "concert",
+    "audio",
+    "গান",
+    "সঙ্গীত",
+    "সুর",
+    "বিট",
+    "বাদ্য",
+    "موسيقى",
+    "أغنية",
+    "صوت",
+    "إيقاع",
+    "音楽",
+    "歌",
+    "音",
+    "음악",
+    "노래"
+  ],
+
+
+  gaming:[
+    "game",
+    "gaming",
+    "gamer",
+    "play",
+    "player",
+    "level",
+    "battle",
+    "quest",
+    "esports",
+    "console",
+    "pc game",
+    "গেম",
+    "গেমিং",
+    "খেলা",
+    "যুদ্ধ",
+    "মিশন",
+    "لعبة",
+    "ألعاب",
+    "مباراة",
+    "ゲーム",
+    "プレイヤー",
+    "게임",
+    "플레이어"
+  ],
+
+
+  automotive:[
+    "car",
+    "cars",
+    "automotive",
+    "vehicle",
+    "vehicles",
+    "motor",
+    "engine",
+    "racing",
+    "race",
+    "speed",
+    "bike",
+    "motorcycle",
+    "গাড়ি",
+    "গাড়ি",
+    "যানবাহন",
+    "মোটর",
+    "ইঞ্জিন",
+    "রেস",
+    "গতি",
+    "سيارة",
+    "سيارات",
+    "محرك",
+    "سباق",
+    "車",
+    "自動車",
+    "バイク",
+    "자동차"
+  ],
+
+
+  product:[
+    "product",
+    "shop",
+    "shopping",
+    "store",
+    "buy",
+    "sale",
+    "price",
+    "brand",
+    "business",
+    "market",
+    "product launch",
+    "পণ্য",
+    "কেনাকাটা",
+    "দোকান",
+    "বিক্রি",
+    "দাম",
+    "ব্র্যান্ড",
+    "ব্যবসা",
+    "منتج",
+    "متجر",
+    "شراء",
+    "سعر",
+    "منتج",
+    "店",
+    "商品",
+    "쇼핑"
+  ],
+
+
+  space:[
+    "space",
+    "planet",
+    "planets",
+    "star",
+    "stars",
+    "galaxy",
+    "universe",
+    "cosmos",
+    "moon",
+    "mars",
+    "nasa",
+    "rocket",
+    "astronaut",
+    "cosmic",
+    "মহাকাশ",
+    "গ্রহ",
+    "তারা",
+    "ছায়াপথ",
+    "বিশ্বব্রহ্মাণ্ড",
+    "চাঁদ",
+    "মঙ্গল",
+    "রকেট",
+    "মহাকাশচারী",
+    "فضاء",
+    "كوكب",
+    "نجوم",
+    "مجرة",
+    "قمر",
+    "صاروخ",
+    "宇宙",
+    "星",
+    "惑星",
+    "月",
+    "로켓"
+  ]
+
+};
+
+
+/* =========================================================
+   MOOD SIGNALS
+========================================================= */
+
+const moodSignals = {
+
+  Calm:[
+    "calm",
+    "peace",
+    "peaceful",
+    "relax",
+    "relaxed",
+    "quiet",
+    "soft",
+    "slow",
+    "serene",
+    "শান্ত",
+    "শান্তি",
+    "নিরিবিলি",
+    "আরাম",
+    "هادئ",
+    "سلام",
+    "سكينة",
+    "平和",
+    "穏やか",
+    "평온"
+  ],
+
+
+  Fresh:[
+    "fresh",
+    "green",
+    "morning",
+    "spring",
+    "clean",
+    "natural",
+    "নতুন",
+    "সতেজ",
+    "সকাল",
+    "বসন্ত",
+    "প্রাকৃতিক",
+    "طازج",
+    "صباح",
+    "ربيع",
+    "新鮮",
+    "春",
+    "신선"
+  ],
+
+
+  Energetic:[
+    "energy",
+    "energetic",
+    "exciting",
+    "excited",
+    "power",
+    "powerful",
+    "fast",
+    "action",
+    "dynamic",
+    "ভালোবাসা",
+    "উত্তেজনা",
+    "শক্তি",
+    "দ্রুত",
+    "অ্যাকশন",
+    "طاقة",
+    "قوي",
+    "سريع",
+    "حماس",
+    "エネルギー",
+    "速い",
+    "에너지"
+  ],
+
+
+  Premium:[
+    "premium",
+    "luxury",
+    "elegant",
+    "exclusive",
+    "professional",
+    "minimal",
+    "high end",
+    "প্রিমিয়াম",
+    "বিলাসবহুল",
+    "মার্জিত",
+    "পেশাদার",
+    "راقي",
+    "فاخر",
+    "أنيق",
+    "高級",
+    "上品",
+    "프리미엄"
+  ],
+
+
+  Cosmic:[
+    "cosmic",
+    "mystery",
+    "infinite",
+    "unknown",
+    "universe",
+    "deep",
+    "মহাজাগতিক",
+    "রহস্য",
+    "অসীম",
+    "গভীর",
+    "كوني",
+    "غموض",
+    "لانهائي",
+    "宇宙",
+    "神秘",
+    "무한"
+  ]
+
+};
+
+
+/* =========================================================
+   MOTION SIGNALS
+========================================================= */
+
+const motionSignals = {
+
+  Soft:[
+    "soft",
+    "slow",
+    "gentle",
+    "quiet",
+    "শান্ত",
+    "ধীরে",
+    "নরম",
+    "هادئ",
+    "بطيء",
+    "柔らかい",
+    "느린"
+  ],
+
+
+  Flowing:[
+    "flow",
+    "flowing",
+    "wave",
+    "waves",
+    "water",
+    "ঢেউ",
+    "প্রবাহ",
+    "পানি",
+    "تدفق",
+    "موج",
+    "流れ",
+    "波",
+    "흐름"
+  ],
+
+
+  Organic:[
+    "organic",
+    "natural",
+    "nature",
+    "wind",
+    "forest",
+    "প্রাকৃতিক",
+    "প্রকৃতি",
+    "বাতাস",
+    "বন",
+    "طبيعي",
+    "غابة",
+    "طبيعة",
+    "自然",
+    "風",
+    "숲"
+  ],
+
+
+  Dynamic:[
+    "dynamic",
+    "action",
+    "battle",
+    "game",
+    "gaming",
+    "dynamic",
+    "অ্যাকশন",
+    "যুদ্ধ",
+    "গেম",
+    "حركة",
+    "لعبة",
+    "動き",
+    "게임"
+  ],
+
+
+  Fast:[
+    "fast",
+    "speed",
+    "race",
+    "racing",
+    "car",
+    "গতি",
+    "দ্রুত",
+    "রেস",
+    "سيارة",
+    "سرعة",
+    "سباق",
+    "速度",
+    "レース"
+  ]
+
+};
+
+
+/* =========================================================
+   GENERIC SCRIPT DETECTION
+========================================================= */
+
+function detectScripts(
+  text
+){
+
+  const scripts = {
+
+    latin:
+      /[A-Za-z]/.test(text),
+
+    bengali:
+      /[\u0980-\u09FF]/.test(text),
+
+    arabic:
+      /[\u0600-\u06FF]/.test(text),
+
+    devanagari:
+      /[\u0900-\u097F]/.test(text),
+
+    cyrillic:
+      /[\u0400-\u04FF]/.test(text),
+
+    greek:
+      /[\u0370-\u03FF]/.test(text),
+
+    hebrew:
+      /[\u0590-\u05FF]/.test(text),
+
+    thai:
+      /[\u0E00-\u0E7F]/.test(text),
+
+    georgian:
+      /[\u10A0-\u10FF]/.test(text),
+
+    armenian:
+      /[\u0530-\u058F]/.test(text),
+
+    ethiopic:
+      /[\u1200-\u137F]/.test(text),
+
+    hangul:
+      /[\uAC00-\uD7AF]/.test(text),
+
+    cjk:
+      /[\u4E00-\u9FFF]/.test(text),
+
+    hiragana:
+      /[\u3040-\u309F]/.test(text),
+
+    katakana:
+      /[\u30A0-\u30FF]/.test(text)
 
   };
 
 
+  return Object.keys(
+    scripts
+  ).filter(
+    key =>
+      scripts[key]
+  );
+
+}
+
+
+/* =========================================================
+   SCORE SIGNALS
+========================================================= */
+
+function scoreSignalMap(
+  text,
+  map
+){
+
+  const lower =
+    text.toLowerCase();
+
+
+  const scores = {};
+
+
+  Object.keys(
+    map
+  ).forEach(
+    function(key){
+
+      let score =
+        0;
+
+
+      map[key].forEach(
+        function(signal){
+
+          if(
+            lower.includes(
+              signal.toLowerCase()
+            )
+          ){
+
+            score +=
+              signal.length > 5
+              ?
+              2
+              :
+              1;
+
+          }
+
+        }
+      );
+
+
+      scores[key] =
+        score;
+
+    }
+  );
+
+
+  return scores;
+
+}
+
+
+/* =========================================================
+   BEST KEY
+========================================================= */
+
+function bestKey(
+  scores,
+  fallback
+){
+
+  let best =
+    fallback;
+
+  let bestScore =
+    0;
+
+
+  Object.keys(
+    scores
+  ).forEach(
+    function(key){
+
+      if(
+        scores[key] >
+        bestScore
+      ){
+
+        best =
+          key;
+
+        bestScore =
+          scores[key];
+
+      }
+
+    }
+  );
+
+
+  return best;
+
+}
+
+
+/* =========================================================
+   CONTENT ANALYZER
+========================================================= */
+
+function analyzeContent(
+  input={}
+){
+
+  const safeInput =
+    input &&
+    typeof input === "object"
+    ?
+    input
+    :
+    {};
+
+
+  const text =
+    safeText(
+      safeInput.text || ""
+    );
+
+
+  const tags =
+    safeArray(
+      safeInput.tags
+    );
+
+
+  const context =
+    safeText(
+      safeInput.context || "",
+      1000
+    );
+
+
+  const locale =
+    safeText(
+      safeInput.locale || "",
+      30
+    );
+
+
+  const contentType =
+    safeText(
+      safeInput.contentType || "text",
+      30
+    );
+
+
+  const combinedText = (
+
+    text +
+    " " +
+    tags.join(" ") +
+    " " +
+    context +
+    " " +
+    locale
+
+  ).trim();
+
+
+  const modeScores =
+    scoreSignalMap(
+      combinedText,
+      semanticSignals
+    );
+
+
+  let mode =
+    bestKey(
+      modeScores,
+      "personal"
+    );
+
+
+  const moodScores =
+    scoreSignalMap(
+      combinedText,
+      moodSignals
+    );
+
+
+  let mood =
+    bestKey(
+      moodScores,
+      profiles[mode].mood
+    );
+
+
+  const motionScores =
+    scoreSignalMap(
+      combinedText,
+      motionSignals
+    );
+
+
+  let motion =
+    bestKey(
+      motionScores,
+      profiles[mode].motion
+    );
+
+
+  let intensity =
+    profiles[mode].intensity;
+
+
+  let energy =
+    clamp(
+      Number(
+        safeInput.audioEnergy || 0
+      ),
+      0,
+      1
+    );
+
+
+  let motionLevel =
+    clamp(
+      Number(
+        safeInput.motionLevel || 0
+      ),
+      0,
+      1
+    );
+
+
+  const audioTempo =
+    clamp(
+      Number(
+        safeInput.audioTempo || 0
+      ),
+      0,
+      300
+    );
+
+
   if(
-    Array.isArray(
-      profile.colors
-    ) &&
-    profile.colors.length
+    contentType ===
+    "audio"
   ){
 
-    targetColors =
-      profile.colors;
+    if(
+      energy >
+      .65
+    ){
+
+      mode =
+        "music";
+
+      mood =
+        "Energetic";
+
+      motion =
+        "Audio Reactive";
+
+    }
+    else{
+
+      mode =
+        "music";
+
+      mood =
+        "Calm";
+
+      motion =
+        "Audio Reactive";
+
+    }
+
+
+    intensity =
+      clamp(
+        .45 +
+        energy * .55,
+        .35,
+        1
+      );
 
   }
-  else{
 
-    targetColors =
-      profiles[mode].colors;
+
+  if(
+    contentType ===
+    "video"
+  ){
+
+    if(
+      motionLevel >
+      .72
+    ){
+
+      if(
+        mode ===
+        "personal"
+      ){
+
+        mode =
+          "gaming";
+
+      }
+
+      motion =
+        "Dynamic";
+
+      intensity =
+        clamp(
+          intensity +
+          .18,
+          .25,
+          1
+        );
+
+    }
+    else if(
+      motionLevel >
+      .45
+    ){
+
+      intensity =
+        clamp(
+          intensity +
+          .08,
+          .25,
+          1
+        );
+
+    }
 
   }
 
 
-  worldName.textContent =
-    mode;
+  if(
+    contentType ===
+    "image"
+  ){
+
+    intensity =
+      clamp(
+        intensity +
+        .03,
+        .25,
+        .95
+      );
+
+  }
 
 
-  worldMeta.textContent =
-    currentProfile.mood +
+  /*
+    Dominant image/video colors
+    are preserved as part of
+    the environment.
+  */
+
+  const dominantColors =
+    safeArray(
+      safeInput.dominantColors
+    )
+    .filter(
+      color =>
+        /^#[0-9a-fA-F]{6}$/.test(
+          color
+        )
+    )
+    .slice(
+      0,
+      5
+    );
+
+
+  let colors =
+    dominantColors.length
+    ?
+    dominantColors
+    :
+    profiles[mode].colors;
+
+
+  /*
+    Audio energy also influences
+    the living environment.
+  */
+
+  const combinedEnergy =
+    clamp(
+      Math.max(
+        energy,
+        motionLevel * .85,
+        intensity * .20
+      ),
+      0,
+      1
+    );
+
+
+  return {
+
+    version:
+      VERSION,
+
+    mode:
+      safeMode(
+        mode
+      ),
+
+    mood:
+      safeMood(
+        mood
+      ),
+
+    motion:
+      safeMotion(
+        motion
+      ),
+
+    colors:
+      colors.map(
+        safeColor
+      ),
+
+    intensity:
+      clamp(
+        intensity,
+        .20,
+        1
+      ),
+
+    energy:
+      combinedEnergy,
+
+    motionLevel,
+
+    audioEnergy:
+      energy,
+
+    audioTempo,
+
+    contentType,
+
+    locale,
+
+    scripts:
+      detectScripts(
+        combinedText
+      )
+
+  };
+
+}
+
+
+/* =========================================================
+   UPDATE UI
+========================================================= */
+
+function updateUI(
+  profile
+){
+
+  const mode =
+    safeMode(
+      profile.mode
+    );
+
+
+  const base =
+    profiles[mode];
+
+
+  worldNameElement.textContent =
+    base.name;
+
+
+  worldMetaElement.textContent =
+    profile.mood +
     " · " +
-    currentProfile.motion;
+    profile.motion;
 
 
-  status.textContent =
-    "Zemivo is reacting to content";
+  worldDescriptionElement.textContent =
+    base.description;
+
+
+  resultWorld.textContent =
+    base.name;
+
+
+  resultMood.textContent =
+    profile.mood;
+
+
+  resultMotion.textContent =
+    profile.motion;
 
 
   document
@@ -2032,256 +4242,433 @@ createVariation(
 }
 
 
-/* =========================
+/* =========================================================
+   APPLY CONTENT PROFILE
+========================================================= */
+
+function applyContentVisualProfile(
+  profile
+){
+
+  if(
+    !profile ||
+    typeof profile !==
+    "object"
+  ){
+
+    return;
+
+  }
+
+
+  const mode =
+    safeMode(
+      profile.mode
+    );
+
+
+  currentMode =
+    mode;
+
+
+  targetProfile = {
+
+    ...profiles[mode],
+
+    ...profile,
+
+    mode
+
+  };
+
+
+  currentProfile =
+    targetProfile;
+
+
+  targetColors =
+    (
+      Array.isArray(
+        profile.colors
+      ) &&
+      profile.colors.length
+    )
+    ?
+    profile.colors
+    :
+    profiles[mode].colors;
+
+
+  targetReaction =
+    clamp(
+      Number(
+        profile.energy ||
+        profile.audioEnergy ||
+        0
+      ),
+      0,
+      1
+    );
+
+
+  targetContentMotion =
+    clamp(
+      Number(
+        profile.motionLevel ||
+        0
+      ),
+      0,
+      1
+    );
+
+
+  createVariation(
+    profile.intensity ||
+    profiles[mode].intensity
+  );
+
+
+  updateUI(
+    targetProfile
+  );
+
+
+  statusElement.textContent =
+    "Reacting · " +
+    profiles[mode].name;
+
+
+  statusElement.classList.add(
+    "active"
+  );
+
+
+  setTimeout(
+    function(){
+
+      statusElement.textContent =
+        "Living · " +
+        profiles[mode].name;
+
+    },
+    1200
+  );
+
+}
+
+
+/* =========================================================
    CHANGE WORLD
-========================= */
+========================================================= */
 
 function changeWorld(
   mode
 ){
 
-  if(
-    !MODES.includes(
+  const safe =
+    safeMode(
       mode
-    )
-  ){
+    );
 
-    mode =
-      "personal";
 
-  }
+  const profile =
+    profiles[safe];
 
 
   applyContentVisualProfile({
 
     mode:
-      mode,
+      safe,
 
     mood:
-      profiles[mode].mood,
+      profile.mood,
 
     motion:
-      profiles[mode].motion,
+      profile.motion,
 
     colors:
-      profiles[mode].colors,
+      profile.colors,
 
     intensity:
-      profiles[mode].intensity
+      profile.intensity,
+
+    energy:
+      0,
+
+    motionLevel:
+      0,
+
+    contentType:
+      "manual"
 
   });
 
 }
 
 
-/* =========================
+/* =========================================================
    IMAGE ANALYSIS
-========================= */
+========================================================= */
 
-function analyzeImage(
-  file
+function extractDominantColors(
+  image
 ){
 
-  return new Promise(
-    function(resolve){
-
-      const url =
-        URL.createObjectURL(
-          file
-        );
+  const offscreen =
+    document.createElement(
+      "canvas"
+    );
 
 
-      const image =
-        new Image();
+  const size =
+    80;
 
 
-      image.onload =
-        function(){
+  offscreen.width =
+    size;
 
-          const canvas =
-            document.createElement(
-              "canvas"
-            );
+  offscreen.height =
+    size;
 
 
-          const size =
-            120;
+  const ctx =
+    offscreen.getContext(
+      "2d",
+      {
+        willReadFrequently:true
+      }
+    );
 
 
-          const ratio =
-            Math.min(
-              size /
-              image.width,
+  if(!ctx){
 
-              size /
-              image.height,
+    return [];
 
-              1
-            );
+  }
 
 
-          canvas.width =
-            Math.max(
-              1,
-              Math.floor(
-                image.width *
-                ratio
-              )
-            );
+  ctx.drawImage(
+    image,
+    0,
+    0,
+    size,
+    size
+  );
 
 
-          canvas.height =
-            Math.max(
-              1,
-              Math.floor(
-                image.height *
-                ratio
-              )
-            );
+  const data =
+    ctx.getImageData(
+      0,
+      0,
+      size,
+      size
+    ).data;
 
 
-          const ctx =
-            canvas.getContext(
-              "2d",
-              {
-                willReadFrequently:true
-              }
-            );
+  let r = 0;
+  let g = 0;
+  let b = 0;
+  let count = 0;
 
 
-          ctx.drawImage(
-            image,
-            0,
-            0,
-            canvas.width,
-            canvas.height
-          );
+  for(
+    let i=0;
+    i<data.length;
+    i+=16
+  ){
+
+    const alpha =
+      data[i+3];
 
 
-          const data =
-            ctx.getImageData(
-              0,
-              0,
-              canvas.width,
-              canvas.height
-            ).data;
+    if(
+      alpha <
+      40
+    ){
 
-
-          const buckets = {};
-
-
-          for(
-            let i = 0;
-            i < data.length;
-            i += 16
-          ){
-
-            const r =
-              data[i];
-
-            const g =
-              data[i + 1];
-
-            const b =
-              data[i + 2];
-
-
-            const key =
-              Math.round(r / 32) +
-              "," +
-              Math.round(g / 32) +
-              "," +
-              Math.round(b / 32);
-
-
-            buckets[key] =
-              (
-                buckets[key] ||
-                0
-              ) + 1;
-
-          }
-
-
-          const colors =
-            Object.keys(
-              buckets
-            )
-            .sort(
-              function(a,b){
-
-                return (
-                  buckets[b] -
-                  buckets[a]
-                );
-
-              }
-            )
-            .slice(0,5)
-            .map(
-              function(key){
-
-                const p =
-                  key
-                    .split(",")
-                    .map(Number);
-
-
-                return {
-
-                  r:
-                    p[0] * 32,
-
-                  g:
-                    p[1] * 32,
-
-                  b:
-                    p[2] * 32
-
-                };
-
-              }
-            );
-
-
-          URL.revokeObjectURL(
-            url
-          );
-
-
-          resolve(
-            colors
-          );
-
-        };
-
-
-      image.onerror =
-        function(){
-
-          URL.revokeObjectURL(
-            url
-          );
-
-          resolve(
-            []
-          );
-
-        };
-
-
-      image.src =
-        url;
+      continue;
 
     }
-  );
+
+
+    r +=
+      data[i];
+
+    g +=
+      data[i+1];
+
+    b +=
+      data[i+2];
+
+    count++;
+
+  }
+
+
+  if(
+    count ===
+    0
+  ){
+
+    return [];
+
+  }
+
+
+  const avgR =
+    r / count;
+
+  const avgG =
+    g / count;
+
+  const avgB =
+    b / count;
+
+
+  const mainColor =
+    rgbToHex(
+      avgR,
+      avgG,
+      avgB
+    );
+
+
+  const secondColor =
+    rgbToHex(
+      clamp(
+        avgR * .65 +
+        avgB * .35,
+        0,
+        255
+      ),
+      clamp(
+        avgG * .75 +
+        avgR * .15,
+        0,
+        255
+      ),
+      clamp(
+        avgB * .80 +
+        avgR * .20,
+        0,
+        255
+      )
+    );
+
+
+  return [
+    mainColor,
+    secondColor
+  ];
 
 }
 
 
-/* =========================
+/* =========================================================
+   IMAGE INPUT
+========================================================= */
+
+imageInput.addEventListener(
+  "change",
+  function(){
+
+    const file =
+      imageInput.files &&
+      imageInput.files[0];
+
+
+    if(!file){
+
+      return;
+
+    }
+
+
+    if(
+      !file.type.startsWith(
+        "image/"
+      )
+    ){
+
+      return;
+
+    }
+
+
+    const url =
+      URL.createObjectURL(
+        file
+      );
+
+
+    const image =
+      new Image();
+
+
+    image.onload =
+      function(){
+
+        const colors =
+          extractDominantColors(
+            image
+          );
+
+
+        const profile =
+          analyzeContent({
+
+            text:
+              textInput.value,
+
+            contentType:
+              "image",
+
+            dominantColors:
+              colors,
+
+            tags:[],
+
+            context:
+              "uploaded image"
+
+          });
+
+
+        applyContentVisualProfile(
+          profile
+        );
+
+
+        URL.revokeObjectURL(
+          url
+        );
+
+      };
+
+
+    image.onerror =
+      function(){
+
+        URL.revokeObjectURL(
+          url
+        );
+
+        statusElement.textContent =
+          "Image analysis failed";
+
+      };
+
+
+    image.src =
+      url;
+
+  }
+);
+
+
+/* =========================================================
    VIDEO ANALYSIS
-========================= */
+========================================================= */
 
 async function analyzeVideo(
   file
@@ -2305,554 +4692,220 @@ async function analyzeVideo(
   video.playsInline =
     true;
 
+  video.preload =
+    "metadata";
+
   video.src =
     url;
 
 
-  await new Promise(
-    function(resolve){
+  try{
 
-      video.onloadedmetadata =
-        resolve;
-
-    }
-  );
-
-
-  const duration =
-    video.duration;
-
-
-  const samples =
-    [];
-
-
-  const count =
-    Math.min(
-      5,
-      Math.max(
-        3,
-        Math.floor(
-          duration
-        )
-      )
-    );
-
-
-  for(
-    let i = 0;
-    i < count;
-    i++
-  ){
-
-    const time =
-      duration *
-      (
-        i /
-        Math.max(
-          1,
-          count - 1
-        )
-      );
-
-
-    const frame =
-      await captureVideoFrame(
-        video,
-        time
-      );
-
-
-    if(frame){
-
-      samples.push(
-        frame
-      );
-
-    }
-
-  }
-
-
-  let colors =
-    [];
-
-
-  const buckets = {};
-
-
-  samples.forEach(
-    function(canvas){
-
-      const ctx =
-        canvas.getContext(
-          "2d",
-          {
-            willReadFrequently:true
-          }
-        );
-
-
-      const data =
-        ctx.getImageData(
-          0,
-          0,
-          canvas.width,
-          canvas.height
-        ).data;
-
-
-      for(
-        let i = 0;
-        i < data.length;
-        i += 16
+    await new Promise(
+      function(
+        resolve,
+        reject
       ){
 
-        const r =
-          data[i];
+        video.onloadedmetadata =
+          resolve;
 
-        const g =
-          data[i + 1];
-
-        const b =
-          data[i + 2];
-
-
-        const key =
-          Math.round(r / 32) +
-          "," +
-          Math.round(g / 32) +
-          "," +
-          Math.round(b / 32);
-
-
-        buckets[key] =
-          (
-            buckets[key] ||
-            0
-          ) + 1;
-
-      }
-
-    }
-  );
-
-
-  colors =
-    Object.keys(
-      buckets
-    )
-    .sort(
-      function(a,b){
-
-        return (
-          buckets[b] -
-          buckets[a]
-        );
-
-      }
-    )
-    .slice(0,5)
-    .map(
-      function(key){
-
-        const p =
-          key
-            .split(",")
-            .map(Number);
-
-
-        return {
-
-          r:
-            p[0] * 32,
-
-          g:
-            p[1] * 32,
-
-          b:
-            p[2] * 32
-
-        };
+        video.onerror =
+          reject;
 
       }
     );
 
 
-  URL.revokeObjectURL(
-    url
-  );
+    const duration =
+      Number.isFinite(
+        video.duration
+      )
+      ?
+      video.duration
+      :
+      0;
 
 
-  return {
-
-    colors:
-      colors,
-
-    motion:
+    const sampleCount =
       Math.min(
-        1,
+        5,
+        Math.max(
+          3,
+          Math.floor(
+            duration || 3
+          )
+        )
+      );
+
+
+    const colors = [];
+
+
+    const sampleCanvas =
+      document.createElement(
+        "canvas"
+      );
+
+
+    sampleCanvas.width =
+      96;
+
+    sampleCanvas.height =
+      54;
+
+
+    const ctx =
+      sampleCanvas.getContext(
+        "2d",
+        {
+          willReadFrequently:true
+        }
+      );
+
+
+    for(
+      let i=0;
+      i<sampleCount;
+      i++
+    ){
+
+      const time =
         duration > 0
         ?
-        samples.length /
-        5
+        Math.min(
+          duration - .05,
+          (
+            duration *
+            i /
+            sampleCount
+          )
+        )
         :
-        .3
-      )
-
-  };
-
-}
+        0;
 
 
-function captureVideoFrame(
-  video,
-  time
-){
+      await new Promise(
+        function(
+          resolve
+        ){
 
-  return new Promise(
-    function(resolve){
+          const handler =
+            function(){
 
-      function done(){
+              video.removeEventListener(
+                "seeked",
+                handler
+              );
 
-        video.removeEventListener(
-          "seeked",
-          done
-        );
+              resolve();
+
+            };
 
 
-        const canvas =
-          document.createElement(
-            "canvas"
+          video.addEventListener(
+            "seeked",
+            handler
           );
 
 
-        const size =
-          120;
+          try{
+
+            video.currentTime =
+              Math.max(
+                0,
+                time
+              );
+
+          }
+          catch(error){
+
+            resolve();
+
+          }
+
+        }
+      );
 
 
-        const ratio =
-          Math.min(
-            size /
-            video.videoWidth,
-
-            size /
-            video.videoHeight,
-
-            1
-          );
-
-
-        canvas.width =
-          Math.max(
-            1,
-            Math.floor(
-              video.videoWidth *
-              ratio
-            )
-          );
-
-
-        canvas.height =
-          Math.max(
-            1,
-            Math.floor(
-              video.videoHeight *
-              ratio
-            )
-          );
-
-
-        const ctx =
-          canvas.getContext(
-            "2d"
-          );
-
+      if(ctx){
 
         ctx.drawImage(
           video,
           0,
           0,
-          canvas.width,
-          canvas.height
+          96,
+          54
         );
 
 
-        resolve(
-          canvas
-        );
+        const imageData =
+          ctx.getImageData(
+            0,
+            0,
+            96,
+            54
+          ).data;
+
+
+        let r=0;
+        let g=0;
+        let b=0;
+        let count=0;
+
+
+        for(
+          let p=0;
+          p<imageData.length;
+          p+=24
+        ){
+
+          r +=
+            imageData[p];
+
+          g +=
+            imageData[p+1];
+
+          b +=
+            imageData[p+2];
+
+          count++;
+
+        }
+
+
+        if(count){
+
+          colors.push(
+            rgbToHex(
+              r/count,
+              g/count,
+              b/count
+            )
+          );
+
+        }
 
       }
 
-
-      video.addEventListener(
-        "seeked",
-        done
-      );
-
-
-      video.currentTime =
-        Math.min(
-          time,
-          Math.max(
-            0,
-            video.duration -
-            .05
-          )
-        );
-
-    }
-  );
-
-}
-
-
-/* =========================
-   AUDIO ANALYSIS
-========================= */
-
-async function analyzeAudio(
-  file
-){
-
-  try{
-
-    const AudioContextClass =
-      window.AudioContext ||
-      window.webkitAudioContext;
-
-
-    if(
-      !AudioContextClass
-    ){
-
-      return {
-
-        energy:
-          .5,
-
-        tempo:
-          100
-
-      };
-
     }
 
 
-    const context =
-      new AudioContextClass();
-
-
-    const arrayBuffer =
-      await file.arrayBuffer();
-
-
-    const audioBuffer =
-      await context.decodeAudioData(
-        arrayBuffer
-      );
-
-
-    const data =
-      audioBuffer.getChannelData(
-        0
-      );
-
-
-    const step =
-      Math.max(
-        1,
-        Math.floor(
-          data.length /
-          100000
-        )
-      );
-
-
-    let total =
-      0;
-
-    let count =
-      0;
-
-
-    for(
-      let i = 0;
-      i < data.length;
-      i += step
-    ){
-
-      total +=
-        data[i] *
-        data[i];
-
-
-      count++;
-
-    }
-
-
-    const rms =
-      Math.sqrt(
-        total /
-        Math.max(
-          1,
-          count
-        )
-      );
-
-
-    const energy =
-      Math.min(
-        1,
-        rms * 4
-      );
-
-
-    await context.close();
-
-
-    return {
-
-      energy:
-        energy,
-
-      tempo:
-        90 +
-        energy * 60
-
-    };
-
-  }
-  catch(error){
-
-    console.error(
-      error
-    );
-
-
-    return {
-
-      energy:
-        .5,
-
-      tempo:
-        100
-
-    };
-
-  }
-
-}
-
-
-/* =========================
-   TEXT
-========================= */
-
-analyzeButton.addEventListener(
-  "click",
-  function(){
-
-    const profile =
-      analyzeContent({
-
-        text:
-          textInput.value,
-
-        contentType:
-          "text"
-
-      });
-
-
-    applyContentVisualProfile(
-      profile
-    );
-
-  }
-);
-
-
-/* =========================
-   IMAGE
-========================= */
-
-imageInput.addEventListener(
-  "change",
-  async function(){
-
-    const file =
-      imageInput.files[0];
-
-
-    if(!file){
-
-      return;
-
-    }
-
-
-    status.textContent =
-      "Analyzing image...";
-
-
-    const colors =
-      await analyzeImage(
-        file
-      );
-
-
-    const profile =
-      analyzeContent({
-
-        text:
-          textInput.value,
-
-        contentType:
-          "image",
-
-        dominantColors:
-          colors
-
-      });
-
-
-    applyContentVisualProfile(
-      profile
-    );
-
-  }
-);
-
-
-/* =========================
-   VIDEO
-========================= */
-
-videoInput.addEventListener(
-  "change",
-  async function(){
-
-    const file =
-      videoInput.files[0];
-
-
-    if(!file){
-
-      return;
-
-    }
-
-
-    status.textContent =
-      "Analyzing video...";
-
-
-    const result =
-      await analyzeVideo(
-        file
-      );
+    const motionLevel =
+      duration > 0
+      ?
+      clamp(
+        .22 +
+        (
+          sampleCount /
+          5
+        ) *
+        .65,
+        0,
+        1
+      )
+      :
+      .35;
 
 
     const profile =
@@ -2865,10 +4918,14 @@ videoInput.addEventListener(
           "video",
 
         dominantColors:
-          result.colors,
+          colors,
 
-        motionLevel:
-          result.motion
+        motionLevel,
+
+        tags:[],
+
+        context:
+          "uploaded video"
 
       });
 
@@ -2878,19 +4935,35 @@ videoInput.addEventListener(
     );
 
   }
-);
+  catch(error){
+
+    console.error(
+      "Video analysis error:",
+      error
+    );
+
+    statusElement.textContent =
+      "Video analysis failed";
+
+  }
+  finally{
+
+    URL.revokeObjectURL(
+      url
+    );
+
+  }
+
+}
 
 
-/* =========================
-   AUDIO
-========================= */
-
-audioInput.addEventListener(
+videoInput.addEventListener(
   "change",
   async function(){
 
     const file =
-      audioInput.files[0];
+      videoInput.files &&
+      videoInput.files[0];
 
 
     if(!file){
@@ -2900,13 +4973,158 @@ audioInput.addEventListener(
     }
 
 
-    status.textContent =
-      "Analyzing audio...";
+    if(
+      !file.type.startsWith(
+        "video/"
+      )
+    ){
+
+      return;
+
+    }
 
 
-    const result =
-      await analyzeAudio(
-        file
+    statusElement.textContent =
+      "Analyzing video...";
+
+
+    await analyzeVideo(
+      file
+    );
+
+  }
+);
+
+
+/* =========================================================
+   AUDIO ANALYSIS
+========================================================= */
+
+async function analyzeAudio(
+  file
+){
+
+  let audioContext =
+    null;
+
+
+  try{
+
+    const arrayBuffer =
+      await file.arrayBuffer();
+
+
+    const AudioContextClass =
+      window.AudioContext ||
+      window.webkitAudioContext;
+
+
+    if(
+      !AudioContextClass
+    ){
+
+      throw new Error(
+        "Web Audio API unavailable"
+      );
+
+    }
+
+
+    audioContext =
+      new AudioContextClass();
+
+
+    const audioBuffer =
+      await audioContext.decodeAudioData(
+        arrayBuffer.slice(0)
+      );
+
+
+    const channel =
+      audioBuffer.numberOfChannels
+      ?
+      audioBuffer.getChannelData(0)
+      :
+      null;
+
+
+    if(!channel){
+
+      throw new Error(
+        "No audio channel"
+      );
+
+    }
+
+
+    const step =
+      Math.max(
+        1,
+        Math.floor(
+          channel.length /
+          40000
+        )
+      );
+
+
+    let sum =
+      0;
+
+    let count =
+      0;
+
+
+    for(
+      let i=0;
+      i<channel.length;
+      i+=step
+    ){
+
+      const sample =
+        channel[i];
+
+
+      sum +=
+        sample *
+        sample;
+
+      count++;
+
+    }
+
+
+    const rms =
+      count
+      ?
+      Math.sqrt(
+        sum / count
+      )
+      :
+      0;
+
+
+    const energy =
+      clamp(
+        rms * 4.2,
+        0,
+        1
+      );
+
+
+    /*
+      Lightweight tempo estimate.
+      This intentionally remains
+      a rough estimate, not a full
+      beat-tracking system.
+    */
+
+    const roughTempo =
+      clamp(
+        90 +
+        energy *
+        60,
+        60,
+        180
       );
 
 
@@ -2920,10 +5138,132 @@ audioInput.addEventListener(
           "audio",
 
         audioEnergy:
-          result.energy,
+          energy,
 
         audioTempo:
-          result.tempo
+          roughTempo,
+
+        tags:[],
+
+        context:
+          "uploaded audio"
+
+      });
+
+
+    applyContentVisualProfile(
+      profile
+    );
+
+  }
+  catch(error){
+
+    console.error(
+      "Audio analysis error:",
+      error
+    );
+
+    statusElement.textContent =
+      "Audio analysis failed";
+
+  }
+  finally{
+
+    if(
+      audioContext
+    ){
+
+      try{
+
+        await audioContext.close();
+
+      }
+      catch(error){}
+
+    }
+
+  }
+
+}
+
+
+audioInput.addEventListener(
+  "change",
+  async function(){
+
+    const file =
+      audioInput.files &&
+      audioInput.files[0];
+
+
+    if(!file){
+
+      return;
+
+    }
+
+
+    if(
+      !file.type.startsWith(
+        "audio/"
+      )
+    ){
+
+      return;
+
+    }
+
+
+    statusElement.textContent =
+      "Analyzing audio...";
+
+
+    await analyzeAudio(
+      file
+    );
+
+  }
+);
+
+
+/* =========================================================
+   TEXT ANALYSIS
+========================================================= */
+
+analyzeButton.addEventListener(
+  "click",
+  function(){
+
+    const text =
+      textInput.value.trim();
+
+
+    if(!text){
+
+      createVariation(
+        profiles[currentMode].intensity
+      );
+
+      statusElement.textContent =
+        "Fresh variation";
+
+      return;
+
+    }
+
+
+    const profile =
+      analyzeContent({
+
+        text,
+
+        contentType:
+          "text",
+
+        tags:[],
+
+        context:
+          "user content"
 
       });
 
@@ -2936,9 +5276,9 @@ audioInput.addEventListener(
 );
 
 
-/* =========================
+/* =========================================================
    WORLD BUTTONS
-========================= */
+========================================================= */
 
 document
   .querySelectorAll(
@@ -2962,9 +5302,9 @@ document
   );
 
 
-/* =========================
-   MOUSE
-========================= */
+/* =========================================================
+   POINTER INTERACTION
+========================================================= */
 
 window.addEventListener(
   "pointermove",
@@ -2975,7 +5315,7 @@ window.addEventListener(
         event.clientX /
         window.innerWidth -
         .5
-      );
+      ) * 2;
 
 
     targetMouseY =
@@ -2983,19 +5323,113 @@ window.addEventListener(
         event.clientY /
         window.innerHeight -
         .5
-      );
+      ) * 2;
 
+  },
+  {
+    passive:true
   }
 );
 
 
-/* =========================
-   ANIMATION
-========================= */
+window.addEventListener(
+  "pointerdown",
+  function(){
+
+    pointerDown =
+      true;
+
+  },
+  {
+    passive:true
+  }
+);
+
+
+window.addEventListener(
+  "pointerup",
+  function(){
+
+    if(pointerDown){
+
+      createVariation(
+        profiles[currentMode].intensity
+      );
+
+      statusElement.textContent =
+        "Fresh variation";
+
+    }
+
+    pointerDown =
+      false;
+
+  },
+  {
+    passive:true
+  }
+);
+
+
+/* =========================================================
+   TOUCH SUPPORT
+========================================================= */
+
+window.addEventListener(
+  "touchmove",
+  function(event){
+
+    if(
+      !event.touches ||
+      !event.touches[0]
+    ){
+
+      return;
+
+    }
+
+
+    const touch =
+      event.touches[0];
+
+
+    targetMouseX =
+      (
+        touch.clientX /
+        window.innerWidth -
+        .5
+      ) * 2;
+
+
+    targetMouseY =
+      (
+        touch.clientY /
+        window.innerHeight -
+        .5
+      ) * 2;
+
+  },
+  {
+    passive:true
+  }
+);
+
+
+/* =========================================================
+   ANIMATION CLOCK
+========================================================= */
 
 const clock =
   new THREE.Clock();
 
+
+let elapsed =
+  0;
+
+
+/* =========================================================
+   ANIMATION
+========================================================= */
 
 function animate(){
 
@@ -3004,163 +5438,138 @@ function animate(){
   );
 
 
-  const elapsed =
-    clock.getElapsedTime();
+  const delta =
+    Math.min(
+      clock.getDelta(),
+      .05
+    );
 
+
+  elapsed +=
+    delta;
+
+
+  /*
+    Smooth content reaction.
+  */
+
+  audioReactive +=
+    (
+      targetReaction -
+      audioReactive
+    ) * .055;
+
+
+  contentMotion +=
+    (
+      targetContentMotion -
+      contentMotion
+    ) * .045;
+
+
+  /*
+    Smooth mouse movement.
+  */
 
   mouseX +=
     (
       targetMouseX -
       mouseX
-    ) * .04;
+    ) * .035;
 
 
   mouseY +=
     (
       targetMouseY -
       mouseY
-    ) * .04;
+    ) * .035;
 
 
-  const intensity =
-    currentProfile.intensity;
+  /*
+    Automatic ringtone-like variation.
+    The world changes internally
+    without changing its semantic mode.
+  */
+
+  if(
+    performance.now() >=
+    nextVariationAt
+  ){
+
+    createVariation(
+      profiles[currentMode].intensity
+    );
+
+    statusElement.textContent =
+      "New Living Variation";
+
+    setTimeout(
+      function(){
+
+        statusElement.textContent =
+          "Living · " +
+          profiles[currentMode].name;
+
+      },
+      900
+    );
+
+  }
 
 
-core.rotation.x =
-  elapsed *
-  .18 *
-  variation.animationSpeed;
+  /*
+    Camera.
+  */
+
+  camera.position.z +=
+    (
+      targetCameraDepth -
+      camera.position.z
+    ) * .018;
 
 
-core.rotation.y =
-  elapsed *
-  .28 *
-  variation.animationSpeed;
+  camera.fov +=
+    (
+      targetCameraFov -
+      camera.fov
+    ) * .018;
 
 
-core.rotation.z =
-  Math.sin(
-    elapsed *
-    .35 *
-    variation.animationSpeed +
-    variation.seed
-  ) *
-  .12;
+  camera.updateProjectionMatrix();
 
 
-  const scale =
-    1 +
-    Math.sin(
-      elapsed * 1.8
-    ) *
-    .08 *
-    intensity +
-    audioReactive *
-    .18;
-
-
-  core.scale.set(
-    scale,
-    scale,
-    scale
-  );
-
-
-  rings.forEach(
-    function(ring,index){
-
-      ring.rotation.x +=
-        .0015 *
-        (
-          index + 1
-        ) *
-        intensity;
-
-
-      ring.rotation.y +=
-        .002 *
-        (
-          index + 1
-        ) *
-        intensity;
-
-
-      ring.scale.setScalar(
-        1 +
-        Math.sin(
-          elapsed *
-          .8 +
-          index
-        ) *
-        .05 *
-        intensity
-      );
-
-    }
-  );
-
-
-particles.rotation.y =
-  elapsed *
-  .008 *
-  intensity *
-  variation.animationSpeed;
-
-particles.rotation.z =
-  Math.sin(
-    elapsed *
-    .18 *
-    variation.animationSpeed +
-    variation.seed
-  ) *
-  .08;
-
-
-  particles.rotation.x =
-    mouseY *
-    .15;
-
-
-  stars.rotation.y =
-    elapsed *
-    .002;
-
-
-  const cinematicDriftX =
-  Math.sin(
-    elapsed *
-    .18 *
-    variation.animationSpeed +
-    variation.seed
-  ) *
-  variation.cameraDrift;
-
-const cinematicDriftY =
-  Math.cos(
-    elapsed *
-    .15 *
-    variation.animationSpeed +
-    variation.seed
-  ) *
-  variation.cameraDrift;
-
-
-camera.position.x +=
-  (
+  camera.position.x =
     mouseX *
-    .7 +
-    cinematicDriftX -
-    camera.position.x
-  ) * .025;
+    (
+      .72 +
+      variation.cameraDrift
+    ) +
+    Math.sin(
+      elapsed *
+      .18 *
+      variation.animationSpeed
+      +
+      variation.phase
+    ) *
+    variation.cameraOrbitX;
 
 
-camera.position.y +=
-  (
+  camera.position.y =
     -mouseY *
-    .5 +
-    cinematicDriftY -
-    camera.position.y
-  ) * .025;
+    (
+      .50 +
+      variation.cameraDrift *
+      .55
+    ) +
+    Math.cos(
+      elapsed *
+      .14 *
+      variation.animationSpeed
+      +
+      variation.phase
+    ) *
+    variation.cameraOrbitY;
+
 
   camera.lookAt(
     0,
@@ -3169,57 +5578,714 @@ camera.position.y +=
   );
 
 
-  /* COLOR TRANSITION */
+  /*
+    Main world group.
+  */
 
-  const primary =
-    hexToRGB(
-      targetColors[0] ||
-      "#2563eb"
+  const baseSpeed =
+    currentProfile.speed ||
+    profiles[currentMode].speed ||
+    1;
+
+
+  const speed =
+    baseSpeed *
+    variation.animationSpeed;
+
+
+  const pulse =
+    1 +
+    Math.sin(
+      elapsed *
+      (
+        1.2 +
+        speed
+      ) +
+      variation.phase
+    ) *
+    (
+      .025 +
+      variation.pulseStrength *
+      .045
+    )
+    +
+    audioReactive *
+    .08;
+
+
+  core.rotation.x +=
+    delta *
+    .22 *
+    speed;
+
+
+  core.rotation.y +=
+    delta *
+    .34 *
+    speed;
+
+
+  core.rotation.z +=
+    delta *
+    .10 *
+    speed;
+
+
+  core.scale.setScalar(
+    pulse
+  );
+
+
+  innerCore.rotation.x -=
+    delta *
+    .17 *
+    speed;
+
+
+  innerCore.rotation.y +=
+    delta *
+    .28 *
+    speed;
+
+
+  innerCore.scale.setScalar(
+    1 +
+    Math.sin(
+      elapsed *
+      1.5 *
+      speed
+    ) *
+    .035
+    +
+    audioReactive *
+    .06
+  );
+
+
+  coreHalo.rotation.x +=
+    delta *
+    .09 *
+    speed;
+
+
+  coreHalo.rotation.y -=
+    delta *
+    .13 *
+    speed;
+
+
+  coreHalo.scale.setScalar(
+    1 +
+    audioReactive *
+    .12
+  );
+
+
+  /*
+    Cinematic glow.
+  */
+
+  if(glowSprite){
+
+    const glowPulse =
+      1 +
+      Math.sin(
+        elapsed *
+        1.1 *
+        speed +
+        variation.phase
+      ) *
+      .045 +
+      audioReactive *
+      .22;
+
+
+    glowSprite.scale.set(
+      8 *
+      glowPulse *
+      variation.environmentScale,
+
+      8 *
+      glowPulse *
+      variation.environmentScale,
+
+      1
     );
 
 
-  const color =
-    new THREE.Color(
-      primary.r / 255,
-      primary.g / 255,
-      primary.b / 255
-    );
+    glowSprite.material.opacity +=
+      (
+        (
+          variation.glowStrength +
+          audioReactive *
+          .12
+        ) -
+        glowSprite.material.opacity
+      ) * .035;
+
+  }
 
 
-  core.material.color.lerp(
-    color,
-    .025
-  );
-
-
-  core.material.emissive.lerp(
-    color,
-    .025
-  );
-
-
-  light1.color.lerp(
-    color,
-    .02
-  );
-
+  /*
+    Rings.
+  */
 
   rings.forEach(
-    function(ring){
+    function(
+      ring,
+      index
+    ){
 
-      ring.material.color.lerp(
-        color,
-        .02
-      );
+      const ringSpeed =
+        ring.userData.speed ||
+        1;
+
+
+      ring.rotation.x +=
+        delta *
+        .08 *
+        speed *
+        ringSpeed;
+
+
+      ring.rotation.y +=
+        delta *
+        .12 *
+        speed *
+        (
+          index % 2
+          ?
+          -1
+          :
+          1
+        );
+
+
+      ring.rotation.z +=
+        delta *
+        .025 *
+        speed;
+
+
+      const phase =
+        ring.userData.phase ||
+        0;
+
+
+      const targetX =
+        ring.userData.targetX ||
+        0;
+
+
+      const targetY =
+        ring.userData.targetY ||
+        0;
+
+
+      const targetZ =
+        ring.userData.targetZ ||
+        0;
+
+
+      ring.position.x +=
+        (
+          targetX -
+          ring.position.x
+        ) * .025;
+
+
+      ring.position.y +=
+        (
+          targetY +
+          Math.sin(
+            elapsed *
+            .35 *
+            speed +
+            phase
+          ) *
+          .05 -
+          ring.position.y
+        ) * .025;
+
+
+      ring.position.z +=
+        (
+          targetZ -
+          ring.position.z
+        ) * .025;
+
+
+      const wave =
+        1 +
+        Math.sin(
+          elapsed *
+          (
+            .55 +
+            index *
+            .08
+          ) *
+          speed +
+          phase
+        ) *
+        .035;
+
+
+      const targetScale =
+        (
+          ring.userData.scale ||
+          variation.ringSpread
+        ) *
+        wave;
+
+
+      ring.scale.x +=
+        (
+          targetScale -
+          ring.scale.x
+        ) * .025;
+
+
+      ring.scale.y +=
+        (
+          targetScale -
+          ring.scale.y
+        ) * .025;
+
+
+      ring.scale.z +=
+        (
+          targetScale -
+          ring.scale.z
+        ) * .025;
 
     }
   );
 
 
-  particles.material.color.lerp(
-    color,
-    .02
+  /*
+    Particles.
+  */
+
+  const positionAttribute =
+    particleGeometry.getAttribute(
+      "position"
+    );
+
+
+  const positions =
+    positionAttribute.array;
+
+
+  for(
+    let i=0;
+    i<particleCount;
+    i++
+  ){
+
+    const index =
+      i * 3;
+
+
+    const baseX =
+      particleBase[index];
+
+    const baseY =
+      particleBase[index+1];
+
+    const baseZ =
+      particleBase[index+2];
+
+
+    const drift =
+      variation.particleDrift *
+      speed;
+
+
+    positions[index] =
+      baseX +
+      Math.sin(
+        elapsed *
+        .22 *
+        drift +
+        i * .017 +
+        variation.phase
+      ) *
+      .08 *
+      (
+        1 +
+        contentMotion
+      );
+
+
+    positions[index+1] =
+      baseY +
+      Math.cos(
+        elapsed *
+        .18 *
+        drift +
+        i * .011
+      ) *
+      .09 *
+      variation.particleDrift;
+
+
+    positions[index+2] =
+      baseZ +
+      Math.sin(
+        elapsed *
+        .16 *
+        drift +
+        i * .009
+      ) *
+      .07;
+
+  }
+
+
+  positionAttribute.needsUpdate =
+    true;
+
+
+  particleMaterial.size +=
+    (
+      (
+        .032 *
+        variation.particleScale +
+        audioReactive *
+        .018
+      ) -
+      particleMaterial.size
+    ) * .04;
+
+
+  particleMaterial.opacity +=
+    (
+      (
+        .48 +
+        variation.pulseStrength *
+        .15 +
+        audioReactive *
+        .12
+      ) -
+      particleMaterial.opacity
+    ) * .025;
+
+
+  /*
+    Dust.
+  */
+
+  dust.rotation.y +=
+    delta *
+    .018 *
+    speed;
+
+
+  dust.rotation.x =
+    Math.sin(
+      elapsed *
+      .08
+    ) *
+    .12;
+
+
+  /*
+    Stars.
+  */
+
+  stars.rotation.y +=
+    delta *
+    .004 *
+    speed;
+
+
+  stars.rotation.x +=
+    delta *
+    .0015 *
+    speed;
+
+
+  starMaterial.opacity =
+    .42 +
+    Math.sin(
+      elapsed *
+      (
+        .35 +
+        variation.starTwinkle
+      )
+    ) *
+    .08;
+
+
+  /*
+    Lighting.
+  */
+
+  const energyBoost =
+    1 +
+    audioReactive *
+    .85 +
+    contentMotion *
+    .25;
+
+
+  lightA.intensity +=
+    (
+      4.0 *
+      variation.lightEnergy *
+      energyBoost -
+      lightA.intensity
+    ) * .035;
+
+
+  lightB.intensity +=
+    (
+      3.0 *
+      variation.lightEnergy *
+      (
+        1 +
+        audioReactive *
+        .55
+      ) -
+      lightB.intensity
+    ) * .035;
+
+
+  lightC.intensity +=
+    (
+      2.0 *
+      variation.lightEnergy *
+      (
+        1 +
+        contentMotion *
+        .45
+      ) -
+      lightC.intensity
+    ) * .035;
+
+
+  /*
+    Ambient light remains subtle.
+  */
+
+  ambientLight.intensity +=
+    (
+      (
+        .48 +
+        variation.lightEnergy *
+        .14
+      ) -
+      ambientLight.intensity
+    ) * .025;
+
+
+  /*
+    Fog density changes with
+    the current variation.
+  */
+
+  const modeFog =
+    profiles[
+      currentMode
+    ].fog;
+
+
+  const desiredFog =
+    variation.fogDensity *
+    (
+      currentMode ===
+      "space"
+      ?
+      .72
+      :
+      1
+    );
+
+
+  scene.fog.color.lerp(
+    hexToThree(
+      modeFog
+    ),
+    .025
   );
+
+
+  scene.fog.density +=
+    (
+      desiredFog -
+      scene.fog.density
+    ) * .025;
+
+
+  /*
+    World scale changes subtly.
+  */
+
+  const worldScale =
+    variation.environmentScale;
+
+
+  worldGroup.scale.x +=
+    (
+      worldScale -
+      worldGroup.scale.x
+    ) * .018;
+
+
+  worldGroup.scale.y +=
+    (
+      worldScale -
+      worldGroup.scale.y
+    ) * .018;
+
+
+  worldGroup.scale.z +=
+    (
+      worldScale -
+      worldGroup.scale.z
+    ) * .018;
+
+
+  /*
+    Color transitions.
+  */
+
+  applyVariationColors();
+
+
+  /*
+    Mode-specific environmental behavior.
+  */
+
+  if(
+    currentMode ===
+    "ocean"
+  ){
+
+    rings.forEach(
+      function(
+        ring,
+        index
+      ){
+
+        ring.position.y +=
+          Math.sin(
+            elapsed *
+            .7 *
+            speed +
+            index
+          ) *
+          .0009;
+
+      }
+    );
+
+  }
+
+
+  if(
+    currentMode ===
+    "nature"
+  ){
+
+    particles.rotation.z =
+      Math.sin(
+        elapsed *
+        .10
+      ) *
+      .08;
+
+  }
+
+
+  if(
+    currentMode ===
+    "music"
+  ){
+
+    worldGroup.rotation.z =
+      Math.sin(
+        elapsed *
+        .32 *
+        speed
+      ) *
+      .018 *
+      (
+        1 +
+        audioReactive
+      );
+
+  }
+
+
+  if(
+    currentMode ===
+    "gaming"
+  ){
+
+    core.position.x =
+      Math.sin(
+        elapsed *
+        1.5 *
+        speed
+      ) *
+      .035 *
+      (
+        1 +
+        contentMotion
+      );
+
+  }
+  else{
+
+    core.position.x +=
+      (
+        0 -
+        core.position.x
+      ) * .03;
+
+  }
+
+
+  if(
+    currentMode ===
+    "automotive"
+  ){
+
+    camera.position.x +=
+      Math.sin(
+        elapsed *
+        .9 *
+        speed
+      ) *
+      .003;
+
+  }
+
+
+  if(
+    currentMode ===
+    "product"
+  ){
+
+    core.rotation.z +=
+      delta *
+      .035;
+
+  }
+
+
+  if(
+    currentMode ===
+    "space"
+  ){
+
+    stars.rotation.y +=
+      delta *
+      .002 *
+      speed;
+
+  }
 
 
   renderer.render(
@@ -3230,37 +6296,81 @@ camera.position.y +=
 }
 
 
-animate();
-
-
-/* =========================
+/* =========================================================
    RESIZE
-========================= */
+========================================================= */
+
+function resize(){
+
+  const width =
+    window.innerWidth;
+
+  const height =
+    window.innerHeight;
+
+
+  camera.aspect =
+    width /
+    height;
+
+
+  camera.updateProjectionMatrix();
+
+
+  renderer.setSize(
+    width,
+    height
+  );
+
+
+  renderer.setPixelRatio(
+    Math.min(
+      window.devicePixelRatio || 1,
+      2
+    )
+  );
+
+}
+
 
 window.addEventListener(
   "resize",
+  resize
+);
+
+
+/* =========================================================
+   VISIBILITY PERFORMANCE
+========================================================= */
+
+let pageVisible =
+  true;
+
+
+document.addEventListener(
+  "visibilitychange",
   function(){
 
-    camera.aspect =
-      window.innerWidth /
-      window.innerHeight;
+    pageVisible =
+      !document.hidden;
 
+    if(
+      pageVisible
+    ){
 
-    camera.updateProjectionMatrix();
+      nextVariationAt =
+        performance.now() +
+        5000;
 
-
-    renderer.setSize(
-      window.innerWidth,
-      window.innerHeight
-    );
+    }
 
   }
 );
 
 
-/* =========================
+/* =========================================================
    PUBLIC API
-========================= */
+========================================================= */
 
 window.ZemivoLivingWorld =
   Object.freeze({
@@ -3268,45 +6378,110 @@ window.ZemivoLivingWorld =
     version:
       VERSION,
 
+
     changeWorld:
+
+
       changeWorld,
 
+
     analyzeContent:
+
+
       analyzeContent,
 
+
     applyContentVisualProfile:
+
+
       applyContentVisualProfile,
 
+
     getCurrentProfile:
+
       function(){
 
         return {
-          ...currentProfile
+
+          ...currentProfile,
+
+          mode:
+            currentMode,
+
+          variation:{
+            ...variation
+          }
+
         };
 
       },
 
+
     getSupportedCapabilities:
+
       function(){
 
         return {
 
-          text:
-            true,
+          version:
+            VERSION,
 
-          image:
-            true,
-
-          video:
-            true,
-
-          audio:
-            true,
-
-          worlds:
+          modes:
             [
-              ...MODES
-            ]
+              ...allowedModes
+            ],
+
+          moods:
+            [
+              ...allowedMoods
+            ],
+
+          motions:
+            [
+              ...allowedMotions
+            ],
+
+          contentTypes:[
+            "text",
+            "image",
+            "video",
+            "audio",
+            "mixed"
+          ],
+
+          multilingualScripts:[
+            "Latin",
+            "Bengali",
+            "Arabic",
+            "Devanagari",
+            "Cyrillic",
+            "Greek",
+            "Hebrew",
+            "Thai",
+            "Georgian",
+            "Armenian",
+            "Ethiopic",
+            "Hangul",
+            "CJK",
+            "Hiragana",
+            "Katakana"
+          ],
+
+          variationEngine:true,
+
+          automaticVariation:true,
+
+          cinematicLighting:true,
+
+          cameraDepthVariation:true,
+
+          particleVariation:true,
+
+          ringVariation:true,
+
+          colorVariation:true,
+
+          contentReaction:true
 
         };
 
@@ -3315,25 +6490,46 @@ window.ZemivoLivingWorld =
   });
 
 
-/* =========================
-   START
-========================= */
+/* =========================================================
+   STARTUP
+========================================================= */
+
+createVariation(
+  profiles.personal.intensity
+);
+
 
 changeWorld(
   "personal"
 );
 
 
+animate();
+
+
 setTimeout(
   function(){
 
-    loading.classList.add(
+    loader.classList.add(
       "hidden"
     );
 
   },
-  700
+  800
 );
+
+
+/* =========================================================
+   INITIAL STATUS
+========================================================= */
+
+statusElement.textContent =
+  "Living · Personal";
+
+
+/* =========================================================
+   END
+========================================================= */
 
 </script>
 
