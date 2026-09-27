@@ -1260,12 +1260,85 @@ function createVariation(
 
 
   light1.intensity =
-    30 *
-    variation.lightEnergy;
+  30 *
+  variation.lightEnergy;
 
-  light2.intensity =
-    20 *
-    variation.lightEnergy;
+light2.intensity =
+  20 *
+  variation.lightEnergy;
+
+
+/* LIVING ENVIRONMENT VARIATION */
+
+light1.position.x =
+  3 +
+  Math.sin(
+    variation.seed
+  ) *
+  2;
+
+light1.position.y =
+  2 +
+  Math.cos(
+    variation.seed
+  ) *
+  2;
+
+light1.position.z =
+  4 +
+  Math.sin(
+    variation.seed * .7
+  ) *
+  2;
+
+
+light2.position.x =
+  -3 +
+  Math.cos(
+    variation.seed
+  ) *
+  2;
+
+light2.position.y =
+  -2 +
+  Math.sin(
+    variation.seed * .8
+  ) *
+  2;
+
+light2.position.z =
+  2 +
+  Math.cos(
+    variation.seed * .6
+  ) *
+  2;
+
+
+particles.material.size =
+  .025 *
+  variation.particleScale;
+
+
+particles.material.opacity =
+  .52 +
+  (
+    variation.particleScale -
+    .82
+  ) *
+  .35;
+
+
+stars.material.size =
+  .014 +
+  Math.random() *
+  .012;
+
+
+stars.material.opacity =
+  .35 +
+  Math.random() *
+  .35;
+  
 
 }
 
