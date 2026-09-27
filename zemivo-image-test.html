@@ -1,0 +1,946 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1.0"
+>
+
+<title>Zemivo Image → Living 3D</title>
+
+<style>
+
+*{
+  box-sizing:border-box;
+}
+
+body{
+  margin:0;
+  font-family:Arial,Helvetica,sans-serif;
+  background:#05070c;
+  color:#fff;
+}
+
+.page{
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+}
+
+/* HEADER */
+
+.header{
+  height:64px;
+  padding:0 18px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  background:rgba(10,15,25,.92);
+  border-bottom:1px solid rgba(255,255,255,.12);
+  position:relative;
+  z-index:10;
+}
+
+.logo{
+  font-size:24px;
+  font-weight:800;
+  color:#60a5fa;
+}
+
+.badge{
+  font-size:12px;
+  padding:7px 11px;
+  border-radius:20px;
+  background:rgba(255,255,255,.08);
+  border:1px solid rgba(255,255,255,.12);
+  color:#cbd5e1;
+}
+
+/* MAIN */
+
+.main{
+  flex:1;
+  display:grid;
+  grid-template-columns:340px 1fr;
+  min-height:0;
+}
+
+/* CONTROL PANEL */
+
+.panel{
+  padding:18px;
+  background:rgba(10,15,25,.96);
+  border-right:1px solid rgba(255,255,255,.1);
+  overflow-y:auto;
+}
+
+.title{
+  font-size:22px;
+  font-weight:800;
+  margin-bottom:7px;
+}
+
+.subtitle{
+  color:#94a3b8;
+  font-size:13px;
+  line-height:1.5;
+  margin-bottom:18px;
+}
+
+.upload-box{
+  border:1px dashed rgba(255,255,255,.25);
+  border-radius:16px;
+  padding:18px;
+  text-align:center;
+  background:rgba(255,255,255,.04);
+}
+
+.upload-box input{
+  width:100%;
+  color:#cbd5e1;
+  font-size:13px;
+}
+
+.preview{
+  width:100%;
+  margin-top:15px;
+  border-radius:14px;
+  display:none;
+  max-height:230px;
+  object-fit:cover;
+  border:1px solid rgba(255,255,255,.12);
+}
+
+.description{
+  margin-top:15px;
+}
+
+.description label{
+  display:block;
+  font-size:13px;
+  color:#cbd5e1;
+  margin-bottom:7px;
+}
+
+.description textarea{
+  width:100%;
+  min-height:90px;
+  resize:vertical;
+  border:1px solid rgba(255,255,255,.14);
+  border-radius:12px;
+  background:#0f172a;
+  color:#fff;
+  padding:11px;
+  outline:none;
+}
+
+.description textarea:focus{
+  border-color:#60a5fa;
+}
+
+.react-button{
+  width:100%;
+  margin-top:15px;
+  padding:13px;
+  border:0;
+  border-radius:12px;
+  background:#2563eb;
+  color:#fff;
+  font-size:15px;
+  font-weight:800;
+  cursor:pointer;
+}
+
+.react-button:hover{
+  background:#1d4ed8;
+}
+
+.react-button:disabled{
+  opacity:.55;
+  cursor:not-allowed;
+}
+
+/* RESULTS */
+
+.results{
+  margin-top:18px;
+  display:grid;
+  gap:9px;
+}
+
+.result{
+  padding:12px;
+  border-radius:12px;
+  background:rgba(255,255,255,.05);
+  border:1px solid rgba(255,255,255,.08);
+}
+
+.result-label{
+  font-size:11px;
+  color:#94a3b8;
+  margin-bottom:4px;
+}
+
+.result-value{
+  font-size:15px;
+  font-weight:800;
+  text-transform:capitalize;
+}
+
+/* COLOR */
+
+.colors{
+  display:flex;
+  gap:7px;
+  margin-top:8px;
+}
+
+.color{
+  width:28px;
+  height:28px;
+  border-radius:50%;
+  border:1px solid rgba(255,255,255,.3);
+}
+
+/* WORLD */
+
+.world{
+  position:relative;
+  min-width:0;
+  min-height:0;
+  background:#000;
+}
+
+.world iframe{
+  width:100%;
+  height:100%;
+  border:0;
+  display:block;
+}
+
+/* STATUS */
+
+.status{
+  position:absolute;
+  left:18px;
+  bottom:18px;
+  z-index:5;
+  padding:9px 13px;
+  border-radius:20px;
+  background:rgba(0,0,0,.5);
+  border:1px solid rgba(255,255,255,.12);
+  backdrop-filter:blur(10px);
+  font-size:12px;
+  color:#cbd5e1;
+}
+
+/* MOBILE */
+
+@media(max-width:800px){
+
+  .main{
+    grid-template-columns:1fr;
+  }
+
+  .panel{
+    border-right:0;
+    border-bottom:1px solid rgba(255,255,255,.1);
+  }
+
+  .world{
+    height:65vh;
+    min-height:450px;
+  }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+<div class="page">
+
+  <header class="header">
+
+    <div class="logo">
+      Zemivo
+    </div>
+
+    <div class="badge">
+      Image → Living 3D
+    </div>
+
+  </header>
+
+
+  <main class="main">
+
+
+    <!-- CONTROL PANEL -->
+
+    <section class="panel">
+
+      <div class="title">
+        Image → Living 3D
+      </div>
+
+      <div class="subtitle">
+        Upload an image and Zemivo will read its
+        visual colors and make the 3D environment
+        react to the content.
+      </div>
+
+
+      <div class="upload-box">
+
+        <input
+          id="imageInput"
+          type="file"
+          accept="image/*"
+        >
+
+        <img
+          id="preview"
+          class="preview"
+          alt="Image preview"
+        >
+
+      </div>
+
+
+      <div class="description">
+
+        <label for="description">
+          Optional description
+        </label>
+
+        <textarea
+          id="description"
+          placeholder="Example: ocean sunset, green nature, futuristic gaming, luxury car..."
+        ></textarea>
+
+      </div>
+
+
+      <button
+        id="reactButton"
+        class="react-button"
+        type="button"
+        disabled
+      >
+        ✨ Make Zemivo React
+      </button>
+
+
+      <div class="results">
+
+        <div class="result">
+
+          <div class="result-label">
+            WORLD
+          </div>
+
+          <div
+            id="worldResult"
+            class="result-value"
+          >
+            Waiting...
+          </div>
+
+        </div>
+
+
+        <div class="result">
+
+          <div class="result-label">
+            MOOD
+          </div>
+
+          <div
+            id="moodResult"
+            class="result-value"
+          >
+            Waiting...
+          </div>
+
+        </div>
+
+
+        <div class="result">
+
+          <div class="result-label">
+            MOTION
+          </div>
+
+          <div
+            id="motionResult"
+            class="result-value"
+          >
+            Waiting...
+          </div>
+
+        </div>
+
+
+        <div class="result">
+
+          <div class="result-label">
+            IMAGE COLORS
+          </div>
+
+          <div
+            id="colorsResult"
+            class="colors"
+          >
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- 3D WORLD -->
+
+    <section class="world">
+
+      <iframe
+        id="worldFrame"
+        src="zemivo-living-world.html"
+        title="Zemivo Living 3D World"
+      ></iframe>
+
+
+      <div
+        id="status"
+        class="status"
+      >
+        Waiting for image...
+      </div>
+
+    </section>
+
+
+  </main>
+
+</div>
+
+
+<script>
+
+const imageInput =
+  document.getElementById(
+    "imageInput"
+  );
+
+const preview =
+  document.getElementById(
+    "preview"
+  );
+
+const reactButton =
+  document.getElementById(
+    "reactButton"
+  );
+
+const description =
+  document.getElementById(
+    "description"
+  );
+
+const worldResult =
+  document.getElementById(
+    "worldResult"
+  );
+
+const moodResult =
+  document.getElementById(
+    "moodResult"
+  );
+
+const motionResult =
+  document.getElementById(
+    "motionResult"
+  );
+
+const colorsResult =
+  document.getElementById(
+    "colorsResult"
+  );
+
+const status =
+  document.getElementById(
+    "status"
+  );
+
+const worldFrame =
+  document.getElementById(
+    "worldFrame"
+  );
+
+
+let selectedImage = null;
+
+let imageColors = [];
+
+
+/* IMAGE LOAD */
+
+imageInput.addEventListener(
+  "change",
+  function(){
+
+    const file =
+      imageInput.files[0];
+
+    if(!file){
+
+      selectedImage = null;
+
+      preview.style.display =
+        "none";
+
+      reactButton.disabled =
+        true;
+
+      status.textContent =
+        "Waiting for image...";
+
+      return;
+
+    }
+
+
+    if(
+      !file.type.startsWith(
+        "image/"
+      )
+    ){
+
+      alert(
+        "Please select an image file."
+      );
+
+      imageInput.value = "";
+
+      return;
+
+    }
+
+
+    selectedImage =
+      file;
+
+
+    const imageURL =
+      URL.createObjectURL(
+        file
+      );
+
+
+    preview.src =
+      imageURL;
+
+    preview.style.display =
+      "block";
+
+
+    reactButton.disabled =
+      false;
+
+
+    status.textContent =
+      "Image loaded. Ready to analyze.";
+
+
+    preview.onload =
+      function(){
+
+        imageColors =
+          extractDominantColors(
+            preview
+          );
+
+        renderColors(
+          imageColors
+        );
+
+      };
+
+  }
+);
+
+
+/* EXTRACT COLORS */
+
+function extractDominantColors(
+  image
+){
+
+  const canvas =
+    document.createElement(
+      "canvas"
+    );
+
+  const ctx =
+    canvas.getContext(
+      "2d",
+      {
+        willReadFrequently:true
+      }
+    );
+
+
+  const maxSize =
+    120;
+
+  const ratio =
+    Math.min(
+      maxSize / image.naturalWidth,
+      maxSize / image.naturalHeight,
+      1
+    );
+
+
+  canvas.width =
+    Math.max(
+      1,
+      Math.floor(
+        image.naturalWidth * ratio
+      )
+    );
+
+
+  canvas.height =
+    Math.max(
+      1,
+      Math.floor(
+        image.naturalHeight * ratio
+      )
+    );
+
+
+  ctx.drawImage(
+    image,
+    0,
+    0,
+    canvas.width,
+    canvas.height
+  );
+
+
+  const data =
+    ctx.getImageData(
+      0,
+      0,
+      canvas.width,
+      canvas.height
+    ).data;
+
+
+  const buckets = {};
+
+
+  for(
+    let i = 0;
+    i < data.length;
+    i += 16
+  ){
+
+    const r =
+      data[i];
+
+    const g =
+      data[i + 1];
+
+    const b =
+      data[i + 2];
+
+    const a =
+      data[i + 3];
+
+
+    if(a < 150){
+
+      continue;
+
+    }
+
+
+    const qr =
+      Math.round(r / 32) * 32;
+
+    const qg =
+      Math.round(g / 32) * 32;
+
+    const qb =
+      Math.round(b / 32) * 32;
+
+
+    const key =
+      qr +
+      "," +
+      qg +
+      "," +
+      qb;
+
+
+    if(
+      !buckets[key]
+    ){
+
+      buckets[key] = 0;
+
+    }
+
+
+    buckets[key]++;
+
+  }
+
+
+  return Object.keys(
+    buckets
+  )
+  .sort(
+    function(a,b){
+
+      return (
+        buckets[b] -
+        buckets[a]
+      );
+
+    }
+  )
+  .slice(0,5)
+  .map(
+    function(key){
+
+      const parts =
+        key.split(",")
+          .map(Number);
+
+      return {
+        r:
+          Math.min(
+            255,
+            parts[0]
+          ),
+
+        g:
+          Math.min(
+            255,
+            parts[1]
+          ),
+
+        b:
+          Math.min(
+            255,
+            parts[2]
+          )
+      };
+
+    }
+  );
+
+}
+
+
+/* RENDER COLORS */
+
+function renderColors(
+  colors
+){
+
+  colorsResult.innerHTML =
+    "";
+
+  colors.forEach(
+    function(color){
+
+      const item =
+        document.createElement(
+          "div"
+        );
+
+      item.className =
+        "color";
+
+
+      item.style.background =
+        "rgb(" +
+        color.r +
+        "," +
+        color.g +
+        "," +
+        color.b +
+        ")";
+
+
+      colorsResult.appendChild(
+        item
+      );
+
+    }
+  );
+
+}
+
+
+/* ANALYZE */
+
+function analyzeImage(){
+
+  if(!selectedImage){
+
+    return;
+
+  }
+
+
+  const text =
+    description.value.trim();
+
+
+  status.textContent =
+    "Analyzing image...";
+
+
+  reactButton.disabled =
+    true;
+
+
+  const waitForEngine =
+    setInterval(
+      function(){
+
+        try{
+
+          const engine =
+            worldFrame
+              .contentWindow
+              .ZemivoLivingWorld;
+
+
+          if(
+            !engine ||
+            typeof
+            engine.applyContentVisualProfile
+            !==
+            "function"
+          ){
+
+            return;
+
+          }
+
+
+          clearInterval(
+            waitForEngine
+          );
+
+
+          const profile =
+            engine.analyzeContent({
+
+              text:
+                text,
+
+              contentType:
+                "image",
+
+              dominantColors:
+                imageColors,
+
+              tags:
+                [],
+
+              context:
+                "uploaded image"
+
+            });
+
+
+          engine.applyContentVisualProfile(
+            profile
+          );
+
+
+          worldResult.textContent =
+            profile.mode ||
+            "personal";
+
+
+          moodResult.textContent =
+            profile.mood ||
+            "calm";
+
+
+          motionResult.textContent =
+            profile.motion ||
+            "soft";
+
+
+          renderColors(
+            imageColors
+          );
+
+
+          status.textContent =
+            "Zemivo is reacting to the image.";
+
+
+          reactButton.disabled =
+            false;
+
+        }
+        catch(error){
+
+          console.error(
+            error
+          );
+
+        }
+
+      },
+      100
+    );
+
+
+  setTimeout(
+    function(){
+
+      clearInterval(
+        waitForEngine
+      );
+
+      reactButton.disabled =
+        false;
+
+    },
+    5000
+  );
+
+}
+
+
+/* BUTTON */
+
+reactButton.addEventListener(
+  "click",
+  analyzeImage
+);
+
+</script>
+
+</body>
+
+</html>
