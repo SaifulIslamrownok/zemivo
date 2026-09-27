@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1.0"
+>
+
+<title>Zemivo Automatic Content Test</title>
+
+<style>
+
+*{
+  box-sizing:border-box;
+}
+
+body{
+
+  margin:0;
+
+  min-height:100vh;
+
+  font-family:
+    Arial,
+    Helvetica,
+    sans-serif;
+
+  background:
+    radial-gradient(
+      circle at top,
+      #172554,
+      #020617 65%
+    );
+
+  color:#fff;
+
+  display:flex;
+
+  align-items:center;
+
+  justify-content:center;
+
+  padding:20px;
+
+}
+
+.panel{
+
+  width:100%;
+
+  max-width:650px;
+
+  padding:25px;
+
+  border:1px solid
+    rgba(255,255,255,.15);
+
+  border-radius:24px;
+
+  background:
+    rgba(255,255,255,.08);
+
+  backdrop-filter:
+    blur(20px);
+
+  box-shadow:
+    0 25px 80px
+    rgba(0,0,0,.45);
+
+}
+
+h1{
+
+  margin:0 0 8px;
+
+  font-size:28px;
+
+}
+
+.subtitle{
+
+  color:#cbd5e1;
+
+  margin-bottom:20px;
+
+}
+
+textarea{
+
+  width:100%;
+
+  min-height:150px;
+
+  resize:vertical;
+
+  padding:16px;
+
+  border-radius:16px;
+
+  border:1px solid
+    rgba(255,255,255,.18);
+
+  background:
+    rgba(0,0,0,.25);
+
+  color:#fff;
+
+  outline:none;
+
+  font-size:16px;
+
+}
+
+textarea::placeholder{
+
+  color:#94a3b8;
+
+}
+
+button{
+
+  width:100%;
+
+  margin-top:14px;
+
+  padding:14px;
+
+  border:0;
+
+  border-radius:14px;
+
+  background:#2563eb;
+
+  color:#fff;
+
+  font-size:16px;
+
+  font-weight:bold;
+
+  cursor:pointer;
+
+}
+
+button:hover{
+
+  background:#1d4ed8;
+
+}
+
+.result{
+
+  margin-top:20px;
+
+  padding:18px;
+
+  border-radius:16px;
+
+  background:
+    rgba(0,0,0,.22);
+
+}
+
+.row{
+
+  display:flex;
+
+  justify-content:space-between;
+
+  gap:15px;
+
+  padding:8px 0;
+
+  border-bottom:1px solid
+    rgba(255,255,255,.08);
+
+}
+
+.row:last-child{
+
+  border-bottom:0;
+
+}
+
+.label{
+
+  color:#94a3b8;
+
+}
+
+.value{
+
+  font-weight:bold;
+
+  text-align:right;
+
+}
+
+.examples{
+
+  display:grid;
+
+  grid-template-columns:
+    repeat(2,1fr);
+
+  gap:8px;
+
+  margin-top:15px;
+
+}
+
+.example{
+
+  padding:10px;
+
+  border-radius:10px;
+
+  border:1px solid
+    rgba(255,255,255,.12);
+
+  background:
+    rgba(255,255,255,.06);
+
+  color:#e2e8f0;
+
+  cursor:pointer;
+
+}
+
+.example:hover{
+
+  background:
+    rgba(255,255,255,.12);
+
+}
+
+.back{
+
+  display:block;
+
+  text-align:center;
+
+  margin-top:18px;
+
+  color:#93c5fd;
+
+  text-decoration:none;
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<div class="panel">
+
+  <h1>
+    🌍 Zemivo Content Intelligence
+  </h1>
+
+  <div class="subtitle">
+    Automatic Content → Living 3D World
+  </div>
+
+
+  <textarea
+    id="contentInput"
+    placeholder="Write or paste any content here...
+
+Example:
+I am walking beside the beautiful ocean today."
+  ></textarea>
+
+
+  <button
+    id="analyzeButton"
+    type="button"
+  >
+    ✨ Analyze Content
+  </button>
+
+
+  <div class="examples">
+
+    <button
+      class="example"
+      type="button"
+      data-text="I am walking beside the beautiful ocean and watching the waves."
+    >
+      🌊 Ocean
+    </button>
+
+    <button
+      class="example"
+      type="button"
+      data-text="The green forest, mountains, river and flowers look beautiful."
+    >
+      🌳 Nature
+    </button>
+
+    <button
+      class="example"
+      type="button"
+      data-text="This music has an amazing beat and makes me want to dance."
+    >
+      🎵 Music
+    </button>
+
+    <button
+      class="example"
+      type="button"
+      data-text="This new game has an amazing battle, powerful character and futuristic technology."
+    >
+      🎮 Gaming
+    </button>
+
+    <button
+      class="example"
+      type="button"
+      data-text="This new sports car has incredible speed and a powerful engine."
+    >
+      🚗 Car
+    </button>
+
+    <button
+      class="example"
+      type="button"
+      data-text="This premium luxury watch is elegant and exclusive."
+    >
+      💎 Product
+    </button>
+
+    <button
+      class="example"
+      type="button"
+      data-text="The astronaut is travelling through the galaxy toward another planet."
+    >
+      🚀 Space
+    </button>
+
+    <button
+      class="example"
+      type="button"
+      data-text="Today I am sharing a simple moment from my life with my friends."
+    >
+      👤 Personal
+    </button>
+
+  </div>
+
+
+  <div
+    id="result"
+    class="result"
+  >
+
+    <div class="row">
+
+      <span class="label">
+        World
+      </span>
+
+      <span
+        id="world"
+        class="value"
+      >
+        —
+      </span>
+
+    </div>
+
+
+    <div class="row">
+
+      <span class="label">
+        Mood
+      </span>
+
+      <span
+        id="mood"
+        class="value"
+      >
+        —
+      </span>
+
+    </div>
+
+
+    <div class="row">
+
+      <span class="label">
+        Motion
+      </span>
+
+      <span
+        id="motion"
+        class="value"
+      >
+        —
+      </span>
+
+    </div>
+
+
+    <div class="row">
+
+      <span class="label">
+        Language / Script
+      </span>
+
+      <span
+        id="script"
+        class="value"
+      >
+        —
+      </span>
+
+    </div>
+
+
+    <div class="row">
+
+      <span class="label">
+        Confidence Signal
+      </span>
+
+      <span
+        id="strength"
+        class="value"
+      >
+        —
+      </span>
+
+    </div>
+
+  </div>
+
+
+  <a
+    class="back"
+    href="zemivo-living-world.html"
+  >
+    ← Open Living 3D World
+  </a>
+
+</div>
+
+
+<script type="module">
+
+import
+  "./zemivo-living-world.js";
+
+
+const input =
+  document.getElementById(
+    "contentInput"
+  );
+
+const analyzeButton =
+  document.getElementById(
+    "analyzeButton"
+  );
+
+const world =
+  document.getElementById(
+    "world"
+  );
+
+const mood =
+  document.getElementById(
+    "mood"
+  );
+
+const motion =
+  document.getElementById(
+    "motion"
+  );
+
+const script =
+  document.getElementById(
+    "script"
+  );
+
+const strength =
+  document.getElementById(
+    "strength"
+  );
+
+
+function analyze(){
+
+  const text =
+    input.value.trim();
+
+  if(!text){
+
+    world.textContent =
+      "Write something first";
+
+    mood.textContent =
+      "—";
+
+    motion.textContent =
+      "—";
+
+    script.textContent =
+      "—";
+
+    strength.textContent =
+      "—";
+
+    return;
+
+  }
+
+
+  if(
+    !window.ZemivoLivingWorld
+  ){
+
+    world.textContent =
+      "Engine not loaded";
+
+    return;
+
+  }
+
+
+  const result =
+    window
+      .ZemivoLivingWorld
+      .applyContentVisualProfile({
+
+        text:
+          text,
+
+        contentType:
+          "text"
+
+      });
+
+
+  const profile =
+    result.profile;
+
+  const analysis =
+    result.analysis;
+
+
+  world.textContent =
+    profile.mode;
+
+  mood.textContent =
+    profile.mood;
+
+  motion.textContent =
+    profile.motion;
+
+
+  script.textContent =
+    analysis.scripts.length
+      ? analysis.scripts.join(", ")
+      : "Unknown";
+
+
+  strength.textContent =
+    Math.round(
+      analysis.semanticStrength *
+      100
+    ) + "%";
+
+}
+
+
+analyzeButton.addEventListener(
+  "click",
+  analyze
+);
+
+
+document
+  .querySelectorAll(
+    ".example"
+  )
+  .forEach(
+    function(button){
+
+      button.addEventListener(
+        "click",
+        function(){
+
+          input.value =
+            button.dataset.text;
+
+          analyze();
+
+        }
+      );
+
+    }
+  );
+
+
+</script>
+
+
+</body>
+
+</html>
