@@ -1446,11 +1446,14 @@ const allowedMoods = [
   "Calm",
   "Fresh",
   "Energetic",
+  "Happy",
+  "Romantic",
+  "Mysterious",
+  "Futuristic",
   "Powerful",
   "Premium",
   "Cosmic"
 ];
-
 
 const allowedMotions = [
   "Soft",
@@ -1459,6 +1462,7 @@ const allowedMotions = [
   "Audio Reactive",
   "Dynamic",
   "Fast",
+  "Drifting",
   "Elegant",
   "Floating"
 ];
@@ -3563,7 +3567,7 @@ const moodSignals = {
 };
 
 
-/* =========================================================
+  /* =========================================================
    MOTION SIGNALS
 ========================================================= */
 
@@ -3574,12 +3578,21 @@ const motionSignals = {
     "slow",
     "gentle",
     "quiet",
+    "calm",
+    "peaceful",
+    "relaxed",
+
     "শান্ত",
     "ধীরে",
     "নরম",
+    "কোমল",
+    "নিরিবিলি",
+
     "هادئ",
     "بطيء",
+
     "柔らかい",
+    "ゆっくり",
     "느린"
   ],
 
@@ -3590,13 +3603,29 @@ const motionSignals = {
     "wave",
     "waves",
     "water",
+    "river",
+    "rain",
+    "wind",
+    "ocean",
+    "sea",
+
     "ঢেউ",
     "প্রবাহ",
     "পানি",
+    "নদী",
+    "বৃষ্টি",
+    "বাতাস",
+    "সমুদ্র",
+    "সাগর",
+
     "تدفق",
     "موج",
+    "ماء",
+
     "流れ",
     "波",
+    "水",
+
     "흐름"
   ],
 
@@ -3605,18 +3634,69 @@ const motionSignals = {
     "organic",
     "natural",
     "nature",
-    "wind",
     "forest",
+    "trees",
+    "tree",
+    "leaves",
+    "leaf",
+    "grass",
+    "garden",
+    "flower",
+
     "প্রাকৃতিক",
     "প্রকৃতি",
-    "বাতাস",
     "বন",
+    "গাছ",
+    "পাতা",
+    "ঘাস",
+    "বাগান",
+    "ফুল",
+
     "طبيعي",
     "غابة",
-    "طبيعة",
+    "شجرة",
+
     "自然",
-    "風",
-    "숲"
+    "森林",
+    "木",
+
+    "숲",
+    "나무"
+  ],
+
+
+  "Audio Reactive":[
+    "music",
+    "song",
+    "sound",
+    "audio",
+    "beat",
+    "beats",
+    "rhythm",
+    "melody",
+    "dance",
+    "dj",
+    "concert",
+
+    "গান",
+    "সঙ্গীত",
+    "শব্দ",
+    "বিট",
+    "ছন্দ",
+    "নাচ",
+    "কনসার্ট",
+
+    "موسيقى",
+    "أغنية",
+    "صوت",
+    "إيقاع",
+
+    "音楽",
+    "歌",
+    "音",
+
+    "음악",
+    "노래"
   ],
 
 
@@ -3626,13 +3706,32 @@ const motionSignals = {
     "battle",
     "game",
     "gaming",
-    "dynamic",
+    "gameplay",
+    "esports",
+    "sports",
+    "football",
+    "cricket",
+    "dance",
+    "fight",
+    "explosion",
+
     "অ্যাকশন",
     "যুদ্ধ",
     "গেম",
+    "গেমিং",
+    "খেলাধুলা",
+    "ফুটবল",
+    "ক্রিকেট",
+    "নাচ",
+    "লড়াই",
+    "বিস্ফোরণ",
+
     "حركة",
-    "لعبة",
+    "قتال",
+
     "動き",
+    "ゲーム",
+
     "게임"
   ],
 
@@ -3643,18 +3742,126 @@ const motionSignals = {
     "race",
     "racing",
     "car",
+    "cars",
+    "driving",
+    "drive",
+    "bike",
+    "motorcycle",
+    "motor",
+
     "গতি",
     "দ্রুত",
     "রেস",
-    "سيارة",
+    "রেসিং",
+    "গাড়ি",
+    "গাড়ি",
+    "ড্রাইভিং",
+    "ড্রাইভ",
+    "বাইক",
+    "মোটরসাইকেল",
+
     "سرعة",
+    "سيارة",
     "سباق",
+
     "速度",
-    "レース"
+    "レース",
+
+    "빠른"
+  ],
+
+
+  Drifting:[
+    "drift",
+    "drifting",
+    "floating",
+    "float",
+    "cloud",
+    "sky",
+    "smoke",
+    "mist",
+    "fog",
+
+    "ভাসা",
+    "ভাসমান",
+    "মেঘ",
+    "আকাশ",
+    "ধোঁয়া",
+    "কুয়াশা",
+
+    "انجراف",
+    "عائم",
+
+    "漂う",
+    "浮遊",
+
+    "부유"
+  ],
+
+
+  Elegant:[
+    "elegant",
+    "elegance",
+    "premium",
+    "luxury",
+    "product",
+    "fashion",
+    "minimal",
+    "minimalist",
+
+    "মার্জিত",
+    "অভিজাত",
+    "প্রিমিয়াম",
+    "বিলাসবহুল",
+    "পণ্য",
+    "ফ্যাশন",
+    "মিনিমাল",
+
+    "أنيق",
+    "فاخر",
+
+    "高級",
+    "上品",
+
+    "우아한"
+  ],
+
+
+  Floating:[
+    "space",
+    "planet",
+    "star",
+    "stars",
+    "galaxy",
+    "cosmic",
+    "universe",
+    "moon",
+    "astronaut",
+    "rocket",
+
+    "মহাকাশ",
+    "গ্রহ",
+    "তারা",
+    "ছায়াপথ",
+    "মহাজাগতিক",
+    "মহাবিশ্ব",
+    "চাঁদ",
+    "মহাকাশচারী",
+    "রকেট",
+
+    "فضاء",
+    "كوكب",
+    "نجوم",
+    "مجرة",
+
+    "宇宙",
+    "星",
+    "惑星",
+
+    "우주"
   ]
 
 };
-
 
 /* =========================================================
    GENERIC SCRIPT DETECTION
