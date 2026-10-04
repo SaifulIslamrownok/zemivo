@@ -1,14 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
   <title>Sign Up - Zemivo</title>
 
+
   <style>
+
     * {
       box-sizing: border-box;
     }
+
 
     body {
       margin: 0;
@@ -21,6 +31,7 @@
       padding: 20px;
     }
 
+
     .signup-box {
       width: 100%;
       max-width: 440px;
@@ -30,6 +41,7 @@
       box-shadow: 0 5px 20px rgba(0,0,0,0.08);
     }
 
+
     .logo {
       text-align: center;
       font-size: 34px;
@@ -38,10 +50,12 @@
       margin-bottom: 8px;
     }
 
+
     h2 {
       text-align: center;
       margin-bottom: 22px;
     }
+
 
     .step {
       font-size: 13px;
@@ -49,6 +63,7 @@
       margin-bottom: 14px;
       text-align: center;
     }
+
 
     input {
       width: 100%;
@@ -60,9 +75,11 @@
       outline: none;
     }
 
+
     input:focus {
       border-color: #2563eb;
     }
+
 
     button {
       width: 100%;
@@ -77,18 +94,22 @@
       margin-top: 4px;
     }
 
+
     button:disabled {
       opacity: 0.6;
       cursor: not-allowed;
     }
 
+
     .secondary {
       background: #64748b;
     }
 
+
     .hidden {
       display: none;
     }
+
 
     #recaptcha-container {
       margin: 10px 0 15px;
@@ -97,6 +118,7 @@
       min-height: 0;
     }
 
+
     #message {
       text-align: center;
       margin-top: 15px;
@@ -104,17 +126,21 @@
       line-height: 1.5;
     }
 
+
     .success {
       color: #15803d;
     }
+
 
     .error {
       color: #dc2626;
     }
 
+
     .warning {
       color: #b45309;
     }
+
 
     .back {
       display: block;
@@ -124,10 +150,12 @@
       text-decoration: none;
     }
 
+
     .login-link {
       text-align: center;
       margin-top: 18px;
     }
+
 
     .login-link a {
       color: #2563eb;
@@ -135,47 +163,67 @@
       font-weight: bold;
     }
 
+
     .phone-help {
       font-size: 12px;
       color: #666;
       margin: 2px 0 12px;
       line-height: 1.4;
     }
+
   </style>
+
 </head>
+
 
 <body>
 
+
 <div class="signup-box">
 
-  <div class="logo">Zemivo</div>
 
-  <h2>Create Your Account</h2>
+  <div class="logo">
+    Zemivo
+  </div>
+
+
+  <h2>
+    Create Your Account
+  </h2>
+
 
   <!-- STEP 1 -->
+
   <div id="step1">
+
 
     <div class="step">
       Step 1 of 2 — Account information
     </div>
 
+
     <form id="signupForm">
+
 
       <input
         id="fullName"
         type="text"
         placeholder="Full Name"
         autocomplete="name"
+        maxlength="100"
         required
       >
+
 
       <input
         id="email"
         type="email"
         placeholder="Email Address"
         autocomplete="email"
+        maxlength="254"
         required
       >
+
 
       <input
         id="birthDate"
@@ -183,40 +231,55 @@
         required
       >
 
+
       <input
         id="phone"
         type="tel"
         placeholder="Phone Number (example: +8801XXXXXXXXX)"
         autocomplete="tel"
+        maxlength="20"
         required
       >
 
+
       <div class="phone-help">
+
         Enter your phone number in international format.
+
         Example: +8801XXXXXXXXX
+
       </div>
+
 
       <input
         id="password"
         type="password"
         placeholder="Password"
         autocomplete="new-password"
-        minlength="6"
+        minlength="12"
+        maxlength="128"
         required
       >
+
 
       <input
         id="confirmPassword"
         type="password"
         placeholder="Confirm Password"
         autocomplete="new-password"
-        minlength="6"
+        minlength="12"
+        maxlength="128"
         required
       >
 
-      <button id="createButton" type="submit">
+
+      <button
+        id="createButton"
+        type="submit"
+      >
         Create Account
       </button>
+
 
     </form>
 
@@ -224,15 +287,24 @@
 
 
   <!-- STEP 2 -->
-  <div id="step2" class="hidden">
+
+  <div
+    id="step2"
+    class="hidden"
+  >
+
 
     <div class="step">
       Step 2 of 2 — Mobile verification
     </div>
 
+
     <p style="text-align:center;">
+
       We sent a verification code to your phone.
+
     </p>
+
 
     <input
       id="otp"
@@ -243,9 +315,14 @@
       maxlength="6"
     >
 
-    <button id="verifyButton" type="button">
+
+    <button
+      id="verifyButton"
+      type="button"
+    >
       Verify Phone
     </button>
+
 
     <button
       id="resendButton"
@@ -255,35 +332,82 @@
       Send OTP Again
     </button>
 
+
   </div>
 
 
   <div id="recaptcha-container"></div>
 
+
   <div id="message"></div>
 
-  <a class="back" href="index.html">
+
+  <a
+    class="back"
+    href="index.html"
+  >
     ← Back to Zemivo
   </a>
 
+
   <div class="login-link">
+
     Already have an account?
-    <a href="login.html">Log In</a>
+
+    <a href="login.html">
+      Log In
+    </a>
+
   </div>
+
 
 </div>
 
 
+
 <script type="module">
 
-  import {
-    initializeApp
-  } from
-  "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
+
+  /*
+   * =====================================================
+   * ZEMIVO SIGNUP
+   * =====================================================
+   *
+   * SECURITY:
+   * Firebase App Check is initialized inside
+   * zemivo-security.js BEFORE Firebase services.
+   *
+   * PAGE ISOLATION:
+   * This page only uses Auth + its required Firestore
+   * documents.
+   *
+   * FINANCIAL ISOLATION:
+   * No wallet.
+   * No ZMV ledger.
+   * No payment credentials.
+   * No admin access.
+   *
+   * 3D:
+   * No direct modification of the Living 3D engine.
+   * This page remains independent and 3D-ready.
+   */
 
 
+  /* =====================================================
+     SECURITY FOUNDATION
+  ===================================================== */
+
   import {
-    getAuth,
+    auth,
+    db
+  } from "./zemivo-security.js";
+
+
+  /* =====================================================
+     FIREBASE AUTH
+  ===================================================== */
+
+  import {
     createUserWithEmailAndPassword,
     updateProfile,
     sendEmailVerification,
@@ -293,8 +417,11 @@
   "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
 
 
+  /* =====================================================
+     FIRESTORE
+  ===================================================== */
+
   import {
-    getFirestore,
     doc,
     setDoc,
     serverTimestamp
@@ -302,161 +429,351 @@
   "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
 
 
-  const firebaseConfig = {
-
-    apiKey: "AIzaSyAxJUFBWm2fa0g3oxUWWqdfSTEAc-bRgfI",
-
-    authDomain: "zemivo.firebaseapp.com",
-
-    projectId: "zemivo",
-
-    storageBucket: "zemivo.firebasestorage.app",
-
-    messagingSenderId: "195335939691",
-
-    appId: "1:195335939691:web:5fa5c62c53d0c0aefe732e",
-
-    measurementId: "G-GNHH5S4H09"
-
-  };
-
-
-  const app =
-    initializeApp(firebaseConfig);
-
-
-  const auth =
-    getAuth(app);
-
-
-  const db =
-    getFirestore(app);
-
+  /* =====================================================
+     ELEMENTS
+  ===================================================== */
 
   const form =
-    document.getElementById("signupForm");
+    document.getElementById(
+      "signupForm"
+    );
+
 
   const message =
-    document.getElementById("message");
+    document.getElementById(
+      "message"
+    );
+
 
   const createButton =
-    document.getElementById("createButton");
+    document.getElementById(
+      "createButton"
+    );
+
 
   const verifyButton =
-    document.getElementById("verifyButton");
+    document.getElementById(
+      "verifyButton"
+    );
+
 
   const resendButton =
-    document.getElementById("resendButton");
+    document.getElementById(
+      "resendButton"
+    );
+
 
   const step1 =
-    document.getElementById("step1");
+    document.getElementById(
+      "step1"
+    );
+
 
   const step2 =
-    document.getElementById("step2");
+    document.getElementById(
+      "step2"
+    );
 
 
-  let confirmationResult = null;
+  /* =====================================================
+     STATE
+  ===================================================== */
 
-  let recaptchaVerifier = null;
+  let confirmationResult =
+    null;
 
-  let pendingUserData = null;
+
+  let recaptchaVerifier =
+    null;
 
 
-  /* =========================
+  let pendingUserData =
+    null;
+
+
+  /* =====================================================
      MESSAGE
-  ========================= */
+  ===================================================== */
 
-  function showMessage(text, type = "") {
+  function showMessage(
+    text,
+    type = ""
+  ) {
 
-    message.textContent = text;
+    message.textContent =
+      text;
 
-    message.className = type;
+    message.className =
+      type;
 
   }
 
 
-  /* =========================
+  /* =====================================================
+     SAFE TEXT NORMALIZATION
+  ===================================================== */
+
+  function cleanText(
+    value,
+    maxLength
+  ) {
+
+    return String(
+      value || ""
+    )
+      .trim()
+      .replace(/\s+/g, " ")
+      .slice(
+        0,
+        maxLength
+      );
+
+  }
+
+
+  /* =====================================================
+     EMAIL NORMALIZATION
+  ===================================================== */
+
+  function cleanEmail(
+    value
+  ) {
+
+    return String(
+      value || ""
+    )
+      .trim()
+      .toLowerCase()
+      .slice(
+        0,
+        254
+      );
+
+  }
+
+
+  /* =====================================================
+     PHONE NORMALIZATION
+  ===================================================== */
+
+  function cleanPhone(
+    value
+  ) {
+
+    return String(
+      value || ""
+    )
+      .trim()
+      .replace(
+        /[\s()-]/g,
+        ""
+      )
+      .slice(
+        0,
+        20
+      );
+
+  }
+
+
+  /* =====================================================
      AGE
-  ========================= */
+  ===================================================== */
 
-  function calculateAge(birthDate) {
+  function calculateAge(
+    birthDate
+  ) {
 
-    const today = new Date();
+    const today =
+      new Date();
+
 
     const birth =
-      new Date(birthDate + "T00:00:00");
+      new Date(
+        birthDate +
+        "T00:00:00"
+      );
+
+
+    if (
+      Number.isNaN(
+        birth.getTime()
+      )
+    ) {
+
+      return -1;
+
+    }
+
 
     let age =
       today.getFullYear() -
       birth.getFullYear();
 
+
     const month =
       today.getMonth() -
       birth.getMonth();
+
 
     if (
       month < 0 ||
       (
         month === 0 &&
-        today.getDate() < birth.getDate()
+        today.getDate() <
+        birth.getDate()
       )
     ) {
+
       age--;
+
     }
+
 
     return age;
 
   }
 
 
-  /* =========================
-     RECAPTCHA
-  ========================= */
+  /* =====================================================
+     PASSWORD STRENGTH
+  ===================================================== */
+
+  function isStrongPassword(
+    password
+  ) {
+
+    if (
+      password.length < 12
+    ) {
+
+      return false;
+
+    }
+
+
+    if (
+      password.length > 128
+    ) {
+
+      return false;
+
+    }
+
+
+    const hasUpper =
+      /[A-Z]/.test(
+        password
+      );
+
+
+    const hasLower =
+      /[a-z]/.test(
+        password
+      );
+
+
+    const hasNumber =
+      /[0-9]/.test(
+        password
+      );
+
+
+    const hasSymbol =
+      /[^A-Za-z0-9]/.test(
+        password
+      );
+
+
+    return (
+      hasUpper &&
+      hasLower &&
+      hasNumber &&
+      hasSymbol
+    );
+
+  }
+
+
+  /* =====================================================
+     RECAPTCHA VERIFIER
+     Used specifically for phone verification.
+  ===================================================== */
 
   function setupRecaptcha() {
 
-    if (recaptchaVerifier) {
+    if (
+      recaptchaVerifier
+    ) {
+
       return;
+
     }
+
 
     recaptchaVerifier =
       new RecaptchaVerifier(
+
         auth,
+
         "recaptcha-container",
+
         {
-          size: "normal",
-          callback: function() {
 
-            showMessage("");
+          size:
+            "normal",
 
-          },
-          "expired-callback": function() {
 
-            showMessage(
-              "reCAPTCHA expired. Please complete it again.",
-              "warning"
-            );
+          callback:
+            function() {
 
-          }
+              showMessage(
+                ""
+              );
+
+            },
+
+
+          "expired-callback":
+            function() {
+
+              showMessage(
+                "reCAPTCHA expired. Please complete it again.",
+                "warning"
+              );
+
+            }
+
         }
+
       );
 
   }
 
 
-  /* =========================
+  /* =====================================================
      SEND PHONE OTP
-  ========================= */
+  ===================================================== */
 
   async function sendPhoneOTP() {
 
     setupRecaptcha();
 
-    const phone =
-      pendingUserData.phone;
+
+    if (
+      !pendingUserData
+    ) {
+
+      throw new Error(
+        "Signup session not found."
+      );
+
+    }
+
 
     const user =
       auth.currentUser;
+
 
     if (!user) {
 
@@ -466,71 +783,113 @@
 
     }
 
+
     confirmationResult =
       await linkWithPhoneNumber(
+
         user,
-        phone,
+
+        pendingUserData.phone,
+
         recaptchaVerifier
+
       );
 
   }
 
 
-  /* =========================
+  /* =====================================================
      SIGN UP
-  ========================= */
+  ===================================================== */
 
   form.addEventListener(
+
     "submit",
+
     async function(event) {
+
 
       event.preventDefault();
 
-      showMessage("");
 
+      showMessage(
+        ""
+      );
+
+
+      /* ================================
+         GET INPUT
+      ================================= */
 
       const name =
-        document
-          .getElementById("fullName")
-          .value
-          .trim();
+        cleanText(
+
+          document
+            .getElementById(
+              "fullName"
+            )
+            .value,
+
+          100
+
+        );
 
 
       const email =
-        document
-          .getElementById("email")
-          .value
-          .trim();
+        cleanEmail(
+
+          document
+            .getElementById(
+              "email"
+            )
+            .value
+
+        );
 
 
       const birthDate =
         document
-          .getElementById("birthDate")
+          .getElementById(
+            "birthDate"
+          )
           .value;
 
 
       const phone =
-        document
-          .getElementById("phone")
-          .value
-          .trim();
+        cleanPhone(
+
+          document
+            .getElementById(
+              "phone"
+            )
+            .value
+
+        );
 
 
       const password =
         document
-          .getElementById("password")
+          .getElementById(
+            "password"
+          )
           .value;
 
 
       const confirmPassword =
         document
-          .getElementById("confirmPassword")
+          .getElementById(
+            "confirmPassword"
+          )
           .value;
 
 
-      /* NAME */
+      /* ================================
+         NAME VALIDATION
+      ================================= */
 
-      if (name.length < 2) {
+      if (
+        name.length < 2
+      ) {
 
         showMessage(
           "Please enter your full name.",
@@ -542,9 +901,32 @@
       }
 
 
-      /* BIRTH DATE */
+      /* ================================
+         EMAIL VALIDATION
+      ================================= */
 
-      if (!birthDate) {
+      if (
+        !email ||
+        !email.includes("@")
+      ) {
+
+        showMessage(
+          "Please enter a valid email address.",
+          "error"
+        );
+
+        return;
+
+      }
+
+
+      /* ================================
+         BIRTH DATE
+      ================================= */
+
+      if (
+        !birthDate
+      ) {
 
         showMessage(
           "Please enter your date of birth.",
@@ -557,10 +939,14 @@
 
 
       const age =
-        calculateAge(birthDate);
+        calculateAge(
+          birthDate
+        );
 
 
-      if (age < 18) {
+      if (
+        age < 18
+      ) {
 
         showMessage(
           "Sorry. You must be 18 or older to create a Zemivo account.",
@@ -572,7 +958,9 @@
       }
 
 
-      if (age > 120) {
+      if (
+        age > 120
+      ) {
 
         showMessage(
           "Please enter a valid date of birth.",
@@ -584,12 +972,18 @@
       }
 
 
-      /* PHONE */
+      /* ================================
+         PHONE
+      ================================= */
 
-      if (!phone.startsWith("+")) {
+      if (
+        !/^\+[1-9][0-9]{7,18}$/.test(
+          phone
+        )
+      ) {
 
         showMessage(
-          "Please enter your phone number with country code. Example: +8801XXXXXXXXX",
+          "Please enter a valid international phone number.",
           "error"
         );
 
@@ -598,12 +992,18 @@
       }
 
 
-      /* PASSWORD */
+      /* ================================
+         PASSWORD
+      ================================= */
 
-      if (password.length < 6) {
+      if (
+        !isStrongPassword(
+          password
+        )
+      ) {
 
         showMessage(
-          "Password must be at least 6 characters.",
+          "Password must be 12+ characters and include uppercase, lowercase, number and symbol.",
           "error"
         );
 
@@ -612,7 +1012,10 @@
       }
 
 
-      if (password !== confirmPassword) {
+      if (
+        password !==
+        confirmPassword
+      ) {
 
         showMessage(
           "Passwords do not match.",
@@ -624,7 +1027,13 @@
       }
 
 
-      createButton.disabled = true;
+      /* ================================
+         LOCK BUTTON
+      ================================= */
+
+      createButton.disabled =
+        true;
+
 
       createButton.textContent =
         "Creating Account...";
@@ -632,13 +1041,20 @@
 
       try {
 
-        /* CREATE FIREBASE ACCOUNT */
+
+        /* ================================
+           CREATE AUTH ACCOUNT
+        ================================= */
 
         const userCredential =
           await createUserWithEmailAndPassword(
+
             auth,
+
             email,
+
             password
+
           );
 
 
@@ -646,52 +1062,76 @@
           userCredential.user;
 
 
-        /* SAVE NAME */
+        /* ================================
+           SAVE DISPLAY NAME
+        ================================= */
 
         await updateProfile(
+
           user,
+
           {
-            displayName: name
+
+            displayName:
+              name
+
           }
+
         );
 
 
-        /* EMAIL VERIFICATION */
+        /* ================================
+           EMAIL VERIFICATION
+        ================================= */
 
-        await sendEmailVerification(user);
+        await sendEmailVerification(
+          user
+        );
 
 
-        /* TEMPORARY SIGNUP DATA */
+        /* ================================
+           TEMPORARY SIGNUP STATE
+        ================================= */
 
         pendingUserData = {
 
-          uid: user.uid,
+          uid:
+            user.uid,
 
-          name: name,
+          name:
+            name,
 
-          email: email,
+          email:
+            email,
 
-          phone: phone,
+          phone:
+            phone,
 
-          birthDate: birthDate
+          birthDate:
+            birthDate
 
         };
 
 
-        /*
-          PHONE OTP
-        */
+        /* ================================
+           PHONE OTP
+        ================================= */
 
         await sendPhoneOTP();
 
 
-        /*
-          MOVE TO STEP 2
-        */
+        /* ================================
+           MOVE TO STEP 2
+        ================================= */
 
-        step1.classList.add("hidden");
+        step1.classList.add(
+          "hidden"
+        );
 
-        step2.classList.remove("hidden");
+
+        step2.classList.remove(
+          "hidden"
+        );
 
 
         showMessage(
@@ -700,111 +1140,115 @@
         );
 
 
-      } catch (error) {
+      }
+      catch(error) {
 
-        console.error(error);
+
+        console.error(
+          "Zemivo signup error:",
+          error
+        );
 
 
         let errorMessage =
           "Account creation failed. Please try again.";
 
 
-        if (
-          error.code ===
-          "auth/email-already-in-use"
+        switch (
+          error.code
         ) {
 
-          errorMessage =
-            "This email is already registered.";
 
-        }
+          case
+          "auth/email-already-in-use":
 
-        else if (
-          error.code ===
-          "auth/invalid-email"
-        ) {
+            errorMessage =
+              "This email is already registered.";
 
-          errorMessage =
-            "Please enter a valid email address.";
+            break;
 
-        }
 
-        else if (
-          error.code ===
-          "auth/invalid-phone-number"
-        ) {
+          case
+          "auth/invalid-email":
 
-          errorMessage =
-            "Please enter a valid international phone number.";
+            errorMessage =
+              "Please enter a valid email address.";
 
-        }
+            break;
 
-        else if (
-          error.code ===
-          "auth/phone-number-already-in-use"
-        ) {
 
-          errorMessage =
-            "This phone number is already linked to another account.";
+          case
+          "auth/invalid-phone-number":
 
-        }
+            errorMessage =
+              "Please enter a valid international phone number.";
 
-        else if (
-          error.code ===
-          "auth/provider-already-linked"
-        ) {
+            break;
 
-          errorMessage =
-            "This phone number is already linked to this account.";
 
-        }
+          case
+          "auth/phone-number-already-in-use":
 
-        else if (
-          error.code ===
-          "auth/too-many-requests"
-        ) {
+            errorMessage =
+              "This phone number is already linked to another account.";
 
-          errorMessage =
-            "Too many attempts. Please wait and try again.";
+            break;
 
-        }
 
-        else if (
-          error.code ===
-          "auth/network-request-failed"
-        ) {
+          case
+          "auth/provider-already-linked":
 
-          errorMessage =
-            "Network problem. Please try again.";
+            errorMessage =
+              "This phone number is already linked to this account.";
 
-        }
+            break;
 
-        else if (
-          error.code ===
-          "auth/operation-not-allowed"
-        ) {
 
-          errorMessage =
-            "Phone authentication is not enabled in Firebase.";
+          case
+          "auth/too-many-requests":
 
-        }
+            errorMessage =
+              "Too many attempts. Please wait and try again.";
 
-        else if (
-          error.code ===
-          "auth/quota-exceeded"
-        ) {
+            break;
 
-          errorMessage =
-            "SMS verification limit has been reached. Please try again later.";
 
-        }
+          case
+          "auth/network-request-failed":
 
-        else if (
-          error.message
-        ) {
+            errorMessage =
+              "Network problem. Please try again.";
 
-          errorMessage =
-            error.message;
+            break;
+
+
+          case
+          "auth/operation-not-allowed":
+
+            errorMessage =
+              "Phone authentication is not enabled in Firebase.";
+
+            break;
+
+
+          case
+          "auth/quota-exceeded":
+
+            errorMessage =
+              "SMS verification limit has been reached. Please try again later.";
+
+            break;
+
+
+          default:
+
+            /*
+             * Do not expose sensitive internal details
+             * to normal users.
+             */
+
+            errorMessage =
+              "Account creation failed. Please check your information and try again.";
 
         }
 
@@ -815,7 +1259,9 @@
         );
 
 
-        createButton.disabled = false;
+        createButton.disabled =
+          false;
+
 
         createButton.textContent =
           "Create Account";
@@ -823,25 +1269,35 @@
       }
 
     }
+
   );
 
 
-  /* =========================
+  /* =====================================================
      VERIFY OTP
-  ========================= */
+  ===================================================== */
 
   verifyButton.addEventListener(
+
     "click",
+
     async function() {
+
 
       const otp =
         document
-          .getElementById("otp")
+          .getElementById(
+            "otp"
+          )
           .value
           .trim();
 
 
-      if (!otp || otp.length !== 6) {
+      if (
+        !/^[0-9]{6}$/.test(
+          otp
+        )
+      ) {
 
         showMessage(
           "Please enter the 6-digit OTP.",
@@ -853,7 +1309,9 @@
       }
 
 
-      verifyButton.disabled = true;
+      verifyButton.disabled =
+        true;
+
 
       verifyButton.textContent =
         "Verifying...";
@@ -861,7 +1319,10 @@
 
       try {
 
-        if (!confirmationResult) {
+
+        if (
+          !confirmationResult
+        ) {
 
           throw new Error(
             "No OTP verification session found."
@@ -870,14 +1331,22 @@
         }
 
 
-        await confirmationResult.confirm(otp);
+        /* ================================
+           CONFIRM PHONE
+        ================================= */
+
+        await confirmationResult.confirm(
+          otp
+        );
 
 
         const user =
           auth.currentUser;
 
 
-        if (!user) {
+        if (
+          !user
+        ) {
 
           throw new Error(
             "User session not found."
@@ -893,7 +1362,10 @@
           auth.currentUser;
 
 
-        if (!updatedUser.phoneNumber) {
+        if (
+          !updatedUser ||
+          !updatedUser.phoneNumber
+        ) {
 
           throw new Error(
             "Phone verification was not completed."
@@ -902,16 +1374,18 @@
         }
 
 
-        /* =========================
+        /* ================================
            PUBLIC PROFILE
-        ========================= */
+        ================================= */
 
         await setDoc(
+
           doc(
             db,
             "profiles",
             updatedUser.uid
           ),
+
           {
 
             uid:
@@ -930,14 +1404,16 @@
               "user"
 
           }
+
         );
 
 
-        /* =========================
+        /* ================================
            PRIVATE ACCOUNT DATA
-        ========================= */
+        ================================= */
 
         await setDoc(
+
           doc(
             db,
             "users",
@@ -945,6 +1421,7 @@
             "private",
             "account"
           ),
+
           {
 
             uid:
@@ -969,8 +1446,13 @@
               serverTimestamp()
 
           }
+
         );
 
+
+        /* ================================
+           SUCCESS
+        ================================= */
 
         showMessage(
           "Account created and phone verified successfully.",
@@ -978,88 +1460,79 @@
         );
 
 
-        /*
-          GO TO PROFILE
-        */
-
         setTimeout(
+
           function() {
 
             window.location.href =
               "profile.html";
 
           },
+
           1200
+
         );
 
 
-      } catch (error) {
+      }
+      catch(error) {
 
-        console.error(error);
+
+        console.error(
+          "Zemivo OTP verification error:",
+          error
+        );
 
 
         let errorMessage =
           "OTP verification failed. Please try again.";
 
 
-        if (
-          error.code ===
-          "auth/invalid-verification-code"
+        switch (
+          error.code
         ) {
 
-          errorMessage =
-            "The OTP is incorrect.";
 
-        }
+          case
+          "auth/invalid-verification-code":
 
-        else if (
-          error.code ===
-          "auth/code-expired"
-        ) {
+            errorMessage =
+              "The OTP is incorrect.";
 
-          errorMessage =
-            "The OTP has expired. Please request a new one.";
+            break;
 
-        }
 
-        else if (
-          error.code ===
-          "auth/credential-already-in-use"
-        ) {
+          case
+          "auth/code-expired":
 
-          errorMessage =
-            "This phone number is already linked to another account.";
+            errorMessage =
+              "The OTP has expired. Please request a new one.";
 
-        }
+            break;
 
-        else if (
-          error.code ===
-          "permission-denied"
-        ) {
 
-          errorMessage =
-            "Firestore permission is blocking account setup. Please check Firebase Security Rules.";
+          case
+          "auth/credential-already-in-use":
 
-        }
+            errorMessage =
+              "This phone number is already linked to another account.";
 
-        else if (
-          error.message &&
-          error.message.includes(
-            "PERMISSION_DENIED"
-          )
-        ) {
+            break;
 
-          errorMessage =
-            "Firestore permission is blocking account setup. Please check Firebase Security Rules.";
 
-        }
+          case
+          "permission-denied":
 
-        else if (
-          error.message
-        ) {
+            errorMessage =
+              "Account setup was blocked by security rules.";
 
-          errorMessage =
-            error.message;
+            break;
+
+
+          default:
+
+            errorMessage =
+              "OTP verification failed. Please check the code and try again.";
 
         }
 
@@ -1070,7 +1543,9 @@
         );
 
 
-        verifyButton.disabled = false;
+        verifyButton.disabled =
+          false;
+
 
         verifyButton.textContent =
           "Verify Phone";
@@ -1078,18 +1553,24 @@
       }
 
     }
+
   );
 
 
-  /* =========================
+  /* =====================================================
      RESEND OTP
-  ========================= */
+  ===================================================== */
 
   resendButton.addEventListener(
+
     "click",
+
     async function() {
 
-      resendButton.disabled = true;
+
+      resendButton.disabled =
+        true;
+
 
       resendButton.textContent =
         "Sending...";
@@ -1097,7 +1578,10 @@
 
       try {
 
-        if (!pendingUserData) {
+
+        if (
+          !pendingUserData
+        ) {
 
           throw new Error(
             "Signup session not found."
@@ -1106,18 +1590,31 @@
         }
 
 
-        confirmationResult = null;
+        confirmationResult =
+          null;
 
 
-        if (recaptchaVerifier) {
+        if (
+          recaptchaVerifier
+        ) {
 
           try {
 
             recaptchaVerifier.clear();
 
-          } catch (e) {}
+          }
+          catch(e) {
 
-          recaptchaVerifier = null;
+            console.warn(
+              "reCAPTCHA cleanup warning:",
+              e
+            );
+
+          }
+
+
+          recaptchaVerifier =
+            null;
 
         }
 
@@ -1131,13 +1628,17 @@
         );
 
 
-      } catch (error) {
+      }
+      catch(error) {
 
-        console.error(error);
+
+        console.error(
+          "Zemivo OTP resend error:",
+          error
+        );
 
 
         showMessage(
-          error.message ||
           "Could not resend OTP. Please try again later.",
           "error"
         );
@@ -1145,16 +1646,21 @@
       }
 
 
-      resendButton.disabled = false;
+      resendButton.disabled =
+        false;
+
 
       resendButton.textContent =
         "Send OTP Again";
 
     }
+
   );
 
 
 </script>
 
+
 </body>
+
 </html>
