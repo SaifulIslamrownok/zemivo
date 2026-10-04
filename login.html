@@ -147,18 +147,130 @@
 
   <script type="module">
 
-    import { initializeApp } from
-      "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
+  /*
+   * ZEMIVO LOGIN
+   *
+   * Security:
+   * Firebase App Check is initialized
+   * through the shared Zemivo Security Foundation.
+   *
+   * Page isolation:
+   * This page only uses the exported Auth instance.
+   *
+   * No admin credentials.
+   * No wallet access.
+   * No database write access from this page.
+   */
 
-    import {
-      getAuth,
-      signInWithEmailAndPassword
-    } from
-      "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
+  import {
+    auth
+  } from "./zemivo-security.js";
+
+  import {
+    signInWithEmailAndPassword
+  } from
+    "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
 
 
-    const firebaseConfig = {
+  /* ================================
+     ELEMENTS
+  ================================= */
 
+  const loginForm =
+    document.getElementById("loginForm");
+
+  const message =
+    document.getElementById("message");
+
+  const loginButton =
+    document.getElementById("loginButton");
+
+
+  /* ================================
+     LOGIN
+  ================================= */
+
+  loginForm.addEventListener(
+    "submit",
+    async function(event) {
+
+      event.preventDefault();
+
+
+      const email =
+        document
+          .getElementById("email")
+          .value
+          .trim();
+
+      const password =
+        document
+          .getElementById("password")
+          .value;
+
+
+      message.textContent = "";
+
+      loginButton.disabled = true;
+
+      loginButton.textContent =
+        "Logging in...";
+
+
+      try {
+
+        await signInWithEmailAndPassword(
+          auth,
+          email,
+          password
+        );
+
+
+        message.style.color =
+          "#16a34a";
+
+        message.textContent =
+          "Login successful!";
+
+
+        setTimeout(
+          function() {
+
+            window.location.href =
+              "profile.html";
+
+          },
+          1000
+        );
+
+
+      }
+      catch(error) {
+
+        console.error(
+          "Zemivo login error:",
+          error
+        );
+
+
+        message.style.color =
+          "#dc2626";
+
+        message.textContent =
+          "Email or password is incorrect.";
+
+
+        loginButton.disabled =
+          false;
+
+        loginButton.textContent =
+          "Log In";
+
+      }
+
+    });
+
+</script>
       apiKey: "AIzaSyAxJUFBWm2fa0g3oxUWWqdfSTEAc-bRgfI",
 
       authDomain: "zemivo.firebaseapp.com",
