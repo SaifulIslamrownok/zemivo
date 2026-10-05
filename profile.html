@@ -1,12 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
 
   <title>Zemivo Profile</title>
 
   <style>
+
     * {
       box-sizing: border-box;
     }
@@ -25,6 +31,9 @@
       justify-content: space-between;
       align-items: center;
       box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      position: sticky;
+      top: 0;
+      z-index: 100;
     }
 
     .logo {
@@ -42,7 +51,7 @@
     .profile {
       max-width: 700px;
       margin: 30px auto;
-      padding: 0 15px;
+      padding: 0 15px 30px;
     }
 
     .card {
@@ -69,17 +78,27 @@
       font-size: 40px;
       font-weight: bold;
       margin: auto;
+      overflow: hidden;
+    }
+
+    .avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: none;
     }
 
     .name {
       margin-top: 15px;
       font-size: 28px;
       font-weight: bold;
+      word-break: break-word;
     }
 
     .username {
       color: #666;
       margin-top: 5px;
+      word-break: break-word;
     }
 
     .verified {
@@ -110,6 +129,11 @@
       justify-content: space-around;
       text-align: center;
       margin-top: 25px;
+      gap: 10px;
+    }
+
+    .stat {
+      flex: 1;
     }
 
     .stat strong {
@@ -152,6 +176,7 @@
 
     .voice-button:disabled {
       opacity: 0.6;
+      cursor: not-allowed;
     }
 
     .identity {
@@ -182,6 +207,17 @@
       word-break: break-word;
     }
 
+    .verification-badge {
+      display: inline-block;
+      margin-top: 5px;
+      padding: 5px 9px;
+      border-radius: 15px;
+      background: #dcfce7;
+      color: #15803d;
+      font-size: 12px;
+      font-weight: bold;
+    }
+
     .logout {
       width: 100%;
       border: none;
@@ -192,6 +228,11 @@
       font-weight: bold;
       cursor: pointer;
       font-size: 16px;
+    }
+
+    .logout:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
     }
 
     .notice {
@@ -208,13 +249,74 @@
       color: #666;
     }
 
+    .error {
+      max-width: 700px;
+      margin: 30px auto;
+      padding: 20px;
+      text-align: center;
+      color: #dc2626;
+      background: #fff;
+      border-radius: 15px;
+    }
+
     #profileContent {
       display: none;
     }
+
+    @media (max-width: 600px) {
+
+      .topbar {
+        padding: 13px 15px;
+      }
+
+      .logo {
+        font-size: 23px;
+      }
+
+      .profile {
+        margin-top: 20px;
+        padding-left: 10px;
+        padding-right: 10px;
+      }
+
+      .card {
+        padding: 20px;
+        border-radius: 16px;
+      }
+
+      .avatar {
+        width: 90px;
+        height: 90px;
+        font-size: 36px;
+      }
+
+      .name {
+        font-size: 24px;
+      }
+
+      .stats {
+        margin-top: 22px;
+      }
+
+      .stat strong {
+        font-size: 19px;
+      }
+
+      .stat span {
+        font-size: 12px;
+      }
+
+    }
+
   </style>
+
 </head>
 
+
 <body>
+
+
+  <!-- TOP BAR -->
 
   <header class="topbar">
 
@@ -222,65 +324,146 @@
       Zemivo
     </div>
 
-    <a class="back" href="index.html">
+    <a
+      class="back"
+      href="index.html"
+    >
       ← Home
     </a>
 
   </header>
 
 
-  <div id="loading" class="loading">
+  <!-- LOADING -->
+
+  <div
+    id="loading"
+    class="loading"
+  >
     Loading Zemivo Profile...
   </div>
 
 
-  <main class="profile" id="profileContent">
+  <!-- ERROR -->
+
+  <div
+    id="errorMessage"
+    class="error"
+    style="display:none;"
+  >
+    Unable to load your Zemivo profile.
+  </div>
+
+
+  <!-- PROFILE -->
+
+  <main
+    class="profile"
+    id="profileContent"
+  >
 
 
     <!-- PROFILE CARD -->
 
     <section class="card profile-header">
 
-      <div class="avatar" id="avatar">
-        Z
+      <div
+        class="avatar"
+        id="avatar"
+      >
+
+        <span id="avatarLetter">
+          Z
+        </span>
+
+        <img
+          id="avatarImage"
+          alt="Zemivo profile photo"
+        >
+
       </div>
 
-      <div class="name" id="profileName">
+
+      <div
+        class="name"
+        id="profileName"
+      >
         Zemivo User
       </div>
 
-      <div class="username" id="username">
+
+      <div
+        class="username"
+        id="username"
+      >
         @zemivo_user
       </div>
 
-      <div class="verified">
-        ✓ Identity Verified
+
+      <div
+        class="verified"
+        id="verifiedBadge"
+      >
+        ✓ Account Verified
       </div>
 
-      <div class="country" id="country">
+
+      <div
+        class="country"
+        id="country"
+      >
         🌍 Global
       </div>
 
-      <div class="email" id="userEmail">
+
+      <div
+        class="email"
+        id="userEmail"
+      >
         Loading...
       </div>
 
 
+      <!-- STATS -->
+
       <div class="stats">
 
         <div class="stat">
-          <strong>0</strong>
-          <span>Followers</span>
+
+          <strong id="followersCount">
+            0
+          </strong>
+
+          <span>
+            Followers
+          </span>
+
         </div>
 
-        <div class="stat">
-          <strong>0</strong>
-          <span>Following</span>
-        </div>
 
         <div class="stat">
-          <strong>0</strong>
-          <span>Posts</span>
+
+          <strong id="followingCount">
+            0
+          </strong>
+
+          <span>
+            Following
+          </span>
+
+        </div>
+
+
+        <div class="stat">
+
+          <strong id="postsCount">
+            0
+          </strong>
+
+          <span>
+            Posts
+          </span>
+
         </div>
 
       </div>
@@ -296,12 +479,14 @@
         🔊 Zemivo Welcome
       </div>
 
+
       <div
         class="voice-message"
         id="voiceMessage"
       >
         Zemivo-তে স্বাগতম।
       </div>
+
 
       <button
         class="voice-button"
@@ -322,6 +507,7 @@
         🌍 Identity
       </h3>
 
+
       <div class="identity-row">
 
         <div class="identity-label">
@@ -332,7 +518,7 @@
           class="identity-value"
           id="verifiedName"
         >
-          Not verified yet
+          Not available
         </div>
 
       </div>
@@ -348,7 +534,39 @@
           class="identity-value"
           id="identityCountry"
         >
-          Not selected
+          Global
+        </div>
+
+      </div>
+
+
+      <div class="identity-row">
+
+        <div class="identity-label">
+          Email Verification
+        </div>
+
+        <div
+          class="identity-value"
+          id="emailVerificationStatus"
+        >
+          Checking...
+        </div>
+
+      </div>
+
+
+      <div class="identity-row">
+
+        <div class="identity-label">
+          Phone Verification
+        </div>
+
+        <div
+          class="identity-value"
+          id="phoneVerificationStatus"
+        >
+          Checking...
         </div>
 
       </div>
@@ -360,8 +578,11 @@
           Verification Status
         </div>
 
-        <div class="identity-value">
-          ✓ Account Active
+        <div
+          class="identity-value"
+          id="accountStatus"
+        >
+          Checking...
         </div>
 
       </div>
@@ -412,87 +633,501 @@
 
   <script type="module">
 
-    import { initializeApp } from
-      "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
+
+    /*
+     * =====================================================
+     * ZEMIVO PROFILE
+     * Security Foundation Integration
+     * =====================================================
+     *
+     * Firebase initialization is handled by:
+     *
+     * ./zemivo-security.js
+     *
+     * This keeps App Check and Firebase services
+     * centralized instead of initializing them again
+     * on every page.
+     *
+     * =====================================================
+     */
+
 
     import {
-      getAuth,
+      auth,
+      db
+    } from "./zemivo-security.js";
+
+
+    import {
       onAuthStateChanged,
       signOut
     } from
       "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
 
 
-    /* =========================
-       FIREBASE CONFIG
-       ========================= */
-
-    const firebaseConfig = {
-
-      apiKey:
-        "AIzaSyAxJUFBWm2fa0g3oxUWWqdfSTEAc-bRgfI",
-
-      authDomain:
-        "zemivo.firebaseapp.com",
-
-      projectId:
-        "zemivo",
-
-      storageBucket:
-        "zemivo.firebasestorage.app",
-
-      messagingSenderId:
-        "195335939691",
-
-      appId:
-        "1:195335939691:web:5fa5c62c53d0c0aefe732e",
-
-      measurementId:
-        "G-GNHH5S4H09"
-
-    };
+    import {
+      doc,
+      getDoc
+    } from
+      "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
 
 
-    const app =
-      initializeApp(firebaseConfig);
+    /* =====================================================
+       ELEMENTS
+       ===================================================== */
 
-    const auth =
-      getAuth(app);
-
-
-    /* =========================
-       BASIC ELEMENTS
-       ========================= */
 
     const loading =
-      document.getElementById("loading");
+      document.getElementById(
+        "loading"
+      );
+
+
+    const errorMessage =
+      document.getElementById(
+        "errorMessage"
+      );
+
 
     const profileContent =
-      document.getElementById("profileContent");
+      document.getElementById(
+        "profileContent"
+      );
+
 
     const profileName =
-      document.getElementById("profileName");
+      document.getElementById(
+        "profileName"
+      );
+
+
+    const username =
+      document.getElementById(
+        "username"
+      );
+
 
     const userEmail =
-      document.getElementById("userEmail");
+      document.getElementById(
+        "userEmail"
+      );
 
-    const avatar =
-      document.getElementById("avatar");
+
+    const avatarLetter =
+      document.getElementById(
+        "avatarLetter"
+      );
+
+
+    const avatarImage =
+      document.getElementById(
+        "avatarImage"
+      );
+
 
     const verifiedName =
-      document.getElementById("verifiedName");
+      document.getElementById(
+        "verifiedName"
+      );
+
+
+    const country =
+      document.getElementById(
+        "country"
+      );
+
+
+    const identityCountry =
+      document.getElementById(
+        "identityCountry"
+      );
+
 
     const zemivoId =
-      document.getElementById("zemivoId");
+      document.getElementById(
+        "zemivoId"
+      );
 
 
-    /* =========================
+    const followersCount =
+      document.getElementById(
+        "followersCount"
+      );
+
+
+    const followingCount =
+      document.getElementById(
+        "followingCount"
+      );
+
+
+    const postsCount =
+      document.getElementById(
+        "postsCount"
+      );
+
+
+    const emailVerificationStatus =
+      document.getElementById(
+        "emailVerificationStatus"
+      );
+
+
+    const phoneVerificationStatus =
+      document.getElementById(
+        "phoneVerificationStatus"
+      );
+
+
+    const accountStatus =
+      document.getElementById(
+        "accountStatus"
+      );
+
+
+    const voiceMessage =
+      document.getElementById(
+        "voiceMessage"
+      );
+
+
+    const voiceButton =
+      document.getElementById(
+        "voiceButton"
+      );
+
+
+    const logoutButton =
+      document.getElementById(
+        "logoutButton"
+      );
+
+
+    /* =====================================================
+       SAFE TEXT
+       ===================================================== */
+
+    function safeText(
+      value,
+      fallback = ""
+    ) {
+
+      if (
+        value === null ||
+        value === undefined
+      ) {
+
+        return fallback;
+
+      }
+
+
+      const text =
+        String(value).trim();
+
+
+      return text ||
+        fallback;
+
+    }
+
+
+    /* =====================================================
+       SAFE NUMBER
+       ===================================================== */
+
+    function safeNumber(
+      value
+    ) {
+
+      const number =
+        Number(value);
+
+
+      if (
+        !Number.isFinite(number) ||
+        number < 0
+      ) {
+
+        return 0;
+
+      }
+
+
+      return Math.floor(
+        number
+      );
+
+    }
+
+
+    /* =====================================================
+       USERNAME
+       ===================================================== */
+
+    function createUsername(
+      displayName,
+      email,
+      profileUsername
+    ) {
+
+      const savedUsername =
+        safeText(
+          profileUsername
+        );
+
+
+      if (
+        savedUsername
+      ) {
+
+        return savedUsername
+          .startsWith("@")
+          ? savedUsername
+          : "@" + savedUsername;
+
+      }
+
+
+      const name =
+        safeText(
+          displayName
+        );
+
+
+      if (name) {
+
+        const generated =
+          name
+            .toLowerCase()
+            .replace(
+              /[^a-z0-9]+/g,
+              "_"
+            )
+            .replace(
+              /^_+|_+$/g,
+              ""
+            );
+
+
+        if (generated) {
+
+          return "@" +
+            generated;
+
+        }
+
+      }
+
+
+      const emailName =
+        safeText(
+          email
+            .split("@")[0],
+          "zemivo_user"
+        );
+
+
+      const generatedEmailName =
+        emailName
+          .toLowerCase()
+          .replace(
+            /[^a-z0-9]+/g,
+            "_"
+          )
+          .replace(
+            /^_+|_+$/g,
+            ""
+          );
+
+
+      return "@" +
+        (
+          generatedEmailName ||
+          "zemivo_user"
+        );
+
+    }
+
+
+    /* =====================================================
+       AVATAR
+       ===================================================== */
+
+    function setAvatar(
+      displayName,
+      photoURL
+    ) {
+
+      const name =
+        safeText(
+          displayName,
+          "Zemivo User"
+        );
+
+
+      const firstLetter =
+        name
+          .charAt(0)
+          .toUpperCase();
+
+
+      avatarLetter.textContent =
+        firstLetter ||
+        "Z";
+
+
+      const imageURL =
+        safeText(
+          photoURL
+        );
+
+
+      if (
+        imageURL
+      ) {
+
+        avatarImage.src =
+          imageURL;
+
+
+        avatarImage.onload =
+          function() {
+
+            avatarImage.style.display =
+              "block";
+
+            avatarLetter.style.display =
+              "none";
+
+          };
+
+
+        avatarImage.onerror =
+          function() {
+
+            avatarImage.style.display =
+              "none";
+
+            avatarLetter.style.display =
+              "block";
+
+          };
+
+      }
+      else {
+
+        avatarImage.style.display =
+          "none";
+
+        avatarLetter.style.display =
+          "block";
+
+      }
+
+    }
+
+
+    /* =====================================================
+       COUNTRY
+       ===================================================== */
+
+    function formatCountry(
+      profile
+    ) {
+
+      const savedCountry =
+        safeText(
+          profile.country
+        );
+
+
+      const countryCode =
+        safeText(
+          profile.countryCode
+        );
+
+
+      if (
+        savedCountry
+      ) {
+
+        if (
+          countryCode
+        ) {
+
+          return (
+            countryFlag(
+              countryCode
+            ) +
+            " " +
+            savedCountry
+          );
+
+        }
+
+
+        return "🌍 " +
+          savedCountry;
+
+      }
+
+
+      return "🌍 Global";
+
+    }
+
+
+    /* =====================================================
+       COUNTRY FLAG
+       ===================================================== */
+
+    function countryFlag(
+      countryCode
+    ) {
+
+      const code =
+        countryCode
+          .toUpperCase();
+
+
+      if (
+        !/^[A-Z]{2}$/.test(
+          code
+        )
+      ) {
+
+        return "🌍";
+
+      }
+
+
+      return code
+        .split("")
+        .map(
+          function(letter) {
+
+            return String
+              .fromCodePoint(
+                127397 +
+                letter.charCodeAt(0)
+              );
+
+          }
+        )
+        .join("");
+
+    }
+
+
+    /* =====================================================
        VOICE DATABASE
-       ========================= */
+       ===================================================== */
 
     const greetings = {
 
       bn: [
+
         "Zemivo-তে স্বাগতম। নতুন একটি সংযোগের গল্প আবিষ্কার করুন।",
 
         "আপনাকে Zemivo-তে স্বাগতম। হয়তো এই সংযোগ থেকেই শুরু হবে নতুন একটি গল্প।",
@@ -502,10 +1137,12 @@
         "একটি নতুন পরিচয়, একটি নতুন গল্প। Zemivo-তে স্বাগতম।",
 
         "আপনার এই যাত্রা সুন্দর হোক। Zemivo-তে স্বাগতম।"
+
       ],
 
 
       en: [
+
         "Welcome to this Zemivo profile. Discover a new connection.",
 
         "Welcome to Zemivo. Every connection can begin a new story.",
@@ -513,49 +1150,64 @@
         "Glad to see you here. Explore this Zemivo profile.",
 
         "A new connection can begin with a simple visit. Welcome to Zemivo."
+
       ],
 
 
       hi: [
+
         "Zemivo प्रोफ़ाइल में आपका स्वागत है। एक नया जुड़ाव खोजें।"
+
       ],
 
 
       ar: [
+
         "مرحبًا بك في ملف Zemivo. اكتشف اتصالًا جديدًا."
+
       ],
 
 
       fr: [
+
         "Bienvenue sur ce profil Zemivo. Découvrez une nouvelle connexion."
+
       ],
 
 
       es: [
+
         "Bienvenido a este perfil de Zemivo. Descubre una nueva conexión."
+
       ],
 
 
       de: [
+
         "Willkommen auf diesem Zemivo-Profil. Entdecke eine neue Verbindung."
+
       ],
 
 
       ja: [
+
         "Zemivoプロフィールへようこそ。新しいつながりを見つけてください。"
+
       ],
 
 
       ko: [
+
         "Zemivo 프로필에 오신 것을 환영합니다. 새로운 인연을 만나보세요."
+
       ]
 
     };
 
 
-    /* =========================
-       LANGUAGE DETECTION
-       ========================= */
+    /* =====================================================
+       LANGUAGE
+       ===================================================== */
 
     function getLanguage() {
 
@@ -567,11 +1219,14 @@
 
 
       const languageCode =
-        browserLanguage.split("-")[0];
+        browserLanguage
+          .split("-")[0];
 
 
       if (
-        greetings[languageCode]
+        greetings[
+          languageCode
+        ]
       ) {
 
         return languageCode;
@@ -584,9 +1239,9 @@
     }
 
 
-    /* =========================
-       SELECT GREETING
-       ========================= */
+    /* =====================================================
+       GREETING
+       ===================================================== */
 
     function getGreeting() {
 
@@ -595,20 +1250,25 @@
 
 
       const list =
-        greetings[language];
+        greetings[
+          language
+        ];
 
 
       const index =
         Math.floor(
-          Math.random() * list.length
+          Math.random() *
+          list.length
         );
 
 
       return {
 
-        text: list[index],
+        text:
+          list[index],
 
-        language: language
+        language:
+          language
 
       };
 
@@ -619,17 +1279,16 @@
       getGreeting();
 
 
-    document.getElementById(
-      "voiceMessage"
-    ).textContent =
+    voiceMessage.textContent =
       selectedGreeting.text;
 
 
-    /* =========================
-       VOICE FUNCTION
-       ========================= */
+    /* =====================================================
+       VOICE ENGINE
+       ===================================================== */
 
-    let availableVoices = [];
+    let availableVoices =
+      [];
 
 
     function loadVoices() {
@@ -639,7 +1298,8 @@
       ) {
 
         availableVoices =
-          speechSynthesis.getVoices();
+          window.speechSynthesis
+            .getVoices();
 
       }
 
@@ -653,7 +1313,8 @@
       "speechSynthesis" in window
     ) {
 
-      speechSynthesis.onvoiceschanged =
+      window.speechSynthesis
+        .onvoiceschanged =
         function() {
 
           loadVoices();
@@ -666,7 +1327,10 @@
     function speakGreeting() {
 
       if (
-        !("speechSynthesis" in window)
+        !(
+          "speechSynthesis"
+          in window
+        )
       ) {
 
         alert(
@@ -678,36 +1342,26 @@
       }
 
 
-      const button =
-        document.getElementById(
-          "voiceButton"
-        );
+      voiceButton.disabled =
+        true;
 
 
-      button.disabled = true;
-
-      button.textContent =
+      voiceButton.textContent =
         "🔊 Playing...";
 
 
-      speechSynthesis.cancel();
+      window.speechSynthesis
+        .cancel();
 
-
-      /*
-        Android Chrome-এ speech engine
-        আটকে থাকলে resume করে চালু করা।
-      */
 
       try {
 
-        speechSynthesis.resume();
+        window.speechSynthesis
+          .resume();
 
-      } catch (e) {}
+      }
+      catch (error) {}
 
-
-      /*
-        Voice list আবার load করা।
-      */
 
       loadVoices();
 
@@ -719,21 +1373,23 @@
 
 
       speech.lang =
-        selectedGreeting.language === "bn"
+        selectedGreeting.language ===
+        "bn"
           ? "bn-BD"
           : selectedGreeting.language;
 
 
-      speech.rate = 0.88;
-
-      speech.pitch = 1;
-
-      speech.volume = 1;
+      speech.rate =
+        0.88;
 
 
-      /*
-        প্রথমে নির্দিষ্ট ভাষার voice খোঁজা।
-      */
+      speech.pitch =
+        1;
+
+
+      speech.volume =
+        1;
+
 
       let matchingVoice =
         availableVoices.find(
@@ -749,31 +1405,46 @@
         );
 
 
-      /*
-        বাংলা voice না পেলে Bengali voice
-        আলাদাভাবে খোঁজা।
-      */
-
       if (
         !matchingVoice &&
-        selectedGreeting.language === "bn"
+        selectedGreeting.language ===
+          "bn"
       ) {
 
         matchingVoice =
           availableVoices.find(
             function(voice) {
 
-              const lang =
-                voice.lang.toLowerCase();
+              const voiceLanguage =
+                voice.lang
+                  .toLowerCase();
 
-              const name =
-                voice.name.toLowerCase();
+
+              const voiceName =
+                voice.name
+                  .toLowerCase();
+
 
               return (
-                lang.includes("bn") ||
-                lang.includes("ben") ||
-                name.includes("bengali") ||
-                name.includes("bangla")
+
+                voiceLanguage
+                  .includes("bn")
+
+                ||
+
+                voiceLanguage
+                  .includes("ben")
+
+                ||
+
+                voiceName
+                  .includes("bengali")
+
+                ||
+
+                voiceName
+                  .includes("bangla")
+
               );
 
             }
@@ -782,7 +1453,9 @@
       }
 
 
-      if (matchingVoice) {
+      if (
+        matchingVoice
+      ) {
 
         speech.voice =
           matchingVoice;
@@ -790,66 +1463,53 @@
       }
 
 
-      /*
-        Speech শেষ হলে Button আগের অবস্থায়।
-      */
-
       speech.onend =
         function() {
 
-          button.disabled = false;
+          voiceButton.disabled =
+            false;
 
-          button.textContent =
+          voiceButton.textContent =
             "🔊 Play Welcome";
 
         };
 
-
-      /*
-        Error হলে Button আবার চালু হবে।
-      */
 
       speech.onerror =
         function() {
 
-          button.disabled = false;
+          voiceButton.disabled =
+            false;
 
-          button.textContent =
+          voiceButton.textContent =
             "🔊 Play Welcome";
-
-          /*
-            কিছু Android browser-এ voice
-            প্রথমবার fail করলে আবার resume করা।
-          */
-
-          try {
-
-            speechSynthesis.resume();
-
-          } catch (e) {}
 
         };
 
 
-      /*
-        Android browser-এ click event-এর
-        ভেতরেই speech শুরু হচ্ছে।
-      */
-
       try {
 
-        speechSynthesis.speak(
-          speech
+        window.speechSynthesis
+          .speak(
+            speech
+          );
+
+      }
+      catch (error) {
+
+        console.error(
+          "Zemivo voice error:",
+          error
         );
 
-      } catch (error) {
 
-        console.error(error);
+        voiceButton.disabled =
+          false;
 
-        button.disabled = false;
 
-        button.textContent =
+        voiceButton.textContent =
           "🔊 Play Welcome";
+
 
         alert(
           "Voice playback could not start. Please try again."
@@ -860,28 +1520,307 @@
     }
 
 
-    document.getElementById(
-      "voiceButton"
-    ).addEventListener(
+    voiceButton.addEventListener(
       "click",
       speakGreeting
     );
 
 
-    /* =========================
-       FIREBASE LOGIN USER
-       ========================= */
+    /* =====================================================
+       PROFILE DATA
+       ===================================================== */
+
+    async function loadProfile(
+      user
+    ) {
+
+      let profile = {};
+
+
+      try {
+
+        const profileReference =
+          doc(
+            db,
+            "profiles",
+            user.uid
+          );
+
+
+        const profileSnapshot =
+          await getDoc(
+            profileReference
+          );
+
+
+        if (
+          profileSnapshot.exists()
+        ) {
+
+          profile =
+            profileSnapshot.data() ||
+            {};
+
+        }
+
+      }
+      catch (error) {
+
+        /*
+         * Authentication can still be
+         * displayed if the optional
+         * profile document cannot be read.
+         */
+
+        console.error(
+          "Zemivo profile read error:",
+          error
+        );
+
+      }
+
+
+      /*
+       * Firebase Auth displayName has
+       * priority when available.
+       */
+
+      const displayName =
+        safeText(
+          user.displayName
+        ) ||
+
+        safeText(
+          profile.displayName
+        ) ||
+
+        safeText(
+          profile.name
+        ) ||
+
+        "Zemivo User";
+
+
+      const email =
+        safeText(
+          user.email
+        ) ||
+
+        safeText(
+          profile.email
+        ) ||
+
+        "Email unavailable";
+
+
+      const photoURL =
+        safeText(
+          user.photoURL
+        ) ||
+
+        safeText(
+          profile.photoURL
+        ) ||
+
+        safeText(
+          profile.photoUrl
+        );
+
+
+      const profileUsername =
+        safeText(
+          profile.username
+        );
+
+
+      const userCountry =
+        formatCountry(
+          profile
+        );
+
+
+      /*
+       * Main profile
+       */
+
+      profileName.textContent =
+        displayName;
+
+
+      username.textContent =
+        createUsername(
+          displayName,
+          email,
+          profileUsername
+        );
+
+
+      userEmail.textContent =
+        email;
+
+
+      setAvatar(
+        displayName,
+        photoURL
+      );
+
+
+      country.textContent =
+        userCountry;
+
+
+      verifiedName.textContent =
+        displayName;
+
+
+      identityCountry.textContent =
+        userCountry;
+
+
+      /*
+       * UID
+       *
+       * The actual Firebase UID is
+       * displayed only as a shortened
+       * public identifier.
+       */
+
+      zemivoId.textContent =
+        "ZMV-" +
+        user.uid.substring(
+          0,
+          12
+        );
+
+
+      /*
+       * Statistics
+       *
+       * These values are read from
+       * the profile document when
+       * available.
+       */
+
+      followersCount.textContent =
+        safeNumber(
+          profile.followersCount ??
+          profile.followers
+        );
+
+
+      followingCount.textContent =
+        safeNumber(
+          profile.followingCount ??
+          profile.following
+        );
+
+
+      postsCount.textContent =
+        safeNumber(
+          profile.postsCount ??
+          profile.posts
+        );
+
+
+      /*
+       * Email verification
+       */
+
+      if (
+        user.emailVerified
+      ) {
+
+        emailVerificationStatus
+          .innerHTML =
+          '<span class="verification-badge">✓ Verified</span>';
+
+      }
+      else {
+
+        emailVerificationStatus
+          .innerHTML =
+          '<span style="color:#b45309;">Not verified</span>';
+
+      }
+
+
+      /*
+       * Phone verification
+       *
+       * Firebase Auth exposes
+       * providerData for linked
+       * authentication providers.
+       */
+
+      const hasPhoneProvider =
+        Array.isArray(
+          user.providerData
+        ) &&
+        user.providerData.some(
+          function(provider) {
+
+            return (
+              provider.providerId ===
+              "phone"
+            );
+
+          }
+        );
+
+
+      if (
+        hasPhoneProvider
+      ) {
+
+        phoneVerificationStatus
+          .innerHTML =
+          '<span class="verification-badge">✓ Verified</span>';
+
+      }
+      else {
+
+        phoneVerificationStatus
+          .innerHTML =
+          '<span style="color:#b45309;">Not linked</span>';
+
+      }
+
+
+      /*
+       * Account status
+       */
+
+      accountStatus.innerHTML =
+        '<span class="verification-badge">✓ Account Active</span>';
+
+
+      /*
+       * Show page
+       */
+
+      loading.style.display =
+        "none";
+
+
+      errorMessage.style.display =
+        "none";
+
+
+      profileContent.style.display =
+        "block";
+
+    }
+
+
+    /* =====================================================
+       AUTH STATE
+       ===================================================== */
 
     onAuthStateChanged(
       auth,
-      function(user) {
+      async function(user) {
 
         if (!user) {
-
-          /*
-            Login করা না থাকলে
-            Login page-এ পাঠাবে।
-          */
 
           window.location.href =
             "login.html";
@@ -891,155 +1830,84 @@
         }
 
 
-        /*
-          Firebase থেকে আসল email
-          নেওয়া হচ্ছে।
-        */
+        try {
 
-        const email =
-          user.email || "User";
-
-
-        userEmail.textContent =
-          email;
-
-
-        /*
-          Email থেকে temporary
-          display name তৈরি করা হচ্ছে।
-          পরে আমরা Firebase Profile
-          data দিয়ে replace করব।
-        */
-
-        let displayName =
-          email.split("@")[0];
-
-
-        displayName =
-          displayName
-            .replace(/[._-]/g, " ");
-
-
-        displayName =
-          displayName
-            .replace(/\b\w/g, function(letter) {
-              return letter.toUpperCase();
-            });
-
-
-        profileName.textContent =
-          displayName;
-
-
-        verifiedName.textContent =
-          displayName;
-
-
-        /*
-          Avatar
-        */
-
-        avatar.textContent =
-          displayName
-            .charAt(0)
-            .toUpperCase();
-
-
-        /*
-          Firebase UID
-          */
-
-        zemivoId.textContent =
-          "ZMV-" +
-          user.uid.substring(0, 12);
-
-
-        /*
-          Country এখন browser language
-          অনুযায়ী প্রাথমিকভাবে দেখানো হচ্ছে।
-          পরে Firebase profile country
-          দিয়ে replace করা হবে।
-        */
-
-        let countryText =
-          "🌍 Global";
-
-
-        if (
-          selectedGreeting.language === "bn"
-        ) {
-
-          countryText =
-            "🇧🇩 Bangladesh";
+          await loadProfile(
+            user
+          );
 
         }
+        catch (error) {
 
-        if (
-          selectedGreeting.language === "en"
-        ) {
+          console.error(
+            "Zemivo profile loading error:",
+            error
+          );
 
-          countryText =
-            "🌍 International";
+
+          loading.style.display =
+            "none";
+
+
+          profileContent.style.display =
+            "none";
+
+
+          errorMessage.style.display =
+            "block";
 
         }
-
-        if (
-          selectedGreeting.language === "hi"
-        ) {
-
-          countryText =
-            "🇮🇳 India";
-
-        }
-
-
-        document.getElementById(
-          "country"
-        ).textContent =
-          countryText;
-
-
-        document.getElementById(
-          "identityCountry"
-        ).textContent =
-          countryText;
-
-
-        loading.style.display =
-          "none";
-
-
-        profileContent.style.display =
-          "block";
 
       }
     );
 
 
-    /* =========================
+    /* =====================================================
        LOGOUT
-       ========================= */
+       ===================================================== */
 
-    document.getElementById(
-      "logoutButton"
-    ).addEventListener(
+    logoutButton.addEventListener(
       "click",
       async function() {
 
+        logoutButton.disabled =
+          true;
+
+
+        logoutButton.textContent =
+          "Logging out...";
+
+
         try {
 
-          await signOut(auth);
+          await signOut(
+            auth
+          );
+
 
           window.location.href =
             "login.html";
 
-        } catch (error) {
+        }
+        catch (error) {
+
+          console.error(
+            "Zemivo logout error:",
+            error
+          );
+
+
+          logoutButton.disabled =
+            false;
+
+
+          logoutButton.textContent =
+            "Log Out";
+
 
           alert(
             "Logout failed. Please try again."
           );
-
-          console.error(error);
 
         }
 
@@ -1049,5 +1917,7 @@
 
   </script>
 
+
 </body>
+
 </html>
