@@ -1,229 +1,1922 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
   <title>Zemivo - Friends</title>
 
+
   <style>
+
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
     }
 
+
     body {
-      font-family: Arial, sans-serif;
-      background: #f4f6f8;
-      color: #222;
+
+      font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+      min-height: 100vh;
+
+      color: #172554;
+
+      background:
+        radial-gradient(
+          circle at 10% 10%,
+          rgba(37,99,235,0.15),
+          transparent 30%
+        ),
+        radial-gradient(
+          circle at 90% 20%,
+          rgba(124,58,237,0.12),
+          transparent 30%
+        ),
+        linear-gradient(
+          135deg,
+          #f5f8ff,
+          #edf4ff 48%,
+          #f8fbff
+        );
+
     }
+
+
+    button,
+    input {
+
+      font-family: inherit;
+
+    }
+
+
+    button {
+
+      cursor: pointer;
+
+    }
+
+
+    /* =========================
+       TOPBAR
+    ========================= */
 
     .topbar {
-      background: white;
-      padding: 15px 20px;
+
+      position: sticky;
+
+      top: 0;
+
+      z-index: 100;
+
+      min-height: 70px;
+
+      padding: 12px 24px;
+
       display: flex;
+
       align-items: center;
+
       justify-content: space-between;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+
+      gap: 20px;
+
+      background:
+        rgba(255,255,255,0.90);
+
+      backdrop-filter:
+        blur(18px);
+
+      -webkit-backdrop-filter:
+        blur(18px);
+
+      border-bottom:
+        1px solid
+        rgba(148,163,184,0.18);
+
+      box-shadow:
+        0 8px 30px
+        rgba(37,99,235,0.08);
+
     }
+
 
     .logo {
-      font-size: 26px;
-      font-weight: bold;
+
+      font-size: 29px;
+
+      font-weight: 900;
+
+      letter-spacing: -1px;
+
       color: #2563eb;
+
     }
+
+
+    .nav {
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: center;
+
+      flex-wrap: wrap;
+
+      gap: 7px;
+
+    }
+
 
     .nav a {
-      margin-left: 12px;
-      color: #2563eb;
+
+      color: #334155;
+
       text-decoration: none;
-      font-weight: bold;
+
+      font-size: 14px;
+
+      font-weight: 700;
+
+      padding: 9px 12px;
+
+      border-radius: 12px;
+
+      transition: 0.2s ease;
+
     }
+
+
+    .nav a:hover {
+
+      color: #2563eb;
+
+      background:
+        rgba(37,99,235,0.09);
+
+      transform:
+        translateY(-1px);
+
+    }
+
+
+    .nav a.active {
+
+      color: #2563eb;
+
+      background:
+        rgba(37,99,235,0.10);
+
+    }
+
+
+    /* =========================
+       MAIN
+    ========================= */
 
     .container {
-      max-width: 900px;
-      margin: 25px auto;
-      padding: 0 15px;
+
+      width:
+        min(
+          1180px,
+          calc(100% - 30px)
+        );
+
+      margin:
+        30px auto;
+
+      display: grid;
+
+      grid-template-columns:
+        minmax(0, 1fr)
+        350px;
+
+      gap: 22px;
+
+      align-items: start;
+
     }
 
-    .card {
-      background: white;
-      padding: 20px;
-      margin-bottom: 18px;
-      border-radius: 15px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+
+    .main-area {
+
+      min-width: 0;
+
     }
 
-    h1 {
-      color: #2563eb;
+
+    /* =========================
+       HERO
+    ========================= */
+
+    .hero {
+
+      position: relative;
+
+      overflow: hidden;
+
+      min-height: 190px;
+
+      padding: 28px;
+
+      border-radius: 27px;
+
+      background:
+        linear-gradient(
+          135deg,
+          rgba(219,234,254,0.96),
+          rgba(239,246,255,0.95)
+        );
+
+      border:
+        1px solid
+        rgba(255,255,255,0.95);
+
+      box-shadow:
+        0 22px 55px
+        rgba(37,99,235,0.14);
+
+    }
+
+
+    .hero::after {
+
+      content: "";
+
+      position: absolute;
+
+      width: 260px;
+
+      height: 260px;
+
+      right: -100px;
+
+      top: -130px;
+
+      border-radius: 50%;
+
+      background:
+        rgba(96,165,250,0.18);
+
+    }
+
+
+    .hero-content {
+
+      position: relative;
+
+      z-index: 2;
+
+      display: flex;
+
+      align-items: center;
+
+      gap: 22px;
+
+    }
+
+
+    .hero-icon {
+
+      width: 105px;
+
+      height: 105px;
+
+      flex-shrink: 0;
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: center;
+
+      border-radius: 30px;
+
+      font-size: 55px;
+
+      background:
+        linear-gradient(
+          145deg,
+          #ffffff,
+          #dbeafe
+        );
+
+      box-shadow:
+        10px 15px 30px
+        rgba(37,99,235,0.18),
+        inset
+        2px 2px 8px
+        rgba(255,255,255,0.95);
+
+      animation:
+        floatHero 4s ease-in-out infinite;
+
+    }
+
+
+    @keyframes floatHero {
+
+      0%,
+      100% {
+
+        transform:
+          translateY(0);
+
+      }
+
+      50% {
+
+        transform:
+          translateY(-7px);
+
+      }
+
+    }
+
+
+    .hero h1 {
+
+      color: #0f172a;
+
+      font-size: 36px;
+
       margin-bottom: 8px;
+
     }
 
-    .search {
-      width: 100%;
-      padding: 13px;
-      border: 1px solid #ddd;
-      border-radius: 25px;
-      margin-top: 15px;
+
+    .hero p {
+
+      color: #52627a;
+
       font-size: 15px;
+
+      line-height: 1.5;
+
     }
+
+
+    .friend-count {
+
+      display: inline-flex;
+
+      align-items: center;
+
+      gap: 7px;
+
+      margin-top: 14px;
+
+      padding: 8px 14px;
+
+      border-radius: 25px;
+
+      background:
+        rgba(255,255,255,0.78);
+
+      color: #1d4ed8;
+
+      font-size: 13px;
+
+      font-weight: 800;
+
+      box-shadow:
+        0 7px 18px
+        rgba(37,99,235,0.09);
+
+    }
+
+
+    /* =========================
+       SEARCH
+    ========================= */
+
+    .search-card {
+
+      margin-top: 18px;
+
+      padding: 14px;
+
+      border-radius: 22px;
+
+      background:
+        rgba(255,255,255,0.88);
+
+      border:
+        1px solid
+        rgba(255,255,255,0.95);
+
+      box-shadow:
+        0 14px 35px
+        rgba(15,23,42,0.06);
+
+    }
+
+
+    .search-wrap {
+
+      position: relative;
+
+    }
+
+
+    .search-icon {
+
+      position: absolute;
+
+      left: 17px;
+
+      top: 50%;
+
+      transform:
+        translateY(-50%);
+
+      font-size: 20px;
+
+      pointer-events: none;
+
+    }
+
+
+    #friendSearch {
+
+      width: 100%;
+
+      height: 52px;
+
+      padding:
+        0 18px 0 50px;
+
+      border:
+        1px solid
+        #dbeafe;
+
+      border-radius: 28px;
+
+      outline: none;
+
+      background:
+        linear-gradient(
+          135deg,
+          #ffffff,
+          #f1f5ff
+        );
+
+      color: #172554;
+
+      font-size: 15px;
+
+      box-shadow:
+        inset
+        0 2px 8px
+        rgba(37,99,235,0.05);
+
+    }
+
+
+    #friendSearch:focus {
+
+      border-color:
+        #60a5fa;
+
+      box-shadow:
+        0 0 0 4px
+        rgba(37,99,235,0.09);
+
+    }
+
+
+    /* =========================
+       FRIEND LIST
+    ========================= */
+
+    .friend-list {
+
+      margin-top: 18px;
+
+      padding: 10px 18px;
+
+      border-radius: 25px;
+
+      background:
+        rgba(255,255,255,0.88);
+
+      border:
+        1px solid
+        rgba(255,255,255,0.95);
+
+      box-shadow:
+        0 20px 50px
+        rgba(15,23,42,0.08);
+
+    }
+
 
     .friend {
+
       display: flex;
+
       align-items: center;
+
       justify-content: space-between;
-      padding: 15px 0;
-      border-bottom: 1px solid #eee;
+
+      gap: 15px;
+
+      padding: 16px 7px;
+
+      border-bottom:
+        1px solid
+        rgba(148,163,184,0.16);
+
+      transition:
+        0.2s ease;
+
     }
+
 
     .friend:last-child {
+
       border-bottom: none;
+
     }
 
-    .avatar {
-      font-size: 35px;
-      margin-right: 12px;
+
+    .friend:hover {
+
+      transform:
+        translateX(3px);
+
     }
+
 
     .friend-info {
+
+      min-width: 0;
+
       display: flex;
+
       align-items: center;
+
+      gap: 13px;
+
     }
+
+
+    .avatar {
+
+      position: relative;
+
+      width: 60px;
+
+      height: 60px;
+
+      flex-shrink: 0;
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: center;
+
+      overflow: hidden;
+
+      border-radius: 50%;
+
+      background:
+        linear-gradient(
+          145deg,
+          #dbeafe,
+          #bfdbfe
+        );
+
+      color: #2563eb;
+
+      font-size: 30px;
+
+      font-weight: bold;
+
+      box-shadow:
+        6px 9px 18px
+        rgba(37,99,235,0.14);
+
+    }
+
+
+    .avatar img {
+
+      width: 100%;
+
+      height: 100%;
+
+      object-fit: cover;
+
+    }
+
+
+    .online-dot {
+
+      position: absolute;
+
+      right: 2px;
+
+      bottom: 3px;
+
+      width: 14px;
+
+      height: 14px;
+
+      border-radius: 50%;
+
+      border: 3px solid white;
+
+      background: #22c55e;
+
+    }
+
 
     .friend-name {
-      font-weight: bold;
+
+      color: #0f172a;
+
       font-size: 17px;
+
+      font-weight: 800;
+
+      white-space: nowrap;
+
+      overflow: hidden;
+
+      text-overflow: ellipsis;
+
     }
+
 
     .friend-status {
-      color: #777;
+
+      margin-top: 5px;
+
+      color: #64748b;
+
       font-size: 13px;
-      margin-top: 4px;
+
+      white-space: nowrap;
+
+      overflow: hidden;
+
+      text-overflow: ellipsis;
+
     }
+
 
     .button {
-      background: #2563eb;
-      color: white;
+
+      flex-shrink: 0;
+
       border: none;
-      padding: 9px 15px;
-      border-radius: 20px;
-      font-weight: bold;
-      cursor: pointer;
+
+      padding:
+        10px 17px;
+
+      border-radius: 23px;
+
+      color: white;
+
+      font-weight: 800;
+
+      background:
+        linear-gradient(
+          135deg,
+          #2563eb,
+          #4f46e5
+        );
+
+      box-shadow:
+        0 8px 18px
+        rgba(37,99,235,0.20);
+
+      transition:
+        0.2s ease;
+
     }
+
+
+    .button:hover {
+
+      transform:
+        translateY(-2px);
+
+      box-shadow:
+        0 11px 24px
+        rgba(37,99,235,0.27);
+
+    }
+
 
     .button.added {
-      background: #16a34a;
+
+      background:
+        linear-gradient(
+          135deg,
+          #16a34a,
+          #059669
+        );
+
     }
 
-    .footer {
-      text-align: center;
-      color: #777;
-      padding: 25px;
+
+    /* =========================
+       RIGHT 3D PANEL
+    ========================= */
+
+    .visual-card {
+
+      position: sticky;
+
+      top: 92px;
+
+      overflow: hidden;
+
+      min-height: 610px;
+
+      border-radius: 28px;
+
+      background:
+        linear-gradient(
+          145deg,
+          rgba(239,246,255,0.97),
+          rgba(224,231,255,0.92)
+        );
+
+      border:
+        1px solid
+        rgba(255,255,255,0.96);
+
+      box-shadow:
+        0 25px 60px
+        rgba(37,99,235,0.14);
+
     }
+
+
+    .visual-image {
+
+      width: 100%;
+
+      height: 385px;
+
+      display: block;
+
+      object-fit: cover;
+
+      border-radius:
+        28px 28px 0 0;
+
+    }
+
+
+    .visual-content {
+
+      padding: 25px;
+
+      text-align: center;
+
+    }
+
+
+    .visual-content h2 {
+
+      color: #0f172a;
+
+      font-size: 25px;
+
+      line-height: 1.2;
+
+      margin-bottom: 11px;
+
+    }
+
+
+    .visual-content p {
+
+      color: #64748b;
+
+      font-size: 14px;
+
+      line-height: 1.6;
+
+    }
+
+
+    .find-button {
+
+      width: 100%;
+
+      margin-top: 20px;
+
+      border: none;
+
+      padding: 13px 20px;
+
+      border-radius: 26px;
+
+      color: white;
+
+      font-weight: 800;
+
+      font-size: 14px;
+
+      background:
+        linear-gradient(
+          135deg,
+          #2563eb,
+          #4f46e5
+        );
+
+      box-shadow:
+        0 11px 25px
+        rgba(37,99,235,0.25);
+
+    }
+
+
+    /* =========================
+       LOADING / EMPTY
+    ========================= */
+
+    .loading,
+    .empty {
+
+      text-align: center;
+
+      padding: 45px 20px;
+
+      color: #64748b;
+
+    }
+
+
+    .error {
+
+      padding: 25px;
+
+      text-align: center;
+
+      color: #dc2626;
+
+    }
+
+
+    /* =========================
+       FOOTER
+    ========================= */
+
+    .footer {
+
+      width:
+        min(
+          1180px,
+          calc(100% - 30px)
+        );
+
+      margin:
+        25px auto;
+
+      padding: 15px;
+
+      text-align: center;
+
+      color: #64748b;
+
+      font-size: 13px;
+
+    }
+
+
+    /* =========================
+       MOBILE
+    ========================= */
+
+    @media (max-width: 850px) {
+
+      .container {
+
+        grid-template-columns: 1fr;
+
+      }
+
+
+      .visual-card {
+
+        position: relative;
+
+        top: auto;
+
+        min-height: auto;
+
+      }
+
+
+      .visual-image {
+
+        height: 300px;
+
+      }
+
+    }
+
+
+    @media (max-width: 600px) {
+
+      .topbar {
+
+        flex-direction: column;
+
+        align-items: flex-start;
+
+        padding:
+          12px 15px;
+
+      }
+
+
+      .nav {
+
+        width: 100%;
+
+        overflow-x: auto;
+
+        flex-wrap: nowrap;
+
+        justify-content: flex-start;
+
+      }
+
+
+      .nav a {
+
+        white-space: nowrap;
+
+        font-size: 12px;
+
+      }
+
+
+      .container {
+
+        width:
+          calc(100% - 20px);
+
+        margin-top: 15px;
+
+      }
+
+
+      .hero {
+
+        padding: 20px;
+
+        border-radius: 22px;
+
+      }
+
+
+      .hero-content {
+
+        align-items: flex-start;
+
+        gap: 14px;
+
+      }
+
+
+      .hero-icon {
+
+        width: 70px;
+
+        height: 70px;
+
+        border-radius: 20px;
+
+        font-size: 36px;
+
+      }
+
+
+      .hero h1 {
+
+        font-size: 26px;
+
+      }
+
+
+      .hero p {
+
+        font-size: 13px;
+
+      }
+
+
+      .friend-list {
+
+        padding:
+          8px 10px;
+
+        border-radius: 20px;
+
+      }
+
+
+      .friend {
+
+        gap: 8px;
+
+      }
+
+
+      .avatar {
+
+        width: 48px;
+
+        height: 48px;
+
+        font-size: 24px;
+
+      }
+
+
+      .friend-name {
+
+        font-size: 14px;
+
+      }
+
+
+      .friend-status {
+
+        font-size: 11px;
+
+      }
+
+
+      .button {
+
+        padding:
+          8px 10px;
+
+        font-size: 11px;
+
+      }
+
+
+      .visual-image {
+
+        height: 250px;
+
+      }
+
+
+      .visual-content {
+
+        padding: 20px;
+
+      }
+
+    }
+
   </style>
+
 </head>
+
 
 <body>
 
+
+  <!-- =========================
+       PAGE ISOLATED HEADER
+  ========================== -->
+
   <header class="topbar">
-    <div class="logo">Zemivo</div>
+
+    <div class="logo">
+      Zemivo
+    </div>
+
 
     <nav class="nav">
-      <a href="index.html">🏠 Home</a>
-      <a href="profile.html">👤 Profile</a>
-      <a href="messenger.html">💬 Messenger</a>
+
+      <a href="index.html">
+        🏠 Home
+      </a>
+
+      <a href="profile.html">
+        👤 Profile
+      </a>
+
+      <a
+        href="friends.html"
+        class="active"
+      >
+        👥 Friends
+      </a>
+
+      <a href="feed.html">
+        📰 Feed
+      </a>
+
+      <a href="messenger.html">
+        💬 Messenger
+      </a>
+
     </nav>
+
   </header>
+
+
+
+  <!-- =========================
+       PAGE
+  ========================== -->
 
   <main class="container">
 
-    <div class="card">
-      <h1>👥 Friends</h1>
-      <p>Find people and connect with your friends on Zemivo.</p>
 
-      <input
-        id="friendSearch"
-        class="search"
-        type="text"
-        placeholder="Search friends..."
+    <section class="main-area">
+
+
+      <!-- HERO -->
+
+      <div class="hero">
+
+        <div class="hero-content">
+
+          <div class="hero-icon">
+            👥
+          </div>
+
+
+          <div>
+
+            <h1>
+              Friends
+            </h1>
+
+            <p>
+              Find people and connect
+              with your friends on Zemivo.
+            </p>
+
+
+            <div
+              id="friendCount"
+              class="friend-count"
+            >
+              👥 Loading people...
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+
+      <!-- SEARCH -->
+
+      <div class="search-card">
+
+        <div class="search-wrap">
+
+          <span class="search-icon">
+            🔍
+          </span>
+
+          <input
+            id="friendSearch"
+            type="search"
+            placeholder="Search friends..."
+            autocomplete="off"
+          >
+
+        </div>
+
+      </div>
+
+
+
+      <!-- FRIEND LIST -->
+
+      <div
+        id="friendList"
+        class="friend-list"
       >
-    </div>
 
-    <div class="card" id="friendList">
-
-      <div class="friend">
-        <div class="friend-info">
-          <div class="avatar">👨</div>
-          <div>
-            <div class="friend-name">Zemivo User</div>
-            <div class="friend-status">New member</div>
-          </div>
+        <div class="loading">
+          Loading Zemivo people...
         </div>
-        <button class="button">Add Friend</button>
+
       </div>
 
-      <div class="friend">
-        <div class="friend-info">
-          <div class="avatar">👩</div>
-          <div>
-            <div class="friend-name">Creator User</div>
-            <div class="friend-status">Creator</div>
-          </div>
-        </div>
-        <button class="button">Add Friend</button>
+
+    </section>
+
+
+
+    <!-- =========================
+         3D VISUAL
+    ========================== -->
+
+    <aside class="visual-card">
+
+
+      <img
+        class="visual-image"
+        src="zemivo-friends-3d.png"
+        alt="Zemivo 3D Friends"
+      >
+
+
+      <div class="visual-content">
+
+        <h2>
+          More Friends
+          More Possibilities
+        </h2>
+
+
+        <p>
+          Connect with people,
+          share your moments,
+          and grow your world
+          on Zemivo.
+        </p>
+
+
+        <button
+          id="findFriendsButton"
+          class="find-button"
+          type="button"
+        >
+          👥 Find Friends
+        </button>
+
       </div>
 
-      <div class="friend">
-        <div class="friend-info">
-          <div class="avatar">🧑</div>
-          <div>
-            <div class="friend-name">Zemivo Member</div>
-            <div class="friend-status">Active on Zemivo</div>
-          </div>
-        </div>
-        <button class="button">Add Friend</button>
-      </div>
 
-    </div>
+    </aside>
+
 
   </main>
 
+
+
   <footer class="footer">
-    © 2026 Zemivo — Connect. Create. Earn.
+
+    © 2026 Zemivo —
+    Connect. Create. Earn.
+
   </footer>
 
-  <script>
-    const buttons = document.querySelectorAll(".button");
 
-    buttons.forEach(function(button) {
-      button.addEventListener("click", function() {
-        if (button.classList.contains("added")) {
-          button.classList.remove("added");
-          button.textContent = "Add Friend";
-        } else {
-          button.classList.add("added");
-          button.textContent = "Added ✓";
+
+  <!-- =========================
+       ZEMIVO SECURITY + PAGE LOGIC
+  ========================== -->
+
+  <script type="module">
+
+    import {
+      auth,
+      db
+    } from "./zemivo-security.js";
+
+
+    import {
+      onAuthStateChanged
+    } from
+      "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
+
+
+    import {
+      collection,
+      query,
+      onSnapshot
+    } from
+      "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
+
+
+
+    /* =========================
+       ELEMENTS
+    ========================== */
+
+    const friendList =
+      document.getElementById(
+        "friendList"
+      );
+
+
+    const friendSearch =
+      document.getElementById(
+        "friendSearch"
+      );
+
+
+    const friendCount =
+      document.getElementById(
+        "friendCount"
+      );
+
+
+    const findFriendsButton =
+      document.getElementById(
+        "findFriendsButton"
+      );
+
+
+
+    /* =========================
+       PAGE STATE
+    ========================== */
+
+    let currentUser = null;
+
+    let allPeople = [];
+
+
+
+    /* =========================
+       HTML SAFETY
+    ========================== */
+
+    function escapeHtml(value) {
+
+      if (
+        value === undefined ||
+        value === null
+      ) {
+
+        return "";
+
+      }
+
+
+      return String(value)
+
+        .replaceAll(
+          "&",
+          "&amp;"
+        )
+
+        .replaceAll(
+          "<",
+          "&lt;"
+        )
+
+        .replaceAll(
+          ">",
+          "&gt;"
+        )
+
+        .replaceAll(
+          '"',
+          "&quot;"
+        )
+
+        .replaceAll(
+          "'",
+          "&#039;"
+        );
+
+    }
+
+
+
+    /* =========================
+       INITIAL LETTER
+    ========================== */
+
+    function getInitial(name) {
+
+      const safeName =
+        String(name || "Z");
+
+      return safeName
+        .charAt(0)
+        .toUpperCase();
+
+    }
+
+
+
+    /* =========================
+       AUTH
+    ========================== */
+
+    onAuthStateChanged(
+      auth,
+      function(user) {
+
+        if (!user) {
+
+          friendCount.textContent =
+            "🔒 Please log in first.";
+
+          friendList.innerHTML = `
+
+            <div class="empty">
+
+              🔒
+
+              <br><br>
+
+              Please log in to see
+              Zemivo people.
+
+            </div>
+
+          `;
+
+          setTimeout(
+            function() {
+
+              window.location.href =
+                "login.html";
+
+            },
+            900
+          );
+
+          return;
+
         }
-      });
-    });
 
-    const search = document.getElementById("friendSearch");
-    const friends = document.querySelectorAll(".friend");
 
-    search.addEventListener("input", function() {
-      const text = search.value.toLowerCase();
+        currentUser =
+          user;
 
-      friends.forEach(function(friend) {
-        const name = friend
-          .querySelector(".friend-name")
-          .textContent
-          .toLowerCase();
 
-        friend.style.display =
-          name.includes(text) ? "flex" : "none";
-      });
-    });
+        loadPeople();
+
+      }
+    );
+
+
+
+    /* =========================
+       LOAD PEOPLE
+    ========================== */
+
+    function loadPeople() {
+
+      friendList.innerHTML = `
+
+        <div class="loading">
+          Loading Zemivo people...
+        </div>
+
+      `;
+
+
+      try {
+
+        const peopleQuery =
+          query(
+            collection(
+              db,
+              "profiles"
+            )
+          );
+
+
+        onSnapshot(
+          peopleQuery,
+          function(snapshot) {
+
+            allPeople = [];
+
+
+            snapshot.forEach(
+              function(
+                profileSnapshot
+              ) {
+
+                const profile =
+                  profileSnapshot.data();
+
+
+                const uid =
+                  profileSnapshot.id;
+
+
+                if (
+                  currentUser &&
+                  uid ===
+                  currentUser.uid
+                ) {
+
+                  return;
+
+                }
+
+
+                allPeople.push({
+
+                  uid:
+                    uid,
+
+                  displayName:
+                    profile.displayName ||
+                    profile.name ||
+                    "Zemivo User",
+
+                  email:
+                    profile.email ||
+                    "",
+
+                  photoURL:
+                    profile.photoURL ||
+                    "",
+
+                  country:
+                    profile.country ||
+                    "",
+
+                  role:
+                    profile.role ||
+                    "Zemivo Member"
+
+                });
+
+              }
+            );
+
+
+            renderPeople(
+              allPeople
+            );
+
+          },
+          function(error) {
+
+            console.error(
+              "Zemivo friends error:",
+              error
+            );
+
+
+            friendList.innerHTML = `
+
+              <div class="error">
+
+                Could not load Zemivo people.
+
+                <br><br>
+
+                Please check your
+                Firestore permissions.
+
+              </div>
+
+            `;
+
+            friendCount.textContent =
+              "⚠️ People unavailable";
+
+          }
+        );
+
+      }
+      catch(error) {
+
+        console.error(error);
+
+        friendList.innerHTML = `
+
+          <div class="error">
+            Could not load people.
+          </div>
+
+        `;
+
+      }
+
+    }
+
+
+
+    /* =========================
+       RENDER PEOPLE
+    ========================== */
+
+    function renderPeople(
+      people
+    ) {
+
+      friendList.innerHTML = "";
+
+
+      friendCount.textContent =
+        "👥 " +
+        people.length +
+        " people available";
+
+
+      if (
+        people.length === 0
+      ) {
+
+        friendList.innerHTML = `
+
+          <div class="empty">
+
+            👥
+
+            <br><br>
+
+            No other Zemivo users
+            found yet.
+
+          </div>
+
+        `;
+
+        return;
+
+      }
+
+
+      people.forEach(
+        function(person) {
+
+          const friend =
+            document.createElement(
+              "div"
+            );
+
+
+          friend.className =
+            "friend";
+
+
+          const avatar =
+            person.photoURL
+
+            ?
+
+            `
+              <img
+                src="${escapeHtml(
+                  person.photoURL
+                )}"
+                alt="${escapeHtml(
+                  person.displayName
+                )}"
+                loading="lazy"
+              >
+            `
+
+            :
+
+            escapeHtml(
+              getInitial(
+                person.displayName
+              )
+            );
+
+
+          const countryText =
+            person.country
+            ||
+            person.role
+            ||
+            "Zemivo Member";
+
+
+          friend.innerHTML = `
+
+            <div class="friend-info">
+
+              <div class="avatar">
+
+                ${avatar}
+
+                <span
+                  class="online-dot"
+                  title="Zemivo user"
+                ></span>
+
+              </div>
+
+
+              <div>
+
+                <div class="friend-name">
+
+                  ${escapeHtml(
+                    person.displayName
+                  )}
+
+                </div>
+
+
+                <div class="friend-status">
+
+                  ${escapeHtml(
+                    countryText
+                  )}
+
+                </div>
+
+              </div>
+
+            </div>
+
+
+            <button
+              class="button"
+              type="button"
+              data-uid="${escapeHtml(
+                person.uid
+              )}"
+            >
+              Add Friend
+            </button>
+
+          `;
+
+
+          const button =
+            friend.querySelector(
+              ".button"
+            );
+
+
+          button.addEventListener(
+            "click",
+            function() {
+
+              toggleFriendButton(
+                button
+              );
+
+            }
+          );
+
+
+          friendList.appendChild(
+            friend
+          );
+
+        }
+      );
+
+    }
+
+
+
+    /* =========================
+       ADD FRIEND UI
+       PAGE-LOCAL STATE
+    ========================== */
+
+    function toggleFriendButton(
+      button
+    ) {
+
+      if (
+        button.classList.contains(
+          "added"
+        )
+      ) {
+
+        button.classList.remove(
+          "added"
+        );
+
+        button.textContent =
+          "Add Friend";
+
+        return;
+
+      }
+
+
+      button.classList.add(
+        "added"
+      );
+
+      button.textContent =
+        "Request Sent ✓";
+
+    }
+
+
+
+    /* =========================
+       SEARCH
+    ========================== */
+
+    friendSearch.addEventListener(
+      "input",
+      function() {
+
+        const search =
+          friendSearch.value
+            .trim()
+            .toLowerCase();
+
+
+        if (!search) {
+
+          renderPeople(
+            allPeople
+          );
+
+          return;
+
+        }
+
+
+        const filtered =
+          allPeople.filter(
+            function(person) {
+
+              return (
+
+                person.displayName
+                  .toLowerCase()
+                  .includes(
+                    search
+                  )
+
+                ||
+
+                person.email
+                  .toLowerCase()
+                  .includes(
+                    search
+                  )
+
+                ||
+
+                person.country
+                  .toLowerCase()
+                  .includes(
+                    search
+                  )
+
+              );
+
+            }
+          );
+
+
+        renderPeople(
+          filtered
+        );
+
+      }
+    );
+
+
+
+    /* =========================
+       FIND FRIENDS BUTTON
+    ========================== */
+
+    findFriendsButton.addEventListener(
+      "click",
+      function() {
+
+        friendSearch.focus();
+
+        window.scrollTo({
+
+          top: 0,
+
+          behavior: "smooth"
+
+        });
+
+      }
+    );
+
   </script>
 
+
 </body>
+
 </html>
