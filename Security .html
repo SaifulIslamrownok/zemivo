@@ -1,25 +1,1298 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Zemivo - Security</title>
-<style>
-body{font-family:Arial;background:#f4f6f8;margin:0}
-.card{background:white;max-width:700px;margin:30px auto;padding:25px;border-radius:15px}
-.item{padding:18px;border-bottom:1px solid #eee}
-button{background:#2563eb;color:white;border:0;padding:10px 16px;border-radius:20px}
-</style>
-</head>
-<body>
-<div class="card">
-<h1>🛡️ Security</h1>
-<p>Protect your Zemivo account.</p>
 
-<div class="item">🔑 Password Security<br><button onclick="alert('Password settings opened')">Manage</button></div>
-<div class="item">📱 Login Alerts<br><button onclick="alert('Login alerts enabled')">Enable</button></div>
-<div class="item">🔐 Two-Factor Authentication<br><button onclick="alert('2FA setup opened')">Set Up</button></div>
-<div class="item">💻 Active Sessions<br><button onclick="alert('No active sessions shown yet')">View</button></div>
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+  name="viewport"
+  content="width=device-width,initial-scale=1.0"
+>
+
+<title>Zemivo - Security</title>
+
+<style>
+
+*{
+  box-sizing:border-box;
+}
+
+body{
+  font-family:Arial,sans-serif;
+  background:#f4f6f8;
+  margin:0;
+  color:#222;
+}
+
+.topbar{
+  background:#fff;
+  padding:14px 20px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  box-shadow:0 2px 8px rgba(0,0,0,.08);
+  position:sticky;
+  top:0;
+  z-index:100;
+}
+
+.logo{
+  color:#2563eb;
+  font-size:26px;
+  font-weight:bold;
+}
+
+.back{
+  color:#2563eb;
+  text-decoration:none;
+  font-weight:bold;
+}
+
+.card{
+  background:#fff;
+  max-width:700px;
+  margin:30px auto;
+  padding:25px;
+  border-radius:15px;
+  box-shadow:0 3px 12px rgba(0,0,0,.07);
+}
+
+h1{
+  margin-top:0;
+}
+
+.subtitle{
+  color:#666;
+  line-height:1.5;
+}
+
+.item{
+  padding:20px 0;
+  border-bottom:1px solid #eee;
+}
+
+.item:last-child{
+  border-bottom:none;
+}
+
+.item-title{
+  font-size:17px;
+  font-weight:bold;
+}
+
+.item-description{
+  color:#777;
+  font-size:13px;
+  line-height:1.5;
+  margin:7px 0 12px;
+}
+
+button{
+  background:#2563eb;
+  color:#fff;
+  border:0;
+  padding:10px 16px;
+  border-radius:20px;
+  cursor:pointer;
+  font-weight:bold;
+}
+
+button:disabled{
+  opacity:.6;
+  cursor:not-allowed;
+}
+
+.secondary{
+  background:#64748b;
+}
+
+.danger{
+  background:#dc2626;
+}
+
+.status{
+  display:inline-block;
+  margin-left:8px;
+  font-size:12px;
+  font-weight:bold;
+  padding:4px 8px;
+  border-radius:12px;
+  background:#dcfce7;
+  color:#15803d;
+}
+
+.status.warning{
+  background:#fef3c7;
+  color:#b45309;
+}
+
+.status.off{
+  background:#f1f5f9;
+  color:#64748b;
+}
+
+.notice{
+  display:none;
+  margin-top:20px;
+  padding:12px 15px;
+  border-radius:10px;
+  font-size:14px;
+  line-height:1.5;
+}
+
+.notice.success{
+  display:block;
+  background:#dcfce7;
+  color:#166534;
+}
+
+.notice.error{
+  display:block;
+  background:#fee2e2;
+  color:#991b1b;
+}
+
+.notice.info{
+  display:block;
+  background:#e0f2fe;
+  color:#075985;
+}
+
+.loading{
+  text-align:center;
+  padding:40px;
+  color:#666;
+}
+
+.user-email{
+  font-size:13px;
+  color:#777;
+  margin-top:5px;
+  word-break:break-word;
+}
+
+.modal{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.45);
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+  z-index:500;
+}
+
+.modal.show{
+  display:flex;
+}
+
+.modal-box{
+  width:100%;
+  max-width:430px;
+  background:#fff;
+  border-radius:16px;
+  padding:22px;
+  box-shadow:0 10px 35px rgba(0,0,0,.2);
+}
+
+.modal-box h2{
+  margin-top:0;
+}
+
+.modal-box label{
+  display:block;
+  margin-top:12px;
+  font-size:13px;
+  color:#555;
+}
+
+.modal-box input{
+  width:100%;
+  margin-top:6px;
+  padding:12px;
+  border:1px solid #ddd;
+  border-radius:10px;
+  outline:none;
+  font-size:15px;
+}
+
+.modal-actions{
+  display:flex;
+  gap:8px;
+  margin-top:18px;
+}
+
+.modal-actions button{
+  flex:1;
+}
+
+.session-info{
+  padding:12px;
+  background:#f8fafc;
+  border-radius:10px;
+  color:#555;
+  font-size:13px;
+  line-height:1.5;
+}
+
+@media(max-width:600px){
+
+  .topbar{
+    padding:13px 15px;
+  }
+
+  .logo{
+    font-size:23px;
+  }
+
+  .card{
+    margin:20px 10px;
+    padding:20px;
+  }
+
+  .item{
+    padding:18px 0;
+  }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<header class="topbar">
+
+  <div class="logo">
+    Zemivo
+  </div>
+
+  <a
+    class="back"
+    href="profile.html"
+  >
+    ← Profile
+  </a>
+
+</header>
+
+
+<main class="card">
+
+  <h1>
+    🛡️ Security
+  </h1>
+
+  <p class="subtitle">
+    Protect your Zemivo account and manage important security settings.
+  </p>
+
+  <div
+    id="userInfo"
+    class="loading"
+  >
+    Checking your account...
+  </div>
+
+
+  <!-- PASSWORD -->
+
+  <div class="item">
+
+    <div class="item-title">
+      🔑 Password Security
+    </div>
+
+    <div class="item-description">
+      Change your password or request a secure password reset email.
+    </div>
+
+    <button
+      id="passwordButton"
+      type="button"
+      disabled
+    >
+      Manage
+    </button>
+
+  </div>
+
+
+  <!-- LOGIN ALERTS -->
+
+  <div class="item">
+
+    <div class="item-title">
+      📱 Login Alerts
+
+      <span
+        id="loginAlertStatus"
+        class="status"
+      >
+        Active
+      </span>
+
+    </div>
+
+    <div class="item-description">
+      Zemivo will keep this security area ready for future login-alert and account-activity notifications.
+    </div>
+
+    <button
+      id="loginAlertButton"
+      type="button"
+    >
+      View Security Info
+    </button>
+
+  </div>
+
+
+  <!-- TWO FACTOR -->
+
+  <div class="item">
+
+    <div class="item-title">
+      🔐 Two-Factor Authentication
+
+      <span
+        id="mfaStatus"
+        class="status off"
+      >
+        Not configured
+      </span>
+
+    </div>
+
+    <div class="item-description">
+      Add an additional authentication factor to protect sensitive account access.
+    </div>
+
+    <button
+      id="mfaButton"
+      type="button"
+    >
+      Set Up
+    </button>
+
+  </div>
+
+
+  <!-- ACTIVE SESSIONS -->
+
+  <div class="item">
+
+    <div class="item-title">
+      💻 Active Sessions
+    </div>
+
+    <div class="item-description">
+      Firebase Authentication manages your signed-in session. Detailed device/session management can be added later with the appropriate backend controls.
+    </div>
+
+    <button
+      id="sessionButton"
+      type="button"
+    >
+      View
+    </button>
+
+  </div>
+
+
+  <div
+    id="notice"
+    class="notice"
+  ></div>
+
+</main>
+
+
+<!-- PASSWORD MODAL -->
+
+<div
+  id="passwordModal"
+  class="modal"
+>
+
+  <div class="modal-box">
+
+    <h2>
+      🔑 Password Security
+    </h2>
+
+    <p class="subtitle">
+      Choose an option for your Zemivo account.
+    </p>
+
+    <button
+      id="changePasswordButton"
+      type="button"
+    >
+      Change Password
+    </button>
+
+    <button
+      id="resetPasswordButton"
+      type="button"
+      class="secondary"
+      style="margin-top:10px;"
+    >
+      Send Reset Email
+    </button>
+
+    <button
+      id="closePasswordModal"
+      type="button"
+      class="danger"
+      style="margin-top:10px;"
+    >
+      Close
+    </button>
+
+  </div>
+
 </div>
+
+
+<!-- SESSION MODAL -->
+
+<div
+  id="sessionModal"
+  class="modal"
+>
+
+  <div class="modal-box">
+
+    <h2>
+      💻 Current Session
+    </h2>
+
+    <div
+      id="sessionInfo"
+      class="session-info"
+    >
+      Loading...
+    </div>
+
+    <button
+      id="closeSessionModal"
+      type="button"
+      class="secondary"
+      style="margin-top:15px;width:100%;"
+    >
+      Close
+    </button>
+
+  </div>
+
+</div>
+
+
+<!-- CHANGE PASSWORD MODAL -->
+
+<div
+  id="changePasswordModal"
+  class="modal"
+>
+
+  <div class="modal-box">
+
+    <h2>
+      🔑 Change Password
+    </h2>
+
+    <p class="subtitle">
+      For security, Firebase may require you to sign in again before changing your password.
+    </p>
+
+    <label for="newPassword">
+      New Password
+    </label>
+
+    <input
+      id="newPassword"
+      type="password"
+      autocomplete="new-password"
+      placeholder="Enter new password"
+    >
+
+    <label for="confirmPassword">
+      Confirm Password
+    </label>
+
+    <input
+      id="confirmPassword"
+      type="password"
+      autocomplete="new-password"
+      placeholder="Confirm new password"
+    >
+
+    <div class="modal-actions">
+
+      <button
+        id="savePasswordButton"
+        type="button"
+      >
+        Save
+      </button>
+
+      <button
+        id="cancelChangePassword"
+        type="button"
+        class="secondary"
+      >
+        Cancel
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<script type="module">
+
+
+/* =====================================================
+   ZEMIVO SECURITY SETTINGS
+   ===================================================== */
+
+import {
+  auth
+} from "./zemivo-security.js";
+
+
+import {
+  onAuthStateChanged,
+  sendPasswordResetEmail,
+  updatePassword,
+  reauthenticateWithCredential,
+  EmailAuthProvider
+} from
+  "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
+
+
+/* =====================================================
+   ELEMENTS
+   ===================================================== */
+
+const userInfo =
+  document.getElementById(
+    "userInfo"
+  );
+
+
+const passwordButton =
+  document.getElementById(
+    "passwordButton"
+  );
+
+
+const loginAlertButton =
+  document.getElementById(
+    "loginAlertButton"
+  );
+
+
+const mfaButton =
+  document.getElementById(
+    "mfaButton"
+  );
+
+
+const sessionButton =
+  document.getElementById(
+    "sessionButton"
+  );
+
+
+const notice =
+  document.getElementById(
+    "notice"
+  );
+
+
+const passwordModal =
+  document.getElementById(
+    "passwordModal"
+  );
+
+
+const changePasswordModal =
+  document.getElementById(
+    "changePasswordModal"
+  );
+
+
+const sessionModal =
+  document.getElementById(
+    "sessionModal"
+  );
+
+
+const newPassword =
+  document.getElementById(
+    "newPassword"
+  );
+
+
+const confirmPassword =
+  document.getElementById(
+    "confirmPassword"
+  );
+
+
+const savePasswordButton =
+  document.getElementById(
+    "savePasswordButton"
+  );
+
+
+const sessionInfo =
+  document.getElementById(
+    "sessionInfo"
+  );
+
+
+let currentUser =
+  null;
+
+
+/* =====================================================
+   NOTICE
+   ===================================================== */
+
+function showNotice(
+  message,
+  type = "info"
+){
+
+  notice.textContent =
+    message;
+
+  notice.className =
+    "notice " +
+    type;
+
+}
+
+
+/* =====================================================
+   PASSWORD VALIDATION
+   ===================================================== */
+
+function isStrongPassword(
+  password
+){
+
+  return (
+
+    password.length >= 12
+
+    && /[a-z]/.test(
+      password
+    )
+
+    && /[A-Z]/.test(
+      password
+    )
+
+    && /[0-9]/.test(
+      password
+    )
+
+    && /[^A-Za-z0-9]/.test(
+      password
+    )
+
+  );
+
+}
+
+
+/* =====================================================
+   OPEN / CLOSE
+   ===================================================== */
+
+function openModal(
+  modal
+){
+
+  modal.classList.add(
+    "show"
+  );
+
+}
+
+
+function closeModal(
+  modal
+){
+
+  modal.classList.remove(
+    "show"
+  );
+
+}
+
+
+/* =====================================================
+   AUTH STATE
+   ===================================================== */
+
+onAuthStateChanged(
+  auth,
+  function(user){
+
+    if(!user){
+
+      window.location.href =
+        "login.html";
+
+      return;
+
+    }
+
+
+    currentUser =
+      user;
+
+
+    userInfo.className =
+      "user-email";
+
+
+    userInfo.innerHTML =
+      "Signed in as <strong>" +
+      escapeHtml(
+        user.email ||
+        "Zemivo User"
+      ) +
+      "</strong>";
+
+
+    passwordButton.disabled =
+      false;
+
+  }
+);
+
+
+/* =====================================================
+   HTML ESCAPE
+   ===================================================== */
+
+function escapeHtml(
+  value
+){
+
+  if(
+    value === null ||
+    value === undefined
+  ){
+
+    return "";
+
+  }
+
+
+  return String(value)
+    .replaceAll(
+      "&",
+      "&amp;"
+    )
+    .replaceAll(
+      "<",
+      "&lt;"
+    )
+    .replaceAll(
+      ">",
+      "&gt;"
+    )
+    .replaceAll(
+      '"',
+      "&quot;"
+    )
+    .replaceAll(
+      "'",
+      "&#039;"
+    );
+
+}
+
+
+/* =====================================================
+   PASSWORD SETTINGS
+   ===================================================== */
+
+passwordButton.addEventListener(
+  "click",
+  function(){
+
+    openModal(
+      passwordModal
+    );
+
+  }
+);
+
+
+document.getElementById(
+  "closePasswordModal"
+).addEventListener(
+  "click",
+  function(){
+
+    closeModal(
+      passwordModal
+    );
+
+  }
+);
+
+
+/* =====================================================
+   PASSWORD RESET EMAIL
+   ===================================================== */
+
+document.getElementById(
+  "resetPasswordButton"
+).addEventListener(
+  "click",
+  async function(){
+
+    if(
+      !currentUser ||
+      !currentUser.email
+    ){
+
+      showNotice(
+        "Your account email could not be found.",
+        "error"
+      );
+
+      return;
+
+    }
+
+
+    const button =
+      document.getElementById(
+        "resetPasswordButton"
+      );
+
+
+    button.disabled =
+      true;
+
+
+    button.textContent =
+      "Sending...";
+
+
+    try{
+
+      await sendPasswordResetEmail(
+        auth,
+        currentUser.email
+      );
+
+
+      closeModal(
+        passwordModal
+      );
+
+
+      showNotice(
+        "Password reset email has been sent to your account email.",
+        "success"
+      );
+
+    }
+    catch(error){
+
+      console.error(
+        "Zemivo password reset error:",
+        error
+      );
+
+
+      showNotice(
+        "Password reset email could not be sent. Please try again.",
+        "error"
+      );
+
+    }
+
+
+    button.disabled =
+      false;
+
+
+    button.textContent =
+      "Send Reset Email";
+
+  }
+);
+
+
+/* =====================================================
+   OPEN CHANGE PASSWORD
+   ===================================================== */
+
+document.getElementById(
+  "changePasswordButton"
+).addEventListener(
+  "click",
+  function(){
+
+    closeModal(
+      passwordModal
+    );
+
+
+    newPassword.value =
+      "";
+
+    confirmPassword.value =
+      "";
+
+
+    openModal(
+      changePasswordModal
+    );
+
+  }
+);
+
+
+/* =====================================================
+   CANCEL CHANGE PASSWORD
+   ===================================================== */
+
+document.getElementById(
+  "cancelChangePassword"
+).addEventListener(
+  "click",
+  function(){
+
+    closeModal(
+      changePasswordModal
+    );
+
+  }
+);
+
+
+/* =====================================================
+   CHANGE PASSWORD
+   ===================================================== */
+
+savePasswordButton.addEventListener(
+  "click",
+  async function(){
+
+    if(
+      !currentUser
+    ){
+
+      return;
+
+    }
+
+
+    const password =
+      newPassword.value;
+
+
+    const confirm =
+      confirmPassword.value;
+
+
+    if(
+      !isStrongPassword(
+        password
+      )
+    ){
+
+      showNotice(
+        "Password must contain at least 12 characters, including uppercase, lowercase, number and symbol.",
+        "error"
+      );
+
+      return;
+
+    }
+
+
+    if(
+      password !== confirm
+    ){
+
+      showNotice(
+        "Passwords do not match.",
+        "error"
+      );
+
+      return;
+
+    }
+
+
+    savePasswordButton.disabled =
+      true;
+
+
+    savePasswordButton.textContent =
+      "Saving...";
+
+
+    try{
+
+      await updatePassword(
+        currentUser,
+        password
+      );
+
+
+      closeModal(
+        changePasswordModal
+      );
+
+
+      showNotice(
+        "Password changed successfully.",
+        "success"
+      );
+
+    }
+    catch(error){
+
+      console.error(
+        "Zemivo password change error:",
+        error
+      );
+
+
+      if(
+        error.code ===
+        "auth/requires-recent-login"
+      ){
+
+        showNotice(
+          "For security, please log in again and then change your password.",
+          "error"
+        );
+
+      }
+      else{
+
+        showNotice(
+          "Password could not be changed. Please try again.",
+          "error"
+        );
+
+      }
+
+    }
+
+
+    savePasswordButton.disabled =
+      false;
+
+
+    savePasswordButton.textContent =
+      "Save";
+
+  }
+);
+
+
+/* =====================================================
+   LOGIN ALERTS
+   ===================================================== */
+
+loginAlertButton.addEventListener(
+  "click",
+  function(){
+
+    showNotice(
+      "Login-alert infrastructure is reserved for the notification/security system. No fake alert has been created here.",
+      "info"
+    );
+
+  }
+);
+
+
+/* =====================================================
+   TWO-FACTOR AUTHENTICATION
+   ===================================================== */
+
+mfaButton.addEventListener(
+  "click",
+  function(){
+
+    showNotice(
+      "Two-Factor Authentication requires Firebase Authentication with Identity Platform and a configured MFA provider. We will connect the real MFA flow later instead of using a fake setup button.",
+      "info"
+    );
+
+  }
+);
+
+
+/* =====================================================
+   ACTIVE SESSION
+   ===================================================== */
+
+sessionButton.addEventListener(
+  "click",
+  function(){
+
+    if(
+      !currentUser
+    ){
+
+      return;
+
+    }
+
+
+    const providerNames =
+      Array.isArray(
+        currentUser.providerData
+      )
+        ? currentUser.providerData
+            .map(
+              function(provider){
+
+                return provider.providerId;
+
+              }
+            )
+            .join(", ")
+        : "Unknown";
+
+
+    sessionInfo.innerHTML =
+
+      "<strong>Account:</strong> " +
+      escapeHtml(
+        currentUser.email ||
+        "Zemivo User"
+      ) +
+
+      "<br><br>" +
+
+      "<strong>Authentication provider:</strong> " +
+      escapeHtml(
+        providerNames ||
+        "Password"
+      ) +
+
+      "<br><br>" +
+
+      "<strong>Session:</strong> Active" +
+
+      "<br><br>" +
+
+      "Detailed device/session management will be connected through the appropriate backend security system.";
+
+    
+    openModal(
+      sessionModal
+    );
+
+  }
+);
+
+
+document.getElementById(
+  "closeSessionModal"
+).addEventListener(
+  "click",
+  function(){
+
+    closeModal(
+      sessionModal
+    );
+
+  }
+);
+
+
+/* =====================================================
+   CLOSE MODALS BY BACKDROP
+   ===================================================== */
+
+[
+  passwordModal,
+  changePasswordModal,
+  sessionModal
+].forEach(
+  function(modal){
+
+    modal.addEventListener(
+      "click",
+      function(event){
+
+        if(
+          event.target ===
+          modal
+        ){
+
+          closeModal(
+            modal
+          );
+
+        }
+
+      }
+    );
+
+  }
+);
+
+
+/* =====================================================
+   ESC KEY
+   ===================================================== */
+
+document.addEventListener(
+  "keydown",
+  function(event){
+
+    if(
+      event.key ===
+      "Escape"
+    ){
+
+      closeModal(
+        passwordModal
+      );
+
+      closeModal(
+        changePasswordModal
+      );
+
+      closeModal(
+        sessionModal
+      );
+
+    }
+
+  }
+);
+
+</script>
+
 </body>
+
 </html>
