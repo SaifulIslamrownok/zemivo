@@ -1,200 +1,2137 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
   <title>Zemivo - Saved</title>
 
+
   <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
+
+    *{
+      box-sizing:border-box;
+      margin:0;
+      padding:0;
     }
 
-    body {
-      font-family: Arial, sans-serif;
-      background: #f4f6f8;
-      color: #222;
+
+    :root{
+
+      --blue:#2563eb;
+      --blue-dark:#1d4ed8;
+      --blue-soft:#eff6ff;
+
+      --text:#17202a;
+      --muted:#64748b;
+
+      --border:rgba(148,163,184,.20);
+
     }
 
-    .topbar {
-      background: white;
-      padding: 15px 20px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+
+    body{
+
+      min-height:100vh;
+
+      font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+      color:var(--text);
+
+      background:
+
+        radial-gradient(
+          circle at 10% 10%,
+          rgba(37,99,235,.16),
+          transparent 28%
+        ),
+
+        radial-gradient(
+          circle at 90% 25%,
+          rgba(59,130,246,.13),
+          transparent 30%
+        ),
+
+        linear-gradient(
+          135deg,
+          #eef4ff,
+          #f8fafc 50%,
+          #edf5ff
+        );
+
+      overflow-x:hidden;
+
     }
 
-    .logo {
-      font-size: 26px;
-      font-weight: bold;
-      color: #2563eb;
+
+    button,
+    input{
+
+      font-family:inherit;
+
     }
 
-    .nav a {
-      margin-left: 10px;
-      color: #2563eb;
-      text-decoration: none;
-      font-weight: bold;
+
+    button{
+
+      cursor:pointer;
+
     }
 
-    .container {
-      max-width: 800px;
-      margin: 25px auto;
-      padding: 0 15px;
+
+    /* =========================
+       3D BACKGROUND
+    ========================= */
+
+    .world{
+
+      position:fixed;
+
+      inset:0;
+
+      z-index:-1;
+
+      overflow:hidden;
+
+      pointer-events:none;
+
     }
 
-    .card {
-      background: white;
-      padding: 20px;
-      margin-bottom: 18px;
-      border-radius: 15px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+
+    .orb{
+
+      position:absolute;
+
+      border-radius:50%;
+
+      filter:blur(3px);
+
+      opacity:.42;
+
+      animation:
+        floating
+        9s
+        ease-in-out
+        infinite
+        alternate;
+
     }
 
-    h1 {
-      color: #2563eb;
-      margin-bottom: 8px;
+
+    .orb-one{
+
+      width:260px;
+      height:260px;
+
+      left:-90px;
+      top:90px;
+
+      background:
+        radial-gradient(
+          circle,
+          rgba(37,99,235,.30),
+          transparent 70%
+        );
+
     }
 
-    .saved-item {
-      padding: 16px 5px;
-      border-bottom: 1px solid #eee;
+
+    .orb-two{
+
+      width:320px;
+      height:320px;
+
+      right:-120px;
+      top:300px;
+
+      background:
+        radial-gradient(
+          circle,
+          rgba(96,165,250,.24),
+          transparent 70%
+        );
+
+      animation-delay:2s;
+
     }
 
-    .saved-item:last-child {
-      border-bottom: none;
+
+    .orb-three{
+
+      width:190px;
+      height:190px;
+
+      left:42%;
+      bottom:-80px;
+
+      background:
+        radial-gradient(
+          circle,
+          rgba(14,165,233,.20),
+          transparent 70%
+        );
+
+      animation-delay:4s;
+
     }
 
-    .saved-item h3 {
-      margin-bottom: 7px;
+
+    .world-grid{
+
+      position:absolute;
+
+      inset:0;
+
+      opacity:.15;
+
+      background-image:
+
+        linear-gradient(
+          rgba(37,99,235,.08) 1px,
+          transparent 1px
+        ),
+
+        linear-gradient(
+          90deg,
+          rgba(37,99,235,.08) 1px,
+          transparent 1px
+        );
+
+      background-size:55px 55px;
+
+      transform:
+        perspective(650px)
+        rotateX(58deg)
+        translateY(35%);
+
+      transform-origin:center bottom;
+
     }
 
-    .saved-item p {
-      color: #666;
-      margin-bottom: 12px;
+
+    @keyframes floating{
+
+      from{
+
+        transform:
+          translate3d(
+            0,
+            0,
+            0
+          );
+
+      }
+
+      to{
+
+        transform:
+          translate3d(
+            25px,
+            -35px,
+            0
+          );
+
+      }
+
     }
 
-    .button {
-      background: #2563eb;
-      color: white;
-      border: none;
-      padding: 9px 16px;
-      border-radius: 20px;
-      cursor: pointer;
-      font-weight: bold;
+
+    /* =========================
+       TOPBAR
+    ========================= */
+
+    .topbar{
+
+      position:sticky;
+
+      top:0;
+
+      z-index:100;
+
+      min-height:68px;
+
+      display:flex;
+
+      align-items:center;
+
+      justify-content:space-between;
+
+      gap:18px;
+
+      padding:
+        12px
+        22px;
+
+      background:
+        rgba(255,255,255,.84);
+
+      backdrop-filter:
+        blur(18px);
+
+      -webkit-backdrop-filter:
+        blur(18px);
+
+      border-bottom:
+        1px solid
+        var(--border);
+
+      box-shadow:
+        0 5px 25px
+        rgba(15,23,42,.07);
+
     }
 
-    .remove {
-      background: #dc2626;
+
+    .logo{
+
+      color:
+        var(--blue);
+
+      font-size:28px;
+
+      font-weight:900;
+
+      letter-spacing:-1px;
+
+      text-decoration:none;
+
+      white-space:nowrap;
+
     }
 
-    .footer {
-      text-align: center;
-      color: #777;
-      padding: 25px;
+
+    .nav{
+
+      display:flex;
+
+      gap:7px;
+
+      overflow-x:auto;
+
+      scrollbar-width:none;
+
     }
+
+
+    .nav::-webkit-scrollbar{
+
+      display:none;
+
+    }
+
+
+    .nav a{
+
+      color:#334155;
+
+      text-decoration:none;
+
+      font-size:14px;
+
+      font-weight:bold;
+
+      padding:
+        9px
+        11px;
+
+      border-radius:12px;
+
+      white-space:nowrap;
+
+      transition:.2s;
+
+    }
+
+
+    .nav a:hover{
+
+      background:
+        var(--blue-soft);
+
+      color:
+        var(--blue);
+
+    }
+
+
+    .nav a.active{
+
+      background:
+        var(--blue);
+
+      color:white;
+
+      box-shadow:
+        0 6px 16px
+        rgba(37,99,235,.22);
+
+    }
+
+
+    /* =========================
+       MAIN
+    ========================= */
+
+    .container{
+
+      width:
+        min(
+          1050px,
+          calc(100% - 30px)
+        );
+
+      margin:
+        30px
+        auto
+        50px;
+
+    }
+
+
+    /* =========================
+       HERO
+    ========================= */
+
+    .hero{
+
+      position:relative;
+
+      overflow:hidden;
+
+      display:grid;
+
+      grid-template-columns:
+        1.2fr
+        .8fr;
+
+      gap:25px;
+
+      padding:30px;
+
+      margin-bottom:22px;
+
+      border:
+        1px solid
+        rgba(255,255,255,.75);
+
+      border-radius:25px;
+
+      background:
+        linear-gradient(
+          135deg,
+          rgba(255,255,255,.90),
+          rgba(239,246,255,.75)
+        );
+
+      backdrop-filter:
+        blur(18px);
+
+      -webkit-backdrop-filter:
+        blur(18px);
+
+      box-shadow:
+        0 15px 40px
+        rgba(15,23,42,.10);
+
+    }
+
+
+    .hero-content{
+
+      display:flex;
+
+      flex-direction:column;
+
+      justify-content:center;
+
+    }
+
+
+    .badge{
+
+      display:inline-flex;
+
+      align-items:center;
+
+      width:max-content;
+
+      padding:
+        7px
+        12px;
+
+      margin-bottom:14px;
+
+      border-radius:30px;
+
+      background:
+        rgba(37,99,235,.10);
+
+      color:
+        var(--blue);
+
+      font-size:12px;
+
+      font-weight:bold;
+
+    }
+
+
+    .hero h1{
+
+      font-size:
+        clamp(
+          32px,
+          5vw,
+          50px
+        );
+
+      line-height:1.05;
+
+      margin-bottom:12px;
+
+    }
+
+
+    .hero h1 span{
+
+      color:
+        var(--blue);
+
+    }
+
+
+    .hero p{
+
+      max-width:600px;
+
+      color:
+        var(--muted);
+
+      line-height:1.6;
+
+    }
+
+
+    /* =========================
+       3D OBJECT
+    ========================= */
+
+    .visual{
+
+      min-height:220px;
+
+      display:flex;
+
+      align-items:center;
+
+      justify-content:center;
+
+      perspective:800px;
+
+    }
+
+
+    .scene{
+
+      width:170px;
+
+      height:170px;
+
+      position:relative;
+
+      transform-style:preserve-3d;
+
+      animation:
+        sceneFloat
+        6s
+        ease-in-out
+        infinite;
+
+    }
+
+
+    .cube{
+
+      position:absolute;
+
+      width:110px;
+
+      height:110px;
+
+      left:30px;
+
+      top:30px;
+
+      transform-style:preserve-3d;
+
+      animation:
+        cubeSpin
+        14s
+        linear
+        infinite;
+
+    }
+
+
+    .face{
+
+      position:absolute;
+
+      width:110px;
+
+      height:110px;
+
+      border:
+        1px solid
+        rgba(255,255,255,.70);
+
+      background:
+        linear-gradient(
+          135deg,
+          rgba(37,99,235,.72),
+          rgba(96,165,250,.30)
+        );
+
+      box-shadow:
+        inset 0 0 25px
+        rgba(255,255,255,.12),
+
+        0 0 35px
+        rgba(37,99,235,.15);
+
+      backdrop-filter:
+        blur(5px);
+
+    }
+
+
+    .front{
+      transform:
+        translateZ(55px);
+    }
+
+
+    .back{
+      transform:
+        rotateY(180deg)
+        translateZ(55px);
+    }
+
+
+    .right{
+      transform:
+        rotateY(90deg)
+        translateZ(55px);
+    }
+
+
+    .left{
+      transform:
+        rotateY(-90deg)
+        translateZ(55px);
+    }
+
+
+    .top{
+      transform:
+        rotateX(90deg)
+        translateZ(55px);
+    }
+
+
+    .bottom{
+      transform:
+        rotateX(-90deg)
+        translateZ(55px);
+    }
+
+
+    .center-icon{
+
+      position:absolute;
+
+      left:50%;
+      top:50%;
+
+      transform:
+        translate(
+          -50%,
+          -50%
+        )
+        translateZ(115px);
+
+      font-size:44px;
+
+      filter:
+        drop-shadow(
+          0 8px 12px
+          rgba(0,0,0,.18)
+        );
+
+    }
+
+
+    @keyframes cubeSpin{
+
+      from{
+
+        transform:
+          rotateX(-12deg)
+          rotateY(0deg);
+
+      }
+
+      to{
+
+        transform:
+          rotateX(348deg)
+          rotateY(360deg);
+
+      }
+
+    }
+
+
+    @keyframes sceneFloat{
+
+      0%,
+      100%{
+
+        transform:
+          translateY(0);
+
+      }
+
+      50%{
+
+        transform:
+          translateY(-12px);
+
+      }
+
+    }
+
+
+    /* =========================
+       TOOLBAR
+    ========================= */
+
+    .toolbar{
+
+      display:flex;
+
+      align-items:center;
+
+      justify-content:space-between;
+
+      gap:15px;
+
+      margin-bottom:18px;
+
+    }
+
+
+    .title{
+
+      font-size:22px;
+
+      font-weight:800;
+
+    }
+
+
+    .count{
+
+      display:inline-flex;
+
+      align-items:center;
+
+      justify-content:center;
+
+      min-width:30px;
+
+      height:27px;
+
+      padding:
+        0
+        8px;
+
+      margin-left:5px;
+
+      border-radius:20px;
+
+      background:
+        var(--blue-soft);
+
+      color:
+        var(--blue);
+
+      font-size:12px;
+
+    }
+
+
+    .search-box{
+
+      width:
+        min(
+          330px,
+          100%
+        );
+
+    }
+
+
+    .search-box input{
+
+      width:100%;
+
+      padding:
+        12px
+        15px;
+
+      border:
+        1px solid
+        rgba(148,163,184,.35);
+
+      border-radius:14px;
+
+      outline:none;
+
+      background:
+        rgba(255,255,255,.85);
+
+      font-size:14px;
+
+      transition:.2s;
+
+    }
+
+
+    .search-box input:focus{
+
+      border-color:
+        var(--blue);
+
+      box-shadow:
+        0 0 0 4px
+        rgba(37,99,235,.10);
+
+    }
+
+
+    /* =========================
+       SAVED CARD
+    ========================= */
+
+    .card{
+
+      background:
+        rgba(255,255,255,.88);
+
+      border:
+        1px solid
+        rgba(255,255,255,.80);
+
+      border-radius:22px;
+
+      box-shadow:
+        0 15px 40px
+        rgba(15,23,42,.09);
+
+      backdrop-filter:
+        blur(16px);
+
+      -webkit-backdrop-filter:
+        blur(16px);
+
+      overflow:hidden;
+
+    }
+
+
+    .saved-item{
+
+      display:flex;
+
+      align-items:center;
+
+      gap:16px;
+
+      padding:
+        20px;
+
+      border-bottom:
+        1px solid
+        rgba(148,163,184,.16);
+
+      transition:.2s;
+
+    }
+
+
+    .saved-item:last-child{
+
+      border-bottom:none;
+
+    }
+
+
+    .saved-item:hover{
+
+      background:
+        rgba(239,246,255,.65);
+
+    }
+
+
+    .item-icon{
+
+      width:54px;
+
+      height:54px;
+
+      flex-shrink:0;
+
+      display:flex;
+
+      align-items:center;
+
+      justify-content:center;
+
+      border-radius:17px;
+
+      background:
+        linear-gradient(
+          135deg,
+          #eff6ff,
+          #dbeafe
+        );
+
+      font-size:25px;
+
+    }
+
+
+    .item-content{
+
+      flex:1;
+
+      min-width:0;
+
+    }
+
+
+    .item-content h3{
+
+      margin-bottom:6px;
+
+      font-size:17px;
+
+    }
+
+
+    .item-content p{
+
+      color:
+        var(--muted);
+
+      font-size:14px;
+
+      line-height:1.5;
+
+      margin-bottom:8px;
+
+    }
+
+
+    .type{
+
+      display:inline-block;
+
+      padding:
+        4px
+        8px;
+
+      border-radius:8px;
+
+      background:
+        #f1f5f9;
+
+      color:
+        #64748b;
+
+      font-size:11px;
+
+      font-weight:bold;
+
+    }
+
+
+    .actions{
+
+      display:flex;
+
+      gap:8px;
+
+      flex-shrink:0;
+
+    }
+
+
+    .button{
+
+      border:0;
+
+      padding:
+        9px
+        14px;
+
+      border-radius:12px;
+
+      font-size:13px;
+
+      font-weight:bold;
+
+      transition:.2s;
+
+    }
+
+
+    .open{
+
+      background:
+        var(--blue);
+
+      color:white;
+
+    }
+
+
+    .open:hover{
+
+      background:
+        #1d4ed8;
+
+    }
+
+
+    .remove{
+
+      background:
+        #fee2e2;
+
+      color:
+        #dc2626;
+
+    }
+
+
+    .remove:hover{
+
+      background:
+        #fecaca;
+
+    }
+
+
+    /* =========================
+       EMPTY
+    ========================= */
+
+    .empty{
+
+      display:none;
+
+      text-align:center;
+
+      padding:
+        60px
+        20px;
+
+      color:
+        var(--muted);
+
+    }
+
+
+    .empty-icon{
+
+      font-size:52px;
+
+      margin-bottom:10px;
+
+    }
+
+
+    .empty h3{
+
+      color:
+        var(--text);
+
+      margin-bottom:7px;
+
+    }
+
+
+    /* =========================
+       NOTICE
+    ========================= */
+
+    .notice{
+
+      margin-top:18px;
+
+      padding:
+        15px
+        17px;
+
+      border-radius:15px;
+
+      background:
+        rgba(239,246,255,.78);
+
+      border:
+        1px solid
+        rgba(37,99,235,.12);
+
+      color:
+        #475569;
+
+      font-size:13px;
+
+      line-height:1.5;
+
+    }
+
+
+    .notice strong{
+
+      color:
+        var(--blue);
+
+    }
+
+
+    /* =========================
+       TOAST
+    ========================= */
+
+    .toast{
+
+      position:fixed;
+
+      left:50%;
+
+      bottom:24px;
+
+      z-index:500;
+
+      max-width:
+        calc(100% - 30px);
+
+      padding:
+        12px
+        18px;
+
+      border-radius:12px;
+
+      background:
+        #111827;
+
+      color:white;
+
+      font-size:14px;
+
+      text-align:center;
+
+      opacity:0;
+
+      transform:
+        translate(
+          -50%,
+          20px
+        );
+
+      pointer-events:none;
+
+      transition:.25s;
+
+    }
+
+
+    .toast.show{
+
+      opacity:1;
+
+      transform:
+        translate(
+          -50%,
+          0
+        );
+
+    }
+
+
+    /* =========================
+       FOOTER
+    ========================= */
+
+    .footer{
+
+      text-align:center;
+
+      color:
+        #64748b;
+
+      font-size:13px;
+
+      padding:
+        20px;
+
+    }
+
+
+    /* =========================
+       MOBILE
+    ========================= */
+
+    @media(max-width:800px){
+
+      .topbar{
+
+        align-items:flex-start;
+
+        flex-direction:column;
+
+        padding:
+          12px
+          14px;
+
+      }
+
+
+      .nav{
+
+        width:100%;
+
+      }
+
+
+      .hero{
+
+        grid-template-columns:1fr;
+
+        padding:23px;
+
+      }
+
+
+      .visual{
+
+        min-height:180px;
+
+      }
+
+
+      .toolbar{
+
+        align-items:flex-start;
+
+        flex-direction:column;
+
+      }
+
+
+      .search-box{
+
+        width:100%;
+
+      }
+
+    }
+
+
+    @media(max-width:600px){
+
+      .container{
+
+        width:
+          calc(100% - 20px);
+
+        margin-top:18px;
+
+      }
+
+
+      .hero h1{
+
+        font-size:33px;
+
+      }
+
+
+      .saved-item{
+
+        align-items:flex-start;
+
+        flex-wrap:wrap;
+
+        padding:16px;
+
+      }
+
+
+      .item-content{
+
+        width:
+          calc(100% - 70px);
+
+      }
+
+
+      .actions{
+
+        width:100%;
+
+        margin-left:70px;
+
+      }
+
+
+      .actions .button{
+
+        flex:1;
+
+      }
+
+    }
+
   </style>
+
 </head>
+
 
 <body>
 
+
+  <!-- =========================
+       ZEMIVO LIVING WORLD LAYER
+       Final global engine integration
+       will happen later.
+  ========================== -->
+
+  <div class="world">
+
+    <div class="orb orb-one"></div>
+
+    <div class="orb orb-two"></div>
+
+    <div class="orb orb-three"></div>
+
+    <div class="world-grid"></div>
+
+  </div>
+
+
+  <!-- =========================
+       TOPBAR
+  ========================== -->
+
   <header class="topbar">
 
-    <div class="logo">Zemivo</div>
+    <a
+      href="index.html"
+      class="logo"
+    >
+      Zemivo
+    </a>
+
 
     <nav class="nav">
-      <a href="index.html">🏠 Home</a>
-      <a href="profile.html">👤 Profile</a>
-      <a href="videos.html">🎥 Videos</a>
-      <a href="groups.html">👥 Groups</a>
-      <a href="settings.html">⚙️ Settings</a>
+
+      <a href="index.html">
+        🏠 Home
+      </a>
+
+      <a href="profile.html">
+        👤 Profile
+      </a>
+
+      <a href="videos.html">
+        🎥 Videos
+      </a>
+
+      <a href="groups.html">
+        👥 Groups
+      </a>
+
+      <a
+        href="saved.html"
+        class="active"
+      >
+        🔖 Saved
+      </a>
+
+      <a href="settings.html">
+        ⚙️ Settings
+      </a>
+
     </nav>
 
   </header>
 
+
+  <!-- =========================
+       MAIN
+  ========================== -->
+
   <main class="container">
 
-    <div class="card">
 
-      <h1>🔖 Saved</h1>
+    <!-- HERO -->
 
-      <p>
-        Save posts, videos and useful content to find them later.
-      </p>
+    <section class="hero">
+
+      <div class="hero-content">
+
+        <div class="badge">
+          🔖 Personal Collection
+        </div>
+
+
+        <h1>
+
+          Your
+
+          <span>
+            Saved
+          </span>
+
+          Content
+
+        </h1>
+
+
+        <p>
+
+          Save posts, videos and useful content
+          so you can quickly find them again later.
+
+        </p>
+
+      </div>
+
+
+      <div class="visual">
+
+        <div class="scene">
+
+          <div class="cube">
+
+            <div class="face front"></div>
+
+            <div class="face back"></div>
+
+            <div class="face right"></div>
+
+            <div class="face left"></div>
+
+            <div class="face top"></div>
+
+            <div class="face bottom"></div>
+
+          </div>
+
+
+          <div class="center-icon">
+            🔖
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- TOOLBAR -->
+
+    <div class="toolbar">
+
+      <div class="title">
+
+        Saved
+
+        <span
+          id="savedCount"
+          class="count"
+        >
+          3
+        </span>
+
+      </div>
+
+
+      <div class="search-box">
+
+        <input
+          id="savedSearch"
+          type="search"
+          placeholder="Search saved content..."
+          autocomplete="off"
+        >
+
+      </div>
 
     </div>
 
-    <div class="card">
 
-      <div class="saved-item">
+    <!-- SAVED CONTENT -->
 
-        <h3>🌍 Welcome to Zemivo</h3>
+    <section
+      id="savedCard"
+      class="card"
+    >
 
-        <p>
-          A new social platform where creators and communities connect.
-        </p>
 
-        <button class="button remove">
-          Remove
-        </button>
+      <div
+        class="saved-item"
+        data-title="Welcome to Zemivo"
+        data-description="A new social platform where creators and communities connect."
+      >
+
+        <div class="item-icon">
+          🌍
+        </div>
+
+
+        <div class="item-content">
+
+          <h3>
+            Welcome to Zemivo
+          </h3>
+
+          <p>
+            A new social platform where creators
+            and communities connect.
+          </p>
+
+          <span class="type">
+            Post
+          </span>
+
+        </div>
+
+
+        <div class="actions">
+
+          <button
+            class="button open"
+            type="button"
+          >
+            Open
+          </button>
+
+
+          <button
+            class="button remove"
+            type="button"
+          >
+            Remove
+          </button>
+
+        </div>
 
       </div>
 
-      <div class="saved-item">
 
-        <h3>🎥 Creator Tips</h3>
+      <div
+        class="saved-item"
+        data-title="Creator Tips"
+        data-description="Useful ideas for growing your audience on Zemivo."
+      >
 
-        <p>
-          Useful ideas for growing your audience on Zemivo.
-        </p>
+        <div class="item-icon">
+          🎥
+        </div>
 
-        <button class="button remove">
-          Remove
-        </button>
+
+        <div class="item-content">
+
+          <h3>
+            Creator Tips
+          </h3>
+
+          <p>
+            Useful ideas for growing your
+            audience on Zemivo.
+          </p>
+
+          <span class="type">
+            Video
+          </span>
+
+        </div>
+
+
+        <div class="actions">
+
+          <button
+            class="button open"
+            type="button"
+          >
+            Open
+          </button>
+
+
+          <button
+            class="button remove"
+            type="button"
+          >
+            Remove
+          </button>
+
+        </div>
 
       </div>
 
-      <div class="saved-item">
 
-        <h3>💰 Earning Opportunities</h3>
+      <div
+        class="saved-item"
+        data-title="Earning Opportunities"
+        data-description="Discover future creator and affiliate opportunities."
+      >
 
-        <p>
-          Discover future creator and affiliate opportunities.
-        </p>
+        <div class="item-icon">
+          💰
+        </div>
 
-        <button class="button remove">
-          Remove
-        </button>
+
+        <div class="item-content">
+
+          <h3>
+            Earning Opportunities
+          </h3>
+
+          <p>
+            Discover future creator and
+            affiliate opportunities.
+          </p>
+
+          <span class="type">
+            Information
+          </span>
+
+        </div>
+
+
+        <div class="actions">
+
+          <button
+            class="button open"
+            type="button"
+          >
+            Open
+          </button>
+
+
+          <button
+            class="button remove"
+            type="button"
+          >
+            Remove
+          </button>
+
+        </div>
 
       </div>
+
+
+      <div
+        id="empty"
+        class="empty"
+      >
+
+        <div class="empty-icon">
+          🔖
+        </div>
+
+        <h3>
+          Nothing found
+        </h3>
+
+        <p>
+          There is no matching saved content.
+        </p>
+
+      </div>
+
+
+    </section>
+
+
+    <!-- FUTURE FOUNDATION NOTICE -->
+
+    <div class="notice">
+
+      <strong>
+        Zemivo Saved Foundation:
+      </strong>
+
+      The current page keeps Saved content
+      isolated from other pages. Persistent
+      user-owned Saved storage will be connected
+      when the final Saved data model and
+      security rules are established.
 
     </div>
+
 
   </main>
 
+
+  <!-- =========================
+       FOOTER
+  ========================== -->
+
   <footer class="footer">
-    © 2026 Zemivo — Connect. Create. Earn.
+
+    © 2026 Zemivo —
+    Connect. Create. Earn.
+
   </footer>
 
-  <script>
 
-    const removeButtons =
-      document.querySelectorAll(".remove");
+  <!-- TOAST -->
 
-    removeButtons.forEach(function(button) {
+  <div
+    id="toast"
+    class="toast"
+  ></div>
 
-      button.addEventListener("click", function() {
 
-        button.parentElement.remove();
+  <!-- =========================
+       SECURITY FOUNDATION
+  ========================== -->
+
+  <script type="module">
+
+    import {
+      auth
+    } from "./zemivo-security.js";
+
+
+    import {
+      onAuthStateChanged
+    } from
+      "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
+
+
+    /* =========================
+       ELEMENTS
+    ========================== */
+
+    const savedSearch =
+      document.getElementById(
+        "savedSearch"
+      );
+
+
+    const savedCount =
+      document.getElementById(
+        "savedCount"
+      );
+
+
+    const savedCard =
+      document.getElementById(
+        "savedCard"
+      );
+
+
+    const empty =
+      document.getElementById(
+        "empty"
+      );
+
+
+    const toast =
+      document.getElementById(
+        "toast"
+      );
+
+
+    /* =========================
+       STATE
+    ========================== */
+
+    let currentUser =
+      null;
+
+
+    /* =========================
+       TOAST
+    ========================== */
+
+    let toastTimer =
+      null;
+
+
+    function showToast(
+      message
+    ){
+
+      toast.textContent =
+        message;
+
+
+      toast.classList.add(
+        "show"
+      );
+
+
+      clearTimeout(
+        toastTimer
+      );
+
+
+      toastTimer =
+        setTimeout(
+          function(){
+
+            toast.classList.remove(
+              "show"
+            );
+
+          },
+          2200
+        );
+
+    }
+
+
+    /* =========================
+       AUTH
+    ========================== */
+
+    onAuthStateChanged(
+      auth,
+      function(user){
+
+        currentUser =
+          user;
+
+      }
+    );
+
+
+    /* =========================
+       GET ITEMS
+    ========================== */
+
+    function getItems(){
+
+      return Array.from(
+        document.querySelectorAll(
+          ".saved-item"
+        )
+      );
+
+    }
+
+
+    /* =========================
+       UPDATE COUNT
+    ========================== */
+
+    function updateCount(){
+
+      const visibleItems =
+        getItems().filter(
+          function(item){
+
+            return (
+              item.style.display !==
+              "none"
+            );
+
+          }
+        );
+
+
+      savedCount.textContent =
+        visibleItems.length;
+
+    }
+
+
+    /* =========================
+       SEARCH
+    ========================== */
+
+    savedSearch.addEventListener(
+      "input",
+      function(){
+
+        const search =
+          savedSearch.value
+            .trim()
+            .toLowerCase();
+
+
+        const items =
+          getItems();
+
+
+        let visible =
+          0;
+
+
+        items.forEach(
+          function(item){
+
+            const title =
+              (
+                item.dataset.title ||
+                ""
+              )
+              .toLowerCase();
+
+
+            const description =
+              (
+                item.dataset.description ||
+                ""
+              )
+              .toLowerCase();
+
+
+            const matches =
+              !search ||
+
+              title.includes(
+                search
+              ) ||
+
+              description.includes(
+                search
+              );
+
+
+            if(matches){
+
+              item.style.display =
+                "flex";
+
+              visible++;
+
+            }
+            else{
+
+              item.style.display =
+                "none";
+
+            }
+
+          }
+        );
+
+
+        empty.style.display =
+          visible === 0
+          ?
+          "block"
+          :
+          "none";
+
+
+        updateCount();
+
+      }
+    );
+
+
+    /* =========================
+       REMOVE
+    ========================== */
+
+    savedCard.addEventListener(
+      "click",
+      function(event){
+
+        const removeButton =
+          event.target.closest(
+            ".remove"
+          );
+
+
+        if(!removeButton){
+
+          return;
+
+        }
+
+
+        const item =
+          removeButton.closest(
+            ".saved-item"
+          );
+
+
+        if(!item){
+
+          return;
+
+        }
+
+
+        const title =
+          item.dataset.title ||
+          "Saved item";
+
+
+        item.remove();
+
+
+        updateCount();
+
+
+        const remaining =
+          getItems();
+
+
+        if(
+          remaining.length ===
+          0
+        ){
+
+          empty.style.display =
+            "block";
+
+        }
+
+
+        showToast(
+          `"${title}" removed from Saved.`
+        );
+
+      }
+    );
+
+
+    /* =========================
+       OPEN
+    ========================== */
+
+    savedCard.addEventListener(
+      "click",
+      function(event){
+
+        const openButton =
+          event.target.closest(
+            ".open"
+          );
+
+
+        if(!openButton){
+
+          return;
+
+        }
+
+
+        const item =
+          openButton.closest(
+            ".saved-item"
+          );
+
+
+        if(!item){
+
+          return;
+
+        }
+
+
+        const title =
+          item.dataset.title ||
+          "Saved content";
+
+
+        showToast(
+          `"${title}" will open when the connected content system is active.`
+        );
+
+      }
+    );
+
+
+    /* =========================
+       PAGE ISOLATION
+    ========================== */
+
+    window.ZemivoSavedPage =
+      Object.freeze({
+
+        version:
+          "1.0.0",
+
+        getCurrentUser:
+          function(){
+
+            return currentUser;
+
+          },
+
+        getSavedCount:
+          function(){
+
+            return getItems().length;
+
+          }
 
       });
 
-    });
+
+    /* =========================
+       LIVING WORLD HOOK
+    ========================== */
+
+    window.ZemivoLivingWorld =
+      window.ZemivoLivingWorld ||
+      {
+
+        page:
+          "saved",
+
+        contentType:
+          "saved-content",
+
+        ready:
+          true
+
+      };
+
+
+    /* =========================
+       INITIAL STATE
+    ========================== */
+
+    updateCount();
 
   </script>
 
+
 </body>
+
 </html>
