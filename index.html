@@ -3,6 +3,7 @@
 <head>
 
 <meta charset="UTF-8">
+
 <meta
   name="viewport"
   content="width=device-width,initial-scale=1,maximum-scale=1"
@@ -53,9 +54,7 @@ button{
   cursor:pointer;
 }
 
-/* =====================================================
-   TOP BAR
-===================================================== */
+/* TOP BAR */
 
 .topbar{
   position:sticky;
@@ -75,6 +74,7 @@ button{
   font-weight:800;
   color:var(--blue);
   letter-spacing:-1px;
+  cursor:pointer;
 }
 
 .search{
@@ -105,9 +105,7 @@ button{
   background:#f2f4f7;
 }
 
-/* =====================================================
-   LAYOUT
-===================================================== */
+/* LAYOUT */
 
 .layout{
   width:100%;
@@ -127,9 +125,7 @@ button{
   box-shadow:var(--shadow);
 }
 
-/* =====================================================
-   SIDEBAR
-===================================================== */
+/* SIDEBAR */
 
 .sidebar{
   height:max-content;
@@ -154,9 +150,7 @@ button{
   background:#f1f3f5;
 }
 
-/* =====================================================
-   MIND BOX
-===================================================== */
+/* MIND BOX */
 
 .mind-card{
   padding:15px;
@@ -204,9 +198,7 @@ button{
   background:#eef1f5;
 }
 
-/* =====================================================
-   POST
-===================================================== */
+/* POST */
 
 .post{
   overflow:hidden;
@@ -279,9 +271,7 @@ button{
   font-size:13px;
 }
 
-/* =====================================================
-   STATS
-===================================================== */
+/* STATS */
 
 .stats{
   display:flex;
@@ -292,9 +282,7 @@ button{
   border-bottom:1px solid var(--line);
 }
 
-/* =====================================================
-   POST OPTIONS
-===================================================== */
+/* ACTIONS */
 
 .post-actions{
   display:grid;
@@ -318,9 +306,7 @@ button{
   font-weight:700;
 }
 
-/* =====================================================
-   COMMENTS
-===================================================== */
+/* COMMENTS */
 
 .comments{
   padding:0 15px 14px;
@@ -370,9 +356,7 @@ button{
   color:var(--blue);
 }
 
-/* =====================================================
-   REPLIES
-===================================================== */
+/* REPLIES */
 
 .reply-list{
   margin-left:14px;
@@ -408,6 +392,15 @@ button{
   border-radius:18px;
   padding:7px 10px;
   font-size:13px;
+}
+
+.reply-box button{
+  border:0;
+  background:var(--blue);
+  color:#fff;
+  border-radius:18px;
+  padding:0 12px;
+  font-size:12px;
 }
 
 .reply-actions{
@@ -464,13 +457,7 @@ button{
   font-size:11px;
 }
 
-.reply-list .reply-list{
-  margin-left:20px;
-}
-
-/* =====================================================
-   COMMENT BOX
-===================================================== */
+/* COMMENT BOX */
 
 .comment-box{
   display:flex;
@@ -495,9 +482,7 @@ button{
   padding:0 15px;
 }
 
-/* =====================================================
-   RIGHT
-===================================================== */
+/* RIGHT */
 
 .right .card{
   padding:15px;
@@ -515,9 +500,7 @@ button{
   padding:8px 0;
 }
 
-/* =====================================================
-   MODAL
-===================================================== */
+/* MODAL */
 
 .modal{
   position:fixed;
@@ -542,16 +525,13 @@ button{
   padding:18px;
 }
 
-/* =====================================================
-   NEW POST HEADER
-===================================================== */
+/* NEW POST */
 
 .new-post-head{
   display:flex;
   align-items:center;
   justify-content:space-between;
   min-height:50px;
-  position:relative;
 }
 
 .new-post-title{
@@ -559,7 +539,6 @@ button{
   text-align:center;
   font-size:22px;
   font-weight:700;
-  color:#111827;
 }
 
 .new-post-close{
@@ -569,7 +548,6 @@ button{
   border-radius:50%;
   background:#f1f3f5;
   font-size:26px;
-  line-height:1;
   color:#111827;
 }
 
@@ -586,16 +564,16 @@ button{
   color:var(--blue);
 }
 
-/* =====================================================
-   STEPS
-===================================================== */
+/* STEPS */
 
 .steps{
-  display:none;
+  display:flex;
+  gap:5px;
+  margin-top:10px;
 }
 
 .steps span{
-  height:5px;
+  height:4px;
   flex:1;
   border-radius:10px;
   background:#e5e7eb;
@@ -605,9 +583,7 @@ button{
   background:var(--blue);
 }
 
-/* =====================================================
-   STEP ONE
-===================================================== */
+/* WRITER */
 
 .writer-user{
   display:flex;
@@ -626,9 +602,7 @@ button{
   font-size:19px;
 }
 
-/* =====================================================
-   QUICK TAGS
-===================================================== */
+/* TAGS */
 
 .tags{
   display:flex;
@@ -644,16 +618,13 @@ button{
   padding:9px 13px;
   color:#344054;
   font-size:15px;
-  white-space:nowrap;
 }
 
 .tag-btn:hover{
   background:#f8fafc;
 }
 
-/* =====================================================
-   TEXT AREA
-===================================================== */
+/* TEXT */
 
 .post-textarea{
   width:100%;
@@ -671,9 +642,7 @@ button{
   color:#98a2b3;
 }
 
-/* =====================================================
-   MEDIA PREVIEW
-===================================================== */
+/* MEDIA */
 
 .media-preview{
   display:none;
@@ -708,9 +677,7 @@ button{
   color:#fff;
 }
 
-/* =====================================================
-   MEDIA TOOLS
-===================================================== */
+/* TOOLS */
 
 .writer-tools{
   border-top:1px solid #eef0f3;
@@ -740,10 +707,6 @@ button{
   background:#f8fafc;
 }
 
-.writer-tool .small{
-  display:none;
-}
-
 .tool-icon{
   width:38px;
   height:38px;
@@ -751,7 +714,6 @@ button{
   background:#eef2ff;
   display:grid;
   place-items:center;
-  flex:none;
   font-size:16px;
 }
 
@@ -759,21 +721,16 @@ button{
   font-size:13px;
 }
 
-/* =====================================================
-   EXTRA TOOLS
-===================================================== */
-
 .writer-extra-tools{
   display:none;
 }
 
 .writer-extra-tools.show{
   display:grid;
+  grid-template-columns:repeat(2,1fr);
 }
 
-/* =====================================================
-   SHARING
-===================================================== */
+/* SHARE */
 
 .share-settings{
   display:flex;
@@ -795,9 +752,7 @@ button{
   background:#f8fafc;
 }
 
-/* =====================================================
-   BUTTONS
-===================================================== */
+/* BUTTONS */
 
 .nextbar{
   display:flex;
@@ -828,9 +783,65 @@ button{
   padding:11px 19px;
 }
 
-/* =====================================================
-   DRAFT
-===================================================== */
+/* SETTINGS */
+
+.settings{
+  display:none;
+}
+
+.settings.show{
+  display:block;
+}
+
+.setting{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:15px;
+  padding:14px 0;
+  border-bottom:1px solid var(--line);
+}
+
+.setting:last-child{
+  border-bottom:0;
+}
+
+.setting select{
+  border:1px solid var(--line);
+  border-radius:9px;
+  padding:8px;
+}
+
+.toggle{
+  width:48px;
+  height:27px;
+  border:0;
+  border-radius:20px;
+  background:#cbd5e1;
+  position:relative;
+}
+
+.toggle:after{
+  content:"";
+  width:21px;
+  height:21px;
+  position:absolute;
+  top:3px;
+  left:3px;
+  border-radius:50%;
+  background:white;
+  transition:.2s;
+}
+
+.toggle.on{
+  background:var(--blue);
+}
+
+.toggle.on:after{
+  left:24px;
+}
+
+/* DRAFT */
 
 .draft-modal{
   position:fixed;
@@ -893,69 +904,7 @@ button{
   color:var(--danger);
 }
 
-/* =====================================================
-   STEP TWO
-===================================================== */
-
-.settings{
-  display:none;
-}
-
-.settings.show{
-  display:block;
-}
-
-.setting{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:15px;
-  padding:14px 0;
-  border-bottom:1px solid var(--line);
-}
-
-.setting:last-child{
-  border-bottom:0;
-}
-
-.setting select{
-  border:1px solid var(--line);
-  border-radius:9px;
-  padding:8px;
-}
-
-.toggle{
-  width:48px;
-  height:27px;
-  border:0;
-  border-radius:20px;
-  background:#cbd5e1;
-  position:relative;
-}
-
-.toggle:after{
-  content:"";
-  width:21px;
-  height:21px;
-  position:absolute;
-  top:3px;
-  left:3px;
-  border-radius:50%;
-  background:white;
-  transition:.2s;
-}
-
-.toggle.on{
-  background:var(--blue);
-}
-
-.toggle.on:after{
-  left:24px;
-}
-
-/* =====================================================
-   THREE DOT MENU
-===================================================== */
+/* MENU */
 
 .menu{
   position:fixed;
@@ -993,9 +942,7 @@ button{
   color:var(--danger);
 }
 
-/* =====================================================
-   TOAST
-===================================================== */
+/* TOAST */
 
 .toast{
   position:fixed;
@@ -1016,9 +963,7 @@ button{
   display:block;
 }
 
-/* =====================================================
-   EMPTY
-===================================================== */
+/* EMPTY */
 
 .empty{
   text-align:center;
@@ -1026,9 +971,7 @@ button{
   color:var(--muted);
 }
 
-/* =====================================================
-   MOBILE
-===================================================== */
+/* MOBILE */
 
 @media(max-width:900px){
 
@@ -1069,86 +1012,23 @@ button{
 
   .sheet{
     padding:14px 16px 18px;
-    border-radius:24px 24px 0 0;
-  }
-
-  .new-post-title{
-    font-size:22px;
-  }
-
-  .new-post-close{
-    width:40px;
-    height:40px;
-    font-size:25px;
-  }
-
-  .new-post-next{
-    font-size:16px;
-  }
-
-  .writer-user{
-    padding:15px 0 10px;
-  }
-
-  .writer-user .avatar{
-    width:50px;
-    height:50px;
-  }
-
-  .writer-user b{
-    font-size:18px;
-  }
-
-  .tags{
-    gap:7px;
-    margin:6px 0;
-  }
-
-  .tag-btn{
-    font-size:15px;
-    padding:8px 11px;
   }
 
   .post-textarea{
     min-height:235px;
     font-size:21px;
-    padding:15px 0 10px;
   }
 
   .writer-tools{
     grid-template-columns:repeat(4,1fr);
-    padding:10px 0;
   }
 
   .writer-tool{
-    min-height:72px;
+    min-height:70px;
   }
 
   .writer-tool b{
     font-size:12px;
-  }
-
-  .tool-icon{
-    width:36px;
-    height:36px;
-    font-size:13px;
-  }
-
-  .share-settings{
-    padding-top:13px;
-  }
-
-  .share-chip{
-    font-size:14px;
-    padding:8px 11px;
-  }
-
-  #stepOne > .nextbar{
-    display:none;
-  }
-
-  .setting{
-    align-items:flex-start;
   }
 
 }
@@ -1158,13 +1038,11 @@ button{
 
 <body>
 
-<!-- =====================================================
-     TOP BAR
-===================================================== -->
-
 <header class="topbar">
 
-  <div class="brand">
+  <div
+    class="brand"
+    onclick="goHome()">
     Zemivo
   </div>
 
@@ -1220,10 +1098,6 @@ button{
 
 <main class="layout">
 
-<!-- =====================================================
-     LEFT
-===================================================== -->
-
 <aside class="sidebar panel">
 
   <button
@@ -1277,10 +1151,6 @@ button{
 </aside>
 
 
-<!-- =====================================================
-     FEED
-===================================================== -->
-
 <section>
 
   <div class="mind-card card">
@@ -1306,15 +1176,10 @@ button{
 
   </div>
 
-
   <div id="feed"></div>
 
 </section>
 
-
-<!-- =====================================================
-     RIGHT
-===================================================== -->
 
 <aside class="right">
 
@@ -1355,9 +1220,7 @@ button{
 </main>
 
 
-<!-- =====================================================
-     COMPOSER
-===================================================== -->
+<!-- COMPOSER -->
 
 <div
   id="composerModal"
@@ -1401,10 +1264,6 @@ button{
 
     </div>
 
-
-    <!-- =================================================
-         STEP ONE
-    ================================================= -->
 
     <section id="stepOne">
 
@@ -1450,7 +1309,7 @@ button{
         <button
           class="tag-btn"
           onclick="addFeeling()">
-          😊
+          😊 Feeling
         </button>
 
       </div>
@@ -1561,12 +1420,7 @@ button{
 
           <div class="tool-icon">@</div>
 
-          <div>
-            <b>Mention</b>
-            <div class="small">
-              Mention someone
-            </div>
-          </div>
+          <b>Mention</b>
 
         </button>
 
@@ -1577,12 +1431,7 @@ button{
 
           <div class="tool-icon">#</div>
 
-          <div>
-            <b>Hashtag</b>
-            <div class="small">
-              Add a hashtag
-            </div>
-          </div>
+          <b>Hashtag</b>
 
         </button>
 
@@ -1593,12 +1442,7 @@ button{
 
           <div class="tool-icon">👥</div>
 
-          <div>
-            <b>Group</b>
-            <div class="small">
-              Publish inside a group
-            </div>
-          </div>
+          <b>Group</b>
 
         </button>
 
@@ -1609,12 +1453,7 @@ button{
 
           <div class="tool-icon">📊</div>
 
-          <div>
-            <b>Poll</b>
-            <div class="small">
-              Create a poll
-            </div>
-          </div>
+          <b>Poll</b>
 
         </button>
 
@@ -1625,12 +1464,7 @@ button{
 
           <div class="tool-icon">📅</div>
 
-          <div>
-            <b>Event</b>
-            <div class="small">
-              Add an event
-            </div>
-          </div>
+          <b>Event</b>
 
         </button>
 
@@ -1641,12 +1475,7 @@ button{
 
           <div class="tool-icon">🔗</div>
 
-          <div>
-            <b>Affiliate Product</b>
-            <div class="small">
-              Add product or affiliate link
-            </div>
-          </div>
+          <b>Affiliate Product</b>
 
         </button>
 
@@ -1658,46 +1487,19 @@ button{
         <button
           class="share-chip"
           onclick="setAudiencePublic()">
-
           🌍 Public
-
         </button>
 
         <button
           class="share-chip"
-          onclick="showToast('Instagram sharing is off')">
-
-          📷 Instagram Off
-
-        </button>
-
-      </div>
-
-
-      <div
-        class="nextbar"
-        style="display:none">
-
-        <div></div>
-
-        <button
-          id="nextButton"
-          class="primary"
-          disabled
-          onclick="goToStepTwo()">
-
-          Next →
-
+          onclick="toggleExtraTools()">
+          ➕ More
         </button>
 
       </div>
 
     </section>
 
-
-    <!-- =================================================
-         STEP TWO
-    ================================================= -->
 
     <section
       id="stepTwo"
@@ -1881,18 +1683,14 @@ button{
         <button
           class="secondary"
           onclick="backToStepOne()">
-
           ← Back
-
         </button>
 
-
         <button
+          id="publishButton"
           class="primary"
           onclick="publishPost()">
-
           Share Post
-
         </button>
 
       </div>
@@ -1904,9 +1702,7 @@ button{
 </div>
 
 
-<!-- =====================================================
-     DRAFT
-===================================================== -->
+<!-- DRAFT -->
 
 <div
   id="draftModal"
@@ -1990,9 +1786,7 @@ button{
 </div>
 
 
-<!-- =====================================================
-     THREE DOT MENU
-===================================================== -->
+<!-- POST MENU -->
 
 <div
   id="postMenu"
@@ -2041,9 +1835,7 @@ button{
   <button
     class="danger"
     onclick="deletePost()">
-
     🗑️ Move to trash
-
   </button>
 
 </div>
@@ -2056,21 +1848,24 @@ button{
 
 
 <!-- =====================================================
-     ZEMIVO HOME PAGE
-     SECURITY FOUNDATION + FIREBASE
+     ONE SINGLE MODULE
+     Firebase + Home Logic
 ===================================================== -->
 
 <script type="module">
 
 import {
   auth,
-  db
+  db,
+  storage
 } from "./zemivo-security.js";
+
 
 import {
   onAuthStateChanged
 } from
 "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
+
 
 import {
   collection,
@@ -2080,476 +1875,25 @@ import {
   onSnapshot,
   doc,
   setDoc,
-  deleteDoc
+  updateDoc,
+  deleteDoc,
+  getDoc,
+  serverTimestamp,
+  increment
 } from
 "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
 
 
-/* =====================================================
-   PAGE ISOLATION
-===================================================== */
-
-window.ZemivoHomePage =
-  Object.freeze({
-    version:"1.0.0",
-    name:"Home"
-  });
+import {
+  ref as storageRef,
+  uploadBytes,
+  getDownloadURL
+} from
+"https://www.gstatic.com/firebasejs/12.1.0/firebase-storage.js";
 
 
 /* =====================================================
-   FIREBASE STATE
-===================================================== */
-
-window.zemivoAuth =
-  auth;
-
-window.zemivoDb =
-  db;
-
-window.zemivoCurrentUser =
-  null;
-
-
-/* =====================================================
-   GLOBAL POST DATA
-===================================================== */
-
-let firebasePosts = [];
-
-let firebaseListener = null;
-
-
-/* =====================================================
-   CURRENT USER
-===================================================== */
-
-onAuthStateChanged(
-  auth,
-  function(user){
-
-    window.zemivoCurrentUser =
-      user || null;
-
-    updateUserUI();
-
-    if(user){
-
-      startFirebasePosts();
-
-    }else{
-
-      stopFirebasePosts();
-
-    }
-
-    render();
-
-  }
-);
-
-
-/* =====================================================
-   USER UI
-===================================================== */
-
-function updateUserUI(){
-
-  const user =
-    window.zemivoCurrentUser;
-
-  const name =
-    user?.displayName ||
-    "Zemivo User";
-
-  const initial =
-    name
-      .charAt(0)
-      .toUpperCase() ||
-    "Z";
-
-
-  const writerName =
-    document.getElementById(
-      "writerName"
-    );
-
-  const writerAvatar =
-    document.getElementById(
-      "writerAvatar"
-    );
-
-  const homeAvatar =
-    document.getElementById(
-      "homeAvatar"
-    );
-
-
-  if(writerName){
-
-    writerName.textContent =
-      name;
-
-  }
-
-
-  if(writerAvatar){
-
-    writerAvatar.textContent =
-      initial;
-
-    if(user?.photoURL){
-
-      writerAvatar.innerHTML =
-        `<img src="${escapeHTML(
-          user.photoURL
-        )}" alt="">`;
-
-    }
-
-  }
-
-
-  if(homeAvatar){
-
-    homeAvatar.textContent =
-      initial;
-
-    if(user?.photoURL){
-
-      homeAvatar.innerHTML =
-        `<img src="${escapeHTML(
-          user.photoURL
-        )}" alt="">`;
-
-    }
-
-  }
-
-}
-
-
-/* =====================================================
-   FIRESTORE POSTS LISTENER
-===================================================== */
-
-function startFirebasePosts(){
-
-  if(firebaseListener){
-
-    firebaseListener();
-
-    firebaseListener =
-      null;
-
-  }
-
-
-  try{
-
-    const postsQuery =
-      query(
-        collection(
-          db,
-          "posts"
-        ),
-        orderBy(
-          "createdAt",
-          "desc"
-        ),
-        limit(50)
-      );
-
-
-    firebaseListener =
-      onSnapshot(
-        postsQuery,
-
-        function(snapshot){
-
-          firebasePosts =
-            snapshot.docs.map(
-              function(snapshotDoc){
-
-                return {
-                  id:snapshotDoc.id,
-                  ...snapshotDoc.data(),
-                  source:"firebase"
-                };
-
-              }
-            );
-
-
-          render();
-
-        },
-
-        function(error){
-
-          console.error(
-            "Zemivo Firestore posts listener error:",
-            error
-          );
-
-          firebasePosts = [];
-
-          render();
-
-        }
-      );
-
-  }
-  catch(error){
-
-    console.error(
-      "Zemivo Firestore posts setup error:",
-      error
-    );
-
-  }
-
-}
-
-
-/* =====================================================
-   STOP FIREBASE LISTENER
-===================================================== */
-
-function stopFirebasePosts(){
-
-  if(firebaseListener){
-
-    firebaseListener();
-
-    firebaseListener =
-      null;
-
-  }
-
-  firebasePosts = [];
-
-}
-
-
-/* =====================================================
-   FIREBASE WRITE HELPER
-===================================================== */
-
-window.zemivoSavePostToFirebase =
-  async function(post){
-
-    const user =
-      window.zemivoCurrentUser;
-
-    if(!user){
-
-      return false;
-
-    }
-
-
-    try{
-
-      /*
-       IMPORTANT:
-       Media data URLs are not sent to Firestore.
-       Large media should later use Firebase Storage.
-      */
-
-      const safePost = {
-
-        id:
-          post.id,
-
-        author:
-          post.author,
-
-        authorId:
-          user.uid,
-
-        text:
-          post.text || "",
-
-        media:
-          post.mediaType === "image" ||
-          post.mediaType === "video"
-          ? ""
-          : "",
-
-        mediaType:
-          post.mediaType || "",
-
-        mediaUrl:
-          post.mediaUrl || "",
-
-        location:
-          post.location || "",
-
-        group:
-          post.group || "",
-
-        product:
-          post.product || "",
-
-        audience:
-          post.audience || "Public",
-
-        comments:
-          post.comments || "Public",
-
-        createdAt:
-          post.createdAt,
-
-        likes:
-          Number(post.likes || 0),
-
-        shares:
-          Number(post.shares || 0),
-
-        saved:
-          false,
-
-        pinned:
-          false,
-
-        archived:
-          false,
-
-        trashed:
-          false
-
-      };
-
-
-      await setDoc(
-        doc(
-          db,
-          "posts",
-          post.id
-        ),
-        safePost
-      );
-
-
-      return true;
-
-    }
-    catch(error){
-
-      console.error(
-        "Zemivo Firestore post write error:",
-        error
-      );
-
-      return false;
-
-    }
-
-  };
-
-
-/* =====================================================
-   FIREBASE DELETE HELPER
-===================================================== */
-
-window.zemivoDeleteFirebasePost =
-  async function(id){
-
-    try{
-
-      await deleteDoc(
-        doc(
-          db,
-          "posts",
-          id
-        )
-      );
-
-      return true;
-
-    }
-    catch(error){
-
-      console.error(
-        "Zemivo Firestore post delete error:",
-        error
-      );
-
-      return false;
-
-    }
-
-  };
-
-
-/* =====================================================
-   NAVIGATION
-===================================================== */
-
-window.navigateTo =
-  function(page){
-
-    window.location.href =
-      page;
-
-  };
-
-
-window.goHome =
-  function(){
-
-    window.scrollTo({
-      top:0,
-      behavior:"smooth"
-    });
-
-  };
-
-
-/* =====================================================
-   SEARCH
-===================================================== */
-
-document
-  .getElementById("search")
-  .addEventListener(
-    "input",
-    function(){
-
-      render();
-
-    }
-  );
-
-
-/* =====================================================
-   CLEANUP
-===================================================== */
-
-window.addEventListener(
-  "beforeunload",
-  function(){
-
-    if(firebaseListener){
-
-      firebaseListener();
-
-    }
-
-  }
-);
-
-</script>
-
-
-<!-- =====================================================
-     HOME PAGE LOCAL LOGIC
-===================================================== -->
-
-<script>
-
-/* =====================================================
-   DATA
+   PAGE STATE
 ===================================================== */
 
 const STORAGE_KEY =
@@ -2559,13 +1903,20 @@ const DRAFT_KEY =
   "zemivo_post_draft_v1";
 
 
-let posts =
-  JSON.parse(
-    localStorage.getItem(
-      STORAGE_KEY
-    ) || "[]"
-  );
+let currentUser =
+  null;
 
+let currentProfile =
+  null;
+
+let posts =
+  loadLocalPosts();
+
+let firebasePosts =
+  [];
+
+let firebaseListener =
+  null;
 
 let selectedPostId =
   null;
@@ -2575,6 +1926,9 @@ let selectedMedia =
 
 let selectedMediaType =
   "";
+
+let selectedFile =
+  null;
 
 let selectedLocation =
   "";
@@ -2590,92 +1944,141 @@ let editingId =
 
 
 /* =====================================================
-   SAVE LOCAL
+   PAGE ISOLATION
 ===================================================== */
 
-function save(){
+const ZemivoHomePage = {
 
-  localStorage.setItem(
-    STORAGE_KEY,
-    JSON.stringify(posts)
-  );
+  version:"2.0.0",
 
-}
+  name:"Home",
+
+  feature:"Zemivo Home Feed"
+
+};
+
+
+Object.defineProperty(
+  window,
+  "ZemivoHomePage",
+  {
+    value:Object.freeze(
+      ZemivoHomePage
+    ),
+    writable:false,
+    configurable:false
+  }
+);
 
 
 /* =====================================================
-   ID
+   HELPERS
 ===================================================== */
 
-function createId(){
-
-  return (
-    Date.now().toString(36)
-    +
-    Math.random()
-      .toString(36)
-      .substring(2,9)
-  );
-
-}
-
-
-/* =====================================================
-   ESCAPE
-===================================================== */
-
-function escapeHTML(value){
+function escapeHTML(
+  value
+){
 
   return String(
     value ?? ""
   )
-    .replace(
-      /&/g,
+    .replaceAll(
+      "&",
       "&amp;"
     )
-    .replace(
-      /</g,
+    .replaceAll(
+      "<",
       "&lt;"
     )
-    .replace(
-      />/g,
+    .replaceAll(
+      ">",
       "&gt;"
     )
-    .replace(
-      /"/g,
+    .replaceAll(
+      '"',
       "&quot;"
     )
-    .replace(
-      /'/g,
+    .replaceAll(
+      "'",
       "&#039;"
     );
 
 }
 
 
-/* =====================================================
-   TOAST
-===================================================== */
+function safeURL(
+  value
+){
 
-function showToast(message){
+  const url =
+    String(
+      value || ""
+    );
+
+
+  if(
+    url.startsWith(
+      "https://"
+    ) ||
+    url.startsWith(
+      "http://"
+    ) ||
+    url.startsWith(
+      "data:image/"
+    ) ||
+    url.startsWith(
+      "data:video/"
+    )
+  ){
+
+    return url;
+
+  }
+
+
+  return "";
+
+}
+
+
+function createId(){
+
+  return (
+    Date.now().toString(36)
+    +
+    "-"
+    +
+    crypto.randomUUID()
+  );
+
+}
+
+
+function showToast(
+  message
+){
 
   const toast =
     document.getElementById(
       "toast"
     );
 
+
   toast.textContent =
     message;
+
 
   toast.classList.add(
     "show"
   );
 
+
   clearTimeout(
-    window.toastTimer
+    window.__zemivoToastTimer
   );
 
-  window.toastTimer =
+
+  window.__zemivoToastTimer =
     setTimeout(
       function(){
 
@@ -2684,19 +2087,775 @@ function showToast(message){
         );
 
       },
-      2200
+      2500
     );
 
 }
 
 
 /* =====================================================
+   LOCAL STORAGE
+===================================================== */
+
+function loadLocalPosts(){
+
+  try{
+
+    const raw =
+      localStorage.getItem(
+        STORAGE_KEY
+      );
+
+
+    const data =
+      JSON.parse(
+        raw || "[]"
+      );
+
+
+    return Array.isArray(
+      data
+    )
+    ? data
+    : [];
+
+  }
+  catch(error){
+
+    console.error(
+      "Zemivo local post load error:",
+      error
+    );
+
+    return [];
+
+  }
+
+}
+
+
+function saveLocalPosts(){
+
+  try{
+
+    /*
+      Data URLs are removed before localStorage save
+      to prevent the browser storage from becoming huge.
+    */
+
+    const safe =
+      posts.map(
+        function(post){
+
+          const copy =
+            {
+              ...post
+            };
+
+
+          if(
+            copy.mediaUrl &&
+            String(
+              copy.mediaUrl
+            ).startsWith(
+              "data:"
+            )
+          ){
+
+            copy.mediaUrl =
+              "";
+
+          }
+
+
+          if(
+            copy.media &&
+            String(
+              copy.media
+            ).startsWith(
+              "data:"
+            )
+          ){
+
+            copy.media =
+              "";
+
+          }
+
+
+          return copy;
+
+        }
+      );
+
+
+    localStorage.setItem(
+      STORAGE_KEY,
+      JSON.stringify(
+        safe
+      )
+    );
+
+  }
+  catch(error){
+
+    console.error(
+      "Zemivo local save error:",
+      error
+    );
+
+  }
+
+}
+
+
+/* =====================================================
+   AUTH
+===================================================== */
+
+onAuthStateChanged(
+  auth,
+  async function(user){
+
+    currentUser =
+      user || null;
+
+
+    currentProfile =
+      null;
+
+
+    if(user){
+
+      await loadCurrentProfile();
+
+      updateUserUI();
+
+      startFirebasePosts();
+
+    }
+    else{
+
+      stopFirebasePosts();
+
+      updateUserUI();
+
+    }
+
+
+    render();
+
+  }
+);
+
+
+/* =====================================================
+   PROFILE
+===================================================== */
+
+async function loadCurrentProfile(){
+
+  if(!currentUser)
+    return;
+
+
+  try{
+
+    const profileSnapshot =
+      await getDoc(
+        doc(
+          db,
+          "profiles",
+          currentUser.uid
+        )
+      );
+
+
+    if(
+      profileSnapshot.exists()
+    ){
+
+      currentProfile =
+        profileSnapshot.data();
+
+    }
+
+  }
+  catch(error){
+
+    console.warn(
+      "Zemivo profile load:",
+      error
+    );
+
+  }
+
+}
+
+
+function getCurrentName(){
+
+  return (
+    currentProfile?.displayName ||
+    currentProfile?.name ||
+    currentUser?.displayName ||
+    "Zemivo User"
+  );
+
+}
+
+
+function getCurrentPhoto(){
+
+  return (
+    currentProfile?.photoURL ||
+    currentProfile?.profilePhotoURL ||
+    currentUser?.photoURL ||
+    ""
+  );
+
+}
+
+
+function updateAvatarElement(
+  element,
+  name,
+  photoURL
+){
+
+  if(!element)
+    return;
+
+
+  const safePhoto =
+    safeURL(
+      photoURL
+    );
+
+
+  if(safePhoto){
+
+    element.innerHTML =
+      `<img
+        src="${escapeHTML(
+          safePhoto
+        )}"
+        alt="">`;
+
+    return;
+
+  }
+
+
+  element.textContent =
+    (
+      name ||
+      "Z"
+    )
+      .charAt(0)
+      .toUpperCase();
+
+}
+
+
+function updateUserUI(){
+
+  const name =
+    getCurrentName();
+
+
+  const photo =
+    getCurrentPhoto();
+
+
+  const writerName =
+    document.getElementById(
+      "writerName"
+    );
+
+
+  if(writerName){
+
+    writerName.textContent =
+      name;
+
+  }
+
+
+  updateAvatarElement(
+    document.getElementById(
+      "writerAvatar"
+    ),
+    name,
+    photo
+  );
+
+
+  updateAvatarElement(
+    document.getElementById(
+      "homeAvatar"
+    ),
+    name,
+    photo
+  );
+
+}
+
+
+/* =====================================================
+   FIRESTORE POSTS
+===================================================== */
+
+function startFirebasePosts(){
+
+  stopFirebasePosts();
+
+
+  if(!currentUser)
+    return;
+
+
+  try{
+
+    const postsQuery =
+      query(
+        collection(
+          db,
+          "posts"
+        ),
+        orderBy(
+          "createdAtMs",
+          "desc"
+        ),
+        limit(50)
+      );
+
+
+    firebaseListener =
+      onSnapshot(
+        postsQuery,
+
+        function(snapshot){
+
+          firebasePosts =
+            snapshot.docs.map(
+              function(item){
+
+                const data =
+                  item.data();
+
+
+                return {
+
+                  id:item.id,
+
+                  ...data,
+
+                  source:"firebase"
+
+                };
+
+              }
+            );
+
+
+          render();
+
+        },
+
+        function(error){
+
+          console.error(
+            "Zemivo posts listener error:",
+            error
+          );
+
+
+          firebasePosts =
+            [];
+
+
+          render();
+
+        }
+      );
+
+  }
+  catch(error){
+
+    console.error(
+      "Zemivo posts query error:",
+      error
+    );
+
+  }
+
+}
+
+
+function stopFirebasePosts(){
+
+  if(firebaseListener){
+
+    firebaseListener();
+
+    firebaseListener =
+      null;
+
+  }
+
+
+  firebasePosts =
+    [];
+
+}
+
+
+/* =====================================================
+   FIRESTORE POST DATA
+===================================================== */
+
+function makeFirestorePost(
+  post
+){
+
+  return {
+
+    author:
+      post.author ||
+      "Zemivo User",
+
+    authorId:
+      post.authorId ||
+      currentUser?.uid ||
+      "",
+
+    authorPhotoURL:
+      post.authorPhotoURL ||
+      "",
+
+    text:
+      post.text ||
+      "",
+
+    mediaUrl:
+      post.mediaUrl ||
+      "",
+
+    mediaType:
+      post.mediaType ||
+      "",
+
+    location:
+      post.location ||
+      "",
+
+    group:
+      post.group ||
+      "",
+
+    product:
+      post.product ||
+      "",
+
+    audience:
+      post.audience ||
+      "Public",
+
+    comments:
+      post.comments ||
+      "Public",
+
+    likes:
+      Number(
+        post.likes ||
+        0
+      ),
+
+    shares:
+      Number(
+        post.shares ||
+        0
+      ),
+
+    createdAt:
+      serverTimestamp(),
+
+    createdAtMs:
+      Number(
+        post.createdAtMs ||
+        Date.now()
+      )
+
+  };
+
+}
+
+
+/* =====================================================
+   UPLOAD MEDIA
+===================================================== */
+
+async function uploadPostMedia(
+  postId
+){
+
+  if(
+    !selectedFile ||
+    !currentUser
+  ){
+
+    return "";
+
+  }
+
+
+  const safeName =
+    selectedFile.name
+      .replace(
+        /[^a-zA-Z0-9._-]/g,
+        "_"
+      );
+
+
+  const path =
+    "posts/" +
+    currentUser.uid +
+    "/" +
+    postId +
+    "/" +
+    Date.now() +
+    "_" +
+    safeName;
+
+
+  const fileReference =
+    storageRef(
+      storage,
+      path
+    );
+
+
+  await uploadBytes(
+    fileReference,
+    selectedFile,
+    {
+      contentType:
+        selectedFile.type
+    }
+  );
+
+
+  return await getDownloadURL(
+    fileReference
+  );
+
+}
+
+
+/* =====================================================
+   SAVE POST TO FIRESTORE
+===================================================== */
+
+async function savePostToFirebase(
+  post
+){
+
+  if(!currentUser)
+    return false;
+
+
+  try{
+
+    const data =
+      makeFirestorePost(
+        post
+      );
+
+
+    await setDoc(
+      doc(
+        db,
+        "posts",
+        post.id
+      ),
+      data
+    );
+
+
+    return true;
+
+  }
+  catch(error){
+
+    console.error(
+      "Zemivo Firestore save:",
+      error
+    );
+
+
+    return false;
+
+  }
+
+}
+
+
+/* =====================================================
+   UPDATE POST
+===================================================== */
+
+async function updateFirebasePost(
+  post
+){
+
+  if(
+    !currentUser ||
+    post.authorId !==
+    currentUser.uid
+  ){
+
+    return false;
+
+  }
+
+
+  try{
+
+    await updateDoc(
+      doc(
+        db,
+        "posts",
+        post.id
+      ),
+      {
+
+        text:
+          post.text ||
+          "",
+
+        audience:
+          post.audience ||
+          "Public",
+
+        comments:
+          post.comments ||
+          "Public",
+
+        location:
+          post.location ||
+          "",
+
+        group:
+          post.group ||
+          "",
+
+        product:
+          post.product ||
+          ""
+
+      }
+    );
+
+
+    return true;
+
+  }
+  catch(error){
+
+    console.error(
+      "Zemivo Firestore update:",
+      error
+    );
+
+
+    return false;
+
+  }
+
+}
+
+
+/* =====================================================
+   NAVIGATION
+===================================================== */
+
+function navigateTo(
+  page
+){
+
+  window.location.href =
+    page;
+
+}
+
+
+function goHome(){
+
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
+
+}
+
+
+/* =====================================================
+   SEARCH
+===================================================== */
+
+document
+  .getElementById(
+    "search"
+  )
+  .addEventListener(
+    "input",
+    function(){
+
+      render();
+
+    }
+  );
+
+
+document
+  .getElementById(
+    "search"
+  )
+  .addEventListener(
+    "keydown",
+    function(event){
+
+      if(
+        event.key ===
+        "Enter"
+      ){
+
+        const value =
+          event.target.value.trim();
+
+
+        if(value){
+
+          window.location.href =
+            "search.html?q=" +
+            encodeURIComponent(
+              value
+            );
+
+        }
+
+      }
+
+    }
+  );
+
+
+/* =====================================================
    COMPOSER
 ===================================================== */
 
-function openComposer(
-  kind=""
-){
+function resetComposerState(){
 
   editingId =
     null;
@@ -2706,6 +2865,9 @@ function openComposer(
 
   selectedMediaType =
     "";
+
+  selectedFile =
+    null;
 
   selectedLocation =
     "";
@@ -2720,6 +2882,14 @@ function openComposer(
   document
     .getElementById(
       "postText"
+    )
+    .value =
+    "";
+
+
+  document
+    .getElementById(
+      "mediaInput"
     )
     .value =
     "";
@@ -2769,17 +2939,40 @@ function openComposer(
     "none";
 
 
-  document
-    .getElementById(
-      "mediaInput"
-    )
-    .value =
-    "";
-
-
   resetStepOne();
 
   updateNextButton();
+
+}
+
+
+function openComposer(
+  kind=""
+){
+
+  if(!currentUser){
+
+    showToast(
+      "Please log in first."
+    );
+
+    setTimeout(
+      function(){
+
+        navigateTo(
+          "login.html"
+        );
+
+      },
+      700
+    );
+
+    return;
+
+  }
+
+
+  resetComposerState();
 
 
   document
@@ -2793,7 +2986,8 @@ function openComposer(
 
 
   if(
-    kind === "photo"
+    kind ===
+    "photo"
   ){
 
     setTimeout(
@@ -2813,10 +3007,6 @@ function openComposer(
 
 }
 
-
-/* =====================================================
-   CLOSE
-===================================================== */
 
 function closeComposer(){
 
@@ -2874,12 +3064,6 @@ function saveDraft(){
           "postText"
         )
         .value,
-
-    media:
-      selectedMedia,
-
-    mediaType:
-      selectedMediaType,
 
     location:
       selectedLocation,
@@ -2980,63 +3164,7 @@ function continueEditing(){
 
 
 /* =====================================================
-   NEXT BUTTON
-===================================================== */
-
-function updateNextButton(){
-
-  const text =
-    document
-      .getElementById(
-        "postText"
-      )
-      .value
-      .trim();
-
-
-  const hasMedia =
-    !!selectedMedia;
-
-
-  const disabled =
-    !text &&
-    !hasMedia;
-
-
-  const button =
-    document.getElementById(
-      "nextButton"
-    );
-
-
-  const topButton =
-    document.getElementById(
-      "topNextButton"
-    );
-
-
-  if(button){
-
-    button.disabled =
-      disabled;
-
-  }
-
-
-  topButton.disabled =
-    disabled;
-
-
-  topButton.classList.toggle(
-    "enabled",
-    !disabled
-  );
-
-}
-
-
-/* =====================================================
-   STEP CONTROL
+   STEP
 ===================================================== */
 
 function resetStepOne(){
@@ -3082,7 +3210,55 @@ function resetStepOne(){
 }
 
 
+function updateNextButton(){
+
+  const text =
+    document
+      .getElementById(
+        "postText"
+      )
+      .value
+      .trim();
+
+
+  const enabled =
+    !!text ||
+    !!selectedMedia;
+
+
+  const top =
+    document
+      .getElementById(
+        "topNextButton"
+      );
+
+
+  top.disabled =
+    !enabled;
+
+
+  top.classList.toggle(
+    "enabled",
+    enabled
+  );
+
+}
+
+
 function goToStepTwo(){
+
+  if(
+    !currentUser
+  ){
+
+    showToast(
+      "Please log in first."
+    );
+
+    return;
+
+  }
+
 
   const text =
     document
@@ -3099,7 +3275,7 @@ function goToStepTwo(){
   ){
 
     showToast(
-      "Write something or add a photo first."
+      "Write something or add media first."
     );
 
     return;
@@ -3195,10 +3371,12 @@ function backToStepOne(){
    MEDIA
 ===================================================== */
 
-function selectMedia(event){
+function selectMedia(
+  event
+){
 
   const file =
-    event.target.files[0];
+    event.target.files?.[0];
 
 
   if(!file)
@@ -3222,13 +3400,21 @@ function selectMedia(event){
   }
 
 
-  if(
-    !file.type.startsWith(
+  const isImage =
+    file.type.startsWith(
       "image/"
-    ) &&
-    !file.type.startsWith(
+    );
+
+
+  const isVideo =
+    file.type.startsWith(
       "video/"
-    )
+    );
+
+
+  if(
+    !isImage &&
+    !isVideo
   ){
 
     showToast(
@@ -3243,10 +3429,12 @@ function selectMedia(event){
   }
 
 
+  selectedFile =
+    file;
+
+
   selectedMediaType =
-    file.type.startsWith(
-      "image/"
-    )
+    isImage
     ? "image"
     : "video";
 
@@ -3274,10 +3462,7 @@ function selectMedia(event){
         );
 
 
-      if(
-        selectedMediaType ===
-        "image"
-      ){
+      if(isImage){
 
         image.src =
           selectedMedia;
@@ -3288,7 +3473,8 @@ function selectMedia(event){
         video.style.display =
           "none";
 
-      }else{
+      }
+      else{
 
         image.style.display =
           "none";
@@ -3332,39 +3518,16 @@ function removeMedia(){
   selectedMediaType =
     "";
 
+  selectedFile =
+    null;
+
 
   document
     .getElementById(
-      "previewImage"
+      "mediaInput"
     )
-    .src =
+    .value =
     "";
-
-
-  document
-    .getElementById(
-      "previewVideo"
-    )
-    .src =
-    "";
-
-
-  document
-    .getElementById(
-      "previewImage"
-    )
-    .style
-    .display =
-    "block";
-
-
-  document
-    .getElementById(
-      "previewVideo"
-    )
-    .style
-    .display =
-    "none";
 
 
   document
@@ -3377,14 +3540,6 @@ function removeMedia(){
     );
 
 
-  document
-    .getElementById(
-      "mediaInput"
-    )
-    .value =
-    "";
-
-
   updateNextButton();
 
 }
@@ -3394,128 +3549,84 @@ function removeMedia(){
    WRITER TOOLS
 ===================================================== */
 
-function mention(){
+function appendText(
+  value
+){
 
   const area =
     document.getElementById(
       "postText"
     );
 
+
   area.value +=
-    " @";
+    value;
+
 
   area.focus();
 
   updateNextButton();
 
+}
+
+
+function mention(){
+  appendText(" @");
 }
 
 
 function hashtag(){
-
-  const area =
-    document.getElementById(
-      "postText"
-    );
-
-  area.value +=
-    " #";
-
-  area.focus();
-
-  updateNextButton();
-
+  appendText(" #");
 }
 
 
 function addFeeling(){
-
-  const area =
-    document.getElementById(
-      "postText"
-    );
-
-  area.value +=
-    " 😊 Feeling happy";
-
-  area.focus();
-
-  updateNextButton();
-
+  appendText(" 😊 Feeling happy");
 }
 
 
 function addGIF(){
-
-  const area =
-    document.getElementById(
-      "postText"
-    );
-
-  area.value +=
-    " [GIF]";
-
-  area.focus();
-
-  showToast(
-    "GIF placeholder added"
-  );
-
-  updateNextButton();
-
+  appendText(" [GIF]");
+  showToast("GIF placeholder added");
 }
 
 
 function addLiveInfo(){
-
-  const area =
-    document.getElementById(
-      "postText"
-    );
-
-  area.value +=
-    " 🔴 Live session";
-
-  area.focus();
-
-  updateNextButton();
-
+  appendText(" 🔴 Live session");
 }
 
 
 function addBackground(){
-
   showToast(
-    "Background selector prepared."
+    "Background selector is ready for the next media layer."
   );
+}
 
+
+function addMusic(){
+  appendText(" 🎵 Music");
+}
+
+
+function addCollaborate(){
+  appendText(" 👥 Collaborate");
 }
 
 
 function addPoll(){
 
-  const question =
+  const value =
     prompt(
       "Poll question"
     );
 
 
-  if(question){
+  if(value){
 
-    const area =
-      document.getElementById(
-        "postText"
-      );
-
-
-    area.value +=
+    appendText(
       "\n📊 Poll: " +
-      question;
-
-
-    area.focus();
-
-    updateNextButton();
+      value.trim()
+    );
 
   }
 
@@ -3524,28 +3635,18 @@ function addPoll(){
 
 function addEvent(){
 
-  const eventName =
+  const value =
     prompt(
       "Event name"
     );
 
 
-  if(eventName){
+  if(value){
 
-    const area =
-      document.getElementById(
-        "postText"
-      );
-
-
-    area.value +=
+    appendText(
       "\n📅 Event: " +
-      eventName;
-
-
-    area.focus();
-
-    updateNextButton();
+      value.trim()
+    );
 
   }
 
@@ -3621,44 +3722,6 @@ function addProduct(){
 }
 
 
-function addMusic(){
-
-  const area =
-    document.getElementById(
-      "postText"
-    );
-
-
-  area.value +=
-    " 🎵 Music";
-
-
-  area.focus();
-
-  updateNextButton();
-
-}
-
-
-function addCollaborate(){
-
-  const area =
-    document.getElementById(
-      "postText"
-    );
-
-
-  area.value +=
-    " 👥 Collaborate";
-
-
-  area.focus();
-
-  updateNextButton();
-
-}
-
-
 function toggleExtraTools(){
 
   document
@@ -3696,11 +3759,9 @@ function setAudiencePublic(){
 }
 
 
-/* =====================================================
-   TOGGLE
-===================================================== */
-
-function toggle(button){
+function toggle(
+  button
+){
 
   button.classList.toggle(
     "on"
@@ -3714,6 +3775,17 @@ function toggle(button){
 ===================================================== */
 
 async function publishPost(){
+
+  if(!currentUser){
+
+    showToast(
+      "Please log in first."
+    );
+
+    return;
+
+  }
+
 
   const text =
     document
@@ -3730,12 +3802,26 @@ async function publishPost(){
   ){
 
     showToast(
-      "Write something or add a photo first."
+      "Write something or add media first."
     );
 
     return;
 
   }
+
+
+  const publishButton =
+    document.getElementById(
+      "publishButton"
+    );
+
+
+  publishButton.disabled =
+    true;
+
+
+  publishButton.textContent =
+    "Sharing...";
 
 
   const audience =
@@ -3750,41 +3836,39 @@ async function publishPost(){
     ).value;
 
 
-  const currentUser =
-    window.zemivoCurrentUser;
+  try{
+
+    /* EDIT EXISTING */
+
+    if(editingId){
+
+      const post =
+        posts.find(
+          item =>
+            item.id ===
+            editingId
+        );
 
 
-  if(!currentUser){
+      if(!post){
 
-    showToast(
-      "Please log in first."
-    );
+        showToast(
+          "Post not found."
+        );
 
-    return;
+        return;
 
-  }
+      }
 
-
-  if(editingId){
-
-    const post =
-      posts.find(
-        p =>
-          p.id ===
-          editingId
-      );
-
-
-    if(post){
 
       post.text =
         text;
 
-      post.media =
-        selectedMedia;
+      post.audience =
+        audience;
 
-      post.mediaType =
-        selectedMediaType;
+      post.comments =
+        comments;
 
       post.location =
         selectedLocation;
@@ -3795,122 +3879,154 @@ async function publishPost(){
       post.product =
         selectedProduct;
 
-      post.audience =
-        audience;
 
-      post.comments =
-        comments;
+      saveLocalPosts();
+
+
+      await updateFirebasePost(
+        post
+      );
+
+
+      showToast(
+        "Post updated"
+      );
 
     }
 
+    /* NEW POST */
 
-    save();
+    else{
 
-    showToast(
-      "Post updated"
-    );
+      const postId =
+        createId();
 
-  }else{
 
-    const post = {
+      let cloudMediaURL =
+        "";
 
-      id:
-        createId(),
-
-      author:
-        currentUser.displayName ||
-        "Zemivo User",
-
-      authorId:
-        currentUser.uid,
-
-      authorPhotoURL:
-        currentUser.photoURL ||
-        "",
-
-      text:
-        text,
 
       /*
-       Local preview is kept for the
-       current browser only.
-       Permanent media storage will use
-       Firebase Storage.
+       Try Firebase Storage first.
+       If Storage is unavailable,
+       the post can still be saved as text.
       */
 
-      media:
-        selectedMedia,
+      if(
+        selectedFile
+      ){
 
-      mediaType:
-        selectedMediaType,
+        try{
 
-      mediaUrl:
-        "",
+          cloudMediaURL =
+            await uploadPostMedia(
+              postId
+            );
 
-      location:
-        selectedLocation,
+        }
+        catch(error){
 
-      group:
-        selectedGroup,
-
-      product:
-        selectedProduct,
-
-      audience:
-        audience,
-
-      comments:
-        comments,
-
-      createdAt:
-        Date.now(),
-
-      likes:
-        0,
-
-      liked:
-        false,
-
-      shares:
-        0,
-
-      saved:
-        false,
-
-      pinned:
-        false,
-
-      commentsList:
-        [],
-
-      archived:
-        false,
-
-      trashed:
-        false
-
-    };
+          console.error(
+            "Zemivo media upload:",
+            error
+          );
 
 
-    posts.unshift(
-      post
-    );
+          showToast(
+            "Media upload failed. Saving the post without cloud media."
+          );
 
-    save();
+        }
+
+      }
 
 
-    /*
-     Firestore post save.
-     The Security Foundation provides
-     the authenticated Firestore instance.
-    */
+      const post = {
 
-    if(
-      window.zemivoSavePostToFirebase
-    ){
+        id:
+          postId,
+
+        author:
+          getCurrentName(),
+
+        authorId:
+          currentUser.uid,
+
+        authorPhotoURL:
+          getCurrentPhoto(),
+
+        text:
+          text,
+
+        mediaUrl:
+          cloudMediaURL,
+
+        media:
+          cloudMediaURL
+          ? ""
+          : selectedMedia,
+
+        mediaType:
+          selectedMediaType,
+
+        location:
+          selectedLocation,
+
+        group:
+          selectedGroup,
+
+        product:
+          selectedProduct,
+
+        audience:
+          audience,
+
+        comments:
+          comments,
+
+        createdAt:
+          Date.now(),
+
+        createdAtMs:
+          Date.now(),
+
+        likes:
+          0,
+
+        liked:
+          false,
+
+        shares:
+          0,
+
+        saved:
+          false,
+
+        pinned:
+          false,
+
+        archived:
+          false,
+
+        trashed:
+          false,
+
+        commentsList:
+          []
+
+      };
+
+
+      posts.unshift(
+        post
+      );
+
+
+      saveLocalPosts();
+
 
       const saved =
-        await window.zemivoSavePostToFirebase(
+        await savePostToFirebase(
           post
         );
 
@@ -3918,21 +4034,184 @@ async function publishPost(){
       if(saved){
 
         showToast(
-          "Post shared"
+          "Post shared successfully"
         );
 
-      }else{
+      }
+      else{
 
         showToast(
-          "Post shared locally; cloud save failed"
+          "Post saved on this device. Cloud save failed."
         );
 
       }
 
-    }else{
+    }
 
-      showToast(
-        "Post shared locally"
+
+    localStorage.removeItem(
+      DRAFT_KEY
+    );
+
+
+    render();
+
+
+    document
+      .getElementById(
+        "composerModal"
+      )
+      .classList
+      .remove(
+        "show"
+      );
+
+
+    editingId =
+      null;
+
+  }
+  catch(error){
+
+    console.error(
+      "Zemivo publish error:",
+      error
+    );
+
+
+    showToast(
+      "Could not publish the post."
+    );
+
+  }
+  finally{
+
+    publishButton.disabled =
+      false;
+
+    publishButton.textContent =
+      "Share Post";
+
+  }
+
+}
+
+
+/* =====================================================
+   POST MERGE
+===================================================== */
+
+function normalizeRemotePost(
+  post
+){
+
+  let createdAtMs =
+    Number(
+      post.createdAtMs ||
+      0
+    );
+
+
+  if(
+    !createdAtMs &&
+    post.createdAt &&
+    typeof post.createdAt.toMillis ===
+    "function"
+  ){
+
+    createdAtMs =
+      post.createdAt.toMillis();
+
+  }
+
+
+  return {
+
+    ...post,
+
+    createdAtMs,
+
+    createdAtDisplay:
+      createdAtMs,
+
+    commentsList:
+      post.commentsList ||
+      []
+
+  };
+
+}
+
+
+function getAllPosts(){
+
+  const map =
+    new Map();
+
+
+  for(
+    const local of posts
+  ){
+
+    map.set(
+      local.id,
+      local
+    );
+
+  }
+
+
+  for(
+    const remoteRaw of firebasePosts
+  ){
+
+    const remote =
+      normalizeRemotePost(
+        remoteRaw
+      );
+
+
+    const local =
+      map.get(
+        remote.id
+      );
+
+
+    if(local){
+
+      map.set(
+        remote.id,
+        {
+
+          ...local,
+
+          ...remote,
+
+          liked:
+            local.liked ||
+            false,
+
+          saved:
+            local.saved ||
+            false,
+
+          pinned:
+            local.pinned ||
+            false,
+
+          commentsList:
+            local.commentsList ||
+            []
+
+        }
+      );
+
+    }
+    else{
+
+      map.set(
+        remote.id,
+        remote
       );
 
     }
@@ -3940,53 +4219,48 @@ async function publishPost(){
   }
 
 
-  localStorage.removeItem(
-    DRAFT_KEY
+  return Array.from(
+    map.values()
   );
-
-
-  render();
-
-
-  document
-    .getElementById(
-      "composerModal"
-    )
-    .classList
-    .remove(
-      "show"
-    );
 
 }
 
 
 /* =====================================================
-   MERGE FIREBASE + LOCAL
+   PRIVACY VIEW
 ===================================================== */
 
-function getAllPosts(){
+function canViewPost(
+  post
+){
 
-  const firebaseIds =
-    new Set(
-      firebasePosts.map(
-        p => p.id
-      )
+  if(
+    !currentUser
+  ){
+
+    return (
+      post.audience ===
+      "Public"
     );
 
-
-  const localOnly =
-    posts.filter(
-      p =>
-        !firebaseIds.has(
-          p.id
-        )
-    );
+  }
 
 
-  return [
-    ...firebasePosts,
-    ...localOnly
-  ];
+  if(
+    post.authorId ===
+    currentUser.uid
+  ){
+
+    return true;
+
+  }
+
+
+  return (
+    !post.audience ||
+    post.audience ===
+    "Public"
+  );
 
 }
 
@@ -4003,6 +4277,10 @@ function render(){
     );
 
 
+  if(!feed)
+    return;
+
+
   const search =
     document
       .getElementById(
@@ -4013,18 +4291,25 @@ function render(){
       .toLowerCase();
 
 
-  const all =
-    getAllPosts();
-
-
   const visible =
-    all
+    getAllPosts()
       .filter(
-        function(p){
+        function(post){
 
           if(
-            p.trashed ||
-            p.archived
+            post.trashed ||
+            post.archived
+          ){
+
+            return false;
+
+          }
+
+
+          if(
+            !canViewPost(
+              post
+            )
           ){
 
             return false;
@@ -4034,13 +4319,16 @@ function render(){
 
           const combined =
             (
-              (p.text || "") +
+              (post.text || "")
+              +
               " " +
-              (p.location || "") +
+              (post.location || "")
+              +
               " " +
-              (p.group || "") +
+              (post.group || "")
+              +
               " " +
-              (p.author || "")
+              (post.author || "")
             )
               .toLowerCase();
 
@@ -4056,11 +4344,15 @@ function render(){
 
           return (
             Number(
-              b.createdAt || 0
+              b.createdAtMs ||
+              b.createdAt ||
+              0
             )
             -
             Number(
-              a.createdAt || 0
+              a.createdAtMs ||
+              a.createdAt ||
+              0
             )
           );
 
@@ -4106,6 +4398,127 @@ function render(){
 
 
 /* =====================================================
+   AVATAR HTML
+===================================================== */
+
+function avatarHTML(
+  name,
+  photoURL,
+  className="avatar"
+){
+
+  const photo =
+    safeURL(
+      photoURL
+    );
+
+
+  if(photo){
+
+    return `
+
+      <div class="${className}">
+
+        <img
+          src="${escapeHTML(
+            photo
+          )}"
+          alt="">
+
+      </div>
+
+    `;
+
+  }
+
+
+  return `
+
+    <div class="${className}">
+
+      ${escapeHTML(
+        (
+          name ||
+          "Z"
+        )
+          .charAt(0)
+          .toUpperCase()
+      )}
+
+    </div>
+
+  `;
+
+}
+
+
+/* =====================================================
+   REPLY HELPERS
+===================================================== */
+
+function getReplyByPath(
+  postId,
+  path
+){
+
+  const post =
+    posts.find(
+      item =>
+        item.id ===
+        postId
+    );
+
+
+  if(!post)
+    return null;
+
+
+  const parts =
+    String(
+      path
+    )
+      .split("-")
+      .map(
+        Number
+      );
+
+
+  const commentIndex =
+    parts.shift();
+
+
+  let item =
+    post.commentsList?.[
+      commentIndex
+    ];
+
+
+  if(!item)
+    return null;
+
+
+  for(
+    const index of parts
+  ){
+
+    item =
+      item.replies?.[
+        index
+      ];
+
+
+    if(!item)
+      return null;
+
+  }
+
+
+  return item;
+
+}
+
+
+/* =====================================================
    REPLY HTML
 ===================================================== */
 
@@ -4133,26 +4546,14 @@ function replyHTML(
       .join("");
 
 
-  const likes =
-    reply.likes || 0;
-
-
   return `
 
     <div class="reply">
 
-      <div class="avatar">
-
-        ${escapeHTML(
-          (
-            reply.name ||
-            "Z"
-          )
-            .charAt(0)
-            .toUpperCase()
-        )}
-
-      </div>
+      ${avatarHTML(
+        reply.name,
+        reply.photoURL
+      )}
 
       <div class="comment-content">
 
@@ -4189,16 +4590,12 @@ function replyHTML(
               )
             ">
 
-            👍
+            👍 Like
             ${
-              reply.liked
-              ? "Unlike"
-              : "Like"
-            }
-
-            ${
-              likes
-              ? "(" + likes + ")"
+              reply.likes
+              ? "(" +
+                reply.likes +
+                ")"
               : ""
             }
 
@@ -4250,15 +4647,11 @@ function replyHTML(
 
 
         <div
-          id="
-            reply-edit-${postId}-${path}
-          "
+          id="reply-edit-${postId}-${path}"
           class="reply-edit-box">
 
           <input
-            id="
-              reply-edit-input-${postId}-${path}
-            "
+            id="reply-edit-input-${postId}-${path}"
             value="${escapeHTML(
               reply.text
             )}"
@@ -4288,15 +4681,11 @@ function replyHTML(
 
 
         <div
-          id="
-            reply-box-${postId}-${path}
-          "
+          id="reply-box-${postId}-${path}"
           class="reply-box">
 
           <input
-            id="
-              reply-input-${postId}-${path}
-            "
+            id="reply-input-${postId}-${path}"
             placeholder="Write a reply..."
             onkeydown="
               if(event.key==='Enter'){
@@ -4370,18 +4759,10 @@ function commentHTML(
 
     <div class="comment">
 
-      <div class="avatar">
-
-        ${escapeHTML(
-          (
-            comment.name ||
-            "Z"
-          )
-            .charAt(0)
-            .toUpperCase()
-        )}
-
-      </div>
+      ${avatarHTML(
+        comment.name,
+        comment.photoURL
+      )}
 
       <div class="comment-content">
 
@@ -4422,15 +4803,11 @@ function commentHTML(
 
 
         <div
-          id="
-            reply-box-${postId}-${index}
-          "
+          id="reply-box-${postId}-${index}"
           class="reply-box">
 
           <input
-            id="
-              reply-input-${postId}-${index}
-            "
+            id="reply-input-${postId}-${index}"
             placeholder="Write a reply..."
             onkeydown="
               if(event.key==='Enter'){
@@ -4531,13 +4908,15 @@ function postHTML(
   }
 
 
-  let mediaHTML =
-    "";
-
-
   const mediaSource =
-    post.mediaUrl ||
-    post.media ||
+    safeURL(
+      post.mediaUrl ||
+      post.media ||
+      ""
+    );
+
+
+  let mediaHTML =
     "";
 
 
@@ -4560,7 +4939,8 @@ function postHTML(
 
       `;
 
-    }else{
+    }
+    else{
 
       mediaHTML = `
 
@@ -4578,33 +4958,20 @@ function postHTML(
   }
 
 
-  const authorInitial =
-    (
-      post.author ||
-      "Z"
-    )
-      .charAt(0)
-      .toUpperCase();
+  const timeValue =
+    Number(
+      post.createdAtMs ||
+      post.createdAt ||
+      0
+    );
 
 
-  const authorAvatar =
-    post.authorPhotoURL
-    ? `
-      <div class="avatar">
-        <img
-          src="${escapeHTML(
-            post.authorPhotoURL
-          )}"
-          alt="">
-      </div>
-    `
-    : `
-      <div class="avatar">
-        ${escapeHTML(
-          authorInitial
-        )}
-      </div>
-    `;
+  const timeText =
+    timeValue
+    ? new Date(
+        timeValue
+      ).toLocaleString()
+    : "Just now";
 
 
   return `
@@ -4617,7 +4984,10 @@ function postHTML(
 
       <div class="post-head">
 
-        ${authorAvatar}
+        ${avatarHTML(
+          post.author,
+          post.authorPhotoURL
+        )}
 
         <div class="post-info">
 
@@ -4632,14 +5002,9 @@ function postHTML(
 
           <div class="post-time">
 
-            ${
-              post.createdAt
-              ? new Date(
-                  post.createdAt
-                )
-                .toLocaleString()
-              : "Just now"
-            }
+            ${escapeHTML(
+              timeText
+            )}
 
             ·
 
@@ -4707,7 +5072,10 @@ function postHTML(
 
         <span>
           👍
-          ${post.likes || 0}
+          ${Number(
+            post.likes ||
+            0
+          )}
           Likes
         </span>
 
@@ -4722,7 +5090,10 @@ function postHTML(
           ·
 
           ${
-            post.shares || 0
+            Number(
+              post.shares ||
+              0
+            )
           }
           Shares
 
@@ -4814,11 +5185,9 @@ function postHTML(
             <div class="comment-box">
 
               <input
-                id="
-                  comment-${escapeHTML(
-                    post.id
-                  )}
-                "
+                id="comment-${escapeHTML(
+                  post.id
+                )}"
                 placeholder="Write a comment..."
                 onkeydown="
                   if(event.key==='Enter'){
@@ -4866,7 +5235,7 @@ function postHTML(
 
 
 /* =====================================================
-   FIND LOCAL POST
+   LOCAL POST
 ===================================================== */
 
 function getLocalPost(
@@ -4874,8 +5243,9 @@ function getLocalPost(
 ){
 
   return posts.find(
-    p =>
-      p.id === id
+    post =>
+      post.id ===
+      id
   );
 
 }
@@ -4890,13 +5260,15 @@ function likePost(
 ){
 
   const post =
-    getLocalPost(id);
+    getLocalPost(
+      id
+    );
 
 
   if(!post){
 
     showToast(
-      "This cloud post will use backend reactions."
+      "This post is available from the cloud. Reaction sync will use the next backend layer."
     );
 
     return;
@@ -4911,7 +5283,10 @@ function likePost(
   post.likes =
     Math.max(
       0,
-      (post.likes || 0)
+      Number(
+        post.likes ||
+        0
+      )
       +
       (
         post.liked
@@ -4921,7 +5296,7 @@ function likePost(
     );
 
 
-  save();
+  saveLocalPosts();
 
   render();
 
@@ -4937,13 +5312,15 @@ function quickSavePost(
 ){
 
   const post =
-    getLocalPost(id);
+    getLocalPost(
+      id
+    );
 
 
   if(!post){
 
     showToast(
-      "Post saved status is synced in the next data layer."
+      "Cloud post saved state is not available in this layer yet."
     );
 
     return;
@@ -4955,7 +5332,7 @@ function quickSavePost(
     !post.saved;
 
 
-  save();
+  saveLocalPosts();
 
   render();
 
@@ -4997,15 +5374,17 @@ function addComment(
   id
 ){
 
+  const post =
+    getLocalPost(
+      id
+    );
+
+
   const input =
     document.getElementById(
       "comment-" +
       id
     );
-
-
-  const post =
-    getLocalPost(id);
 
 
   if(!post || !input)
@@ -5028,15 +5407,13 @@ function addComment(
   }
 
 
-  const user =
-    window.zemivoCurrentUser;
-
-
   post.commentsList.push({
 
     name:
-      user?.displayName ||
-      "Zemivo User",
+      getCurrentName(),
+
+    photoURL:
+      getCurrentPhoto(),
 
     text:
       text,
@@ -5051,7 +5428,7 @@ function addComment(
     "";
 
 
-  save();
+  saveLocalPosts();
 
   render();
 
@@ -5059,7 +5436,7 @@ function addComment(
 
 
 /* =====================================================
-   REPLY BOX
+   REPLIES
 ===================================================== */
 
 function showReplyBox(
@@ -5091,20 +5468,14 @@ function showReplyBox(
     )
   ){
 
-    const input =
-      document.getElementById(
+    document
+      .getElementById(
         "reply-input-" +
         postId +
         "-" +
         path
-      );
-
-
-    if(input){
-
-      input.focus();
-
-    }
+      )
+      ?.focus();
 
   }
 
@@ -5116,66 +5487,15 @@ function addReply(
   path
 ){
 
-  const post =
-    getLocalPost(
-      postId
+  const replyParent =
+    getReplyParent(
+      postId,
+      path
     );
 
 
-  if(!post)
+  if(!replyParent)
     return;
-
-
-  if(!post.commentsList){
-
-    post.commentsList =
-      [];
-
-  }
-
-
-  const parts =
-    String(path)
-      .split("-")
-      .map(Number);
-
-
-  const commentIndex =
-    parts.shift();
-
-
-  let parent =
-    post.commentsList[
-      commentIndex
-    ];
-
-
-  if(!parent)
-    return;
-
-
-  for(
-    const index of parts
-  ){
-
-    if(!parent.replies){
-
-      parent.replies =
-        [];
-
-    }
-
-
-    parent =
-      parent.replies[
-        index
-      ];
-
-
-    if(!parent)
-      return;
-
-  }
 
 
   const input =
@@ -5199,23 +5519,21 @@ function addReply(
     return;
 
 
-  if(!parent.replies){
+  if(!replyParent.replies){
 
-    parent.replies =
+    replyParent.replies =
       [];
 
   }
 
 
-  const user =
-    window.zemivoCurrentUser;
-
-
-  parent.replies.push({
+  replyParent.replies.push({
 
     name:
-      user?.displayName ||
-      "Zemivo User",
+      getCurrentName(),
+
+    photoURL:
+      getCurrentPhoto(),
 
     text:
       text,
@@ -5232,26 +5550,14 @@ function addReply(
   });
 
 
-  input.value =
-    "";
-
-
-  save();
+  saveLocalPosts();
 
   render();
-
-  showToast(
-    "Reply added"
-  );
 
 }
 
 
-/* =====================================================
-   GET REPLY
-===================================================== */
-
-function getReplyByPath(
+function getReplyParent(
   postId,
   path
 ){
@@ -5267,22 +5573,26 @@ function getReplyByPath(
 
 
   const parts =
-    String(path)
+    String(
+      path
+    )
       .split("-")
-      .map(Number);
+      .map(
+        Number
+      );
 
 
   const commentIndex =
     parts.shift();
 
 
-  let reply =
+  let item =
     post.commentsList?.[
       commentIndex
     ];
 
 
-  if(!reply)
+  if(!item)
     return null;
 
 
@@ -5290,30 +5600,22 @@ function getReplyByPath(
     const index of parts
   ){
 
-    if(!reply.replies)
-      return null;
-
-
-    reply =
-      reply.replies[
+    item =
+      item.replies?.[
         index
       ];
 
 
-    if(!reply)
+    if(!item)
       return null;
 
   }
 
 
-  return reply;
+  return item;
 
 }
 
-
-/* =====================================================
-   LIKE REPLY
-===================================================== */
 
 function likeReply(
   postId,
@@ -5331,28 +5633,6 @@ function likeReply(
     return;
 
 
-  if(
-    typeof reply.likes !==
-    "number"
-  ){
-
-    reply.likes =
-      0;
-
-  }
-
-
-  if(
-    typeof reply.liked !==
-    "boolean"
-  ){
-
-    reply.liked =
-      false;
-
-  }
-
-
   reply.liked =
     !reply.liked;
 
@@ -5360,7 +5640,11 @@ function likeReply(
   reply.likes =
     Math.max(
       0,
-      reply.likes +
+      Number(
+        reply.likes ||
+        0
+      )
+      +
       (
         reply.liked
         ? 1
@@ -5369,16 +5653,12 @@ function likeReply(
     );
 
 
-  save();
+  saveLocalPosts();
 
   render();
 
 }
 
-
-/* =====================================================
-   EDIT REPLY
-===================================================== */
 
 function editReply(
   postId,
@@ -5394,37 +5674,11 @@ function editReply(
     );
 
 
-  if(!box)
-    return;
+  if(box){
 
-
-  box.classList.toggle(
-    "show"
-  );
-
-
-  if(
-    box.classList.contains(
+    box.classList.toggle(
       "show"
-    )
-  ){
-
-    const input =
-      document.getElementById(
-        "reply-edit-input-" +
-        postId +
-        "-" +
-        path
-      );
-
-
-    if(input){
-
-      input.focus();
-
-      input.select();
-
-    }
+    );
 
   }
 
@@ -5468,7 +5722,7 @@ function saveReplyEdit(
     text;
 
 
-  save();
+  saveLocalPosts();
 
   render();
 
@@ -5479,10 +5733,6 @@ function saveReplyEdit(
 
 }
 
-
-/* =====================================================
-   DELETE REPLY
-===================================================== */
 
 function deleteReply(
   postId,
@@ -5500,9 +5750,13 @@ function deleteReply(
 
 
   const parts =
-    String(path)
+    String(
+      path
+    )
       .split("-")
-      .map(Number);
+      .map(
+        Number
+      );
 
 
   const commentIndex =
@@ -5533,38 +5787,27 @@ function deleteReply(
     i++
   ){
 
-    const index =
-      parts[i];
-
-
-    if(
-      !parent.replies ||
-      !parent.replies[index]
-    ){
-
-      return;
-
-    }
-
-
     parent =
-      parent.replies[
-        index
+      parent.replies?.[
+        parts[i]
       ];
+
+
+    if(!parent)
+      return;
 
   }
 
 
-  const targetIndex =
+  const target =
     parts[
-      parts.length-1
+      parts.length - 1
     ];
 
 
   if(
-    !parent.replies ||
-    !parent.replies[
-      targetIndex
+    !parent.replies?.[
+      target
     ]
   ){
 
@@ -5585,12 +5828,12 @@ function deleteReply(
 
 
   parent.replies.splice(
-    targetIndex,
+    target,
     1
   );
 
 
-  save();
+  saveLocalPosts();
 
   render();
 
@@ -5606,38 +5849,65 @@ function deleteReply(
    SHARE
 ===================================================== */
 
-function sharePost(
+async function sharePost(
   id
 ){
 
-  const link =
+  const url =
     location.href
-    .split("#")[0]
+      .split("#")[0]
     +
     "#post-"
     +
     id;
 
 
+  const post =
+    getLocalPost(
+      id
+    );
+
+
+  if(post){
+
+    post.shares =
+      Number(
+        post.shares ||
+        0
+      ) + 1;
+
+
+    saveLocalPosts();
+
+    render();
+
+  }
+
+
   if(
     navigator.share
   ){
 
-    navigator.share({
+    try{
 
-      title:
-        "Zemivo Post",
+      await navigator.share({
 
-      text:
-        "View this Zemivo post",
+        title:
+          "Zemivo Post",
 
-      url:
-        link
+        text:
+          "View this Zemivo post",
 
-    })
-    .catch(
-      function(){}
-    );
+        url:url
+
+      });
+
+    }
+    catch(error){
+
+      /* User cancelled share. */
+
+    }
 
     return;
 
@@ -5648,19 +5918,26 @@ function sharePost(
     navigator.clipboard
   ){
 
-    navigator.clipboard
-      .writeText(
-        link
-      )
-      .then(
-        function(){
+    try{
 
-          showToast(
-            "Post link copied"
-          );
+      await navigator.clipboard
+        .writeText(
+          url
+        );
 
-        }
+
+      showToast(
+        "Post link copied"
       );
+
+    }
+    catch(error){
+
+      showToast(
+        "Post link ready"
+      );
+
+    }
 
     return;
 
@@ -5675,7 +5952,7 @@ function sharePost(
 
 
 /* =====================================================
-   THREE DOT MENU
+   POST MENU
 ===================================================== */
 
 function openPostMenu(
@@ -5751,48 +6028,6 @@ function openPostMenu(
 }
 
 
-document.addEventListener(
-  "click",
-  function(event){
-
-    const menu =
-      document.getElementById(
-        "postMenu"
-      );
-
-
-    if(
-      !event.target.closest(
-        "#postMenu"
-      ) &&
-      !event.target.closest(
-        ".more-btn"
-      )
-    ){
-
-      menu.classList.remove(
-        "show"
-      );
-
-    }
-
-  }
-);
-
-
-/* =====================================================
-   SELECTED POST
-===================================================== */
-
-function getSelectedPost(){
-
-  return getLocalPost(
-    selectedPostId
-  );
-
-}
-
-
 function closeMenu(){
 
   document
@@ -5807,8 +6042,17 @@ function closeMenu(){
 }
 
 
+function getSelectedPost(){
+
+  return getLocalPost(
+    selectedPostId
+  );
+
+}
+
+
 /* =====================================================
-   EDIT
+   EDIT POST
 ===================================================== */
 
 function editPost(){
@@ -5817,8 +6061,34 @@ function editPost(){
     getSelectedPost();
 
 
-  if(!post)
+  if(!post){
+
+    showToast(
+      "This cloud post cannot be edited from this device yet."
+    );
+
+    closeMenu();
+
     return;
+
+  }
+
+
+  if(
+    currentUser &&
+    post.authorId !==
+    currentUser.uid
+  ){
+
+    showToast(
+      "You can only edit your own post."
+    );
+
+    closeMenu();
+
+    return;
+
+  }
 
 
   editingId =
@@ -5826,23 +6096,33 @@ function editPost(){
 
 
   selectedMedia =
-    post.media || "";
+    post.mediaUrl ||
+    post.media ||
+    "";
 
 
   selectedMediaType =
-    post.mediaType || "";
+    post.mediaType ||
+    "";
+
+
+  selectedFile =
+    null;
 
 
   selectedLocation =
-    post.location || "";
+    post.location ||
+    "";
 
 
   selectedGroup =
-    post.group || "";
+    post.group ||
+    "";
 
 
   selectedProduct =
-    post.product || "";
+    post.product ||
+    "";
 
 
   document
@@ -5850,7 +6130,8 @@ function editPost(){
       "postText"
     )
     .value =
-    post.text || "";
+    post.text ||
+    "";
 
 
   document
@@ -5883,62 +6164,47 @@ function editPost(){
       );
 
 
+    const image =
+      document.getElementById(
+        "previewImage"
+      );
+
+
+    const video =
+      document.getElementById(
+        "previewVideo"
+      );
+
+
     if(
       selectedMediaType ===
       "video"
     ){
 
-      document
-        .getElementById(
-          "previewImage"
-        )
-        .style
-        .display =
+      image.style.display =
         "none";
 
-
-      document
-        .getElementById(
-          "previewVideo"
-        )
-        .style
-        .display =
+      video.style.display =
         "block";
 
+      video.src =
+        safeURL(
+          selectedMedia
+        );
 
-      document
-        .getElementById(
-          "previewVideo"
-        )
-        .src =
-        selectedMedia;
+    }
+    else{
 
-    }else{
-
-      document
-        .getElementById(
-          "previewImage"
-        )
-        .style
-        .display =
+      image.style.display =
         "block";
 
-
-      document
-        .getElementById(
-          "previewVideo"
-        )
-        .style
-        .display =
+      video.style.display =
         "none";
 
-
-      document
-        .getElementById(
-          "previewImage"
-        )
-        .src =
-        selectedMedia;
+      image.src =
+        safeURL(
+          selectedMedia
+        );
 
     }
 
@@ -5966,7 +6232,7 @@ function editPost(){
 
 
 /* =====================================================
-   SAVE POST
+   SAVE / PIN
 ===================================================== */
 
 function savePost(){
@@ -5983,7 +6249,7 @@ function savePost(){
     !post.saved;
 
 
-  save();
+  saveLocalPosts();
 
   render();
 
@@ -6000,10 +6266,6 @@ function savePost(){
 }
 
 
-/* =====================================================
-   PIN
-===================================================== */
-
 function pinPost(){
 
   const post =
@@ -6018,7 +6280,7 @@ function pinPost(){
     !post.pinned;
 
 
-  save();
+  saveLocalPosts();
 
 
   showToast(
@@ -6037,7 +6299,7 @@ function pinPost(){
    COPY LINK
 ===================================================== */
 
-function copyPostLink(){
+async function copyPostLink(){
 
   const link =
     location.href
@@ -6048,23 +6310,24 @@ function copyPostLink(){
     selectedPostId;
 
 
-  if(
-    navigator.clipboard
-  ){
+  try{
 
-    navigator.clipboard
+    await navigator.clipboard
       .writeText(
         link
-      )
-      .then(
-        function(){
-
-          showToast(
-            "Post link copied"
-          );
-
-        }
       );
+
+
+    showToast(
+      "Post link copied"
+    );
+
+  }
+  catch(error){
+
+    showToast(
+      "Post link ready"
+    );
 
   }
 
@@ -6078,7 +6341,7 @@ function copyPostLink(){
    PRIVACY
 ===================================================== */
 
-function changePrivacy(){
+async function changePrivacy(){
 
   const post =
     getSelectedPost();
@@ -6099,10 +6362,14 @@ function changePrivacy(){
   if(value){
 
     post.audience =
-      value;
+      value.trim();
 
 
-    save();
+    saveLocalPosts();
+
+    await updateFirebasePost(
+      post
+    );
 
     render();
 
@@ -6118,7 +6385,7 @@ function changePrivacy(){
    COMMENTS SETTINGS
 ===================================================== */
 
-function changeComments(){
+async function changeComments(){
 
   const post =
     getSelectedPost();
@@ -6139,10 +6406,14 @@ function changeComments(){
   if(value){
 
     post.comments =
-      value;
+      value.trim();
 
 
-    save();
+    saveLocalPosts();
+
+    await updateFirebasePost(
+      post
+    );
 
     render();
 
@@ -6158,7 +6429,7 @@ function changeComments(){
    PRODUCT
 ===================================================== */
 
-function manageProduct(){
+async function manageProduct(){
 
   const post =
     getSelectedPost();
@@ -6182,7 +6453,11 @@ function manageProduct(){
       value.trim();
 
 
-    save();
+    saveLocalPosts();
+
+    await updateFirebasePost(
+      post
+    );
 
     render();
 
@@ -6198,7 +6473,7 @@ function manageProduct(){
    ARCHIVE
 ===================================================== */
 
-function archivePost(){
+async function archivePost(){
 
   const post =
     getSelectedPost();
@@ -6212,7 +6487,40 @@ function archivePost(){
     true;
 
 
-  save();
+  saveLocalPosts();
+
+
+  if(
+    currentUser &&
+    post.authorId ===
+    currentUser.uid
+  ){
+
+    try{
+
+      await updateDoc(
+        doc(
+          db,
+          "posts",
+          post.id
+        ),
+        {
+          archived:true
+        }
+      );
+
+    }
+    catch(error){
+
+      console.warn(
+        "Archive cloud update:",
+        error
+      );
+
+    }
+
+  }
+
 
   render();
 
@@ -6228,13 +6536,13 @@ function archivePost(){
 
 
 /* =====================================================
-   NOTIFICATIONS
+   NOTIFICATION / REPORT
 ===================================================== */
 
 function togglePostNotifications(){
 
   showToast(
-    "Post notifications updated"
+    "Post notification preference updated on this device."
   );
 
 
@@ -6243,14 +6551,10 @@ function togglePostNotifications(){
 }
 
 
-/* =====================================================
-   REPORT
-===================================================== */
-
 function reportPost(){
 
   showToast(
-    "Report submitted for review"
+    "Report request recorded for review."
   );
 
 
@@ -6274,6 +6578,23 @@ async function deletePost(){
 
 
   if(
+    currentUser &&
+    post.authorId !==
+    currentUser.uid
+  ){
+
+    showToast(
+      "You can only delete your own post."
+    );
+
+    closeMenu();
+
+    return;
+
+  }
+
+
+  if(
     !confirm(
       "Move this post to trash?"
     )
@@ -6290,23 +6611,39 @@ async function deletePost(){
     true;
 
 
-  save();
-
-  render();
+  saveLocalPosts();
 
 
   if(
-    window.zemivoCurrentUser &&
+    currentUser &&
     post.authorId ===
-    window.zemivoCurrentUser.uid &&
-    window.zemivoDeleteFirebasePost
+    currentUser.uid
   ){
 
-    await window.zemivoDeleteFirebasePost(
-      post.id
-    );
+    try{
+
+      await deleteDoc(
+        doc(
+          db,
+          "posts",
+          post.id
+        )
+      );
+
+    }
+    catch(error){
+
+      console.warn(
+        "Cloud delete:",
+        error
+      );
+
+    }
 
   }
+
+
+  render();
 
 
   showToast(
@@ -6317,6 +6654,39 @@ async function deletePost(){
   closeMenu();
 
 }
+
+
+/* =====================================================
+   OUTSIDE CLICK
+===================================================== */
+
+document.addEventListener(
+  "click",
+  function(event){
+
+    const menu =
+      document.getElementById(
+        "postMenu"
+      );
+
+
+    if(
+      !event.target.closest(
+        "#postMenu"
+      ) &&
+      !event.target.closest(
+        ".more-btn"
+      )
+    ){
+
+      menu.classList.remove(
+        "show"
+      );
+
+    }
+
+  }
+);
 
 
 /* =====================================================
@@ -6345,8 +6715,104 @@ document
 
 
 /* =====================================================
+   GLOBAL HTML HANDLERS
+===================================================== */
+
+Object.assign(
+  window,
+  {
+
+    navigateTo,
+    goHome,
+
+    showToast,
+
+    openComposer,
+    closeComposer,
+
+    saveDraft,
+    discardComposer,
+    continueEditing,
+
+    updateNextButton,
+
+    resetStepOne,
+    goToStepTwo,
+    backToStepOne,
+
+    selectMedia,
+    removeMedia,
+
+    mention,
+    hashtag,
+    addFeeling,
+    addGIF,
+    addLiveInfo,
+    addBackground,
+    addPoll,
+    addEvent,
+    addLocation,
+    addGroup,
+    addProduct,
+    addMusic,
+    addCollaborate,
+    toggleExtraTools,
+    setAudiencePublic,
+    toggle,
+
+    publishPost,
+
+    likePost,
+    quickSavePost,
+    focusComment,
+    addComment,
+
+    showReplyBox,
+    addReply,
+    likeReply,
+    editReply,
+    saveReplyEdit,
+    deleteReply,
+
+    sharePost,
+
+    openPostMenu,
+
+    editPost,
+    savePost,
+    pinPost,
+    copyPostLink,
+    changePrivacy,
+    changeComments,
+    manageProduct,
+    archivePost,
+    togglePostNotifications,
+    reportPost,
+    deletePost
+
+  }
+);
+
+
+/* =====================================================
+   CLEANUP
+===================================================== */
+
+window.addEventListener(
+  "beforeunload",
+  function(){
+
+    stopFirebasePosts();
+
+  }
+);
+
+
+/* =====================================================
    INITIAL
 ===================================================== */
+
+updateUserUI();
 
 render();
 
