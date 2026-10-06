@@ -1,217 +1,1355 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
   <title>Zemivo - Insights</title>
 
   <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
+
+    *{
+      box-sizing:border-box;
+      margin:0;
+      padding:0;
     }
 
-    body {
-      font-family: Arial, sans-serif;
-      background: #f4f6f8;
-      color: #222;
+    :root{
+      --blue:#2563eb;
+      --blue-dark:#1d4ed8;
+      --text:#17202a;
+      --muted:#64748b;
+      --border:rgba(255,255,255,.55);
+      --glass:rgba(255,255,255,.72);
+      --shadow:0 18px 50px rgba(37,99,235,.12);
     }
 
-    .topbar {
-      background: white;
-      padding: 15px 20px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    body{
+      font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+      min-height:100vh;
+
+      color:var(--text);
+
+      background:
+        radial-gradient(
+          circle at 10% 10%,
+          rgba(37,99,235,.18),
+          transparent 30%
+        ),
+        radial-gradient(
+          circle at 90% 20%,
+          rgba(14,165,233,.15),
+          transparent 28%
+        ),
+        linear-gradient(
+          135deg,
+          #eef5ff,
+          #f8fafc 50%,
+          #eef6ff
+        );
+
+      overflow-x:hidden;
     }
 
-    .logo {
-      font-size: 26px;
-      font-weight: bold;
-      color: #2563eb;
+    button,
+    input{
+      font-family:inherit;
     }
 
-    .nav a {
-      margin-left: 10px;
-      color: #2563eb;
-      text-decoration: none;
-      font-weight: bold;
+    button{
+      cursor:pointer;
     }
 
-    .container {
-      max-width: 950px;
-      margin: 25px auto;
-      padding: 0 15px;
+    /* TOPBAR */
+
+    .topbar{
+      position:sticky;
+      top:0;
+      z-index:100;
+
+      min-height:68px;
+
+      padding:
+        12px
+        20px;
+
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:15px;
+
+      background:
+        rgba(255,255,255,.82);
+
+      backdrop-filter:
+        blur(18px);
+
+      -webkit-backdrop-filter:
+        blur(18px);
+
+      border-bottom:
+        1px solid
+        rgba(255,255,255,.7);
+
+      box-shadow:
+        0 8px 30px
+        rgba(15,23,42,.08);
     }
 
-    .card {
-      background: white;
-      padding: 20px;
-      margin-bottom: 18px;
-      border-radius: 15px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    .logo{
+      font-size:28px;
+      font-weight:900;
+      color:var(--blue);
+      letter-spacing:-1px;
     }
 
-    h1 {
-      color: #2563eb;
-      margin-bottom: 8px;
+    .nav{
+      display:flex;
+      align-items:center;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+      gap:6px;
     }
 
-    .stats {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 15px;
-      margin-top: 20px;
+    .nav a{
+      color:#334155;
+      text-decoration:none;
+      font-weight:bold;
+      font-size:13px;
+      padding:8px 10px;
+      border-radius:12px;
+      transition:.2s;
     }
 
-    .stat {
-      text-align: center;
-      border: 1px solid #eee;
-      border-radius: 12px;
-      padding: 20px 10px;
+    .nav a:hover{
+      background:#e8f0ff;
+      color:var(--blue);
+      transform:translateY(-1px);
     }
 
-    .stat-icon {
-      font-size: 30px;
-      margin-bottom: 8px;
+    /* MAIN */
+
+    .container{
+      width:min(
+        1050px,
+        calc(100% - 30px)
+      );
+
+      margin:
+        30px
+        auto
+        0;
     }
 
-    .stat h2 {
-      color: #2563eb;
-      margin-bottom: 5px;
+    /* HERO */
+
+    .hero{
+      position:relative;
+      overflow:hidden;
+
+      min-height:230px;
+
+      padding:32px;
+
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:30px;
+
+      border:
+        1px solid
+        var(--border);
+
+      border-radius:26px;
+
+      background:
+        linear-gradient(
+          135deg,
+          rgba(255,255,255,.88),
+          rgba(239,246,255,.7)
+        );
+
+      backdrop-filter:
+        blur(20px);
+
+      -webkit-backdrop-filter:
+        blur(20px);
+
+      box-shadow:var(--shadow);
     }
 
-    .stat p {
-      color: #666;
+    .hero-content{
+      position:relative;
+      z-index:3;
+      max-width:600px;
     }
 
-    .progress {
-      background: #e5e7eb;
-      height: 12px;
-      border-radius: 10px;
-      overflow: hidden;
-      margin-top: 12px;
+    .hero h1{
+      font-size:36px;
+      line-height:1.1;
+      color:var(--blue);
+      margin-bottom:10px;
     }
 
-    .progress-bar {
-      background: #2563eb;
-      height: 100%;
-      width: 65%;
+    .hero p{
+      color:var(--muted);
+      font-size:16px;
+      line-height:1.6;
     }
 
-    .footer {
-      text-align: center;
-      color: #777;
-      padding: 25px;
+    .hero-badge{
+      display:inline-flex;
+      align-items:center;
+      gap:7px;
+
+      margin-bottom:15px;
+
+      padding:7px 12px;
+
+      border-radius:999px;
+
+      background:
+        rgba(37,99,235,.1);
+
+      color:var(--blue);
+
+      font-size:12px;
+      font-weight:bold;
     }
 
-    @media (max-width: 700px) {
-      .stats {
-        grid-template-columns: repeat(2, 1fr);
+    /* 3D READY WORLD */
+
+    .world{
+      position:relative;
+
+      width:240px;
+      height:170px;
+
+      flex-shrink:0;
+
+      perspective:700px;
+    }
+
+    .world-core{
+      position:absolute;
+
+      width:105px;
+      height:105px;
+
+      left:50%;
+      top:50%;
+
+      transform:
+        translate(-50%,-50%)
+        rotateX(58deg)
+        rotateZ(18deg);
+
+      border-radius:28px;
+
+      background:
+        linear-gradient(
+          135deg,
+          rgba(37,99,235,.95),
+          rgba(14,165,233,.55)
+        );
+
+      box-shadow:
+        0 25px 55px
+        rgba(37,99,235,.3);
+
+      animation:
+        worldFloat
+        5s
+        ease-in-out
+        infinite;
+    }
+
+    .world-ring{
+      position:absolute;
+
+      left:50%;
+      top:50%;
+
+      width:185px;
+      height:70px;
+
+      transform:
+        translate(-50%,-50%)
+        rotateX(62deg);
+
+      border:
+        2px solid
+        rgba(37,99,235,.25);
+
+      border-radius:50%;
+
+      animation:
+        ringRotate
+        8s
+        linear
+        infinite;
+    }
+
+    .world-dot{
+      position:absolute;
+
+      width:10px;
+      height:10px;
+
+      border-radius:50%;
+
+      background:#2563eb;
+
+      box-shadow:
+        0 0 18px
+        rgba(37,99,235,.7);
+
+      animation:
+        dotFloat
+        4s
+        ease-in-out
+        infinite;
+    }
+
+    .world-dot.one{
+      top:22px;
+      left:42px;
+    }
+
+    .world-dot.two{
+      right:25px;
+      top:75px;
+      animation-delay:1s;
+    }
+
+    .world-dot.three{
+      bottom:20px;
+      left:80px;
+      animation-delay:2s;
+    }
+
+    @keyframes worldFloat{
+
+      0%,
+      100%{
+        transform:
+          translate(-50%,-50%)
+          rotateX(58deg)
+          rotateZ(18deg)
+          translateY(0);
       }
 
-      .nav a {
-        font-size: 12px;
-        margin-left: 4px;
+      50%{
+        transform:
+          translate(-50%,-50%)
+          rotateX(58deg)
+          rotateZ(18deg)
+          translateY(-12px);
       }
+
     }
+
+    @keyframes ringRotate{
+
+      from{
+        transform:
+          translate(-50%,-50%)
+          rotateX(62deg)
+          rotateZ(0deg);
+      }
+
+      to{
+        transform:
+          translate(-50%,-50%)
+          rotateX(62deg)
+          rotateZ(360deg);
+      }
+
+    }
+
+    @keyframes dotFloat{
+
+      0%,
+      100%{
+        transform:translateY(0);
+      }
+
+      50%{
+        transform:translateY(-10px);
+      }
+
+    }
+
+    /* CARDS */
+
+    .card{
+      margin-top:20px;
+
+      padding:22px;
+
+      border:
+        1px solid
+        var(--border);
+
+      border-radius:22px;
+
+      background:
+        var(--glass);
+
+      backdrop-filter:
+        blur(18px);
+
+      -webkit-backdrop-filter:
+        blur(18px);
+
+      box-shadow:
+        0 12px 40px
+        rgba(15,23,42,.07);
+    }
+
+    .card-title{
+      font-size:20px;
+      margin-bottom:5px;
+    }
+
+    .card-subtitle{
+      color:var(--muted);
+      font-size:13px;
+      margin-bottom:18px;
+    }
+
+    /* STATS */
+
+    .stats{
+      display:grid;
+
+      grid-template-columns:
+        repeat(4,1fr);
+
+      gap:15px;
+    }
+
+    .stat{
+      position:relative;
+      overflow:hidden;
+
+      padding:20px 15px;
+
+      text-align:center;
+
+      border:
+        1px solid
+        rgba(226,232,240,.9);
+
+      border-radius:18px;
+
+      background:
+        rgba(255,255,255,.7);
+
+      transition:
+        transform .25s,
+        box-shadow .25s;
+    }
+
+    .stat:hover{
+      transform:
+        translateY(-5px);
+
+      box-shadow:
+        0 15px 30px
+        rgba(37,99,235,.12);
+    }
+
+    .stat-icon{
+      font-size:30px;
+      margin-bottom:8px;
+    }
+
+    .stat h2{
+      color:var(--blue);
+      font-size:28px;
+      margin-bottom:5px;
+    }
+
+    .stat p{
+      color:var(--muted);
+      font-size:13px;
+    }
+
+    /* PROGRESS */
+
+    .growth-row{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:15px;
+    }
+
+    .growth-value{
+      color:var(--blue);
+      font-weight:900;
+      font-size:24px;
+    }
+
+    .progress{
+      width:100%;
+      height:12px;
+
+      margin-top:15px;
+
+      overflow:hidden;
+
+      background:#e2e8f0;
+
+      border-radius:999px;
+    }
+
+    .progress-bar{
+      width:65%;
+      height:100%;
+
+      border-radius:999px;
+
+      background:
+        linear-gradient(
+          90deg,
+          #2563eb,
+          #38bdf8
+        );
+
+      box-shadow:
+        0 0 18px
+        rgba(37,99,235,.35);
+    }
+
+    /* EARNINGS */
+
+    .earning-box{
+      display:grid;
+
+      grid-template-columns:
+        1fr 1fr;
+
+      gap:15px;
+    }
+
+    .earning-item{
+      padding:20px;
+
+      border-radius:18px;
+
+      background:
+        linear-gradient(
+          135deg,
+          rgba(239,246,255,.9),
+          rgba(255,255,255,.75)
+        );
+
+      border:
+        1px solid
+        rgba(191,219,254,.7);
+    }
+
+    .earning-label{
+      color:var(--muted);
+      font-size:13px;
+      margin-bottom:7px;
+    }
+
+    .earning-value{
+      font-size:26px;
+      font-weight:900;
+      color:var(--blue);
+    }
+
+    /* STATUS */
+
+    .status{
+      margin-top:18px;
+
+      padding:12px 15px;
+
+      border-radius:13px;
+
+      background:
+        rgba(37,99,235,.07);
+
+      color:#475569;
+
+      font-size:13px;
+
+      display:none;
+    }
+
+    .status.show{
+      display:block;
+    }
+
+    .loading{
+      text-align:center;
+      color:var(--muted);
+      padding:20px;
+    }
+
+    .error{
+      color:#dc2626;
+      text-align:center;
+      padding:20px;
+    }
+
+    /* FOOTER */
+
+    .footer{
+      text-align:center;
+      color:#64748b;
+      padding:35px 20px;
+      font-size:13px;
+    }
+
+    /* MOBILE */
+
+    @media(max-width:800px){
+
+      .topbar{
+        align-items:flex-start;
+        flex-direction:column;
+      }
+
+      .nav{
+        width:100%;
+        justify-content:flex-start;
+      }
+
+      .hero{
+        padding:25px;
+      }
+
+      .world{
+        width:180px;
+        height:150px;
+      }
+
+      .stats{
+        grid-template-columns:
+          repeat(2,1fr);
+      }
+
+    }
+
+    @media(max-width:560px){
+
+      .container{
+        width:
+          calc(100% - 20px);
+
+        margin-top:15px;
+      }
+
+      .hero{
+        min-height:auto;
+
+        flex-direction:column;
+        align-items:flex-start;
+      }
+
+      .hero h1{
+        font-size:29px;
+      }
+
+      .world{
+        align-self:center;
+      }
+
+      .stats{
+        grid-template-columns:
+          1fr 1fr;
+
+        gap:10px;
+      }
+
+      .stat{
+        padding:16px 8px;
+      }
+
+      .stat h2{
+        font-size:23px;
+      }
+
+      .earning-box{
+        grid-template-columns:1fr;
+      }
+
+      .nav a{
+        font-size:11px;
+        padding:7px 8px;
+      }
+
+    }
+
   </style>
+
 </head>
+
 
 <body>
 
-  <header class="topbar">
 
-    <div class="logo">Zemivo</div>
+<header class="topbar">
 
-    <nav class="nav">
-      <a href="index.html">🏠 Home</a>
-      <a href="profile.html">👤 Profile</a>
-      <a href="videos.html">🎥 Videos</a>
-      <a href="pages.html">📄 Pages</a>
-      <a href="earn.html">💰 Earn</a>
-      <a href="settings.html">⚙️ Settings</a>
-    </nav>
+  <div class="logo">
+    Zemivo
+  </div>
 
-  </header>
+  <nav class="nav">
 
-  <main class="container">
+    <a href="index.html">
+      🏠 Home
+    </a>
 
-    <div class="card">
+    <a href="profile.html">
+      👤 Profile
+    </a>
 
-      <h1>📊 Zemivo Insights</h1>
+    <a href="videos.html">
+      🎥 Videos
+    </a>
+
+    <a href="pages.html">
+      📄 Pages
+    </a>
+
+    <a href="earn.html">
+      💰 Earn
+    </a>
+
+    <a href="settings.html">
+      ⚙️ Settings
+    </a>
+
+  </nav>
+
+</header>
+
+
+<main
+  class="container"
+  id="insightsPage"
+>
+
+
+  <!-- HERO -->
+
+  <section class="hero">
+
+    <div class="hero-content">
+
+      <div class="hero-badge">
+        ✦ Creator Analytics
+      </div>
+
+      <h1>
+        📊 Zemivo Insights
+      </h1>
 
       <p>
-        Track your content performance and audience growth.
+        Track your content performance,
+        audience growth and future earning
+        opportunities from one place.
       </p>
 
     </div>
 
-    <div class="card">
 
-      <h2>Overview</h2>
+    <!-- 3D READY VISUAL -->
 
-      <div class="stats">
+    <div
+      class="world"
+      aria-hidden="true"
+    >
 
-        <div class="stat">
-          <div class="stat-icon">👁️</div>
-          <h2>0</h2>
-          <p>Views</p>
+      <div class="world-ring"></div>
+
+      <div class="world-core"></div>
+
+      <div class="world-dot one"></div>
+
+      <div class="world-dot two"></div>
+
+      <div class="world-dot three"></div>
+
+    </div>
+
+  </section>
+
+
+  <!-- OVERVIEW -->
+
+  <section class="card">
+
+    <h2 class="card-title">
+      Overview
+    </h2>
+
+    <p class="card-subtitle">
+      Your current creator statistics.
+    </p>
+
+
+    <div class="stats">
+
+
+      <div class="stat">
+
+        <div class="stat-icon">
+          👁️
         </div>
 
-        <div class="stat">
-          <div class="stat-icon">❤️</div>
-          <h2>0</h2>
-          <p>Likes</p>
+        <h2 id="viewsCount">
+          0
+        </h2>
+
+        <p>
+          Views
+        </p>
+
+      </div>
+
+
+      <div class="stat">
+
+        <div class="stat-icon">
+          ❤️
         </div>
 
-        <div class="stat">
-          <div class="stat-icon">👥</div>
-          <h2>0</h2>
-          <p>Followers</p>
+        <h2 id="likesCount">
+          0
+        </h2>
+
+        <p>
+          Likes
+        </p>
+
+      </div>
+
+
+      <div class="stat">
+
+        <div class="stat-icon">
+          👥
         </div>
 
-        <div class="stat">
-          <div class="stat-icon">💬</div>
-          <h2>0</h2>
-          <p>Comments</p>
+        <h2 id="followersCount">
+          0
+        </h2>
+
+        <p>
+          Followers
+        </p>
+
+      </div>
+
+
+      <div class="stat">
+
+        <div class="stat-icon">
+          💬
+        </div>
+
+        <h2 id="commentsCount">
+          0
+        </h2>
+
+        <p>
+          Comments
+        </p>
+
+      </div>
+
+
+    </div>
+
+  </section>
+
+
+  <!-- AUDIENCE -->
+
+  <section class="card">
+
+    <h2 class="card-title">
+      📈 Audience Growth
+    </h2>
+
+    <p class="card-subtitle">
+      Your audience growth analytics will
+      appear here as creator data becomes available.
+    </p>
+
+
+    <div class="growth-row">
+
+      <span>
+        Current progress
+      </span>
+
+      <span
+        class="growth-value"
+        id="growthValue"
+      >
+        65%
+      </span>
+
+    </div>
+
+
+    <div class="progress">
+
+      <div
+        class="progress-bar"
+        id="growthBar"
+      ></div>
+
+    </div>
+
+
+    <div
+      id="growthStatus"
+      class="status"
+    >
+      Audience analytics module ready.
+    </div>
+
+  </section>
+
+
+  <!-- EARNINGS -->
+
+  <section class="card">
+
+    <h2 class="card-title">
+      💰 Earnings Insights
+    </h2>
+
+    <p class="card-subtitle">
+      Creator, affiliate and future Zemivo
+      earning statistics will appear here.
+    </p>
+
+
+    <div class="earning-box">
+
+
+      <div class="earning-item">
+
+        <div class="earning-label">
+          Current creator earnings
+        </div>
+
+        <div
+          class="earning-value"
+          id="creatorEarnings"
+        >
+          ৳0
         </div>
 
       </div>
 
-    </div>
 
-    <div class="card">
+      <div class="earning-item">
 
-      <h2>📈 Audience Growth</h2>
+        <div class="earning-label">
+          Affiliate earnings
+        </div>
 
-      <p style="margin-top:10px; color:#666;">
-        Your audience growth will appear here.
-      </p>
+        <div
+          class="earning-value"
+          id="affiliateEarnings"
+        >
+          ৳0
+        </div>
 
-      <div class="progress">
-        <div class="progress-bar"></div>
       </div>
 
-    </div>
-
-    <div class="card">
-
-      <h2>💰 Earnings Insights</h2>
-
-      <p style="margin-top:10px; color:#666;">
-        Future creator and affiliate earnings statistics will appear here.
-      </p>
 
     </div>
 
-  </main>
 
-  <footer class="footer">
-    © 2026 Zemivo — Connect. Create. Earn.
-  </footer>
+    <div
+      id="earningsStatus"
+      class="status"
+    >
+      Earnings analytics are ready for
+      future secure backend integration.
+    </div>
+
+  </section>
+
+
+  <!-- ACCOUNT STATUS -->
+
+  <section class="card">
+
+    <h2 class="card-title">
+      🔐 Analytics Security
+    </h2>
+
+    <p
+      class="card-subtitle"
+      id="accountStatus"
+    >
+      Checking your Zemivo account...
+    </p>
+
+  </section>
+
+
+</main>
+
+
+<footer class="footer">
+
+  © 2026 Zemivo —
+  Connect. Create. Earn.
+
+</footer>
+
+
+<script type="module">
+
+  /*
+   * ZEMIVO INSIGHTS
+   *
+   * Page Isolation:
+   * This page owns only its own UI and analytics logic.
+   *
+   * Security Foundation:
+   * Firebase services come from zemivo-security.js.
+   *
+   * Living 3D World:
+   * The visual area is kept modular so the future
+   * Zemivo Living 3D World engine can connect here
+   * without rewriting this page.
+   */
+
+
+  import {
+    auth,
+    db
+  } from "./zemivo-security.js";
+
+
+  import {
+    onAuthStateChanged
+  } from
+    "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
+
+
+  import {
+    doc,
+    getDoc
+  } from
+    "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
+
+
+  /* ELEMENTS */
+
+  const viewsCount =
+    document.getElementById(
+      "viewsCount"
+    );
+
+  const likesCount =
+    document.getElementById(
+      "likesCount"
+    );
+
+  const followersCount =
+    document.getElementById(
+      "followersCount"
+    );
+
+  const commentsCount =
+    document.getElementById(
+      "commentsCount"
+    );
+
+  const accountStatus =
+    document.getElementById(
+      "accountStatus"
+    );
+
+
+  const growthStatus =
+    document.getElementById(
+      "growthStatus"
+    );
+
+  const earningsStatus =
+    document.getElementById(
+      "earningsStatus"
+    );
+
+
+  const creatorEarnings =
+    document.getElementById(
+      "creatorEarnings"
+    );
+
+  const affiliateEarnings =
+    document.getElementById(
+      "affiliateEarnings"
+    );
+
+
+  /* PAGE STATE */
+
+  const ZemivoInsightsPage =
+    Object.freeze({
+
+      version:
+        "1.0.0",
+
+      name:
+        "Zemivo Insights",
+
+      initialized:
+        false
+
+    });
+
+
+  /*
+   * Keep the page module isolated.
+   * Other pages do not depend on this object.
+   */
+
+  Object.defineProperty(
+    window,
+    "ZemivoInsightsPage",
+    {
+      value:
+        ZemivoInsightsPage,
+
+      writable:false,
+
+      configurable:false,
+
+      enumerable:false
+    }
+  );
+
+
+  /* NUMBER FORMAT */
+
+  function formatNumber(
+    value
+  ){
+
+    const number =
+      Number(value);
+
+    if(
+      !Number.isFinite(number)
+    ){
+
+      return "0";
+
+    }
+
+    return number.toLocaleString(
+      "en-US"
+    );
+
+  }
+
+
+  /* LOAD PROFILE */
+
+  async function loadProfile(
+    user
+  ){
+
+    try{
+
+      const profileRef =
+        doc(
+          db,
+          "profiles",
+          user.uid
+        );
+
+
+      const profileSnapshot =
+        await getDoc(
+          profileRef
+        );
+
+
+      if(
+        !profileSnapshot.exists()
+      ){
+
+        followersCount.textContent =
+          "0";
+
+        accountStatus.textContent =
+          "Account connected. No profile analytics data found yet.";
+
+        return;
+
+      }
+
+
+      const profile =
+        profileSnapshot.data();
+
+
+      /*
+       * Followers are read from the existing
+       * profile document when available.
+       *
+       * Other analytics remain zero until
+       * their dedicated backend data model exists.
+       */
+
+      const followers =
+        profile.followersCount ??
+        profile.followers ??
+        0;
+
+
+      followersCount.textContent =
+        formatNumber(
+          followers
+        );
+
+
+      /*
+       * Do not invent views, likes,
+       * comments or earnings.
+       */
+
+      viewsCount.textContent =
+        "0";
+
+      likesCount.textContent =
+        "0";
+
+      commentsCount.textContent =
+        "0";
+
+      creatorEarnings.textContent =
+        "৳0";
+
+      affiliateEarnings.textContent =
+        "৳0";
+
+
+      accountStatus.textContent =
+        "Your Zemivo account is connected. Analytics will update as the secure analytics system is added.";
+
+    }
+    catch(error){
+
+      console.error(
+        "Zemivo Insights profile error:",
+        error
+      );
+
+
+      accountStatus.textContent =
+        "Profile analytics could not be loaded right now.";
+
+    }
+
+  }
+
+
+  /* AUTH STATE */
+
+  onAuthStateChanged(
+    auth,
+    async function(user){
+
+      if(!user){
+
+        accountStatus.textContent =
+          "Please log in to view your personal Zemivo Insights.";
+
+        setTimeout(
+          function(){
+
+            window.location.href =
+              "login.html";
+
+          },
+          1200
+        );
+
+        return;
+
+      }
+
+
+      await loadProfile(
+        user
+      );
+
+
+      growthStatus.classList.add(
+        "show"
+      );
+
+
+      earningsStatus.classList.add(
+        "show"
+      );
+
+    }
+  );
+
+
+  /*
+   * FUTURE LIVING 3D WORLD HOOK
+   *
+   * The real Zemivo Living 3D World engine
+   * will be connected later in one controlled
+   * integration pass.
+   */
+
+  window.dispatchEvent(
+    new CustomEvent(
+      "zemivo:insights-ready",
+      {
+        detail:{
+          version:
+            ZemivoInsightsPage.version,
+
+          page:
+            "insights"
+        }
+      }
+    )
+  );
+
+
+  console.log(
+    "Zemivo Insights loaded.",
+    ZemivoInsightsPage.version
+  );
+
+</script>
+
 
 </body>
+
 </html>
