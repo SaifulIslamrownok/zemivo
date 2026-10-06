@@ -1,259 +1,2768 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
   <title>Zemivo - Events</title>
 
+
   <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
+
+    *{
+      box-sizing:border-box;
+      margin:0;
+      padding:0;
     }
 
-    body {
-      font-family: Arial, sans-serif;
-      background: #f4f6f8;
-      color: #222;
+
+    :root{
+
+      --blue:#2563eb;
+      --blue-dark:#1d4ed8;
+      --blue-soft:#eff6ff;
+
+      --text:#17202a;
+      --muted:#64748b;
+
+      --border:rgba(148,163,184,.22);
+
+      --glass:rgba(255,255,255,.86);
+
     }
 
-    .topbar {
-      background: white;
-      padding: 15px 20px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+
+    body{
+
+      min-height:100vh;
+
+      font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+      color:var(--text);
+
+      background:
+
+        radial-gradient(
+          circle at 8% 8%,
+          rgba(37,99,235,.15),
+          transparent 30%
+        ),
+
+        radial-gradient(
+          circle at 92% 22%,
+          rgba(96,165,250,.14),
+          transparent 32%
+        ),
+
+        linear-gradient(
+          135deg,
+          #eef4ff,
+          #f8fafc 50%,
+          #edf5ff
+        );
+
+      overflow-x:hidden;
+
     }
 
-    .logo {
-      font-size: 26px;
-      font-weight: bold;
-      color: #2563eb;
+
+    button,
+    input,
+    textarea{
+
+      font-family:inherit;
+
     }
 
-    .nav a {
-      margin-left: 10px;
-      color: #2563eb;
-      text-decoration: none;
-      font-weight: bold;
+
+    button{
+
+      cursor:pointer;
+
     }
 
-    .container {
-      max-width: 900px;
-      margin: 25px auto;
-      padding: 0 15px;
+
+    /* =========================
+       PAGE 3D VISUAL FOUNDATION
+    ========================== */
+
+    .world{
+
+      position:fixed;
+
+      inset:0;
+
+      overflow:hidden;
+
+      pointer-events:none;
+
+      z-index:-1;
+
     }
 
-    .card {
-      background: white;
-      padding: 20px;
-      margin-bottom: 18px;
-      border-radius: 15px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+
+    .orb{
+
+      position:absolute;
+
+      border-radius:50%;
+
+      filter:blur(4px);
+
+      opacity:.42;
+
+      animation:
+        floatOrb
+        11s
+        ease-in-out
+        infinite
+        alternate;
+
     }
 
-    h1 {
-      color: #2563eb;
-      margin-bottom: 8px;
+
+    .orb-one{
+
+      width:310px;
+
+      height:310px;
+
+      left:-120px;
+
+      top:100px;
+
+      background:
+        radial-gradient(
+          circle,
+          rgba(37,99,235,.30),
+          transparent 70%
+        );
+
     }
 
-    .create {
-      background: #2563eb;
-      color: white;
-      border: none;
-      padding: 10px 18px;
-      border-radius: 20px;
-      font-weight: bold;
-      cursor: pointer;
-      margin-top: 15px;
+
+    .orb-two{
+
+      width:350px;
+
+      height:350px;
+
+      right:-130px;
+
+      top:250px;
+
+      background:
+        radial-gradient(
+          circle,
+          rgba(59,130,246,.25),
+          transparent 70%
+        );
+
+      animation-delay:2s;
+
     }
 
-    .event {
-      border: 1px solid #eee;
-      border-radius: 12px;
-      padding: 16px;
-      margin-top: 15px;
+
+    .orb-three{
+
+      width:220px;
+
+      height:220px;
+
+      left:42%;
+
+      bottom:-110px;
+
+      background:
+        radial-gradient(
+          circle,
+          rgba(14,165,233,.20),
+          transparent 70%
+        );
+
+      animation-delay:4s;
+
     }
 
-    .event h3 {
-      margin-bottom: 8px;
+
+    .grid{
+
+      position:absolute;
+
+      inset:0;
+
+      opacity:.13;
+
+      background-image:
+
+        linear-gradient(
+          rgba(37,99,235,.08) 1px,
+          transparent 1px
+        ),
+
+        linear-gradient(
+          90deg,
+          rgba(37,99,235,.08) 1px,
+          transparent 1px
+        );
+
+      background-size:
+        55px 55px;
+
+      transform:
+        perspective(650px)
+        rotateX(58deg)
+        translateY(35%);
+
+      transform-origin:
+        center bottom;
+
     }
 
-    .event p {
-      color: #666;
-      margin: 6px 0;
+
+    @keyframes floatOrb{
+
+      from{
+
+        transform:
+          translate3d(
+            0,
+            0,
+            0
+          );
+
+      }
+
+      to{
+
+        transform:
+          translate3d(
+            25px,
+            -35px,
+            0
+          );
+
+      }
+
     }
 
-    .interested {
-      background: #16a34a;
-      color: white;
-      border: none;
-      padding: 9px 16px;
-      border-radius: 20px;
-      cursor: pointer;
-      font-weight: bold;
-      margin-top: 10px;
+
+    /* =========================
+       TOPBAR
+    ========================== */
+
+    .topbar{
+
+      position:sticky;
+
+      top:0;
+
+      z-index:100;
+
+      min-height:68px;
+
+      display:flex;
+
+      align-items:center;
+
+      justify-content:space-between;
+
+      gap:18px;
+
+      padding:
+        12px
+        22px;
+
+      background:
+        rgba(255,255,255,.87);
+
+      backdrop-filter:
+        blur(18px);
+
+      -webkit-backdrop-filter:
+        blur(18px);
+
+      border-bottom:
+        1px solid
+        var(--border);
+
+      box-shadow:
+        0 5px 25px
+        rgba(15,23,42,.07);
+
     }
 
-    .interested.active {
-      background: #64748b;
+
+    .logo{
+
+      color:
+        var(--blue);
+
+      font-size:28px;
+
+      font-weight:900;
+
+      letter-spacing:-1px;
+
+      text-decoration:none;
+
+      white-space:nowrap;
+
     }
 
-    .footer {
-      text-align: center;
-      color: #777;
-      padding: 25px;
+
+    .nav{
+
+      display:flex;
+
+      gap:7px;
+
+      overflow-x:auto;
+
+      scrollbar-width:none;
+
     }
+
+
+    .nav::-webkit-scrollbar{
+
+      display:none;
+
+    }
+
+
+    .nav a{
+
+      color:#334155;
+
+      text-decoration:none;
+
+      font-size:14px;
+
+      font-weight:bold;
+
+      padding:
+        9px
+        11px;
+
+      border-radius:12px;
+
+      white-space:nowrap;
+
+      transition:.2s;
+
+    }
+
+
+    .nav a:hover{
+
+      background:
+        var(--blue-soft);
+
+      color:
+        var(--blue);
+
+    }
+
+
+    .nav a.active{
+
+      background:
+        var(--blue);
+
+      color:white;
+
+      box-shadow:
+        0 6px 16px
+        rgba(37,99,235,.22);
+
+    }
+
+
+    /* =========================
+       MAIN
+    ========================== */
+
+    .container{
+
+      width:
+        min(
+          1100px,
+          calc(100% - 30px)
+        );
+
+      margin:
+        30px
+        auto
+        50px;
+
+    }
+
+
+    /* =========================
+       HERO
+    ========================== */
+
+    .hero{
+
+      position:relative;
+
+      overflow:hidden;
+
+      display:grid;
+
+      grid-template-columns:
+        1.2fr
+        .8fr;
+
+      gap:25px;
+
+      padding:30px;
+
+      margin-bottom:22px;
+
+      border:
+        1px solid
+        rgba(255,255,255,.78);
+
+      border-radius:26px;
+
+      background:
+        linear-gradient(
+          135deg,
+          rgba(255,255,255,.91),
+          rgba(239,246,255,.77)
+        );
+
+      backdrop-filter:
+        blur(18px);
+
+      -webkit-backdrop-filter:
+        blur(18px);
+
+      box-shadow:
+        0 15px 40px
+        rgba(15,23,42,.10);
+
+    }
+
+
+    .hero-content{
+
+      display:flex;
+
+      flex-direction:column;
+
+      justify-content:center;
+
+    }
+
+
+    .badge{
+
+      width:max-content;
+
+      display:inline-flex;
+
+      align-items:center;
+
+      padding:
+        7px
+        12px;
+
+      margin-bottom:14px;
+
+      border-radius:30px;
+
+      background:
+        rgba(37,99,235,.10);
+
+      color:
+        var(--blue);
+
+      font-size:12px;
+
+      font-weight:bold;
+
+    }
+
+
+    .hero h1{
+
+      font-size:
+        clamp(
+          32px,
+          5vw,
+          50px
+        );
+
+      line-height:1.05;
+
+      margin-bottom:12px;
+
+    }
+
+
+    .hero h1 span{
+
+      color:
+        var(--blue);
+
+    }
+
+
+    .hero p{
+
+      max-width:650px;
+
+      color:
+        var(--muted);
+
+      line-height:1.6;
+
+    }
+
+
+    /* =========================
+       3D EVENT OBJECT
+    ========================== */
+
+    .visual{
+
+      min-height:230px;
+
+      display:flex;
+
+      align-items:center;
+
+      justify-content:center;
+
+      perspective:900px;
+
+    }
+
+
+    .event-world{
+
+      position:relative;
+
+      width:180px;
+
+      height:180px;
+
+      transform-style:preserve-3d;
+
+      animation:
+        eventFloat
+        6s
+        ease-in-out
+        infinite;
+
+    }
+
+
+    .event-orb{
+
+      position:absolute;
+
+      width:150px;
+
+      height:150px;
+
+      left:15px;
+
+      top:15px;
+
+      border-radius:50%;
+
+      background:
+
+        radial-gradient(
+          circle at 35% 28%,
+          rgba(255,255,255,.95),
+          rgba(96,165,250,.65) 25%,
+          rgba(37,99,235,.72) 58%,
+          rgba(29,78,216,.38)
+        );
+
+      box-shadow:
+
+        inset
+        -18px
+        -20px
+        35px
+        rgba(15,23,42,.18),
+
+        inset
+        15px
+        15px
+        25px
+        rgba(255,255,255,.30),
+
+        0 25px 45px
+        rgba(37,99,235,.25);
+
+    }
+
+
+    .calendar{
+
+      position:absolute;
+
+      left:45px;
+
+      top:38px;
+
+      width:90px;
+
+      height:92px;
+
+      border-radius:14px;
+
+      background:
+        rgba(255,255,255,.94);
+
+      box-shadow:
+        0 12px 25px
+        rgba(15,23,42,.18);
+
+      transform:
+        translateZ(35px);
+
+      overflow:hidden;
+
+    }
+
+
+    .calendar-top{
+
+      height:27px;
+
+      background:
+        var(--blue);
+
+    }
+
+
+    .calendar-grid{
+
+      display:grid;
+
+      grid-template-columns:
+        repeat(3,1fr);
+
+      gap:6px;
+
+      padding:12px;
+
+    }
+
+
+    .calendar-grid span{
+
+      width:12px;
+
+      height:12px;
+
+      border-radius:3px;
+
+      background:
+        #bfdbfe;
+
+    }
+
+
+    .calendar-grid span:nth-child(
+      2n
+    ){
+
+      background:
+        #60a5fa;
+
+    }
+
+
+    .ring{
+
+      position:absolute;
+
+      border:
+        1px solid
+        rgba(37,99,235,.24);
+
+      border-radius:50%;
+
+      transform-style:preserve-3d;
+
+    }
+
+
+    .ring-one{
+
+      inset:-12px;
+
+      transform:
+        rotateX(70deg)
+        rotateZ(12deg);
+
+    }
+
+
+    .ring-two{
+
+      inset:-25px;
+
+      transform:
+        rotateY(65deg)
+        rotateZ(-20deg);
+
+    }
+
+
+    @keyframes eventFloat{
+
+      0%,
+      100%{
+
+        transform:
+          translateY(0)
+          rotateY(0deg);
+
+      }
+
+      50%{
+
+        transform:
+          translateY(-12px)
+          rotateY(12deg);
+
+      }
+
+    }
+
+
+    /* =========================
+       SEARCH / FILTER
+    ========================== */
+
+    .toolbar{
+
+      display:flex;
+
+      gap:10px;
+
+      margin-bottom:20px;
+
+    }
+
+
+    .search-box{
+
+      position:relative;
+
+      flex:1;
+
+    }
+
+
+    .search-box span{
+
+      position:absolute;
+
+      left:15px;
+
+      top:50%;
+
+      transform:
+        translateY(-50%);
+
+    }
+
+
+    .search-box input{
+
+      width:100%;
+
+      padding:
+        14px
+        15px
+        14px
+        45px;
+
+      border:
+        1px solid
+        rgba(148,163,184,.30);
+
+      border-radius:15px;
+
+      outline:none;
+
+      background:
+        rgba(255,255,255,.88);
+
+      font-size:15px;
+
+    }
+
+
+    .search-box input:focus{
+
+      border-color:
+        var(--blue);
+
+      box-shadow:
+        0 0 0 4px
+        rgba(37,99,235,.09);
+
+    }
+
+
+    .filter-button{
+
+      border:0;
+
+      padding:
+        0
+        20px;
+
+      border-radius:15px;
+
+      background:
+        var(--blue);
+
+      color:white;
+
+      font-weight:bold;
+
+    }
+
+
+    /* =========================
+       CARD
+    ========================== */
+
+    .card{
+
+      padding:22px;
+
+      margin-bottom:20px;
+
+      border-radius:22px;
+
+      background:
+        rgba(255,255,255,.88);
+
+      border:
+        1px solid
+        rgba(255,255,255,.80);
+
+      box-shadow:
+        0 15px 40px
+        rgba(15,23,42,.09);
+
+      backdrop-filter:
+        blur(16px);
+
+      -webkit-backdrop-filter:
+        blur(16px);
+
+    }
+
+
+    .card-header{
+
+      display:flex;
+
+      align-items:center;
+
+      justify-content:space-between;
+
+      gap:10px;
+
+      margin-bottom:18px;
+
+    }
+
+
+    .card-header h2{
+
+      font-size:21px;
+
+    }
+
+
+    .event-count{
+
+      color:
+        var(--muted);
+
+      font-size:13px;
+
+    }
+
+
+    /* =========================
+       EVENT LIST
+    ========================== */
+
+    .event-list{
+
+      display:grid;
+
+      gap:14px;
+
+    }
+
+
+    .event{
+
+      position:relative;
+
+      overflow:hidden;
+
+      padding:19px;
+
+      border:
+        1px solid
+        rgba(148,163,184,.18);
+
+      border-radius:18px;
+
+      background:
+        linear-gradient(
+          135deg,
+          rgba(248,250,252,.92),
+          rgba(239,246,255,.62)
+        );
+
+      transition:
+        transform .2s,
+        box-shadow .2s;
+
+    }
+
+
+    .event:hover{
+
+      transform:
+        translateY(-3px);
+
+      box-shadow:
+        0 12px 28px
+        rgba(37,99,235,.10);
+
+    }
+
+
+    .event::after{
+
+      content:"";
+
+      position:absolute;
+
+      width:130px;
+
+      height:130px;
+
+      right:-60px;
+
+      top:-65px;
+
+      border-radius:50%;
+
+      background:
+        rgba(37,99,235,.08);
+
+      pointer-events:none;
+
+    }
+
+
+    .event-top{
+
+      display:flex;
+
+      align-items:flex-start;
+
+      gap:13px;
+
+    }
+
+
+    .event-icon{
+
+      width:50px;
+
+      height:50px;
+
+      flex-shrink:0;
+
+      display:flex;
+
+      align-items:center;
+
+      justify-content:center;
+
+      border-radius:15px;
+
+      background:
+        linear-gradient(
+          135deg,
+          #2563eb,
+          #60a5fa
+        );
+
+      color:white;
+
+      font-size:22px;
+
+      box-shadow:
+        0 8px 18px
+        rgba(37,99,235,.20);
+
+    }
+
+
+    .event-info{
+
+      flex:1;
+
+      min-width:0;
+
+    }
+
+
+    .event h3{
+
+      font-size:17px;
+
+      margin-bottom:8px;
+
+    }
+
+
+    .event p{
+
+      color:
+        var(--muted);
+
+      font-size:13px;
+
+      line-height:1.5;
+
+      margin:
+        4px
+        0;
+
+    }
+
+
+    .event-description{
+
+      margin-top:10px !important;
+
+    }
+
+
+    .event-actions{
+
+      display:flex;
+
+      gap:8px;
+
+      flex-wrap:wrap;
+
+      margin-top:13px;
+
+    }
+
+
+    .interested{
+
+      border:0;
+
+      padding:
+        9px
+        15px;
+
+      border-radius:20px;
+
+      background:
+        var(--blue);
+
+      color:white;
+
+      font-weight:bold;
+
+    }
+
+
+    .interested.active{
+
+      background:
+        #64748b;
+
+    }
+
+
+    .details-button{
+
+      border:
+        1px solid
+        #dbeafe;
+
+      padding:
+        8px
+        14px;
+
+      border-radius:20px;
+
+      background:
+        white;
+
+      color:
+        var(--blue);
+
+      font-weight:bold;
+
+    }
+
+
+    /* =========================
+       EMPTY
+    ========================== */
+
+    .empty{
+
+      padding:
+        50px
+        20px;
+
+      text-align:center;
+
+      color:
+        var(--muted);
+
+    }
+
+
+    .empty-icon{
+
+      font-size:45px;
+
+      margin-bottom:10px;
+
+    }
+
+
+    .empty h3{
+
+      color:
+        var(--text);
+
+      margin-bottom:7px;
+
+    }
+
+
+    /* =========================
+       NOTICE
+    ========================== */
+
+    .notice{
+
+      padding:
+        15px
+        17px;
+
+      border-radius:15px;
+
+      background:
+        rgba(239,246,255,.80);
+
+      border:
+        1px solid
+        rgba(37,99,235,.12);
+
+      color:
+        #475569;
+
+      font-size:13px;
+
+      line-height:1.5;
+
+    }
+
+
+    .notice strong{
+
+      color:
+        var(--blue);
+
+    }
+
+
+    /* =========================
+       MODAL
+    ========================== */
+
+    .modal{
+
+      position:fixed;
+
+      inset:0;
+
+      z-index:300;
+
+      display:none;
+
+      align-items:center;
+
+      justify-content:center;
+
+      padding:20px;
+
+      background:
+        rgba(15,23,42,.55);
+
+      backdrop-filter:
+        blur(8px);
+
+    }
+
+
+    .modal.show{
+
+      display:flex;
+
+    }
+
+
+    .modal-box{
+
+      width:
+        min(
+          520px,
+          100%
+        );
+
+      max-height:
+        calc(100vh - 40px);
+
+      overflow-y:auto;
+
+      padding:25px;
+
+      border-radius:22px;
+
+      background:white;
+
+      box-shadow:
+        0 25px 70px
+        rgba(15,23,42,.25);
+
+    }
+
+
+    .modal-header{
+
+      display:flex;
+
+      align-items:center;
+
+      justify-content:space-between;
+
+      margin-bottom:18px;
+
+    }
+
+
+    .modal-header h2{
+
+      font-size:22px;
+
+    }
+
+
+    .close{
+
+      width:38px;
+
+      height:38px;
+
+      border:0;
+
+      border-radius:50%;
+
+      background:
+        #f1f5f9;
+
+      font-size:18px;
+
+    }
+
+
+    .field{
+
+      margin-bottom:15px;
+
+    }
+
+
+    .field label{
+
+      display:block;
+
+      margin-bottom:6px;
+
+      font-size:13px;
+
+      font-weight:bold;
+
+    }
+
+
+    .field input,
+    .field textarea{
+
+      width:100%;
+
+      padding:
+        12px
+        13px;
+
+      border:
+        1px solid
+        #dbe2ea;
+
+      border-radius:12px;
+
+      outline:none;
+
+    }
+
+
+    .field textarea{
+
+      min-height:100px;
+
+      resize:vertical;
+
+    }
+
+
+    .field input:focus,
+    .field textarea:focus{
+
+      border-color:
+        var(--blue);
+
+      box-shadow:
+        0 0 0 3px
+        rgba(37,99,235,.08);
+
+    }
+
+
+    .modal-actions{
+
+      display:flex;
+
+      justify-content:flex-end;
+
+      gap:8px;
+
+      margin-top:20px;
+
+    }
+
+
+    .cancel{
+
+      border:0;
+
+      padding:
+        11px
+        17px;
+
+      border-radius:20px;
+
+      background:
+        #e2e8f0;
+
+      color:
+        #334155;
+
+      font-weight:bold;
+
+    }
+
+
+    .save{
+
+      border:0;
+
+      padding:
+        11px
+        19px;
+
+      border-radius:20px;
+
+      background:
+        var(--blue);
+
+      color:white;
+
+      font-weight:bold;
+
+    }
+
+
+    /* =========================
+       TOAST
+    ========================== */
+
+    .toast{
+
+      position:fixed;
+
+      left:50%;
+
+      bottom:22px;
+
+      z-index:500;
+
+      max-width:
+        calc(100% - 30px);
+
+      padding:
+        12px
+        18px;
+
+      border-radius:12px;
+
+      background:
+        #111827;
+
+      color:white;
+
+      text-align:center;
+
+      font-size:14px;
+
+      opacity:0;
+
+      pointer-events:none;
+
+      transform:
+        translate(
+          -50%,
+          20px
+        );
+
+      transition:.25s;
+
+    }
+
+
+    .toast.show{
+
+      opacity:1;
+
+      transform:
+        translate(
+          -50%,
+          0
+        );
+
+    }
+
+
+    /* =========================
+       FOOTER
+    ========================== */
+
+    .footer{
+
+      text-align:center;
+
+      color:
+        #64748b;
+
+      font-size:13px;
+
+      padding:
+        25px;
+
+    }
+
+
+    /* =========================
+       MOBILE
+    ========================== */
+
+    @media(max-width:800px){
+
+      .topbar{
+
+        align-items:flex-start;
+
+        flex-direction:column;
+
+        padding:
+          12px
+          14px;
+
+      }
+
+
+      .nav{
+
+        width:100%;
+
+      }
+
+
+      .hero{
+
+        grid-template-columns:1fr;
+
+        padding:23px;
+
+      }
+
+
+      .visual{
+
+        min-height:190px;
+
+      }
+
+    }
+
+
+    @media(max-width:600px){
+
+      .container{
+
+        width:
+          calc(100% - 20px);
+
+        margin-top:18px;
+
+      }
+
+
+      .toolbar{
+
+        flex-direction:column;
+
+      }
+
+
+      .filter-button{
+
+        min-height:45px;
+
+      }
+
+
+      .event-top{
+
+        align-items:flex-start;
+
+      }
+
+
+      .event-icon{
+
+        width:44px;
+
+        height:44px;
+
+      }
+
+
+      .hero h1{
+
+        font-size:34px;
+
+      }
+
+    }
+
   </style>
+
 </head>
+
 
 <body>
 
+
+  <!-- =========================
+       PAGE LOCAL 3D WORLD
+  ========================== -->
+
+  <div class="world">
+
+    <div class="orb orb-one"></div>
+
+    <div class="orb orb-two"></div>
+
+    <div class="orb orb-three"></div>
+
+    <div class="grid"></div>
+
+  </div>
+
+
+  <!-- =========================
+       TOPBAR
+  ========================== -->
+
   <header class="topbar">
 
-    <div class="logo">Zemivo</div>
+    <a
+      href="index.html"
+      class="logo"
+    >
+      Zemivo
+    </a>
+
 
     <nav class="nav">
-      <a href="index.html">🏠 Home</a>
-      <a href="profile.html">👤 Profile</a>
-      <a href="stories.html">📸 Stories</a>
-      <a href="groups.html">👥 Groups</a>
-      <a href="pages.html">📄 Pages</a>
-      <a href="settings.html">⚙️ Settings</a>
+
+      <a href="index.html">
+        🏠 Home
+      </a>
+
+      <a href="profile.html">
+        👤 Profile
+      </a>
+
+      <a href="stories.html">
+        📸 Stories
+      </a>
+
+      <a href="groups.html">
+        👥 Groups
+      </a>
+
+      <a
+        href="events.html"
+        class="active"
+      >
+        📌 Events
+      </a>
+
+      <a href="settings.html">
+        ⚙️ Settings
+      </a>
+
     </nav>
 
   </header>
 
+
+  <!-- =========================
+       MAIN
+  ========================== -->
+
   <main class="container">
 
-    <div class="card">
 
-      <h1>📌 Zemivo Events</h1>
+    <!-- HERO -->
 
-      <p>
-        Discover events, meet people and join activities.
-      </p>
+    <section class="hero">
+
+      <div class="hero-content">
+
+        <div class="badge">
+          🌍 Zemivo Global Events
+        </div>
+
+
+        <h1>
+
+          Discover
+
+          <span>
+            Events
+          </span>
+
+        </h1>
+
+
+        <p>
+
+          Discover events, meet people,
+          join communities and participate
+          in activities across Zemivo.
+
+        </p>
+
+      </div>
+
+
+      <div class="visual">
+
+        <div class="event-world">
+
+          <div class="ring ring-one"></div>
+
+          <div class="ring ring-two"></div>
+
+          <div class="event-orb"></div>
+
+
+          <div class="calendar">
+
+            <div class="calendar-top"></div>
+
+            <div class="calendar-grid">
+
+              <span></span>
+              <span></span>
+              <span></span>
+
+              <span></span>
+              <span></span>
+              <span></span>
+
+              <span></span>
+              <span></span>
+              <span></span>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- SEARCH -->
+
+    <div class="toolbar">
+
+      <div class="search-box">
+
+        <span>
+          🔎
+        </span>
+
+        <input
+          id="eventSearch"
+          type="search"
+          placeholder="Search events..."
+          autocomplete="off"
+        >
+
+      </div>
+
 
       <button
-        class="create"
-        onclick="createEvent()"
+        id="createButton"
+        class="filter-button"
+        type="button"
       >
         + Create Event
       </button>
 
     </div>
 
-    <div class="card">
 
-      <h2>Upcoming Events</h2>
+    <!-- EVENTS -->
 
-      <div class="event">
+    <section class="card">
 
-        <h3>🌍 Zemivo Community Meetup</h3>
+      <div class="card-header">
 
-        <p>📅 August 25, 2026</p>
+        <h2>
+          Upcoming Events
+        </h2>
 
-        <p>📍 Online</p>
+
+        <div
+          id="eventCount"
+          class="event-count"
+        >
+          3 events
+        </div>
+
+      </div>
+
+
+      <div
+        id="eventList"
+        class="event-list"
+      >
+
+
+        <!-- EVENT 1 -->
+
+        <article
+          class="event"
+          data-search="
+            zemivo community meetup
+            community online
+          "
+        >
+
+          <div class="event-top">
+
+            <div class="event-icon">
+              🌍
+            </div>
+
+
+            <div class="event-info">
+
+              <h3>
+                Zemivo Community Meetup
+              </h3>
+
+              <p>
+                📅 August 25, 2026
+              </p>
+
+              <p>
+                📍 Online
+              </p>
+
+              <p class="event-description">
+                Meet other Zemivo users and discuss
+                the future of the platform.
+              </p>
+
+
+              <div class="event-actions">
+
+                <button
+                  class="interested"
+                  type="button"
+                >
+                  Interested
+                </button>
+
+
+                <button
+                  class="details-button"
+                  type="button"
+                >
+                  Details
+                </button>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </article>
+
+
+        <!-- EVENT 2 -->
+
+        <article
+          class="event"
+          data-search="
+            creator workshop
+            creators online
+          "
+        >
+
+          <div class="event-top">
+
+            <div class="event-icon">
+              🎥
+            </div>
+
+
+            <div class="event-info">
+
+              <h3>
+                Creator Workshop
+              </h3>
+
+              <p>
+                📅 September 5, 2026
+              </p>
+
+              <p>
+                📍 Online
+              </p>
+
+              <p class="event-description">
+                Learn how creators can grow
+                their audience.
+              </p>
+
+
+              <div class="event-actions">
+
+                <button
+                  class="interested"
+                  type="button"
+                >
+                  Interested
+                </button>
+
+
+                <button
+                  class="details-button"
+                  type="button"
+                >
+                  Details
+                </button>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </article>
+
+
+        <!-- EVENT 3 -->
+
+        <article
+          class="event"
+          data-search="
+            gaming community event
+            gaming gamers online
+          "
+        >
+
+          <div class="event-top">
+
+            <div class="event-icon">
+              🎮
+            </div>
+
+
+            <div class="event-info">
+
+              <h3>
+                Gaming Community Event
+              </h3>
+
+              <p>
+                📅 September 15, 2026
+              </p>
+
+              <p>
+                📍 Online
+              </p>
+
+              <p class="event-description">
+                Connect with gamers and
+                gaming communities.
+              </p>
+
+
+              <div class="event-actions">
+
+                <button
+                  class="interested"
+                  type="button"
+                >
+                  Interested
+                </button>
+
+
+                <button
+                  class="details-button"
+                  type="button"
+                >
+                  Details
+                </button>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </article>
+
+
+      </div>
+
+
+      <div
+        id="emptyState"
+        class="empty"
+        style="display:none;"
+      >
+
+        <div class="empty-icon">
+          🔎
+        </div>
+
+        <h3>
+          No events found
+        </h3>
 
         <p>
-          Meet other Zemivo users and discuss the future of the platform.
+          Try another search.
         </p>
 
-        <button class="interested">
-          Interested
+      </div>
+
+
+    </section>
+
+
+    <!-- FOUNDATION NOTICE -->
+
+    <div class="notice">
+
+      <strong>
+        Zemivo Events Foundation:
+      </strong>
+
+      The page is isolated from other modules.
+      Event database creation, RSVP storage,
+      invitations, reminders and notifications
+      can be connected later through the dedicated
+      Events backend without changing the page structure.
+
+    </div>
+
+
+  </main>
+
+
+  <!-- =========================
+       CREATE EVENT MODAL
+  ========================== -->
+
+  <div
+    id="eventModal"
+    class="modal"
+  >
+
+    <div class="modal-box">
+
+      <div class="modal-header">
+
+        <h2>
+          Create Event
+        </h2>
+
+
+        <button
+          id="closeModal"
+          class="close"
+          type="button"
+        >
+          ✕
         </button>
 
       </div>
 
-      <div class="event">
 
-        <h3>🎥 Creator Workshop</h3>
+      <div class="field">
 
-        <p>📅 September 5, 2026</p>
+        <label for="eventName">
+          Event name
+        </label>
 
-        <p>📍 Online</p>
-
-        <p>
-          Learn how creators can grow their audience.
-        </p>
-
-        <button class="interested">
-          Interested
-        </button>
+        <input
+          id="eventName"
+          type="text"
+          placeholder="Enter event name"
+          maxlength="120"
+        >
 
       </div>
 
-      <div class="event">
 
-        <h3>🎮 Gaming Community Event</h3>
+      <div class="field">
 
-        <p>📅 September 15, 2026</p>
+        <label for="eventDate">
+          Date
+        </label>
 
-        <p>📍 Online</p>
+        <input
+          id="eventDate"
+          type="date"
+        >
 
-        <p>
-          Connect with gamers and gaming communities.
-        </p>
+      </div>
 
-        <button class="interested">
-          Interested
+
+      <div class="field">
+
+        <label for="eventLocation">
+          Location
+        </label>
+
+        <input
+          id="eventLocation"
+          type="text"
+          placeholder="Online or location"
+          maxlength="120"
+        >
+
+      </div>
+
+
+      <div class="field">
+
+        <label for="eventDescription">
+          Description
+        </label>
+
+        <textarea
+          id="eventDescription"
+          placeholder="Describe your event..."
+          maxlength="500"
+        ></textarea>
+
+      </div>
+
+
+      <div class="modal-actions">
+
+        <button
+          id="cancelButton"
+          class="cancel"
+          type="button"
+        >
+          Cancel
+        </button>
+
+
+        <button
+          id="saveEventButton"
+          class="save"
+          type="button"
+        >
+          Create Event
         </button>
 
       </div>
 
     </div>
 
-  </main>
+  </div>
 
-  <footer class="footer">
-    © 2026 Zemivo — Connect. Create. Earn.
-  </footer>
 
-  <script>
+  <!-- TOAST -->
 
-    const buttons =
-      document.querySelectorAll(".interested");
+  <div
+    id="toast"
+    class="toast"
+  ></div>
 
-    buttons.forEach(function(button) {
 
-      button.addEventListener("click", function() {
+  <!-- =========================
+       SECURITY FOUNDATION
+  ========================== -->
 
-        if (button.classList.contains("active")) {
+  <script type="module">
 
-          button.classList.remove("active");
-          button.textContent = "Interested";
+    import {
+      auth
+    } from "./zemivo-security.js";
 
-        } else {
 
-          button.classList.add("active");
-          button.textContent = "✓ Interested";
+    import {
+      onAuthStateChanged
+    } from
+      "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
 
-        }
 
-      });
+    /* =========================
+       ELEMENTS
+    ========================== */
 
-    });
+    const eventSearch =
+      document.getElementById(
+        "eventSearch"
+      );
 
-    function createEvent() {
 
-      const name =
-        prompt("Enter event name:");
+    const eventList =
+      document.getElementById(
+        "eventList"
+      );
 
-      if (name && name.trim() !== "") {
 
-        alert(
-          "Event '" +
-          name.trim() +
-          "' is ready to be created."
-        );
+    const eventCount =
+      document.getElementById(
+        "eventCount"
+      );
+
+
+    const emptyState =
+      document.getElementById(
+        "emptyState"
+      );
+
+
+    const createButton =
+      document.getElementById(
+        "createButton"
+      );
+
+
+    const eventModal =
+      document.getElementById(
+        "eventModal"
+      );
+
+
+    const closeModal =
+      document.getElementById(
+        "closeModal"
+      );
+
+
+    const cancelButton =
+      document.getElementById(
+        "cancelButton"
+      );
+
+
+    const saveEventButton =
+      document.getElementById(
+        "saveEventButton"
+      );
+
+
+    const eventName =
+      document.getElementById(
+        "eventName"
+      );
+
+
+    const eventDate =
+      document.getElementById(
+        "eventDate"
+      );
+
+
+    const eventLocation =
+      document.getElementById(
+        "eventLocation"
+      );
+
+
+    const eventDescription =
+      document.getElementById(
+        "eventDescription"
+      );
+
+
+    const toast =
+      document.getElementById(
+        "toast"
+      );
+
+
+    /* =========================
+       STATE
+    ========================== */
+
+    let currentUser =
+      null;
+
+
+    let toastTimer =
+      null;
+
+
+    /* =========================
+       AUTH
+    ========================== */
+
+    onAuthStateChanged(
+      auth,
+      function(user){
+
+        currentUser =
+          user;
 
       }
+    );
+
+
+    /* =========================
+       TOAST
+    ========================== */
+
+    function showToast(
+      message
+    ){
+
+      toast.textContent =
+        message;
+
+
+      toast.classList.add(
+        "show"
+      );
+
+
+      clearTimeout(
+        toastTimer
+      );
+
+
+      toastTimer =
+        setTimeout(
+          function(){
+
+            toast.classList.remove(
+              "show"
+            );
+
+          },
+          2400
+        );
 
     }
 
+
+    /* =========================
+       INTERESTED
+    ========================== */
+
+    document
+      .querySelectorAll(
+        ".interested"
+      )
+      .forEach(
+        function(button){
+
+          button.addEventListener(
+            "click",
+            function(){
+
+              if(
+                !currentUser
+              ){
+
+                showToast(
+                  "Please log in first."
+                );
+
+                return;
+
+              }
+
+
+              button.classList.toggle(
+                "active"
+              );
+
+
+              if(
+                button.classList.contains(
+                  "active"
+                )
+              ){
+
+                button.textContent =
+                  "✓ Interested";
+
+              }
+              else{
+
+                button.textContent =
+                  "Interested";
+
+              }
+
+            }
+          );
+
+        }
+      );
+
+
+    /* =========================
+       EVENT SEARCH
+    ========================== */
+
+    eventSearch.addEventListener(
+      "input",
+      function(){
+
+        const term =
+          eventSearch.value
+            .trim()
+            .toLowerCase();
+
+
+        const events =
+          Array.from(
+            eventList.querySelectorAll(
+              ".event"
+            )
+          );
+
+
+        let visible =
+          0;
+
+
+        events.forEach(
+          function(event){
+
+            const searchText =
+              (
+                event.dataset.search ||
+                event.textContent ||
+                ""
+              ).toLowerCase();
+
+
+            const matches =
+              !term ||
+              searchText.includes(
+                term
+              );
+
+
+            event.style.display =
+              matches
+              ?
+              ""
+              :
+              "block";
+
+
+            if(matches){
+
+              visible++;
+
+            }
+
+          }
+        );
+
+
+        eventCount.textContent =
+          visible +
+          (
+            visible === 1
+            ?
+            " event"
+            :
+            " events"
+          );
+
+
+        emptyState.style.display =
+          visible === 0
+          ?
+          "block"
+          :
+          "none";
+
+      }
+    );
+
+
+    /* =========================
+       EVENT DETAILS
+    ========================== */
+
+    document
+      .querySelectorAll(
+        ".details-button"
+      )
+      .forEach(
+        function(button){
+
+          button.addEventListener(
+            "click",
+            function(){
+
+              const event =
+                button.closest(
+                  ".event"
+                );
+
+
+              const title =
+                event.querySelector(
+                  "h3"
+                ).textContent;
+
+
+              showToast(
+                title +
+                " — event details module ready."
+              );
+
+            }
+          );
+
+        }
+      );
+
+
+    /* =========================
+       MODAL
+    ========================== */
+
+    function openModal(){
+
+      if(!currentUser){
+
+        showToast(
+          "Please log in to create an event."
+        );
+
+        return;
+
+      }
+
+
+      eventModal.classList.add(
+        "show"
+      );
+
+
+      eventName.focus();
+
+    }
+
+
+    function closeEventModal(){
+
+      eventModal.classList.remove(
+        "show"
+      );
+
+    }
+
+
+    createButton.addEventListener(
+      "click",
+      openModal
+    );
+
+
+    closeModal.addEventListener(
+      "click",
+      closeEventModal
+    );
+
+
+    cancelButton.addEventListener(
+      "click",
+      closeEventModal
+    );
+
+
+    eventModal.addEventListener(
+      "click",
+      function(event){
+
+        if(
+          event.target ===
+          eventModal
+        ){
+
+          closeEventModal();
+
+        }
+
+      }
+    );
+
+
+    /* =========================
+       CREATE EVENT
+    ========================== */
+
+    saveEventButton.addEventListener(
+      "click",
+      function(){
+
+        if(!currentUser){
+
+          showToast(
+            "Please log in first."
+          );
+
+          return;
+
+        }
+
+
+        const name =
+          eventName.value.trim();
+
+
+        const date =
+          eventDate.value;
+
+
+        const location =
+          eventLocation.value.trim();
+
+
+        const description =
+          eventDescription.value.trim();
+
+
+        if(!name){
+
+          showToast(
+            "Enter an event name."
+          );
+
+          eventName.focus();
+
+          return;
+
+        }
+
+
+        if(!date){
+
+          showToast(
+            "Choose an event date."
+          );
+
+          eventDate.focus();
+
+          return;
+
+        }
+
+
+        /*
+          No Firestore write is performed here yet.
+
+          This keeps the page safe until the
+          dedicated Events data model and
+          Firestore Rules are finalized.
+        */
+
+
+        closeEventModal();
+
+
+        eventName.value =
+          "";
+
+        eventDate.value =
+          "";
+
+        eventLocation.value =
+          "";
+
+        eventDescription.value =
+          "";
+
+
+        showToast(
+          "Event form is ready. Events backend will be connected later."
+        );
+
+      }
+    );
+
+
+    /* =========================
+       ESCAPE MODAL
+    ========================== */
+
+    document.addEventListener(
+      "keydown",
+      function(event){
+
+        if(
+          event.key ===
+          "Escape"
+        ){
+
+          closeEventModal();
+
+        }
+
+      }
+    );
+
+
+    /* =========================
+       PAGE ISOLATION
+    ========================== */
+
+    window.ZemivoEventsPage =
+      Object.freeze({
+
+        version:
+          "1.0.0",
+
+        page:
+          "events",
+
+        getCurrentUser:
+          function(){
+
+            return currentUser;
+
+          }
+
+      });
+
+
+    /* =========================
+       LIVING WORLD HOOK
+    ========================== */
+
+    window.ZemivoLivingWorld =
+      window.ZemivoLivingWorld ||
+      {
+
+        page:
+          "events",
+
+        contentType:
+          "events",
+
+        ready:
+          true
+
+      };
+
   </script>
 
+
+  <!-- =========================
+       FOOTER
+  ========================== -->
+
+  <footer class="footer">
+
+    © 2026 Zemivo —
+    Connect. Create. Earn.
+
+  </footer>
+
+
 </body>
+
 </html>
