@@ -1,8 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+<meta
+  name="viewport"
+  content="width=device-width,initial-scale=1,maximum-scale=1"
+>
 
 <title>Zemivo — Home</title>
 
@@ -49,9 +53,9 @@ button{
   cursor:pointer;
 }
 
-/* =========================
+/* =====================================================
    TOP BAR
-========================= */
+===================================================== */
 
 .topbar{
   position:sticky;
@@ -101,9 +105,9 @@ button{
   background:#f2f4f7;
 }
 
-/* =========================
+/* =====================================================
    LAYOUT
-========================= */
+===================================================== */
 
 .layout{
   width:100%;
@@ -123,9 +127,9 @@ button{
   box-shadow:var(--shadow);
 }
 
-/* =========================
+/* =====================================================
    SIDEBAR
-========================= */
+===================================================== */
 
 .sidebar{
   height:max-content;
@@ -150,9 +154,9 @@ button{
   background:#f1f3f5;
 }
 
-/* =========================
+/* =====================================================
    MIND BOX
-========================= */
+===================================================== */
 
 .mind-card{
   padding:15px;
@@ -175,6 +179,14 @@ button{
   color:#fff;
   font-weight:700;
   background:linear-gradient(135deg,#1877f2,#7c3aed);
+  overflow:hidden;
+}
+
+.avatar img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  display:block;
 }
 
 .mind-button{
@@ -192,9 +204,9 @@ button{
   background:#eef1f5;
 }
 
-/* =========================
+/* =====================================================
    POST
-========================= */
+===================================================== */
 
 .post{
   overflow:hidden;
@@ -210,10 +222,14 @@ button{
 
 .post-info{
   flex:1;
+  min-width:0;
 }
 
 .post-name{
   font-weight:700;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
 }
 
 .post-time{
@@ -239,6 +255,7 @@ button{
   padding:0 15px 13px;
   line-height:1.55;
   white-space:pre-wrap;
+  overflow-wrap:anywhere;
 }
 
 .post-image{
@@ -262,9 +279,9 @@ button{
   font-size:13px;
 }
 
-/* =========================
+/* =====================================================
    STATS
-========================= */
+===================================================== */
 
 .stats{
   display:flex;
@@ -275,9 +292,9 @@ button{
   border-bottom:1px solid var(--line);
 }
 
-/* =========================
-   EXACTLY FOUR POST OPTIONS
-========================= */
+/* =====================================================
+   POST OPTIONS
+===================================================== */
 
 .post-actions{
   display:grid;
@@ -301,9 +318,9 @@ button{
   font-weight:700;
 }
 
-/* =========================
+/* =====================================================
    COMMENTS
-========================= */
+===================================================== */
 
 .comments{
   padding:0 15px 14px;
@@ -330,6 +347,7 @@ button{
   background:#f1f3f5;
   border-radius:14px;
   padding:8px 11px;
+  overflow-wrap:anywhere;
 }
 
 .comment-actions{
@@ -352,9 +370,9 @@ button{
   color:var(--blue);
 }
 
-/* =========================
+/* =====================================================
    REPLIES
-========================= */
+===================================================== */
 
 .reply-list{
   margin-left:14px;
@@ -397,6 +415,7 @@ button{
   gap:10px;
   margin-top:3px;
   padding-left:6px;
+  flex-wrap:wrap;
 }
 
 .reply-action{
@@ -449,10 +468,9 @@ button{
   margin-left:20px;
 }
 
-
-/* =========================
+/* =====================================================
    COMMENT BOX
-========================= */
+===================================================== */
 
 .comment-box{
   display:flex;
@@ -477,9 +495,9 @@ button{
   padding:0 15px;
 }
 
-/* =========================
+/* =====================================================
    RIGHT
-========================= */
+===================================================== */
 
 .right .card{
   padding:15px;
@@ -497,9 +515,9 @@ button{
   padding:8px 0;
 }
 
-/* =========================
+/* =====================================================
    MODAL
-========================= */
+===================================================== */
 
 .modal{
   position:fixed;
@@ -524,9 +542,9 @@ button{
   padding:18px;
 }
 
-/* =========================
+/* =====================================================
    NEW POST HEADER
-========================= */
+===================================================== */
 
 .new-post-head{
   display:flex;
@@ -568,10 +586,9 @@ button{
   color:var(--blue);
 }
 
-/* =========================
+/* =====================================================
    STEPS
-   HIDDEN FOR CLEAN DESIGN
-========================= */
+===================================================== */
 
 .steps{
   display:none;
@@ -588,9 +605,9 @@ button{
   background:var(--blue);
 }
 
-/* =========================
-   STEP 1
-========================= */
+/* =====================================================
+   STEP ONE
+===================================================== */
 
 .writer-user{
   display:flex;
@@ -609,15 +626,15 @@ button{
   font-size:19px;
 }
 
-/* =========================
+/* =====================================================
    QUICK TAGS
-========================= */
+===================================================== */
 
 .tags{
   display:flex;
   gap:8px;
   flex-wrap:wrap;
-  margin:8px 0 8px;
+  margin:8px 0;
 }
 
 .tag-btn{
@@ -634,9 +651,9 @@ button{
   background:#f8fafc;
 }
 
-/* =========================
+/* =====================================================
    TEXT AREA
-========================= */
+===================================================== */
 
 .post-textarea{
   width:100%;
@@ -654,13 +671,9 @@ button{
   color:#98a2b3;
 }
 
-.post-textarea:focus{
-  outline:none;
-}
-
-/* =========================
+/* =====================================================
    MEDIA PREVIEW
-========================= */
+===================================================== */
 
 .media-preview{
   display:none;
@@ -695,9 +708,9 @@ button{
   color:#fff;
 }
 
-/* =========================
+/* =====================================================
    MEDIA TOOLS
-========================= */
+===================================================== */
 
 .writer-tools{
   border-top:1px solid #eef0f3;
@@ -746,18 +759,21 @@ button{
   font-size:13px;
 }
 
-/* =========================
+/* =====================================================
    EXTRA TOOLS
-   KEPT HIDDEN
-========================= */
+===================================================== */
 
 .writer-extra-tools{
   display:none;
 }
 
-/* =========================
-   SHARING CHIPS
-========================= */
+.writer-extra-tools.show{
+  display:grid;
+}
+
+/* =====================================================
+   SHARING
+===================================================== */
 
 .share-settings{
   display:flex;
@@ -779,9 +795,9 @@ button{
   background:#f8fafc;
 }
 
-/* =========================
+/* =====================================================
    BUTTONS
-========================= */
+===================================================== */
 
 .nextbar{
   display:flex;
@@ -812,9 +828,9 @@ button{
   padding:11px 19px;
 }
 
-/* =========================
-   DRAFT SHEET
-========================= */
+/* =====================================================
+   DRAFT
+===================================================== */
 
 .draft-modal{
   position:fixed;
@@ -877,9 +893,9 @@ button{
   color:var(--danger);
 }
 
-/* =========================
-   STEP 2
-========================= */
+/* =====================================================
+   STEP TWO
+===================================================== */
 
 .settings{
   display:none;
@@ -937,9 +953,9 @@ button{
   left:24px;
 }
 
-/* =========================
+/* =====================================================
    THREE DOT MENU
-========================= */
+===================================================== */
 
 .menu{
   position:fixed;
@@ -977,9 +993,9 @@ button{
   color:var(--danger);
 }
 
-/* =========================
+/* =====================================================
    TOAST
-========================= */
+===================================================== */
 
 .toast{
   position:fixed;
@@ -992,15 +1008,17 @@ button{
   padding:12px 17px;
   border-radius:12px;
   display:none;
+  max-width:90%;
+  text-align:center;
 }
 
 .toast.show{
   display:block;
 }
 
-/* =========================
+/* =====================================================
    EMPTY
-========================= */
+===================================================== */
 
 .empty{
   text-align:center;
@@ -1008,9 +1026,9 @@ button{
   color:var(--muted);
 }
 
-/* =========================
+/* =====================================================
    MOBILE
-========================= */
+===================================================== */
 
 @media(max-width:900px){
 
@@ -1125,9 +1143,6 @@ button{
     padding:8px 11px;
   }
 
-  /* Hide the old bottom Next area.
-     Top Next remains functional. */
-
   #stepOne > .nextbar{
     display:none;
   }
@@ -1143,27 +1158,60 @@ button{
 
 <body>
 
-<!-- =========================
+<!-- =====================================================
      TOP BAR
-========================= -->
+===================================================== -->
 
 <header class="topbar">
 
-  <div class="brand">Zemivo</div>
+  <div class="brand">
+    Zemivo
+  </div>
 
   <input
     id="search"
     class="search"
-    placeholder="Search Zemivo">
+    placeholder="Search Zemivo"
+    autocomplete="off"
+  >
 
   <nav class="nav">
 
-    <button onclick="goHome()">⌂</button>
-    <button onclick="showToast('Reels')">▣</button>
-    <button onclick="showToast('Friends')">♧</button>
-    <button onclick="showToast('Marketplace')">🛍</button>
-    <button onclick="showToast('Notifications')">🔔</button>
-    <button onclick="showToast('Profile')">◉</button>
+    <button
+      type="button"
+      onclick="goHome()">
+      ⌂
+    </button>
+
+    <button
+      type="button"
+      onclick="navigateTo('stories.html')">
+      ▣
+    </button>
+
+    <button
+      type="button"
+      onclick="navigateTo('friends.html')">
+      ♧
+    </button>
+
+    <button
+      type="button"
+      onclick="navigateTo('marketplace.html')">
+      🛍
+    </button>
+
+    <button
+      type="button"
+      onclick="navigateTo('notifications.html')">
+      🔔
+    </button>
+
+    <button
+      type="button"
+      onclick="navigateTo('profile.html')">
+      ◉
+    </button>
 
   </nav>
 
@@ -1172,27 +1220,66 @@ button{
 
 <main class="layout">
 
-<!-- =========================
+<!-- =====================================================
      LEFT
-========================= -->
+===================================================== -->
 
 <aside class="sidebar panel">
 
-  <button class="sidebtn" onclick="goHome()">🏠 Home</button>
-  <button class="sidebtn" onclick="showToast('Friends')">👥 Friends</button>
-  <button class="sidebtn" onclick="showToast('Groups')">👨‍👩‍👧 Groups</button>
-  <button class="sidebtn" onclick="showToast('Saved')">🔖 Saved</button>
-  <button class="sidebtn" onclick="showToast('Marketplace')">🛍️ Marketplace</button>
-  <button class="sidebtn" onclick="showToast('Messenger')">💬 Messenger</button>
-  <button class="sidebtn" onclick="showToast('Notifications')">🔔 Notifications</button>
-  <button class="sidebtn" onclick="showToast('Settings')">⚙️ Settings</button>
+  <button
+    class="sidebtn"
+    onclick="goHome()">
+    🏠 Home
+  </button>
+
+  <button
+    class="sidebtn"
+    onclick="navigateTo('friends.html')">
+    👥 Friends
+  </button>
+
+  <button
+    class="sidebtn"
+    onclick="navigateTo('groups.html')">
+    👨‍👩‍👧 Groups
+  </button>
+
+  <button
+    class="sidebtn"
+    onclick="navigateTo('saved.html')">
+    🔖 Saved
+  </button>
+
+  <button
+    class="sidebtn"
+    onclick="navigateTo('marketplace.html')">
+    🛍️ Marketplace
+  </button>
+
+  <button
+    class="sidebtn"
+    onclick="navigateTo('messenger.html')">
+    💬 Messenger
+  </button>
+
+  <button
+    class="sidebtn"
+    onclick="navigateTo('notifications.html')">
+    🔔 Notifications
+  </button>
+
+  <button
+    class="sidebtn"
+    onclick="navigateTo('settings.html')">
+    ⚙️ Settings
+  </button>
 
 </aside>
 
 
-<!-- =========================
+<!-- =====================================================
      FEED
-========================= -->
+===================================================== -->
 
 <section>
 
@@ -1200,7 +1287,11 @@ button{
 
     <div class="mind-row">
 
-      <div class="avatar">Z</div>
+      <div
+        id="homeAvatar"
+        class="avatar">
+        Z
+      </div>
 
       <button
         id="mindButton"
@@ -1221,9 +1312,9 @@ button{
 </section>
 
 
-<!-- =========================
+<!-- =====================================================
      RIGHT
-========================= -->
+===================================================== -->
 
 <aside class="right">
 
@@ -1241,10 +1332,21 @@ button{
 
     <b>Quick tools</b>
 
-    <div class="tool-row">💰 Coin & Creator</div>
-    <div class="tool-row">🔗 Affiliate</div>
-    <div class="tool-row">🚚 Drop-shipping</div>
-    <div class="tool-row">🛡️ Safety</div>
+    <div class="tool-row">
+      💰 Coin & Creator
+    </div>
+
+    <div class="tool-row">
+      🔗 Affiliate
+    </div>
+
+    <div class="tool-row">
+      🚚 Drop-shipping
+    </div>
+
+    <div class="tool-row">
+      🛡️ Safety
+    </div>
 
   </div>
 
@@ -1263,16 +1365,12 @@ button{
 
   <div class="sheet">
 
-    <!-- NEW POST HEADER -->
-
     <div class="new-post-head">
 
       <button
         class="new-post-close"
         onclick="closeComposer()">
-
         ×
-
       </button>
 
       <div class="new-post-title">
@@ -1284,18 +1382,11 @@ button{
         class="new-post-next"
         disabled
         onclick="goToStepTwo()">
-
         Next
-
       </button>
 
     </div>
 
-
-    <!-- STEP BAR
-         KEPT FOR EXISTING JS
-         HIDDEN VISUALLY
-    -->
 
     <div class="steps">
 
@@ -1317,65 +1408,53 @@ button{
 
     <section id="stepOne">
 
-      <!-- USER -->
-
       <div class="writer-user">
 
-        <div class="avatar">
+        <div
+          id="writerAvatar"
+          class="avatar">
           Z
         </div>
 
         <div>
 
-          <b>Zemivo User</b>
+          <b id="writerName">
+            Zemivo User
+          </b>
 
         </div>
 
       </div>
 
 
-      <!-- QUICK OPTIONS
-           NOW ABOVE TEXT
-      -->
-
       <div class="tags">
 
-  <button
-    class="tag-btn"
-    onclick="addMusic()">
+        <button
+          class="tag-btn"
+          onclick="addMusic()">
+          🎵 Music
+        </button>
 
-    🎵 Music
+        <button
+          class="tag-btn"
+          onclick="addCollaborate()">
+          👥 Tag / collaborate
+        </button>
 
-  </button>
+        <button
+          class="tag-btn"
+          onclick="addLocation()">
+          📍 Location
+        </button>
 
-  <button
-    class="tag-btn"
-    onclick="addCollaborate()">
+        <button
+          class="tag-btn"
+          onclick="addFeeling()">
+          😊
+        </button>
 
-    👥 Tag / collaborate
+      </div>
 
-  </button>
-
-  <button
-    class="tag-btn"
-    onclick="addLocation()">
-
-    📍 Location
-
-  </button>
-
-  <button
-    class="tag-btn"
-    onclick="addFeeling()">
-
-    😊
-
-  </button>
-
-</div>
-
-
-      <!-- MAIN TEXT -->
 
       <textarea
         id="postText"
@@ -1384,8 +1463,6 @@ button{
         oninput="updateNextButton()"></textarea>
 
 
-      <!-- MEDIA PREVIEW -->
-
       <div
         id="mediaPreview"
         class="media-preview">
@@ -1393,9 +1470,7 @@ button{
         <button
           class="remove-media"
           onclick="removeMedia()">
-
           ×
-
         </button>
 
         <img
@@ -1416,10 +1491,9 @@ button{
         type="file"
         accept="image/*,video/*"
         hidden
-        onchange="selectMedia(event)">
+        onchange="selectMedia(event)"
+      >
 
-
-      <!-- MAIN MEDIA TOOLS -->
 
       <div class="writer-tools">
 
@@ -1427,7 +1501,9 @@ button{
           class="writer-tool"
           onclick="document.getElementById('mediaInput').click()">
 
-          <div class="tool-icon">🖼️</div>
+          <div class="tool-icon">
+            🖼️
+          </div>
 
           <b>Gallery</b>
 
@@ -1475,13 +1551,6 @@ button{
       </div>
 
 
-      <!--
-        MORE OPTIONS BUTTON REMOVED.
-        EXISTING EXTRA TOOLS ARE KEPT HIDDEN
-        SO THEIR JAVASCRIPT DOES NOT AFFECT
-        ANY OTHER PART OF THE PROJECT.
-      -->
-
       <div
         id="extraWriterTools"
         class="writer-extra-tools">
@@ -1494,7 +1563,9 @@ button{
 
           <div>
             <b>Mention</b>
-            <div class="small">Mention someone</div>
+            <div class="small">
+              Mention someone
+            </div>
           </div>
 
         </button>
@@ -1508,7 +1579,9 @@ button{
 
           <div>
             <b>Hashtag</b>
-            <div class="small">Add a hashtag</div>
+            <div class="small">
+              Add a hashtag
+            </div>
           </div>
 
         </button>
@@ -1522,7 +1595,9 @@ button{
 
           <div>
             <b>Group</b>
-            <div class="small">Publish inside a group</div>
+            <div class="small">
+              Publish inside a group
+            </div>
           </div>
 
         </button>
@@ -1536,7 +1611,9 @@ button{
 
           <div>
             <b>Poll</b>
-            <div class="small">Create a poll</div>
+            <div class="small">
+              Create a poll
+            </div>
           </div>
 
         </button>
@@ -1550,7 +1627,9 @@ button{
 
           <div>
             <b>Event</b>
-            <div class="small">Add an event</div>
+            <div class="small">
+              Add an event
+            </div>
           </div>
 
         </button>
@@ -1564,7 +1643,9 @@ button{
 
           <div>
             <b>Affiliate Product</b>
-            <div class="small">Add product or affiliate link</div>
+            <div class="small">
+              Add product or affiliate link
+            </div>
           </div>
 
         </button>
@@ -1572,34 +1653,26 @@ button{
       </div>
 
 
-      <!-- SHARING -->
+      <div class="share-settings">
 
-<div class="share-settings">
+        <button
+          class="share-chip"
+          onclick="setAudiencePublic()">
 
-  <button
-    class="share-chip"
-    onclick="setAudiencePublic()">
+          🌍 Public
 
-    🌍 Public
+        </button>
 
-  </button>
+        <button
+          class="share-chip"
+          onclick="showToast('Instagram sharing is off')">
 
-  <button
-    class="share-chip"
-    onclick="showToast('Instagram sharing is off')">
+          📷 Instagram Off
 
-    📷 Instagram Off
+        </button>
 
-  </button>
+      </div>
 
-</div>
-
-  
-      <!--
-        OLD BOTTOM NEXT BUTTON
-        REMOVED FROM DISPLAY.
-        TOP NEXT IS NOW THE MAIN NEXT BUTTON.
-      -->
 
       <div
         class="nextbar"
@@ -1736,9 +1809,7 @@ button{
         <button
           class="secondary"
           onclick="addProduct()">
-
           Add
-
         </button>
 
       </div>
@@ -1759,9 +1830,7 @@ button{
         <button
           class="secondary"
           onclick="addGroup()">
-
           Choose
-
         </button>
 
       </div>
@@ -1836,7 +1905,7 @@ button{
 
 
 <!-- =====================================================
-     DRAFT CONFIRMATION
+     DRAFT
 ===================================================== -->
 
 <div
@@ -1986,6 +2055,497 @@ button{
 </div>
 
 
+<!-- =====================================================
+     ZEMIVO HOME PAGE
+     SECURITY FOUNDATION + FIREBASE
+===================================================== -->
+
+<script type="module">
+
+import {
+  auth,
+  db
+} from "./zemivo-security.js";
+
+import {
+  onAuthStateChanged
+} from
+"https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
+
+import {
+  collection,
+  query,
+  orderBy,
+  limit,
+  onSnapshot,
+  doc,
+  setDoc,
+  deleteDoc
+} from
+"https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
+
+
+/* =====================================================
+   PAGE ISOLATION
+===================================================== */
+
+window.ZemivoHomePage =
+  Object.freeze({
+    version:"1.0.0",
+    name:"Home"
+  });
+
+
+/* =====================================================
+   FIREBASE STATE
+===================================================== */
+
+window.zemivoAuth =
+  auth;
+
+window.zemivoDb =
+  db;
+
+window.zemivoCurrentUser =
+  null;
+
+
+/* =====================================================
+   GLOBAL POST DATA
+===================================================== */
+
+let firebasePosts = [];
+
+let firebaseListener = null;
+
+
+/* =====================================================
+   CURRENT USER
+===================================================== */
+
+onAuthStateChanged(
+  auth,
+  function(user){
+
+    window.zemivoCurrentUser =
+      user || null;
+
+    updateUserUI();
+
+    if(user){
+
+      startFirebasePosts();
+
+    }else{
+
+      stopFirebasePosts();
+
+    }
+
+    render();
+
+  }
+);
+
+
+/* =====================================================
+   USER UI
+===================================================== */
+
+function updateUserUI(){
+
+  const user =
+    window.zemivoCurrentUser;
+
+  const name =
+    user?.displayName ||
+    "Zemivo User";
+
+  const initial =
+    name
+      .charAt(0)
+      .toUpperCase() ||
+    "Z";
+
+
+  const writerName =
+    document.getElementById(
+      "writerName"
+    );
+
+  const writerAvatar =
+    document.getElementById(
+      "writerAvatar"
+    );
+
+  const homeAvatar =
+    document.getElementById(
+      "homeAvatar"
+    );
+
+
+  if(writerName){
+
+    writerName.textContent =
+      name;
+
+  }
+
+
+  if(writerAvatar){
+
+    writerAvatar.textContent =
+      initial;
+
+    if(user?.photoURL){
+
+      writerAvatar.innerHTML =
+        `<img src="${escapeHTML(
+          user.photoURL
+        )}" alt="">`;
+
+    }
+
+  }
+
+
+  if(homeAvatar){
+
+    homeAvatar.textContent =
+      initial;
+
+    if(user?.photoURL){
+
+      homeAvatar.innerHTML =
+        `<img src="${escapeHTML(
+          user.photoURL
+        )}" alt="">`;
+
+    }
+
+  }
+
+}
+
+
+/* =====================================================
+   FIRESTORE POSTS LISTENER
+===================================================== */
+
+function startFirebasePosts(){
+
+  if(firebaseListener){
+
+    firebaseListener();
+
+    firebaseListener =
+      null;
+
+  }
+
+
+  try{
+
+    const postsQuery =
+      query(
+        collection(
+          db,
+          "posts"
+        ),
+        orderBy(
+          "createdAt",
+          "desc"
+        ),
+        limit(50)
+      );
+
+
+    firebaseListener =
+      onSnapshot(
+        postsQuery,
+
+        function(snapshot){
+
+          firebasePosts =
+            snapshot.docs.map(
+              function(snapshotDoc){
+
+                return {
+                  id:snapshotDoc.id,
+                  ...snapshotDoc.data(),
+                  source:"firebase"
+                };
+
+              }
+            );
+
+
+          render();
+
+        },
+
+        function(error){
+
+          console.error(
+            "Zemivo Firestore posts listener error:",
+            error
+          );
+
+          firebasePosts = [];
+
+          render();
+
+        }
+      );
+
+  }
+  catch(error){
+
+    console.error(
+      "Zemivo Firestore posts setup error:",
+      error
+    );
+
+  }
+
+}
+
+
+/* =====================================================
+   STOP FIREBASE LISTENER
+===================================================== */
+
+function stopFirebasePosts(){
+
+  if(firebaseListener){
+
+    firebaseListener();
+
+    firebaseListener =
+      null;
+
+  }
+
+  firebasePosts = [];
+
+}
+
+
+/* =====================================================
+   FIREBASE WRITE HELPER
+===================================================== */
+
+window.zemivoSavePostToFirebase =
+  async function(post){
+
+    const user =
+      window.zemivoCurrentUser;
+
+    if(!user){
+
+      return false;
+
+    }
+
+
+    try{
+
+      /*
+       IMPORTANT:
+       Media data URLs are not sent to Firestore.
+       Large media should later use Firebase Storage.
+      */
+
+      const safePost = {
+
+        id:
+          post.id,
+
+        author:
+          post.author,
+
+        authorId:
+          user.uid,
+
+        text:
+          post.text || "",
+
+        media:
+          post.mediaType === "image" ||
+          post.mediaType === "video"
+          ? ""
+          : "",
+
+        mediaType:
+          post.mediaType || "",
+
+        mediaUrl:
+          post.mediaUrl || "",
+
+        location:
+          post.location || "",
+
+        group:
+          post.group || "",
+
+        product:
+          post.product || "",
+
+        audience:
+          post.audience || "Public",
+
+        comments:
+          post.comments || "Public",
+
+        createdAt:
+          post.createdAt,
+
+        likes:
+          Number(post.likes || 0),
+
+        shares:
+          Number(post.shares || 0),
+
+        saved:
+          false,
+
+        pinned:
+          false,
+
+        archived:
+          false,
+
+        trashed:
+          false
+
+      };
+
+
+      await setDoc(
+        doc(
+          db,
+          "posts",
+          post.id
+        ),
+        safePost
+      );
+
+
+      return true;
+
+    }
+    catch(error){
+
+      console.error(
+        "Zemivo Firestore post write error:",
+        error
+      );
+
+      return false;
+
+    }
+
+  };
+
+
+/* =====================================================
+   FIREBASE DELETE HELPER
+===================================================== */
+
+window.zemivoDeleteFirebasePost =
+  async function(id){
+
+    try{
+
+      await deleteDoc(
+        doc(
+          db,
+          "posts",
+          id
+        )
+      );
+
+      return true;
+
+    }
+    catch(error){
+
+      console.error(
+        "Zemivo Firestore post delete error:",
+        error
+      );
+
+      return false;
+
+    }
+
+  };
+
+
+/* =====================================================
+   NAVIGATION
+===================================================== */
+
+window.navigateTo =
+  function(page){
+
+    window.location.href =
+      page;
+
+  };
+
+
+window.goHome =
+  function(){
+
+    window.scrollTo({
+      top:0,
+      behavior:"smooth"
+    });
+
+  };
+
+
+/* =====================================================
+   SEARCH
+===================================================== */
+
+document
+  .getElementById("search")
+  .addEventListener(
+    "input",
+    function(){
+
+      render();
+
+    }
+  );
+
+
+/* =====================================================
+   CLEANUP
+===================================================== */
+
+window.addEventListener(
+  "beforeunload",
+  function(){
+
+    if(firebaseListener){
+
+      firebaseListener();
+
+    }
+
+  }
+);
+
+</script>
+
+
+<!-- =====================================================
+     HOME PAGE LOCAL LOGIC
+===================================================== -->
+
 <script>
 
 /* =====================================================
@@ -1998,22 +2558,39 @@ const STORAGE_KEY =
 const DRAFT_KEY =
   "zemivo_post_draft_v1";
 
+
 let posts =
   JSON.parse(
-    localStorage.getItem(STORAGE_KEY) || "[]"
+    localStorage.getItem(
+      STORAGE_KEY
+    ) || "[]"
   );
 
-let selectedPostId = null;
-let selectedMedia = "";
-let selectedMediaType = "";
-let selectedLocation = "";
-let selectedGroup = "";
-let selectedProduct = "";
-let editingId = null;
+
+let selectedPostId =
+  null;
+
+let selectedMedia =
+  "";
+
+let selectedMediaType =
+  "";
+
+let selectedLocation =
+  "";
+
+let selectedGroup =
+  "";
+
+let selectedProduct =
+  "";
+
+let editingId =
+  null;
 
 
 /* =====================================================
-   SAVE
+   SAVE LOCAL
 ===================================================== */
 
 function save(){
@@ -2032,11 +2609,13 @@ function save(){
 
 function createId(){
 
-  return Date.now().toString(36)
+  return (
+    Date.now().toString(36)
     +
     Math.random()
       .toString(36)
-      .substring(2,9);
+      .substring(2,9)
+  );
 
 }
 
@@ -2047,12 +2626,29 @@ function createId(){
 
 function escapeHTML(value){
 
-  return String(value || "")
-    .replace(/&/g,"&amp;")
-    .replace(/</g,"&lt;")
-    .replace(/>/g,"&gt;")
-    .replace(/"/g,"&quot;")
-    .replace(/'/g,"&#039;");
+  return String(
+    value ?? ""
+  )
+    .replace(
+      /&/g,
+      "&amp;"
+    )
+    .replace(
+      /</g,
+      "&lt;"
+    )
+    .replace(
+      />/g,
+      "&gt;"
+    )
+    .replace(
+      /"/g,
+      "&quot;"
+    )
+    .replace(
+      /'/g,
+      "&#039;"
+    );
 
 }
 
@@ -2064,35 +2660,32 @@ function escapeHTML(value){
 function showToast(message){
 
   const toast =
-    document.getElementById("toast");
+    document.getElementById(
+      "toast"
+    );
 
   toast.textContent =
     message;
 
-  toast.classList.add("show");
+  toast.classList.add(
+    "show"
+  );
 
-  clearTimeout(window.toastTimer);
+  clearTimeout(
+    window.toastTimer
+  );
 
   window.toastTimer =
-    setTimeout(() => {
+    setTimeout(
+      function(){
 
-      toast.classList.remove("show");
+        toast.classList.remove(
+          "show"
+        );
 
-    },2200);
-
-}
-
-
-/* =====================================================
-   HOME
-===================================================== */
-
-function goHome(){
-
-  window.scrollTo({
-    top:0,
-    behavior:"smooth"
-  });
+      },
+      2200
+    );
 
 }
 
@@ -2101,50 +2694,120 @@ function goHome(){
    COMPOSER
 ===================================================== */
 
-function openComposer(kind=""){
+function openComposer(
+  kind=""
+){
 
-  editingId = null;
+  editingId =
+    null;
 
-  selectedMedia = "";
-  selectedMediaType = "";
-  selectedLocation = "";
-  selectedGroup = "";
-  selectedProduct = "";
+  selectedMedia =
+    "";
 
-  document.getElementById("postText").value = "";
+  selectedMediaType =
+    "";
 
-  document.getElementById("mediaPreview")
-    .classList.remove("show");
+  selectedLocation =
+    "";
 
-  document.getElementById("previewImage")
-    .src = "";
+  selectedGroup =
+    "";
 
-  document.getElementById("previewVideo")
-    .src = "";
+  selectedProduct =
+    "";
 
-  document.getElementById("previewImage")
-    .style.display = "block";
 
-  document.getElementById("previewVideo")
-    .style.display = "none";
+  document
+    .getElementById(
+      "postText"
+    )
+    .value =
+    "";
 
-  document.getElementById("mediaInput").value = "";
+
+  document
+    .getElementById(
+      "mediaPreview"
+    )
+    .classList
+    .remove(
+      "show"
+    );
+
+
+  document
+    .getElementById(
+      "previewImage"
+    )
+    .src =
+    "";
+
+
+  document
+    .getElementById(
+      "previewVideo"
+    )
+    .src =
+    "";
+
+
+  document
+    .getElementById(
+      "previewImage"
+    )
+    .style
+    .display =
+    "block";
+
+
+  document
+    .getElementById(
+      "previewVideo"
+    )
+    .style
+    .display =
+    "none";
+
+
+  document
+    .getElementById(
+      "mediaInput"
+    )
+    .value =
+    "";
+
 
   resetStepOne();
 
   updateNextButton();
 
-  document.getElementById("composerModal")
-    .classList.add("show");
 
-  if(kind === "photo"){
+  document
+    .getElementById(
+      "composerModal"
+    )
+    .classList
+    .add(
+      "show"
+    );
 
-    setTimeout(() => {
 
-      document.getElementById("mediaInput")
-        .click();
+  if(
+    kind === "photo"
+  ){
 
-    },150);
+    setTimeout(
+      function(){
+
+        document
+          .getElementById(
+            "mediaInput"
+          )
+          .click();
+
+      },
+      150
+    );
 
   }
 
@@ -2152,27 +2815,47 @@ function openComposer(kind=""){
 
 
 /* =====================================================
-   CLOSE COMPOSER
+   CLOSE
 ===================================================== */
 
 function closeComposer(){
 
   const text =
-    document.getElementById("postText")
+    document
+      .getElementById(
+        "postText"
+      )
       .value
       .trim();
 
-  if(text || selectedMedia){
 
-    document.getElementById("draftModal")
-      .classList.add("show");
+  if(
+    text ||
+    selectedMedia
+  ){
+
+    document
+      .getElementById(
+        "draftModal"
+      )
+      .classList
+      .add(
+        "show"
+      );
 
     return;
 
   }
 
-  document.getElementById("composerModal")
-    .classList.remove("show");
+
+  document
+    .getElementById(
+      "composerModal"
+    )
+    .classList
+    .remove(
+      "show"
+    );
 
 }
 
@@ -2186,7 +2869,10 @@ function saveDraft(){
   const draft = {
 
     text:
-      document.getElementById("postText")
+      document
+        .getElementById(
+          "postText"
+        )
         .value,
 
     media:
@@ -2209,16 +2895,34 @@ function saveDraft(){
 
   };
 
+
   localStorage.setItem(
     DRAFT_KEY,
-    JSON.stringify(draft)
+    JSON.stringify(
+      draft
+    )
   );
 
-  document.getElementById("draftModal")
-    .classList.remove("show");
 
-  document.getElementById("composerModal")
-    .classList.remove("show");
+  document
+    .getElementById(
+      "draftModal"
+    )
+    .classList
+    .remove(
+      "show"
+    );
+
+
+  document
+    .getElementById(
+      "composerModal"
+    )
+    .classList
+    .remove(
+      "show"
+    );
+
 
   showToast(
     "Post saved as draft"
@@ -2229,13 +2933,30 @@ function saveDraft(){
 
 function discardComposer(){
 
-  localStorage.removeItem(DRAFT_KEY);
+  localStorage.removeItem(
+    DRAFT_KEY
+  );
 
-  document.getElementById("draftModal")
-    .classList.remove("show");
 
-  document.getElementById("composerModal")
-    .classList.remove("show");
+  document
+    .getElementById(
+      "draftModal"
+    )
+    .classList
+    .remove(
+      "show"
+    );
+
+
+  document
+    .getElementById(
+      "composerModal"
+    )
+    .classList
+    .remove(
+      "show"
+    );
+
 
   showToast(
     "Post discarded"
@@ -2246,8 +2967,14 @@ function discardComposer(){
 
 function continueEditing(){
 
-  document.getElementById("draftModal")
-    .classList.remove("show");
+  document
+    .getElementById(
+      "draftModal"
+    )
+    .classList
+    .remove(
+      "show"
+    );
 
 }
 
@@ -2259,29 +2986,46 @@ function continueEditing(){
 function updateNextButton(){
 
   const text =
-    document.getElementById("postText")
+    document
+      .getElementById(
+        "postText"
+      )
       .value
       .trim();
+
 
   const hasMedia =
     !!selectedMedia;
 
+
   const disabled =
-    !text && !hasMedia;
+    !text &&
+    !hasMedia;
+
 
   const button =
-    document.getElementById("nextButton");
+    document.getElementById(
+      "nextButton"
+    );
+
 
   const topButton =
-    document.getElementById("topNextButton");
+    document.getElementById(
+      "topNextButton"
+    );
+
 
   if(button){
+
     button.disabled =
       disabled;
+
   }
+
 
   topButton.disabled =
     disabled;
+
 
   topButton.classList.toggle(
     "enabled",
@@ -2297,17 +3041,43 @@ function updateNextButton(){
 
 function resetStepOne(){
 
-  document.getElementById("stepOne")
-    .style.display = "block";
+  document
+    .getElementById(
+      "stepOne"
+    )
+    .style
+    .display =
+    "block";
 
-  document.getElementById("stepTwo")
-    .classList.remove("show");
 
-  document.getElementById("stepOneBar")
-    .classList.add("active");
+  document
+    .getElementById(
+      "stepTwo"
+    )
+    .classList
+    .remove(
+      "show"
+    );
 
-  document.getElementById("stepTwoBar")
-    .classList.remove("active");
+
+  document
+    .getElementById(
+      "stepOneBar"
+    )
+    .classList
+    .add(
+      "active"
+    );
+
+
+  document
+    .getElementById(
+      "stepTwoBar"
+    )
+    .classList
+    .remove(
+      "active"
+    );
 
 }
 
@@ -2315,11 +3085,18 @@ function resetStepOne(){
 function goToStepTwo(){
 
   const text =
-    document.getElementById("postText")
+    document
+      .getElementById(
+        "postText"
+      )
       .value
       .trim();
 
-  if(!text && !selectedMedia){
+
+  if(
+    !text &&
+    !selectedMedia
+  ){
 
     showToast(
       "Write something or add a photo first."
@@ -2329,34 +3106,87 @@ function goToStepTwo(){
 
   }
 
-  document.getElementById("stepOne")
-    .style.display = "none";
 
-  document.getElementById("stepTwo")
-    .classList.add("show");
+  document
+    .getElementById(
+      "stepOne"
+    )
+    .style
+    .display =
+    "none";
 
-  document.getElementById("stepOneBar")
-    .classList.remove("active");
 
-  document.getElementById("stepTwoBar")
-    .classList.add("active");
+  document
+    .getElementById(
+      "stepTwo"
+    )
+    .classList
+    .add(
+      "show"
+    );
+
+
+  document
+    .getElementById(
+      "stepOneBar"
+    )
+    .classList
+    .remove(
+      "active"
+    );
+
+
+  document
+    .getElementById(
+      "stepTwoBar"
+    )
+    .classList
+    .add(
+      "active"
+    );
 
 }
 
 
 function backToStepOne(){
 
-  document.getElementById("stepTwo")
-    .classList.remove("show");
+  document
+    .getElementById(
+      "stepTwo"
+    )
+    .classList
+    .remove(
+      "show"
+    );
 
-  document.getElementById("stepOne")
-    .style.display = "block";
 
-  document.getElementById("stepTwoBar")
-    .classList.remove("active");
+  document
+    .getElementById(
+      "stepOne"
+    )
+    .style
+    .display =
+    "block";
 
-  document.getElementById("stepOneBar")
-    .classList.add("active");
+
+  document
+    .getElementById(
+      "stepTwoBar"
+    )
+    .classList
+    .remove(
+      "active"
+    );
+
+
+  document
+    .getElementById(
+      "stepOneBar"
+    )
+    .classList
+    .add(
+      "active"
+    );
 
 }
 
@@ -2370,30 +3200,43 @@ function selectMedia(event){
   const file =
     event.target.files[0];
 
-  if(!file) return;
 
-  if(file.size > 8 * 1024 * 1024){
+  if(!file)
+    return;
+
+
+  if(
+    file.size >
+    8 * 1024 * 1024
+  ){
 
     showToast(
       "For testing use a file below 8 MB."
     );
 
-    event.target.value = "";
+    event.target.value =
+      "";
 
     return;
 
   }
 
+
   if(
-    !file.type.startsWith("image/") &&
-    !file.type.startsWith("video/")
+    !file.type.startsWith(
+      "image/"
+    ) &&
+    !file.type.startsWith(
+      "video/"
+    )
   ){
 
     showToast(
       "Please select an image or video."
     );
 
-    event.target.value = "";
+    event.target.value =
+      "";
 
     return;
 
@@ -2401,106 +3244,146 @@ function selectMedia(event){
 
 
   selectedMediaType =
-    file.type.startsWith("image/")
+    file.type.startsWith(
+      "image/"
+    )
     ? "image"
     : "video";
 
 
-  if(selectedMediaType === "image"){
+  const reader =
+    new FileReader();
 
-    const reader =
-      new FileReader();
 
-    reader.onload = function(){
+  reader.onload =
+    function(){
 
       selectedMedia =
         reader.result;
 
+
       const image =
-        document.getElementById("previewImage");
+        document.getElementById(
+          "previewImage"
+        );
+
 
       const video =
-        document.getElementById("previewVideo");
+        document.getElementById(
+          "previewVideo"
+        );
 
-      image.src =
-        selectedMedia;
 
-      image.style.display =
-        "block";
+      if(
+        selectedMediaType ===
+        "image"
+      ){
 
-      video.style.display =
-        "none";
+        image.src =
+          selectedMedia;
 
-      document.getElementById("mediaPreview")
-        .classList.add("show");
+        image.style.display =
+          "block";
+
+        video.style.display =
+          "none";
+
+      }else{
+
+        image.style.display =
+          "none";
+
+        video.src =
+          selectedMedia;
+
+        video.style.display =
+          "block";
+
+      }
+
+
+      document
+        .getElementById(
+          "mediaPreview"
+        )
+        .classList
+        .add(
+          "show"
+        );
+
 
       updateNextButton();
 
     };
 
-    reader.readAsDataURL(file);
 
-  }else{
-
-    const reader =
-      new FileReader();
-
-    reader.onload = function(){
-
-      selectedMedia =
-        reader.result;
-
-      const image =
-        document.getElementById("previewImage");
-
-      const video =
-        document.getElementById("previewVideo");
-
-      image.style.display =
-        "none";
-
-      video.src =
-        selectedMedia;
-
-      video.style.display =
-        "block";
-
-      document.getElementById("mediaPreview")
-        .classList.add("show");
-
-      updateNextButton();
-
-    };
-
-    reader.readAsDataURL(file);
-
-  }
+  reader.readAsDataURL(
+    file
+  );
 
 }
 
 
 function removeMedia(){
 
-  selectedMedia = "";
-  selectedMediaType = "";
+  selectedMedia =
+    "";
 
-  document.getElementById("previewImage")
-    .src = "";
+  selectedMediaType =
+    "";
 
-  document.getElementById("previewVideo")
-    .src = "";
 
-  document.getElementById("previewImage")
-    .style.display = "block";
+  document
+    .getElementById(
+      "previewImage"
+    )
+    .src =
+    "";
 
-  document.getElementById("previewVideo")
-    .style.display = "none";
 
-  document.getElementById("mediaPreview")
-    .classList.remove("show");
+  document
+    .getElementById(
+      "previewVideo"
+    )
+    .src =
+    "";
 
-  document.getElementById("mediaInput")
-    .value = "";
+
+  document
+    .getElementById(
+      "previewImage"
+    )
+    .style
+    .display =
+    "block";
+
+
+  document
+    .getElementById(
+      "previewVideo"
+    )
+    .style
+    .display =
+    "none";
+
+
+  document
+    .getElementById(
+      "mediaPreview"
+    )
+    .classList
+    .remove(
+      "show"
+    );
+
+
+  document
+    .getElementById(
+      "mediaInput"
+    )
+    .value =
+    "";
+
 
   updateNextButton();
 
@@ -2514,9 +3397,12 @@ function removeMedia(){
 function mention(){
 
   const area =
-    document.getElementById("postText");
+    document.getElementById(
+      "postText"
+    );
 
-  area.value += " @";
+  area.value +=
+    " @";
 
   area.focus();
 
@@ -2528,9 +3414,12 @@ function mention(){
 function hashtag(){
 
   const area =
-    document.getElementById("postText");
+    document.getElementById(
+      "postText"
+    );
 
-  area.value += " #";
+  area.value +=
+    " #";
 
   area.focus();
 
@@ -2542,7 +3431,9 @@ function hashtag(){
 function addFeeling(){
 
   const area =
-    document.getElementById("postText");
+    document.getElementById(
+      "postText"
+    );
 
   area.value +=
     " 😊 Feeling happy";
@@ -2557,7 +3448,9 @@ function addFeeling(){
 function addGIF(){
 
   const area =
-    document.getElementById("postText");
+    document.getElementById(
+      "postText"
+    );
 
   area.value +=
     " [GIF]";
@@ -2576,7 +3469,9 @@ function addGIF(){
 function addLiveInfo(){
 
   const area =
-    document.getElementById("postText");
+    document.getElementById(
+      "postText"
+    );
 
   area.value +=
     " 🔴 Live session";
@@ -2600,15 +3495,23 @@ function addBackground(){
 function addPoll(){
 
   const question =
-    prompt("Poll question");
+    prompt(
+      "Poll question"
+    );
+
 
   if(question){
 
     const area =
-      document.getElementById("postText");
+      document.getElementById(
+        "postText"
+      );
+
 
     area.value +=
-      "\n📊 Poll: " + question;
+      "\n📊 Poll: " +
+      question;
+
 
     area.focus();
 
@@ -2622,15 +3525,23 @@ function addPoll(){
 function addEvent(){
 
   const eventName =
-    prompt("Event name");
+    prompt(
+      "Event name"
+    );
+
 
   if(eventName){
 
     const area =
-      document.getElementById("postText");
+      document.getElementById(
+        "postText"
+      );
+
 
     area.value +=
-      "\n📅 Event: " + eventName;
+      "\n📅 Event: " +
+      eventName;
+
 
     area.focus();
 
@@ -2648,10 +3559,12 @@ function addLocation(){
       "Enter location"
     );
 
+
   if(value){
 
     selectedLocation =
       value.trim();
+
 
     showToast(
       "Location added"
@@ -2669,10 +3582,12 @@ function addGroup(){
       "Enter group name"
     );
 
+
   if(value){
 
     selectedGroup =
       value.trim();
+
 
     showToast(
       "Group added"
@@ -2690,10 +3605,12 @@ function addProduct(){
       "Product / Affiliate URL"
     );
 
+
   if(value){
 
     selectedProduct =
       value.trim();
+
 
     showToast(
       "Affiliate product added"
@@ -2704,17 +3621,17 @@ function addProduct(){
 }
 
 
-/* =====================================================
-   NEW QUICK OPTIONS
-===================================================== */
-
 function addMusic(){
 
   const area =
-    document.getElementById("postText");
+    document.getElementById(
+      "postText"
+    );
+
 
   area.value +=
     " 🎵 Music";
+
 
   area.focus();
 
@@ -2726,10 +3643,14 @@ function addMusic(){
 function addCollaborate(){
 
   const area =
-    document.getElementById("postText");
+    document.getElementById(
+      "postText"
+    );
+
 
   area.value +=
     " 👥 Collaborate";
+
 
   area.focus();
 
@@ -2740,12 +3661,39 @@ function addCollaborate(){
 
 function toggleExtraTools(){
 
-  document.getElementById("extraWriterTools")
-    .classList.toggle("show");
+  document
+    .getElementById(
+      "extraWriterTools"
+    )
+    .classList
+    .toggle(
+      "show"
+    );
 
 }
 
 
+function setAudiencePublic(){
+
+  const audience =
+    document.getElementById(
+      "audience"
+    );
+
+
+  if(audience){
+
+    audience.value =
+      "Public";
+
+  }
+
+
+  showToast(
+    "Audience set to Public"
+  );
+
+}
 
 
 /* =====================================================
@@ -2754,7 +3702,9 @@ function toggleExtraTools(){
 
 function toggle(button){
 
-  button.classList.toggle("on");
+  button.classList.toggle(
+    "on"
+  );
 
 }
 
@@ -2764,86 +3714,282 @@ function toggle(button){
 ===================================================== */
 
 async function publishPost(){
-  const text=document.getElementById("postText").value.trim();
 
-  if(!text && !selectedMedia){
-    showToast("Write something or add a photo first.");
+  const text =
+    document
+      .getElementById(
+        "postText"
+      )
+      .value
+      .trim();
+
+
+  if(
+    !text &&
+    !selectedMedia
+  ){
+
+    showToast(
+      "Write something or add a photo first."
+    );
+
     return;
+
   }
 
-  const audience=document.getElementById("audience").value;
-  const comments=document.getElementById("commentPermission").value;
+
+  const audience =
+    document.getElementById(
+      "audience"
+    ).value;
+
+
+  const comments =
+    document.getElementById(
+      "commentPermission"
+    ).value;
+
+
+  const currentUser =
+    window.zemivoCurrentUser;
+
+
+  if(!currentUser){
+
+    showToast(
+      "Please log in first."
+    );
+
+    return;
+
+  }
+
 
   if(editingId){
-    const post=posts.find(p=>p.id===editingId);
+
+    const post =
+      posts.find(
+        p =>
+          p.id ===
+          editingId
+      );
+
 
     if(post){
-      post.text=text;
-      post.media=selectedMedia;
-      post.mediaType=selectedMediaType;
-      post.location=selectedLocation;
-      post.group=selectedGroup;
-      post.product=selectedProduct;
-      post.audience=audience;
-      post.comments=comments;
+
+      post.text =
+        text;
+
+      post.media =
+        selectedMedia;
+
+      post.mediaType =
+        selectedMediaType;
+
+      post.location =
+        selectedLocation;
+
+      post.group =
+        selectedGroup;
+
+      post.product =
+        selectedProduct;
+
+      post.audience =
+        audience;
+
+      post.comments =
+        comments;
+
     }
 
-    showToast("Post updated");
-  }else{
-    const currentUser=window.zemivoCurrentUser;
 
-    const post={
-      id:createId(),
-      author:currentUser?.displayName||"Zemivo User",
-      authorId:currentUser?.uid||null,
-      text,
-      media:selectedMedia,
-      mediaType:selectedMediaType,
-      location:selectedLocation,
-      group:selectedGroup,
-      product:selectedProduct,
-      audience,
-      comments,
-      createdAt:Date.now(),
-      likes:0,
-      liked:false,
-      shares:0,
-      saved:false,
-      pinned:false,
-      commentsList:[],
-      archived:false,
-      trashed:false
+    save();
+
+    showToast(
+      "Post updated"
+    );
+
+  }else{
+
+    const post = {
+
+      id:
+        createId(),
+
+      author:
+        currentUser.displayName ||
+        "Zemivo User",
+
+      authorId:
+        currentUser.uid,
+
+      authorPhotoURL:
+        currentUser.photoURL ||
+        "",
+
+      text:
+        text,
+
+      /*
+       Local preview is kept for the
+       current browser only.
+       Permanent media storage will use
+       Firebase Storage.
+      */
+
+      media:
+        selectedMedia,
+
+      mediaType:
+        selectedMediaType,
+
+      mediaUrl:
+        "",
+
+      location:
+        selectedLocation,
+
+      group:
+        selectedGroup,
+
+      product:
+        selectedProduct,
+
+      audience:
+        audience,
+
+      comments:
+        comments,
+
+      createdAt:
+        Date.now(),
+
+      likes:
+        0,
+
+      liked:
+        false,
+
+      shares:
+        0,
+
+      saved:
+        false,
+
+      pinned:
+        false,
+
+      commentsList:
+        [],
+
+      archived:
+        false,
+
+      trashed:
+        false
+
     };
 
-    posts.unshift(post);
 
-    /* FIRESTORE: SAVE POST */
-    try{
-      if(window.zemivoDb && currentUser){
-        const { collection, doc, setDoc } =
-          await import("https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js");
+    posts.unshift(
+      post
+    );
 
-        await setDoc(
-          doc(collection(window.zemivoDb,"posts"),post.id),
+    save();
+
+
+    /*
+     Firestore post save.
+     The Security Foundation provides
+     the authenticated Firestore instance.
+    */
+
+    if(
+      window.zemivoSavePostToFirebase
+    ){
+
+      const saved =
+        await window.zemivoSavePostToFirebase(
           post
         );
 
-        showToast("Post shared and saved to Firestore");
+
+      if(saved){
+
+        showToast(
+          "Post shared"
+        );
+
       }else{
-        showToast("Post shared locally");
+
+        showToast(
+          "Post shared locally; cloud save failed"
+        );
+
       }
-    }catch(error){
-      console.error("Firestore post save error:",error);
-      showToast("Post shared, but Firestore save failed");
+
+    }else{
+
+      showToast(
+        "Post shared locally"
+      );
+
     }
+
   }
 
-  localStorage.removeItem(DRAFT_KEY);
-  save();
+
+  localStorage.removeItem(
+    DRAFT_KEY
+  );
+
+
   render();
 
-  document.getElementById("composerModal").classList.remove("show");
+
+  document
+    .getElementById(
+      "composerModal"
+    )
+    .classList
+    .remove(
+      "show"
+    );
+
 }
+
+
+/* =====================================================
+   MERGE FIREBASE + LOCAL
+===================================================== */
+
+function getAllPosts(){
+
+  const firebaseIds =
+    new Set(
+      firebasePosts.map(
+        p => p.id
+      )
+    );
+
+
+  const localOnly =
+    posts.filter(
+      p =>
+        !firebaseIds.has(
+          p.id
+        )
+    );
+
+
+  return [
+    ...firebasePosts,
+    ...localOnly
+  ];
+
+}
+
 
 /* =====================================================
    RENDER
@@ -2852,32 +3998,74 @@ async function publishPost(){
 function render(){
 
   const feed =
-    document.getElementById("feed");
+    document.getElementById(
+      "feed"
+    );
+
 
   const search =
-    document.getElementById("search")
+    document
+      .getElementById(
+        "search"
+      )
       .value
       .trim()
       .toLowerCase();
 
+
+  const all =
+    getAllPosts();
+
+
   const visible =
-    posts.filter(p => {
+    all
+      .filter(
+        function(p){
 
-      if(p.trashed || p.archived)
-        return false;
+          if(
+            p.trashed ||
+            p.archived
+          ){
 
-      const combined =
-        (
-          (p.text || "") +
-          " " +
-          (p.location || "") +
-          " " +
-          (p.group || "")
-        ).toLowerCase();
+            return false;
 
-      return combined.includes(search);
+          }
 
-    });
+
+          const combined =
+            (
+              (p.text || "") +
+              " " +
+              (p.location || "") +
+              " " +
+              (p.group || "") +
+              " " +
+              (p.author || "")
+            )
+              .toLowerCase();
+
+
+          return combined.includes(
+            search
+          );
+
+        }
+      )
+      .sort(
+        function(a,b){
+
+          return (
+            Number(
+              b.createdAt || 0
+            )
+            -
+            Number(
+              a.createdAt || 0
+            )
+          );
+
+        }
+      );
 
 
   if(!visible.length){
@@ -2890,7 +4078,9 @@ function render(){
           📝
         </div>
 
-        <h3>No posts yet</h3>
+        <h3>
+          No posts yet
+        </h3>
 
         <p>
           Create your first Zemivo post.
@@ -2907,7 +4097,9 @@ function render(){
 
   feed.innerHTML =
     visible
-      .map(postHTML)
+      .map(
+        postHTML
+      )
       .join("");
 
 }
@@ -2917,22 +4109,33 @@ function render(){
    REPLY HTML
 ===================================================== */
 
-function replyHTML(reply,postId,path){
+function replyHTML(
+  reply,
+  postId,
+  path
+){
 
   const replies =
     (reply.replies || [])
       .map(
-        (child,index) =>
-          replyHTML(
+        function(child,index){
+
+          return replyHTML(
             child,
             postId,
-            path + "-" + index
-          )
+            path +
+            "-" +
+            index
+          );
+
+        }
       )
       .join("");
 
+
   const likes =
     reply.likes || 0;
+
 
   return `
 
@@ -2941,7 +4144,10 @@ function replyHTML(reply,postId,path){
       <div class="avatar">
 
         ${escapeHTML(
-          (reply.name || "Z")
+          (
+            reply.name ||
+            "Z"
+          )
             .charAt(0)
             .toUpperCase()
         )}
@@ -2953,12 +4159,17 @@ function replyHTML(reply,postId,path){
         <div class="comment-bubble">
 
           <b>
-            ${escapeHTML(reply.name || "Zemivo User")}
+            ${escapeHTML(
+              reply.name ||
+              "Zemivo User"
+            )}
           </b>
 
           <br>
 
-          ${escapeHTML(reply.text)}
+          ${escapeHTML(
+            reply.text
+          )}
 
         </div>
 
@@ -2966,18 +4177,42 @@ function replyHTML(reply,postId,path){
         <div class="reply-actions">
 
           <button
-            class="reply-action ${reply.liked ? "active" : ""}"
-            onclick="likeReply('${postId}','${path}')">
+            class="reply-action ${
+              reply.liked
+              ? "active"
+              : ""
+            }"
+            onclick="
+              likeReply(
+                '${postId}',
+                '${path}'
+              )
+            ">
 
-            👍 ${reply.liked ? "Unlike" : "Like"}
-            ${likes ? "(" + likes + ")" : ""}
+            👍
+            ${
+              reply.liked
+              ? "Unlike"
+              : "Like"
+            }
+
+            ${
+              likes
+              ? "(" + likes + ")"
+              : ""
+            }
 
           </button>
 
 
           <button
             class="reply-action"
-            onclick="showReplyBox('${postId}','${path}')">
+            onclick="
+              showReplyBox(
+                '${postId}',
+                '${path}'
+              )
+            ">
 
             💬 Reply
 
@@ -2986,7 +4221,12 @@ function replyHTML(reply,postId,path){
 
           <button
             class="reply-action"
-            onclick="editReply('${postId}','${path}')">
+            onclick="
+              editReply(
+                '${postId}',
+                '${path}'
+              )
+            ">
 
             ✏️ Edit
 
@@ -2995,7 +4235,12 @@ function replyHTML(reply,postId,path){
 
           <button
             class="reply-action"
-            onclick="deleteReply('${postId}','${path}')">
+            onclick="
+              deleteReply(
+                '${postId}',
+                '${path}'
+              )
+            ">
 
             🗑️ Delete
 
@@ -3005,20 +4250,35 @@ function replyHTML(reply,postId,path){
 
 
         <div
-          id="reply-edit-${postId}-${path}"
+          id="
+            reply-edit-${postId}-${path}
+          "
           class="reply-edit-box">
 
           <input
-            id="reply-edit-input-${postId}-${path}"
-            value="${escapeHTML(reply.text)}"
+            id="
+              reply-edit-input-${postId}-${path}
+            "
+            value="${escapeHTML(
+              reply.text
+            )}"
             onkeydown="
               if(event.key==='Enter'){
-                saveReplyEdit('${postId}','${path}')
+                saveReplyEdit(
+                  '${postId}',
+                  '${path}'
+                )
               }
-            ">
+            "
+          >
 
           <button
-            onclick="saveReplyEdit('${postId}','${path}')">
+            onclick="
+              saveReplyEdit(
+                '${postId}',
+                '${path}'
+              )
+            ">
 
             Save
 
@@ -3028,20 +4288,33 @@ function replyHTML(reply,postId,path){
 
 
         <div
-          id="reply-box-${postId}-${path}"
+          id="
+            reply-box-${postId}-${path}
+          "
           class="reply-box">
 
           <input
-            id="reply-input-${postId}-${path}"
+            id="
+              reply-input-${postId}-${path}
+            "
             placeholder="Write a reply..."
             onkeydown="
               if(event.key==='Enter'){
-                addReply('${postId}','${path}')
+                addReply(
+                  '${postId}',
+                  '${path}'
+                )
               }
-            ">
+            "
+          >
 
           <button
-            onclick="addReply('${postId}','${path}')">
+            onclick="
+              addReply(
+                '${postId}',
+                '${path}'
+              )
+            ">
 
             Reply
 
@@ -3064,23 +4337,35 @@ function replyHTML(reply,postId,path){
 
 }
 
+
 /* =====================================================
    COMMENT HTML
 ===================================================== */
 
-function commentHTML(comment,index,postId){
+function commentHTML(
+  comment,
+  index,
+  postId
+){
 
   const replies =
-  (comment.replies || [])
-    .map(
-      (reply,replyIndex) =>
-        replyHTML(
-          reply,
-          postId,
-          index + "-" + replyIndex
-        )
-    )
-    .join("");
+    (comment.replies || [])
+      .map(
+        function(reply,replyIndex){
+
+          return replyHTML(
+            reply,
+            postId,
+            index +
+            "-" +
+            replyIndex
+          );
+
+        }
+      )
+      .join("");
+
+
   return `
 
     <div class="comment">
@@ -3088,7 +4373,10 @@ function commentHTML(comment,index,postId){
       <div class="avatar">
 
         ${escapeHTML(
-          (comment.name || "Z")
+          (
+            comment.name ||
+            "Z"
+          )
             .charAt(0)
             .toUpperCase()
         )}
@@ -3100,12 +4388,17 @@ function commentHTML(comment,index,postId){
         <div class="comment-bubble">
 
           <b>
-            ${escapeHTML(comment.name)}
+            ${escapeHTML(
+              comment.name ||
+              "Zemivo User"
+            )}
           </b>
 
           <br>
 
-          ${escapeHTML(comment.text)}
+          ${escapeHTML(
+            comment.text
+          )}
 
         </div>
 
@@ -3114,7 +4407,12 @@ function commentHTML(comment,index,postId){
 
           <button
             class="comment-action"
-            onclick="showReplyBox('${postId}',${index})">
+            onclick="
+              showReplyBox(
+                '${postId}',
+                '${index}'
+              )
+            ">
 
             Reply
 
@@ -3124,20 +4422,33 @@ function commentHTML(comment,index,postId){
 
 
         <div
-          id="reply-box-${postId}-${index}"
+          id="
+            reply-box-${postId}-${index}
+          "
           class="reply-box">
 
           <input
-            id="reply-input-${postId}-${index}"
+            id="
+              reply-input-${postId}-${index}
+            "
             placeholder="Write a reply..."
             onkeydown="
               if(event.key==='Enter'){
-                addReply('${postId}',${index})
+                addReply(
+                  '${postId}',
+                  '${index}'
+                )
               }
-            ">
+            "
+          >
 
           <button
-            onclick="addReply('${postId}',${index})">
+            onclick="
+              addReply(
+                '${postId}',
+                '${index}'
+              )
+            ">
 
             Reply
 
@@ -3165,37 +4476,49 @@ function commentHTML(comment,index,postId){
    POST HTML
 ===================================================== */
 
-function postHTML(post){
+function postHTML(
+  post
+){
 
   const comments =
     (post.commentsList || [])
       .map(
-        (comment,index) =>
-          commentHTML(
+        function(comment,index){
+
+          return commentHTML(
             comment,
             index,
             post.id
-          )
+          );
+
+        }
       )
       .join("");
 
 
-  let extras = "";
+  let extras =
+    "";
+
 
   if(post.location){
 
     extras +=
       "📍 " +
-      escapeHTML(post.location) +
+      escapeHTML(
+        post.location
+      ) +
       " ";
 
   }
+
 
   if(post.group){
 
     extras +=
       " · 👥 " +
-      escapeHTML(post.group);
+      escapeHTML(
+        post.group
+      );
 
   }
 
@@ -3208,18 +4531,31 @@ function postHTML(post){
   }
 
 
-  let mediaHTML = "";
+  let mediaHTML =
+    "";
 
-  if(post.media){
 
-    if(post.mediaType === "video"){
+  const mediaSource =
+    post.mediaUrl ||
+    post.media ||
+    "";
+
+
+  if(mediaSource){
+
+    if(
+      post.mediaType ===
+      "video"
+    ){
 
       mediaHTML = `
 
         <video
           class="post-video"
           controls
-          src="${post.media}">
+          src="${escapeHTML(
+            mediaSource
+          )}">
         </video>
 
       `;
@@ -3230,7 +4566,9 @@ function postHTML(post){
 
         <img
           class="post-image"
-          src="${post.media}"
+          src="${escapeHTML(
+            mediaSource
+          )}"
           alt="Zemivo post">
 
       `;
@@ -3240,33 +4578,74 @@ function postHTML(post){
   }
 
 
+  const authorInitial =
+    (
+      post.author ||
+      "Z"
+    )
+      .charAt(0)
+      .toUpperCase();
+
+
+  const authorAvatar =
+    post.authorPhotoURL
+    ? `
+      <div class="avatar">
+        <img
+          src="${escapeHTML(
+            post.authorPhotoURL
+          )}"
+          alt="">
+      </div>
+    `
+    : `
+      <div class="avatar">
+        ${escapeHTML(
+          authorInitial
+        )}
+      </div>
+    `;
+
+
   return `
 
     <article
       class="post card"
-      id="post-${post.id}">
+      id="post-${escapeHTML(
+        post.id
+      )}">
 
       <div class="post-head">
 
-        <div class="avatar">
-          Z
-        </div>
+        ${authorAvatar}
 
         <div class="post-info">
 
           <div class="post-name">
-            ${escapeHTML(post.author)}
+
+            ${escapeHTML(
+              post.author ||
+              "Zemivo User"
+            )}
+
           </div>
 
           <div class="post-time">
 
-            ${new Date(post.createdAt)
-              .toLocaleString()}
+            ${
+              post.createdAt
+              ? new Date(
+                  post.createdAt
+                )
+                .toLocaleString()
+              : "Just now"
+            }
 
             ·
 
             ${escapeHTML(
-              post.audience || "Public"
+              post.audience ||
+              "Public"
             )}
 
           </div>
@@ -3276,7 +4655,14 @@ function postHTML(post){
 
         <button
           class="more-btn"
-          onclick="openPostMenu('${post.id}',event)">
+          onclick="
+            openPostMenu(
+              '${escapeHTML(
+                post.id
+              )}',
+              event
+            )
+          ">
 
           ⋯
 
@@ -3291,7 +4677,9 @@ function postHTML(post){
 
           <div class="post-text">
 
-            ${escapeHTML(post.text)}
+            ${escapeHTML(
+              post.text
+            )}
 
             ${
               extras
@@ -3318,17 +4706,24 @@ function postHTML(post){
       <div class="stats">
 
         <span>
-          👍 ${post.likes || 0} Likes
+          👍
+          ${post.likes || 0}
+          Likes
         </span>
 
         <span>
 
-          ${(post.commentsList || []).length}
+          ${
+            (post.commentsList || [])
+              .length
+          }
           Comments
 
           ·
 
-          ${post.shares || 0}
+          ${
+            post.shares || 0
+          }
           Shares
 
         </span>
@@ -3339,8 +4734,18 @@ function postHTML(post){
       <div class="post-actions">
 
         <button
-          class="${post.liked ? "active" : ""}"
-          onclick="likePost('${post.id}')">
+          class="${
+            post.liked
+            ? "active"
+            : ""
+          }"
+          onclick="
+            likePost(
+              '${escapeHTML(
+                post.id
+              )}'
+            )
+          ">
 
           👍 Like
 
@@ -3348,7 +4753,13 @@ function postHTML(post){
 
 
         <button
-          onclick="focusComment('${post.id}')">
+          onclick="
+            focusComment(
+              '${escapeHTML(
+                post.id
+              )}'
+            )
+          ">
 
           💬 Comment
 
@@ -3356,7 +4767,13 @@ function postHTML(post){
 
 
         <button
-          onclick="sharePost('${post.id}')">
+          onclick="
+            sharePost(
+              '${escapeHTML(
+                post.id
+              )}'
+            )
+          ">
 
           ↗ Share
 
@@ -3364,8 +4781,18 @@ function postHTML(post){
 
 
         <button
-          class="${post.saved ? "active" : ""}"
-          onclick="quickSavePost('${post.id}')">
+          class="${
+            post.saved
+            ? "active"
+            : ""
+          }"
+          onclick="
+            quickSavePost(
+              '${escapeHTML(
+                post.id
+              )}'
+            )
+          ">
 
           🔖 Save
 
@@ -3380,22 +4807,38 @@ function postHTML(post){
 
 
         ${
-          post.comments !== "Off"
+          post.comments !==
+          "Off"
           ? `
 
             <div class="comment-box">
 
               <input
-                id="comment-${post.id}"
+                id="
+                  comment-${escapeHTML(
+                    post.id
+                  )}
+                "
                 placeholder="Write a comment..."
                 onkeydown="
                   if(event.key==='Enter'){
-                    addComment('${post.id}')
+                    addComment(
+                      '${escapeHTML(
+                        post.id
+                      )}'
+                    )
                   }
-                ">
+                "
+              >
 
               <button
-                onclick="addComment('${post.id}')">
+                onclick="
+                  addComment(
+                    '${escapeHTML(
+                      post.id
+                    )}'
+                  )
+                ">
 
                 Send
 
@@ -3423,27 +4866,60 @@ function postHTML(post){
 
 
 /* =====================================================
+   FIND LOCAL POST
+===================================================== */
+
+function getLocalPost(
+  id
+){
+
+  return posts.find(
+    p =>
+      p.id === id
+  );
+
+}
+
+
+/* =====================================================
    LIKE
 ===================================================== */
 
-function likePost(id){
+function likePost(
+  id
+){
 
   const post =
-    posts.find(
-      p => p.id === id
+    getLocalPost(id);
+
+
+  if(!post){
+
+    showToast(
+      "This cloud post will use backend reactions."
     );
 
-  if(!post) return;
+    return;
+
+  }
+
 
   post.liked =
     !post.liked;
 
+
   post.likes =
     Math.max(
       0,
-      (post.likes || 0) +
-      (post.liked ? 1 : -1)
+      (post.likes || 0)
+      +
+      (
+        post.liked
+        ? 1
+        : -1
+      )
     );
+
 
   save();
 
@@ -3456,21 +4932,33 @@ function likePost(id){
    SAVE
 ===================================================== */
 
-function quickSavePost(id){
+function quickSavePost(
+  id
+){
 
   const post =
-    posts.find(
-      p => p.id === id
+    getLocalPost(id);
+
+
+  if(!post){
+
+    showToast(
+      "Post saved status is synced in the next data layer."
     );
 
-  if(!post) return;
+    return;
+
+  }
+
 
   post.saved =
     !post.saved;
 
+
   save();
 
   render();
+
 
   showToast(
     post.saved
@@ -3485,12 +4973,16 @@ function quickSavePost(id){
    COMMENT
 ===================================================== */
 
-function focusComment(id){
+function focusComment(
+  id
+){
 
   const input =
     document.getElementById(
-      "comment-" + id
+      "comment-" +
+      id
     );
+
 
   if(input){
 
@@ -3501,41 +4993,63 @@ function focusComment(id){
 }
 
 
-function addComment(id){
+function addComment(
+  id
+){
 
   const input =
     document.getElementById(
-      "comment-" + id
+      "comment-" +
+      id
     );
 
+
   const post =
-    posts.find(
-      p => p.id === id
-    );
+    getLocalPost(id);
+
 
   if(!post || !input)
     return;
 
+
   const text =
     input.value.trim();
+
 
   if(!text)
     return;
 
-  if(!post.commentsList)
-    post.commentsList = [];
+
+  if(!post.commentsList){
+
+    post.commentsList =
+      [];
+
+  }
+
+
+  const user =
+    window.zemivoCurrentUser;
+
 
   post.commentsList.push({
 
-    name:"Zemivo User",
+    name:
+      user?.displayName ||
+      "Zemivo User",
 
-    text:text,
+    text:
+      text,
 
-    replies:[]
+    replies:
+      []
 
   });
 
-  input.value = "";
+
+  input.value =
+    "";
+
 
   save();
 
@@ -3548,9 +5062,10 @@ function addComment(id){
    REPLY BOX
 ===================================================== */
 
-
-
-function showReplyBox(postId,path){
+function showReplyBox(
+  postId,
+  path
+){
 
   const box =
     document.getElementById(
@@ -3560,12 +5075,21 @@ function showReplyBox(postId,path){
       path
     );
 
+
   if(!box)
     return;
 
-  box.classList.toggle("show");
 
-  if(box.classList.contains("show")){
+  box.classList.toggle(
+    "show"
+  );
+
+
+  if(
+    box.classList.contains(
+      "show"
+    )
+  ){
 
     const input =
       document.getElementById(
@@ -3575,53 +5099,84 @@ function showReplyBox(postId,path){
         path
       );
 
-    if(input)
+
+    if(input){
+
       input.focus();
+
+    }
 
   }
 
 }
 
 
-function addReply(postId,path){
+function addReply(
+  postId,
+  path
+){
 
   const post =
-    posts.find(
-      p => p.id === postId
+    getLocalPost(
+      postId
     );
+
 
   if(!post)
     return;
 
-  if(!post.commentsList)
-    post.commentsList = [];
+
+  if(!post.commentsList){
+
+    post.commentsList =
+      [];
+
+  }
+
 
   const parts =
     String(path)
       .split("-")
       .map(Number);
 
+
   const commentIndex =
     parts.shift();
 
+
   let parent =
-    post.commentsList[commentIndex];
+    post.commentsList[
+      commentIndex
+    ];
+
 
   if(!parent)
     return;
 
-  for(const index of parts){
 
-    if(!parent.replies)
-      parent.replies = [];
+  for(
+    const index of parts
+  ){
+
+    if(!parent.replies){
+
+      parent.replies =
+        [];
+
+    }
+
 
     parent =
-      parent.replies[index];
+      parent.replies[
+        index
+      ];
+
 
     if(!parent)
       return;
 
   }
+
 
   const input =
     document.getElementById(
@@ -3631,27 +5186,55 @@ function addReply(postId,path){
       path
     );
 
+
   if(!input)
     return;
+
 
   const text =
     input.value.trim();
 
+
   if(!text)
     return;
 
-  if(!parent.replies)
-    parent.replies = [];
+
+  if(!parent.replies){
+
+    parent.replies =
+      [];
+
+  }
+
+
+  const user =
+    window.zemivoCurrentUser;
+
 
   parent.replies.push({
-  name:"Zemivo User",
-  text:text,
-  replies:[],
-  likes:0,
-  liked:false
-});
 
-  input.value = "";
+    name:
+      user?.displayName ||
+      "Zemivo User",
+
+    text:
+      text,
+
+    replies:
+      [],
+
+    likes:
+      0,
+
+    liked:
+      false
+
+  });
+
+
+  input.value =
+    "";
+
 
   save();
 
@@ -3662,53 +5245,80 @@ function addReply(postId,path){
   );
 
 }
+
+
 /* =====================================================
-   REPLY ACTIONS
+   GET REPLY
 ===================================================== */
 
-function getReplyByPath(postId,path){
+function getReplyByPath(
+  postId,
+  path
+){
 
   const post =
-    posts.find(
-      p => p.id === postId
+    getLocalPost(
+      postId
     );
+
 
   if(!post)
     return null;
+
 
   const parts =
     String(path)
       .split("-")
       .map(Number);
 
+
   const commentIndex =
     parts.shift();
 
+
   let reply =
-    post.commentsList?.[commentIndex];
+    post.commentsList?.[
+      commentIndex
+    ];
+
 
   if(!reply)
     return null;
 
-  for(const index of parts){
+
+  for(
+    const index of parts
+  ){
 
     if(!reply.replies)
       return null;
 
+
     reply =
-      reply.replies[index];
+      reply.replies[
+        index
+      ];
+
 
     if(!reply)
       return null;
 
   }
 
+
   return reply;
 
 }
 
 
-function likeReply(postId,path){
+/* =====================================================
+   LIKE REPLY
+===================================================== */
+
+function likeReply(
+  postId,
+  path
+){
 
   const reply =
     getReplyByPath(
@@ -3716,24 +5326,48 @@ function likeReply(postId,path){
       path
     );
 
+
   if(!reply)
     return;
 
-  if(typeof reply.likes !== "number")
-    reply.likes = 0;
 
-  if(typeof reply.liked !== "boolean")
-    reply.liked = false;
+  if(
+    typeof reply.likes !==
+    "number"
+  ){
+
+    reply.likes =
+      0;
+
+  }
+
+
+  if(
+    typeof reply.liked !==
+    "boolean"
+  ){
+
+    reply.liked =
+      false;
+
+  }
+
 
   reply.liked =
     !reply.liked;
+
 
   reply.likes =
     Math.max(
       0,
       reply.likes +
-      (reply.liked ? 1 : -1)
+      (
+        reply.liked
+        ? 1
+        : -1
+      )
     );
+
 
   save();
 
@@ -3742,7 +5376,14 @@ function likeReply(postId,path){
 }
 
 
-function editReply(postId,path){
+/* =====================================================
+   EDIT REPLY
+===================================================== */
+
+function editReply(
+  postId,
+  path
+){
 
   const box =
     document.getElementById(
@@ -3752,12 +5393,21 @@ function editReply(postId,path){
       path
     );
 
+
   if(!box)
     return;
 
-  box.classList.toggle("show");
 
-  if(box.classList.contains("show")){
+  box.classList.toggle(
+    "show"
+  );
+
+
+  if(
+    box.classList.contains(
+      "show"
+    )
+  ){
 
     const input =
       document.getElementById(
@@ -3767,9 +5417,11 @@ function editReply(postId,path){
         path
       );
 
+
     if(input){
 
       input.focus();
+
       input.select();
 
     }
@@ -3779,13 +5431,17 @@ function editReply(postId,path){
 }
 
 
-function saveReplyEdit(postId,path){
+function saveReplyEdit(
+  postId,
+  path
+){
 
   const reply =
     getReplyByPath(
       postId,
       path
     );
+
 
   const input =
     document.getElementById(
@@ -3795,21 +5451,27 @@ function saveReplyEdit(postId,path){
       path
     );
 
+
   if(!reply || !input)
     return;
+
 
   const text =
     input.value.trim();
 
+
   if(!text)
     return;
+
 
   reply.text =
     text;
 
+
   save();
 
   render();
+
 
   showToast(
     "Reply updated"
@@ -3818,76 +5480,120 @@ function saveReplyEdit(postId,path){
 }
 
 
-  function deleteReply(postId,path){
+/* =====================================================
+   DELETE REPLY
+===================================================== */
+
+function deleteReply(
+  postId,
+  path
+){
 
   const post =
-    posts.find(
-      p => p.id === postId
+    getLocalPost(
+      postId
     );
+
 
   if(!post)
     return;
+
 
   const parts =
     String(path)
       .split("-")
       .map(Number);
 
+
   const commentIndex =
     parts.shift();
 
+
   const comment =
-    post.commentsList?.[commentIndex];
+    post.commentsList?.[
+      commentIndex
+    ];
+
 
   if(!comment)
     return;
 
+
   if(!parts.length)
     return;
+
 
   let parent =
     comment;
 
-  for(let i=0;i<parts.length-1;i++){
+
+  for(
+    let i=0;
+    i<parts.length-1;
+    i++
+  ){
 
     const index =
       parts[i];
 
+
     if(
       !parent.replies ||
       !parent.replies[index]
-    )
+    ){
+
       return;
 
+    }
+
+
     parent =
-      parent.replies[index];
+      parent.replies[
+        index
+      ];
 
   }
 
+
   const targetIndex =
-    parts[parts.length-1];
+    parts[
+      parts.length-1
+    ];
+
 
   if(
     !parent.replies ||
-    !parent.replies[targetIndex]
-  )
+    !parent.replies[
+      targetIndex
+    ]
+  ){
+
     return;
+
+  }
+
 
   if(
     !confirm(
       "Delete this reply?"
     )
-  )
+  ){
+
     return;
+
+  }
+
 
   parent.replies.splice(
     targetIndex,
     1
   );
 
+
   save();
 
   render();
+
 
   showToast(
     "Reply deleted"
@@ -3896,49 +5602,151 @@ function saveReplyEdit(postId,path){
 }
 
 
+/* =====================================================
+   SHARE
+===================================================== */
+
+function sharePost(
+  id
+){
+
+  const link =
+    location.href
+    .split("#")[0]
+    +
+    "#post-"
+    +
+    id;
+
+
+  if(
+    navigator.share
+  ){
+
+    navigator.share({
+
+      title:
+        "Zemivo Post",
+
+      text:
+        "View this Zemivo post",
+
+      url:
+        link
+
+    })
+    .catch(
+      function(){}
+    );
+
+    return;
+
+  }
+
+
+  if(
+    navigator.clipboard
+  ){
+
+    navigator.clipboard
+      .writeText(
+        link
+      )
+      .then(
+        function(){
+
+          showToast(
+            "Post link copied"
+          );
+
+        }
+      );
+
+    return;
+
+  }
+
+
+  showToast(
+    "Post link ready"
+  );
+
+}
+
 
 /* =====================================================
    THREE DOT MENU
 ===================================================== */
 
-function openPostMenu(id,event){
+function openPostMenu(
+  id,
+  event
+){
 
   event.stopPropagation();
 
-  selectedPostId = id;
+
+  selectedPostId =
+    id;
+
 
   const menu =
-    document.getElementById("postMenu");
+    document.getElementById(
+      "postMenu"
+    );
+
 
   let left =
     event.clientX;
 
+
   let top =
     event.clientY;
 
-  if(left + 270 >
-     window.innerWidth){
+
+  if(
+    left + 270 >
+    window.innerWidth
+  ){
 
     left =
-      window.innerWidth - 278;
+      window.innerWidth -
+      278;
 
   }
 
-  if(top + 450 >
-     window.innerHeight){
+
+  if(
+    top + 450 >
+    window.innerHeight
+  ){
 
     top =
-      window.innerHeight - 458;
+      window.innerHeight -
+      458;
 
   }
 
+
   menu.style.left =
-    Math.max(8,left) + "px";
+    Math.max(
+      8,
+      left
+    ) +
+    "px";
+
 
   menu.style.top =
-    Math.max(8,top) + "px";
+    Math.max(
+      8,
+      top
+    ) +
+    "px";
 
-  menu.classList.add("show");
+
+  menu.classList.add(
+    "show"
+  );
 
 }
 
@@ -3948,14 +5756,23 @@ document.addEventListener(
   function(event){
 
     const menu =
-      document.getElementById("postMenu");
+      document.getElementById(
+        "postMenu"
+      );
+
 
     if(
-      !event.target.closest("#postMenu") &&
-      !event.target.closest(".more-btn")
+      !event.target.closest(
+        "#postMenu"
+      ) &&
+      !event.target.closest(
+        ".more-btn"
+      )
     ){
 
-      menu.classList.remove("show");
+      menu.classList.remove(
+        "show"
+      );
 
     }
 
@@ -3964,13 +5781,13 @@ document.addEventListener(
 
 
 /* =====================================================
-   MENU ACTIONS
+   SELECTED POST
 ===================================================== */
 
 function getSelectedPost(){
 
-  return posts.find(
-    p => p.id === selectedPostId
+  return getLocalPost(
+    selectedPostId
   );
 
 }
@@ -3978,8 +5795,14 @@ function getSelectedPost(){
 
 function closeMenu(){
 
-  document.getElementById("postMenu")
-    .classList.remove("show");
+  document
+    .getElementById(
+      "postMenu"
+    )
+    .classList
+    .remove(
+      "show"
+    );
 
 }
 
@@ -3993,69 +5816,127 @@ function editPost(){
   const post =
     getSelectedPost();
 
-  if(!post) return;
+
+  if(!post)
+    return;
+
 
   editingId =
     post.id;
 
+
   selectedMedia =
     post.media || "";
+
 
   selectedMediaType =
     post.mediaType || "";
 
+
   selectedLocation =
     post.location || "";
+
 
   selectedGroup =
     post.group || "";
 
+
   selectedProduct =
     post.product || "";
 
-  document.getElementById("postText")
+
+  document
+    .getElementById(
+      "postText"
+    )
     .value =
     post.text || "";
 
-  document.getElementById("audience")
-    .value =
-    post.audience || "Public";
 
-  document.getElementById("commentPermission")
+  document
+    .getElementById(
+      "audience"
+    )
     .value =
-    post.comments || "Public";
+    post.audience ||
+    "Public";
+
+
+  document
+    .getElementById(
+      "commentPermission"
+    )
+    .value =
+    post.comments ||
+    "Public";
 
 
   if(selectedMedia){
 
-    document.getElementById("mediaPreview")
-      .classList.add("show");
+    document
+      .getElementById(
+        "mediaPreview"
+      )
+      .classList
+      .add(
+        "show"
+      );
 
-    if(selectedMediaType === "video"){
 
-      document.getElementById("previewImage")
-        .style.display =
+    if(
+      selectedMediaType ===
+      "video"
+    ){
+
+      document
+        .getElementById(
+          "previewImage"
+        )
+        .style
+        .display =
         "none";
 
-      document.getElementById("previewVideo")
-        .style.display =
+
+      document
+        .getElementById(
+          "previewVideo"
+        )
+        .style
+        .display =
         "block";
 
-      document.getElementById("previewVideo")
+
+      document
+        .getElementById(
+          "previewVideo"
+        )
         .src =
         selectedMedia;
 
     }else{
 
-      document.getElementById("previewImage")
-        .style.display =
+      document
+        .getElementById(
+          "previewImage"
+        )
+        .style
+        .display =
         "block";
 
-      document.getElementById("previewVideo")
-        .style.display =
+
+      document
+        .getElementById(
+          "previewVideo"
+        )
+        .style
+        .display =
         "none";
 
-      document.getElementById("previewImage")
+
+      document
+        .getElementById(
+          "previewImage"
+        )
         .src =
         selectedMedia;
 
@@ -4068,8 +5949,16 @@ function editPost(){
 
   updateNextButton();
 
-  document.getElementById("composerModal")
-    .classList.add("show");
+
+  document
+    .getElementById(
+      "composerModal"
+    )
+    .classList
+    .add(
+      "show"
+    );
+
 
   closeMenu();
 
@@ -4085,20 +5974,26 @@ function savePost(){
   const post =
     getSelectedPost();
 
-  if(!post) return;
+
+  if(!post)
+    return;
+
 
   post.saved =
     !post.saved;
 
+
   save();
 
   render();
+
 
   showToast(
     post.saved
     ? "Post saved"
     : "Post removed from saved"
   );
+
 
   closeMenu();
 
@@ -4114,18 +6009,24 @@ function pinPost(){
   const post =
     getSelectedPost();
 
-  if(!post) return;
+
+  if(!post)
+    return;
+
 
   post.pinned =
     !post.pinned;
 
+
   save();
+
 
   showToast(
     post.pinned
     ? "Post pinned"
     : "Post unpinned"
   );
+
 
   closeMenu();
 
@@ -4139,25 +6040,34 @@ function pinPost(){
 function copyPostLink(){
 
   const link =
-    location.href.split("#")[0]
+    location.href
+      .split("#")[0]
     +
     "#post-"
     +
     selectedPostId;
 
-  if(navigator.clipboard){
+
+  if(
+    navigator.clipboard
+  ){
 
     navigator.clipboard
-      .writeText(link)
-      .then(() => {
+      .writeText(
+        link
+      )
+      .then(
+        function(){
 
-        showToast(
-          "Post link copied"
-        );
+          showToast(
+            "Post link copied"
+          );
 
-      });
+        }
+      );
 
   }
+
 
   closeMenu();
 
@@ -4173,24 +6083,31 @@ function changePrivacy(){
   const post =
     getSelectedPost();
 
-  if(!post) return;
+
+  if(!post)
+    return;
+
 
   const value =
     prompt(
       "Public / Friends / Only me",
-      post.audience || "Public"
+      post.audience ||
+      "Public"
     );
+
 
   if(value){
 
     post.audience =
       value;
 
+
     save();
 
     render();
 
   }
+
 
   closeMenu();
 
@@ -4198,7 +6115,7 @@ function changePrivacy(){
 
 
 /* =====================================================
-   COMMENT SETTINGS
+   COMMENTS SETTINGS
 ===================================================== */
 
 function changeComments(){
@@ -4206,24 +6123,31 @@ function changeComments(){
   const post =
     getSelectedPost();
 
-  if(!post) return;
+
+  if(!post)
+    return;
+
 
   const value =
     prompt(
       "Public / Friends / Off",
-      post.comments || "Public"
+      post.comments ||
+      "Public"
     );
+
 
   if(value){
 
     post.comments =
       value;
 
+
     save();
 
     render();
 
   }
+
 
   closeMenu();
 
@@ -4239,24 +6163,31 @@ function manageProduct(){
   const post =
     getSelectedPost();
 
-  if(!post) return;
+
+  if(!post)
+    return;
+
 
   const value =
     prompt(
       "Affiliate product URL",
-      post.product || ""
+      post.product ||
+      ""
     );
+
 
   if(value !== null){
 
     post.product =
       value.trim();
 
+
     save();
 
     render();
 
   }
+
 
   closeMenu();
 
@@ -4272,18 +6203,24 @@ function archivePost(){
   const post =
     getSelectedPost();
 
-  if(!post) return;
+
+  if(!post)
+    return;
+
 
   post.archived =
     true;
+
 
   save();
 
   render();
 
+
   showToast(
     "Post moved to archive"
   );
+
 
   closeMenu();
 
@@ -4300,6 +6237,7 @@ function togglePostNotifications(){
     "Post notifications updated"
   );
 
+
   closeMenu();
 
 }
@@ -4315,6 +6253,7 @@ function reportPost(){
     "Report submitted for review"
   );
 
+
   closeMenu();
 
 }
@@ -4324,31 +6263,56 @@ function reportPost(){
    DELETE
 ===================================================== */
 
-function deletePost(){
+async function deletePost(){
 
   const post =
     getSelectedPost();
 
-  if(!post) return;
+
+  if(!post)
+    return;
+
 
   if(
-    confirm(
+    !confirm(
       "Move this post to trash?"
     )
   ){
 
-    post.trashed =
-      true;
+    closeMenu();
 
-    save();
+    return;
 
-    render();
+  }
 
-    showToast(
-      "Post moved to trash"
+
+  post.trashed =
+    true;
+
+
+  save();
+
+  render();
+
+
+  if(
+    window.zemivoCurrentUser &&
+    post.authorId ===
+    window.zemivoCurrentUser.uid &&
+    window.zemivoDeleteFirebasePost
+  ){
+
+    await window.zemivoDeleteFirebasePost(
+      post.id
     );
 
   }
+
+
+  showToast(
+    "Post moved to trash"
+  );
+
 
   closeMenu();
 
@@ -4356,21 +6320,13 @@ function deletePost(){
 
 
 /* =====================================================
-   SEARCH
-===================================================== */
-
-document.getElementById("search")
-  .addEventListener(
-    "input",
-    render
-  );
-
-
-/* =====================================================
    MODAL BACKDROP
 ===================================================== */
 
-document.getElementById("composerModal")
+document
+  .getElementById(
+    "composerModal"
+  )
   .addEventListener(
     "click",
     function(event){
@@ -4395,31 +6351,6 @@ document.getElementById("composerModal")
 render();
 
 </script>
-<!-- ZEMIVO FIREBASE AUTH CONNECTION -->
-<script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
-  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
-import { getFirestore } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
-  const firebaseConfig = {
-    apiKey: "AIzaSyAxJUFBWm2fa0g3oxUWWqdfSTEAc-bRgfI",
-    authDomain: "zemivo.firebaseapp.com",
-    projectId: "zemivo",
-    storageBucket: "zemivo.firebasestorage.app",
-    messagingSenderId: "195335939691",
-    appId: "1:195335939691:web:5fa5c62c53d0c0aefe732e",
-    measurementId: "G-GNHH5S4H09"
-  };
 
-  const app = initializeApp(firebaseConfig);
-  const auth = getAuth(app);
-window.zemivoDb = getFirestore(app);
-  // Current logged-in Zemivo user
-  window.zemivoAuth = auth;
-  window.zemivoCurrentUser = null;
-
-  onAuthStateChanged(auth, (user) => {
-    window.zemivoCurrentUser = user || null;
-  });
-</script>
 </body>
 </html>
