@@ -1,260 +1,2365 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Zemivo - Groups</title>
 
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+<meta charset="UTF-8">
 
-    body {
-      font-family: Arial, sans-serif;
-      background: #f4f6f8;
-      color: #222;
-    }
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1.0"
+>
 
-    .topbar {
-      background: white;
-      padding: 15px 20px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-    }
+<title>Zemivo - Groups</title>
 
-    .logo {
-      font-size: 26px;
-      font-weight: bold;
-      color: #2563eb;
-    }
+<style>
 
-    .nav a {
-      margin-left: 10px;
-      color: #2563eb;
-      text-decoration: none;
-      font-weight: bold;
-    }
+/* =========================================================
+   ZEMIVO GROUPS
+   Page-local UI
+   Security Foundation ready
+   Living 3D World ready
+========================================================= */
 
-    .container {
-      max-width: 900px;
-      margin: 25px auto;
-      padding: 0 15px;
-    }
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
 
-    .card {
-      background: white;
-      padding: 20px;
-      margin-bottom: 18px;
-      border-radius: 15px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-    }
+html{
+  scroll-behavior:smooth;
+}
 
-    h1 {
-      color: #2563eb;
-      margin-bottom: 8px;
-    }
+body{
+  font-family:
+    Arial,
+    Helvetica,
+    sans-serif;
 
-    .create {
-      background: #2563eb;
-      color: white;
-      border: none;
-      padding: 11px 18px;
-      border-radius: 22px;
-      font-weight: bold;
-      cursor: pointer;
-      margin-top: 15px;
-    }
+  min-height:100vh;
 
-    .group {
-      border: 1px solid #eee;
-      border-radius: 12px;
-      padding: 16px;
-      margin-top: 15px;
-    }
+  color:#17202a;
 
-    .group h3 {
-      margin-bottom: 7px;
-    }
+  background:
+    radial-gradient(
+      circle at 15% 10%,
+      rgba(37,99,235,.14),
+      transparent 30%
+    ),
+    radial-gradient(
+      circle at 85% 20%,
+      rgba(14,165,233,.12),
+      transparent 28%
+    ),
+    linear-gradient(
+      135deg,
+      #eef4ff,
+      #f8fafc 45%,
+      #eef7ff
+    );
+}
 
-    .group p {
-      color: #666;
-      margin-bottom: 12px;
-    }
+button,
+input{
+  font-family:inherit;
+}
 
-    .join {
-      background: #16a34a;
-      color: white;
-      border: none;
-      padding: 9px 16px;
-      border-radius: 20px;
-      cursor: pointer;
-      font-weight: bold;
-    }
+button{
+  cursor:pointer;
+}
 
-    .join.joined {
-      background: #64748b;
-    }
 
-    .footer {
-      text-align: center;
-      color: #777;
-      padding: 25px;
-    }
-  </style>
+/* =========================================================
+   TOPBAR
+========================================================= */
+
+.topbar{
+
+  position:sticky;
+
+  top:0;
+
+  z-index:100;
+
+  min-height:64px;
+
+  padding:
+    12px 20px;
+
+  display:flex;
+
+  align-items:center;
+
+  justify-content:space-between;
+
+  gap:15px;
+
+  background:
+    rgba(255,255,255,.88);
+
+  backdrop-filter:
+    blur(18px);
+
+  -webkit-backdrop-filter:
+    blur(18px);
+
+  border-bottom:
+    1px solid
+    rgba(255,255,255,.7);
+
+  box-shadow:
+    0 8px 30px
+    rgba(15,23,42,.08);
+}
+
+.logo{
+
+  color:#2563eb;
+
+  font-size:27px;
+
+  font-weight:900;
+
+  letter-spacing:-1px;
+
+  white-space:nowrap;
+}
+
+.nav{
+
+  display:flex;
+
+  align-items:center;
+
+  gap:6px;
+
+  overflow-x:auto;
+
+  scrollbar-width:none;
+}
+
+.nav::-webkit-scrollbar{
+  display:none;
+}
+
+.nav a{
+
+  color:#334155;
+
+  text-decoration:none;
+
+  font-size:13px;
+
+  font-weight:700;
+
+  white-space:nowrap;
+
+  padding:
+    9px 11px;
+
+  border-radius:12px;
+
+  transition:
+    .2s ease;
+}
+
+.nav a:hover{
+
+  color:#2563eb;
+
+  background:
+    rgba(37,99,235,.08);
+}
+
+
+/* =========================================================
+   MAIN
+========================================================= */
+
+.container{
+
+  width:
+    min(
+      1180px,
+      calc(100% - 30px)
+    );
+
+  margin:
+    25px auto 0;
+}
+
+
+/* =========================================================
+   HERO
+========================================================= */
+
+.hero{
+
+  position:relative;
+
+  overflow:hidden;
+
+  min-height:330px;
+
+  display:grid;
+
+  grid-template-columns:
+    1.15fr
+    .85fr;
+
+  gap:25px;
+
+  align-items:center;
+
+  padding:32px;
+
+  border-radius:28px;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255,255,255,.94),
+      rgba(238,246,255,.86)
+    );
+
+  border:
+    1px solid
+    rgba(255,255,255,.9);
+
+  box-shadow:
+    0 25px 70px
+    rgba(30,64,175,.13);
+}
+
+.hero-content{
+
+  position:relative;
+
+  z-index:3;
+}
+
+.hero-badge{
+
+  display:inline-flex;
+
+  align-items:center;
+
+  gap:7px;
+
+  padding:
+    7px 12px;
+
+  border-radius:20px;
+
+  background:
+    rgba(37,99,235,.09);
+
+  color:#2563eb;
+
+  font-size:12px;
+
+  font-weight:800;
+
+  margin-bottom:14px;
+}
+
+.hero h1{
+
+  font-size:
+    clamp(
+      30px,
+      5vw,
+      48px
+    );
+
+  line-height:1.05;
+
+  color:#0f172a;
+
+  margin-bottom:13px;
+
+  letter-spacing:-1.5px;
+}
+
+.hero h1 span{
+  color:#2563eb;
+}
+
+.hero p{
+
+  max-width:600px;
+
+  color:#64748b;
+
+  line-height:1.65;
+
+  font-size:16px;
+}
+
+.hero-actions{
+
+  display:flex;
+
+  flex-wrap:wrap;
+
+  gap:10px;
+
+  margin-top:22px;
+}
+
+.primary-button{
+
+  border:0;
+
+  padding:
+    12px 18px;
+
+  border-radius:14px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #2563eb,
+      #1d4ed8
+    );
+
+  color:#fff;
+
+  font-weight:800;
+
+  box-shadow:
+    0 10px 25px
+    rgba(37,99,235,.24);
+}
+
+.secondary-button{
+
+  border:1px solid
+    rgba(37,99,235,.16);
+
+  padding:
+    12px 18px;
+
+  border-radius:14px;
+
+  background:#fff;
+
+  color:#2563eb;
+
+  font-weight:800;
+}
+
+
+/* =========================================================
+   CSS 3D VISUAL
+========================================================= */
+
+.hero-visual{
+
+  min-height:270px;
+
+  position:relative;
+
+  display:flex;
+
+  align-items:center;
+
+  justify-content:center;
+
+  perspective:900px;
+}
+
+.world{
+
+  position:relative;
+
+  width:235px;
+
+  height:235px;
+
+  transform-style:
+    preserve-3d;
+
+  transform:
+    rotateX(12deg)
+    rotateY(-15deg);
+
+  animation:
+    worldFloat
+    7s
+    ease-in-out
+    infinite;
+}
+
+@keyframes worldFloat{
+
+  0%,
+  100%{
+    transform:
+      rotateX(12deg)
+      rotateY(-15deg)
+      translateY(0);
+  }
+
+  50%{
+    transform:
+      rotateX(16deg)
+      rotateY(8deg)
+      translateY(-12px);
+  }
+}
+
+.world-core{
+
+  position:absolute;
+
+  left:50%;
+
+  top:50%;
+
+  width:130px;
+
+  height:130px;
+
+  transform:
+    translate(-50%,-50%)
+    translateZ(40px);
+
+  border-radius:50%;
+
+  background:
+    radial-gradient(
+      circle at 32% 28%,
+      #93c5fd,
+      #2563eb 42%,
+      #172554 100%
+    );
+
+  box-shadow:
+    0 0 35px
+    rgba(37,99,235,.5),
+
+    inset
+    -20px -20px 35px
+    rgba(15,23,42,.35);
+}
+
+.world-ring{
+
+  position:absolute;
+
+  left:50%;
+
+  top:50%;
+
+  width:210px;
+
+  height:78px;
+
+  transform:
+    translate(-50%,-50%)
+    rotateX(68deg);
+
+  border:
+    2px solid
+    rgba(37,99,235,.35);
+
+  border-radius:50%;
+
+  box-shadow:
+    0 0 25px
+    rgba(37,99,235,.15);
+}
+
+.world-ring.two{
+
+  width:175px;
+
+  height:55px;
+
+  transform:
+    translate(-50%,-50%)
+    rotateX(68deg)
+    rotateZ(55deg);
+
+  border-color:
+    rgba(14,165,233,.3);
+}
+
+.world-dot{
+
+  position:absolute;
+
+  width:10px;
+
+  height:10px;
+
+  border-radius:50%;
+
+  background:#fff;
+
+  box-shadow:
+    0 0 16px
+    rgba(255,255,255,.9);
+}
+
+.dot-one{
+
+  left:25px;
+  top:65px;
+}
+
+.dot-two{
+
+  right:25px;
+  top:105px;
+}
+
+.dot-three{
+
+  left:105px;
+  bottom:18px;
+}
+
+.world-card{
+
+  position:absolute;
+
+  padding:
+    9px 12px;
+
+  border-radius:12px;
+
+  background:
+    rgba(255,255,255,.76);
+
+  border:
+    1px solid
+    rgba(255,255,255,.95);
+
+  box-shadow:
+    0 12px 25px
+    rgba(15,23,42,.12);
+
+  backdrop-filter:
+    blur(12px);
+
+  color:#1e3a8a;
+
+  font-size:11px;
+
+  font-weight:800;
+
+  white-space:nowrap;
+}
+
+.card-one{
+
+  top:12px;
+  left:0;
+
+  transform:
+    translateZ(65px);
+}
+
+.card-two{
+
+  right:-5px;
+  bottom:45px;
+
+  transform:
+    translateZ(80px);
+}
+
+.card-three{
+
+  left:35px;
+  bottom:-3px;
+
+  transform:
+    translateZ(90px);
+}
+
+
+/* =========================================================
+   SEARCH
+========================================================= */
+
+.search-card{
+
+  margin-top:20px;
+
+  padding:18px;
+
+  border-radius:20px;
+
+  background:
+    rgba(255,255,255,.9);
+
+  border:
+    1px solid
+    rgba(255,255,255,.8);
+
+  box-shadow:
+    0 15px 45px
+    rgba(15,23,42,.07);
+}
+
+.search-wrap{
+
+  position:relative;
+}
+
+.search-wrap span{
+
+  position:absolute;
+
+  left:15px;
+
+  top:50%;
+
+  transform:
+    translateY(-50%);
+
+  font-size:18px;
+
+  pointer-events:none;
+}
+
+.search{
+
+  width:100%;
+
+  padding:
+    14px
+    15px
+    14px
+    45px;
+
+  border:
+    1px solid
+    #dbe3ef;
+
+  border-radius:15px;
+
+  outline:none;
+
+  font-size:15px;
+
+  background:#fff;
+
+  transition:
+    .2s ease;
+}
+
+.search:focus{
+
+  border-color:#60a5fa;
+
+  box-shadow:
+    0 0 0 4px
+    rgba(37,99,235,.08);
+}
+
+
+/* =========================================================
+   SECTION
+========================================================= */
+
+.section{
+
+  margin-top:22px;
+}
+
+.section-header{
+
+  display:flex;
+
+  align-items:center;
+
+  justify-content:space-between;
+
+  gap:15px;
+
+  margin-bottom:14px;
+}
+
+.section-title{
+
+  font-size:23px;
+
+  font-weight:900;
+
+  color:#0f172a;
+}
+
+.section-subtitle{
+
+  color:#64748b;
+
+  font-size:13px;
+}
+
+
+/* =========================================================
+   GROUP GRID
+========================================================= */
+
+.group-grid{
+
+  display:grid;
+
+  grid-template-columns:
+    repeat(
+      2,
+      minmax(0,1fr)
+    );
+
+  gap:17px;
+}
+
+.group{
+
+  position:relative;
+
+  overflow:hidden;
+
+  padding:21px;
+
+  border-radius:20px;
+
+  background:
+    rgba(255,255,255,.94);
+
+  border:
+    1px solid
+    rgba(255,255,255,.9);
+
+  box-shadow:
+    0 14px 40px
+    rgba(15,23,42,.07);
+
+  transition:
+    transform .2s ease,
+    box-shadow .2s ease;
+}
+
+.group:hover{
+
+  transform:
+    translateY(-4px);
+
+  box-shadow:
+    0 20px 50px
+    rgba(15,23,42,.11);
+}
+
+.group::after{
+
+  content:"";
+
+  position:absolute;
+
+  width:110px;
+
+  height:110px;
+
+  right:-35px;
+
+  top:-45px;
+
+  border-radius:50%;
+
+  background:
+    rgba(37,99,235,.08);
+}
+
+.group-top{
+
+  display:flex;
+
+  align-items:center;
+
+  gap:13px;
+
+  position:relative;
+
+  z-index:2;
+}
+
+.group-icon{
+
+  width:52px;
+
+  height:52px;
+
+  flex-shrink:0;
+
+  display:flex;
+
+  align-items:center;
+
+  justify-content:center;
+
+  border-radius:16px;
+
+  font-size:25px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #eff6ff,
+      #dbeafe
+    );
+
+  box-shadow:
+    inset 0 1px 0 #fff;
+}
+
+.group h3{
+
+  color:#0f172a;
+
+  font-size:17px;
+
+  margin-bottom:4px;
+}
+
+.group-meta{
+
+  color:#64748b;
+
+  font-size:12px;
+}
+
+.group p{
+
+  color:#64748b;
+
+  line-height:1.55;
+
+  margin:
+    14px 0;
+
+  font-size:14px;
+
+  position:relative;
+
+  z-index:2;
+}
+
+.group-bottom{
+
+  display:flex;
+
+  align-items:center;
+
+  justify-content:space-between;
+
+  gap:10px;
+
+  position:relative;
+
+  z-index:2;
+}
+
+.members{
+
+  color:#64748b;
+
+  font-size:12px;
+}
+
+.join{
+
+  border:0;
+
+  padding:
+    9px 15px;
+
+  border-radius:12px;
+
+  background:#16a34a;
+
+  color:#fff;
+
+  font-weight:800;
+
+  font-size:13px;
+}
+
+.join.joined{
+
+  background:#64748b;
+}
+
+
+/* =========================================================
+   CREATE GROUP MODAL
+========================================================= */
+
+.modal{
+
+  position:fixed;
+
+  inset:0;
+
+  z-index:500;
+
+  display:none;
+
+  align-items:center;
+
+  justify-content:center;
+
+  padding:20px;
+
+  background:
+    rgba(15,23,42,.55);
+
+  backdrop-filter:
+    blur(7px);
+}
+
+.modal.show{
+  display:flex;
+}
+
+.modal-box{
+
+  width:
+    min(
+      450px,
+      100%
+    );
+
+  padding:24px;
+
+  border-radius:22px;
+
+  background:#fff;
+
+  box-shadow:
+    0 30px 80px
+    rgba(15,23,42,.25);
+}
+
+.modal-box h2{
+
+  margin-bottom:8px;
+
+  color:#0f172a;
+}
+
+.modal-box p{
+
+  color:#64748b;
+
+  font-size:13px;
+
+  line-height:1.5;
+
+  margin-bottom:17px;
+}
+
+.modal-input{
+
+  width:100%;
+
+  padding:13px;
+
+  border:
+    1px solid
+    #dbe3ef;
+
+  border-radius:13px;
+
+  outline:none;
+
+  font-size:15px;
+}
+
+.modal-input:focus{
+
+  border-color:#60a5fa;
+
+  box-shadow:
+    0 0 0 4px
+    rgba(37,99,235,.08);
+}
+
+.modal-actions{
+
+  display:flex;
+
+  justify-content:flex-end;
+
+  gap:9px;
+
+  margin-top:16px;
+}
+
+.modal-cancel{
+
+  border:0;
+
+  padding:
+    10px 16px;
+
+  border-radius:12px;
+
+  background:#f1f5f9;
+
+  color:#475569;
+
+  font-weight:700;
+}
+
+.modal-create{
+
+  border:0;
+
+  padding:
+    10px 16px;
+
+  border-radius:12px;
+
+  background:#2563eb;
+
+  color:#fff;
+
+  font-weight:800;
+}
+
+
+/* =========================================================
+   EMPTY
+========================================================= */
+
+.empty{
+
+  display:none;
+
+  text-align:center;
+
+  padding:35px;
+
+  color:#64748b;
+
+  background:#fff;
+
+  border-radius:18px;
+}
+
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+.footer{
+
+  text-align:center;
+
+  color:#64748b;
+
+  font-size:12px;
+
+  padding:
+    35px 20px;
+}
+
+
+/* =========================================================
+   TOAST
+========================================================= */
+
+.toast{
+
+  position:fixed;
+
+  left:50%;
+
+  bottom:25px;
+
+  transform:
+    translateX(-50%)
+    translateY(20px);
+
+  z-index:900;
+
+  max-width:
+    calc(100% - 30px);
+
+  padding:
+    12px 17px;
+
+  border-radius:12px;
+
+  background:#0f172a;
+
+  color:#fff;
+
+  font-size:13px;
+
+  opacity:0;
+
+  pointer-events:none;
+
+  transition:
+    .25s ease;
+}
+
+.toast.show{
+
+  opacity:1;
+
+  transform:
+    translateX(-50%)
+    translateY(0);
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media(max-width:850px){
+
+  .topbar{
+
+    align-items:flex-start;
+
+    flex-direction:column;
+  }
+
+  .nav{
+
+    width:100%;
+  }
+
+  .hero{
+
+    grid-template-columns:1fr;
+
+    padding:25px;
+  }
+
+  .hero-visual{
+
+    min-height:245px;
+  }
+
+  .group-grid{
+
+    grid-template-columns:1fr;
+  }
+
+}
+
+@media(max-width:520px){
+
+  .container{
+
+    width:
+      calc(100% - 20px);
+
+    margin-top:15px;
+  }
+
+  .hero{
+
+    border-radius:22px;
+
+    padding:21px;
+  }
+
+  .hero h1{
+
+    font-size:32px;
+  }
+
+  .hero p{
+
+    font-size:14px;
+  }
+
+  .hero-visual{
+
+    transform:
+      scale(.88);
+  }
+
+  .section-header{
+
+    align-items:flex-start;
+
+    flex-direction:column;
+  }
+
+  .group{
+
+    padding:17px;
+  }
+
+  .group-bottom{
+
+    align-items:flex-start;
+
+    flex-direction:column;
+  }
+
+  .join{
+
+    width:100%;
+  }
+
+}
+
+</style>
+
 </head>
+
 
 <body>
 
-  <header class="topbar">
 
-    <div class="logo">Zemivo</div>
+<!-- =======================================================
+     TOPBAR
+======================================================= -->
 
-    <nav class="nav">
-      <a href="index.html">🏠 Home</a>
-      <a href="profile.html">👤 Profile</a>
-      <a href="friends.html">👥 Friends</a>
-      <a href="videos.html">🎥 Videos</a>
-      <a href="notifications.html">🔔 Notifications</a>
-      <a href="messenger.html">💬 Messenger</a>
-    </nav>
+<header class="topbar">
 
-  </header>
+  <div class="logo">
+    Zemivo
+  </div>
 
-  <main class="container">
+  <nav class="nav">
 
-    <div class="card">
+    <a href="index.html">
+      🏠 Home
+    </a>
 
-      <h1>👥 Zemivo Groups</h1>
+    <a href="profile.html">
+      👤 Profile
+    </a>
+
+    <a href="friends.html">
+      👥 Friends
+    </a>
+
+    <a href="notifications.html">
+      🔔 Notifications
+    </a>
+
+    <a href="messenger.html">
+      💬 Messenger
+    </a>
+
+  </nav>
+
+</header>
+
+
+<!-- =======================================================
+     MAIN
+======================================================= -->
+
+<main class="container">
+
+
+  <!-- HERO -->
+
+  <section class="hero">
+
+    <div class="hero-content">
+
+      <div class="hero-badge">
+        🌍 Global Communities
+      </div>
+
+      <h1>
+        Find Your
+        <span>Community.</span>
+      </h1>
 
       <p>
-        Join communities, meet people and discuss topics you enjoy.
+        Join communities, meet people,
+        share ideas and build meaningful
+        connections across Zemivo.
       </p>
 
-      <button
-        class="create"
-        onclick="createGroup()"
+      <div class="hero-actions">
+
+        <button
+          id="createGroupButton"
+          class="primary-button"
+          type="button"
+        >
+          + Create Group
+        </button>
+
+        <button
+          id="discoverButton"
+          class="secondary-button"
+          type="button"
+        >
+          Explore Groups
+        </button>
+
+      </div>
+
+    </div>
+
+
+    <!-- CSS 3D VISUAL -->
+
+    <div
+      class="hero-visual"
+      aria-hidden="true"
+    >
+
+      <div class="world">
+
+        <div class="world-ring"></div>
+
+        <div class="world-ring two"></div>
+
+        <div class="world-core"></div>
+
+        <div class="world-dot dot-one"></div>
+
+        <div class="world-dot dot-two"></div>
+
+        <div class="world-dot dot-three"></div>
+
+        <div class="world-card card-one">
+          🌍 Global
+        </div>
+
+        <div class="world-card card-two">
+          👥 Community
+        </div>
+
+        <div class="world-card card-three">
+          ✨ Connect
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- SEARCH -->
+
+  <section class="search-card">
+
+    <div class="search-wrap">
+
+      <span>🔎</span>
+
+      <input
+        id="groupSearch"
+        class="search"
+        type="search"
+        placeholder="Search groups..."
+        autocomplete="off"
       >
-        + Create Group
+
+    </div>
+
+  </section>
+
+
+  <!-- GROUPS -->
+
+  <section
+    id="groupsSection"
+    class="section"
+  >
+
+    <div class="section-header">
+
+      <div>
+
+        <div class="section-title">
+          Discover Groups
+        </div>
+
+        <div class="section-subtitle">
+          Explore communities that match your interests.
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <div
+      id="groupGrid"
+      class="group-grid"
+    >
+
+
+      <!-- GROUP 1 -->
+
+      <article
+        class="group"
+        data-search="
+          zemivo community
+          official community
+          global
+        "
+      >
+
+        <div class="group-top">
+
+          <div class="group-icon">
+            🌍
+          </div>
+
+          <div>
+
+            <h3>
+              Zemivo Community
+            </h3>
+
+            <div class="group-meta">
+              Global Community
+            </div>
+
+          </div>
+
+        </div>
+
+        <p>
+          Connect with Zemivo users,
+          share ideas and discover
+          what's happening across
+          the platform.
+        </p>
+
+        <div class="group-bottom">
+
+          <span class="members">
+            👥 Global community
+          </span>
+
+          <button
+            class="join"
+            type="button"
+            data-group="Zemivo Community"
+          >
+            Join Group
+          </button>
+
+        </div>
+
+      </article>
+
+
+      <!-- GROUP 2 -->
+
+      <article
+        class="group"
+        data-search="
+          creators hub
+          creator
+          creators
+          video
+          content
+        "
+      >
+
+        <div class="group-top">
+
+          <div class="group-icon">
+            🎥
+          </div>
+
+          <div>
+
+            <h3>
+              Creators Hub
+            </h3>
+
+            <div class="group-meta">
+              Creator Community
+            </div>
+
+          </div>
+
+        </div>
+
+        <p>
+          A community for creators
+          to share ideas, content
+          strategies and growth
+          opportunities.
+        </p>
+
+        <div class="group-bottom">
+
+          <span class="members">
+            🎬 Creator focused
+          </span>
+
+          <button
+            class="join"
+            type="button"
+            data-group="Creators Hub"
+          >
+            Join Group
+          </button>
+
+        </div>
+
+      </article>
+
+
+      <!-- GROUP 3 -->
+
+      <article
+        class="group"
+        data-search="
+          online earning
+          earning
+          creator earning
+          business
+          income
+        "
+      >
+
+        <div class="group-top">
+
+          <div class="group-icon">
+            💰
+          </div>
+
+          <div>
+
+            <h3>
+              Online Earning
+            </h3>
+
+            <div class="group-meta">
+              Business & Creator
+            </div>
+
+          </div>
+
+        </div>
+
+        <p>
+          Discuss legitimate online
+          earning, creator opportunities
+          and digital business ideas.
+        </p>
+
+        <div class="group-bottom">
+
+          <span class="members">
+            💡 Ideas & opportunities
+          </span>
+
+          <button
+            class="join"
+            type="button"
+            data-group="Online Earning"
+          >
+            Join Group
+          </button>
+
+        </div>
+
+      </article>
+
+
+      <!-- GROUP 4 -->
+
+      <article
+        class="group"
+        data-search="
+          gaming community
+          gaming
+          games
+          gamer
+          esports
+        "
+      >
+
+        <div class="group-top">
+
+          <div class="group-icon">
+            🎮
+          </div>
+
+          <div>
+
+            <h3>
+              Gaming Community
+            </h3>
+
+            <div class="group-meta">
+              Gaming Community
+            </div>
+
+          </div>
+
+        </div>
+
+        <p>
+          Connect with gamers,
+          discuss games and build
+          gaming communities.
+        </p>
+
+        <div class="group-bottom">
+
+          <span class="members">
+            🎮 Gamer community
+          </span>
+
+          <button
+            class="join"
+            type="button"
+            data-group="Gaming Community"
+          >
+            Join Group
+          </button>
+
+        </div>
+
+      </article>
+
+
+      <!-- GROUP 5 -->
+
+      <article
+        class="group"
+        data-search="
+          technology
+          ai
+          artificial intelligence
+          future
+          technology community
+        "
+      >
+
+        <div class="group-top">
+
+          <div class="group-icon">
+            🤖
+          </div>
+
+          <div>
+
+            <h3>
+              AI & Technology
+            </h3>
+
+            <div class="group-meta">
+              Technology Community
+            </div>
+
+          </div>
+
+        </div>
+
+        <p>
+          Explore artificial intelligence,
+          technology, innovation and
+          the future of digital life.
+        </p>
+
+        <div class="group-bottom">
+
+          <span class="members">
+            🤖 AI & Technology
+          </span>
+
+          <button
+            class="join"
+            type="button"
+            data-group="AI & Technology"
+          >
+            Join Group
+          </button>
+
+        </div>
+
+      </article>
+
+
+      <!-- GROUP 6 -->
+
+      <article
+        class="group"
+        data-search="
+          photography
+          photo
+          video
+          creator
+          camera
+        "
+      >
+
+        <div class="group-top">
+
+          <div class="group-icon">
+            📸
+          </div>
+
+          <div>
+
+            <h3>
+              Photography & Media
+            </h3>
+
+            <div class="group-meta">
+              Creative Community
+            </div>
+
+          </div>
+
+        </div>
+
+        <p>
+          Share photography,
+          visual stories, creative
+          work and media ideas.
+        </p>
+
+        <div class="group-bottom">
+
+          <span class="members">
+            📸 Visual creators
+          </span>
+
+          <button
+            class="join"
+            type="button"
+            data-group="Photography & Media"
+          >
+            Join Group
+          </button>
+
+        </div>
+
+      </article>
+
+
+    </div>
+
+
+    <div
+      id="empty"
+      class="empty"
+    >
+      No groups found.
+    </div>
+
+  </section>
+
+
+</main>
+
+
+<!-- =======================================================
+     CREATE GROUP MODAL
+======================================================= -->
+
+<div
+  id="createModal"
+  class="modal"
+  aria-hidden="true"
+>
+
+  <div class="modal-box">
+
+    <h2>
+      Create a Group
+    </h2>
+
+    <p>
+      Group creation UI is ready.
+      Secure Firestore group creation
+      will be connected after the
+      dedicated Groups data model
+      and Rules are finalized.
+    </p>
+
+    <input
+      id="newGroupName"
+      class="modal-input"
+      type="text"
+      maxlength="80"
+      placeholder="Enter group name"
+      autocomplete="off"
+    >
+
+    <div class="modal-actions">
+
+      <button
+        id="cancelModal"
+        class="modal-cancel"
+        type="button"
+      >
+        Cancel
+      </button>
+
+      <button
+        id="createModalButton"
+        class="modal-create"
+        type="button"
+      >
+        Continue
       </button>
 
     </div>
 
-    <div class="card">
+  </div>
 
-      <h2>Discover Groups</h2>
+</div>
 
-      <div class="group">
 
-        <h3>🌍 Zemivo Community</h3>
+<!-- TOAST -->
 
-        <p>
-          Official community for Zemivo users.
-        </p>
+<div
+  id="toast"
+  class="toast"
+  role="status"
+  aria-live="polite"
+></div>
 
-        <button class="join">
-          Join Group
-        </button>
 
-      </div>
+<!-- FOOTER -->
 
-      <div class="group">
+<footer class="footer">
 
-        <h3>🎥 Creators Hub</h3>
+  © 2026 Zemivo —
+  Connect. Create. Earn.
 
-        <p>
-          A place for creators to share ideas and grow.
-        </p>
+</footer>
 
-        <button class="join">
-          Join Group
-        </button>
 
-      </div>
+<!-- =======================================================
+     ZEMIVO GROUPS SCRIPT
+======================================================= -->
 
-      <div class="group">
+<script type="module">
 
-        <h3>💰 Online Earning</h3>
+/*
+  SECURITY FOUNDATION
 
-        <p>
-          Discuss online earning and creator opportunities.
-        </p>
+  Firebase services come from the
+  centralized Zemivo security layer.
 
-        <button class="join">
-          Join Group
-        </button>
+  This page does NOT initialize
+  Firebase separately.
+*/
 
-      </div>
+import {
+  auth
+} from "./zemivo-security.js";
 
-      <div class="group">
+import {
+  onAuthStateChanged
+} from
+"https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
 
-        <h3>🎮 Gaming Community</h3>
 
-        <p>
-          Connect with gamers and gaming communities.
-        </p>
+/* =========================================================
+   ELEMENTS
+========================================================= */
 
-        <button class="join">
-          Join Group
-        </button>
+const groupSearch =
+  document.getElementById(
+    "groupSearch"
+  );
 
-      </div>
+const groupGrid =
+  document.getElementById(
+    "groupGrid"
+  );
 
-    </div>
+const empty =
+  document.getElementById(
+    "empty"
+  );
 
-  </main>
+const groupsSection =
+  document.getElementById(
+    "groupsSection"
+  );
 
-  <footer class="footer">
-    © 2026 Zemivo — Connect. Create. Earn.
-  </footer>
+const createGroupButton =
+  document.getElementById(
+    "createGroupButton"
+  );
 
-  <script>
+const discoverButton =
+  document.getElementById(
+    "discoverButton"
+  );
 
-    const joinButtons =
-      document.querySelectorAll(".join");
+const createModal =
+  document.getElementById(
+    "createModal"
+  );
 
-    joinButtons.forEach(function(button) {
+const cancelModal =
+  document.getElementById(
+    "cancelModal"
+  );
 
-      button.addEventListener("click", function() {
+const createModalButton =
+  document.getElementById(
+    "createModalButton"
+  );
 
-        if (button.classList.contains("joined")) {
+const newGroupName =
+  document.getElementById(
+    "newGroupName"
+  );
 
-          button.classList.remove("joined");
-          button.textContent = "Join Group";
+const toast =
+  document.getElementById(
+    "toast"
+  );
 
-        } else {
 
-          button.classList.add("joined");
-          button.textContent = "✓ Joined";
+/* =========================================================
+   STATE
+========================================================= */
 
-        }
+let currentUser = null;
 
-      });
 
-    });
+/* =========================================================
+   TOAST
+========================================================= */
 
-    function createGroup() {
+let toastTimer = null;
 
-      const name =
-        prompt("Enter your group name:");
+function showToast(text){
 
-      if (name && name.trim() !== "") {
+  toast.textContent =
+    text;
 
-        alert(
-          "Group '" +
-          name.trim() +
-          "' is ready to be created."
+  toast.classList.add(
+    "show"
+  );
+
+  clearTimeout(
+    toastTimer
+  );
+
+  toastTimer =
+    setTimeout(
+      function(){
+
+        toast.classList.remove(
+          "show"
         );
 
-      }
+      },
+      2600
+    );
+
+}
+
+
+/* =========================================================
+   AUTH STATE
+========================================================= */
+
+onAuthStateChanged(
+  auth,
+  function(user){
+
+    if(!user){
+
+      currentUser =
+        null;
+
+      showToast(
+        "Please log in to use Zemivo Groups."
+      );
+
+      return;
 
     }
 
-  </script>
+    currentUser =
+      user;
+
+  }
+);
+
+
+/* =========================================================
+   SEARCH GROUPS
+========================================================= */
+
+groupSearch.addEventListener(
+  "input",
+  function(){
+
+    const search =
+      groupSearch.value
+        .trim()
+        .toLowerCase();
+
+    const groups =
+      groupGrid.querySelectorAll(
+        ".group"
+      );
+
+    let visibleCount =
+      0;
+
+    groups.forEach(
+      function(group){
+
+        const text =
+          (
+            group.dataset.search ||
+            ""
+          ).toLowerCase();
+
+        const visible =
+          !search ||
+          text.includes(
+            search
+          );
+
+        group.style.display =
+          visible
+          ? ""
+          : "block";
+
+        if(!visible){
+
+          group.style.display =
+            "none";
+
+        }
+
+        if(visible){
+
+          visibleCount++;
+
+        }
+
+      }
+    );
+
+    empty.style.display =
+      visibleCount === 0
+      ? "block"
+      : "none";
+
+  }
+);
+
+
+/* =========================================================
+   JOIN BUTTONS
+========================================================= */
+
+const joinButtons =
+  document.querySelectorAll(
+    ".join"
+  );
+
+joinButtons.forEach(
+  function(button){
+
+    button.addEventListener(
+      "click",
+      function(){
+
+        if(!currentUser){
+
+          showToast(
+            "Please log in first."
+          );
+
+          return;
+
+        }
+
+        const joined =
+          button.classList.contains(
+            "joined"
+          );
+
+        if(joined){
+
+          button.classList.remove(
+            "joined"
+          );
+
+          button.textContent =
+            "Join Group";
+
+          showToast(
+            "Group removed from your local selection."
+          );
+
+        }else{
+
+          button.classList.add(
+            "joined"
+          );
+
+          button.textContent =
+            "✓ Joined";
+
+          showToast(
+            "Group selected."
+          );
+
+        }
+
+      }
+    );
+
+  }
+);
+
+
+/* =========================================================
+   CREATE GROUP MODAL
+========================================================= */
+
+function openCreateModal(){
+
+  if(!currentUser){
+
+    showToast(
+      "Please log in first."
+    );
+
+    return;
+
+  }
+
+  createModal.classList.add(
+    "show"
+  );
+
+  createModal.setAttribute(
+    "aria-hidden",
+    "false"
+  );
+
+  newGroupName.value =
+    "";
+
+  setTimeout(
+    function(){
+
+      newGroupName.focus();
+
+    },
+    50
+  );
+
+}
+
+
+function closeCreateModal(){
+
+  createModal.classList.remove(
+    "show"
+  );
+
+  createModal.setAttribute(
+    "aria-hidden",
+    "true"
+  );
+
+}
+
+
+createGroupButton.addEventListener(
+  "click",
+  openCreateModal
+);
+
+
+cancelModal.addEventListener(
+  "click",
+  closeCreateModal
+);
+
+
+createModal.addEventListener(
+  "click",
+  function(event){
+
+    if(
+      event.target ===
+      createModal
+    ){
+
+      closeCreateModal();
+
+    }
+
+  }
+);
+
+
+/* =========================================================
+   CREATE GROUP ACTION
+========================================================= */
+
+createModalButton.addEventListener(
+  "click",
+  function(){
+
+    const name =
+      newGroupName.value.trim();
+
+    if(!name){
+
+      showToast(
+        "Enter a group name."
+      );
+
+      newGroupName.focus();
+
+      return;
+
+    }
+
+    /*
+      IMPORTANT:
+
+      No Firestore write is performed
+      here yet.
+
+      A secure Groups backend requires
+      a dedicated data model and Rules
+      before client writes are enabled.
+    */
+
+    closeCreateModal();
+
+    showToast(
+      "Group creation interface is ready. Secure backend connection will be added with the Groups data model."
+    );
+
+  }
+);
+
+
+/* =========================================================
+   ENTER KEY
+========================================================= */
+
+newGroupName.addEventListener(
+  "keydown",
+  function(event){
+
+    if(
+      event.key ===
+      "Enter"
+    ){
+
+      event.preventDefault();
+
+      createModalButton.click();
+
+    }
+
+  }
+);
+
+
+/* =========================================================
+   DISCOVER BUTTON
+========================================================= */
+
+discoverButton.addEventListener(
+  "click",
+  function(){
+
+    groupsSection.scrollIntoView({
+      behavior:"smooth",
+      block:"start"
+    });
+
+  }
+);
+
+
+/* =========================================================
+   ESCAPE MODAL
+========================================================= */
+
+document.addEventListener(
+  "keydown",
+  function(event){
+
+    if(
+      event.key ===
+      "Escape"
+    ){
+
+      closeCreateModal();
+
+    }
+
+  }
+);
+
+
+/* =========================================================
+   FUTURE LIVING 3D WORLD HOOK
+
+   This page does not directly
+   initialize the 3D engine.
+
+   Later the centralized
+   Zemivo Living 3D World engine
+   can observe:
+
+   - group topic
+   - group activity
+   - content mood
+   - media type
+   - global language
+   - user interaction
+
+   and adapt the environment
+   without changing this page's
+   core functionality.
+========================================================= */
+
+window.ZemivoGroups =
+  Object.freeze({
+
+    version:"1.0.0",
+
+    page:"groups",
+
+    livingWorldReady:true
+
+  });
+
+
+console.log(
+  "Zemivo Groups page loaded."
+);
+
+</script>
 
 </body>
+
 </html>
