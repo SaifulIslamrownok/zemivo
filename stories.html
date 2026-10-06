@@ -1,210 +1,1899 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Zemivo - Stories</title>
 
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+<meta charset="UTF-8">
 
-    body {
-      font-family: Arial, sans-serif;
-      background: #f4f6f8;
-      color: #222;
-    }
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1.0"
+>
 
-    .topbar {
-      background: white;
-      padding: 15px 20px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-    }
+<title>Zemivo - Stories</title>
 
-    .logo {
-      font-size: 26px;
-      font-weight: bold;
-      color: #2563eb;
-    }
+<style>
 
-    .nav a {
-      margin-left: 10px;
-      color: #2563eb;
-      text-decoration: none;
-      font-weight: bold;
-    }
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
 
-    .container {
-      max-width: 900px;
-      margin: 25px auto;
-      padding: 0 15px;
-    }
+html{
+  scroll-behavior:smooth;
+}
 
-    .card {
-      background: white;
-      padding: 20px;
-      margin-bottom: 18px;
-      border-radius: 15px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-    }
+body{
 
-    h1 {
-      color: #2563eb;
-      margin-bottom: 8px;
-    }
+  min-height:100vh;
 
-    .story-list {
-      display: flex;
-      gap: 15px;
-      overflow-x: auto;
-      padding: 10px 0;
-    }
+  font-family:
+    Arial,
+    Helvetica,
+    sans-serif;
 
-    .story {
-      min-width: 130px;
-      height: 190px;
-      border-radius: 15px;
-      background: #dbeafe;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: flex-end;
-      padding: 12px;
-      cursor: pointer;
-      font-weight: bold;
-      position: relative;
-    }
+  color:#17202a;
 
-    .story-icon {
-      font-size: 45px;
-      margin-bottom: auto;
-      margin-top: 25px;
-    }
+  background:
+    radial-gradient(
+      circle at 10% 10%,
+      rgba(37,99,235,.14),
+      transparent 30%
+    ),
+    radial-gradient(
+      circle at 90% 20%,
+      rgba(14,165,233,.12),
+      transparent 30%
+    ),
+    linear-gradient(
+      135deg,
+      #eef5ff,
+      #f8fafc 50%,
+      #edf7ff
+    );
+}
 
-    .add-story {
-      background: #2563eb;
-      color: white;
-    }
+button,
+input{
+  font-family:inherit;
+}
 
-    .add-button {
-      border: none;
-      background: white;
-      color: #2563eb;
-      padding: 9px 15px;
-      border-radius: 20px;
-      font-weight: bold;
-      cursor: pointer;
-      margin-top: 10px;
-    }
+button{
+  cursor:pointer;
+}
 
-    .footer {
-      text-align: center;
-      color: #777;
-      padding: 25px;
-    }
-  </style>
+
+/* =========================================================
+   TOPBAR
+========================================================= */
+
+.topbar{
+
+  position:sticky;
+
+  top:0;
+
+  z-index:100;
+
+  min-height:64px;
+
+  padding:
+    12px 20px;
+
+  display:flex;
+
+  align-items:center;
+
+  justify-content:space-between;
+
+  gap:15px;
+
+  background:
+    rgba(255,255,255,.88);
+
+  backdrop-filter:
+    blur(18px);
+
+  -webkit-backdrop-filter:
+    blur(18px);
+
+  border-bottom:
+    1px solid
+    rgba(255,255,255,.8);
+
+  box-shadow:
+    0 8px 30px
+    rgba(15,23,42,.08);
+}
+
+.logo{
+
+  color:#2563eb;
+
+  font-size:27px;
+
+  font-weight:900;
+
+  letter-spacing:-1px;
+
+  white-space:nowrap;
+}
+
+.nav{
+
+  display:flex;
+
+  align-items:center;
+
+  gap:5px;
+
+  overflow-x:auto;
+
+  scrollbar-width:none;
+}
+
+.nav::-webkit-scrollbar{
+  display:none;
+}
+
+.nav a{
+
+  color:#334155;
+
+  text-decoration:none;
+
+  font-size:13px;
+
+  font-weight:700;
+
+  white-space:nowrap;
+
+  padding:
+    9px 11px;
+
+  border-radius:12px;
+
+  transition:.2s ease;
+}
+
+.nav a:hover{
+
+  color:#2563eb;
+
+  background:
+    rgba(37,99,235,.08);
+}
+
+
+/* =========================================================
+   CONTAINER
+========================================================= */
+
+.container{
+
+  width:
+    min(
+      1180px,
+      calc(100% - 30px)
+    );
+
+  margin:
+    25px auto 0;
+}
+
+
+/* =========================================================
+   HERO
+========================================================= */
+
+.hero{
+
+  position:relative;
+
+  overflow:hidden;
+
+  min-height:350px;
+
+  display:grid;
+
+  grid-template-columns:
+    1.1fr
+    .9fr;
+
+  gap:25px;
+
+  align-items:center;
+
+  padding:32px;
+
+  border-radius:28px;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255,255,255,.95),
+      rgba(239,246,255,.86)
+    );
+
+  border:
+    1px solid
+    rgba(255,255,255,.9);
+
+  box-shadow:
+    0 25px 70px
+    rgba(30,64,175,.13);
+}
+
+.hero-content{
+
+  position:relative;
+
+  z-index:3;
+}
+
+.badge{
+
+  display:inline-flex;
+
+  align-items:center;
+
+  gap:7px;
+
+  padding:
+    7px 12px;
+
+  border-radius:20px;
+
+  background:
+    rgba(37,99,235,.09);
+
+  color:#2563eb;
+
+  font-size:12px;
+
+  font-weight:800;
+
+  margin-bottom:14px;
+}
+
+.hero h1{
+
+  color:#0f172a;
+
+  font-size:
+    clamp(
+      32px,
+      5vw,
+      50px
+    );
+
+  line-height:1.04;
+
+  letter-spacing:-1.8px;
+
+  margin-bottom:14px;
+}
+
+.hero h1 span{
+  color:#2563eb;
+}
+
+.hero p{
+
+  max-width:580px;
+
+  color:#64748b;
+
+  font-size:16px;
+
+  line-height:1.65;
+}
+
+.hero-actions{
+
+  display:flex;
+
+  flex-wrap:wrap;
+
+  gap:10px;
+
+  margin-top:22px;
+}
+
+.primary{
+
+  border:0;
+
+  padding:
+    12px 18px;
+
+  border-radius:14px;
+
+  color:#fff;
+
+  font-weight:800;
+
+  background:
+    linear-gradient(
+      135deg,
+      #2563eb,
+      #1d4ed8
+    );
+
+  box-shadow:
+    0 10px 25px
+    rgba(37,99,235,.24);
+}
+
+.secondary{
+
+  border:
+    1px solid
+    rgba(37,99,235,.18);
+
+  padding:
+    12px 18px;
+
+  border-radius:14px;
+
+  background:#fff;
+
+  color:#2563eb;
+
+  font-weight:800;
+}
+
+
+/* =========================================================
+   CSS 3D STORY WORLD
+========================================================= */
+
+.hero-visual{
+
+  min-height:285px;
+
+  position:relative;
+
+  display:flex;
+
+  align-items:center;
+
+  justify-content:center;
+
+  perspective:900px;
+}
+
+.story-world{
+
+  position:relative;
+
+  width:240px;
+
+  height:240px;
+
+  transform-style:
+    preserve-3d;
+
+  transform:
+    rotateX(12deg)
+    rotateY(-15deg);
+
+  animation:
+    storyWorldFloat
+    7s
+    ease-in-out
+    infinite;
+}
+
+@keyframes storyWorldFloat{
+
+  0%,
+  100%{
+    transform:
+      rotateX(12deg)
+      rotateY(-15deg)
+      translateY(0);
+  }
+
+  50%{
+    transform:
+      rotateX(17deg)
+      rotateY(10deg)
+      translateY(-12px);
+  }
+}
+
+.world-core{
+
+  position:absolute;
+
+  left:50%;
+
+  top:50%;
+
+  width:145px;
+
+  height:145px;
+
+  transform:
+    translate(-50%,-50%)
+    translateZ(40px);
+
+  border-radius:50%;
+
+  background:
+    radial-gradient(
+      circle at 30% 25%,
+      #bfdbfe,
+      #3b82f6 38%,
+      #172554 100%
+    );
+
+  box-shadow:
+    0 0 40px
+    rgba(37,99,235,.48),
+
+    inset
+    -22px -22px 38px
+    rgba(15,23,42,.35);
+}
+
+.world-ring{
+
+  position:absolute;
+
+  left:50%;
+
+  top:50%;
+
+  width:220px;
+
+  height:82px;
+
+  transform:
+    translate(-50%,-50%)
+    rotateX(68deg);
+
+  border:
+    2px solid
+    rgba(37,99,235,.36);
+
+  border-radius:50%;
+}
+
+.world-ring.two{
+
+  width:180px;
+
+  height:60px;
+
+  transform:
+    translate(-50%,-50%)
+    rotateX(68deg)
+    rotateZ(55deg);
+
+  border-color:
+    rgba(14,165,233,.34);
+}
+
+.story-orb{
+
+  position:absolute;
+
+  width:38px;
+
+  height:38px;
+
+  display:flex;
+
+  align-items:center;
+
+  justify-content:center;
+
+  border-radius:50%;
+
+  background:
+    rgba(255,255,255,.82);
+
+  border:
+    1px solid
+    rgba(255,255,255,.95);
+
+  box-shadow:
+    0 10px 25px
+    rgba(15,23,42,.16);
+
+  font-size:18px;
+}
+
+.orb-one{
+
+  left:5px;
+  top:52px;
+
+  transform:
+    translateZ(75px);
+}
+
+.orb-two{
+
+  right:-3px;
+  top:88px;
+
+  transform:
+    translateZ(95px);
+}
+
+.orb-three{
+
+  left:48px;
+  bottom:3px;
+
+  transform:
+    translateZ(100px);
+}
+
+.world-label{
+
+  position:absolute;
+
+  padding:
+    9px 12px;
+
+  border-radius:12px;
+
+  background:
+    rgba(255,255,255,.78);
+
+  border:
+    1px solid
+    rgba(255,255,255,.95);
+
+  backdrop-filter:
+    blur(12px);
+
+  box-shadow:
+    0 12px 25px
+    rgba(15,23,42,.12);
+
+  color:#1e3a8a;
+
+  font-size:11px;
+
+  font-weight:800;
+
+  white-space:nowrap;
+}
+
+.label-one{
+
+  top:4px;
+  left:22px;
+
+  transform:
+    translateZ(80px);
+}
+
+.label-two{
+
+  right:-5px;
+  bottom:45px;
+
+  transform:
+    translateZ(90px);
+}
+
+
+/* =========================================================
+   STORIES SECTION
+========================================================= */
+
+.card{
+
+  margin-top:20px;
+
+  padding:22px;
+
+  border-radius:22px;
+
+  background:
+    rgba(255,255,255,.93);
+
+  border:
+    1px solid
+    rgba(255,255,255,.9);
+
+  box-shadow:
+    0 15px 45px
+    rgba(15,23,42,.07);
+}
+
+.section-head{
+
+  display:flex;
+
+  align-items:center;
+
+  justify-content:space-between;
+
+  gap:15px;
+
+  margin-bottom:15px;
+}
+
+.section-title{
+
+  font-size:22px;
+
+  font-weight:900;
+
+  color:#0f172a;
+}
+
+.section-subtitle{
+
+  margin-top:4px;
+
+  color:#64748b;
+
+  font-size:13px;
+}
+
+
+/* =========================================================
+   STORY LIST
+========================================================= */
+
+.story-list{
+
+  display:flex;
+
+  gap:15px;
+
+  overflow-x:auto;
+
+  padding:
+    8px 3px 13px;
+
+  scrollbar-width:thin;
+}
+
+.story-list::-webkit-scrollbar{
+  height:5px;
+}
+
+.story-list::-webkit-scrollbar-thumb{
+
+  background:
+    #cbd5e1;
+
+  border-radius:10px;
+}
+
+
+/* =========================================================
+   STORY CARD
+========================================================= */
+
+.story{
+
+  position:relative;
+
+  flex:
+    0 0 145px;
+
+  height:215px;
+
+  overflow:hidden;
+
+  display:flex;
+
+  flex-direction:column;
+
+  align-items:center;
+
+  justify-content:flex-end;
+
+  padding:14px;
+
+  border-radius:20px;
+
+  cursor:pointer;
+
+  color:#fff;
+
+  background:
+    linear-gradient(
+      160deg,
+      #2563eb,
+      #0f172a
+    );
+
+  box-shadow:
+    0 12px 30px
+    rgba(15,23,42,.15);
+
+  transition:
+    transform .22s ease,
+    box-shadow .22s ease;
+}
+
+.story:hover{
+
+  transform:
+    translateY(-6px)
+    scale(1.015);
+
+  box-shadow:
+    0 20px 40px
+    rgba(15,23,42,.2);
+}
+
+.story::before{
+
+  content:"";
+
+  position:absolute;
+
+  width:130px;
+
+  height:130px;
+
+  right:-45px;
+
+  top:-45px;
+
+  border-radius:50%;
+
+  background:
+    rgba(255,255,255,.15);
+
+  filter:blur(2px);
+}
+
+.story::after{
+
+  content:"";
+
+  position:absolute;
+
+  inset:0;
+
+  background:
+    linear-gradient(
+      transparent 40%,
+      rgba(0,0,0,.45)
+    );
+
+  pointer-events:none;
+}
+
+.story-icon{
+
+  position:relative;
+
+  z-index:2;
+
+  width:72px;
+
+  height:72px;
+
+  display:flex;
+
+  align-items:center;
+
+  justify-content:center;
+
+  border-radius:50%;
+
+  margin-top:20px;
+
+  margin-bottom:auto;
+
+  background:
+    rgba(255,255,255,.16);
+
+  border:
+    2px solid
+    rgba(255,255,255,.7);
+
+  box-shadow:
+    0 10px 30px
+    rgba(0,0,0,.16);
+
+  font-size:35px;
+}
+
+.story-name{
+
+  position:relative;
+
+  z-index:2;
+
+  width:100%;
+
+  text-align:center;
+
+  font-weight:800;
+
+  font-size:14px;
+
+  line-height:1.3;
+}
+
+.story-type{
+
+  position:relative;
+
+  z-index:2;
+
+  margin-top:4px;
+
+  font-size:10px;
+
+  opacity:.8;
+}
+
+
+/* =========================================================
+   ADD STORY
+========================================================= */
+
+.add-story{
+
+  background:
+    linear-gradient(
+      160deg,
+      #2563eb,
+      #1e40af
+    );
+}
+
+.add-story .story-icon{
+
+  background:#fff;
+
+  color:#2563eb;
+
+  border-color:#fff;
+}
+
+
+/* =========================================================
+   STORY VIEWER
+========================================================= */
+
+.viewer{
+
+  position:fixed;
+
+  inset:0;
+
+  z-index:600;
+
+  display:none;
+
+  align-items:center;
+
+  justify-content:center;
+
+  padding:20px;
+
+  background:
+    rgba(2,6,23,.82);
+
+  backdrop-filter:
+    blur(12px);
+}
+
+.viewer.show{
+  display:flex;
+}
+
+.viewer-card{
+
+  position:relative;
+
+  width:
+    min(
+      430px,
+      100%
+    );
+
+  height:
+    min(
+      720px,
+      88vh
+    );
+
+  overflow:hidden;
+
+  display:flex;
+
+  flex-direction:column;
+
+  justify-content:flex-end;
+
+  padding:25px;
+
+  border-radius:28px;
+
+  color:#fff;
+
+  background:
+    linear-gradient(
+      160deg,
+      #2563eb,
+      #172554 55%,
+      #020617
+    );
+
+  box-shadow:
+    0 35px 100px
+    rgba(0,0,0,.45);
+}
+
+.viewer-glow{
+
+  position:absolute;
+
+  width:260px;
+
+  height:260px;
+
+  right:-80px;
+
+  top:-70px;
+
+  border-radius:50%;
+
+  background:
+    rgba(96,165,250,.35);
+
+  filter:blur(5px);
+}
+
+.viewer-orb{
+
+  position:absolute;
+
+  width:120px;
+
+  height:120px;
+
+  left:50%;
+
+  top:38%;
+
+  transform:
+    translate(-50%,-50%);
+
+  display:flex;
+
+  align-items:center;
+
+  justify-content:center;
+
+  border-radius:50%;
+
+  background:
+    rgba(255,255,255,.12);
+
+  border:
+    2px solid
+    rgba(255,255,255,.5);
+
+  box-shadow:
+    0 0 50px
+    rgba(96,165,250,.35);
+
+  font-size:52px;
+}
+
+.viewer-content{
+
+  position:relative;
+
+  z-index:2;
+}
+
+.viewer-title{
+
+  font-size:27px;
+
+  font-weight:900;
+
+  margin-bottom:8px;
+}
+
+.viewer-text{
+
+  color:
+    rgba(255,255,255,.78);
+
+  line-height:1.5;
+
+  font-size:14px;
+}
+
+.close-viewer{
+
+  position:absolute;
+
+  top:15px;
+
+  right:15px;
+
+  z-index:5;
+
+  width:40px;
+
+  height:40px;
+
+  border:0;
+
+  border-radius:50%;
+
+  background:
+    rgba(255,255,255,.16);
+
+  color:#fff;
+
+  font-size:19px;
+}
+
+
+/* =========================================================
+   TOAST
+========================================================= */
+
+.toast{
+
+  position:fixed;
+
+  left:50%;
+
+  bottom:24px;
+
+  z-index:900;
+
+  max-width:
+    calc(100% - 30px);
+
+  padding:
+    12px 17px;
+
+  border-radius:12px;
+
+  background:#0f172a;
+
+  color:#fff;
+
+  font-size:13px;
+
+  opacity:0;
+
+  pointer-events:none;
+
+  transform:
+    translateX(-50%)
+    translateY(18px);
+
+  transition:.25s ease;
+}
+
+.toast.show{
+
+  opacity:1;
+
+  transform:
+    translateX(-50%)
+    translateY(0);
+}
+
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+.footer{
+
+  text-align:center;
+
+  color:#64748b;
+
+  font-size:12px;
+
+  padding:
+    35px 20px;
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media(max-width:850px){
+
+  .topbar{
+
+    flex-direction:column;
+
+    align-items:flex-start;
+  }
+
+  .nav{
+
+    width:100%;
+  }
+
+  .hero{
+
+    grid-template-columns:1fr;
+
+    padding:25px;
+  }
+
+  .hero-visual{
+
+    min-height:260px;
+  }
+
+}
+
+@media(max-width:520px){
+
+  .container{
+
+    width:
+      calc(100% - 20px);
+
+    margin-top:15px;
+  }
+
+  .hero{
+
+    padding:21px;
+
+    border-radius:22px;
+  }
+
+  .hero h1{
+
+    font-size:34px;
+  }
+
+  .hero p{
+
+    font-size:14px;
+  }
+
+  .hero-visual{
+
+    transform:
+      scale(.88);
+  }
+
+  .card{
+
+    padding:17px;
+
+    border-radius:20px;
+  }
+
+  .story{
+
+    flex-basis:135px;
+
+    height:205px;
+  }
+
+}
+
+</style>
+
 </head>
+
 
 <body>
 
-  <header class="topbar">
 
-    <div class="logo">Zemivo</div>
+<!-- =======================================================
+     TOPBAR
+======================================================= -->
 
-    <nav class="nav">
-      <a href="index.html">🏠 Home</a>
-      <a href="profile.html">👤 Profile</a>
-      <a href="feed.html">📰 Feed</a>
-      <a href="videos.html">🎥 Videos</a>
-      <a href="notifications.html">🔔 Notifications</a>
-    </nav>
+<header class="topbar">
 
-  </header>
+  <div class="logo">
+    Zemivo
+  </div>
 
-  <main class="container">
+  <nav class="nav">
 
-    <div class="card">
+    <a href="index.html">
+      🏠 Home
+    </a>
 
-      <h1>📸 Zemivo Stories</h1>
+    <a href="profile.html">
+      👤 Profile
+    </a>
+
+    <a href="feed.html">
+      📰 Feed
+    </a>
+
+    <a href="friends.html">
+      👥 Friends
+    </a>
+
+    <a href="notifications.html">
+      🔔 Notifications
+    </a>
+
+  </nav>
+
+</header>
+
+
+<!-- =======================================================
+     MAIN
+======================================================= -->
+
+<main class="container">
+
+
+  <!-- HERO -->
+
+  <section class="hero">
+
+    <div class="hero-content">
+
+      <div class="badge">
+        ✨ Living Stories
+      </div>
+
+      <h1>
+        Share Your
+        <span>Moment.</span>
+      </h1>
 
       <p>
-        Share moments with your friends and followers.
+        Share photos, videos and moments
+        with friends and followers through
+        Zemivo Stories.
       </p>
+
+      <div class="hero-actions">
+
+        <button
+          id="addStoryHero"
+          class="primary"
+          type="button"
+        >
+          + Add Story
+        </button>
+
+        <button
+          id="viewStories"
+          class="secondary"
+          type="button"
+        >
+          View Stories
+        </button>
+
+      </div>
 
     </div>
 
-    <div class="card">
 
-      <div class="story-list">
+    <!-- CSS 3D VISUAL -->
 
-        <div class="story add-story" onclick="addStory()">
-          <div class="story-icon">➕</div>
-          <div>Your Story</div>
+    <div
+      class="hero-visual"
+      aria-hidden="true"
+    >
+
+      <div class="story-world">
+
+        <div class="world-ring"></div>
+
+        <div class="world-ring two"></div>
+
+        <div class="world-core"></div>
+
+        <div class="story-orb orb-one">
+          📸
         </div>
 
-        <div class="story" onclick="openStory('Creator Story')">
-          <div class="story-icon">🎥</div>
-          <div>Creator Story</div>
+        <div class="story-orb orb-two">
+          🎥
         </div>
 
-        <div class="story" onclick="openStory('Gaming Story')">
-          <div class="story-icon">🎮</div>
-          <div>Gaming Story</div>
+        <div class="story-orb orb-three">
+          ✨
         </div>
 
-        <div class="story" onclick="openStory('Travel Story')">
-          <div class="story-icon">🌍</div>
-          <div>Travel Story</div>
+        <div class="world-label label-one">
+          📸 Moments
         </div>
 
-        <div class="story" onclick="openStory('Business Story')">
-          <div class="story-icon">💼</div>
-          <div>Business Story</div>
+        <div class="world-label label-two">
+          🌍 Share
         </div>
 
       </div>
 
     </div>
 
-  </main>
+  </section>
 
-  <footer class="footer">
-    © 2026 Zemivo — Connect. Create. Earn.
-  </footer>
 
-  <script>
+  <!-- STORIES -->
 
-    function addStory() {
+  <section
+    id="storiesSection"
+    class="card"
+  >
 
-      const text = prompt("Write your story:");
+    <div class="section-head">
 
-      if (text && text.trim() !== "") {
+      <div>
 
-        alert(
-          "Your story is ready to publish: " +
-          text.trim()
+        <div class="section-title">
+          Stories
+        </div>
+
+        <div class="section-subtitle">
+          Moments from the Zemivo community.
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <div class="story-list">
+
+
+      <!-- YOUR STORY -->
+
+      <article
+        class="story add-story"
+        id="yourStory"
+      >
+
+        <div class="story-icon">
+          ➕
+        </div>
+
+        <div class="story-name">
+          Your Story
+        </div>
+
+        <div class="story-type">
+          Add a new story
+        </div>
+
+      </article>
+
+
+      <!-- CREATOR -->
+
+      <article
+        class="story"
+        data-story-name="Creator Story"
+        data-story-icon="🎥"
+      >
+
+        <div class="story-icon">
+          🎥
+        </div>
+
+        <div class="story-name">
+          Creator Story
+        </div>
+
+        <div class="story-type">
+          Video
+        </div>
+
+      </article>
+
+
+      <!-- GAMING -->
+
+      <article
+        class="story"
+        data-story-name="Gaming Story"
+        data-story-icon="🎮"
+      >
+
+        <div class="story-icon">
+          🎮
+        </div>
+
+        <div class="story-name">
+          Gaming Story
+        </div>
+
+        <div class="story-type">
+          Gaming
+        </div>
+
+      </article>
+
+
+      <!-- TRAVEL -->
+
+      <article
+        class="story"
+        data-story-name="Travel Story"
+        data-story-icon="🌍"
+      >
+
+        <div class="story-icon">
+          🌍
+        </div>
+
+        <div class="story-name">
+          Travel Story
+        </div>
+
+        <div class="story-type">
+          Travel
+        </div>
+
+      </article>
+
+
+      <!-- BUSINESS -->
+
+      <article
+        class="story"
+        data-story-name="Business Story"
+        data-story-icon="💼"
+      >
+
+        <div class="story-icon">
+          💼
+        </div>
+
+        <div class="story-name">
+          Business Story
+        </div>
+
+        <div class="story-type">
+          Business
+        </div>
+
+      </article>
+
+
+    </div>
+
+  </section>
+
+
+</main>
+
+
+<!-- =======================================================
+     STORY VIEWER
+======================================================= -->
+
+<div
+  id="viewer"
+  class="viewer"
+  aria-hidden="true"
+>
+
+  <div class="viewer-card">
+
+    <div class="viewer-glow"></div>
+
+    <button
+      id="closeViewer"
+      class="close-viewer"
+      type="button"
+      aria-label="Close story"
+    >
+      ✕
+    </button>
+
+    <div
+      id="viewerOrb"
+      class="viewer-orb"
+    >
+      🎥
+    </div>
+
+    <div class="viewer-content">
+
+      <div
+        id="viewerTitle"
+        class="viewer-title"
+      >
+        Story
+      </div>
+
+      <div class="viewer-text">
+        Story viewer is ready.
+        Real photo/video story delivery
+        will be connected with the
+        secure media backend later.
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<!-- TOAST -->
+
+<div
+  id="toast"
+  class="toast"
+  role="status"
+  aria-live="polite"
+></div>
+
+
+<!-- FOOTER -->
+
+<footer class="footer">
+
+  © 2026 Zemivo —
+  Connect. Create. Earn.
+
+</footer>
+
+
+<!-- =======================================================
+     ZEMIVO STORIES SCRIPT
+======================================================= -->
+
+<script type="module">
+
+/*
+  SECURITY FOUNDATION
+
+  This page uses the centralized
+  Zemivo security layer.
+
+  Firebase is NOT initialized
+  independently here.
+*/
+
+import {
+  auth
+} from "./zemivo-security.js";
+
+import {
+  onAuthStateChanged
+} from
+"https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
+
+
+/* =========================================================
+   ELEMENTS
+========================================================= */
+
+const addStoryHero =
+  document.getElementById(
+    "addStoryHero"
+  );
+
+const viewStories =
+  document.getElementById(
+    "viewStories"
+  );
+
+const yourStory =
+  document.getElementById(
+    "yourStory"
+  );
+
+const storiesSection =
+  document.getElementById(
+    "storiesSection"
+  );
+
+const storyCards =
+  document.querySelectorAll(
+    ".story[data-story-name]"
+  );
+
+const viewer =
+  document.getElementById(
+    "viewer"
+  );
+
+const closeViewer =
+  document.getElementById(
+    "closeViewer"
+  );
+
+const viewerTitle =
+  document.getElementById(
+    "viewerTitle"
+  );
+
+const viewerOrb =
+  document.getElementById(
+    "viewerOrb"
+  );
+
+const toast =
+  document.getElementById(
+    "toast"
+  );
+
+
+/* =========================================================
+   STATE
+========================================================= */
+
+let currentUser =
+  null;
+
+let toastTimer =
+  null;
+
+
+/* =========================================================
+   TOAST
+========================================================= */
+
+function showToast(text){
+
+  toast.textContent =
+    text;
+
+  toast.classList.add(
+    "show"
+  );
+
+  clearTimeout(
+    toastTimer
+  );
+
+  toastTimer =
+    setTimeout(
+      function(){
+
+        toast.classList.remove(
+          "show"
+        );
+
+      },
+      2600
+    );
+
+}
+
+
+/* =========================================================
+   AUTH
+========================================================= */
+
+onAuthStateChanged(
+  auth,
+  function(user){
+
+    currentUser =
+      user || null;
+
+  }
+);
+
+
+/* =========================================================
+   ADD STORY
+========================================================= */
+
+function addStory(){
+
+  if(!currentUser){
+
+    showToast(
+      "Please log in to create a story."
+    );
+
+    return;
+
+  }
+
+  showToast(
+    "Story creation interface is ready. Secure media upload will be connected later."
+  );
+
+}
+
+
+addStoryHero.addEventListener(
+  "click",
+  addStory
+);
+
+
+yourStory.addEventListener(
+  "click",
+  addStory
+);
+
+
+/* =========================================================
+   OPEN STORY
+========================================================= */
+
+function openStory(
+  name,
+  icon
+){
+
+  viewerTitle.textContent =
+    name;
+
+  viewerOrb.textContent =
+    icon;
+
+  viewer.classList.add(
+    "show"
+  );
+
+  viewer.setAttribute(
+    "aria-hidden",
+    "false"
+  );
+
+}
+
+
+/* =========================================================
+   STORY CARDS
+========================================================= */
+
+storyCards.forEach(
+  function(card){
+
+    card.addEventListener(
+      "click",
+      function(){
+
+        openStory(
+          card.dataset.storyName,
+          card.dataset.storyIcon
         );
 
       }
+    );
+
+  }
+);
+
+
+/* =========================================================
+   VIEW STORIES
+========================================================= */
+
+viewStories.addEventListener(
+  "click",
+  function(){
+
+    storiesSection.scrollIntoView({
+      behavior:"smooth",
+      block:"start"
+    });
+
+  }
+);
+
+
+/* =========================================================
+   CLOSE VIEWER
+========================================================= */
+
+function closeStoryViewer(){
+
+  viewer.classList.remove(
+    "show"
+  );
+
+  viewer.setAttribute(
+    "aria-hidden",
+    "true"
+  );
+
+}
+
+
+closeViewer.addEventListener(
+  "click",
+  closeStoryViewer
+);
+
+
+viewer.addEventListener(
+  "click",
+  function(event){
+
+    if(
+      event.target ===
+      viewer
+    ){
+
+      closeStoryViewer();
 
     }
 
-    function openStory(name) {
+  }
+);
 
-      alert(
-        name +
-        " will open here."
-      );
+
+/* =========================================================
+   ESCAPE
+========================================================= */
+
+document.addEventListener(
+  "keydown",
+  function(event){
+
+    if(
+      event.key ===
+      "Escape"
+    ){
+
+      closeStoryViewer();
 
     }
 
-  </script>
+  }
+);
+
+
+/* =========================================================
+   FUTURE LIVING 3D WORLD HOOK
+=========================================================
+
+   The actual Living 3D World engine
+   remains separate from this page.
+
+   Later it can react automatically
+   to:
+
+   - story image colors
+   - video mood
+   - music/audio
+   - topic
+   - movement
+   - global language
+   - user interaction
+
+   This page does not directly
+   modify the future engine.
+========================================================= */
+
+window.ZemivoStories =
+  Object.freeze({
+
+    version:"1.0.0",
+
+    page:"stories",
+
+    livingWorldReady:true
+
+  });
+
+
+console.log(
+  "Zemivo Stories page loaded."
+);
+
+</script>
 
 </body>
+
 </html>
