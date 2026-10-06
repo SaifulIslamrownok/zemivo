@@ -1,115 +1,1578 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
   <title>Zemivo - Referrals</title>
+
+
   <style>
-    body{font-family:Arial;background:#f4f6f8;margin:0;color:#222}
-    .topbar{background:white;padding:18px;text-align:center;box-shadow:0 2px 8px #ddd}
-    .logo{font-size:28px;font-weight:bold;color:#2563eb}
-    .container{max-width:700px;margin:25px auto;padding:15px}
-    .card{background:white;padding:22px;border-radius:15px;margin-bottom:18px;box-shadow:0 2px 8px #ddd}
-    h1{color:#2563eb}
-    .invite{background:#eff6ff;padding:15px;border-radius:10px;margin-top:15px;word-break:break-all}
-    button{background:#2563eb;color:white;border:0;padding:11px 18px;border-radius:22px;font-weight:bold;cursor:pointer;margin-top:10px}
-    .stats{display:flex;gap:10px}
-    .stat{flex:1;background:#f8fafc;padding:18px;text-align:center;border-radius:10px}
-    .stat h2{color:#2563eb}
+
+    *{
+      box-sizing:border-box;
+      margin:0;
+      padding:0;
+    }
+
+
+    :root{
+      --blue:#2563eb;
+      --blue-dark:#1d4ed8;
+      --cyan:#38bdf8;
+      --text:#17202a;
+      --muted:#64748b;
+      --glass:rgba(255,255,255,.76);
+      --border:rgba(255,255,255,.7);
+    }
+
+
+    body{
+
+      min-height:100vh;
+
+      font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+      color:var(--text);
+
+      background:
+
+        radial-gradient(
+          circle at 10% 10%,
+          rgba(37,99,235,.18),
+          transparent 30%
+        ),
+
+        radial-gradient(
+          circle at 90% 20%,
+          rgba(56,189,248,.18),
+          transparent 28%
+        ),
+
+        linear-gradient(
+          135deg,
+          #eef5ff,
+          #f8fafc 50%,
+          #eef6ff
+        );
+
+      overflow-x:hidden;
+    }
+
+
+    button{
+      font-family:inherit;
+      cursor:pointer;
+    }
+
+
+    /* TOPBAR */
+
+    .topbar{
+
+      position:sticky;
+      top:0;
+      z-index:100;
+
+      min-height:68px;
+
+      padding:
+        12px 20px;
+
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+
+      background:
+        rgba(255,255,255,.82);
+
+      backdrop-filter:
+        blur(18px);
+
+      -webkit-backdrop-filter:
+        blur(18px);
+
+      border-bottom:
+        1px solid
+        rgba(255,255,255,.8);
+
+      box-shadow:
+        0 8px 30px
+        rgba(15,23,42,.08);
+    }
+
+
+    .logo{
+
+      font-size:28px;
+
+      font-weight:900;
+
+      color:var(--blue);
+
+      letter-spacing:-1px;
+    }
+
+
+    .top-status{
+
+      display:flex;
+      align-items:center;
+      gap:7px;
+
+      color:#64748b;
+
+      font-size:12px;
+
+      font-weight:bold;
+    }
+
+
+    .status-dot{
+
+      width:8px;
+      height:8px;
+
+      border-radius:50%;
+
+      background:#22c55e;
+
+      box-shadow:
+        0 0 10px
+        rgba(34,197,94,.6);
+    }
+
+
+    /* MAIN */
+
+    .container{
+
+      width:
+        min(
+          850px,
+          calc(100% - 30px)
+        );
+
+      margin:
+        30px auto;
+    }
+
+
+    /* HERO */
+
+    .hero{
+
+      position:relative;
+
+      min-height:270px;
+
+      padding:32px;
+
+      display:flex;
+
+      align-items:center;
+
+      justify-content:space-between;
+
+      gap:25px;
+
+      overflow:hidden;
+
+      border:
+        1px solid
+        var(--border);
+
+      border-radius:26px;
+
+      background:
+        linear-gradient(
+          135deg,
+          rgba(255,255,255,.9),
+          rgba(239,246,255,.72)
+        );
+
+      backdrop-filter:
+        blur(20px);
+
+      -webkit-backdrop-filter:
+        blur(20px);
+
+      box-shadow:
+        0 20px 55px
+        rgba(37,99,235,.12);
+    }
+
+
+    .hero-content{
+
+      position:relative;
+
+      z-index:5;
+
+      max-width:520px;
+    }
+
+
+    .hero-badge{
+
+      display:inline-flex;
+
+      padding:
+        7px 12px;
+
+      margin-bottom:14px;
+
+      border-radius:999px;
+
+      background:
+        rgba(37,99,235,.1);
+
+      color:var(--blue);
+
+      font-size:12px;
+
+      font-weight:bold;
+    }
+
+
+    .hero h1{
+
+      font-size:36px;
+
+      line-height:1.1;
+
+      color:var(--blue);
+
+      margin-bottom:12px;
+    }
+
+
+    .hero p{
+
+      color:var(--muted);
+
+      line-height:1.6;
+
+      font-size:15px;
+    }
+
+
+    /* 3D REFERRAL WORLD */
+
+    .referral-world{
+
+      position:relative;
+
+      width:230px;
+      height:190px;
+
+      flex-shrink:0;
+
+      perspective:700px;
+    }
+
+
+    .world-core{
+
+      position:absolute;
+
+      width:100px;
+      height:100px;
+
+      left:50%;
+      top:50%;
+
+      transform:
+        translate(-50%,-50%)
+        rotateX(58deg)
+        rotateZ(18deg);
+
+      border-radius:28px;
+
+      background:
+        linear-gradient(
+          135deg,
+          #2563eb,
+          #38bdf8
+        );
+
+      box-shadow:
+        0 25px 60px
+        rgba(37,99,235,.35);
+
+      animation:
+        floatingCore
+        5s
+        ease-in-out
+        infinite;
+    }
+
+
+    .world-ring{
+
+      position:absolute;
+
+      width:180px;
+      height:70px;
+
+      left:50%;
+      top:50%;
+
+      transform:
+        translate(-50%,-50%)
+        rotateX(62deg);
+
+      border:
+        2px solid
+        rgba(37,99,235,.25);
+
+      border-radius:50%;
+
+      animation:
+        ringSpin
+        8s
+        linear
+        infinite;
+    }
+
+
+    .world-user{
+
+      position:absolute;
+
+      width:28px;
+      height:28px;
+
+      display:flex;
+
+      align-items:center;
+      justify-content:center;
+
+      border-radius:50%;
+
+      background:
+        rgba(255,255,255,.9);
+
+      box-shadow:
+        0 8px 20px
+        rgba(37,99,235,.2);
+
+      font-size:15px;
+
+      animation:
+        userFloat
+        4s
+        ease-in-out
+        infinite;
+    }
+
+
+    .world-user.one{
+
+      top:22px;
+      left:25px;
+    }
+
+
+    .world-user.two{
+
+      right:15px;
+      top:72px;
+
+      animation-delay:
+        1s;
+    }
+
+
+    .world-user.three{
+
+      bottom:22px;
+      left:82px;
+
+      animation-delay:
+        2s;
+    }
+
+
+    @keyframes floatingCore{
+
+      0%,
+      100%{
+
+        transform:
+          translate(-50%,-50%)
+          rotateX(58deg)
+          rotateZ(18deg)
+          translateY(0);
+
+      }
+
+      50%{
+
+        transform:
+          translate(-50%,-50%)
+          rotateX(58deg)
+          rotateZ(18deg)
+          translateY(-12px);
+
+      }
+
+    }
+
+
+    @keyframes ringSpin{
+
+      from{
+
+        transform:
+          translate(-50%,-50%)
+          rotateX(62deg)
+          rotateZ(0deg);
+
+      }
+
+      to{
+
+        transform:
+          translate(-50%,-50%)
+          rotateX(62deg)
+          rotateZ(360deg);
+
+      }
+
+    }
+
+
+    @keyframes userFloat{
+
+      0%,
+      100%{
+
+        transform:
+          translateY(0);
+
+      }
+
+      50%{
+
+        transform:
+          translateY(-9px);
+
+      }
+
+    }
+
+
+    /* CARD */
+
+    .card{
+
+      margin-top:20px;
+
+      padding:24px;
+
+      border:
+        1px solid
+        var(--border);
+
+      border-radius:22px;
+
+      background:
+        var(--glass);
+
+      backdrop-filter:
+        blur(18px);
+
+      -webkit-backdrop-filter:
+        blur(18px);
+
+      box-shadow:
+        0 14px 40px
+        rgba(15,23,42,.07);
+    }
+
+
+    .card h2{
+
+      font-size:21px;
+
+      margin-bottom:7px;
+    }
+
+
+    .card-description{
+
+      color:var(--muted);
+
+      font-size:13px;
+
+      line-height:1.5;
+
+      margin-bottom:17px;
+    }
+
+
+    /* INVITE LINK */
+
+    .invite{
+
+      padding:15px;
+
+      border-radius:14px;
+
+      background:
+        linear-gradient(
+          135deg,
+          #eff6ff,
+          #f8fbff
+        );
+
+      border:
+        1px solid
+        #dbeafe;
+
+      color:
+        #1d4ed8;
+
+      font-size:13px;
+
+      line-height:1.5;
+
+      word-break:break-all;
+    }
+
+
+    .buttons{
+
+      display:flex;
+
+      flex-wrap:wrap;
+
+      gap:10px;
+
+      margin-top:13px;
+    }
+
+
+    .button{
+
+      border:0;
+
+      padding:
+        11px 18px;
+
+      border-radius:22px;
+
+      color:white;
+
+      background:
+        linear-gradient(
+          135deg,
+          #2563eb,
+          #1d4ed8
+        );
+
+      font-weight:bold;
+
+      box-shadow:
+        0 8px 18px
+        rgba(37,99,235,.18);
+
+      transition:.2s;
+    }
+
+
+    .button:hover{
+
+      transform:
+        translateY(-2px);
+
+      box-shadow:
+        0 12px 25px
+        rgba(37,99,235,.25);
+    }
+
+
+    .button.secondary{
+
+      color:var(--blue);
+
+      background:
+        #eaf2ff;
+
+      box-shadow:none;
+    }
+
+
+    /* STATS */
+
+    .stats{
+
+      display:grid;
+
+      grid-template-columns:
+        repeat(3,1fr);
+
+      gap:13px;
+
+      margin-top:18px;
+    }
+
+
+    .stat{
+
+      padding:20px 12px;
+
+      text-align:center;
+
+      border:
+        1px solid
+        #e2e8f0;
+
+      border-radius:17px;
+
+      background:
+        rgba(255,255,255,.7);
+
+      transition:.2s;
+    }
+
+
+    .stat:hover{
+
+      transform:
+        translateY(-4px);
+
+      box-shadow:
+        0 12px 25px
+        rgba(37,99,235,.1);
+    }
+
+
+    .stat-icon{
+
+      font-size:28px;
+
+      margin-bottom:8px;
+    }
+
+
+    .stat h2{
+
+      color:var(--blue);
+
+      font-size:27px;
+
+      margin-bottom:5px;
+    }
+
+
+    .stat p{
+
+      color:var(--muted);
+
+      font-size:13px;
+    }
+
+
+    /* REWARD */
+
+    .reward{
+
+      display:flex;
+
+      align-items:center;
+
+      justify-content:space-between;
+
+      gap:15px;
+
+      padding:18px;
+
+      border-radius:17px;
+
+      background:
+        linear-gradient(
+          135deg,
+          rgba(239,246,255,.9),
+          rgba(255,255,255,.75)
+        );
+
+      border:
+        1px solid
+        #dbeafe;
+    }
+
+
+    .reward-title{
+
+      font-weight:bold;
+
+      margin-bottom:5px;
+    }
+
+
+    .reward-text{
+
+      color:var(--muted);
+
+      font-size:13px;
+
+      line-height:1.5;
+    }
+
+
+    .reward-value{
+
+      color:var(--blue);
+
+      font-size:27px;
+
+      font-weight:900;
+
+      white-space:nowrap;
+    }
+
+
+    /* STATUS */
+
+    .status{
+
+      display:none;
+
+      margin-top:15px;
+
+      padding:12px 15px;
+
+      border-radius:12px;
+
+      background:
+        rgba(37,99,235,.07);
+
+      color:#475569;
+
+      font-size:13px;
+    }
+
+
+    .status.show{
+
+      display:block;
+    }
+
+
+    /* FOOTER */
+
+    .footer{
+
+      text-align:center;
+
+      color:#64748b;
+
+      font-size:13px;
+
+      padding:
+        15px 20px
+        35px;
+    }
+
+
+    /* MOBILE */
+
+    @media(max-width:700px){
+
+      .topbar{
+
+        flex-direction:column;
+
+        align-items:flex-start;
+
+        gap:8px;
+      }
+
+
+      .hero{
+
+        flex-direction:column;
+
+        align-items:flex-start;
+
+        padding:25px;
+      }
+
+
+      .hero h1{
+
+        font-size:29px;
+      }
+
+
+      .referral-world{
+
+        align-self:center;
+      }
+
+
+      .stats{
+
+        grid-template-columns:
+          1fr 1fr;
+      }
+
+    }
+
+
+    @media(max-width:480px){
+
+      .container{
+
+        width:
+          calc(100% - 20px);
+
+        margin-top:15px;
+      }
+
+
+      .stats{
+
+        grid-template-columns:1fr;
+      }
+
+
+      .reward{
+
+        flex-direction:column;
+
+        align-items:flex-start;
+      }
+
+
+      .buttons{
+
+        flex-direction:column;
+      }
+
+
+      .button{
+
+        width:100%;
+      }
+
+    }
+
   </style>
+
 </head>
+
+
 <body>
 
+
 <header class="topbar">
-  <div class="logo">Zemivo</div>
-</header>
 
-<main class="container">
-
-  <div class="card">
-    <h1>🔗 Invite Friends</h1>
-
-    <p>
-      Invite friends to Zemivo and grow your community.
-    </p>
-
-    <div class="invite" id="inviteLink">
-      https://saifulislamrownok.github.io/zemivo/
-    </div>
-
-    <button onclick="copyInvite()">
-      📋 Copy Invite Link
-    </button>
-
-    <button onclick="shareInvite()">
-      ↗ Share Invite
-    </button>
+  <div class="logo">
+    Zemivo
   </div>
 
-  <div class="card">
 
-    <h2>📊 Referral Statistics</h2>
+  <div class="top-status">
+
+    <span class="status-dot"></span>
+
+    Referral System
+
+  </div>
+
+</header>
+
+
+<main
+  class="container"
+  id="referralsPage"
+>
+
+
+  <!-- HERO -->
+
+  <section class="hero">
+
+
+    <div class="hero-content">
+
+      <div class="hero-badge">
+        ✦ Zemivo Community Growth
+      </div>
+
+
+      <h1>
+        🔗 Invite Friends
+      </h1>
+
+
+      <p>
+        Invite people to Zemivo,
+        grow your community and
+        unlock future creator and
+        referral opportunities.
+      </p>
+
+    </div>
+
+
+    <!-- 3D READY WORLD -->
+
+    <div
+      class="referral-world"
+      aria-hidden="true"
+    >
+
+      <div class="world-ring"></div>
+
+      <div class="world-core"></div>
+
+      <div class="world-user one">
+        👤
+      </div>
+
+      <div class="world-user two">
+        👤
+      </div>
+
+      <div class="world-user three">
+        👤
+      </div>
+
+    </div>
+
+
+  </section>
+
+
+  <!-- INVITE -->
+
+  <section class="card">
+
+    <h2>
+      📩 Your Invite Link
+    </h2>
+
+
+    <p class="card-description">
+
+      Share your Zemivo invitation link
+      with friends and other people.
+
+    </p>
+
+
+    <div
+      class="invite"
+      id="inviteLink"
+    >
+      Creating your secure invite link...
+    </div>
+
+
+    <div class="buttons">
+
+      <button
+        class="button"
+        id="copyButton"
+        type="button"
+      >
+        📋 Copy Invite Link
+      </button>
+
+
+      <button
+        class="button secondary"
+        id="shareButton"
+        type="button"
+      >
+        ↗ Share Invite
+      </button>
+
+    </div>
+
+
+    <div
+      id="inviteStatus"
+      class="status"
+    ></div>
+
+  </section>
+
+
+  <!-- STATISTICS -->
+
+  <section class="card">
+
+    <h2>
+      📊 Referral Statistics
+    </h2>
+
+
+    <p class="card-description">
+
+      Your referral statistics will update
+      when the secure referral backend
+      becomes active.
+
+    </p>
+
 
     <div class="stats">
 
-      <div class="stat">
-        <h2>0</h2>
-        <p>Invites</p>
-      </div>
 
       <div class="stat">
-        <h2>0</h2>
-        <p>Joined</p>
+
+        <div class="stat-icon">
+          📨
+        </div>
+
+        <h2 id="inviteCount">
+          0
+        </h2>
+
+        <p>
+          Invites
+        </p>
+
       </div>
 
+
       <div class="stat">
-        <h2>$0</h2>
-        <p>Rewards</p>
+
+        <div class="stat-icon">
+          👥
+        </div>
+
+        <h2 id="joinedCount">
+          0
+        </h2>
+
+        <p>
+          Joined
+        </p>
+
+      </div>
+
+
+      <div class="stat">
+
+        <div class="stat-icon">
+          💰
+        </div>
+
+        <h2 id="rewardCount">
+          $0
+        </h2>
+
+        <p>
+          Rewards
+        </p>
+
+      </div>
+
+
+    </div>
+
+  </section>
+
+
+  <!-- FUTURE REWARD -->
+
+  <section class="card">
+
+    <h2>
+      🎁 Referral Rewards
+    </h2>
+
+
+    <p class="card-description">
+
+      Zemivo's future referral and creator
+      reward system will be connected
+      through a secure backend and ledger.
+
+    </p>
+
+
+    <div class="reward">
+
+      <div>
+
+        <div class="reward-title">
+          Current Referral Reward
+        </div>
+
+        <div class="reward-text">
+          No reward has been credited.
+          Future rewards will be verified
+          before being added to your account.
+        </div>
+
+      </div>
+
+
+      <div class="reward-value">
+        $0
       </div>
 
     </div>
 
-  </div>
+
+    <div
+      id="rewardStatus"
+      class="status"
+    >
+      Reward system is ready for future
+      secure backend integration.
+    </div>
+
+  </section>
+
+
+  <!-- SECURITY -->
+
+  <section class="card">
+
+    <h2>
+      🔐 Referral Security
+    </h2>
+
+
+    <p
+      class="card-description"
+      id="accountStatus"
+    >
+      Checking your Zemivo account...
+    </p>
+
+  </section>
+
 
 </main>
 
-<script>
 
-function copyInvite(){
+<footer class="footer">
 
-  const link =
-    document.getElementById("inviteLink").textContent.trim();
+  © 2026 Zemivo —
+  Connect. Create. Earn.
 
-  navigator.clipboard.writeText(link);
+</footer>
 
-  alert("Invite link copied!");
 
-}
+<script type="module">
 
-function shareInvite(){
 
-  const link =
-    document.getElementById("inviteLink").textContent.trim();
+  /*
+   * ZEMIVO REFERRALS
+   *
+   * 1. Security Foundation
+   *    Firebase services come only from
+   *    zemivo-security.js.
+   *
+   * 2. Page Isolation
+   *    This page owns its own referral
+   *    UI and logic.
+   *
+   * 3. Living 3D World
+   *    The visual world is kept modular.
+   *    The main Living 3D Engine can be
+   *    connected later without rebuilding
+   *    this page.
+   */
 
-  if(navigator.share){
 
-    navigator.share({
-      title: "Join Zemivo",
-      text: "Join me on Zemivo!",
-      url: link
+  import {
+    auth
+  } from "./zemivo-security.js";
+
+
+  import {
+    onAuthStateChanged
+  } from
+    "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
+
+
+  /* ELEMENTS */
+
+  const inviteLink =
+    document.getElementById(
+      "inviteLink"
+    );
+
+
+  const copyButton =
+    document.getElementById(
+      "copyButton"
+    );
+
+
+  const shareButton =
+    document.getElementById(
+      "shareButton"
+    );
+
+
+  const inviteStatus =
+    document.getElementById(
+      "inviteStatus"
+    );
+
+
+  const rewardStatus =
+    document.getElementById(
+      "rewardStatus"
+    );
+
+
+  const accountStatus =
+    document.getElementById(
+      "accountStatus"
+    );
+
+
+  /* PAGE ISOLATION */
+
+  const ZemivoReferralsPage =
+    Object.freeze({
+
+      name:
+        "Zemivo Referrals",
+
+      version:
+        "1.0.0",
+
+      initialized:
+        false
+
     });
 
-  }else{
 
-    navigator.clipboard.writeText(link);
+  Object.defineProperty(
+    window,
+    "ZemivoReferralsPage",
+    {
+      value:
+        ZemivoReferralsPage,
 
-    alert("Invite link copied!");
+      writable:false,
+
+      configurable:false,
+
+      enumerable:false
+    }
+  );
+
+
+  /* INVITE LINK */
+
+  function createInviteLink(
+    user
+  ){
+
+    /*
+     * The UID is used only as a
+     * referral identifier in the URL.
+     *
+     * The actual reward verification
+     * must happen server-side later.
+     */
+
+    const baseUrl =
+      window.location.origin +
+      window.location.pathname
+        .replace(
+          "referrals.html",
+          ""
+        );
+
+
+    return (
+      baseUrl +
+      "signup.html?ref=" +
+      encodeURIComponent(
+        user.uid
+      )
+    );
 
   }
 
-}
+
+  /* STATUS */
+
+  function showStatus(
+    text
+  ){
+
+    inviteStatus.textContent =
+      text;
+
+    inviteStatus.classList.add(
+      "show"
+    );
+
+    setTimeout(
+      function(){
+
+        inviteStatus.classList.remove(
+          "show"
+        );
+
+      },
+      2500
+    );
+
+  }
+
+
+  /* COPY */
+
+  async function copyInvite(){
+
+    const link =
+      inviteLink.textContent.trim();
+
+
+    if(
+      !link ||
+      link.includes(
+        "Creating your"
+      )
+    ){
+
+      showStatus(
+        "Your invite link is not ready yet."
+      );
+
+      return;
+
+    }
+
+
+    try{
+
+      await navigator.clipboard.writeText(
+        link
+      );
+
+      showStatus(
+        "Invite link copied successfully."
+      );
+
+    }
+    catch(error){
+
+      console.error(
+        "Copy invite error:",
+        error
+      );
+
+      showStatus(
+        "Could not copy the link. Please copy it manually."
+      );
+
+    }
+
+  }
+
+
+  /* SHARE */
+
+  async function shareInvite(){
+
+    const link =
+      inviteLink.textContent.trim();
+
+
+    if(
+      !link ||
+      link.includes(
+        "Creating your"
+      )
+    ){
+
+      showStatus(
+        "Your invite link is not ready yet."
+      );
+
+      return;
+
+    }
+
+
+    if(
+      typeof navigator.share ===
+      "function"
+    ){
+
+      try{
+
+        await navigator.share({
+
+          title:
+            "Join Zemivo",
+
+          text:
+            "Join me on Zemivo!",
+
+          url:
+            link
+
+        });
+
+      }
+      catch(error){
+
+        /*
+         * User cancelling the native
+         * share dialog is not an error
+         * that needs to be shown.
+         */
+
+        if(
+          error &&
+          error.name !==
+          "AbortError"
+        ){
+
+          console.error(
+            "Share error:",
+            error
+          );
+
+          showStatus(
+            "Sharing was not available."
+          );
+
+        }
+
+      }
+
+      return;
+
+    }
+
+
+    await copyInvite();
+
+  }
+
+
+  /* BUTTONS */
+
+  copyButton.addEventListener(
+    "click",
+    copyInvite
+  );
+
+
+  shareButton.addEventListener(
+    "click",
+    shareInvite
+  );
+
+
+  /* AUTH */
+
+  onAuthStateChanged(
+    auth,
+    function(user){
+
+      if(!user){
+
+        accountStatus.textContent =
+          "Please log in to use your personal Zemivo referral link.";
+
+        setTimeout(
+          function(){
+
+            window.location.href =
+              "login.html";
+
+          },
+          1200
+        );
+
+        return;
+
+      }
+
+
+      const link =
+        createInviteLink(
+          user
+        );
+
+
+      inviteLink.textContent =
+        link;
+
+
+      accountStatus.textContent =
+        "Your Zemivo account is securely connected. Referral rewards are not credited until the secure referral backend verifies the referral.";
+
+
+      rewardStatus.classList.add(
+        "show"
+      );
+
+
+      /*
+       * Important:
+       *
+       * No fake referral count.
+       * No fake reward.
+       * No client-side wallet credit.
+       *
+       * Future referral rewards must be
+       * verified by the backend and then
+       * written through the protected
+       * financial/ledger system.
+       */
+
+    }
+  );
+
+
+  /* LIVING 3D WORLD HOOK */
+
+  window.dispatchEvent(
+    new CustomEvent(
+      "zemivo:referrals-ready",
+      {
+        detail:{
+          page:
+            "referrals",
+
+          version:
+            ZemivoReferralsPage.version
+        }
+      }
+    )
+  );
+
+
+  console.log(
+    "Zemivo Referrals loaded.",
+    ZemivoReferralsPage.version
+  );
+
 
 </script>
 
+
 </body>
+
 </html>
