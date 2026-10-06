@@ -1,200 +1,2616 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Zemivo - Saved</title>
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>Zemivo - Search</title>
+
 
   <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
+
+    *{
+      box-sizing:border-box;
+      margin:0;
+      padding:0;
     }
 
-    body {
-      font-family: Arial, sans-serif;
-      background: #f4f6f8;
-      color: #222;
+
+    :root{
+
+      --blue:#2563eb;
+      --blue-dark:#1d4ed8;
+      --blue-soft:#eff6ff;
+
+      --text:#17202a;
+      --muted:#64748b;
+
+      --border:rgba(148,163,184,.22);
+
+      --glass:rgba(255,255,255,.84);
+
     }
 
-    .topbar {
-      background: white;
-      padding: 15px 20px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+
+    body{
+
+      min-height:100vh;
+
+      font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+      color:var(--text);
+
+      background:
+
+        radial-gradient(
+          circle at 10% 10%,
+          rgba(37,99,235,.16),
+          transparent 30%
+        ),
+
+        radial-gradient(
+          circle at 90% 20%,
+          rgba(59,130,246,.12),
+          transparent 30%
+        ),
+
+        linear-gradient(
+          135deg,
+          #eef4ff,
+          #f8fafc 50%,
+          #edf5ff
+        );
+
+      overflow-x:hidden;
+
     }
 
-    .logo {
-      font-size: 26px;
-      font-weight: bold;
-      color: #2563eb;
+
+    button,
+    input{
+
+      font-family:inherit;
+
     }
 
-    .nav a {
-      margin-left: 10px;
-      color: #2563eb;
-      text-decoration: none;
-      font-weight: bold;
+
+    button{
+
+      cursor:pointer;
+
     }
 
-    .container {
-      max-width: 800px;
-      margin: 25px auto;
-      padding: 0 15px;
+
+    /* =========================
+       LIVING WORLD VISUAL LAYER
+    ========================== */
+
+    .world{
+
+      position:fixed;
+
+      inset:0;
+
+      overflow:hidden;
+
+      pointer-events:none;
+
+      z-index:-1;
+
     }
 
-    .card {
-      background: white;
-      padding: 20px;
-      margin-bottom: 18px;
-      border-radius: 15px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+
+    .orb{
+
+      position:absolute;
+
+      border-radius:50%;
+
+      filter:blur(3px);
+
+      opacity:.42;
+
+      animation:
+        floatOrb
+        10s
+        ease-in-out
+        infinite
+        alternate;
+
     }
 
-    h1 {
-      color: #2563eb;
-      margin-bottom: 8px;
+
+    .orb-one{
+
+      width:280px;
+      height:280px;
+
+      left:-100px;
+      top:90px;
+
+      background:
+        radial-gradient(
+          circle,
+          rgba(37,99,235,.30),
+          transparent 70%
+        );
+
     }
 
-    .saved-item {
-      padding: 16px 5px;
-      border-bottom: 1px solid #eee;
+
+    .orb-two{
+
+      width:330px;
+      height:330px;
+
+      right:-120px;
+      top:260px;
+
+      background:
+        radial-gradient(
+          circle,
+          rgba(96,165,250,.25),
+          transparent 70%
+        );
+
+      animation-delay:2s;
+
     }
 
-    .saved-item:last-child {
-      border-bottom: none;
+
+    .orb-three{
+
+      width:190px;
+      height:190px;
+
+      left:42%;
+      bottom:-80px;
+
+      background:
+        radial-gradient(
+          circle,
+          rgba(14,165,233,.18),
+          transparent 70%
+        );
+
+      animation-delay:4s;
+
     }
 
-    .saved-item h3 {
-      margin-bottom: 7px;
+
+    .grid{
+
+      position:absolute;
+
+      inset:0;
+
+      opacity:.14;
+
+      background-image:
+
+        linear-gradient(
+          rgba(37,99,235,.08) 1px,
+          transparent 1px
+        ),
+
+        linear-gradient(
+          90deg,
+          rgba(37,99,235,.08) 1px,
+          transparent 1px
+        );
+
+      background-size:55px 55px;
+
+      transform:
+        perspective(650px)
+        rotateX(58deg)
+        translateY(35%);
+
+      transform-origin:center bottom;
+
     }
 
-    .saved-item p {
-      color: #666;
-      margin-bottom: 12px;
+
+    @keyframes floatOrb{
+
+      from{
+
+        transform:
+          translate3d(
+            0,
+            0,
+            0
+          );
+
+      }
+
+      to{
+
+        transform:
+          translate3d(
+            25px,
+            -35px,
+            0
+          );
+
+      }
+
     }
 
-    .button {
-      background: #2563eb;
-      color: white;
-      border: none;
-      padding: 9px 16px;
-      border-radius: 20px;
-      cursor: pointer;
-      font-weight: bold;
+
+    /* =========================
+       TOPBAR
+    ========================== */
+
+    .topbar{
+
+      position:sticky;
+
+      top:0;
+
+      z-index:100;
+
+      min-height:68px;
+
+      display:flex;
+
+      align-items:center;
+
+      justify-content:space-between;
+
+      gap:18px;
+
+      padding:
+        12px
+        22px;
+
+      background:
+        rgba(255,255,255,.86);
+
+      backdrop-filter:
+        blur(18px);
+
+      -webkit-backdrop-filter:
+        blur(18px);
+
+      border-bottom:
+        1px solid
+        var(--border);
+
+      box-shadow:
+        0 5px 25px
+        rgba(15,23,42,.07);
+
     }
 
-    .remove {
-      background: #dc2626;
+
+    .logo{
+
+      color:
+        var(--blue);
+
+      font-size:28px;
+
+      font-weight:900;
+
+      letter-spacing:-1px;
+
+      text-decoration:none;
+
+      white-space:nowrap;
+
     }
 
-    .footer {
-      text-align: center;
-      color: #777;
-      padding: 25px;
+
+    .nav{
+
+      display:flex;
+
+      gap:7px;
+
+      overflow-x:auto;
+
+      scrollbar-width:none;
+
     }
+
+
+    .nav::-webkit-scrollbar{
+
+      display:none;
+
+    }
+
+
+    .nav a{
+
+      color:#334155;
+
+      text-decoration:none;
+
+      font-size:14px;
+
+      font-weight:bold;
+
+      padding:
+        9px
+        11px;
+
+      border-radius:12px;
+
+      white-space:nowrap;
+
+      transition:.2s;
+
+    }
+
+
+    .nav a:hover{
+
+      background:
+        var(--blue-soft);
+
+      color:
+        var(--blue);
+
+    }
+
+
+    .nav a.active{
+
+      background:
+        var(--blue);
+
+      color:white;
+
+      box-shadow:
+        0 6px 16px
+        rgba(37,99,235,.22);
+
+    }
+
+
+    /* =========================
+       MAIN
+    ========================== */
+
+    .container{
+
+      width:
+        min(
+          1100px,
+          calc(100% - 30px)
+        );
+
+      margin:
+        30px
+        auto
+        50px;
+
+    }
+
+
+    /* =========================
+       HERO
+    ========================== */
+
+    .hero{
+
+      position:relative;
+
+      overflow:hidden;
+
+      display:grid;
+
+      grid-template-columns:
+        1.25fr
+        .75fr;
+
+      gap:25px;
+
+      padding:30px;
+
+      margin-bottom:22px;
+
+      border:
+        1px solid
+        rgba(255,255,255,.75);
+
+      border-radius:26px;
+
+      background:
+        linear-gradient(
+          135deg,
+          rgba(255,255,255,.90),
+          rgba(239,246,255,.76)
+        );
+
+      backdrop-filter:
+        blur(18px);
+
+      -webkit-backdrop-filter:
+        blur(18px);
+
+      box-shadow:
+        0 15px 40px
+        rgba(15,23,42,.10);
+
+    }
+
+
+    .hero-content{
+
+      display:flex;
+
+      flex-direction:column;
+
+      justify-content:center;
+
+    }
+
+
+    .badge{
+
+      width:max-content;
+
+      display:inline-flex;
+
+      align-items:center;
+
+      padding:
+        7px
+        12px;
+
+      margin-bottom:14px;
+
+      border-radius:30px;
+
+      background:
+        rgba(37,99,235,.10);
+
+      color:
+        var(--blue);
+
+      font-size:12px;
+
+      font-weight:bold;
+
+    }
+
+
+    .hero h1{
+
+      font-size:
+        clamp(
+          32px,
+          5vw,
+          50px
+        );
+
+      line-height:1.05;
+
+      margin-bottom:12px;
+
+    }
+
+
+    .hero h1 span{
+
+      color:
+        var(--blue);
+
+    }
+
+
+    .hero p{
+
+      max-width:650px;
+
+      color:
+        var(--muted);
+
+      line-height:1.6;
+
+    }
+
+
+    /* =========================
+       3D SEARCH VISUAL
+    ========================== */
+
+    .visual{
+
+      min-height:220px;
+
+      display:flex;
+
+      align-items:center;
+
+      justify-content:center;
+
+      perspective:900px;
+
+    }
+
+
+    .search-orb{
+
+      position:relative;
+
+      width:150px;
+
+      height:150px;
+
+      border-radius:50%;
+
+      background:
+
+        radial-gradient(
+          circle at 35% 30%,
+          rgba(255,255,255,.95),
+          rgba(96,165,250,.65) 28%,
+          rgba(37,99,235,.72) 60%,
+          rgba(29,78,216,.40)
+        );
+
+      box-shadow:
+
+        inset
+        -18px
+        -20px
+        35px
+        rgba(15,23,42,.18),
+
+        inset
+        15px
+        15px
+        25px
+        rgba(255,255,255,.30),
+
+        0 25px 45px
+        rgba(37,99,235,.25);
+
+      animation:
+        searchFloat
+        5s
+        ease-in-out
+        infinite;
+
+    }
+
+
+    .magnifier{
+
+      position:absolute;
+
+      width:65px;
+
+      height:65px;
+
+      left:38px;
+
+      top:35px;
+
+      border:
+        8px solid
+        white;
+
+      border-radius:50%;
+
+      box-shadow:
+        0 8px 18px
+        rgba(15,23,42,.18);
+
+    }
+
+
+    .magnifier::after{
+
+      content:"";
+
+      position:absolute;
+
+      width:42px;
+
+      height:8px;
+
+      right:-32px;
+
+      bottom:-20px;
+
+      border-radius:10px;
+
+      background:white;
+
+      transform:
+        rotate(45deg);
+
+      box-shadow:
+        0 6px 12px
+        rgba(15,23,42,.15);
+
+    }
+
+
+    @keyframes searchFloat{
+
+      0%,
+      100%{
+
+        transform:
+          translateY(0)
+          rotateY(0deg);
+
+      }
+
+      50%{
+
+        transform:
+          translateY(-13px)
+          rotateY(12deg);
+
+      }
+
+    }
+
+
+    /* =========================
+       SEARCH BOX
+    ========================== */
+
+    .search-panel{
+
+      padding:22px;
+
+      margin-bottom:20px;
+
+      border-radius:22px;
+
+      background:
+        rgba(255,255,255,.88);
+
+      border:
+        1px solid
+        rgba(255,255,255,.80);
+
+      box-shadow:
+        0 15px 40px
+        rgba(15,23,42,.09);
+
+      backdrop-filter:
+        blur(16px);
+
+      -webkit-backdrop-filter:
+        blur(16px);
+
+    }
+
+
+    .search-form{
+
+      display:flex;
+
+      gap:10px;
+
+    }
+
+
+    .search-input-wrap{
+
+      position:relative;
+
+      flex:1;
+
+    }
+
+
+    .search-icon{
+
+      position:absolute;
+
+      left:16px;
+
+      top:50%;
+
+      transform:
+        translateY(-50%);
+
+      font-size:19px;
+
+      pointer-events:none;
+
+    }
+
+
+    .search-input{
+
+      width:100%;
+
+      padding:
+        15px
+        16px
+        15px
+        48px;
+
+      border:
+        1px solid
+        rgba(148,163,184,.35);
+
+      border-radius:15px;
+
+      outline:none;
+
+      background:
+        rgba(248,250,252,.92);
+
+      color:
+        var(--text);
+
+      font-size:16px;
+
+      transition:.2s;
+
+    }
+
+
+    .search-input:focus{
+
+      border-color:
+        var(--blue);
+
+      box-shadow:
+        0 0 0 4px
+        rgba(37,99,235,.10);
+
+      background:white;
+
+    }
+
+
+    .search-button{
+
+      border:0;
+
+      padding:
+        0
+        23px;
+
+      border-radius:15px;
+
+      background:
+        var(--blue);
+
+      color:white;
+
+      font-weight:bold;
+
+      font-size:15px;
+
+      box-shadow:
+        0 7px 18px
+        rgba(37,99,235,.20);
+
+    }
+
+
+    .search-button:hover{
+
+      background:
+        var(--blue-dark);
+
+    }
+
+
+    /* =========================
+       CATEGORY TABS
+    ========================== */
+
+    .categories{
+
+      display:flex;
+
+      gap:9px;
+
+      overflow-x:auto;
+
+      padding:
+        2px
+        1px
+        6px;
+
+      margin-bottom:20px;
+
+      scrollbar-width:none;
+
+    }
+
+
+    .categories::-webkit-scrollbar{
+
+      display:none;
+
+    }
+
+
+    .category{
+
+      border:
+        1px solid
+        rgba(148,163,184,.24);
+
+      background:
+        rgba(255,255,255,.76);
+
+      color:
+        #475569;
+
+      padding:
+        10px
+        15px;
+
+      border-radius:25px;
+
+      font-size:13px;
+
+      font-weight:bold;
+
+      white-space:nowrap;
+
+    }
+
+
+    .category.active{
+
+      background:
+        var(--blue);
+
+      color:white;
+
+      border-color:
+        var(--blue);
+
+    }
+
+
+    /* =========================
+       RESULTS
+    ========================== */
+
+    .results-card{
+
+      min-height:280px;
+
+      padding:22px;
+
+      border-radius:22px;
+
+      background:
+        rgba(255,255,255,.88);
+
+      border:
+        1px solid
+        rgba(255,255,255,.80);
+
+      box-shadow:
+        0 15px 40px
+        rgba(15,23,42,.09);
+
+      backdrop-filter:
+        blur(16px);
+
+      -webkit-backdrop-filter:
+        blur(16px);
+
+    }
+
+
+    .results-header{
+
+      display:flex;
+
+      align-items:center;
+
+      justify-content:space-between;
+
+      gap:10px;
+
+      margin-bottom:18px;
+
+    }
+
+
+    .results-title{
+
+      font-size:20px;
+
+      font-weight:800;
+
+    }
+
+
+    .result-count{
+
+      color:
+        var(--muted);
+
+      font-size:13px;
+
+    }
+
+
+    .result-list{
+
+      display:grid;
+
+      gap:10px;
+
+    }
+
+
+    .result-item{
+
+      display:flex;
+
+      align-items:center;
+
+      gap:14px;
+
+      padding:14px;
+
+      border-radius:16px;
+
+      background:
+        rgba(248,250,252,.85);
+
+      border:
+        1px solid
+        rgba(148,163,184,.13);
+
+      transition:.2s;
+
+    }
+
+
+    .result-item:hover{
+
+      background:
+        var(--blue-soft);
+
+      transform:
+        translateY(-1px);
+
+    }
+
+
+    .avatar{
+
+      width:52px;
+
+      height:52px;
+
+      flex-shrink:0;
+
+      display:flex;
+
+      align-items:center;
+
+      justify-content:center;
+
+      border-radius:50%;
+
+      overflow:hidden;
+
+      background:
+        linear-gradient(
+          135deg,
+          #2563eb,
+          #60a5fa
+        );
+
+      color:white;
+
+      font-size:19px;
+
+      font-weight:bold;
+
+    }
+
+
+    .avatar img{
+
+      width:100%;
+
+      height:100%;
+
+      object-fit:cover;
+
+    }
+
+
+    .result-info{
+
+      flex:1;
+
+      min-width:0;
+
+    }
+
+
+    .result-name{
+
+      font-weight:bold;
+
+      font-size:16px;
+
+      overflow:hidden;
+
+      text-overflow:ellipsis;
+
+      white-space:nowrap;
+
+    }
+
+
+    .result-meta{
+
+      margin-top:4px;
+
+      color:
+        var(--muted);
+
+      font-size:12px;
+
+      overflow:hidden;
+
+      text-overflow:ellipsis;
+
+      white-space:nowrap;
+
+    }
+
+
+    .result-button{
+
+      border:0;
+
+      padding:
+        9px
+        13px;
+
+      border-radius:12px;
+
+      background:
+        var(--blue-soft);
+
+      color:
+        var(--blue);
+
+      font-size:12px;
+
+      font-weight:bold;
+
+      white-space:nowrap;
+
+    }
+
+
+    .result-button:hover{
+
+      background:
+        var(--blue);
+
+      color:white;
+
+    }
+
+
+    /* =========================
+       EMPTY / STATUS
+    ========================== */
+
+    .status{
+
+      padding:
+        55px
+        20px;
+
+      text-align:center;
+
+      color:
+        var(--muted);
+
+    }
+
+
+    .status-icon{
+
+      font-size:48px;
+
+      margin-bottom:10px;
+
+    }
+
+
+    .status h3{
+
+      color:
+        var(--text);
+
+      margin-bottom:7px;
+
+    }
+
+
+    .loading-spinner{
+
+      width:30px;
+
+      height:30px;
+
+      margin:
+        0
+        auto
+        12px;
+
+      border:
+        3px solid
+        #dbeafe;
+
+      border-top-color:
+        var(--blue);
+
+      border-radius:50%;
+
+      animation:
+        spin
+        .8s
+        linear
+        infinite;
+
+    }
+
+
+    @keyframes spin{
+
+      to{
+
+        transform:
+          rotate(360deg);
+
+      }
+
+    }
+
+
+    /* =========================
+       NOTICE
+    ========================== */
+
+    .notice{
+
+      margin-top:18px;
+
+      padding:
+        15px
+        17px;
+
+      border-radius:15px;
+
+      background:
+        rgba(239,246,255,.78);
+
+      border:
+        1px solid
+        rgba(37,99,235,.12);
+
+      color:
+        #475569;
+
+      font-size:13px;
+
+      line-height:1.5;
+
+    }
+
+
+    .notice strong{
+
+      color:
+        var(--blue);
+
+    }
+
+
+    /* =========================
+       FOOTER
+    ========================== */
+
+    .footer{
+
+      text-align:center;
+
+      color:
+        #64748b;
+
+      font-size:13px;
+
+      padding:
+        20px;
+
+    }
+
+
+    /* =========================
+       TOAST
+    ========================== */
+
+    .toast{
+
+      position:fixed;
+
+      left:50%;
+
+      bottom:24px;
+
+      z-index:500;
+
+      max-width:
+        calc(100% - 30px);
+
+      padding:
+        12px
+        18px;
+
+      border-radius:12px;
+
+      background:
+        #111827;
+
+      color:white;
+
+      font-size:14px;
+
+      text-align:center;
+
+      opacity:0;
+
+      transform:
+        translate(
+          -50%,
+          20px
+        );
+
+      pointer-events:none;
+
+      transition:.25s;
+
+    }
+
+
+    .toast.show{
+
+      opacity:1;
+
+      transform:
+        translate(
+          -50%,
+          0
+        );
+
+    }
+
+
+    /* =========================
+       MOBILE
+    ========================== */
+
+    @media(max-width:800px){
+
+      .topbar{
+
+        align-items:flex-start;
+
+        flex-direction:column;
+
+        padding:
+          12px
+          14px;
+
+      }
+
+
+      .nav{
+
+        width:100%;
+
+      }
+
+
+      .hero{
+
+        grid-template-columns:1fr;
+
+        padding:23px;
+
+      }
+
+
+      .visual{
+
+        min-height:180px;
+
+      }
+
+
+    }
+
+
+    @media(max-width:600px){
+
+      .container{
+
+        width:
+          calc(100% - 20px);
+
+        margin-top:18px;
+
+      }
+
+
+      .search-form{
+
+        flex-direction:column;
+
+      }
+
+
+      .search-button{
+
+        min-height:48px;
+
+      }
+
+
+      .result-item{
+
+        align-items:flex-start;
+
+      }
+
+
+      .result-button{
+
+        display:none;
+
+      }
+
+
+      .hero h1{
+
+        font-size:34px;
+
+      }
+
+    }
+
   </style>
+
 </head>
+
 
 <body>
 
+
+  <!-- =========================
+       ZEMIVO LIVING WORLD
+       PAGE-LOCAL VISUAL FOUNDATION
+  ========================== -->
+
+  <div class="world">
+
+    <div class="orb orb-one"></div>
+
+    <div class="orb orb-two"></div>
+
+    <div class="orb orb-three"></div>
+
+    <div class="grid"></div>
+
+  </div>
+
+
+  <!-- =========================
+       TOPBAR
+  ========================== -->
+
   <header class="topbar">
 
-    <div class="logo">Zemivo</div>
+    <a
+      href="index.html"
+      class="logo"
+    >
+      Zemivo
+    </a>
+
 
     <nav class="nav">
-      <a href="index.html">🏠 Home</a>
-      <a href="profile.html">👤 Profile</a>
-      <a href="videos.html">🎥 Videos</a>
-      <a href="groups.html">👥 Groups</a>
-      <a href="settings.html">⚙️ Settings</a>
+
+      <a href="index.html">
+        🏠 Home
+      </a>
+
+      <a href="profile.html">
+        👤 Profile
+      </a>
+
+      <a href="friends.html">
+        👥 Friends
+      </a>
+
+      <a
+        href="search.html"
+        class="active"
+      >
+        🔎 Search
+      </a>
+
+      <a href="notifications.html">
+        🔔 Notifications
+      </a>
+
+      <a href="settings.html">
+        ⚙️ Settings
+      </a>
+
     </nav>
 
   </header>
 
+
+  <!-- =========================
+       MAIN
+  ========================== -->
+
   <main class="container">
 
-    <div class="card">
 
-      <h1>🔖 Saved</h1>
+    <!-- HERO -->
 
-      <p>
-        Save posts, videos and useful content to find them later.
-      </p>
+    <section class="hero">
+
+      <div class="hero-content">
+
+        <div class="badge">
+          🌍 Zemivo Global Search
+        </div>
+
+
+        <h1>
+
+          Search
+
+          <span>
+            Zemivo
+          </span>
+
+        </h1>
+
+
+        <p>
+
+          Find people, groups and future Zemivo
+          content from one global search experience.
+
+        </p>
+
+      </div>
+
+
+      <div class="visual">
+
+        <div class="search-orb">
+
+          <div class="magnifier"></div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- SEARCH PANEL -->
+
+    <section class="search-panel">
+
+      <form
+        id="searchForm"
+        class="search-form"
+      >
+
+        <div class="search-input-wrap">
+
+          <span class="search-icon">
+            🔎
+          </span>
+
+
+          <input
+            id="searchInput"
+            class="search-input"
+            type="search"
+            placeholder="Search people, groups, posts..."
+            autocomplete="off"
+          >
+
+        </div>
+
+
+        <button
+          class="search-button"
+          type="submit"
+        >
+          Search
+        </button>
+
+      </form>
+
+    </section>
+
+
+    <!-- CATEGORIES -->
+
+    <div
+      id="categories"
+      class="categories"
+    >
+
+      <button
+        class="category active"
+        data-category="people"
+        type="button"
+      >
+        👤 People
+      </button>
+
+
+      <button
+        class="category"
+        data-category="groups"
+        type="button"
+      >
+        👥 Groups
+      </button>
+
+
+      <button
+        class="category"
+        data-category="posts"
+        type="button"
+      >
+        📝 Posts
+      </button>
+
+
+      <button
+        class="category"
+        data-category="videos"
+        type="button"
+      >
+        🎥 Videos
+      </button>
+
+
+      <button
+        class="category"
+        data-category="marketplace"
+        type="button"
+      >
+        🛍️ Marketplace
+      </button>
 
     </div>
 
-    <div class="card">
 
-      <div class="saved-item">
+    <!-- RESULTS -->
 
-        <h3>🌍 Welcome to Zemivo</h3>
+    <section class="results-card">
 
-        <p>
-          A new social platform where creators and communities connect.
-        </p>
+      <div class="results-header">
 
-        <button class="button remove">
-          Remove
-        </button>
+        <div class="results-title">
+          Search Results
+        </div>
 
-      </div>
 
-      <div class="saved-item">
-
-        <h3>🎥 Creator Tips</h3>
-
-        <p>
-          Useful ideas for growing your audience on Zemivo.
-        </p>
-
-        <button class="button remove">
-          Remove
-        </button>
+        <div
+          id="resultCount"
+          class="result-count"
+        >
+          Search people on Zemivo
+        </div>
 
       </div>
 
-      <div class="saved-item">
 
-        <h3>💰 Earning Opportunities</h3>
+      <div
+        id="results"
+        class="result-list"
+      >
 
-        <p>
-          Discover future creator and affiliate opportunities.
-        </p>
+        <div class="status">
 
-        <button class="button remove">
-          Remove
-        </button>
+          <div class="status-icon">
+            🔎
+          </div>
+
+          <h3>
+            Start searching
+          </h3>
+
+          <p>
+            Enter a name or email to find Zemivo users.
+          </p>
+
+        </div>
 
       </div>
+
+    </section>
+
+
+    <!-- FOUNDATION NOTICE -->
+
+    <div class="notice">
+
+      <strong>
+        Zemivo Search Foundation:
+      </strong>
+
+      People search is connected to the existing
+      <strong>profiles</strong> collection. Groups,
+      posts, videos and marketplace search are
+      kept as separate modules so they can be
+      connected later without breaking this page.
 
     </div>
+
 
   </main>
 
+
+  <!-- =========================
+       FOOTER
+  ========================== -->
+
   <footer class="footer">
-    © 2026 Zemivo — Connect. Create. Earn.
+
+    © 2026 Zemivo —
+    Connect. Create. Earn.
+
   </footer>
 
-  <script>
 
-    const removeButtons =
-      document.querySelectorAll(".remove");
+  <!-- TOAST -->
 
-    removeButtons.forEach(function(button) {
+  <div
+    id="toast"
+    class="toast"
+  ></div>
 
-      button.addEventListener("click", function() {
 
-        button.parentElement.remove();
+  <!-- =========================
+       SECURITY FOUNDATION
+  ========================== -->
+
+  <script type="module">
+
+    import {
+      auth,
+      db
+    } from "./zemivo-security.js";
+
+
+    import {
+      onAuthStateChanged
+    } from
+      "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
+
+
+    import {
+      collection,
+      getDocs
+    } from
+      "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
+
+
+    /* =========================
+       ELEMENTS
+    ========================== */
+
+    const searchForm =
+      document.getElementById(
+        "searchForm"
+      );
+
+
+    const searchInput =
+      document.getElementById(
+        "searchInput"
+      );
+
+
+    const results =
+      document.getElementById(
+        "results"
+      );
+
+
+    const resultCount =
+      document.getElementById(
+        "resultCount"
+      );
+
+
+    const categories =
+      document.getElementById(
+        "categories"
+      );
+
+
+    const toast =
+      document.getElementById(
+        "toast"
+      );
+
+
+    /* =========================
+       STATE
+    ========================== */
+
+    let currentUser =
+      null;
+
+
+    let activeCategory =
+      "people";
+
+
+    let allProfiles =
+      [];
+
+
+    let profilesLoaded =
+      false;
+
+
+    /* =========================
+       TOAST
+    ========================== */
+
+    let toastTimer =
+      null;
+
+
+    function showToast(
+      message
+    ){
+
+      toast.textContent =
+        message;
+
+
+      toast.classList.add(
+        "show"
+      );
+
+
+      clearTimeout(
+        toastTimer
+      );
+
+
+      toastTimer =
+        setTimeout(
+          function(){
+
+            toast.classList.remove(
+              "show"
+            );
+
+          },
+          2200
+        );
+
+    }
+
+
+    /* =========================
+       ESCAPE HTML
+    ========================== */
+
+    function escapeHtml(
+      value
+    ){
+
+      if(
+        value === null ||
+        value === undefined
+      ){
+
+        return "";
+
+      }
+
+
+      return String(value)
+
+        .replaceAll(
+          "&",
+          "&amp;"
+        )
+
+        .replaceAll(
+          "<",
+          "&lt;"
+        )
+
+        .replaceAll(
+          ">",
+          "&gt;"
+        )
+
+        .replaceAll(
+          '"',
+          "&quot;"
+        )
+
+        .replaceAll(
+          "'",
+          "&#039;"
+        );
+
+    }
+
+
+    /* =========================
+       AUTH
+    ========================== */
+
+    onAuthStateChanged(
+      auth,
+      function(user){
+
+        currentUser =
+          user;
+
+      }
+    );
+
+
+    /* =========================
+       LOAD PROFILES
+    ========================== */
+
+    async function loadProfiles(){
+
+      if(profilesLoaded){
+
+        return;
+
+      }
+
+
+      results.innerHTML = `
+
+        <div class="status">
+
+          <div class="loading-spinner"></div>
+
+          <p>
+            Loading Zemivo people...
+          </p>
+
+        </div>
+
+      `;
+
+
+      try{
+
+        const snapshot =
+          await getDocs(
+            collection(
+              db,
+              "profiles"
+            )
+          );
+
+
+        allProfiles =
+          [];
+
+
+        snapshot.forEach(
+          function(docSnapshot){
+
+            const data =
+              docSnapshot.data();
+
+
+            allProfiles.push({
+
+              uid:
+                docSnapshot.id,
+
+              displayName:
+                data.displayName ||
+                data.name ||
+                "Zemivo User",
+
+              email:
+                data.email ||
+                "",
+
+              country:
+                data.country ||
+                "",
+
+              photoURL:
+                data.photoURL ||
+                ""
+
+            });
+
+          }
+        );
+
+
+        profilesLoaded =
+          true;
+
+
+      }
+      catch(error){
+
+        console.error(
+          "Zemivo search profile error:",
+          error
+        );
+
+
+        results.innerHTML = `
+
+          <div class="status">
+
+            <div class="status-icon">
+              ⚠️
+            </div>
+
+            <h3>
+              Search unavailable
+            </h3>
+
+            <p>
+              The people search could not access
+              the current profile data.
+            </p>
+
+          </div>
+
+        `;
+
+
+        resultCount.textContent =
+          "Unable to load people";
+
+        return;
+
+      }
+
+    }
+
+
+    /* =========================
+       SEARCH PEOPLE
+    ========================== */
+
+    async function searchPeople(
+      text
+    ){
+
+      if(
+        activeCategory !==
+        "people"
+      ){
+
+        showModuleMessage();
+
+        return;
+
+      }
+
+
+      const term =
+        text
+          .trim()
+          .toLowerCase();
+
+
+      if(!term){
+
+        results.innerHTML = `
+
+          <div class="status">
+
+            <div class="status-icon">
+              🔎
+            </div>
+
+            <h3>
+              Start searching
+            </h3>
+
+            <p>
+              Enter a name or email to find Zemivo users.
+            </p>
+
+          </div>
+
+        `;
+
+
+        resultCount.textContent =
+          "Search people on Zemivo";
+
+        return;
+
+      }
+
+
+      await loadProfiles();
+
+
+      if(
+        !profilesLoaded
+      ){
+
+        return;
+
+      }
+
+
+      const matched =
+        allProfiles.filter(
+          function(profile){
+
+            const name =
+              profile.displayName
+                .toLowerCase();
+
+
+            const email =
+              profile.email
+                .toLowerCase();
+
+
+            const country =
+              profile.country
+                .toLowerCase();
+
+
+            return (
+
+              name.includes(term)
+
+              ||
+
+              email.includes(term)
+
+              ||
+
+              country.includes(term)
+
+            );
+
+          }
+        );
+
+
+      renderPeople(
+        matched
+      );
+
+    }
+
+
+    /* =========================
+       RENDER PEOPLE
+    ========================== */
+
+    function renderPeople(
+      people
+    ){
+
+      results.innerHTML =
+        "";
+
+
+      resultCount.textContent =
+        people.length +
+        (
+          people.length === 1
+          ?
+          " person"
+          :
+          " people"
+        );
+
+
+      if(
+        people.length ===
+        0
+      ){
+
+        results.innerHTML = `
+
+          <div class="status">
+
+            <div class="status-icon">
+              🔍
+            </div>
+
+            <h3>
+              No people found
+            </h3>
+
+            <p>
+              Try another name, email or country.
+            </p>
+
+          </div>
+
+        `;
+
+        return;
+
+      }
+
+
+      people.forEach(
+        function(profile){
+
+          const item =
+            document.createElement(
+              "div"
+            );
+
+
+          item.className =
+            "result-item";
+
+
+          const initial =
+            profile.displayName
+              .charAt(0)
+              .toUpperCase();
+
+
+          const avatar =
+            document.createElement(
+              "div"
+            );
+
+
+          avatar.className =
+            "avatar";
+
+
+          if(profile.photoURL){
+
+            const image =
+              document.createElement(
+                "img"
+              );
+
+
+            image.src =
+              profile.photoURL;
+
+
+            image.alt =
+              profile.displayName;
+
+
+            image.onerror =
+              function(){
+
+                avatar.textContent =
+                  initial;
+
+              };
+
+
+            avatar.appendChild(
+              image
+            );
+
+          }
+          else{
+
+            avatar.textContent =
+              initial;
+
+          }
+
+
+          const info =
+            document.createElement(
+              "div"
+            );
+
+
+          info.className =
+            "result-info";
+
+
+          const name =
+            document.createElement(
+              "div"
+            );
+
+
+          name.className =
+            "result-name";
+
+
+          name.textContent =
+            profile.displayName;
+
+
+          const meta =
+            document.createElement(
+              "div"
+            );
+
+
+          meta.className =
+            "result-meta";
+
+
+          const parts =
+            [];
+
+
+          if(profile.email){
+
+            parts.push(
+              profile.email
+            );
+
+          }
+
+
+          if(profile.country){
+
+            parts.push(
+              profile.country
+            );
+
+          }
+
+
+          meta.textContent =
+            parts.join(
+              " • "
+            ) ||
+            "Zemivo member";
+
+
+          info.appendChild(
+            name
+          );
+
+
+          info.appendChild(
+            meta
+          );
+
+
+          const button =
+            document.createElement(
+              "button"
+            );
+
+
+          button.className =
+            "result-button";
+
+
+          button.type =
+            "button";
+
+
+          button.textContent =
+            "View Profile";
+
+
+          button.addEventListener(
+            "click",
+            function(){
+
+              window.location.href =
+                "profile.html?uid=" +
+                encodeURIComponent(
+                  profile.uid
+                );
+
+            }
+          );
+
+
+          item.appendChild(
+            avatar
+          );
+
+
+          item.appendChild(
+            info
+          );
+
+
+          item.appendChild(
+            button
+          );
+
+
+          results.appendChild(
+            item
+          );
+
+        }
+      );
+
+    }
+
+
+    /* =========================
+       FUTURE MODULE MESSAGE
+    ========================== */
+
+    function showModuleMessage(){
+
+      const moduleNames = {
+
+        groups:
+          "Groups",
+
+        posts:
+          "Posts",
+
+        videos:
+          "Videos",
+
+        marketplace:
+          "Marketplace"
+
+      };
+
+
+      const moduleName =
+        moduleNames[
+          activeCategory
+        ] ||
+        "Search";
+
+
+      results.innerHTML = `
+
+        <div class="status">
+
+          <div class="status-icon">
+            🚀
+          </div>
+
+          <h3>
+            ${escapeHtml(
+              moduleName
+            )} Search Foundation
+          </h3>
+
+          <p>
+            This module is isolated and ready
+            for its dedicated backend data model.
+          </p>
+
+        </div>
+
+      `;
+
+
+      resultCount.textContent =
+        moduleName +
+        " module ready";
+
+    }
+
+
+    /* =========================
+       SEARCH FORM
+    ========================== */
+
+    searchForm.addEventListener(
+      "submit",
+      function(event){
+
+        event.preventDefault();
+
+
+        searchPeople(
+          searchInput.value
+        );
+
+      }
+    );
+
+
+    /* =========================
+       LIVE SEARCH
+    ========================== */
+
+    let searchTimer =
+      null;
+
+
+    searchInput.addEventListener(
+      "input",
+      function(){
+
+        clearTimeout(
+          searchTimer
+        );
+
+
+        searchTimer =
+          setTimeout(
+            function(){
+
+              searchPeople(
+                searchInput.value
+              );
+
+            },
+            300
+          );
+
+      }
+    );
+
+
+    /* =========================
+       CATEGORY SWITCH
+    ========================== */
+
+    categories.addEventListener(
+      "click",
+      function(event){
+
+        const button =
+          event.target.closest(
+            ".category"
+          );
+
+
+        if(!button){
+
+          return;
+
+        }
+
+
+        const category =
+          button.dataset.category;
+
+
+        activeCategory =
+          category;
+
+
+        document
+          .querySelectorAll(
+            ".category"
+          )
+          .forEach(
+            function(item){
+
+              item.classList.toggle(
+                "active",
+                item === button
+              );
+
+            }
+          );
+
+
+        if(
+          category ===
+          "people"
+        ){
+
+          searchPeople(
+            searchInput.value
+          );
+
+        }
+        else{
+
+          showModuleMessage();
+
+        }
+
+      }
+    );
+
+
+    /* =========================
+       PAGE ISOLATION
+    ========================== */
+
+    window.ZemivoSearchPage =
+      Object.freeze({
+
+        version:
+          "1.0.0",
+
+        getCurrentUser:
+          function(){
+
+            return currentUser;
+
+          },
+
+        getActiveCategory:
+          function(){
+
+            return activeCategory;
+
+          }
 
       });
 
-    });
+
+    /* =========================
+       LIVING WORLD HOOK
+    ========================== */
+
+    window.ZemivoLivingWorld =
+      window.ZemivoLivingWorld ||
+      {
+
+        page:
+          "search",
+
+        contentType:
+          "search",
+
+        ready:
+          true
+
+      };
+
 
   </script>
 
+
 </body>
+
 </html>
