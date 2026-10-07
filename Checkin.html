@@ -1,63 +1,462 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1.0"
+>
+
 <title>Zemivo - Check In</title>
+
 <style>
-body{margin:0;font-family:Arial;background:#f4f6f8;color:#222}
-.topbar{background:white;padding:18px;display:flex;justify-content:space-between;box-shadow:0 2px 8px #ddd}
-.logo{font-size:28px;font-weight:bold;color:#2563eb}
-.topbar a{color:#2563eb;text-decoration:none;font-weight:bold}
-.container{max-width:750px;margin:25px auto;padding:15px}
-.card{background:white;padding:22px;border-radius:15px;margin-bottom:18px;box-shadow:0 2px 8px #ddd}
-input{width:100%;padding:13px;border:1px solid #ddd;border-radius:10px;margin-top:12px;font-size:15px}
-button{background:#2563eb;color:white;border:0;padding:11px 20px;border-radius:22px;font-weight:bold;margin-top:12px}
-.location{padding:15px;border-bottom:1px solid #eee}
+
+*{
+  box-sizing:border-box;
+}
+
+body{
+  margin:0;
+  font-family:Arial,Helvetica,sans-serif;
+  background:#f4f6f8;
+  color:#222;
+}
+
+.topbar{
+  background:white;
+  padding:18px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  box-shadow:0 2px 8px #ddd;
+}
+
+.logo{
+  font-size:28px;
+  font-weight:bold;
+  color:#2563eb;
+}
+
+.topbar a{
+  color:#2563eb;
+  text-decoration:none;
+  font-weight:bold;
+}
+
+.container{
+  max-width:750px;
+  margin:25px auto;
+  padding:15px;
+}
+
+.card{
+  background:white;
+  padding:22px;
+  border-radius:15px;
+  margin-bottom:18px;
+  box-shadow:0 2px 8px #ddd;
+}
+
+input{
+  width:100%;
+  padding:13px;
+  border:1px solid #ddd;
+  border-radius:10px;
+  margin-top:12px;
+  font-size:15px;
+  outline:none;
+}
+
+input:focus{
+  border-color:#2563eb;
+}
+
+button{
+  background:#2563eb;
+  color:white;
+  border:0;
+  padding:11px 20px;
+  border-radius:22px;
+  font-weight:bold;
+  margin-top:12px;
+  cursor:pointer;
+}
+
+button:disabled{
+  opacity:.6;
+  cursor:not-allowed;
+}
+
+.location{
+  padding:15px;
+  border-bottom:1px solid #eee;
+  cursor:pointer;
+}
+
+.location:last-child{
+  border-bottom:0;
+}
+
+.location:hover{
+  background:#f4f6f8;
+}
+
+.status{
+  margin-top:15px;
+  padding:12px;
+  border-radius:10px;
+  background:#f0f2f5;
+  color:#555;
+  display:none;
+}
+
+.status.show{
+  display:block;
+}
+
+.status.success{
+  color:#15803d;
+  background:#ecfdf5;
+}
+
+.status.error{
+  color:#b91c1c;
+  background:#fef2f2;
+}
+
+.security-status{
+  text-align:center;
+  color:#777;
+  font-size:12px;
+  margin-top:20px;
+}
+
+@media(max-width:700px){
+
+  .topbar{
+    padding:15px;
+  }
+
+  .logo{
+    font-size:24px;
+  }
+
+  .container{
+    margin:15px auto;
+    padding:12px;
+  }
+
+  .card{
+    padding:18px;
+  }
+
+}
+
 </style>
+
 </head>
+
 <body>
 
+
 <header class="topbar">
-<div class="logo">Zemivo</div>
-<a href="index.html">🏠 Home</a>
+
+  <div class="logo">
+    Zemivo
+  </div>
+
+  <a href="index.html">
+    🏠 Home
+  </a>
+
 </header>
+
 
 <main class="container">
 
-<div class="card">
-<h1>📍 Check In</h1>
-<p>Share the place you're visiting with your friends.</p>
 
-<input id="locationInput" placeholder="Enter a location...">
+  <div class="card">
 
-<button onclick="checkIn()">📍 Check In</button>
-</div>
+    <h1>
+      📍 Check In
+    </h1>
 
-<div class="card">
-<h2>Popular Places</h2>
+    <p>
+      Share the place you're visiting with your friends.
+    </p>
 
-<div class="location">🏙️ Dhaka</div>
-<div class="location">🌊 Cox's Bazar</div>
-<div class="location">🌆 Chittagong</div>
-<div class="location">🌍 International</div>
 
-</div>
+    <input
+      id="locationInput"
+      type="text"
+      placeholder="Enter a location..."
+      autocomplete="off"
+    >
+
+
+    <button
+      id="checkInButton"
+      type="button"
+    >
+      📍 Check In
+    </button>
+
+
+    <div
+      id="status"
+      class="status"
+    ></div>
+
+  </div>
+
+
+  <div class="card">
+
+    <h2>
+      Popular Places
+    </h2>
+
+
+    <div
+      class="location"
+      data-location="Dhaka"
+    >
+      🏙️ Dhaka
+    </div>
+
+
+    <div
+      class="location"
+      data-location="Cox's Bazar"
+    >
+      🌊 Cox's Bazar
+    </div>
+
+
+    <div
+      class="location"
+      data-location="Chittagong"
+    >
+      🌆 Chittagong
+    </div>
+
+
+    <div
+      class="location"
+      data-location="International"
+    >
+      🌍 International
+    </div>
+
+  </div>
+
+
+  <div
+    id="securityStatus"
+    class="security-status"
+  >
+    Zemivo Security Foundation initializing...
+  </div>
+
 
 </main>
 
-<script>
-function checkIn(){
-const location=document.getElementById("locationInput").value.trim();
 
-if(location===""){
-alert("Please enter a location.");
-return;
-}
+<script type="module">
 
-alert("Checked in at " + location + "!");
-}
+/*
+  ZEMIVO CHECK-IN PAGE
+
+  1. Security Foundation
+  2. Page Isolation
+  3. Existing Check-In content preserved
+
+  No Living 3D integration here.
+*/
+
+
+import {
+  auth,
+  db
+} from "./zemivo-security.js";
+
+
+/*
+  PAGE ISOLATION
+*/
+
+const ZemivoCheckInPage = Object.freeze({
+
+  version: "1.0.0",
+
+
+  init: function(){
+
+    const locationInput =
+      document.getElementById(
+        "locationInput"
+      );
+
+
+    const checkInButton =
+      document.getElementById(
+        "checkInButton"
+      );
+
+
+    const status =
+      document.getElementById(
+        "status"
+      );
+
+
+    const securityStatus =
+      document.getElementById(
+        "securityStatus"
+      );
+
+
+    /*
+      SECURITY FOUNDATION STATUS
+    */
+
+    if(auth && db){
+
+      securityStatus.textContent =
+        "Zemivo Security Foundation active.";
+
+    }
+
+
+    /*
+      CHECK IN
+    */
+
+    checkInButton.addEventListener(
+      "click",
+      function(){
+
+        const location =
+          locationInput.value.trim();
+
+
+        if(location === ""){
+
+          showStatus(
+            "Please enter a location.",
+            "error"
+          );
+
+          locationInput.focus();
+
+          return;
+
+        }
+
+
+        /*
+          Current Check-In action.
+
+          The existing page behavior is preserved.
+          No fake Firestore write is performed
+          until the final Check-In data model
+          and security rules are defined.
+        */
+
+        showStatus(
+          "Checked in at " +
+          location +
+          "!",
+          "success"
+        );
+
+      }
+    );
+
+
+    /*
+      POPULAR PLACES
+    */
+
+    const popularLocations =
+      document.querySelectorAll(
+        ".location"
+      );
+
+
+    popularLocations.forEach(
+      function(locationElement){
+
+        locationElement.addEventListener(
+          "click",
+          function(){
+
+            const location =
+              locationElement.dataset.location;
+
+
+            locationInput.value =
+              location;
+
+
+            locationInput.focus();
+
+          }
+        );
+
+      }
+    );
+
+
+    /*
+      ENTER KEY
+    */
+
+    locationInput.addEventListener(
+      "keydown",
+      function(event){
+
+        if(event.key === "Enter"){
+
+          event.preventDefault();
+
+          checkInButton.click();
+
+        }
+
+      }
+    );
+
+
+    function showStatus(
+      message,
+      type
+    ){
+
+      status.textContent =
+        message;
+
+      status.className =
+        "status show " +
+        type;
+
+    }
+
+  }
+
+});
+
+
+/*
+  START PAGE
+*/
+
+ZemivoCheckInPage.init();
+
 </script>
+
 
 </body>
 </html>
