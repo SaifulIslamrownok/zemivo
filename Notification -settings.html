@@ -1,23 +1,540 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+
 <title>Zemivo - Notification Settings</title>
+
 <style>
-body{font-family:Arial;background:#f4f6f8}
-.card{background:white;max-width:700px;margin:30px auto;padding:25px;border-radius:15px}
-.item{padding:16px;border-bottom:1px solid #eee}
-button{background:#2563eb;color:white;border:0;padding:9px 15px;border-radius:20px}
+
+*{
+  box-sizing:border-box;
+}
+
+body{
+  margin:0;
+  font-family:Arial,Helvetica,sans-serif;
+  background:#f4f6f8;
+  color:#17202a;
+}
+
+
+/* LIVING WORLD FOUNDATION */
+
+#zemivoWorld{
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  z-index:0;
+  overflow:hidden;
+}
+
+#zemivoWorld::before{
+  content:"";
+  position:absolute;
+  width:420px;
+  height:420px;
+  top:-180px;
+  right:-120px;
+  border-radius:50%;
+  background:
+    radial-gradient(
+      circle,
+      rgba(37,99,235,.10) 0%,
+      rgba(37,99,235,.04) 40%,
+      transparent 70%
+    );
+  animation:zemivoWorldFloat 10s ease-in-out infinite;
+}
+
+#zemivoWorld::after{
+  content:"";
+  position:absolute;
+  width:360px;
+  height:360px;
+  bottom:-180px;
+  left:-130px;
+  border-radius:50%;
+  background:
+    radial-gradient(
+      circle,
+      rgba(59,130,246,.08) 0%,
+      rgba(59,130,246,.03) 45%,
+      transparent 70%
+    );
+  animation:zemivoWorldFloat 13s ease-in-out infinite reverse;
+}
+
+@keyframes zemivoWorldFloat{
+
+  0%{
+    transform:translate3d(0,0,0) scale(1);
+  }
+
+  50%{
+    transform:translate3d(0,18px,0) scale(1.04);
+  }
+
+  100%{
+    transform:translate3d(0,0,0) scale(1);
+  }
+
+}
+
+
+/* PAGE */
+
+.zemivo-notification-page{
+  min-height:100vh;
+  padding:1px 15px 30px;
+  position:relative;
+  z-index:1;
+}
+
+
+/* CARD */
+
+.card{
+  position:relative;
+
+  background:rgba(255,255,255,.97);
+
+  max-width:700px;
+
+  margin:30px auto;
+
+  padding:25px;
+
+  border-radius:15px;
+
+  box-shadow:
+    0 8px 25px rgba(15,23,42,.08);
+}
+
+.card h1{
+  margin-top:0;
+  color:#2563eb;
+}
+
+
+/* SETTINGS ITEM */
+
+.item{
+  padding:16px 0;
+
+  border-bottom:
+    1px solid #eee;
+
+  display:flex;
+
+  align-items:center;
+
+  justify-content:space-between;
+
+  gap:15px;
+}
+
+.item:last-of-type{
+  border-bottom:0;
+}
+
+.item span{
+  font-weight:500;
+}
+
+
+/* BUTTON */
+
+button{
+  background:#2563eb;
+
+  color:white;
+
+  border:0;
+
+  padding:9px 15px;
+
+  border-radius:20px;
+
+  cursor:pointer;
+
+  font-weight:bold;
+
+  white-space:nowrap;
+}
+
+button:hover{
+  opacity:.9;
+}
+
+
+/* SECURITY */
+
+.security-status{
+  margin-top:20px;
+
+  padding:11px 14px;
+
+  border-radius:10px;
+
+  background:#f0fdf4;
+
+  border:1px solid #bbf7d0;
+
+  color:#166534;
+
+  font-size:13px;
+}
+
+
+/* TOAST */
+
+.toast{
+  position:fixed;
+
+  left:50%;
+
+  bottom:25px;
+
+  transform:
+    translateX(-50%);
+
+  background:#111827;
+
+  color:white;
+
+  padding:11px 18px;
+
+  border-radius:10px;
+
+  display:none;
+
+  z-index:100;
+
+  max-width:90%;
+
+  text-align:center;
+}
+
+.toast.show{
+  display:block;
+}
+
+
+/* MOBILE */
+
+@media(max-width:600px){
+
+  .zemivo-notification-page{
+    padding:
+      1px 10px 25px;
+  }
+
+  .card{
+    margin:
+      15px auto;
+
+    padding:
+      20px 15px;
+  }
+
+  .item{
+    align-items:flex-start;
+  }
+
+  .item span{
+    line-height:1.4;
+  }
+
+}
+
 </style>
+
 </head>
+
+
 <body>
-<div class="card">
-<h1>🔔 Notification Settings</h1>
-<div class="item">Likes & Comments <button onclick="alert('Notification setting changed')">Manage</button></div>
-<div class="item">Friend Requests <button onclick="alert('Notification setting changed')">Manage</button></div>
-<div class="item">Messages <button onclick="alert('Notification setting changed')">Manage</button></div>
-<div class="item">Creator Updates <button onclick="alert('Notification setting changed')">Manage</button></div>
-</div>
+
+
+<!-- ZEMIVO LIVING WORLD FOUNDATION -->
+
+<div
+  id="zemivoWorld"
+  data-living-world="ready"
+  data-world-version="1.0.0"
+  aria-hidden="true"
+></div>
+
+
+<!-- PAGE ISOLATION -->
+
+<main
+  class="zemivo-notification-page"
+  data-page="notification-settings"
+>
+
+  <div class="card">
+
+    <h1>
+      🔔 Notification Settings
+    </h1>
+
+
+    <div class="item">
+
+      <span>
+        Likes & Comments
+      </span>
+
+      <button
+        type="button"
+        data-setting="likes-comments"
+      >
+        Manage
+      </button>
+
+    </div>
+
+
+    <div class="item">
+
+      <span>
+        Friend Requests
+      </span>
+
+      <button
+        type="button"
+        data-setting="friend-requests"
+      >
+        Manage
+      </button>
+
+    </div>
+
+
+    <div class="item">
+
+      <span>
+        Messages
+      </span>
+
+      <button
+        type="button"
+        data-setting="messages"
+      >
+        Manage
+      </button>
+
+    </div>
+
+
+    <div class="item">
+
+      <span>
+        Creator Updates
+      </span>
+
+      <button
+        type="button"
+        data-setting="creator-updates"
+      >
+        Manage
+      </button>
+
+    </div>
+
+
+    <!-- SECURITY FOUNDATION -->
+
+    <div
+      id="securityStatus"
+      class="security-status"
+    >
+      🔐 Zemivo Security Foundation loading...
+    </div>
+
+
+  </div>
+
+</main>
+
+
+<div
+  id="toast"
+  class="toast"
+></div>
+
+
+<script type="module">
+
+/*
+  ZEMIVO NOTIFICATION SETTINGS
+
+  Foundations:
+  1. Security Foundation
+  2. Page Isolation
+  3. Existing Content Preservation
+  4. Living World Foundation
+
+  Notification settings are kept page-local
+  until the final user-preference data model
+  is connected.
+*/
+
+
+import {
+  auth
+} from "./zemivo-security.js";
+
+
+/* ELEMENTS */
+
+const toast =
+  document.getElementById(
+    "toast"
+  );
+
+const securityStatus =
+  document.getElementById(
+    "securityStatus"
+  );
+
+
+/* PAGE ISOLATION */
+
+const ZemivoNotificationSettingsPage = {
+
+  version:
+    "1.0.0",
+
+  page:
+    "notification-settings",
+
+  livingWorld:
+    "1.0.0",
+
+
+  initialize(){
+
+    this.setupButtons();
+
+    this.updateSecurityStatus();
+
+  },
+
+
+  setupButtons(){
+
+    const buttons =
+      document.querySelectorAll(
+        "[data-setting]"
+      );
+
+
+    buttons.forEach(
+      function(button){
+
+        button.addEventListener(
+          "click",
+          function(){
+
+            const setting =
+              button.dataset.setting;
+
+
+            showToast(
+              "Notification setting changed."
+            );
+
+
+            console.log(
+              "Zemivo notification setting:",
+              setting
+            );
+
+          }
+        );
+
+      }
+    );
+
+  },
+
+
+  updateSecurityStatus(){
+
+    if(!securityStatus){
+
+      return;
+
+    }
+
+
+    if(auth.currentUser){
+
+      securityStatus.textContent =
+        "🔐 Zemivo Security Foundation active • Notification settings session protected.";
+
+    }
+    else{
+
+      securityStatus.textContent =
+        "🔐 Zemivo Security Foundation active • Sign in to manage your notification settings.";
+
+    }
+
+  }
+
+};
+
+
+/* TOAST */
+
+function showToast(message){
+
+  toast.textContent =
+    message;
+
+  toast.classList.add(
+    "show"
+  );
+
+
+  setTimeout(
+    function(){
+
+      toast.classList.remove(
+        "show"
+      );
+
+    },
+    2200
+  );
+
+}
+
+
+/* START */
+
+ZemivoNotificationSettingsPage
+  .initialize();
+
+
+/* AUTH STATE */
+
+auth.onAuthStateChanged(
+  function(){
+
+    ZemivoNotificationSettingsPage
+      .updateSecurityStatus();
+
+  }
+);
+
+</script>
+
+
 </body>
 </html>
