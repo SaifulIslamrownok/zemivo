@@ -1,44 +1,261 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
   <title>Zemivo App</title>
+
   <style>
-    body{font-family:Arial;background:#f4f6f8;margin:0;color:#222}
-    .topbar{background:white;padding:18px;text-align:center;box-shadow:0 2px 8px #ddd}
-    .logo{font-size:28px;font-weight:bold;color:#2563eb}
-    .container{max-width:700px;margin:25px auto;padding:15px}
-    .card{background:white;padding:25px;border-radius:15px;margin-bottom:18px;box-shadow:0 2px 8px #ddd;text-align:center}
-    h1{color:#2563eb}
-    .button{display:inline-block;background:#2563eb;color:white;padding:12px 22px;border-radius:25px;text-decoration:none;font-weight:bold;margin-top:10px}
-    .icon{font-size:60px}
+
+    *{
+      box-sizing:border-box;
+    }
+
+    body{
+      font-family:Arial,Helvetica,sans-serif;
+      background:#f4f6f8;
+      margin:0;
+      color:#222;
+    }
+
+    .topbar{
+      background:white;
+      padding:18px;
+      text-align:center;
+      box-shadow:0 2px 8px #ddd;
+    }
+
+    .logo{
+      font-size:28px;
+      font-weight:bold;
+      color:#2563eb;
+    }
+
+    .container{
+      max-width:700px;
+      margin:25px auto;
+      padding:15px;
+    }
+
+    .card{
+      background:white;
+      padding:25px;
+      border-radius:15px;
+      margin-bottom:18px;
+      box-shadow:0 2px 8px #ddd;
+      text-align:center;
+    }
+
+    h1{
+      color:#2563eb;
+    }
+
+    .button{
+      display:inline-block;
+      background:#2563eb;
+      color:white;
+      padding:12px 22px;
+      border-radius:25px;
+      text-decoration:none;
+      font-weight:bold;
+      margin-top:10px;
+    }
+
+    .button:hover{
+      opacity:.9;
+    }
+
+    .icon{
+      font-size:60px;
+    }
+
+    .status{
+      font-size:13px;
+      color:#777;
+      margin-top:18px;
+    }
+
+    @media(max-width:700px){
+
+      .container{
+        margin:15px auto;
+        padding:12px;
+      }
+
+      .card{
+        padding:22px 18px;
+      }
+
+      .logo{
+        font-size:25px;
+      }
+
+    }
+
   </style>
+
 </head>
+
 <body>
 
 <header class="topbar">
-  <div class="logo">Zemivo</div>
+
+  <div class="logo">
+    Zemivo
+  </div>
+
 </header>
+
 
 <main class="container">
 
   <div class="card">
-    <div class="icon">📱</div>
-    <h1>Zemivo App</h1>
-    <p>Connect, create and earn from anywhere.</p>
 
-    <a class="button" href="#">
+    <div class="icon">
+      📱
+    </div>
+
+    <h1>
+      Zemivo App
+    </h1>
+
+    <p>
+      Connect, create and earn from anywhere.
+    </p>
+
+    <a
+      class="button"
+      href="#"
+      id="downloadButton"
+    >
       Download App
     </a>
+
   </div>
 
+
   <div class="card">
-    <h2>🚀 Coming Soon</h2>
-    <p>The official Zemivo Android app will be available here in the future.</p>
+
+    <h2>
+      🚀 Coming Soon
+    </h2>
+
+    <p>
+      The official Zemivo Android app will be available here in the future.
+    </p>
+
+  </div>
+
+
+  <div
+    id="securityStatus"
+    class="status"
+  >
+    Zemivo Security Foundation initializing...
   </div>
 
 </main>
+
+
+<script type="module">
+
+  /*
+    ZEMIVO APP PAGE
+    ----------------
+    1. Security Foundation
+    2. Page Isolation
+    3. Existing App-page content preserved
+
+    Living 3D World integration:
+    NOT added yet.
+  */
+
+
+  import {
+    auth
+  } from "./zemivo-security.js";
+
+
+  /*
+    PAGE ISOLATION
+  */
+
+  const ZemivoAppPage = Object.freeze({
+
+    version: "1.0.0",
+
+    init: function(){
+
+      const securityStatus =
+        document.getElementById(
+          "securityStatus"
+        );
+
+      const downloadButton =
+        document.getElementById(
+          "downloadButton"
+        );
+
+
+      /*
+        AUTH STATE
+
+        This page does not require login
+        just to view the App information.
+      */
+
+      if(auth){
+
+        securityStatus.textContent =
+          "Zemivo Security Foundation active.";
+
+      }
+
+
+      /*
+        DOWNLOAD BUTTON
+
+        The official Android app is not
+        available yet, so do not create
+        a fake download link.
+      */
+
+      downloadButton.addEventListener(
+        "click",
+        function(event){
+
+          event.preventDefault();
+
+          securityStatus.textContent =
+            "The official Zemivo Android app is coming soon.";
+
+        }
+      );
+
+    }
+
+  });
+
+
+  /*
+    START PAGE
+  */
+
+  ZemivoAppPage.init();
+
+
+  /*
+    Keep the page module isolated.
+    No page-specific variables are exposed globally.
+  */
+
+</script>
 
 </body>
 </html>
