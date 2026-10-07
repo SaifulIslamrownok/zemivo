@@ -5,8 +5,10 @@
 
 <meta charset="UTF-8">
 
-<meta name="viewport"
-      content="width=device-width, initial-scale=1.0">
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1.0"
+>
 
 <title>Zemivo Clinic Management</title>
 
@@ -110,6 +112,13 @@ body{
     border-radius:8px;
 
     cursor:pointer;
+
+}
+
+
+.account-btn:hover{
+
+    opacity:.9;
 
 }
 
@@ -580,6 +589,29 @@ body{
 
 
 /* =====================================================
+   SECURITY STATUS
+===================================================== */
+
+.security-status{
+
+    margin-top:20px;
+
+    padding:12px 15px;
+
+    border-radius:8px;
+
+    background:#f0fdf4;
+
+    border:1px solid #bbf7d0;
+
+    color:#166534;
+
+    font-size:13px;
+
+}
+
+
+/* =====================================================
    RESPONSIVE
 ===================================================== */
 
@@ -636,6 +668,8 @@ body{
         flex-direction:column;
 
         align-items:stretch;
+
+        gap:12px;
 
     }
 
@@ -702,7 +736,10 @@ body{
     <div class="header-right">
 
 
-        <select class="region-select">
+        <select
+            id="regionSelect"
+            class="region-select"
+        >
 
             <option>🌍 Global</option>
 
@@ -732,8 +769,10 @@ body{
 
 
         <button
-        class="account-btn"
-        onclick="alert('Clinic account setup will be connected later.')">
+            id="accountButton"
+            class="account-btn"
+            type="button"
+        >
 
             Clinic Account
 
@@ -1101,32 +1140,32 @@ body{
                 <div class="actions">
 
 
-                    <button>
+                    <button type="button">
                         + New Patient
                     </button>
 
 
-                    <button>
+                    <button type="button">
                         New Appointment
                     </button>
 
 
-                    <button>
+                    <button type="button">
                         Billing
                     </button>
 
 
-                    <button>
+                    <button type="button">
                         Patient History
                     </button>
 
 
-                    <button>
+                    <button type="button">
                         Prescription
                     </button>
 
 
-                    <button>
+                    <button type="button">
                         Follow-up
                     </button>
 
@@ -1384,9 +1423,168 @@ body{
         </section>
 
 
+        <!-- =============================================
+             SECURITY FOUNDATION STATUS
+        ============================================== -->
+
+        <div
+            id="securityStatus"
+            class="security-status"
+        >
+            Zemivo Security Foundation initializing...
+        </div>
+
+
     </main>
 
 </div>
+
+
+<!-- =====================================================
+     SECURITY FOUNDATION + PAGE ISOLATION
+===================================================== -->
+
+<script type="module">
+
+/*
+  ZEMIVO CLINIC MANAGEMENT PAGE
+
+  1. Security Foundation
+  2. Page Isolation
+  3. Existing clinic-management content preserved
+
+  IMPORTANT:
+  No patient, billing, prescription or medical
+  information is written to Firestore from this page.
+
+  Those sensitive systems require their own
+  backend/data model/security rules before
+  production functionality is enabled.
+
+  Living 3D World integration:
+  NOT added yet.
+*/
+
+
+import {
+
+    auth,
+
+    db
+
+} from "./zemivo-security.js";
+
+
+/*
+  PAGE ISOLATION
+
+  All page-specific state and behavior
+  stays inside this object.
+*/
+
+const ZemivoClinicManagementPage =
+Object.freeze({
+
+    version:"1.0.0",
+
+
+    init:function(){
+
+        const securityStatus =
+            document.getElementById(
+                "securityStatus"
+            );
+
+
+        const accountButton =
+            document.getElementById(
+                "accountButton"
+            );
+
+
+        const regionSelect =
+            document.getElementById(
+                "regionSelect"
+            );
+
+
+        /*
+          SECURITY FOUNDATION
+        */
+
+        if(auth && db){
+
+            securityStatus.textContent =
+                "Zemivo Security Foundation active.";
+
+        }
+
+
+        /*
+          CLINIC ACCOUNT
+
+          The original page only showed
+          an informational alert.
+
+          We preserve that behavior.
+        */
+
+        accountButton.addEventListener(
+
+            "click",
+
+            function(){
+
+                window.alert(
+                    "Clinic account setup will be connected later."
+                );
+
+            }
+
+        );
+
+
+        /*
+          REGION SELECTION
+
+          This currently changes the
+          selected interface value only.
+
+          Global clinic configuration will
+          be connected later to the proper
+          account/configuration system.
+        */
+
+        regionSelect.addEventListener(
+
+            "change",
+
+            function(){
+
+                const selectedRegion =
+                    regionSelect.value;
+
+                console.log(
+                    "Zemivo clinic region selected:",
+                    selectedRegion
+                );
+
+            }
+
+        );
+
+    }
+
+});
+
+
+/*
+  START PAGE
+*/
+
+ZemivoClinicManagementPage.init();
+
+</script>
 
 
 </body>
