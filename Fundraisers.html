@@ -1,71 +1,546 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+
 <title>Zemivo - Fundraisers</title>
+
 <style>
-body{margin:0;font-family:Arial;background:#f4f6f8;color:#222}
-.topbar{background:white;padding:18px;display:flex;justify-content:space-between;box-shadow:0 2px 8px #ddd}
-.logo{font-size:28px;font-weight:bold;color:#2563eb}
-.topbar a{color:#2563eb;text-decoration:none;font-weight:bold}
-.container{max-width:850px;margin:25px auto;padding:15px}
-.card{background:white;padding:22px;border-radius:15px;margin-bottom:18px;box-shadow:0 2px 8px #ddd}
-.fundraiser{padding:18px 0;border-bottom:1px solid #eee}
-.progress{background:#e5e7eb;height:10px;border-radius:10px;margin:12px 0}
-.bar{height:100%;background:#16a34a;border-radius:10px}
-button{background:#16a34a;color:white;border:0;padding:10px 18px;border-radius:22px;font-weight:bold}
+
+*{
+  box-sizing:border-box;
+}
+
+body{
+  margin:0;
+  font-family:Arial,Helvetica,sans-serif;
+  background:#f4f6f8;
+  color:#222;
+}
+
+
+/* LIVING WORLD FOUNDATION */
+
+#zemivoWorld{
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  z-index:0;
+  overflow:hidden;
+}
+
+#zemivoWorld::before{
+  content:"";
+  position:absolute;
+  width:420px;
+  height:420px;
+  top:-180px;
+  right:-120px;
+  border-radius:50%;
+  background:
+    radial-gradient(
+      circle,
+      rgba(37,99,235,.10) 0%,
+      rgba(37,99,235,.04) 40%,
+      transparent 70%
+    );
+  animation:zemivoWorldFloat 10s ease-in-out infinite;
+}
+
+#zemivoWorld::after{
+  content:"";
+  position:absolute;
+  width:360px;
+  height:360px;
+  bottom:-180px;
+  left:-130px;
+  border-radius:50%;
+  background:
+    radial-gradient(
+      circle,
+      rgba(22,163,74,.08) 0%,
+      rgba(22,163,74,.03) 45%,
+      transparent 70%
+    );
+  animation:zemivoWorldFloat 13s ease-in-out infinite reverse;
+}
+
+@keyframes zemivoWorldFloat{
+
+  0%{
+    transform:translate3d(0,0,0) scale(1);
+  }
+
+  50%{
+    transform:translate3d(0,18px,0) scale(1.04);
+  }
+
+  100%{
+    transform:translate3d(0,0,0) scale(1);
+  }
+
+}
+
+
+/* TOPBAR */
+
+.topbar{
+  position:relative;
+  z-index:2;
+
+  background:rgba(255,255,255,.97);
+
+  padding:18px;
+
+  display:flex;
+
+  justify-content:space-between;
+
+  align-items:center;
+
+  box-shadow:
+    0 2px 8px rgba(0,0,0,.10);
+}
+
+.logo{
+  font-size:28px;
+  font-weight:bold;
+  color:#2563eb;
+}
+
+.topbar a{
+  color:#2563eb;
+  text-decoration:none;
+  font-weight:bold;
+}
+
+
+/* MAIN */
+
+.zemivo-fundraisers-page{
+  position:relative;
+  z-index:1;
+}
+
+.container{
+  max-width:850px;
+
+  margin:25px auto;
+
+  padding:15px;
+}
+
+
+/* CARD */
+
+.card{
+  background:rgba(255,255,255,.97);
+
+  padding:22px;
+
+  border-radius:15px;
+
+  margin-bottom:18px;
+
+  box-shadow:
+    0 2px 8px rgba(0,0,0,.08);
+}
+
+.card h1{
+  margin-top:0;
+  color:#2563eb;
+}
+
+
+/* FUNDRAISER */
+
+.fundraiser{
+  padding:18px 0;
+
+  border-bottom:
+    1px solid #eee;
+}
+
+.fundraiser:last-child{
+  border-bottom:0;
+}
+
+.fundraiser h3{
+  margin-top:0;
+}
+
+
+/* PROGRESS */
+
+.progress{
+  background:#e5e7eb;
+
+  height:10px;
+
+  border-radius:10px;
+
+  margin:12px 0;
+
+  overflow:hidden;
+}
+
+.bar{
+  height:100%;
+
+  background:#16a34a;
+
+  border-radius:10px;
+
+  transition:
+    width .4s ease;
+}
+
+
+/* BUTTON */
+
+button{
+  background:#16a34a;
+
+  color:white;
+
+  border:0;
+
+  padding:10px 18px;
+
+  border-radius:22px;
+
+  font-weight:bold;
+
+  cursor:pointer;
+}
+
+button:hover{
+  opacity:.9;
+}
+
+
+/* SECURITY STATUS */
+
+.security-status{
+  margin-top:20px;
+
+  padding:11px 14px;
+
+  border-radius:10px;
+
+  background:#f0fdf4;
+
+  border:1px solid #bbf7d0;
+
+  color:#166534;
+
+  font-size:13px;
+}
+
+
+/* MOBILE */
+
+@media(max-width:600px){
+
+  .topbar{
+    padding:15px;
+  }
+
+  .logo{
+    font-size:24px;
+  }
+
+  .container{
+    margin:15px auto;
+    padding:10px;
+  }
+
+  .card{
+    padding:18px;
+  }
+
+}
+
 </style>
+
 </head>
+
+
 <body>
 
+
+<!-- ZEMIVO LIVING WORLD FOUNDATION -->
+
+<div
+  id="zemivoWorld"
+  data-living-world="ready"
+  data-world-version="1.0.0"
+  aria-hidden="true"
+></div>
+
+
+<!-- TOPBAR -->
+
 <header class="topbar">
-<div class="logo">Zemivo</div>
-<a href="index.html">🏠 Home</a>
+
+  <div class="logo">
+    Zemivo
+  </div>
+
+  <a href="index.html">
+    🏠 Home
+  </a>
+
 </header>
 
-<main class="container">
 
-<div class="card">
-<h1>❤️ Fundraisers</h1>
-<p>Support important causes and communities.</p>
-</div>
+<!-- PAGE ISOLATION -->
 
-<div class="card">
+<main
+  class="zemivo-fundraisers-page"
+  data-page="fundraisers"
+>
 
-<div class="fundraiser">
-<h3>🏥 Medical Support</h3>
-<p>Help a family with medical expenses.</p>
+  <div class="container">
 
-<div class="progress">
-<div class="bar" style="width:60%"></div>
-</div>
 
-<p>$6,000 raised of $10,000</p>
-<button onclick="donate(this)">Donate</button>
-</div>
+    <!-- INTRODUCTION -->
 
-<div class="fundraiser">
-<h3>🎓 Education Support</h3>
-<p>Help students continue their education.</p>
+    <div class="card">
 
-<div class="progress">
-<div class="bar" style="width:40%"></div>
-</div>
+      <h1>
+        ❤️ Fundraisers
+      </h1>
 
-<p>$4,000 raised of $10,000</p>
-<button onclick="donate(this)">Donate</button>
-</div>
+      <p>
+        Support important causes and communities.
+      </p>
 
-</div>
+    </div>
+
+
+    <!-- FUNDRAISERS -->
+
+    <div class="card">
+
+
+      <div class="fundraiser">
+
+        <h3>
+          🏥 Medical Support
+        </h3>
+
+        <p>
+          Help a family with medical expenses.
+        </p>
+
+
+        <div class="progress">
+
+          <div
+            class="bar"
+            style="width:60%"
+          ></div>
+
+        </div>
+
+
+        <p>
+          $6,000 raised of $10,000
+        </p>
+
+
+        <button
+          type="button"
+          data-donate="medical"
+        >
+          Donate
+        </button>
+
+      </div>
+
+
+      <div class="fundraiser">
+
+        <h3>
+          🎓 Education Support
+        </h3>
+
+        <p>
+          Help students continue their education.
+        </p>
+
+
+        <div class="progress">
+
+          <div
+            class="bar"
+            style="width:40%"
+          ></div>
+
+        </div>
+
+
+        <p>
+          $4,000 raised of $10,000
+        </p>
+
+
+        <button
+          type="button"
+          data-donate="education"
+        >
+          Donate
+        </button>
+
+      </div>
+
+
+      <!-- SECURITY FOUNDATION STATUS -->
+
+      <div
+        id="securityStatus"
+        class="security-status"
+      >
+        🔐 Zemivo Security Foundation loading...
+      </div>
+
+
+    </div>
+
+
+  </div>
 
 </main>
 
-<script>
-function donate(button){
-alert("Donation feature will be connected to a payment system later.");
-}
+
+<script type="module">
+
+/*
+  ZEMIVO FUNDRAISERS
+
+  Foundations:
+  1. Security Foundation
+  2. Page Isolation
+  3. Existing Content Preservation
+  4. Living World Foundation
+
+  Payment/donation processing is intentionally
+  not connected yet because the final payment,
+  fundraiser, verification and financial ledger
+  architecture must be completed first.
+*/
+
+
+import {
+  auth
+} from "./zemivo-security.js";
+
+
+/* PAGE ISOLATION */
+
+const ZemivoFundraisersPage = {
+
+  version:
+    "1.0.0",
+
+  page:
+    "fundraisers",
+
+  livingWorld:
+    "1.0.0",
+
+
+  initialize(){
+
+    this.setupDonationButtons();
+
+    this.updateSecurityStatus();
+
+  },
+
+
+  setupDonationButtons(){
+
+    const buttons =
+      document.querySelectorAll(
+        "[data-donate]"
+      );
+
+
+    buttons.forEach(
+      function(button){
+
+        button.addEventListener(
+          "click",
+          function(){
+
+            alert(
+              "Donation feature will be connected to a secure payment system later."
+            );
+
+          }
+        );
+
+      }
+    );
+
+  },
+
+
+  updateSecurityStatus(){
+
+    const status =
+      document.getElementById(
+        "securityStatus"
+      );
+
+
+    if(!status){
+
+      return;
+
+    }
+
+
+    if(auth.currentUser){
+
+      status.textContent =
+        "🔐 Zemivo Security Foundation active • Fundraiser session protected.";
+
+    }
+    else{
+
+      status.textContent =
+        "🔐 Zemivo Security Foundation active • Sign in before making a donation.";
+
+    }
+
+  }
+
+};
+
+
+/* START PAGE */
+
+ZemivoFundraisersPage.initialize();
+
+
+/* AUTH STATE */
+
+auth.onAuthStateChanged(
+  function(){
+
+    ZemivoFundraisersPage
+      .updateSecurityStatus();
+
+  }
+);
+
 </script>
+
 
 </body>
 </html>
