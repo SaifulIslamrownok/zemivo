@@ -2208,10 +2208,10 @@ function createBuildingRoom(
 
 
   roomGroup.position.set(
-    x,
-    y,
-    z
-  );
+  x,
+  0,
+  z
+);
 
 
   cityInteriorRoot.add(
@@ -2341,7 +2341,7 @@ function createBuildingInterior(
 
           roomX,
 
-          floor * floorHeight,
+          0,
 
           roomZ,
 
@@ -3167,15 +3167,6 @@ roomObjectRoot.userData = {
    Avatar + Movement + Camera Follow
 ====================================================== */
 
-const avatarWorldRoot =
-  new THREE.Group();
-
-avatarWorldRoot.name =
-  "ZemivoAvatarWorld";
-
-scene.add(
-  avatarWorldRoot
-);
 
 
 /* ======================================================
@@ -3825,19 +3816,6 @@ function updateAvatarCamera(){
    AVATAR MOVEMENT LOOP
 ====================================================== */
 
-const previousAvatarUpdate =
-  animate;
-
-
-animate = function(){
-
-  updateAvatarMovement();
-
-  updateAvatarCamera();
-
-  previousAvatarUpdate();
-
-};
 
 
 /* ======================================================
@@ -4766,12 +4744,12 @@ function animate(){
     animate
   );
 
-  const elapsed =
-    clock.getElapsedTime();
-
+  );
 
   if(!paused){
+updateAvatarMovement();
 
+updateAvatarCamera();
     controls.update();
 
 
