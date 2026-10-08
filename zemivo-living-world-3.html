@@ -1919,7 +1919,589 @@ cityEnvironment.userData = {
     true
 
 };
+/* ======================================================
+   BUILDING → FLOOR → ROOM / SPACE SYSTEM
+====================================================== */
 
+const cityInteriorRoot =
+  new THREE.Group();
+
+cityInteriorRoot.name =
+  "CityInteriorWorld";
+
+cityEnvironment.add(
+  cityInteriorRoot
+);
+
+
+/* ======================================================
+   ROOM CREATOR
+====================================================== */
+
+function createBuildingRoom(
+  buildingGroup,
+  floorNumber,
+  roomNumber,
+  x,
+  y,
+  z,
+  width,
+  height,
+  depth
+){
+
+  const roomGroup =
+    new THREE.Group();
+
+  roomGroup.name =
+    buildingGroup.name +
+    "_Floor_" +
+    floorNumber +
+    "_Room_" +
+    roomNumber;
+
+
+  /* Room floor */
+
+  const floorGeometry =
+    new THREE.BoxGeometry(
+      width,
+      0.12,
+      depth
+    );
+
+
+  const floorMaterial =
+    new THREE.MeshStandardMaterial({
+
+      color:
+        0x334155,
+
+      roughness:
+        0.8,
+
+      metalness:
+        0.1
+
+    });
+
+
+  const floor =
+    new THREE.Mesh(
+      floorGeometry,
+      floorMaterial
+    );
+
+
+  floor.position.y =
+    0;
+
+
+  floor.receiveShadow =
+    true;
+
+
+  roomGroup.add(
+    floor
+  );
+
+
+  /* Room ceiling */
+
+  const ceilingGeometry =
+    new THREE.BoxGeometry(
+      width,
+      0.08,
+      depth
+    );
+
+
+  const ceilingMaterial =
+    new THREE.MeshStandardMaterial({
+
+      color:
+        0x64748b,
+
+      roughness:
+        0.75
+
+    });
+
+
+  const ceiling =
+    new THREE.Mesh(
+      ceilingGeometry,
+      ceilingMaterial
+    );
+
+
+  ceiling.position.y =
+    height;
+
+
+  roomGroup.add(
+    ceiling
+  );
+
+
+  /* Room walls */
+
+  const wallMaterial =
+    new THREE.MeshStandardMaterial({
+
+      color:
+        0x475569,
+
+      roughness:
+        0.78
+
+    });
+
+
+  const wallThickness =
+    0.12;
+
+
+  const backWall =
+    new THREE.Mesh(
+
+      new THREE.BoxGeometry(
+        width,
+        height,
+        wallThickness
+      ),
+
+      wallMaterial
+
+    );
+
+
+  backWall.position.set(
+    0,
+    height / 2,
+    -depth / 2
+  );
+
+
+  roomGroup.add(
+    backWall
+  );
+
+
+  const leftWall =
+    new THREE.Mesh(
+
+      new THREE.BoxGeometry(
+        wallThickness,
+        height,
+        depth
+      ),
+
+      wallMaterial
+
+    );
+
+
+  leftWall.position.set(
+    -width / 2,
+    height / 2,
+    0
+  );
+
+
+  roomGroup.add(
+    leftWall
+  );
+
+
+  const rightWall =
+    new THREE.Mesh(
+
+      new THREE.BoxGeometry(
+        wallThickness,
+        height,
+        depth
+      ),
+
+      wallMaterial
+
+    );
+
+
+  rightWall.position.set(
+    width / 2,
+    height / 2,
+    0
+  );
+
+
+  roomGroup.add(
+    rightWall
+  );
+
+
+  /* Room entrance */
+
+  const entrance =
+    new THREE.Mesh(
+
+      new THREE.BoxGeometry(
+        1.1,
+        2.2,
+        0.12
+      ),
+
+      new THREE.MeshStandardMaterial({
+
+        color:
+          0x38bdf8,
+
+        emissive:
+          0x0284c7,
+
+        emissiveIntensity:
+          0.35,
+
+        metalness:
+          0.45,
+
+        roughness:
+          0.25
+
+      })
+
+    );
+
+
+  entrance.position.set(
+    0,
+    1.1,
+    depth / 2
+  );
+
+
+  roomGroup.add(
+    entrance
+  );
+
+
+  /* Room data */
+
+  roomGroup.userData = {
+
+    type:
+      "room-space",
+
+    building:
+      buildingGroup.name,
+
+    floor:
+      floorNumber,
+
+    room:
+      roomNumber,
+
+    interactive:
+      true
+
+  };
+
+
+  roomGroup.position.set(
+    x,
+    y,
+    z
+  );
+
+
+  cityInteriorRoot.add(
+    roomGroup
+  );
+
+
+  return roomGroup;
+
+}
+
+
+/* ======================================================
+   BUILDING INTERIOR CREATOR
+====================================================== */
+
+function createBuildingInterior(
+  buildingGroup,
+  floorCount,
+  roomsPerFloor
+){
+
+  const interior =
+    new THREE.Group();
+
+  interior.name =
+    buildingGroup.name +
+    "_Interior";
+
+
+  cityInteriorRoot.add(
+    interior
+  );
+
+
+  const floorHeight =
+    3.2;
+
+
+  const roomWidth =
+    3.2;
+
+
+  const roomDepth =
+    3.2;
+
+
+  const roomHeight =
+    2.7;
+
+
+  for(
+    let floor = 1;
+    floor <= floorCount;
+    floor++
+  ){
+
+    const floorGroup =
+      new THREE.Group();
+
+
+    floorGroup.name =
+      buildingGroup.name +
+      "_Floor_" +
+      floor;
+
+
+    floorGroup.userData = {
+
+      type:
+        "building-floor",
+
+      building:
+        buildingGroup.name,
+
+      floor:
+        floor
+
+    };
+
+
+    floorGroup.position.y =
+      floor * floorHeight;
+
+
+    interior.add(
+      floorGroup
+    );
+
+
+    for(
+      let room = 1;
+      room <= roomsPerFloor;
+      room++
+    ){
+
+      const column =
+        (room - 1) %
+        2;
+
+      const row =
+        Math.floor(
+          (room - 1) / 2
+        );
+
+
+      const roomX =
+        column === 0
+        ? -1.8
+        : 1.8;
+
+
+      const roomZ =
+        row === 0
+        ? -1.8
+        : 1.8;
+
+
+      const roomSpace =
+        createBuildingRoom(
+
+          buildingGroup,
+
+          floor,
+
+          room,
+
+          roomX,
+
+          floor * floorHeight,
+
+          roomZ,
+
+          roomWidth,
+
+          roomHeight,
+
+          roomDepth
+
+        );
+
+
+      roomSpace.parent
+        .remove(
+          roomSpace
+        );
+
+      floorGroup.add(
+        roomSpace
+      );
+
+    }
+
+  }
+
+
+  interior.userData = {
+
+    type:
+      "building-interior",
+
+    building:
+      buildingGroup.name,
+
+    floors:
+      floorCount,
+
+    roomsPerFloor:
+      roomsPerFloor,
+
+    totalRooms:
+      floorCount *
+      roomsPerFloor
+
+  };
+
+
+  return interior;
+
+}
+
+
+/* ======================================================
+   FIRST BUILDING INTERIORS
+====================================================== */
+
+const socialTower =
+  cityEnvironment.getObjectByName(
+    "Zemivo Social Tower"
+  );
+
+
+const creatorTower =
+  cityEnvironment.getObjectByName(
+    "Zemivo Creator Tower"
+  );
+
+
+const commerceCenter =
+  cityEnvironment.getObjectByName(
+    "Zemivo Commerce Center"
+  );
+
+
+const aiCenter =
+  cityEnvironment.getObjectByName(
+    "Zemivo AI Center"
+  );
+
+
+const centralHub =
+  cityEnvironment.getObjectByName(
+    "Zemivo Central Hub"
+  );
+
+
+if(socialTower){
+
+  createBuildingInterior(
+    socialTower,
+    3,
+    4
+  );
+
+}
+
+
+if(creatorTower){
+
+  createBuildingInterior(
+    creatorTower,
+    4,
+    4
+  );
+
+}
+
+
+if(commerceCenter){
+
+  createBuildingInterior(
+    commerceCenter,
+    2,
+    4
+  );
+
+}
+
+
+if(aiCenter){
+
+  createBuildingInterior(
+    aiCenter,
+    3,
+    4
+  );
+
+}
+
+
+if(centralHub){
+
+  createBuildingInterior(
+    centralHub,
+    2,
+    4
+  );
+
+}
+
+
+/* ======================================================
+   INTERIOR SYSTEM READY
+====================================================== */
+
+cityInteriorRoot.userData = {
+
+  type:
+    "city-interior-system",
+
+  version:
+    "1.0",
+
+  hierarchy:
+    "Building → Floor → Room/Space",
+
+  buildings:
+    5
+
+};
 /* ======================================================
    WORLD CORE
 ====================================================== */
