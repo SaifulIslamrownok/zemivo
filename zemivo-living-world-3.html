@@ -1361,7 +1361,564 @@ grid.material.opacity =
 environmentRoot.add(
   grid
 );
+/* ======================================================
+   FIRST 3D CITY ENVIRONMENT
+====================================================== */
 
+const cityEnvironment =
+  new THREE.Group();
+
+cityEnvironment.name =
+  "FirstCityEnvironment";
+
+environmentRoot.add(
+  cityEnvironment
+);
+
+
+/* ======================================================
+   CITY PLAZA
+====================================================== */
+
+const plazaGeometry =
+  new THREE.CylinderGeometry(
+    8,
+    8,
+    0.35,
+    48
+  );
+
+const plazaMaterial =
+  new THREE.MeshStandardMaterial({
+
+    color:
+      0x111827,
+
+    roughness:
+      0.72,
+
+    metalness:
+      0.22
+
+  });
+
+const plaza =
+  new THREE.Mesh(
+    plazaGeometry,
+    plazaMaterial
+  );
+
+plaza.position.set(
+  0,
+  0.18,
+  0
+);
+
+plaza.receiveShadow =
+  true;
+
+cityEnvironment.add(
+  plaza
+);
+
+
+/* ======================================================
+   CITY ROADS
+====================================================== */
+
+const roadMaterial =
+  new THREE.MeshStandardMaterial({
+
+    color:
+      0x0f172a,
+
+    roughness:
+      0.9,
+
+    metalness:
+      0.08
+
+  });
+
+
+function createRoad(
+  width,
+  length,
+  x,
+  z,
+  rotation = 0
+){
+
+  const geometry =
+    new THREE.BoxGeometry(
+      width,
+      0.08,
+      length
+    );
+
+  const road =
+    new THREE.Mesh(
+      geometry,
+      roadMaterial
+    );
+
+  road.position.set(
+    x,
+    0.08,
+    z
+  );
+
+  road.rotation.y =
+    rotation;
+
+  road.receiveShadow =
+    true;
+
+  cityEnvironment.add(
+    road
+  );
+
+  return road;
+
+}
+
+
+createRoad(
+  4,
+  52,
+  0,
+  0,
+  0
+);
+
+
+createRoad(
+  52,
+  4,
+  0,
+  0,
+  0
+);
+
+
+/* ======================================================
+   CITY BUILDING CREATOR
+====================================================== */
+
+function createCityBuilding(
+  name,
+  x,
+  z,
+  width,
+  height,
+  depth,
+  color
+){
+
+  const buildingGroup =
+    new THREE.Group();
+
+  buildingGroup.name =
+    name;
+
+
+  const buildingGeometry =
+    new THREE.BoxGeometry(
+      width,
+      height,
+      depth
+    );
+
+
+  const buildingMaterial =
+    new THREE.MeshStandardMaterial({
+
+      color,
+
+      roughness:
+        0.58,
+
+      metalness:
+        0.18
+
+    });
+
+
+  const building =
+    new THREE.Mesh(
+      buildingGeometry,
+      buildingMaterial
+    );
+
+
+  building.position.y =
+    height / 2;
+
+
+  building.castShadow =
+    true;
+
+  building.receiveShadow =
+    true;
+
+
+  buildingGroup.position.set(
+    x,
+    0,
+    z
+  );
+
+
+  buildingGroup.add(
+    building
+  );
+
+
+  /* Building roof */
+
+  const roofGeometry =
+    new THREE.BoxGeometry(
+      width + 0.18,
+      0.18,
+      depth + 0.18
+    );
+
+
+  const roofMaterial =
+    new THREE.MeshStandardMaterial({
+
+      color:
+        0x1e293b,
+
+      roughness:
+        0.7,
+
+      metalness:
+        0.15
+
+    });
+
+
+  const roof =
+    new THREE.Mesh(
+      roofGeometry,
+      roofMaterial
+    );
+
+
+  roof.position.y =
+    height + 0.09;
+
+
+  roof.castShadow =
+    true;
+
+
+  buildingGroup.add(
+    roof
+  );
+
+
+  /* Building entrance */
+
+  const entranceGeometry =
+    new THREE.BoxGeometry(
+      Math.min(
+        width * 0.28,
+        1.8
+      ),
+      Math.min(
+        height * 0.28,
+        2.8
+      ),
+      0.12
+    );
+
+
+  const entranceMaterial =
+    new THREE.MeshStandardMaterial({
+
+      color:
+        0x60a5fa,
+
+      emissive:
+        0x1d4ed8,
+
+      emissiveIntensity:
+        0.35,
+
+      metalness:
+        0.5,
+
+      roughness:
+        0.25
+
+    });
+
+
+  const entrance =
+    new THREE.Mesh(
+      entranceGeometry,
+      entranceMaterial
+    );
+
+
+  entrance.position.set(
+    0,
+    Math.min(
+      height * 0.14,
+      1.4
+    ),
+    depth / 2 + 0.07
+  );
+
+
+  buildingGroup.add(
+    entrance
+  );
+
+
+  buildingGroup.userData = {
+
+    type:
+      "city-building",
+
+    name,
+
+    interactive:
+      true
+
+  };
+
+
+  cityEnvironment.add(
+    buildingGroup
+  );
+
+
+  return buildingGroup;
+
+}
+
+
+/* ======================================================
+   FIRST CITY BUILDINGS
+====================================================== */
+
+createCityBuilding(
+  "Zemivo Social Tower",
+  -10,
+  -10,
+  5,
+  10,
+  5,
+  0x2563eb
+);
+
+
+createCityBuilding(
+  "Zemivo Creator Tower",
+  10,
+  -10,
+  5,
+  13,
+  5,
+  0x9333ea
+);
+
+
+createCityBuilding(
+  "Zemivo Commerce Center",
+  -10,
+  10,
+  6,
+  8,
+  6,
+  0x16a34a
+);
+
+
+createCityBuilding(
+  "Zemivo AI Center",
+  10,
+  10,
+  6,
+  11,
+  6,
+  0x0891b2
+);
+
+
+/* ======================================================
+   CENTRAL BUILDING
+====================================================== */
+
+createCityBuilding(
+  "Zemivo Central Hub",
+  0,
+  -10,
+  6,
+  7,
+  6,
+  0x1d4ed8
+);
+
+
+/* ======================================================
+   CITY TREES
+====================================================== */
+
+function createCityTree(
+  x,
+  z
+){
+
+  const tree =
+    new THREE.Group();
+
+
+  const trunk =
+    new THREE.Mesh(
+
+      new THREE.CylinderGeometry(
+        0.18,
+        0.24,
+        1.8,
+        12
+      ),
+
+      new THREE.MeshStandardMaterial({
+
+        color:
+          0x78350f
+
+      })
+
+    );
+
+
+  trunk.position.y =
+    0.9;
+
+
+  trunk.castShadow =
+    true;
+
+
+  tree.add(
+    trunk
+  );
+
+
+  const leaves =
+    new THREE.Mesh(
+
+      new THREE.SphereGeometry(
+        1.15,
+        20,
+        20
+      ),
+
+      new THREE.MeshStandardMaterial({
+
+        color:
+          0x16a34a,
+
+        roughness:
+          0.85
+
+      })
+
+    );
+
+
+  leaves.position.y =
+    2.2;
+
+
+  leaves.castShadow =
+    true;
+
+
+  tree.add(
+    leaves
+  );
+
+
+  tree.position.set(
+    x,
+    0,
+    z
+  );
+
+
+  cityEnvironment.add(
+    tree
+  );
+
+}
+
+
+/* ======================================================
+   TREE POSITIONS
+====================================================== */
+
+createCityTree(
+  -5,
+  -5
+);
+
+createCityTree(
+  5,
+  -5
+);
+
+createCityTree(
+  -5,
+  5
+);
+
+createCityTree(
+  5,
+  5
+);
+
+createCityTree(
+  -15,
+  0
+);
+
+createCityTree(
+  15,
+  0
+);
+
+
+/* ======================================================
+   CITY ENVIRONMENT READY
+====================================================== */
+
+cityEnvironment.userData = {
+
+  type:
+    "city-environment",
+
+  version:
+    "1.0",
+
+  buildings:
+    5,
+
+  trees:
+    6,
+
+  roads:
+    2,
+
+  plaza:
+    true
+
+};
 
 /* ======================================================
    WORLD CORE
