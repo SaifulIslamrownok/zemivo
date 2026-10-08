@@ -773,6 +773,36 @@ controls.target.set(
 
 
 /* ======================================================
+   ZEMIVO WORLD HIERARCHY
+====================================================== */
+
+/*
+   World
+      ↓
+   Region
+      ↓
+   City
+      ↓
+   Area
+      ↓
+   Building
+      ↓
+   Room / Space
+
+   This structure is designed for future:
+   Social
+   Creator
+   Commerce
+   AI
+   Gaming
+   Education
+   Business
+   Content
+   Avatars
+*/
+
+
+/* ======================================================
    WORLD ROOT
 ====================================================== */
 
@@ -784,6 +814,65 @@ worldRoot.name =
 
 scene.add(
   worldRoot
+);
+
+
+/* ======================================================
+   WORLD HIERARCHY ROOTS
+====================================================== */
+
+const regionRoot =
+  new THREE.Group();
+
+regionRoot.name =
+  "Regions";
+
+worldRoot.add(
+  regionRoot
+);
+
+
+const cityRoot =
+  new THREE.Group();
+
+cityRoot.name =
+  "Cities";
+
+regionRoot.add(
+  cityRoot
+);
+
+
+const areaRoot =
+  new THREE.Group();
+
+areaRoot.name =
+  "Areas";
+
+cityRoot.add(
+  areaRoot
+);
+
+
+const buildingRoot =
+  new THREE.Group();
+
+buildingRoot.name =
+  "Buildings";
+
+areaRoot.add(
+  buildingRoot
+);
+
+
+const roomRoot =
+  new THREE.Group();
+
+roomRoot.name =
+  "RoomsAndSpaces";
+
+buildingRoot.add(
+  roomRoot
 );
 
 
@@ -875,6 +964,249 @@ gamingRoot.name =
 worldRoot.add(
   gamingRoot
 );
+
+
+/* ======================================================
+   FUTURE WORLD DATA MODEL
+====================================================== */
+
+const WorldStructure =
+  Object.freeze({
+
+    world: {
+      id:
+        "zemivo-global-world",
+
+      name:
+        "Zemivo World",
+
+      type:
+        "world"
+    },
+
+    regions: [],
+
+    cities: [],
+
+    areas: [],
+
+    buildings: [],
+
+    rooms: []
+
+  });
+
+
+/* ======================================================
+   WORLD NODE CREATOR
+====================================================== */
+
+function createWorldLevel(
+  parent,
+  id,
+  name,
+  type
+){
+
+  const group =
+    new THREE.Group();
+
+  group.name =
+    name;
+
+  group.userData = {
+
+    id,
+
+    name,
+
+    type,
+
+    parentId:
+      parent?.userData?.id ||
+      "zemivo-global-world"
+
+  };
+
+  parent.add(
+    group
+  );
+
+  return group;
+
+}
+
+
+/* ======================================================
+   INITIAL GLOBAL REGION
+====================================================== */
+
+const globalRegion =
+  createWorldLevel(
+    regionRoot,
+    "global-region",
+    "Global",
+    "region"
+  );
+
+
+/* ======================================================
+   INITIAL WORLD CITY
+====================================================== */
+
+const globalCity =
+  createWorldLevel(
+    cityRoot,
+    "global-city",
+    "Global City",
+    "city"
+  );
+
+
+/* ======================================================
+   INITIAL WORLD AREA
+====================================================== */
+
+const centralArea =
+  createWorldLevel(
+    areaRoot,
+    "central-area",
+    "Central Area",
+    "area"
+  );
+
+
+/* ======================================================
+   INITIAL WORLD BUILDING
+====================================================== */
+
+const centralBuilding =
+  createWorldLevel(
+    buildingRoot,
+    "central-building",
+    "Zemivo Central Building",
+    "building"
+  );
+
+
+/* ======================================================
+   INITIAL WORLD SPACE
+====================================================== */
+
+const centralSpace =
+  createWorldLevel(
+    roomRoot,
+    "central-space",
+    "Zemivo Central Space",
+    "room"
+  );
+
+
+/* ======================================================
+   WORLD STRUCTURE API
+====================================================== */
+
+const WorldSystem = {
+
+  version:
+    "3.0.0",
+
+  structure:
+    WorldStructure,
+
+  roots: {
+
+    world:
+      worldRoot,
+
+    regions:
+      regionRoot,
+
+    cities:
+      cityRoot,
+
+    areas:
+      areaRoot,
+
+    buildings:
+      buildingRoot,
+
+    rooms:
+      roomRoot
+
+  },
+
+  createRegion(
+    id,
+    name
+  ){
+
+    return createWorldLevel(
+      regionRoot,
+      id,
+      name,
+      "region"
+    );
+
+  },
+
+  createCity(
+    id,
+    name
+  ){
+
+    return createWorldLevel(
+      cityRoot,
+      id,
+      name,
+      "city"
+    );
+
+  },
+
+  createArea(
+    id,
+    name
+  ){
+
+    return createWorldLevel(
+      areaRoot,
+      id,
+      name,
+      "area"
+    );
+
+  },
+
+  createBuilding(
+    id,
+    name
+  ){
+
+    return createWorldLevel(
+      buildingRoot,
+      id,
+      name,
+      "building"
+    );
+
+  },
+
+  createRoom(
+    id,
+    name
+  ){
+
+    return createWorldLevel(
+      roomRoot,
+      id,
+      name,
+      "room"
+    );
+
+  }
+
+};
 
 
 /* ======================================================
