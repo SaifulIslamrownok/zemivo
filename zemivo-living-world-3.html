@@ -2502,6 +2502,666 @@ cityInteriorRoot.userData = {
     5
 
 };
+  /* ======================================================
+   ROOM INTERIOR — DOOR + FURNITURE + LIGHT
+====================================================== */
+
+
+/* ======================================================
+   INTERIOR OBJECT ROOT
+====================================================== */
+
+const roomObjectRoot =
+  new THREE.Group();
+
+roomObjectRoot.name =
+  "RoomInteriorObjects";
+
+cityInteriorRoot.add(
+  roomObjectRoot
+);
+
+
+/* ======================================================
+   CREATE ROOM DOOR
+====================================================== */
+
+function createRoomDoor(
+  room
+){
+
+  const doorGroup =
+    new THREE.Group();
+
+  doorGroup.name =
+    "Door";
+
+
+  const door =
+    new THREE.Mesh(
+
+      new THREE.BoxGeometry(
+        0.9,
+        2.1,
+        0.12
+      ),
+
+      new THREE.MeshStandardMaterial({
+
+        color:
+          0x0f172a,
+
+        roughness:
+          0.55,
+
+        metalness:
+          0.18
+
+      })
+
+    );
+
+
+  door.position.set(
+    0,
+    1.05,
+    1.55
+  );
+
+
+  door.castShadow =
+    true;
+
+
+  doorGroup.add(
+    door
+  );
+
+
+  doorGroup.userData = {
+
+    type:
+      "room-door",
+
+    interactive:
+      true
+
+  };
+
+
+  room.add(
+    doorGroup
+  );
+
+}
+
+
+/* ======================================================
+   CREATE ROOM TABLE
+====================================================== */
+
+function createRoomTable(
+  room
+){
+
+  const tableGroup =
+    new THREE.Group();
+
+  tableGroup.name =
+    "Table";
+
+
+  const top =
+    new THREE.Mesh(
+
+      new THREE.BoxGeometry(
+        1.5,
+        0.12,
+        0.8
+      ),
+
+      new THREE.MeshStandardMaterial({
+
+        color:
+          0x92400e,
+
+        roughness:
+          0.65
+
+      })
+
+    );
+
+
+  top.position.y =
+    0.9;
+
+
+  top.castShadow =
+    true;
+
+
+  tableGroup.add(
+    top
+  );
+
+
+  const legMaterial =
+    new THREE.MeshStandardMaterial({
+
+      color:
+        0x451a03,
+
+      roughness:
+        0.72
+
+    });
+
+
+  const legPositions = [
+
+    [-0.6,0.45,-0.3],
+    [ 0.6,0.45,-0.3],
+    [-0.6,0.45, 0.3],
+    [ 0.6,0.45, 0.3]
+
+  ];
+
+
+  legPositions.forEach(
+    function(position){
+
+      const leg =
+        new THREE.Mesh(
+
+          new THREE.BoxGeometry(
+            0.1,
+            0.9,
+            0.1
+          ),
+
+          legMaterial
+
+        );
+
+
+      leg.position.set(
+        position[0],
+        position[1],
+        position[2]
+      );
+
+
+      leg.castShadow =
+        true;
+
+
+      tableGroup.add(
+        leg
+      );
+
+    }
+  );
+
+
+  tableGroup.position.set(
+    0,
+    0,
+    -0.35
+  );
+
+
+  tableGroup.userData = {
+
+    type:
+      "furniture",
+
+    furnitureType:
+      "table",
+
+    interactive:
+      true
+
+  };
+
+
+  room.add(
+    tableGroup
+  );
+
+}
+
+
+/* ======================================================
+   CREATE ROOM CHAIR
+====================================================== */
+
+function createRoomChair(
+  room
+){
+
+  const chairGroup =
+    new THREE.Group();
+
+  chairGroup.name =
+    "Chair";
+
+
+  const seat =
+    new THREE.Mesh(
+
+      new THREE.BoxGeometry(
+        0.65,
+        0.12,
+        0.65
+      ),
+
+      new THREE.MeshStandardMaterial({
+
+        color:
+          0x475569,
+
+        roughness:
+          0.65
+
+      })
+
+    );
+
+
+  seat.position.y =
+    0.55;
+
+
+  seat.castShadow =
+    true;
+
+
+  chairGroup.add(
+    seat
+  );
+
+
+  const back =
+    new THREE.Mesh(
+
+      new THREE.BoxGeometry(
+        0.65,
+        0.9,
+        0.12
+      ),
+
+      new THREE.MeshStandardMaterial({
+
+        color:
+          0x334155,
+
+        roughness:
+          0.65
+
+      })
+
+    );
+
+
+  back.position.set(
+    0,
+    1,
+    -0.26
+  );
+
+
+  back.castShadow =
+    true;
+
+
+  chairGroup.add(
+    back
+  );
+
+
+  const chairLegMaterial =
+    new THREE.MeshStandardMaterial({
+
+      color:
+        0x1e293b,
+
+      roughness:
+        0.7
+
+    });
+
+
+  const chairLegPositions = [
+
+    [-0.23,0.27,-0.23],
+    [ 0.23,0.27,-0.23],
+    [-0.23,0.27, 0.23],
+    [ 0.23,0.27, 0.23]
+
+  ];
+
+
+  chairLegPositions.forEach(
+    function(position){
+
+      const leg =
+        new THREE.Mesh(
+
+          new THREE.BoxGeometry(
+            0.08,
+            0.55,
+            0.08
+          ),
+
+          chairLegMaterial
+
+        );
+
+
+      leg.position.set(
+        position[0],
+        position[1],
+        position[2]
+      );
+
+
+      chairGroup.add(
+        leg
+      );
+
+    }
+  );
+
+
+  chairGroup.position.set(
+    0,
+    0,
+    0.7
+  );
+
+
+  chairGroup.userData = {
+
+    type:
+      "furniture",
+
+    furnitureType:
+      "chair",
+
+    interactive:
+      true
+
+  };
+
+
+  room.add(
+    chairGroup
+  );
+
+}
+
+
+/* ======================================================
+   CREATE ROOM SCREEN
+====================================================== */
+
+function createRoomScreen(
+  room
+){
+
+  const screenGroup =
+    new THREE.Group();
+
+  screenGroup.name =
+    "InteractiveScreen";
+
+
+  const screen =
+    new THREE.Mesh(
+
+      new THREE.BoxGeometry(
+        1.2,
+        0.7,
+        0.08
+      ),
+
+      new THREE.MeshStandardMaterial({
+
+        color:
+          0x020617,
+
+        emissive:
+          0x2563eb,
+
+        emissiveIntensity:
+          0.35,
+
+        metalness:
+          0.4,
+
+        roughness:
+          0.25
+
+      })
+
+    );
+
+
+  screen.position.set(
+    0,
+    1.8,
+    -1.45
+  );
+
+
+  screen.castShadow =
+    true;
+
+
+  screenGroup.add(
+    screen
+  );
+
+
+  screenGroup.userData = {
+
+    type:
+      "interactive-screen",
+
+    interactive:
+      true,
+
+    action:
+      "open-content"
+
+  };
+
+
+  room.add(
+    screenGroup
+  );
+
+}
+
+
+/* ======================================================
+   CREATE ROOM LIGHT
+====================================================== */
+
+function createRoomLight(
+  room
+){
+
+  const light =
+    new THREE.PointLight(
+
+      0x93c5fd,
+
+      1.8,
+
+      7
+
+    );
+
+
+  light.position.set(
+    0,
+    2.4,
+    0
+  );
+
+
+  light.castShadow =
+    true;
+
+
+  room.add(
+    light
+  );
+
+
+  const lamp =
+    new THREE.Mesh(
+
+      new THREE.SphereGeometry(
+        0.16,
+        16,
+        16
+      ),
+
+      new THREE.MeshStandardMaterial({
+
+        color:
+          0xffffff,
+
+        emissive:
+          0x60a5fa,
+
+        emissiveIntensity:
+          1
+
+      })
+
+    );
+
+
+  lamp.position.set(
+    0,
+    2.65,
+    0
+  );
+
+
+  room.add(
+    lamp
+  );
+
+}
+
+
+/* ======================================================
+   CREATE ROOM INTERIOR
+====================================================== */
+
+function setupRoomInterior(
+  room
+){
+
+  if(
+    room.userData &&
+    room.userData.type ===
+    "room-space"
+  ){
+
+    if(
+      room.userData.interiorReady
+    ){
+
+      return;
+
+    }
+
+
+    createRoomDoor(
+      room
+    );
+
+
+    createRoomTable(
+      room
+    );
+
+
+    createRoomChair(
+      room
+    );
+
+
+    createRoomScreen(
+      room
+    );
+
+
+    createRoomLight(
+      room
+    );
+
+
+    room.userData.interiorReady =
+      true;
+
+  }
+
+}
+
+
+/* ======================================================
+   APPLY INTERIOR TO ALL ROOMS
+====================================================== */
+
+cityInteriorRoot.traverse(
+  function(object){
+
+    if(
+      object.userData &&
+      object.userData.type ===
+      "room-space"
+    ){
+
+      setupRoomInterior(
+        object
+      );
+
+    }
+
+  }
+);
+
+
+/* ======================================================
+   ROOM INTERIOR SYSTEM READY
+====================================================== */
+
+roomObjectRoot.userData = {
+
+  type:
+    "room-interior-system",
+
+  version:
+    "1.0",
+
+  features: [
+
+    "door",
+    "table",
+    "chair",
+    "interactive-screen",
+    "room-light"
+
+  ]
+
+};
 /* ======================================================
    WORLD CORE
 ====================================================== */
