@@ -1,0 +1,2119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+>
+
+<meta
+  name="theme-color"
+  content="#020617"
+>
+
+<meta
+  name="color-scheme"
+  content="dark"
+>
+
+<meta
+  name="description"
+  content="Zemivo Living World 3.0 — Future-ready immersive world foundation."
+>
+
+<title>Zemivo Living World 3.0</title>
+
+
+<style>
+
+/* =========================================================
+   ZEMIVO LIVING WORLD 3.0
+   FUTURE-READY FOUNDATION
+   ========================================================= */
+
+:root{
+
+  --zw-bg:#020617;
+  --zw-bg-2:#050816;
+
+  --zw-blue:#2563eb;
+  --zw-blue-light:#60a5fa;
+
+  --zw-text:#f8fafc;
+  --zw-muted:#94a3b8;
+
+  --zw-border:rgba(148,163,184,.14);
+
+  --zw-glass:rgba(2,6,23,.62);
+
+}
+
+
+*{
+  box-sizing:border-box;
+}
+
+
+html,
+body{
+
+  width:100%;
+  height:100%;
+
+  margin:0;
+
+  overflow:hidden;
+
+  background:var(--zw-bg);
+
+}
+
+
+body{
+
+  font-family:
+    Arial,
+    Helvetica,
+    sans-serif;
+
+  color:var(--zw-text);
+
+  -webkit-font-smoothing:antialiased;
+
+  text-rendering:optimizeLegibility;
+
+}
+
+
+/* =========================================================
+   WORLD ROOT
+   ========================================================= */
+
+#zemivoWorld3{
+
+  position:fixed;
+
+  inset:0;
+
+  width:100vw;
+  height:100vh;
+
+  overflow:hidden;
+
+  isolation:isolate;
+
+  contain:strict;
+
+  background:
+
+    radial-gradient(
+      circle at 50% 45%,
+      rgba(37,99,235,.18),
+      transparent 30%
+    ),
+
+    radial-gradient(
+      circle at 15% 20%,
+      rgba(124,58,237,.10),
+      transparent 28%
+    ),
+
+    radial-gradient(
+      circle at 85% 75%,
+      rgba(6,182,212,.08),
+      transparent 28%
+    ),
+
+    linear-gradient(
+      180deg,
+      #020617,
+      #050816 55%,
+      #01030a
+    );
+
+}
+
+
+/* =========================================================
+   CANVAS
+   ========================================================= */
+
+#zemivoWorld3Canvas{
+
+  position:absolute;
+
+  inset:0;
+
+  width:100%;
+  height:100%;
+
+  display:block;
+
+  z-index:0;
+
+}
+
+
+/* =========================================================
+   WORLD UI
+   ========================================================= */
+
+.zw-ui{
+
+  position:absolute;
+
+  inset:0;
+
+  z-index:10;
+
+  pointer-events:none;
+
+}
+
+
+/* =========================================================
+   HEADER
+   ========================================================= */
+
+.zw-header{
+
+  position:absolute;
+
+  top:0;
+  left:0;
+  right:0;
+
+  min-height:70px;
+
+  display:flex;
+
+  align-items:center;
+
+  justify-content:space-between;
+
+  gap:15px;
+
+  padding:
+    13px
+    18px;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(2,6,23,.84),
+      rgba(2,6,23,.18)
+    );
+
+  border-bottom:
+    1px solid
+    rgba(148,163,184,.06);
+
+  backdrop-filter:
+    blur(16px);
+
+  -webkit-backdrop-filter:
+    blur(16px);
+
+}
+
+
+.zw-brand{
+
+  display:flex;
+
+  align-items:center;
+
+  gap:8px;
+
+}
+
+
+.zw-logo{
+
+  font-size:24px;
+
+  font-weight:900;
+
+  letter-spacing:.3px;
+
+  text-shadow:
+    0 0 20px
+    rgba(96,165,250,.5);
+
+}
+
+
+.zw-version{
+
+  padding:
+    5px
+    9px;
+
+  border:
+    1px solid
+    var(--zw-border);
+
+  border-radius:20px;
+
+  background:
+    rgba(255,255,255,.04);
+
+  color:
+    #bfdbfe;
+
+  font-size:10px;
+
+  font-weight:bold;
+
+}
+
+
+.zw-status{
+
+  display:flex;
+
+  align-items:center;
+
+  gap:7px;
+
+  padding:
+    8px
+    12px;
+
+  border:
+    1px solid
+    var(--zw-border);
+
+  border-radius:20px;
+
+  background:
+    rgba(15,23,42,.55);
+
+  color:#dbeafe;
+
+  font-size:11px;
+
+}
+
+
+.zw-status-dot{
+
+  width:8px;
+  height:8px;
+
+  flex:0 0 auto;
+
+  border-radius:50%;
+
+  background:#22c55e;
+
+  box-shadow:
+    0 0 12px
+    rgba(34,197,94,.75);
+
+}
+
+
+/* =========================================================
+   CENTRAL WORLD
+   ========================================================= */
+
+.zw-core{
+
+  position:absolute;
+
+  left:50%;
+  top:50%;
+
+  width:
+    min(420px,72vw);
+
+  aspect-ratio:1;
+
+  transform:
+    translate(-50%,-50%);
+
+}
+
+
+.zw-ring{
+
+  position:absolute;
+
+  inset:0;
+
+  border-radius:50%;
+
+  border:
+    1px solid
+    rgba(96,165,250,.18);
+
+  box-shadow:
+    0 0 80px
+    rgba(37,99,235,.08);
+
+}
+
+
+.zw-ring-1{
+
+  transform:scale(.70);
+
+  animation:
+    zwPulse
+    6s
+    ease-in-out
+    infinite;
+
+}
+
+
+.zw-ring-2{
+
+  transform:scale(.84);
+
+  animation:
+    zwPulse
+    8s
+    ease-in-out
+    infinite
+    reverse;
+
+}
+
+
+.zw-ring-3{
+
+  transform:scale(1);
+
+  border-style:dashed;
+
+  animation:
+    zwRotate
+    32s
+    linear
+    infinite;
+
+}
+
+
+.zw-core-center{
+
+  position:absolute;
+
+  left:50%;
+  top:50%;
+
+  width:118px;
+  height:118px;
+
+  transform:
+    translate(-50%,-50%);
+
+  display:flex;
+
+  align-items:center;
+
+  justify-content:center;
+
+  border-radius:50%;
+
+  background:
+
+    radial-gradient(
+      circle at 32% 28%,
+      #93c5fd,
+      #2563eb 38%,
+      #1e1b4b 72%,
+      #020617
+    );
+
+  box-shadow:
+
+    0 0 35px
+    rgba(59,130,246,.72),
+
+    0 0 110px
+    rgba(37,99,235,.30),
+
+    inset 0 0 35px
+    rgba(255,255,255,.16);
+
+  font-size:16px;
+
+  font-weight:900;
+
+  letter-spacing:1px;
+
+  z-index:5;
+
+}
+
+
+.zw-core-center::after{
+
+  content:"";
+
+  position:absolute;
+
+  inset:-9px;
+
+  border-radius:50%;
+
+  border:
+    1px solid
+    rgba(147,197,253,.35);
+
+  animation:
+    zwCoreGlow
+    3s
+    ease-in-out
+    infinite;
+
+}
+
+
+/* =========================================================
+   WORLD NODES
+   ========================================================= */
+
+.zw-node{
+
+  position:absolute;
+
+  width:92px;
+  height:92px;
+
+  display:flex;
+
+  align-items:center;
+
+  justify-content:center;
+
+  flex-direction:column;
+
+  gap:4px;
+
+  padding:8px;
+
+  border:
+    1px solid
+    rgba(147,197,253,.18);
+
+  border-radius:50%;
+
+  background:
+    rgba(15,23,42,.70);
+
+  box-shadow:
+    0 15px 45px
+    rgba(0,0,0,.35),
+
+    inset 0 0 24px
+    rgba(59,130,246,.06);
+
+  backdrop-filter:
+    blur(12px);
+
+  -webkit-backdrop-filter:
+    blur(12px);
+
+  color:#dbeafe;
+
+  font-size:10px;
+
+  font-weight:bold;
+
+  text-align:center;
+
+  user-select:none;
+
+}
+
+
+.zw-node-icon{
+
+  font-size:20px;
+
+}
+
+
+.zw-node-social{
+
+  left:8%;
+  top:32%;
+
+}
+
+
+.zw-node-ai{
+
+  right:8%;
+  top:28%;
+
+}
+
+
+.zw-node-commerce{
+
+  left:15%;
+  bottom:17%;
+
+}
+
+
+.zw-node-gaming{
+
+  right:14%;
+  bottom:16%;
+
+}
+
+
+.zw-node-creator{
+
+  left:50%;
+  bottom:2%;
+
+  transform:
+    translateX(-50%);
+
+}
+
+
+/* =========================================================
+   INFORMATION PANEL
+   ========================================================= */
+
+.zw-info{
+
+  position:absolute;
+
+  left:50%;
+  bottom:18px;
+
+  width:
+    min(720px,88vw);
+
+  transform:
+    translateX(-50%);
+
+  padding:
+    12px
+    16px;
+
+  border:
+    1px solid
+    var(--zw-border);
+
+  border-radius:18px;
+
+  background:
+    var(--zw-glass);
+
+  backdrop-filter:
+    blur(16px);
+
+  -webkit-backdrop-filter:
+    blur(16px);
+
+  text-align:center;
+
+}
+
+
+.zw-info-title{
+
+  font-size:14px;
+
+  font-weight:800;
+
+}
+
+
+.zw-info-text{
+
+  margin-top:5px;
+
+  color:var(--zw-muted);
+
+  font-size:10px;
+
+  line-height:1.5;
+
+}
+
+
+/* =========================================================
+   CONTROLS
+   ========================================================= */
+
+.zw-controls{
+
+  position:absolute;
+
+  right:16px;
+  bottom:18px;
+
+  display:flex;
+
+  gap:8px;
+
+  pointer-events:auto;
+
+}
+
+
+.zw-button{
+
+  width:42px;
+  height:42px;
+
+  border:
+    1px solid
+    var(--zw-border);
+
+  border-radius:50%;
+
+  background:
+    rgba(15,23,42,.78);
+
+  color:#fff;
+
+  cursor:pointer;
+
+  font-size:16px;
+
+  backdrop-filter:
+    blur(10px);
+
+  -webkit-backdrop-filter:
+    blur(10px);
+
+}
+
+
+.zw-button:focus-visible{
+
+  outline:
+    2px solid
+    #60a5fa;
+
+  outline-offset:3px;
+
+}
+
+
+/* =========================================================
+   ERROR / FALLBACK
+   ========================================================= */
+
+.zw-fallback{
+
+  position:absolute;
+
+  inset:0;
+
+  display:none;
+
+  align-items:center;
+
+  justify-content:center;
+
+  padding:25px;
+
+  z-index:50;
+
+  background:
+    #020617;
+
+  text-align:center;
+
+}
+
+
+.zw-fallback.show{
+
+  display:flex;
+
+}
+
+
+.zw-fallback-box{
+
+  max-width:520px;
+
+  padding:25px;
+
+  border:
+    1px solid
+    rgba(148,163,184,.15);
+
+  border-radius:18px;
+
+  background:
+    rgba(15,23,42,.8);
+
+}
+
+
+.zw-fallback-title{
+
+  font-weight:800;
+
+  margin-bottom:8px;
+
+}
+
+
+.zw-fallback-text{
+
+  color:#94a3b8;
+
+  font-size:13px;
+
+  line-height:1.5;
+
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media(max-width:700px){
+
+  .zw-header{
+
+    min-height:62px;
+
+    padding:
+      10px
+      12px;
+
+  }
+
+
+  .zw-logo{
+
+    font-size:20px;
+
+  }
+
+
+  .zw-version{
+
+    font-size:8px;
+
+    padding:
+      4px
+      7px;
+
+  }
+
+
+  .zw-status{
+
+    padding:
+      6px
+      8px;
+
+    font-size:9px;
+
+  }
+
+
+  .zw-core{
+
+    width:
+      min(285px,72vw);
+
+  }
+
+
+  .zw-core-center{
+
+    width:82px;
+    height:82px;
+
+    font-size:12px;
+
+  }
+
+
+  .zw-node{
+
+    width:64px;
+    height:64px;
+
+    font-size:7px;
+
+  }
+
+
+  .zw-node-icon{
+
+    font-size:15px;
+
+  }
+
+
+  .zw-node-social{
+
+    left:2%;
+    top:28%;
+
+  }
+
+
+  .zw-node-ai{
+
+    right:2%;
+    top:25%;
+
+  }
+
+
+  .zw-node-commerce{
+
+    left:4%;
+    bottom:25%;
+
+  }
+
+
+  .zw-node-gaming{
+
+    right:4%;
+    bottom:24%;
+
+  }
+
+
+  .zw-node-creator{
+
+    bottom:8%;
+
+  }
+
+
+  .zw-info{
+
+    bottom:10px;
+
+    width:
+      calc(100% - 20px);
+
+    padding:
+      9px
+      11px;
+
+  }
+
+
+  .zw-info-title{
+
+    font-size:11px;
+
+  }
+
+
+  .zw-info-text{
+
+    font-size:8px;
+
+  }
+
+
+  .zw-controls{
+
+    right:10px;
+
+    bottom:70px;
+
+  }
+
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+   ========================================================= */
+
+@media(
+  prefers-reduced-motion:reduce
+){
+
+  *,
+  *::before,
+  *::after{
+
+    animation-duration:
+      .01ms !important;
+
+    animation-iteration-count:
+      1 !important;
+
+    transition-duration:
+      .01ms !important;
+
+    scroll-behavior:
+      auto !important;
+
+  }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- =======================================================
+     ZEMIVO LIVING WORLD 3.0
+     ======================================================= -->
+
+<div
+  id="zemivoWorld3"
+  data-version="3.0.0"
+  data-status="future-ready"
+>
+
+
+  <canvas
+    id="zemivoWorld3Canvas"
+    aria-hidden="true"
+  ></canvas>
+
+
+  <div class="zw-ui">
+
+
+    <!-- HEADER -->
+
+    <header class="zw-header">
+
+      <div class="zw-brand">
+
+        <div class="zw-logo">
+          Zemivo
+        </div>
+
+        <div class="zw-version">
+          Living World 3.0
+        </div>
+
+      </div>
+
+
+      <div
+        class="zw-status"
+        aria-live="polite"
+      >
+
+        <span
+          class="zw-status-dot"
+        ></span>
+
+        <span id="zwStatusText">
+          Initializing
+        </span>
+
+      </div>
+
+    </header>
+
+
+    <!-- CENTRAL WORLD -->
+
+    <main
+      class="zw-core"
+      aria-label="Zemivo Living World 3.0"
+    >
+
+      <div
+        class="zw-ring zw-ring-1"
+      ></div>
+
+      <div
+        class="zw-ring zw-ring-2"
+      ></div>
+
+      <div
+        class="zw-ring zw-ring-3"
+      ></div>
+
+
+      <div
+        class="zw-core-center"
+      >
+        ZEMIVO
+      </div>
+
+
+      <!-- SOCIAL -->
+
+      <div
+        class="zw-node zw-node-social"
+      >
+
+        <div class="zw-node-icon">
+          🌐
+        </div>
+
+        Social World
+
+      </div>
+
+
+      <!-- AI -->
+
+      <div
+        class="zw-node zw-node-ai"
+      >
+
+        <div class="zw-node-icon">
+          🤖
+        </div>
+
+        AI World
+
+      </div>
+
+
+      <!-- COMMERCE -->
+
+      <div
+        class="zw-node zw-node-commerce"
+      >
+
+        <div class="zw-node-icon">
+          🛒
+        </div>
+
+        Commerce
+
+      </div>
+
+
+      <!-- GAMING -->
+
+      <div
+        class="zw-node zw-node-gaming"
+      >
+
+        <div class="zw-node-icon">
+          🎮
+        </div>
+
+        Gaming
+
+      </div>
+
+
+      <!-- CREATOR -->
+
+      <div
+        class="zw-node zw-node-creator"
+      >
+
+        <div class="zw-node-icon">
+          🎨
+        </div>
+
+        Creator World
+
+      </div>
+
+    </main>
+
+
+    <!-- INFO -->
+
+    <section
+      class="zw-info"
+      aria-label="World information"
+    >
+
+      <div class="zw-info-title">
+        Zemivo Living World 3.0
+      </div>
+
+      <div class="zw-info-text">
+
+        Future-ready immersive architecture
+        designed to expand with Zemivo Social,
+        Creator, AI, Commerce, Gaming and
+        future global experiences.
+
+      </div>
+
+    </section>
+
+
+    <!-- CONTROLS -->
+
+    <div class="zw-controls">
+
+      <button
+        id="zwPause"
+        class="zw-button"
+        type="button"
+        aria-label="Pause world animation"
+        title="Pause"
+      >
+        ⏸
+      </button>
+
+
+      <button
+        id="zwReset"
+        class="zw-button"
+        type="button"
+        aria-label="Reset world"
+        title="Reset"
+      >
+        ↻
+      </button>
+
+    </div>
+
+
+  </div>
+
+
+  <!-- FALLBACK -->
+
+  <div
+    id="zwFallback"
+    class="zw-fallback"
+    role="alert"
+  >
+
+    <div class="zw-fallback-box">
+
+      <div class="zw-fallback-title">
+        Zemivo Living World
+      </div>
+
+      <div class="zw-fallback-text">
+        The visual engine could not initialize.
+        The surrounding Zemivo application remains protected.
+      </div>
+
+    </div>
+
+  </div>
+
+
+</div>
+
+
+<script type="module">
+
+/* =========================================================
+   ZEMIVO LIVING WORLD 3.0
+   ISOLATED FUTURE ENGINE
+   ========================================================= */
+
+
+import {
+  ZemivoSecurity
+} from "./zemivo-security.js";
+
+
+(() => {
+
+  "use strict";
+
+
+  /* =======================================================
+     ROOT ELEMENTS
+     ======================================================= */
+
+  const root =
+    document.getElementById(
+      "zemivoWorld3"
+    );
+
+
+  const canvas =
+    document.getElementById(
+      "zemivoWorld3Canvas"
+    );
+
+
+  const statusText =
+    document.getElementById(
+      "zwStatusText"
+    );
+
+
+  const pauseButton =
+    document.getElementById(
+      "zwPause"
+    );
+
+
+  const resetButton =
+    document.getElementById(
+      "zwReset"
+    );
+
+
+  const fallback =
+    document.getElementById(
+      "zwFallback"
+    );
+
+
+  if(
+    !root ||
+    !canvas ||
+    !statusText ||
+    !pauseButton ||
+    !resetButton ||
+    !fallback
+  ){
+
+    throw new Error(
+      "Zemivo Living World 3.0: Required elements are missing."
+    );
+
+  }
+
+
+  /* =======================================================
+     SECURITY FOUNDATION
+     ======================================================= */
+
+  const securityReady =
+    Boolean(
+
+      ZemivoSecurity &&
+
+      ZemivoSecurity.app &&
+
+      ZemivoSecurity.appCheck &&
+
+      ZemivoSecurity.auth &&
+
+      ZemivoSecurity.db &&
+
+      ZemivoSecurity.storage
+
+    );
+
+
+  if(securityReady){
+
+    statusText.textContent =
+      "Secure Future Core";
+
+  }
+  else{
+
+    statusText.textContent =
+      "Security Foundation Required";
+
+  }
+
+
+  /* =======================================================
+     CANVAS ENGINE
+     ======================================================= */
+
+  const context =
+    canvas.getContext(
+      "2d",
+      {
+        alpha:true,
+        desynchronized:true
+      }
+    );
+
+
+  if(!context){
+
+    fallback.classList.add(
+      "show"
+    );
+
+    statusText.textContent =
+      "Visual Engine Offline";
+
+    return;
+
+  }
+
+
+  /* =======================================================
+     STATE
+     ======================================================= */
+
+  const state = {
+
+    version:
+      "3.0.0",
+
+    running:
+      true,
+
+    destroyed:
+      false,
+
+    width:
+      1,
+
+    height:
+      1,
+
+    pixelRatio:
+      1,
+
+    time:
+      0,
+
+    pointerX:
+      .5,
+
+    pointerY:
+      .5,
+
+    targetPointerX:
+      .5,
+
+    targetPointerY:
+      .5,
+
+    rotation:
+      0
+
+  };
+
+
+  /* =======================================================
+     CAPABILITY DETECTION
+     ======================================================= */
+
+  const prefersReducedMotion =
+    window.matchMedia &&
+    window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches;
+
+
+  if(prefersReducedMotion){
+
+    state.running =
+      false;
+
+    pauseButton.textContent =
+      "▶";
+
+  }
+
+
+  /* =======================================================
+     RESIZE
+     ======================================================= */
+
+  function resize(){
+
+    if(state.destroyed){
+      return;
+    }
+
+
+    const width =
+      Math.max(
+        1,
+        window.innerWidth
+      );
+
+
+    const height =
+      Math.max(
+        1,
+        window.innerHeight
+      );
+
+
+    state.width =
+      width;
+
+    state.height =
+      height;
+
+
+    state.pixelRatio =
+      Math.min(
+        window.devicePixelRatio || 1,
+        2
+      );
+
+
+    canvas.width =
+      Math.floor(
+        width *
+        state.pixelRatio
+      );
+
+
+    canvas.height =
+      Math.floor(
+        height *
+        state.pixelRatio
+      );
+
+
+    canvas.style.width =
+      width + "px";
+
+
+    canvas.style.height =
+      height + "px";
+
+
+    context.setTransform(
+      state.pixelRatio,
+      0,
+      0,
+      state.pixelRatio,
+      0,
+      0
+    );
+
+  }
+
+
+  /* =======================================================
+     POINTER
+     ======================================================= */
+
+  function pointerMove(event){
+
+    if(state.destroyed){
+      return;
+    }
+
+
+    state.targetPointerX =
+      Math.max(
+        0,
+        Math.min(
+          1,
+          event.clientX /
+          state.width
+        )
+      );
+
+
+    state.targetPointerY =
+      Math.max(
+        0,
+        Math.min(
+          1,
+          event.clientY /
+          state.height
+        )
+      );
+
+  }
+
+
+  /* =======================================================
+     BACKGROUND
+     ======================================================= */
+
+  function drawBackground(){
+
+    const width =
+      state.width;
+
+    const height =
+      state.height;
+
+
+    context.clearRect(
+      0,
+      0,
+      width,
+      height
+    );
+
+
+    const gradient =
+      context.createRadialGradient(
+
+        width *
+        (
+          .5 +
+          (
+            state.pointerX -
+            .5
+          ) * .12
+        ),
+
+        height *
+        (
+          .44 +
+          (
+            state.pointerY -
+            .5
+          ) * .08
+        ),
+
+        0,
+
+        width * .5,
+
+        height * .5,
+
+        Math.max(
+          width,
+          height
+        ) * .78
+
+      );
+
+
+    gradient.addColorStop(
+      0,
+      "rgba(37,99,235,.13)"
+    );
+
+
+    gradient.addColorStop(
+      .45,
+      "rgba(30,64,175,.045)"
+    );
+
+
+    gradient.addColorStop(
+      1,
+      "rgba(0,0,0,0)"
+    );
+
+
+    context.fillStyle =
+      gradient;
+
+
+    context.fillRect(
+      0,
+      0,
+      width,
+      height
+    );
+
+  }
+
+
+  /* =======================================================
+     STAR FIELD
+     ======================================================= */
+
+  function drawStars(){
+
+    const width =
+      state.width;
+
+    const height =
+      state.height;
+
+
+    const count =
+      width < 700
+        ? 65
+        : 125;
+
+
+    for(
+      let i = 0;
+      i < count;
+      i++
+    ){
+
+      const seed =
+        i * 41.713;
+
+
+      const x =
+        (
+          seed * 17.31
+        ) % width;
+
+
+      const y =
+        (
+          seed * 9.17
+        ) % height;
+
+
+      const pulse =
+        .30 +
+        (
+          Math.sin(
+            state.time *
+            (
+              .45 +
+              (
+                i % 5
+              ) * .07
+            ) +
+            i
+          ) + 1
+        ) * .20;
+
+
+      const size =
+        .45 +
+        (
+          i % 3
+        ) * .45;
+
+
+      context.beginPath();
+
+
+      context.arc(
+        x,
+        y,
+        size,
+        0,
+        Math.PI * 2
+      );
+
+
+      context.fillStyle =
+        `rgba(147,197,253,${pulse})`;
+
+
+      context.fill();
+
+    }
+
+  }
+
+
+  /* =======================================================
+     ORBITS
+     ======================================================= */
+
+  function drawOrbits(){
+
+    const centerX =
+      state.width * .5;
+
+    const centerY =
+      state.height * .5;
+
+
+    const base =
+      Math.min(
+        state.width,
+        state.height
+      );
+
+
+    const radius =
+      base * .21;
+
+
+    for(
+      let i = 0;
+      i < 4;
+      i++
+    ){
+
+      context.save();
+
+
+      context.translate(
+        centerX,
+        centerY
+      );
+
+
+      context.rotate(
+
+        state.rotation *
+        (
+          i % 2
+            ? -.30
+            : .20
+        )
+
+        +
+
+        i * .55
+
+      );
+
+
+      context.scale(
+        1,
+        .35 +
+        i * .08
+      );
+
+
+      context.beginPath();
+
+
+      context.arc(
+        0,
+        0,
+        radius +
+        i * 25,
+        0,
+        Math.PI * 2
+      );
+
+
+      context.strokeStyle =
+        `rgba(96,165,250,${.075 - i * .012})`;
+
+
+      context.lineWidth =
+        1;
+
+
+      context.stroke();
+
+
+      context.restore();
+
+    }
+
+  }
+
+
+  /* =======================================================
+     PARTICLES
+     ======================================================= */
+
+  function drawParticles(){
+
+    const width =
+      state.width;
+
+    const height =
+      state.height;
+
+
+    const count =
+      width < 700
+        ? 20
+        : 38;
+
+
+    for(
+      let i = 0;
+      i < count;
+      i++
+    ){
+
+      const seed =
+        i * 73.117;
+
+
+      const speed =
+        .0007 +
+        (
+          i % 4
+        ) * .00022;
+
+
+      const x =
+        (
+          seed +
+          state.time *
+          speed *
+          width
+        )
+        %
+        (
+          width + 100
+        )
+        -
+        50;
+
+
+      const y =
+        height *
+        (
+          .5 +
+          Math.sin(
+            state.time *
+            .30 +
+            i
+          ) *
+          .34
+        );
+
+
+      const size =
+        1 +
+        (
+          i % 3
+        ) * .45;
+
+
+      context.beginPath();
+
+
+      context.arc(
+        x,
+        y,
+        size,
+        0,
+        Math.PI * 2
+      );
+
+
+      context.fillStyle =
+        "rgba(96,165,250,.18)";
+
+
+      context.fill();
+
+    }
+
+  }
+
+
+  /* =======================================================
+     FRAME
+     ======================================================= */
+
+  function frame(timestamp){
+
+    if(state.destroyed){
+      return;
+    }
+
+
+    state.time =
+      timestamp *
+      .001;
+
+
+    state.pointerX +=
+      (
+        state.targetPointerX -
+        state.pointerX
+      ) * .035;
+
+
+    state.pointerY +=
+      (
+        state.targetPointerY -
+        state.pointerY
+      ) * .035;
+
+
+    if(state.running){
+
+      state.rotation +=
+        .00065;
+
+    }
+
+
+    drawBackground();
+
+    drawStars();
+
+    drawOrbits();
+
+    drawParticles();
+
+
+    requestAnimationFrame(
+      frame
+    );
+
+  }
+
+
+  /* =======================================================
+     PAUSE / RESUME
+     ======================================================= */
+
+  function toggle(){
+
+    state.running =
+      !state.running;
+
+
+    pauseButton.textContent =
+      state.running
+        ? "⏸"
+        : "▶";
+
+
+    pauseButton.setAttribute(
+      "aria-label",
+      state.running
+        ? "Pause world animation"
+        : "Resume world animation"
+    );
+
+  }
+
+
+  /* =======================================================
+     RESET
+     ======================================================= */
+
+  function reset(){
+
+    state.pointerX =
+      .5;
+
+    state.pointerY =
+      .5;
+
+    state.targetPointerX =
+      .5;
+
+    state.targetPointerY =
+      .5;
+
+    state.rotation =
+      0;
+
+  }
+
+
+  /* =======================================================
+     EVENT REGISTRATION
+     ======================================================= */
+
+  window.addEventListener(
+    "resize",
+    resize,
+    {
+      passive:true
+    }
+  );
+
+
+  window.addEventListener(
+    "pointermove",
+    pointerMove,
+    {
+      passive:true
+    }
+  );
+
+
+  pauseButton.addEventListener(
+    "click",
+    toggle
+  );
+
+
+  resetButton.addEventListener(
+    "click",
+    reset
+  );
+
+
+  /* =======================================================
+     INITIALIZATION
+     ======================================================= */
+
+  resize();
+
+
+  requestAnimationFrame(
+    frame
+  );
+
+
+  /* =======================================================
+     FUTURE API
+     ======================================================= */
+
+  const publicAPI =
+    Object.freeze({
+
+      version:
+        "3.0.0",
+
+      securityReady,
+
+      pause(){
+
+        state.running =
+          false;
+
+        pauseButton.textContent =
+          "▶";
+
+      },
+
+      resume(){
+
+        state.running =
+          true;
+
+        pauseButton.textContent =
+          "⏸";
+
+      },
+
+      reset,
+
+      resize
+
+    });
+
+
+  /*
+     Keep the future API isolated and non-writable.
+  */
+
+  Object.defineProperty(
+    window,
+    "ZemivoLivingWorld3",
+    {
+      value:
+        publicAPI,
+
+      writable:
+        false,
+
+      configurable:
+        false,
+
+      enumerable:
+        false
+    }
+  );
+
+
+  console.log(
+    "Zemivo Living World 3.0 ready.",
+    {
+      version:"3.0.0",
+      securityReady
+    }
+  );
+
+
+})();
+
+</script>
+
+</body>
+</html>
