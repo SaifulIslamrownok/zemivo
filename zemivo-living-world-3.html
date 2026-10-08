@@ -3162,6 +3162,707 @@ roomObjectRoot.userData = {
   ]
 
 };
+  /* ======================================================
+   ZEMIVO AVATAR SYSTEM
+   Avatar + Movement + Camera Follow
+====================================================== */
+
+const avatarWorldRoot =
+  new THREE.Group();
+
+avatarWorldRoot.name =
+  "ZemivoAvatarWorld";
+
+scene.add(
+  avatarWorldRoot
+);
+
+
+/* ======================================================
+   AVATAR CREATOR
+====================================================== */
+
+function createZemivoAvatar(){
+
+  const avatar =
+    new THREE.Group();
+
+  avatar.name =
+    "PlayerAvatar";
+
+
+  /* -------------------------------
+     BODY
+  -------------------------------- */
+
+  const body =
+    new THREE.Mesh(
+
+      new THREE.CapsuleGeometry(
+        0.42,
+        1.0,
+        8,
+        16
+      ),
+
+      new THREE.MeshStandardMaterial({
+
+        color:
+          0x2563eb,
+
+        roughness:
+          0.55,
+
+        metalness:
+          0.08
+
+      })
+
+    );
+
+
+  body.position.y =
+    1.05;
+
+  body.castShadow =
+    true;
+
+  avatar.add(
+    body
+  );
+
+
+  /* -------------------------------
+     HEAD
+  -------------------------------- */
+
+  const head =
+    new THREE.Mesh(
+
+      new THREE.SphereGeometry(
+        0.38,
+        24,
+        24
+      ),
+
+      new THREE.MeshStandardMaterial({
+
+        color:
+          0xf1c27d,
+
+        roughness:
+          0.72,
+
+        metalness:
+          0
+
+      })
+
+    );
+
+
+  head.position.y =
+    1.95;
+
+  head.castShadow =
+    true;
+
+  avatar.add(
+    head
+  );
+
+
+  /* -------------------------------
+     LEFT LEG
+  -------------------------------- */
+
+  const legMaterial =
+    new THREE.MeshStandardMaterial({
+
+      color:
+        0x172554,
+
+      roughness:
+        0.7
+
+    });
+
+
+  const leftLeg =
+    new THREE.Mesh(
+
+      new THREE.CapsuleGeometry(
+        0.16,
+        0.65,
+        6,
+        12
+      ),
+
+      legMaterial
+
+    );
+
+
+  leftLeg.position.set(
+    -0.2,
+    0.35,
+    0
+  );
+
+
+  leftLeg.castShadow =
+    true;
+
+
+  avatar.add(
+    leftLeg
+  );
+
+
+  /* -------------------------------
+     RIGHT LEG
+  -------------------------------- */
+
+  const rightLeg =
+    new THREE.Mesh(
+
+      new THREE.CapsuleGeometry(
+        0.16,
+        0.65,
+        6,
+        12
+      ),
+
+      legMaterial
+
+    );
+
+
+  rightLeg.position.set(
+    0.2,
+    0.35,
+    0
+  );
+
+
+  rightLeg.castShadow =
+    true;
+
+
+  avatar.add(
+    rightLeg
+  );
+
+
+  /* -------------------------------
+     LEFT ARM
+  -------------------------------- */
+
+  const armMaterial =
+    new THREE.MeshStandardMaterial({
+
+      color:
+        0x2563eb,
+
+      roughness:
+        0.58
+
+    });
+
+
+  const leftArm =
+    new THREE.Mesh(
+
+      new THREE.CapsuleGeometry(
+        0.13,
+        0.7,
+        6,
+        12
+      ),
+
+      armMaterial
+
+    );
+
+
+  leftArm.position.set(
+    -0.55,
+    1.15,
+    0
+  );
+
+
+  leftArm.rotation.z =
+    -0.08;
+
+
+  leftArm.castShadow =
+    true;
+
+
+  avatar.add(
+    leftArm
+  );
+
+
+  /* -------------------------------
+     RIGHT ARM
+  -------------------------------- */
+
+  const rightArm =
+    new THREE.Mesh(
+
+      new THREE.CapsuleGeometry(
+        0.13,
+        0.7,
+        6,
+        12
+      ),
+
+      armMaterial
+
+    );
+
+
+  rightArm.position.set(
+    0.55,
+    1.15,
+    0
+  );
+
+
+  rightArm.rotation.z =
+    0.08;
+
+
+  rightArm.castShadow =
+    true;
+
+
+  avatar.add(
+    rightArm
+  );
+
+
+  /* -------------------------------
+     AVATAR LIGHT
+  -------------------------------- */
+
+  const avatarLight =
+    new THREE.PointLight(
+      0x60a5fa,
+      0.6,
+      3
+    );
+
+
+  avatarLight.position.y =
+    2.2;
+
+
+  avatar.add(
+    avatarLight
+  );
+
+
+  /* -------------------------------
+     AVATAR DATA
+  -------------------------------- */
+
+  avatar.userData = {
+
+    type:
+      "zemivo-avatar",
+
+    avatarId:
+      "local-player",
+
+    displayName:
+      "Zemivo User",
+
+    interactive:
+      true,
+
+    speed:
+      0.08
+
+  };
+
+
+  avatarWorldRoot.add(
+    avatar
+  );
+
+
+  return avatar;
+
+}
+
+
+/* ======================================================
+   CREATE PLAYER AVATAR
+====================================================== */
+
+const playerAvatar =
+  createZemivoAvatar();
+
+
+playerAvatar.position.set(
+  0,
+  0,
+  4
+);
+
+
+/* ======================================================
+   AVATAR MOVEMENT STATE
+====================================================== */
+
+const avatarMovement = {
+
+  forward:
+    false,
+
+  backward:
+    false,
+
+  left:
+    false,
+
+  right:
+    false
+
+};
+
+
+/* ======================================================
+   KEYBOARD CONTROL
+====================================================== */
+
+window.addEventListener(
+  "keydown",
+  function(event){
+
+    if(
+      event.key ===
+      "w" ||
+      event.key ===
+      "W" ||
+      event.key ===
+      "ArrowUp"
+    ){
+
+      avatarMovement.forward =
+        true;
+
+    }
+
+
+    if(
+      event.key ===
+      "s" ||
+      event.key ===
+      "S" ||
+      event.key ===
+      "ArrowDown"
+    ){
+
+      avatarMovement.backward =
+        true;
+
+    }
+
+
+    if(
+      event.key ===
+      "a" ||
+      event.key ===
+      "A" ||
+      event.key ===
+      "ArrowLeft"
+    ){
+
+      avatarMovement.left =
+        true;
+
+    }
+
+
+    if(
+      event.key ===
+      "d" ||
+      event.key ===
+      "D" ||
+      event.key ===
+      "ArrowRight"
+    ){
+
+      avatarMovement.right =
+        true;
+
+    }
+
+  }
+);
+
+
+window.addEventListener(
+  "keyup",
+  function(event){
+
+    if(
+      event.key ===
+      "w" ||
+      event.key ===
+      "W" ||
+      event.key ===
+      "ArrowUp"
+    ){
+
+      avatarMovement.forward =
+        false;
+
+    }
+
+
+    if(
+      event.key ===
+      "s" ||
+      event.key ===
+      "S" ||
+      event.key ===
+      "ArrowDown"
+    ){
+
+      avatarMovement.backward =
+        false;
+
+    }
+
+
+    if(
+      event.key ===
+      "a" ||
+      event.key ===
+      "A" ||
+      event.key ===
+      "ArrowLeft"
+    ){
+
+      avatarMovement.left =
+        false;
+
+    }
+
+
+    if(
+      event.key ===
+      "d" ||
+      event.key ===
+      "D" ||
+      event.key ===
+      "ArrowRight"
+    ){
+
+      avatarMovement.right =
+        false;
+
+    }
+
+  }
+);
+
+
+/* ======================================================
+   AVATAR MOVEMENT
+====================================================== */
+
+function updateAvatarMovement(){
+
+  if(
+    !playerAvatar
+  ){
+
+    return;
+
+  }
+
+
+  const speed =
+    playerAvatar.userData.speed;
+
+
+  let moveX =
+    0;
+
+  let moveZ =
+    0;
+
+
+  if(
+    avatarMovement.forward
+  ){
+
+    moveZ -= speed;
+
+  }
+
+
+  if(
+    avatarMovement.backward
+  ){
+
+    moveZ += speed;
+
+  }
+
+
+  if(
+    avatarMovement.left
+  ){
+
+    moveX -= speed;
+
+  }
+
+
+  if(
+    avatarMovement.right
+  ){
+
+    moveX += speed;
+
+  }
+
+
+  if(
+    moveX !== 0 ||
+    moveZ !== 0
+  ){
+
+    playerAvatar.position.x +=
+      moveX;
+
+    playerAvatar.position.z +=
+      moveZ;
+
+
+    playerAvatar.rotation.y =
+      Math.atan2(
+        moveX,
+        moveZ
+      );
+
+  }
+
+}
+
+
+/* ======================================================
+   CAMERA FOLLOW
+====================================================== */
+
+const avatarCameraOffset =
+  new THREE.Vector3(
+    6,
+    5,
+    8
+  );
+
+
+function updateAvatarCamera(){
+
+  if(
+    !playerAvatar
+  ){
+
+    return;
+
+  }
+
+
+  const targetPosition =
+    new THREE.Vector3();
+
+
+  targetPosition.copy(
+    playerAvatar.position
+  );
+
+
+  targetPosition.add(
+    avatarCameraOffset
+  );
+
+
+  camera.position.lerp(
+    targetPosition,
+    0.08
+  );
+
+
+  const lookTarget =
+    new THREE.Vector3();
+
+
+  lookTarget.copy(
+    playerAvatar.position
+  );
+
+
+  lookTarget.y +=
+    1.2;
+
+
+  camera.lookAt(
+    lookTarget
+  );
+
+}
+
+
+/* ======================================================
+   AVATAR MOVEMENT LOOP
+====================================================== */
+
+const previousAvatarUpdate =
+  animate;
+
+
+animate = function(){
+
+  updateAvatarMovement();
+
+  updateAvatarCamera();
+
+  previousAvatarUpdate();
+
+};
+
+
+/* ======================================================
+   AVATAR SYSTEM READY
+====================================================== */
+
+avatarWorldRoot.userData = {
+
+  type:
+    "avatar-system",
+
+  version:
+    "1.0",
+
+  movement:
+    "WASD + Arrow Keys",
+
+  camera:
+    "follow",
+
+  player:
+    "local-player"
+
+};
+  
 /* ======================================================
    WORLD CORE
 ====================================================== */
