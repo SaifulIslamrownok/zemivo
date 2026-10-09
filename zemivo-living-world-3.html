@@ -1,342 +1,45 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
 <meta charset="UTF-8">
-
-<meta
-  name="viewport"
-  content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"
->
-
-<title>Zemivo Living World 3.0</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#07111f">
+<title>Zemivo Living 3D World</title>
 
 <style>
-
-*{
-  box-sizing:border-box;
-}
-
-html,
-body{
-  width:100%;
-  height:100%;
-  margin:0;
-  overflow:hidden;
-  background:#020617;
-  font-family:Arial,Helvetica,sans-serif;
-}
-
-body{
-  color:#fff;
-}
-
-#zemivoWorld3{
-  position:fixed;
-  inset:0;
-  overflow:hidden;
-  background:
-    radial-gradient(
-      circle at 50% 45%,
-      #172554 0%,
-      #020617 55%,
-      #000 100%
-    );
-}
-
-#worldCanvas{
-  position:absolute;
-  inset:0;
-  width:100%;
-  height:100%;
-  display:block;
-}
-
-.world-ui{
-  position:absolute;
-  inset:0;
-  pointer-events:none;
-  z-index:10;
-}
-
-.topbar{
-  position:absolute;
-  top:0;
-  left:0;
-  right:0;
-
-  min-height:68px;
-
-  padding:
-    12px
-    16px;
-
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-
-  background:
-    linear-gradient(
-      to bottom,
-      rgba(2,6,23,.82),
-      rgba(2,6,23,0)
-    );
-
-  pointer-events:none;
-}
-
-.brand{
-  font-size:24px;
-  font-weight:800;
-  letter-spacing:-.5px;
-}
-
-.brand span{
-  color:#60a5fa;
-}
-
-.status{
-  display:flex;
-  align-items:center;
-  gap:7px;
-
-  padding:8px 12px;
-
-  border:
-    1px solid
-    rgba(255,255,255,.12);
-
-  border-radius:20px;
-
-  background:
-    rgba(15,23,42,.65);
-
-  backdrop-filter:blur(12px);
-
-  font-size:12px;
-}
-
-.status-dot{
-  width:8px;
-  height:8px;
-  border-radius:50%;
-  background:#22c55e;
-  box-shadow:
-    0 0 12px
-    rgba(34,197,94,.9);
-}
-
-.bottom-panel{
-  position:absolute;
-  left:50%;
-  bottom:18px;
-
-  transform:
-    translateX(-50%);
-
-  width:
-    min(680px,calc(100% - 28px));
-
-  padding:12px;
-
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:10px;
-
-  border:
-    1px solid
-    rgba(255,255,255,.12);
-
-  border-radius:20px;
-
-  background:
-    rgba(2,6,23,.72);
-
-  backdrop-filter:blur(18px);
-
-  box-shadow:
-    0 20px 60px
-    rgba(0,0,0,.35);
-
-  pointer-events:auto;
-}
-
-.world-info{
-  min-width:0;
-}
-
-.world-title{
-  font-size:14px;
-  font-weight:700;
-}
-
-.world-subtitle{
-  margin-top:3px;
-  color:#94a3b8;
-  font-size:11px;
-}
-
-.controls{
-  display:flex;
-  gap:7px;
-}
-
-.world-button{
-  border:0;
-
-  min-width:42px;
-  height:42px;
-
-  border-radius:12px;
-
-  background:
-    rgba(255,255,255,.08);
-
-  color:#fff;
-
-  font-size:16px;
-
-  cursor:pointer;
-
-  transition:
-    transform .18s ease,
-    background .18s ease;
-}
-
-.world-button:hover{
-  background:
-    rgba(96,165,250,.22);
-
-  transform:
-    translateY(-1px);
-}
-
-.world-button:active{
-  transform:
-    scale(.96);
-}
-
-.loading{
-  position:absolute;
-  inset:0;
-
-  display:flex;
-  align-items:center;
-  justify-content:center;
-
-  background:#020617;
-
-  z-index:30;
-
-  transition:
-    opacity .5s ease;
-}
-
-.loading.hide{
-  opacity:0;
-  pointer-events:none;
-}
-
-.loading-box{
-  text-align:center;
-}
-
-.loading-logo{
-  font-size:34px;
-  font-weight:800;
-}
-
-.loading-text{
-  margin-top:8px;
-  color:#94a3b8;
-  font-size:13px;
-}
-
-.error-box{
-  position:absolute;
-  left:50%;
-  top:50%;
-
-  transform:
-    translate(-50%,-50%);
-
-  width:
-    min(420px,calc(100% - 32px));
-
-  padding:24px;
-
-  border-radius:18px;
-
-  background:
-    rgba(15,23,42,.95);
-
-  border:
-    1px solid
-    rgba(248,113,113,.3);
-
-  text-align:center;
-
-  z-index:50;
-
-  display:none;
-}
-
-.error-box.show{
-  display:block;
-}
-
-.error-title{
-  font-size:18px;
-  font-weight:bold;
-  color:#fca5a5;
-}
-
-.error-text{
-  margin-top:8px;
-  color:#cbd5e1;
-  font-size:13px;
-  line-height:1.5;
-}
-
+*{box-sizing:border-box}
+html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#050b16;color:#fff;font-family:Arial,Helvetica,sans-serif}
+#world{position:fixed;inset:0;width:100%;height:100%;display:block;outline:none}
+.topbar{position:fixed;z-index:5;top:0;left:0;right:0;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 18px;background:linear-gradient(180deg,rgba(3,8,20,.92),rgba(3,8,20,.25));pointer-events:none}
+.brand{font-size:23px;font-weight:800;letter-spacing:.5px;color:#7dd3fc;text-shadow:0 0 18px #0284c7}
+.brand small{display:block;font-size:10px;letter-spacing:2px;color:#dbeafe;margin-top:3px}
+.status{font-size:12px;color:#a7f3d0;text-align:right;max-width:55vw}
+.panel{position:fixed;z-index:5;left:50%;bottom:18px;transform:translateX(-50%);width:min(680px,calc(100% - 24px));padding:15px 17px;border:1px solid rgba(125,211,252,.28);border-radius:18px;background:rgba(4,13,29,.86);backdrop-filter:blur(14px);box-shadow:0 12px 40px #0005}
+.panel h2{font-size:17px;margin:0 0 6px;color:#7dd3fc}
+.panel p{font-size:13px;line-height:1.5;color:#cbd5e1;margin:0}
+.controls{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:12px;flex-wrap:wrap}
+.help{font-size:11px;line-height:1.5;color:#94a3b8}
+.buttons{display:flex;gap:8px}
+button{border:1px solid #334155;border-radius:10px;background:#17243a;color:#fff;padding:9px 12px;font-weight:700;cursor:pointer}
+button:hover{background:#1e3a5f;border-color:#38bdf8}
+button:focus-visible{outline:2px solid #7dd3fc;outline-offset:2px}
+#loading,#error{position:fixed;z-index:10;inset:0;display:flex;align-items:center;justify-content:center;text-align:center;padding:24px;background:#050b16;color:#dbeafe}
+#loading div,#error div{max-width:460px}
+#loading strong,#error strong{display:block;font-size:23px;margin-bottom:10px}
+#loading span,#error span{font-size:13px;line-height:1.6;color:#94a3b8}
+#error{display:none;color:#fecaca}
 @media(max-width:600px){
-
-  .brand{
-    font-size:21px;
-  }
-
-  .status{
-    font-size:10px;
-    padding:7px 9px;
-  }
-
-  .bottom-panel{
-    bottom:
-      calc(12px + env(safe-area-inset-bottom));
-
-    border-radius:17px;
-  }
-
-  .world-title{
-    font-size:12px;
-  }
-
-  .world-subtitle{
-    font-size:10px;
-  }
-
+ .topbar{padding:12px}
+ .brand{font-size:20px}
+ .status{font-size:10px}
+ .panel{bottom:10px;padding:13px;border-radius:15px}
+ .panel h2{font-size:16px}
+ .panel p{font-size:12px}
+ .help{max-width:100%}
+ button{padding:9px 10px;font-size:12px}
 }
-
-@media(prefers-reduced-motion:reduce){
-
-  *{
-    scroll-behavior:auto !important;
-  }
-
-}
-
 </style>
+
 <script type="importmap">
 {
   "imports": {
@@ -347,4602 +50,862 @@ body{
 </head>
 
 <body>
+<canvas id="world" aria-label="Zemivo Living 3D World"></canvas>
 
-<div id="zemivoWorld3">
+<header class="topbar">
+  <div class="brand">Zemivo<small>LIVING 3D WORLD</small></div>
+  <div class="status" id="status">Preparing the world...</div>
+</header>
 
-  <canvas id="worldCanvas"></canvas>
-
-  <div class="world-ui">
-
-    <header class="topbar">
-
-      <div class="brand">
-        <span>Zemivo</span>
-        Living World
-      </div>
-
-      <div class="status">
-
-        <span class="status-dot"></span>
-
-        <span id="securityStatus">
-          Starting...
-        </span>
-
-      </div>
-
-    </header>
-
-
-    <div class="bottom-panel">
-
-      <div class="world-info">
-
-        <div
-          id="worldTitle"
-          class="world-title"
-        >
-          Zemivo Living World
-        </div>
-
-        <div
-          id="worldSubtitle"
-          class="world-subtitle"
-        >
-          3D foundation • Future-ready
-        </div>
-
-      </div>
-
-
-      <div class="controls">
-
-        <button
-          id="pauseButton"
-          class="world-button"
-          type="button"
-          title="Pause"
-        >
-          ⏸
-        </button>
-
-        <button
-          id="resetButton"
-          class="world-button"
-          type="button"
-          title="Reset camera"
-        >
-          ↻
-        </button>
-
-      </div>
-
+<section class="panel">
+  <h2 id="placeTitle">Welcome to Zemivo</h2>
+  <p id="placeDescription">Explore a 3D world for social connection, creators, commerce, AI and gaming.</p>
+  <div class="controls">
+    <div class="help">Move: W A S D or arrow keys · Select a glowing world node to explore it · Drag to rotate the view</div>
+    <div class="buttons">
+      <button id="pauseButton" type="button">Pause</button>
+      <button id="resetButton" type="button">Reset View</button>
     </div>
-
   </div>
+</section>
 
-
-  <div
-    id="loading"
-    class="loading"
-  >
-
-    <div class="loading-box">
-
-      <div class="loading-logo">
-        Zemivo
-      </div>
-
-      <div class="loading-text">
-        Building Living World...
-      </div>
-
-    </div>
-
-  </div>
-
-
-  <div
-    id="errorBox"
-    class="error-box"
-  >
-
-    <div class="error-title">
-      Living World could not start
-    </div>
-
-    <div
-      id="errorText"
-      class="error-text"
-    >
-      Please check your browser and internet connection.
-    </div>
-
-  </div>
-
+<div id="loading">
+  <div><strong>Entering Zemivo World…</strong><span>Building the 3D environment. Please wait.</span></div>
 </div>
 
+<div id="error">
+  <div><strong>Unable to start the 3D world</strong><span id="errorText">Please reload the page and check your browser's WebGL support and internet connection.</span></div>
+</div>
 
 <script type="module">
+import * as THREE from "three";
+import { OrbitControls } from "https://cdn.jsdelivr.net/npm/three@0.180.0/examples/jsm/controls/OrbitControls.js";
 
-/*
-==========================================================
-ZEMIVO LIVING WORLD 3.0
-REAL 3D FOUNDATION
-==========================================================
+const canvas = document.getElementById("world");
+const loadingElement = document.getElementById("loading");
+const errorElement = document.getElementById("error");
+const errorText = document.getElementById("errorText");
+const statusElement = document.getElementById("status");
+const titleElement = document.getElementById("placeTitle");
+const descriptionElement = document.getElementById("placeDescription");
+const pauseButton = document.getElementById("pauseButton");
+const resetButton = document.getElementById("resetButton");
 
-Architecture goals:
-
-1. WebGL 3D rendering
-2. Modular world
-3. Future avatar system
-4. Future content system
-5. Future AI system
-6. Future social interaction
-7. Future commerce
-8. Future gaming
-9. Future GLB/GLTF assets
-10. Mobile-ready rendering
-11. Security foundation
-12. Page isolation
-
-This page does NOT modify index.html.
-*/
-
-
-/* ======================================================
-   SECURITY FOUNDATION
-====================================================== */
-
-let ZemivoSecurity = null;
-
-try{
-
-  const security =
-    await import("./zemivo-security.js");
-
-  ZemivoSecurity =
-    security.ZemivoSecurity;
-
+function showError(message) {
+  loadingElement.style.display = "none";
+  errorElement.style.display = "flex";
+  errorText.textContent = message;
+  statusElement.textContent = "3D world unavailable";
+  console.error("[Zemivo World]", message);
 }
-catch(error){
-
-  console.warn(
-    "Zemivo Security Foundation unavailable.",
-    error
-  );
-
-}
-
-
-/* ======================================================
-   THREE.JS
-====================================================== */
-
-import * as THREE from
-"https://cdn.jsdelivr.net/npm/three@0.180.0/build/three.module.js";
-
-import {
-  OrbitControls
-}
-from
-"https://cdn.jsdelivr.net/npm/three@0.180.0/examples/jsm/controls/OrbitControls.js";
-
-
-/* ======================================================
-   PAGE ISOLATION
-====================================================== */
-
-const ZemivoLivingWorld3 =
-{
-
-  version:
-    "3.0.0",
-
-  page:
-    "zemivo-living-world-3",
-
-  engine:
-    "Three.js WebGL",
-
-  future:
-    true
-
-};
-
-
-/* ======================================================
-   ELEMENTS
-====================================================== */
-
-const root =
-  document.getElementById(
-    "zemivoWorld3"
-  );
-
-const canvas =
-  document.getElementById(
-    "worldCanvas"
-  );
-
-const loading =
-  document.getElementById(
-    "loading"
-  );
-
-const errorBox =
-  document.getElementById(
-    "errorBox"
-  );
-
-const errorText =
-  document.getElementById(
-    "errorText"
-  );
-
-const securityStatus =
-  document.getElementById(
-    "securityStatus"
-  );
-
-const pauseButton =
-  document.getElementById(
-    "pauseButton"
-  );
-
-const resetButton =
-  document.getElementById(
-    "resetButton"
-  );
-
-const worldTitle =
-  document.getElementById(
-    "worldTitle"
-  );
-
-const worldSubtitle =
-  document.getElementById(
-    "worldSubtitle"
-  );
-
-
-/* ======================================================
-   REDUCED MOTION
-====================================================== */
-
-const reducedMotion =
-  window.matchMedia(
-    "(prefers-reduced-motion: reduce)"
-  ).matches;
-
-
-/* ======================================================
-   SECURITY STATUS
-====================================================== */
-
-if(
-  ZemivoSecurity &&
-  ZemivoSecurity.app &&
-  ZemivoSecurity.appCheck
-){
-
-  securityStatus.textContent =
-    "Security foundation ready";
-
-}
-else{
-
-  securityStatus.textContent =
-    "3D world ready";
-
-}
-
-
-/* ======================================================
-   RENDERER
-====================================================== */
 
 let renderer;
+let scene;
+let camera;
+let controls;
+let paused = false;
+let animationFrame = 0;
+let elapsed = 0;
+let previousTime = 0;
+let securityLoaded = false;
+let selectedNode = null;
 
-try{
+const clock = new THREE.Clock();
+const raycaster = new THREE.Raycaster();
+const pointer = new THREE.Vector2();
+const keys = new Set();
+const interactiveNodes = [];
+const worldObjects = {};
 
-  renderer =
-    new THREE.WebGLRenderer({
+const worldRoot = new THREE.Group();
+const regionRoot = new THREE.Group();
+const cityRoot = new THREE.Group();
+const areaRoot = new THREE.Group();
+const buildingRoot = new THREE.Group();
+const interiorRoot = new THREE.Group();
+const environmentRoot = new THREE.Group();
+const contentRoot = new THREE.Group();
+const avatarRoot = new THREE.Group();
+const aiRoot = new THREE.Group();
+const commerceRoot = new THREE.Group();
+const gamingRoot = new THREE.Group();
 
-      canvas,
+const WorldStructure = Object.freeze({
+  regions: [],
+  cities: [],
+  areas: [],
+  buildings: [],
+  spaces: []
+});
 
-      antialias:
-        true,
-
-      alpha:
-        true,
-
-      powerPreference:
-        "high-performance"
-
-    });
-
+function addGroup(parent, name) {
+  const group = new THREE.Group();
+  group.name = name;
+  parent.add(group);
+  return group;
 }
-catch(error){
 
-  showError(
-    "WebGL is not available in this browser."
-  );
-
-  throw error;
-
+function createWorldLevel(parent, name, position = [0, 0, 0]) {
+  const group = addGroup(parent, name);
+  group.position.set(position[0], position[1], position[2]);
+  return group;
 }
 
+function makeMaterial(color, options = {}) {
+  return new THREE.MeshStandardMaterial({
+    color,
+    roughness: options.roughness ?? 0.7,
+    metalness: options.metalness ?? 0.15,
+    emissive: options.emissive ?? 0x000000,
+    emissiveIntensity: options.emissiveIntensity ?? 0
+  });
+}
 
-renderer.setPixelRatio(
-  Math.min(
-    window.devicePixelRatio || 1,
-    1.75
-  )
-);
+function addBox(parent, name, size, position, material, options = {}) {
+  const geometry = new THREE.BoxGeometry(size[0], size[1], size[2]);
+  const mesh = new THREE.Mesh(geometry, material);
+  mesh.name = name;
+  mesh.position.set(position[0], position[1], position[2]);
+  mesh.castShadow = options.castShadow ?? true;
+  mesh.receiveShadow = options.receiveShadow ?? true;
+  parent.add(mesh);
+  return mesh;
+}
 
-renderer.setSize(
-  window.innerWidth,
-  window.innerHeight
-);
-
-renderer.shadowMap.enabled =
-  true;
-
-renderer.shadowMap.type =
-  THREE.PCFSoftShadowMap;
-
-renderer.outputColorSpace =
-  THREE.SRGBColorSpace;
-
-
-/* ======================================================
-   SCENE
-====================================================== */
-
-const scene =
-  new THREE.Scene();
-
-scene.background =
-  new THREE.Color(
-    0x020617
+function addSphere(parent, name, radius, position, material, segments = 20) {
+  const mesh = new THREE.Mesh(
+    new THREE.SphereGeometry(radius, segments, Math.max(8, Math.floor(segments * 0.7))),
+    material
   );
+  mesh.name = name;
+  mesh.position.set(position[0], position[1], position[2]);
+  parent.add(mesh);
+  return mesh;
+}
 
-scene.fog =
-  new THREE.FogExp2(
-    0x020617,
-    0.018
+function addCylinder(parent, name, radiusTop, radiusBottom, height, position, material, segments = 16) {
+  const mesh = new THREE.Mesh(
+    new THREE.CylinderGeometry(radiusTop, radiusBottom, height, segments),
+    material
   );
+  mesh.name = name;
+  mesh.position.set(position[0], position[1], position[2]);
+  mesh.castShadow = true;
+  mesh.receiveShadow = true;
+  parent.add(mesh);
+  return mesh;
+}
 
+function createWorld() {
+  scene = new THREE.Scene();
+  scene.background = new THREE.Color(0x050b16);
+  scene.fog = new THREE.FogExp2(0x07111f, 0.009);
 
-/* ======================================================
-   CAMERA
-====================================================== */
-
-const camera =
-  new THREE.PerspectiveCamera(
-
-    55,
-
-    window.innerWidth /
-      window.innerHeight,
-
+  camera = new THREE.PerspectiveCamera(
+    60,
+    window.innerWidth / window.innerHeight,
     0.1,
+    500
+  );
+  camera.position.set(0, 13, 25);
 
-    1000
+  renderer = new THREE.WebGLRenderer({
+    canvas,
+    antialias: window.innerWidth > 700,
+    alpha: false,
+    powerPreference: "high-performance"
+  });
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.5));
+  renderer.setSize(window.innerWidth, window.innerHeight);
+  renderer.shadowMap.enabled = true;
+  renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+  renderer.outputColorSpace = THREE.SRGBColorSpace;
+  renderer.toneMapping = THREE.ACESFilmicToneMapping;
+  renderer.toneMappingExposure = 1.15;
 
+  controls = new OrbitControls(camera, renderer.domElement);
+  controls.enableDamping = true;
+  controls.dampingFactor = 0.06;
+  controls.target.set(0, 2, 0);
+  controls.minDistance = 5;
+  controls.maxDistance = 65;
+  controls.maxPolarAngle = Math.PI * 0.48;
+  controls.update();
+
+  scene.add(worldRoot);
+  worldRoot.add(regionRoot);
+  regionRoot.add(cityRoot);
+  cityRoot.add(areaRoot);
+  areaRoot.add(buildingRoot);
+  buildingRoot.add(interiorRoot);
+  worldRoot.add(environmentRoot);
+  worldRoot.add(contentRoot);
+  worldRoot.add(avatarRoot);
+  worldRoot.add(aiRoot);
+  worldRoot.add(commerceRoot);
+  worldRoot.add(gamingRoot);
+
+  createLighting();
+  createGround();
+  createCity();
+  createBuildings();
+  createWorldCore();
+  createWorldNodes();
+  createStars();
+  createAvatar();
+
+  worldObjects.controls = controls;
+  worldObjects.scene = scene;
+  worldObjects.camera = camera;
+}
+
+function createLighting() {
+  scene.add(new THREE.HemisphereLight(0xbfe7ff, 0x182338, 2.0));
+
+  const sun = new THREE.DirectionalLight(0xffffff, 2.4);
+  sun.position.set(-12, 24, 14);
+  sun.castShadow = true;
+  sun.shadow.mapSize.set(1024, 1024);
+  sun.shadow.camera.left = -40;
+  sun.shadow.camera.right = 40;
+  sun.shadow.camera.top = 40;
+  sun.shadow.camera.bottom = -40;
+  sun.shadow.bias = -0.0003;
+  scene.add(sun);
+
+  const blueLight = new THREE.PointLight(0x168bff, 35, 70);
+  blueLight.position.set(-12, 8, -10);
+  scene.add(blueLight);
+
+  const purpleLight = new THREE.PointLight(0x8b5cf6, 24, 60);
+  purpleLight.position.set(13, 7, 8);
+  scene.add(purpleLight);
+}
+
+function createGround() {
+  const ground = new THREE.Mesh(
+    new THREE.PlaneGeometry(150, 150),
+    makeMaterial(0x0c1728, { roughness: 0.9 })
+  );
+  ground.name = "World Ground";
+  ground.rotation.x = -Math.PI / 2;
+  ground.position.y = -0.05;
+  ground.receiveShadow = true;
+  environmentRoot.add(ground);
+
+  const grid = new THREE.GridHelper(120, 60, 0x164e78, 0x172a43);
+  grid.position.y = 0.015;
+  environmentRoot.add(grid);
+
+  addBox(
+    environmentRoot,
+    "Central Plaza",
+    [20, 0.16, 18],
+    [0, 0.04, 0],
+    makeMaterial(0x132840, { metalness: 0.3 })
+  );
+}
+
+function createCity() {
+  addBox(
+    environmentRoot,
+    "North Road",
+    [5, 0.08, 90],
+    [0, 0.08, -28],
+    makeMaterial(0x182333)
   );
 
-camera.position.set(
-  18,
-  13,
-  22
-);
-
-
-/* ======================================================
-   CAMERA CONTROLS
-====================================================== */
-
-const controls =
-  new OrbitControls(
-    camera,
-    canvas
+  addBox(
+    environmentRoot,
+    "Cross Road",
+    [90, 0.08, 5],
+    [0, 0.09, 0],
+    makeMaterial(0x182333)
   );
 
-controls.enableDamping =
-  true;
-
-controls.dampingFactor =
-  0.055;
-
-controls.minDistance =
-  8;
-
-controls.maxDistance =
-  55;
-
-controls.maxPolarAngle =
-  Math.PI * 0.47;
-
-controls.target.set(
-  0,
-  2,
-  0
-);
-
-
-/* ======================================================
-   ZEMIVO WORLD HIERARCHY
-====================================================== */
-
-/*
-   World
-      ↓
-   Region
-      ↓
-   City
-      ↓
-   Area
-      ↓
-   Building
-      ↓
-   Room / Space
-
-   This structure is designed for future:
-   Social
-   Creator
-   Commerce
-   AI
-   Gaming
-   Education
-   Business
-   Content
-   Avatars
-*/
-
-
-/* ======================================================
-   WORLD ROOT
-====================================================== */
-
-const worldRoot =
-  new THREE.Group();
-
-worldRoot.name =
-  "ZemivoWorld";
-
-scene.add(
-  worldRoot
-);
-
-
-/* ======================================================
-   WORLD HIERARCHY ROOTS
-====================================================== */
-
-const regionRoot =
-  new THREE.Group();
-
-regionRoot.name =
-  "Regions";
-
-worldRoot.add(
-  regionRoot
-);
-
-
-const cityRoot =
-  new THREE.Group();
-
-cityRoot.name =
-  "Cities";
-
-regionRoot.add(
-  cityRoot
-);
-
-
-const areaRoot =
-  new THREE.Group();
-
-areaRoot.name =
-  "Areas";
-
-cityRoot.add(
-  areaRoot
-);
-
-
-const buildingRoot =
-  new THREE.Group();
-
-buildingRoot.name =
-  "Buildings";
-
-areaRoot.add(
-  buildingRoot
-);
-
-
-const roomRoot =
-  new THREE.Group();
-
-roomRoot.name =
-  "RoomsAndSpaces";
-
-buildingRoot.add(
-  roomRoot
-);
-
-
-/* ======================================================
-   ENVIRONMENT ROOT
-====================================================== */
-
-const environmentRoot =
-  new THREE.Group();
-
-environmentRoot.name =
-  "Environment";
-
-worldRoot.add(
-  environmentRoot
-);
-
-
-/* ======================================================
-   CONTENT ROOT
-====================================================== */
-
-const contentRoot =
-  new THREE.Group();
-
-contentRoot.name =
-  "ContentWorld";
-
-worldRoot.add(
-  contentRoot
-);
-
-
-/* ======================================================
-   AVATAR ROOT
-====================================================== */
-
-const avatarRoot =
-  new THREE.Group();
-
-avatarRoot.name =
-  "AvatarWorld";
-
-worldRoot.add(
-  avatarRoot
-);
-
-
-/* ======================================================
-   AI ROOT
-====================================================== */
-
-const aiRoot =
-  new THREE.Group();
-
-aiRoot.name =
-  "AIWorld";
-
-worldRoot.add(
-  aiRoot
-);
-
-
-/* ======================================================
-   COMMERCE ROOT
-====================================================== */
-
-const commerceRoot =
-  new THREE.Group();
-
-commerceRoot.name =
-  "CommerceWorld";
-
-worldRoot.add(
-  commerceRoot
-);
-
-
-/* ======================================================
-   GAMING ROOT
-====================================================== */
-
-const gamingRoot =
-  new THREE.Group();
-
-gamingRoot.name =
-  "GamingWorld";
-
-worldRoot.add(
-  gamingRoot
-);
-
-
-/* ======================================================
-   FUTURE WORLD DATA MODEL
-====================================================== */
-
-const WorldStructure =
-  Object.freeze({
-
-    world: {
-      id:
-        "zemivo-global-world",
-
-      name:
-        "Zemivo World",
-
-      type:
-        "world"
-    },
-
-    regions: [],
-
-    cities: [],
-
-    areas: [],
-
-    buildings: [],
-
-    rooms: []
-
+  const lineMaterial = makeMaterial(0x38bdf8, {
+    emissive: 0x0284c7,
+    emissiveIntensity: 0.5
   });
 
+  for (let z = -65; z <= 15; z += 8) {
+    addBox(environmentRoot, "Road Marker", [0.12, 0.025, 2.4], [0, 0.14, z], lineMaterial, { castShadow: false });
+  }
 
-/* ======================================================
-   WORLD NODE CREATOR
-====================================================== */
+  for (let x = -40; x <= 40; x += 8) {
+    addBox(environmentRoot, "Road Marker", [2.4, 0.025, 0.12], [x, 0.15, 0], lineMaterial, { castShadow: false });
+  }
 
-function createWorldLevel(
-  parent,
-  id,
-  name,
-  type
-){
+  const treePositions = [
+    [-14, -8], [-18, 2], [-13, 12], [14, -8], [18, 2], [13, 12],
+    [-24, -18], [24, -18], [-30, -3], [30, -3]
+  ];
 
-  const group =
-    new THREE.Group();
+  for (const [x, z] of treePositions) {
+    createTree(environmentRoot, x, z);
+  }
+}
 
-  group.name =
-    name;
+function createTree(parent, x, z) {
+  const trunkMaterial = makeMaterial(0x69452f);
+  const leafMaterial = makeMaterial(0x16845b, {
+    roughness: 0.85,
+    emissive: 0x063b2a,
+    emissiveIntensity: 0.15
+  });
 
-  group.userData = {
+  addCylinder(parent, "Tree Trunk", 0.22, 0.32, 2.0, [x, 1, z], trunkMaterial);
+  addSphere(parent, "Tree Canopy", 1.15, [x, 2.5, z], leafMaterial, 14);
+  addSphere(parent, "Tree Canopy", 0.8, [x + 0.55, 2.75, z + 0.15], leafMaterial, 12);
+}
 
-    id,
+const buildingDefinitions = [
+  { name: "Social Tower", x: -13, z: -13, width: 6, depth: 6, height: 13, color: 0x2563eb, description: "Connect with people, share posts, and explore global communities." },
+  { name: "Creator Tower", x: 13, z: -13, width: 6, depth: 6, height: 16, color: 0x9333ea, description: "A future space for creators, content, audiences, and earning tools." },
+  { name: "Commerce Center", x: -14, z: 11, width: 7, depth: 6, height: 10, color: 0x059669, description: "Explore a future-ready commerce and marketplace experience." },
+  { name: "AI Center", x: 14, z: 11, width: 7, depth: 6, height: 12, color: 0x0891b2, description: "Discover AI-powered tools and helpful digital assistants." },
+  { name: "Central Hub", x: 0, z: -27, width: 10, depth: 7, height: 15, color: 0xd97706, description: "The central hub for the Zemivo Living World." }
+];
 
-    name,
+function createBuildings() {
+  for (const definition of buildingDefinitions) {
+    const building = createCityBuilding(definition);
+    createBuildingInterior(building, definition);
+  }
+}
 
-    type,
+function createCityBuilding(definition) {
+  const group = createWorldLevel(
+    buildingRoot,
+    definition.name,
+    [definition.x, 0, definition.z]
+  );
+  group.userData.description = definition.description;
 
-    parentId:
-      parent?.userData?.id ||
-      "zemivo-global-world"
+  const height = definition.height;
+  const mainMaterial = makeMaterial(definition.color, {
+    roughness: 0.35,
+    metalness: 0.35,
+    emissive: definition.color,
+    emissiveIntensity: 0.06
+  });
 
-  };
+  addBox(
+    group,
+    definition.name + " Structure",
+    [definition.width, height, definition.depth],
+    [0, height / 2, 0],
+    mainMaterial
+  );
 
-  parent.add(
-    group
+  addBox(
+    group,
+    definition.name + " Roof",
+    [definition.width + 0.5, 0.35, definition.depth + 0.5],
+    [0, height + 0.18, 0],
+    makeMaterial(0x1e293b, { metalness: 0.5 })
+  );
+
+  const windowMaterial = makeMaterial(0x7dd3fc, {
+    roughness: 0.2,
+    metalness: 0.3,
+    emissive: 0x0284c7,
+    emissiveIntensity: 0.8
+  });
+
+  const floors = Math.max(2, Math.floor(height / 3));
+  for (let floor = 0; floor < floors; floor++) {
+    const y = 1.5 + floor * 2.7;
+    for (const side of [-1, 1]) {
+      addBox(
+        group,
+        "Glowing Window",
+        [definition.width * 0.48, 0.8, 0.08],
+        [0, y, side * (definition.depth / 2 + 0.045)],
+        windowMaterial,
+        { castShadow: false, receiveShadow: false }
+      );
+    }
+  }
+
+  addBox(
+    group,
+    "Entrance",
+    [1.35, 2.3, 0.12],
+    [0, 1.15, definition.depth / 2 + 0.08],
+    makeMaterial(0x0b1220, { metalness: 0.4 })
   );
 
   return group;
-
 }
 
+function createBuildingInterior(building, definition) {
+  const interior = addGroup(interiorRoot, definition.name + " Interior");
+  interior.position.set(definition.x, 0.25, definition.z);
 
-/* ======================================================
-   INITIAL GLOBAL REGION
-====================================================== */
+  const floorCount = Math.max(2, Math.floor(definition.height / 3));
+  for (let floor = 0; floor < floorCount; floor++) {
+    const floorGroup = addGroup(interior, "Floor " + (floor + 1));
+    floorGroup.position.y = floor * 3.0;
 
-const globalRegion =
-  createWorldLevel(
-    regionRoot,
-    "global-region",
-    "Global",
-    "region"
-  );
-
-
-/* ======================================================
-   INITIAL WORLD CITY
-====================================================== */
-
-const globalCity =
-  createWorldLevel(
-    cityRoot,
-    "global-city",
-    "Global City",
-    "city"
-  );
-
-
-/* ======================================================
-   INITIAL WORLD AREA
-====================================================== */
-
-const centralArea =
-  createWorldLevel(
-    areaRoot,
-    "central-area",
-    "Central Area",
-    "area"
-  );
-
-
-/* ======================================================
-   INITIAL WORLD BUILDING
-====================================================== */
-
-const centralBuilding =
-  createWorldLevel(
-    buildingRoot,
-    "central-building",
-    "Zemivo Central Building",
-    "building"
-  );
-
-
-/* ======================================================
-   INITIAL WORLD SPACE
-====================================================== */
-
-const centralSpace =
-  createWorldLevel(
-    roomRoot,
-    "central-space",
-    "Zemivo Central Space",
-    "room"
-  );
-
-
-/* ======================================================
-   WORLD STRUCTURE API
-====================================================== */
-
-const WorldSystem = {
-
-  version:
-    "3.0.0",
-
-  structure:
-    WorldStructure,
-
-  roots: {
-
-    world:
-      worldRoot,
-
-    regions:
-      regionRoot,
-
-    cities:
-      cityRoot,
-
-    areas:
-      areaRoot,
-
-    buildings:
-      buildingRoot,
-
-    rooms:
-      roomRoot
-
-  },
-
-  createRegion(
-    id,
-    name
-  ){
-
-    return createWorldLevel(
-      regionRoot,
-      id,
-      name,
-      "region"
+    addBox(
+      floorGroup,
+      "Interior Floor",
+      [definition.width - 0.5, 0.12, definition.depth - 0.5],
+      [0, 0.12, 0],
+      makeMaterial(0x263a52, { metalness: 0.2 })
     );
 
-  },
-
-  createCity(
-    id,
-    name
-  ){
-
-    return createWorldLevel(
-      cityRoot,
-      id,
-      name,
-      "city"
-    );
-
-  },
-
-  createArea(
-    id,
-    name
-  ){
-
-    return createWorldLevel(
-      areaRoot,
-      id,
-      name,
-      "area"
-    );
-
-  },
-
-  createBuilding(
-    id,
-    name
-  ){
-
-    return createWorldLevel(
-      buildingRoot,
-      id,
-      name,
-      "building"
-    );
-
-  },
-
-  createRoom(
-    id,
-    name
-  ){
-
-    return createWorldLevel(
-      roomRoot,
-      id,
-      name,
-      "room"
-    );
-
+    for (let roomIndex = 0; roomIndex < 2; roomIndex++) {
+      const room = createBuildingRoom(
+        definition.name + " Room " + (floor + 1) + "-" + (roomIndex + 1),
+        roomIndex === 0 ? -definition.width * 0.24 : definition.width * 0.24,
+        0,
+        definition.depth - 0.8
+      );
+      floorGroup.add(room);
+    }
   }
+}
 
-};
+function createBuildingRoom(name, x, y, depth) {
+  const room = addGroup(interiorRoot, name);
+  room.position.set(x, y, 0);
+  room.userData.name = name;
 
+  const wallMaterial = makeMaterial(0x34445a);
+  const floorMaterial = makeMaterial(0x1e293b);
 
-/* ======================================================
-   LIGHTING
-====================================================== */
+  addBox(room, "Room Floor", [2.2, 0.1, depth * 0.42], [0, 0.2, 0], floorMaterial);
+  addBox(room, "Back Wall", [2.2, 1.7, 0.08], [0, 1.05, -depth * 0.2], wallMaterial, { castShadow: false });
+  addBox(room, "Left Wall", [0.08, 1.7, depth * 0.42], [-1.1, 1.05, 0], wallMaterial, { castShadow: false });
+  addBox(room, "Right Wall", [0.08, 1.7, depth * 0.42], [1.1, 1.05, 0], wallMaterial, { castShadow: false });
 
-const ambientLight =
-  new THREE.HemisphereLight(
+  const doorMaterial = makeMaterial(0x0ea5e9, {
+    emissive: 0x0369a1,
+    emissiveIntensity: 0.35
+  });
+  addBox(room, "Room Door", [0.65, 1.25, 0.07], [0, 0.85, depth * 0.2], doorMaterial, { castShadow: false });
 
-    0x9cc7ff,
+  createRoomFurniture(room);
+  return room;
+}
 
-    0x020617,
-
-    1.25
-
-  );
-
-scene.add(
-  ambientLight
-);
-
-
-const sunLight =
-  new THREE.DirectionalLight(
-
-    0xffffff,
-
-    2.4
-
-  );
-
-sunLight.position.set(
-  12,
-  25,
-  12
-);
-
-sunLight.castShadow =
-  true;
-
-sunLight.shadow.mapSize.set(
-  2048,
-  2048
-);
-
-sunLight.shadow.camera.left =
-  -35;
-
-sunLight.shadow.camera.right =
-  35;
-
-sunLight.shadow.camera.top =
-  35;
-
-sunLight.shadow.camera.bottom =
-  -35;
-
-scene.add(
-  sunLight
-);
-
-
-const rimLight =
-  new THREE.PointLight(
-
-    0x3b82f6,
-
-    25,
-
-    55
-
-  );
-
-rimLight.position.set(
-  -15,
-  8,
-  -10
-);
-
-scene.add(
-  rimLight
-);
-
-
-/* ======================================================
-   GROUND
-====================================================== */
-
-const groundGeometry =
-  new THREE.PlaneGeometry(
-    180,
-    180,
-    1,
-    1
-  );
-
-const groundMaterial =
-  new THREE.MeshStandardMaterial({
-
-    color:
-      0x07111f,
-
-    roughness:
-      0.86,
-
-    metalness:
-      0.12
-
+function createRoomFurniture(room) {
+  const wood = makeMaterial(0x8b6544);
+  const dark = makeMaterial(0x263449);
+  const screen = makeMaterial(0x22d3ee, {
+    emissive: 0x0891b2,
+    emissiveIntensity: 1
   });
 
-const ground =
-  new THREE.Mesh(
-    groundGeometry,
-    groundMaterial
-  );
+  addBox(room, "Table Top", [0.8, 0.1, 0.45], [0.25, 0.7, -0.15], wood);
+  addBox(room, "Table Leg", [0.08, 0.5, 0.08], [0.25, 0.4, -0.15], wood);
+  addBox(room, "Chair Seat", [0.38, 0.08, 0.38], [-0.45, 0.5, -0.05], dark);
+  addBox(room, "Chair Back", [0.38, 0.45, 0.08], [-0.45, 0.72, -0.22], dark);
+  addBox(room, "Interactive Screen", [0.6, 0.38, 0.05], [0, 1.1, -0.6], screen, { castShadow: false });
 
-ground.rotation.x =
-  -Math.PI / 2;
+  const lamp = new THREE.PointLight(0x38bdf8, 0.8, 4);
+  lamp.position.set(0, 1.5, 0);
+  room.add(lamp);
+}
 
-ground.receiveShadow =
-  true;
-
-ground.name =
-  "WorldGround";
-
-environmentRoot.add(
-  ground
-);
-
-
-/* ======================================================
-   GRID
-====================================================== */
-
-const grid =
-  new THREE.GridHelper(
-    120,
-    60,
-    0x1d4ed8,
-    0x172554
-  );
-
-grid.position.y =
-  0.02;
-
-grid.material.transparent =
-  true;
-
-grid.material.opacity =
-  0.18;
-
-environmentRoot.add(
-  grid
-);
-/* ======================================================
-   FIRST 3D CITY ENVIRONMENT
-====================================================== */
-
-const cityEnvironment =
-  new THREE.Group();
-
-cityEnvironment.name =
-  "FirstCityEnvironment";
-
-environmentRoot.add(
-  cityEnvironment
-);
-
-
-/* ======================================================
-   CITY PLAZA
-====================================================== */
-
-const plazaGeometry =
-  new THREE.CylinderGeometry(
-    8,
-    8,
-    0.35,
-    48
-  );
-
-const plazaMaterial =
-  new THREE.MeshStandardMaterial({
-
-    color:
-      0x111827,
-
-    roughness:
-      0.72,
-
-    metalness:
-      0.22
-
+function createWorldCore() {
+  const coreMaterial = new THREE.MeshStandardMaterial({
+    color: 0x38bdf8,
+    emissive: 0x0369a1,
+    emissiveIntensity: 1.4,
+    metalness: 0.65,
+    roughness: 0.25
   });
 
-const plaza =
-  new THREE.Mesh(
-    plazaGeometry,
-    plazaMaterial
-  );
-
-plaza.position.set(
-  0,
-  0.18,
-  0
-);
-
-plaza.receiveShadow =
-  true;
-
-cityEnvironment.add(
-  plaza
-);
-
-
-/* ======================================================
-   CITY ROADS
-====================================================== */
-
-const roadMaterial =
-  new THREE.MeshStandardMaterial({
-
-    color:
-      0x0f172a,
-
-    roughness:
-      0.9,
-
-    metalness:
-      0.08
-
-  });
-
-
-function createRoad(
-  width,
-  length,
-  x,
-  z,
-  rotation = 0
-){
-
-  const geometry =
-    new THREE.BoxGeometry(
-      width,
-      0.08,
-      length
-    );
-
-  const road =
-    new THREE.Mesh(
-      geometry,
-      roadMaterial
-    );
-
-  road.position.set(
-    x,
-    0.08,
-    z
-  );
-
-  road.rotation.y =
-    rotation;
-
-  road.receiveShadow =
-    true;
-
-  cityEnvironment.add(
-    road
-  );
-
-  return road;
-
-}
-
-
-createRoad(
-  4,
-  52,
-  0,
-  0,
-  0
-);
-
-
-createRoad(
-  52,
-  4,
-  0,
-  0,
-  0
-);
-
-
-/* ======================================================
-   CITY BUILDING CREATOR
-====================================================== */
-
-function createCityBuilding(
-  name,
-  x,
-  z,
-  width,
-  height,
-  depth,
-  color
-){
-
-  const buildingGroup =
-    new THREE.Group();
-
-  buildingGroup.name =
-    name;
-
-
-  const buildingGeometry =
-    new THREE.BoxGeometry(
-      width,
-      height,
-      depth
-    );
-
-
-  const buildingMaterial =
-    new THREE.MeshStandardMaterial({
-
-      color,
-
-      roughness:
-        0.58,
-
-      metalness:
-        0.18
-
-    });
-
-
-  const building =
-    new THREE.Mesh(
-      buildingGeometry,
-      buildingMaterial
-    );
-
-
-  building.position.y =
-    height / 2;
-
-
-  building.castShadow =
-    true;
-
-  building.receiveShadow =
-    true;
-
-
-  buildingGroup.position.set(
-    x,
-    0,
-    z
-  );
-
-
-  buildingGroup.add(
-    building
-  );
-
-
-  /* Building roof */
-
-  const roofGeometry =
-    new THREE.BoxGeometry(
-      width + 0.18,
-      0.18,
-      depth + 0.18
-    );
-
-
-  const roofMaterial =
-    new THREE.MeshStandardMaterial({
-
-      color:
-        0x1e293b,
-
-      roughness:
-        0.7,
-
-      metalness:
-        0.15
-
-    });
-
-
-  const roof =
-    new THREE.Mesh(
-      roofGeometry,
-      roofMaterial
-    );
-
-
-  roof.position.y =
-    height + 0.09;
-
-
-  roof.castShadow =
-    true;
-
-
-  buildingGroup.add(
-    roof
-  );
-
-
-  /* Building entrance */
-
-  const entranceGeometry =
-    new THREE.BoxGeometry(
-      Math.min(
-        width * 0.28,
-        1.8
-      ),
-      Math.min(
-        height * 0.28,
-        2.8
-      ),
-      0.12
-    );
-
-
-  const entranceMaterial =
-    new THREE.MeshStandardMaterial({
-
-      color:
-        0x60a5fa,
-
-      emissive:
-        0x1d4ed8,
-
-      emissiveIntensity:
-        0.35,
-
-      metalness:
-        0.5,
-
-      roughness:
-        0.25
-
-    });
-
-
-  const entrance =
-    new THREE.Mesh(
-      entranceGeometry,
-      entranceMaterial
-    );
-
-
-  entrance.position.set(
-    0,
-    Math.min(
-      height * 0.14,
-      1.4
-    ),
-    depth / 2 + 0.07
-  );
-
-
-  buildingGroup.add(
-    entrance
-  );
-
-
-  buildingGroup.userData = {
-
-    type:
-      "city-building",
-
-    name,
-
-    interactive:
-      true
-
-  };
-
-
-  cityEnvironment.add(
-    buildingGroup
-  );
-
-
-  return buildingGroup;
-
-}
-
-
-/* ======================================================
-   FIRST CITY BUILDINGS
-====================================================== */
-
-createCityBuilding(
-  "Zemivo Social Tower",
-  -10,
-  -10,
-  5,
-  10,
-  5,
-  0x2563eb
-);
-
-
-createCityBuilding(
-  "Zemivo Creator Tower",
-  10,
-  -10,
-  5,
-  13,
-  5,
-  0x9333ea
-);
-
-
-createCityBuilding(
-  "Zemivo Commerce Center",
-  -10,
-  10,
-  6,
-  8,
-  6,
-  0x16a34a
-);
-
-
-createCityBuilding(
-  "Zemivo AI Center",
-  10,
-  10,
-  6,
-  11,
-  6,
-  0x0891b2
-);
-
-
-/* ======================================================
-   CENTRAL BUILDING
-====================================================== */
-
-createCityBuilding(
-  "Zemivo Central Hub",
-  0,
-  -10,
-  6,
-  7,
-  6,
-  0x1d4ed8
-);
-
-
-/* ======================================================
-   CITY TREES
-====================================================== */
-
-function createCityTree(
-  x,
-  z
-){
-
-  const tree =
-    new THREE.Group();
-
-
-  const trunk =
-    new THREE.Mesh(
-
-      new THREE.CylinderGeometry(
-        0.18,
-        0.24,
-        1.8,
-        12
-      ),
-
-      new THREE.MeshStandardMaterial({
-
-        color:
-          0x78350f
-
-      })
-
-    );
-
-
-  trunk.position.y =
-    0.9;
-
-
-  trunk.castShadow =
-    true;
-
-
-  tree.add(
-    trunk
-  );
-
-
-  const leaves =
-    new THREE.Mesh(
-
-      new THREE.SphereGeometry(
-        1.15,
-        20,
-        20
-      ),
-
-      new THREE.MeshStandardMaterial({
-
-        color:
-          0x16a34a,
-
-        roughness:
-          0.85
-
-      })
-
-    );
-
-
-  leaves.position.y =
-    2.2;
-
-
-  leaves.castShadow =
-    true;
-
-
-  tree.add(
-    leaves
-  );
-
-
-  tree.position.set(
-    x,
-    0,
-    z
-  );
-
-
-  cityEnvironment.add(
-    tree
-  );
-
-}
-
-
-/* ======================================================
-   TREE POSITIONS
-====================================================== */
-
-createCityTree(
-  -5,
-  -5
-);
-
-createCityTree(
-  5,
-  -5
-);
-
-createCityTree(
-  -5,
-  5
-);
-
-createCityTree(
-  5,
-  5
-);
-
-createCityTree(
-  -15,
-  0
-);
-
-createCityTree(
-  15,
-  0
-);
-
-
-/* ======================================================
-   CITY ENVIRONMENT READY
-====================================================== */
-
-cityEnvironment.userData = {
-
-  type:
-    "city-environment",
-
-  version:
-    "1.0",
-
-  buildings:
-    5,
-
-  trees:
-    6,
-
-  roads:
-    2,
-
-  plaza:
-    true
-
-};
-/* ======================================================
-   BUILDING → FLOOR → ROOM / SPACE SYSTEM
-====================================================== */
-
-const cityInteriorRoot =
-  new THREE.Group();
-
-cityInteriorRoot.name =
-  "CityInteriorWorld";
-
-cityEnvironment.add(
-  cityInteriorRoot
-);
-
-
-/* ======================================================
-   ROOM CREATOR
-====================================================== */
-
-function createBuildingRoom(
-  buildingGroup,
-  floorNumber,
-  roomNumber,
-  x,
-  y,
-  z,
-  width,
-  height,
-  depth
-){
-
-  const roomGroup =
-    new THREE.Group();
-
-  roomGroup.name =
-    buildingGroup.name +
-    "_Floor_" +
-    floorNumber +
-    "_Room_" +
-    roomNumber;
-
-
-  /* Room floor */
-
-  const floorGeometry =
-    new THREE.BoxGeometry(
-      width,
-      0.12,
-      depth
-    );
-
-
-  const floorMaterial =
-    new THREE.MeshStandardMaterial({
-
-      color:
-        0x334155,
-
-      roughness:
-        0.8,
-
-      metalness:
-        0.1
-
-    });
-
-
-  const floor =
-    new THREE.Mesh(
-      floorGeometry,
-      floorMaterial
-    );
-
-
-  floor.position.y =
-    0;
-
-
-  floor.receiveShadow =
-    true;
-
-
-  roomGroup.add(
-    floor
-  );
-
-
-  /* Room ceiling */
-
-  const ceilingGeometry =
-    new THREE.BoxGeometry(
-      width,
-      0.08,
-      depth
-    );
-
-
-  const ceilingMaterial =
-    new THREE.MeshStandardMaterial({
-
-      color:
-        0x64748b,
-
-      roughness:
-        0.75
-
-    });
-
-
-  const ceiling =
-    new THREE.Mesh(
-      ceilingGeometry,
-      ceilingMaterial
-    );
-
-
-  ceiling.position.y =
-    height;
-
-
-  roomGroup.add(
-    ceiling
-  );
-
-
-  /* Room walls */
-
-  const wallMaterial =
-    new THREE.MeshStandardMaterial({
-
-      color:
-        0x475569,
-
-      roughness:
-        0.78
-
-    });
-
-
-  const wallThickness =
-    0.12;
-
-
-  const backWall =
-    new THREE.Mesh(
-
-      new THREE.BoxGeometry(
-        width,
-        height,
-        wallThickness
-      ),
-
-      wallMaterial
-
-    );
-
-
-  backWall.position.set(
-    0,
-    height / 2,
-    -depth / 2
-  );
-
-
-  roomGroup.add(
-    backWall
-  );
-
-
-  const leftWall =
-    new THREE.Mesh(
-
-      new THREE.BoxGeometry(
-        wallThickness,
-        height,
-        depth
-      ),
-
-      wallMaterial
-
-    );
-
-
-  leftWall.position.set(
-    -width / 2,
-    height / 2,
-    0
-  );
-
-
-  roomGroup.add(
-    leftWall
-  );
-
-
-  const rightWall =
-    new THREE.Mesh(
-
-      new THREE.BoxGeometry(
-        wallThickness,
-        height,
-        depth
-      ),
-
-      wallMaterial
-
-    );
-
-
-  rightWall.position.set(
-    width / 2,
-    height / 2,
-    0
-  );
-
-
-  roomGroup.add(
-    rightWall
-  );
-
-
-  /* Room entrance */
-
-  const entrance =
-    new THREE.Mesh(
-
-      new THREE.BoxGeometry(
-        1.1,
-        2.2,
-        0.12
-      ),
-
-      new THREE.MeshStandardMaterial({
-
-        color:
-          0x38bdf8,
-
-        emissive:
-          0x0284c7,
-
-        emissiveIntensity:
-          0.35,
-
-        metalness:
-          0.45,
-
-        roughness:
-          0.25
-
-      })
-
-    );
-
-
-  entrance.position.set(
-    0,
-    1.1,
-    depth / 2
-  );
-
-
-  roomGroup.add(
-    entrance
-  );
-
-
-  /* Room data */
-
-  roomGroup.userData = {
-
-    type:
-      "room-space",
-
-    building:
-      buildingGroup.name,
-
-    floor:
-      floorNumber,
-
-    room:
-      roomNumber,
-
-    interactive:
-      true
-
-  };
-
-
-  roomGroup.position.set(
-  x,
-  0,
-  z
-);
-
-
-  cityInteriorRoot.add(
-    roomGroup
-  );
-
-
-  return roomGroup;
-
-}
-
-
-/* ======================================================
-   BUILDING INTERIOR CREATOR
-====================================================== */
-
-function createBuildingInterior(
-  buildingGroup,
-  floorCount,
-  roomsPerFloor
-){
-
-  const interior =
-    new THREE.Group();
-
-  interior.name =
-    buildingGroup.name +
-    "_Interior";
-
-
-  cityInteriorRoot.add(
-    interior
-  );
-
-
-  const floorHeight =
-    3.2;
-
-
-  const roomWidth =
-    3.2;
-
-
-  const roomDepth =
-    3.2;
-
-
-  const roomHeight =
-    2.7;
-
-
-  for(
-    let floor = 1;
-    floor <= floorCount;
-    floor++
-  ){
-
-    const floorGroup =
-      new THREE.Group();
-
-
-    floorGroup.name =
-      buildingGroup.name +
-      "_Floor_" +
-      floor;
-
-
-    floorGroup.userData = {
-
-      type:
-        "building-floor",
-
-      building:
-        buildingGroup.name,
-
-      floor:
-        floor
-
-    };
-
-
-    floorGroup.position.y =
-      floor * floorHeight;
-
-
-    interior.add(
-      floorGroup
-    );
-
-
-    for(
-      let room = 1;
-      room <= roomsPerFloor;
-      room++
-    ){
-
-      const column =
-        (room - 1) %
-        2;
-
-      const row =
-        Math.floor(
-          (room - 1) / 2
-        );
-
-
-      const roomX =
-        column === 0
-        ? -1.8
-        : 1.8;
-
-
-      const roomZ =
-        row === 0
-        ? -1.8
-        : 1.8;
-
-
-      const roomSpace =
-        createBuildingRoom(
-
-          buildingGroup,
-
-          floor,
-
-          room,
-
-          roomX,
-
-          0,
-
-          roomZ,
-
-          roomWidth,
-
-          roomHeight,
-
-          roomDepth
-
-        );
-
-
-      roomSpace.parent
-        .remove(
-          roomSpace
-        );
-
-      floorGroup.add(
-        roomSpace
-      );
-
-    }
-
-  }
-
-
-  interior.userData = {
-
-    type:
-      "building-interior",
-
-    building:
-      buildingGroup.name,
-
-    floors:
-      floorCount,
-
-    roomsPerFloor:
-      roomsPerFloor,
-
-    totalRooms:
-      floorCount *
-      roomsPerFloor
-
-  };
-
-
-  return interior;
-
-}
-
-
-/* ======================================================
-   FIRST BUILDING INTERIORS
-====================================================== */
-
-const socialTower =
-  cityEnvironment.getObjectByName(
-    "Zemivo Social Tower"
-  );
-
-
-const creatorTower =
-  cityEnvironment.getObjectByName(
-    "Zemivo Creator Tower"
-  );
-
-
-const commerceCenter =
-  cityEnvironment.getObjectByName(
-    "Zemivo Commerce Center"
-  );
-
-
-const aiCenter =
-  cityEnvironment.getObjectByName(
-    "Zemivo AI Center"
-  );
-
-
-const centralHub =
-  cityEnvironment.getObjectByName(
-    "Zemivo Central Hub"
-  );
-
-
-if(socialTower){
-
-  createBuildingInterior(
-    socialTower,
-    3,
-    4
-  );
-
-}
-
-
-if(creatorTower){
-
-  createBuildingInterior(
-    creatorTower,
-    4,
-    4
-  );
-
-}
-
-
-if(commerceCenter){
-
-  createBuildingInterior(
-    commerceCenter,
-    2,
-    4
-  );
-
-}
-
-
-if(aiCenter){
-
-  createBuildingInterior(
-    aiCenter,
-    3,
-    4
-  );
-
-}
-
-
-if(centralHub){
-
-  createBuildingInterior(
-    centralHub,
-    2,
-    4
-  );
-
-}
-
-
-/* ======================================================
-   INTERIOR SYSTEM READY
-====================================================== */
-
-cityInteriorRoot.userData = {
-
-  type:
-    "city-interior-system",
-
-  version:
-    "1.0",
-
-  hierarchy:
-    "Building → Floor → Room/Space",
-
-  buildings:
-    5
-
-};
-  /* ======================================================
-   ROOM INTERIOR — DOOR + FURNITURE + LIGHT
-====================================================== */
-
-
-/* ======================================================
-   INTERIOR OBJECT ROOT
-====================================================== */
-
-const roomObjectRoot =
-  new THREE.Group();
-
-roomObjectRoot.name =
-  "RoomInteriorObjects";
-
-cityInteriorRoot.add(
-  roomObjectRoot
-);
-
-
-/* ======================================================
-   CREATE ROOM DOOR
-====================================================== */
-
-function createRoomDoor(
-  room
-){
-
-  const doorGroup =
-    new THREE.Group();
-
-  doorGroup.name =
-    "Door";
-
-
-  const door =
-    new THREE.Mesh(
-
-      new THREE.BoxGeometry(
-        0.9,
-        2.1,
-        0.12
-      ),
-
-      new THREE.MeshStandardMaterial({
-
-        color:
-          0x0f172a,
-
-        roughness:
-          0.55,
-
-        metalness:
-          0.18
-
-      })
-
-    );
-
-
-  door.position.set(
-    0,
-    1.05,
-    1.55
-  );
-
-
-  door.castShadow =
-    true;
-
-
-  doorGroup.add(
-    door
-  );
-
-
-  doorGroup.userData = {
-
-    type:
-      "room-door",
-
-    interactive:
-      true
-
-  };
-
-
-  room.add(
-    doorGroup
-  );
-
-}
-
-
-/* ======================================================
-   CREATE ROOM TABLE
-====================================================== */
-
-function createRoomTable(
-  room
-){
-
-  const tableGroup =
-    new THREE.Group();
-
-  tableGroup.name =
-    "Table";
-
-
-  const top =
-    new THREE.Mesh(
-
-      new THREE.BoxGeometry(
-        1.5,
-        0.12,
-        0.8
-      ),
-
-      new THREE.MeshStandardMaterial({
-
-        color:
-          0x92400e,
-
-        roughness:
-          0.65
-
-      })
-
-    );
-
-
-  top.position.y =
-    0.9;
-
-
-  top.castShadow =
-    true;
-
-
-  tableGroup.add(
-    top
-  );
-
-
-  const legMaterial =
-    new THREE.MeshStandardMaterial({
-
-      color:
-        0x451a03,
-
-      roughness:
-        0.72
-
-    });
-
-
-  const legPositions = [
-
-    [-0.6,0.45,-0.3],
-    [ 0.6,0.45,-0.3],
-    [-0.6,0.45, 0.3],
-    [ 0.6,0.45, 0.3]
-
-  ];
-
-
-  legPositions.forEach(
-    function(position){
-
-      const leg =
-        new THREE.Mesh(
-
-          new THREE.BoxGeometry(
-            0.1,
-            0.9,
-            0.1
-          ),
-
-          legMaterial
-
-        );
-
-
-      leg.position.set(
-        position[0],
-        position[1],
-        position[2]
-      );
-
-
-      leg.castShadow =
-        true;
-
-
-      tableGroup.add(
-        leg
-      );
-
-    }
-  );
-
-
-  tableGroup.position.set(
-    0,
-    0,
-    -0.35
-  );
-
-
-  tableGroup.userData = {
-
-    type:
-      "furniture",
-
-    furnitureType:
-      "table",
-
-    interactive:
-      true
-
-  };
-
-
-  room.add(
-    tableGroup
-  );
-
-}
-
-
-/* ======================================================
-   CREATE ROOM CHAIR
-====================================================== */
-
-function createRoomChair(
-  room
-){
-
-  const chairGroup =
-    new THREE.Group();
-
-  chairGroup.name =
-    "Chair";
-
-
-  const seat =
-    new THREE.Mesh(
-
-      new THREE.BoxGeometry(
-        0.65,
-        0.12,
-        0.65
-      ),
-
-      new THREE.MeshStandardMaterial({
-
-        color:
-          0x475569,
-
-        roughness:
-          0.65
-
-      })
-
-    );
-
-
-  seat.position.y =
-    0.55;
-
-
-  seat.castShadow =
-    true;
-
-
-  chairGroup.add(
-    seat
-  );
-
-
-  const back =
-    new THREE.Mesh(
-
-      new THREE.BoxGeometry(
-        0.65,
-        0.9,
-        0.12
-      ),
-
-      new THREE.MeshStandardMaterial({
-
-        color:
-          0x334155,
-
-        roughness:
-          0.65
-
-      })
-
-    );
-
-
-  back.position.set(
-    0,
-    1,
-    -0.26
-  );
-
-
-  back.castShadow =
-    true;
-
-
-  chairGroup.add(
-    back
-  );
-
-
-  const chairLegMaterial =
-    new THREE.MeshStandardMaterial({
-
-      color:
-        0x1e293b,
-
-      roughness:
-        0.7
-
-    });
-
-
-  const chairLegPositions = [
-
-    [-0.23,0.27,-0.23],
-    [ 0.23,0.27,-0.23],
-    [-0.23,0.27, 0.23],
-    [ 0.23,0.27, 0.23]
-
-  ];
-
-
-  chairLegPositions.forEach(
-    function(position){
-
-      const leg =
-        new THREE.Mesh(
-
-          new THREE.BoxGeometry(
-            0.08,
-            0.55,
-            0.08
-          ),
-
-          chairLegMaterial
-
-        );
-
-
-      leg.position.set(
-        position[0],
-        position[1],
-        position[2]
-      );
-
-
-      chairGroup.add(
-        leg
-      );
-
-    }
-  );
-
-
-  chairGroup.position.set(
-    0,
-    0,
-    0.7
-  );
-
-
-  chairGroup.userData = {
-
-    type:
-      "furniture",
-
-    furnitureType:
-      "chair",
-
-    interactive:
-      true
-
-  };
-
-
-  room.add(
-    chairGroup
-  );
-
-}
-
-
-/* ======================================================
-   CREATE ROOM SCREEN
-====================================================== */
-
-function createRoomScreen(
-  room
-){
-
-  const screenGroup =
-    new THREE.Group();
-
-  screenGroup.name =
-    "InteractiveScreen";
-
-
-  const screen =
-    new THREE.Mesh(
-
-      new THREE.BoxGeometry(
-        1.2,
-        0.7,
-        0.08
-      ),
-
-      new THREE.MeshStandardMaterial({
-
-        color:
-          0x020617,
-
-        emissive:
-          0x2563eb,
-
-        emissiveIntensity:
-          0.35,
-
-        metalness:
-          0.4,
-
-        roughness:
-          0.25
-
-      })
-
-    );
-
-
-  screen.position.set(
-    0,
-    1.8,
-    -1.45
-  );
-
-
-  screen.castShadow =
-    true;
-
-
-  screenGroup.add(
-    screen
-  );
-
-
-  screenGroup.userData = {
-
-    type:
-      "interactive-screen",
-
-    interactive:
-      true,
-
-    action:
-      "open-content"
-
-  };
-
-
-  room.add(
-    screenGroup
-  );
-
-}
-
-
-/* ======================================================
-   CREATE ROOM LIGHT
-====================================================== */
-
-function createRoomLight(
-  room
-){
-
-  const light =
-    new THREE.PointLight(
-
-      0x93c5fd,
-
-      1.8,
-
-      7
-
-    );
-
-
-  light.position.set(
-    0,
-    2.4,
-    0
-  );
-
-
-  light.castShadow =
-    true;
-
-
-  room.add(
-    light
-  );
-
-
-  const lamp =
-    new THREE.Mesh(
-
-      new THREE.SphereGeometry(
-        0.16,
-        16,
-        16
-      ),
-
-      new THREE.MeshStandardMaterial({
-
-        color:
-          0xffffff,
-
-        emissive:
-          0x60a5fa,
-
-        emissiveIntensity:
-          1
-
-      })
-
-    );
-
-
-  lamp.position.set(
-    0,
-    2.65,
-    0
-  );
-
-
-  room.add(
-    lamp
-  );
-
-}
-
-
-/* ======================================================
-   CREATE ROOM INTERIOR
-====================================================== */
-
-function setupRoomInterior(
-  room
-){
-
-  if(
-    room.userData &&
-    room.userData.type ===
-    "room-space"
-  ){
-
-    if(
-      room.userData.interiorReady
-    ){
-
-      return;
-
-    }
-
-
-    createRoomDoor(
-      room
-    );
-
-
-    createRoomTable(
-      room
-    );
-
-
-    createRoomChair(
-      room
-    );
-
-
-    createRoomScreen(
-      room
-    );
-
-
-    createRoomLight(
-      room
-    );
-
-
-    room.userData.interiorReady =
-      true;
-
-  }
-
-}
-
-
-/* ======================================================
-   APPLY INTERIOR TO ALL ROOMS
-====================================================== */
-
-cityInteriorRoot.traverse(
-  function(object){
-
-    if(
-      object.userData &&
-      object.userData.type ===
-      "room-space"
-    ){
-
-      setupRoomInterior(
-        object
-      );
-
-    }
-
-  }
-);
-
-
-/* ======================================================
-   ROOM INTERIOR SYSTEM READY
-====================================================== */
-
-roomObjectRoot.userData = {
-
-  type:
-    "room-interior-system",
-
-  version:
-    "1.0",
-
-  features: [
-
-    "door",
-    "table",
-    "chair",
-    "interactive-screen",
-    "room-light"
-
-  ]
-
-};
-  /* ======================================================
-   ZEMIVO AVATAR SYSTEM
-   Avatar + Movement + Camera Follow
-====================================================== */
-
-
-
-/* ======================================================
-   AVATAR CREATOR
-====================================================== */
-
-function createZemivoAvatar(){
-
-  const avatar =
-    new THREE.Group();
-
-  avatar.name =
-    "PlayerAvatar";
-
-
-  /* -------------------------------
-     BODY
-  -------------------------------- */
-
-  const body =
-    new THREE.Mesh(
-
-      new THREE.CapsuleGeometry(
-        0.42,
-        1.0,
-        8,
-        16
-      ),
-
-      new THREE.MeshStandardMaterial({
-
-        color:
-          0x2563eb,
-
-        roughness:
-          0.55,
-
-        metalness:
-          0.08
-
-      })
-
-    );
-
-
-  body.position.y =
-    1.05;
-
-  body.castShadow =
-    true;
-
-  avatar.add(
-    body
-  );
-
-
-  /* -------------------------------
-     HEAD
-  -------------------------------- */
-
-  const head =
-    new THREE.Mesh(
-
-      new THREE.SphereGeometry(
-        0.38,
-        24,
-        24
-      ),
-
-      new THREE.MeshStandardMaterial({
-
-        color:
-          0xf1c27d,
-
-        roughness:
-          0.72,
-
-        metalness:
-          0
-
-      })
-
-    );
-
-
-  head.position.y =
-    1.95;
-
-  head.castShadow =
-    true;
-
-  avatar.add(
-    head
-  );
-
-
-  /* -------------------------------
-     LEFT LEG
-  -------------------------------- */
-
-  const legMaterial =
-    new THREE.MeshStandardMaterial({
-
-      color:
-        0x172554,
-
-      roughness:
-        0.7
-
-    });
-
-
-  const leftLeg =
-    new THREE.Mesh(
-
-      new THREE.CapsuleGeometry(
-        0.16,
-        0.65,
-        6,
-        12
-      ),
-
-      legMaterial
-
-    );
-
-
-  leftLeg.position.set(
-    -0.2,
-    0.35,
-    0
-  );
-
-
-  leftLeg.castShadow =
-    true;
-
-
-  avatar.add(
-    leftLeg
-  );
-
-
-  /* -------------------------------
-     RIGHT LEG
-  -------------------------------- */
-
-  const rightLeg =
-    new THREE.Mesh(
-
-      new THREE.CapsuleGeometry(
-        0.16,
-        0.65,
-        6,
-        12
-      ),
-
-      legMaterial
-
-    );
-
-
-  rightLeg.position.set(
-    0.2,
-    0.35,
-    0
-  );
-
-
-  rightLeg.castShadow =
-    true;
-
-
-  avatar.add(
-    rightLeg
-  );
-
-
-  /* -------------------------------
-     LEFT ARM
-  -------------------------------- */
-
-  const armMaterial =
-    new THREE.MeshStandardMaterial({
-
-      color:
-        0x2563eb,
-
-      roughness:
-        0.58
-
-    });
-
-
-  const leftArm =
-    new THREE.Mesh(
-
-      new THREE.CapsuleGeometry(
-        0.13,
-        0.7,
-        6,
-        12
-      ),
-
-      armMaterial
-
-    );
-
-
-  leftArm.position.set(
-    -0.55,
-    1.15,
-    0
-  );
-
-
-  leftArm.rotation.z =
-    -0.08;
-
-
-  leftArm.castShadow =
-    true;
-
-
-  avatar.add(
-    leftArm
-  );
-
-
-  /* -------------------------------
-     RIGHT ARM
-  -------------------------------- */
-
-  const rightArm =
-    new THREE.Mesh(
-
-      new THREE.CapsuleGeometry(
-        0.13,
-        0.7,
-        6,
-        12
-      ),
-
-      armMaterial
-
-    );
-
-
-  rightArm.position.set(
-    0.55,
-    1.15,
-    0
-  );
-
-
-  rightArm.rotation.z =
-    0.08;
-
-
-  rightArm.castShadow =
-    true;
-
-
-  avatar.add(
-    rightArm
-  );
-
-
-  /* -------------------------------
-     AVATAR LIGHT
-  -------------------------------- */
-
-  const avatarLight =
-    new THREE.PointLight(
-      0x60a5fa,
-      0.6,
-      3
-    );
-
-
-  avatarLight.position.y =
-    2.2;
-
-
-  avatar.add(
-    avatarLight
-  );
-
-
-  /* -------------------------------
-     AVATAR DATA
-  -------------------------------- */
-
-  avatar.userData = {
-
-    type:
-      "zemivo-avatar",
-
-    avatarId:
-      "local-player",
-
-    displayName:
-      "Zemivo User",
-
-    interactive:
-      true,
-
-    speed:
-      0.08
-
-  };
-
-
-  avatarWorldRoot.add(
-    avatar
-  );
-
-
-  return avatar;
-
-}
-
-
-/* ======================================================
-   CREATE PLAYER AVATAR
-====================================================== */
-
-const playerAvatar =
-  createZemivoAvatar();
-
-
-playerAvatar.position.set(
-  0,
-  0,
-  4
-);
-
-
-/* ======================================================
-   AVATAR MOVEMENT STATE
-====================================================== */
-
-const avatarMovement = {
-
-  forward:
-    false,
-
-  backward:
-    false,
-
-  left:
-    false,
-
-  right:
-    false
-
-};
-
-
-/* ======================================================
-   KEYBOARD CONTROL
-====================================================== */
-
-window.addEventListener(
-  "keydown",
-  function(event){
-
-    if(
-      event.key ===
-      "w" ||
-      event.key ===
-      "W" ||
-      event.key ===
-      "ArrowUp"
-    ){
-
-      avatarMovement.forward =
-        true;
-
-    }
-
-
-    if(
-      event.key ===
-      "s" ||
-      event.key ===
-      "S" ||
-      event.key ===
-      "ArrowDown"
-    ){
-
-      avatarMovement.backward =
-        true;
-
-    }
-
-
-    if(
-      event.key ===
-      "a" ||
-      event.key ===
-      "A" ||
-      event.key ===
-      "ArrowLeft"
-    ){
-
-      avatarMovement.left =
-        true;
-
-    }
-
-
-    if(
-      event.key ===
-      "d" ||
-      event.key ===
-      "D" ||
-      event.key ===
-      "ArrowRight"
-    ){
-
-      avatarMovement.right =
-        true;
-
-    }
-
-  }
-);
-
-
-window.addEventListener(
-  "keyup",
-  function(event){
-
-    if(
-      event.key ===
-      "w" ||
-      event.key ===
-      "W" ||
-      event.key ===
-      "ArrowUp"
-    ){
-
-      avatarMovement.forward =
-        false;
-
-    }
-
-
-    if(
-      event.key ===
-      "s" ||
-      event.key ===
-      "S" ||
-      event.key ===
-      "ArrowDown"
-    ){
-
-      avatarMovement.backward =
-        false;
-
-    }
-
-
-    if(
-      event.key ===
-      "a" ||
-      event.key ===
-      "A" ||
-      event.key ===
-      "ArrowLeft"
-    ){
-
-      avatarMovement.left =
-        false;
-
-    }
-
-
-    if(
-      event.key ===
-      "d" ||
-      event.key ===
-      "D" ||
-      event.key ===
-      "ArrowRight"
-    ){
-
-      avatarMovement.right =
-        false;
-
-    }
-
-  }
-);
-
-
-/* ======================================================
-   AVATAR MOVEMENT
-====================================================== */
-
-function updateAvatarMovement(){
-
-  if(
-    !playerAvatar
-  ){
-
-    return;
-
-  }
-
-
-  const speed =
-    playerAvatar.userData.speed;
-
-
-  let moveX =
-    0;
-
-  let moveZ =
-    0;
-
-
-  if(
-    avatarMovement.forward
-  ){
-
-    moveZ -= speed;
-
-  }
-
-
-  if(
-    avatarMovement.backward
-  ){
-
-    moveZ += speed;
-
-  }
-
-
-  if(
-    avatarMovement.left
-  ){
-
-    moveX -= speed;
-
-  }
-
-
-  if(
-    avatarMovement.right
-  ){
-
-    moveX += speed;
-
-  }
-
-
-  if(
-    moveX !== 0 ||
-    moveZ !== 0
-  ){
-
-    playerAvatar.position.x +=
-      moveX;
-
-    playerAvatar.position.z +=
-      moveZ;
-
-
-    playerAvatar.rotation.y =
-      Math.atan2(
-        moveX,
-        moveZ
-      );
-
-  }
-
-}
-
-
-/* ======================================================
-   CAMERA FOLLOW
-====================================================== */
-
-const avatarCameraOffset =
-  new THREE.Vector3(
-    6,
-    5,
-    8
-  );
-
-
-function updateAvatarCamera(){
-
-  if(
-    !playerAvatar
-  ){
-
-    return;
-
-  }
-
-
-  const targetPosition =
-    new THREE.Vector3();
-
-
-  targetPosition.copy(
-    playerAvatar.position
-  );
-
-
-  targetPosition.add(
-    avatarCameraOffset
-  );
-
-
-  camera.position.lerp(
-    targetPosition,
-    0.08
-  );
-
-
-  const lookTarget =
-    new THREE.Vector3();
-
-
-  lookTarget.copy(
-    playerAvatar.position
-  );
-
-
-  lookTarget.y +=
-    1.2;
-
-
-  camera.lookAt(
-    lookTarget
-  );
-
-}
-
-
-/* ======================================================
-   AVATAR MOVEMENT LOOP
-====================================================== */
-
-
-
-/* ======================================================
-   AVATAR SYSTEM READY
-====================================================== */
-
-avatarWorldRoot.userData = {
-
-  type:
-    "avatar-system",
-
-  version:
-    "1.0",
-
-  movement:
-    "WASD + Arrow Keys",
-
-  camera:
-    "follow",
-
-  player:
-    "local-player"
-
-};
-  
-/* ======================================================
-   WORLD CORE
-====================================================== */
-
-const coreGroup =
-  new THREE.Group();
-
-coreGroup.name =
-  "ZemivoCore";
-
-contentRoot.add(
-  coreGroup
-);
-
-
-const coreGeometry =
-  new THREE.IcosahedronGeometry(
-    2.6,
-    4
-  );
-
-const coreMaterial =
-  new THREE.MeshPhysicalMaterial({
-
-    color:
-      0x2563eb,
-
-    emissive:
-      0x0b2a78,
-
-    emissiveIntensity:
-      1.5,
-
-    roughness:
-      0.18,
-
-    metalness:
-      0.65,
-
-    transparent:
-      true,
-
-    opacity:
-      0.94
-
-  });
-
-const core =
-  new THREE.Mesh(
-    coreGeometry,
+  const core = new THREE.Mesh(
+    new THREE.IcosahedronGeometry(2.3, 2),
     coreMaterial
   );
+  core.name = "Zemivo World Core";
+  core.position.set(0, 4, 0);
+  core.userData.description = "Zemivo connects social life, creators, commerce, AI, and gaming in one evolving world.";
+  contentRoot.add(core);
+  worldObjects.core = core;
 
-core.position.y =
-  4;
-
-core.castShadow =
-  true;
-
-core.receiveShadow =
-  true;
-
-coreGroup.add(
-  core
-);
-
-
-/* ======================================================
-   CORE GLOW
-====================================================== */
-
-const glowGeometry =
-  new THREE.SphereGeometry(
-    3.6,
-    32,
-    32
+  const glow = new THREE.Mesh(
+    new THREE.SphereGeometry(3.1, 32, 24),
+    new THREE.MeshBasicMaterial({
+      color: 0x0284c7,
+      transparent: true,
+      opacity: 0.12,
+      side: THREE.BackSide
+    })
   );
+  glow.position.copy(core.position);
+  contentRoot.add(glow);
 
-const glowMaterial =
-  new THREE.MeshBasicMaterial({
-
-    color:
-      0x2563eb,
-
-    transparent:
-      true,
-
-    opacity:
-      0.09,
-
-    depthWrite:
-      false
-
+  const ringMaterial = new THREE.MeshBasicMaterial({
+    color: 0x38bdf8,
+    transparent: true,
+    opacity: 0.6
   });
 
-const glow =
-  new THREE.Mesh(
-    glowGeometry,
-    glowMaterial
-  );
-
-glow.position.copy(
-  core.position
-);
-
-coreGroup.add(
-  glow
-);
-
-
-/* ======================================================
-   WORLD NODES
-====================================================== */
-
-const nodes = [];
-
-
-function createWorldNode(
-  name,
-  position,
-  color,
-  label
-){
-
-  const group =
-    new THREE.Group();
-
-  group.name =
-    name;
-
-  group.position.set(
-    position.x,
-    position.y,
-    position.z
-  );
-
-
-  const geometry =
-    new THREE.CylinderGeometry(
-      1.25,
-      1.25,
-      3.5,
-      32
-    );
-
-
-  const material =
-    new THREE.MeshStandardMaterial({
-
-      color,
-
-      emissive:
-        color,
-
-      emissiveIntensity:
-        0.35,
-
-      roughness:
-        0.38,
-
-      metalness:
-        0.5
-
-    });
-
-
-  const mesh =
-    new THREE.Mesh(
-      geometry,
-      material
-    );
-
-  mesh.castShadow =
-    true;
-
-  mesh.receiveShadow =
-    true;
-
-  group.add(
-    mesh
-  );
-
-
-  const ringGeometry =
-    new THREE.TorusGeometry(
-      2,
-      0.045,
-      12,
-      64
-    );
-
-  const ringMaterial =
-    new THREE.MeshBasicMaterial({
-
-      color,
-
-      transparent:
-        true,
-
-      opacity:
-        0.55
-
-    });
-
-
-  const ring =
-    new THREE.Mesh(
-      ringGeometry,
+  for (let i = 0; i < 3; i++) {
+    const ring = new THREE.Mesh(
+      new THREE.TorusGeometry(3.0 + i * 0.45, 0.035, 8, 100),
       ringMaterial
     );
-
-  ring.rotation.x =
-    Math.PI / 2;
-
-  ring.position.y =
-    -1.6;
-
-  group.add(
-    ring
-  );
-
-
-  group.userData = {
-
-    type:
-      "world-node",
-
-    name,
-
-    label,
-
-    interactive:
-      true
-
-  };
-
-
-  contentRoot.add(
-    group
-  );
-
-  nodes.push(
-    group
-  );
-
-  return group;
-
+    ring.position.copy(core.position);
+    ring.rotation.x = Math.PI / 2 + i * 0.3;
+    ring.rotation.y = i * 0.5;
+    contentRoot.add(ring);
+  }
 }
 
+const nodeDefinitions = [
+  { name: "Social", position: [-8, 3.4, -3], color: 0x3b82f6, description: "Connect with people, share posts, and explore global communities." },
+  { name: "Creator", position: [8, 4.6, -3], color: 0xa855f7, description: "A future space for creators, content, audiences, and earning tools." },
+  { name: "Commerce", position: [-7, 3.1, 7], color: 0x10b981, description: "Explore a future-ready commerce and marketplace experience." },
+  { name: "AI", position: [7, 4.0, 7], color: 0x06b6d4, description: "Discover AI-powered tools and helpful digital assistants." },
+  { name: "Gaming", position: [0, 6.7, -10], color: 0xf59e0b, description: "A future space for games, interactive experiences, and rewards." }
+];
 
-createWorldNode(
-  "SocialWorld",
-  {
-    x:-9,
-    y:2,
-    z:-4
-  },
-  0x3b82f6,
-  "Social"
-);
+function createWorldNodes() {
+  for (const definition of nodeDefinitions) {
+    const parent = definition.name === "Commerce"
+      ? commerceRoot
+      : definition.name === "AI"
+        ? aiRoot
+        : definition.name === "Gaming"
+          ? gamingRoot
+          : contentRoot;
 
+    const node = new THREE.Group();
+    node.name = definition.name + " World Node";
+    node.position.set(...definition.position);
+    node.userData.nodeName = definition.name;
+    node.userData.description = definition.description;
+    node.userData.baseY = definition.position[1];
 
-createWorldNode(
-  "CreatorWorld",
-  {
-    x:9,
-    y:2,
-    z:-4
-  },
-  0xa855f7,
-  "Creator"
-);
+    const material = new THREE.MeshStandardMaterial({
+      color: definition.color,
+      emissive: definition.color,
+      emissiveIntensity: 0.9,
+      metalness: 0.45,
+      roughness: 0.22
+    });
 
+    const orb = new THREE.Mesh(
+      new THREE.IcosahedronGeometry(0.85, 2),
+      material
+    );
+    orb.name = definition.name + " Interactive Orb";
+    orb.userData.nodeName = definition.name;
+    orb.userData.description = definition.description;
+    orb.castShadow = true;
+    node.add(orb);
 
-createWorldNode(
-  "CommerceWorld",
-  {
-    x:-8,
-    y:2,
-    z:7
-  },
-  0x22c55e,
-  "Commerce"
-);
+    const ring = new THREE.Mesh(
+      new THREE.TorusGeometry(1.25, 0.035, 8, 48),
+      new THREE.MeshBasicMaterial({
+        color: definition.color,
+        transparent: true,
+        opacity: 0.8
+      })
+    );
+    ring.rotation.x = Math.PI / 2;
+    node.add(ring);
 
+    const orbit = new THREE.Mesh(
+      new THREE.TorusGeometry(1.55, 0.018, 6, 48),
+      new THREE.MeshBasicMaterial({
+        color: 0xc4b5fd,
+        transparent: true,
+        opacity: 0.55
+      })
+    );
+    orbit.rotation.set(0.8, 0.4, 0.2);
+    node.add(orbit);
 
-createWorldNode(
-  "AIWorld",
-  {
-    x:8,
-    y:2,
-    z:7
-  },
-  0x06b6d4,
-  "AI"
-);
+    parent.add(node);
+    interactiveNodes.push(orb);
+    worldObjects[definition.name.toLowerCase()] = node;
+  }
+}
 
+function createStars() {
+  const count = window.innerWidth < 600 ? 650 : 1300;
+  const positions = new Float32Array(count * 3);
 
-createWorldNode(
-  "GamingWorld",
-  {
-    x:0,
-    y:2,
-    z:12
-  },
-  0xf59e0b,
-  "Gaming"
-);
+  for (let i = 0; i < count; i++) {
+    positions[i * 3] = (Math.random() - 0.5) * 180;
+    positions[i * 3 + 1] = 8 + Math.random() * 65;
+    positions[i * 3 + 2] = (Math.random() - 0.5) * 180;
+  }
 
+  const geometry = new THREE.BufferGeometry();
+  geometry.setAttribute("position", new THREE.BufferAttribute(positions, 3));
 
-/* ======================================================
-   CONNECTING ORBITS
-====================================================== */
-
-const orbitMaterial =
-  new THREE.MeshBasicMaterial({
-
-    color:
-      0x60a5fa,
-
-    transparent:
-      true,
-
-    opacity:
-      0.28
-
-  });
-
-
-const orbit1 =
-  new THREE.Mesh(
-
-    new THREE.TorusGeometry(
-      10,
-      0.035,
-      10,
-      128
-    ),
-
-    orbitMaterial
-
-  );
-
-orbit1.rotation.x =
-  Math.PI / 2;
-
-orbit1.position.y =
-  4;
-
-contentRoot.add(
-  orbit1
-);
-
-
-const orbit2 =
-  new THREE.Mesh(
-
-    new THREE.TorusGeometry(
-      15,
-      0.025,
-      10,
-      128
-    ),
-
-    new THREE.MeshBasicMaterial({
-
-      color:
-        0x818cf8,
-
-      transparent:
-        true,
-
-      opacity:
-        0.18
-
+  const stars = new THREE.Points(
+    geometry,
+    new THREE.PointsMaterial({
+      color: 0xb9dcff,
+      size: 0.14,
+      transparent: true,
+      opacity: 0.85,
+      sizeAttenuation: true
     })
-
   );
 
-orbit2.rotation.x =
-  Math.PI / 2;
-
-orbit2.rotation.z =
-  0.25;
-
-orbit2.position.y =
-  4;
-
-contentRoot.add(
-  orbit2
-);
-
-
-/* ======================================================
-   STARS
-====================================================== */
-
-const starCount =
-  1300;
-
-const starPositions =
-  new Float32Array(
-    starCount * 3
-  );
-
-
-for(
-  let i = 0;
-  i < starCount;
-  i++
-){
-
-  const radius =
-    35 +
-    Math.random() * 80;
-
-  const theta =
-    Math.random() *
-    Math.PI *
-    2;
-
-  const phi =
-    Math.acos(
-      2 * Math.random() - 1
-    );
-
-  starPositions[
-    i * 3
-  ] =
-    radius *
-    Math.sin(phi) *
-    Math.cos(theta);
-
-  starPositions[
-    i * 3 + 1
-  ] =
-    radius *
-    Math.cos(phi);
-
-  starPositions[
-    i * 3 + 2
-  ] =
-    radius *
-    Math.sin(phi) *
-    Math.sin(theta);
-
+  stars.name = "World Stars";
+  environmentRoot.add(stars);
+  worldObjects.stars = stars;
 }
 
+function createAvatar() {
+  const avatar = new THREE.Group();
+  avatar.name = "Player Avatar";
+  avatar.position.set(0, 0.1, 4);
+  avatar.userData.speed = 7;
+  avatar.userData.description = "Your avatar explores the Zemivo Living World.";
 
-const starGeometry =
-  new THREE.BufferGeometry();
+  const bodyMaterial = makeMaterial(0x2563eb, {
+    roughness: 0.45,
+    metalness: 0.2
+  });
+  const skinMaterial = makeMaterial(0xf2c9a5);
+  const darkMaterial = makeMaterial(0x172554);
 
-starGeometry.setAttribute(
+  const body = new THREE.Mesh(
+    new THREE.CapsuleGeometry(0.42, 0.85, 4, 8),
+    bodyMaterial
+  );
+  body.position.y = 1.2;
+  body.castShadow = true;
+  avatar.add(body);
 
-  "position",
+  const head = addSphere(avatar, "Avatar Head", 0.34, [0, 2.0, 0], skinMaterial, 18);
+  head.castShadow = true;
 
-  new THREE.BufferAttribute(
-    starPositions,
-    3
-  )
+  addBox(avatar, "Avatar Left Leg", [0.2, 0.55, 0.22], [-0.19, 0.42, 0], darkMaterial);
+  addBox(avatar, "Avatar Right Leg", [0.2, 0.55, 0.22], [0.19, 0.42, 0], darkMaterial);
+  addBox(avatar, "Avatar Left Arm", [0.17, 0.68, 0.18], [-0.52, 1.2, 0], skinMaterial);
+  addBox(avatar, "Avatar Right Arm", [0.17, 0.68, 0.18], [0.52, 1.2, 0], skinMaterial);
 
-);
+  const avatarLight = new THREE.PointLight(0x38bdf8, 1.2, 5);
+  avatarLight.position.set(0, 2.4, 0);
+  avatar.add(avatarLight);
 
+  avatarRoot.add(avatar);
+  worldObjects.avatar = avatar;
+}
 
-const starMaterial =
-  new THREE.PointsMaterial({
+function updateAvatarMovement(delta) {
+  const avatar = worldObjects.avatar;
+  if (!avatar) return;
 
-    color:
-      0xffffff,
+  let x = 0;
+  let z = 0;
 
-    size:
-      0.09,
+  if (keys.has("w") || keys.has("arrowup")) z -= 1;
+  if (keys.has("s") || keys.has("arrowdown")) z += 1;
+  if (keys.has("a") || keys.has("arrowleft")) x -= 1;
+  if (keys.has("d") || keys.has("arrowright")) x += 1;
 
-    transparent:
-      true,
+  const moving = x !== 0 || z !== 0;
+  if (moving) {
+    const length = Math.hypot(x, z);
+    x /= length;
+    z /= length;
 
-    opacity:
-      0.8,
+    const speed = avatar.userData.speed * delta;
+    avatar.position.x = THREE.MathUtils.clamp(avatar.position.x + x * speed, -36, 36);
+    avatar.position.z = THREE.MathUtils.clamp(avatar.position.z + z * speed, -58, 18);
+    avatar.rotation.y = Math.atan2(x, z);
+  }
 
-    sizeAttenuation:
-      true
+  avatar.userData.moving = moving;
+}
 
+function updateAvatarCamera() {
+  const avatar = worldObjects.avatar;
+  if (!avatar || !controls) return;
+
+  const target = new THREE.Vector3(
+    avatar.position.x,
+    avatar.position.y + 1.5,
+    avatar.position.z
+  );
+
+  const previousTarget = controls.target.clone();
+  const shift = target.clone().sub(previousTarget);
+
+  controls.target.copy(target);
+  camera.position.add(shift);
+  controls.update();
+}
+
+function handleWorldSelection(event) {
+  if (!renderer || !camera) return;
+
+  const rect = renderer.domElement.getBoundingClientRect();
+  pointer.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
+  pointer.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
+
+  raycaster.setFromCamera(pointer, camera);
+  const hits = raycaster.intersectObjects(interactiveNodes, true);
+
+  if (!hits.length) return;
+
+  let object = hits[0].object;
+  while (object && !object.userData.nodeName) object = object.parent;
+  if (!object) return;
+
+  selectedNode = object;
+  titleElement.textContent = object.userData.nodeName + " World";
+  descriptionElement.textContent = object.userData.description || "Explore this part of Zemivo.";
+  statusElement.textContent = "Exploring: " + object.userData.nodeName;
+}
+
+function resetView() {
+  const avatar = worldObjects.avatar;
+  const target = avatar
+    ? new THREE.Vector3(avatar.position.x, avatar.position.y + 1.5, avatar.position.z)
+    : new THREE.Vector3(0, 2, 0);
+
+  controls.target.copy(target);
+  camera.position.set(target.x, target.y + 11, target.z + 23);
+  controls.update();
+
+  titleElement.textContent = "Welcome to Zemivo";
+  descriptionElement.textContent = "Explore a 3D world for social connection, creators, commerce, AI and gaming.";
+  statusElement.textContent = "Zemivo Living World ready";
+  selectedNode = null;
+}
+
+function handleResize() {
+  if (!camera || !renderer) return;
+  camera.aspect = window.innerWidth / window.innerHeight;
+  camera.updateProjectionMatrix();
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.5));
+  renderer.setSize(window.innerWidth, window.innerHeight);
+}
+
+function animate(time) {
+  animationFrame = requestAnimationFrame(animate);
+
+  const delta = Math.min(clock.getDelta(), 0.05);
+  if (!paused) {
+    elapsed += delta;
+    updateAvatarMovement(delta);
+
+    for (const definition of nodeDefinitions) {
+      const node = worldObjects[definition.name.toLowerCase()];
+      if (!node) continue;
+      node.position.y = node.userData.baseY + Math.sin(elapsed * 1.3 + definition.position[0]) * 0.18;
+      node.rotation.y += delta * 0.18;
+    }
+
+    if (worldObjects.core) {
+      worldObjects.core.rotation.y += delta * 0.18;
+      worldObjects.core.rotation.x += delta * 0.08;
+    }
+
+    if (worldObjects.stars) {
+      worldObjects.stars.rotation.y += delta * 0.003;
+    }
+
+    updateAvatarCamera();
+  } else {
+    controls.update();
+  }
+
+  renderer.render(scene, camera);
+}
+
+function setPaused(value) {
+  paused = value;
+  pauseButton.textContent = paused ? "Resume" : "Pause";
+  statusElement.textContent = paused ? "World paused" : "Zemivo Living World ready";
+}
+
+function bindEvents() {
+  window.addEventListener("resize", handleResize);
+  renderer.domElement.addEventListener("pointerdown", handleWorldSelection);
+
+  window.addEventListener("keydown", event => {
+    const key = event.key.toLowerCase();
+    if (["w", "a", "s", "d", "arrowup", "arrowdown", "arrowleft", "arrowright"].includes(key)) {
+      keys.add(key);
+      if (key.startsWith("arrow")) event.preventDefault();
+    }
   });
 
+  window.addEventListener("keyup", event => {
+    keys.delete(event.key.toLowerCase());
+  });
 
-const stars =
-  new THREE.Points(
-    starGeometry,
-    starMaterial
-  );
+  window.addEventListener("blur", () => keys.clear());
 
-scene.add(
-  stars
-);
-
-
-/* ======================================================
-   FUTURE CONTENT SYSTEM
-====================================================== */
-
-const ContentSystem = {
-
-  supportedTypes: [
-
-    "text",
-    "image",
-    "video",
-    "audio",
-    "document",
-    "live",
-    "avatar",
-    "3d-model",
-    "interactive",
-    "ai-content"
-
-  ],
-
-  languages:
-    "global",
-
-  translationReady:
-    true,
-
-  addContent(data){
-
-    if(!data){
-      return false;
-    }
-
-    /*
-      Future connection point:
-
-      Text
-      Image
-      Video
-      Audio
-      Document
-      Translation
-      AI
-      Social
-      3D
-
-      will connect here.
-    */
-
-    return true;
-
-  }
-
-};
-
-
-/* ======================================================
-   FUTURE AVATAR SYSTEM
-====================================================== */
-
-const AvatarSystem = {
-
-  ready:
-    true,
-
-  models:
-    [],
-
-  addAvatar(avatar){
-
-    if(!avatar){
-      return false;
-    }
-
-    avatarRoot.add(
-      avatar
-    );
-
-    return true;
-
-  }
-
-};
-
-
-/* ======================================================
-   FUTURE AI SYSTEM
-====================================================== */
-
-const AIWorldSystem = {
-
-  ready:
-    true,
-
-  agents:
-    [],
-
-  register(agent){
-
-    if(!agent){
-      return false;
-    }
-
-    aiRoot.add(
-      agent
-    );
-
-    this.agents.push(
-      agent
-    );
-
-    return true;
-
-  }
-
-};
-
-
-/* ======================================================
-   FUTURE ASSET SYSTEM
-====================================================== */
-
-const AssetSystem = {
-
-  supported:
-
-    [
-      "glb",
-      "gltf",
-      "texture",
-      "audio",
-      "video"
-    ],
-
-  loaded:
-    new Map(),
-
-  register(
-    id,
-    asset
-  ){
-
-    if(
-      !id ||
-      !asset
-    ){
-
-      return false;
-
-    }
-
-    this.loaded.set(
-      id,
-      asset
-    );
-
-    return true;
-
-  }
-
-};
-
-
-/* ======================================================
-   INTERACTION
-====================================================== */
-
-const raycaster =
-  new THREE.Raycaster();
-
-const pointer =
-  new THREE.Vector2();
-
-let hoveredNode =
-  null;
-
-
-function updatePointer(
-  clientX,
-  clientY
-){
-
-  pointer.x =
-    (
-      clientX /
-      window.innerWidth
-    ) *
-    2 -
-    1;
-
-  pointer.y =
-    -(
-      clientY /
-      window.innerHeight
-    ) *
-    2 +
-    1;
-
+  pauseButton.addEventListener("click", () => setPaused(!paused));
+  resetButton.addEventListener("click", resetView);
 }
 
-
-function checkInteraction(){
-
-  raycaster.setFromCamera(
-    pointer,
-    camera
-  );
-
-  const objects =
-    nodes.flatMap(
-      node =>
-        node.children.filter(
-          child =>
-            child.isMesh
-        )
+async function loadSecurityFoundation() {
+  try {
+    await import("./zemivo-security.js");
+    securityLoaded = true;
+    statusElement.textContent = "Security foundation loaded · 3D world ready";
+  } catch (error) {
+    securityLoaded = false;
+    console.warn(
+      "[Zemivo World] Optional security module was not loaded. Check zemivo-security.js and its Firebase configuration.",
+      error
     );
+    statusElement.textContent = "3D world ready · Security module not confirmed";
+  }
+}
 
-  const hits =
-    raycaster.intersectObjects(
-      objects,
-      false
-    );
+async function startWorld() {
+  try {
+    createWorld();
+    bindEvents();
+    resetView();
 
-  if(hits.length){
+    await loadSecurityFoundation();
 
-    const object =
-      hits[0].object;
-
-    const parent =
-      object.parent;
-
-    if(
-      parent &&
-      parent.userData
-    ){
-
-      hoveredNode =
-        parent;
-
-      worldTitle.textContent =
-        parent.userData.label;
-
-      worldSubtitle.textContent =
-        "Zemivo Living World • Interactive";
-
-      return;
-
+    loadingElement.style.display = "none";
+    if (securityLoaded) {
+      statusElement.textContent = "Security foundation loaded · 3D world ready";
     }
 
+    animationFrame = requestAnimationFrame(animate);
+  } catch (error) {
+    console.error(error);
+    showError(
+      "The 3D world could not be initialized. Check the browser console, internet connection, WebGL support, and Three.js module access."
+    );
   }
-
-  hoveredNode =
-    null;
-
-  worldTitle.textContent =
-    "Zemivo Living World";
-
-  worldSubtitle.textContent =
-    "3D foundation • Future-ready";
-
 }
 
-
-/* ======================================================
-   POINTER EVENTS
-====================================================== */
-
-window.addEventListener(
-  "pointermove",
-  function(event){
-
-    updatePointer(
-      event.clientX,
-      event.clientY
-    );
-
-    checkInteraction();
-
-  },
-  {
-    passive:true
-  }
-);
-
-
-window.addEventListener(
-  "pointerdown",
-  function(){
-
-    if(
-      hoveredNode
-    ){
-
-      const label =
-        hoveredNode.userData.label;
-
-      worldSubtitle.textContent =
-        label +
-        " world selected";
-
-    }
-
-  },
-  {
-    passive:true
-  }
-);
-
-
-/* ======================================================
-   RESIZE
-====================================================== */
-
-window.addEventListener(
-  "resize",
-  function(){
-
-    camera.aspect =
-      window.innerWidth /
-      window.innerHeight;
-
-    camera.updateProjectionMatrix();
-
-    renderer.setSize(
-      window.innerWidth,
-      window.innerHeight
-    );
-
-    renderer.setPixelRatio(
-      Math.min(
-        window.devicePixelRatio || 1,
-        1.75
-      )
-    );
-
-  },
-  {
-    passive:true
-  }
-);
-
-
-/* ======================================================
-   PAUSE
-====================================================== */
-
-let paused =
-  reducedMotion;
-
-pauseButton.addEventListener(
-  "click",
-  function(){
-
-    paused =
-      !paused;
-
-    pauseButton.textContent =
-      paused
-      ?
-      "▶"
-      :
-      "⏸";
-
-  }
-);
-
-
-/* ======================================================
-   RESET CAMERA
-====================================================== */
-
-resetButton.addEventListener(
-  "click",
-  function(){
-
-    camera.position.set(
-      18,
-      13,
-      22
-    );
-
-    controls.target.set(
-      0,
-      2,
-      0
-    );
-
-    controls.update();
-
-  }
-);
-
-
-/* ======================================================
-   ANIMATION
-====================================================== */
-
-const clock =
-  new THREE.Clock();
-
-
-function animate(){
-
-  requestAnimationFrame(
-    animate
-  );
-
-  );
-
-  if(!paused){
-updateAvatarMovement();
-
-updateAvatarCamera();
-    controls.update();
-
-
-    /*
-      Core animation
-    */
-
-    core.rotation.y =
-      elapsed *
-      0.22;
-
-    core.rotation.x =
-      Math.sin(
-        elapsed * 0.35
-      ) *
-      0.12;
-
-
-    glow.scale.setScalar(
-
-      1 +
-
-      Math.sin(
-        elapsed * 1.2
-      ) *
-      0.035
-
-    );
-
-
-    /*
-      World node animation
-    */
-
-    nodes.forEach(
-      function(node,index){
-
-        const baseY =
-          2;
-
-        node.position.y =
-          baseY +
-
-          Math.sin(
-            elapsed *
-            0.7 +
-
-            index
-          ) *
-          0.12;
-
-        node.rotation.y =
-          elapsed *
-          (
-            0.12 +
-            index *
-            0.015
-          );
-
-      }
-    );
-
-
-    /*
-      Orbit animation
-    */
-
-    orbit1.rotation.z =
-      elapsed *
-      0.08;
-
-    orbit2.rotation.z =
-      -elapsed *
-      0.045;
-
-
-    /*
-      Stars
-
-    */
-
-    stars.rotation.y =
-      elapsed *
-      0.003;
-
-  }
-
-
-  renderer.render(
-    scene,
-    camera
-  );
-
-}
-
-
-/* ======================================================
-   START
-====================================================== */
-
-function startWorld(){
-
-  animate();
-
-  setTimeout(
-    function(){
-
-      loading.classList.add(
-        "hide"
-      );
-
-    },
-    700
-  );
-
-}
-
-
-/* ======================================================
-   ERROR
-====================================================== */
-
-function showError(
-  message
-){
-
-  errorText.textContent =
-    message;
-
-  errorBox.classList.add(
-    "show"
-  );
-
-  loading.classList.add(
-    "hide"
-  );
-
-}
-
-
-/* ======================================================
-   GLOBAL FUTURE API
-====================================================== */
-
-Object.defineProperty(
-  window,
-  "ZemivoLivingWorld3",
-  {
-
-    value:
-      Object.freeze({
-
-        ...ZemivoLivingWorld3,
-
-        ContentSystem,
-
-        AvatarSystem,
-
-        AIWorldSystem,
-
-        AssetSystem,
-
-        scene,
-
-        camera,
-
-        renderer,
-
-        worldRoot
-
-      }),
-
-    writable:
-      false,
-
-    configurable:
-      false,
-
-    enumerable:
-      false
-
-  }
-);
-
-
-/* ======================================================
-   START ENGINE
-====================================================== */
+window.ZemivoLivingWorld3 = Object.freeze({
+  start: startWorld,
+  pause: () => setPaused(true),
+  resume: () => setPaused(false),
+  resetView,
+  getStatus: () => ({
+    running: Boolean(renderer),
+    paused,
+    securityLoaded,
+    structure: WorldStructure
+  }),
+  getWorldObjects: () => worldObjects
+});
 
 startWorld();
 
+window.addEventListener("beforeunload", () => {
+  if (animationFrame) cancelAnimationFrame(animationFrame);
+  if (controls) controls.dispose();
+  if (renderer) renderer.dispose();
+});
 </script>
-
 </body>
-
 </html>
