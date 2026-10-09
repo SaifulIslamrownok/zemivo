@@ -111,6 +111,9 @@ let securityLoaded = false;
 let selectedNode = null;
 
 const clock = new THREE.Clock();
+const cameraTarget = new THREE.Vector3();
+const previousTarget = new THREE.Vector3();
+const cameraShift = new THREE.Vector3();
 const raycaster = new THREE.Raycaster();
 const pointer = new THREE.Vector2();
 const keys = new Set();
@@ -264,7 +267,7 @@ function createLighting() {
 
   const sun = new THREE.DirectionalLight(0xffffff, 2.4);
   sun.position.set(-12, 24, 14);
-  sun.castShadow = true;
+  sun.castShadow = window.innerWidth > 700;
   sun.shadow.mapSize.set(1024, 1024);
   sun.shadow.camera.left = -40;
   sun.shadow.camera.right = 40;
@@ -505,10 +508,11 @@ function createRoomFurniture(room) {
   addBox(room, "Chair Back", [0.38, 0.45, 0.08], [-0.45, 0.72, -0.22], dark);
   addBox(room, "Interactive Screen", [0.6, 0.38, 0.05], [0, 1.1, -0.6], screen, { castShadow: false });
 
-  const lamp = new THREE.PointLight(0x38bdf8, 0.8, 4);
-  lamp.position.set(0, 1.5, 0);
-  room.add(lamp);
-}
+if (window.innerWidth > 700) {
+    const lamp = new THREE.PointLight(0x38bdf8, 0.5, 3);
+    lamp.position.set(0, 1.5, 0);
+    room.add(lamp);
+  }
 
 function createWorldCore() {
   const coreMaterial = new THREE.MeshStandardMaterial({
@@ -741,7 +745,22 @@ function updateAvatarCamera() {
   camera.position.add(shift);
   controls.update();
 }
+function updateAvatarCamera() {
+  const avatar = worldObjects.avatar;
+  if (!avatar || !controls) return;
 
+  cameraTarget.set(
+    avatar.position.x,
+    avatar.position.y + 1.5,
+    avatar.position.z
+  );
+
+  previousTarget.copy(controls.target);
+  cameraShift.subVectors(cameraTarget, previousTarget);
+
+  controls.target.copy(cameraTarget);
+  camera.position.add(cameraShift);
+}
 function handleWorldSelection(event) {
   if (!renderer || !camera) return;
 
@@ -812,10 +831,10 @@ function animate(time) {
       worldObjects.stars.rotation.y += delta * 0.003;
     }
 
-    updateAvatarCamera();
-  } else {
-    controls.update();
+updateAvatarCamera();
   }
+
+  controls.update();
 
   renderer.render(scene, camera);
 }
