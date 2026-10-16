@@ -1,1078 +1,734 @@
-
 <!DOCTYPE html>
 <html lang="bn">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#4666ee">
-  <meta name="description" content="Create your Zemivo account and connect with the world.">
-  <title>Sign Up - Zemivo</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#4666ee">
+<meta name="description" content="Join Zemivo and connect with the world in your language.">
+<title>Sign Up | Zemivo</title>
 
-  <style>
-    :root {
-      --primary: #4666ee;
-      --primary-dark: #344ed0;
-      --text: #17213b;
-      --muted: #758098;
-      --border: #e2e8f3;
-      --surface: #ffffff;
-      --soft: #f1f5ff;
-      --success: #13794b;
-      --danger: #c62828;
-      --shadow: 0 18px 55px rgba(41, 65, 130, .13);
-    }
-
-    * {
-      box-sizing: border-box;
-    }
-
-    body {
-      margin: 0;
-      min-height: 100vh;
-      padding: 28px 16px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      color: var(--text);
-      font-family: system-ui, -apple-system, "Noto Sans Bengali",
-        "Nirmala UI", sans-serif;
-      background:
-        radial-gradient(ellipse at top left, #e9edff 0, transparent 48%),
-        linear-gradient(135deg, #f7f8ff, #eaf7ff);
-    }
-
-    .page {
-      width: 100%;
-      max-width: 650px;
-      margin: auto;
-    }
-
-    .brand {
-      text-align: center;
-      margin-bottom: 22px;
-    }
-
-    .brand-mark {
-      width: 58px;
-      height: 58px;
-      margin: 0 auto 10px;
-      display: grid;
-      place-items: center;
-      color: #fff;
-      font-size: 28px;
-      font-weight: 900;
-      border-radius: 19px;
-      background: linear-gradient(135deg, #536cf6, #3448c8);
-      box-shadow: 0 10px 25px rgba(70, 102, 238, .27);
-    }
-
-    .brand h1 {
-      margin: 0;
-      color: var(--primary);
-      font-size: 32px;
-      letter-spacing: -.7px;
-    }
-
-    .brand p {
-      margin: 5px 0 0;
-      color: var(--muted);
-      font-size: 14px;
-    }
-
-    .card {
-      padding: 34px 36px;
-      background: var(--surface);
-      border: 1px solid rgba(255,255,255,.85);
-      border-radius: 30px;
-      box-shadow: var(--shadow);
-    }
-
-    .card h2 {
-      margin: 0 0 8px;
-      font-size: 26px;
-      line-height: 1.4;
-    }
-
-    .subtitle {
-      margin: 0 0 25px;
-      color: var(--muted);
-      line-height: 1.7;
-      font-size: 15px;
-    }
-
-    .step-label {
-      margin-bottom: 23px;
-      padding: 12px 15px;
-      border-radius: 13px;
-      background: var(--soft);
-      color: var(--primary-dark);
-      font-size: 14px;
-      font-weight: 700;
-    }
-
-    .field {
-      margin-bottom: 21px;
-    }
-
-    label {
-      display: block;
-      margin-bottom: 9px;
-      font-size: 16px;
-      font-weight: 750;
-      line-height: 1.6;
-    }
-
-    input {
-      display: block;
-      width: 100%;
-      min-width: 0;
-      min-height: 58px;
-      padding: 15px 16px;
-      color: var(--text);
-      background: #fff;
-      border: 1.5px solid var(--border);
-      border-radius: 19px;
-      font: inherit;
-      font-size: 16px;
-      outline: none;
-      transition: border-color .2s, box-shadow .2s, background .2s;
-    }
-
-    input:focus {
-      border-color: var(--primary);
-      box-shadow: 0 0 0 4px rgba(70, 102, 238, .10);
-    }
-
-    input[aria-invalid="true"] {
-      border-color: var(--danger);
-      background: #fffafa;
-    }
-
-    .hint {
-      margin: 8px 2px 0;
-      color: var(--muted);
-      font-size: 13px;
-      line-height: 1.7;
-    }
-
-    .password-wrap {
-      position: relative;
-    }
-
-    .password-wrap input {
-      padding-right: 67px;
-    }
-
-    .toggle-password {
-      position: absolute;
-      top: 50%;
-      right: 9px;
-      transform: translateY(-50%);
-      min-width: 46px;
-      min-height: 44px;
-      display: grid;
-      place-items: center;
-      padding: 8px;
-      border: 0;
-      border-radius: 13px;
-      color: #5f6b87;
-      background: transparent;
-      cursor: pointer;
-      touch-action: manipulation;
-    }
-
-    .toggle-password:hover {
-      color: var(--primary);
-      background: var(--soft);
-    }
-
-    .toggle-password:focus-visible,
-    button:focus-visible,
-    a:focus-visible {
-      outline: 3px solid rgba(70, 102, 238, .45);
-      outline-offset: 3px;
-    }
-
-    .eye {
-      width: 24px;
-      height: 24px;
-      display: block;
-    }
-
-    .password-status {
-      min-height: 22px;
-      margin-top: 8px;
-      font-size: 13px;
-      line-height: 1.6;
-    }
-
-    .password-status.good {
-      color: var(--success);
-    }
-
-    .password-status.bad {
-      color: var(--danger);
-    }
-
-    .primary-btn,
-    .secondary-btn {
-      width: 100%;
-      min-height: 60px;
-      padding: 15px 18px;
-      border-radius: 19px;
-      font: inherit;
-      font-size: 17px;
-      font-weight: 800;
-      cursor: pointer;
-      touch-action: manipulation;
-      transition: transform .15s, opacity .15s;
-    }
-
-    .primary-btn {
-      color: #fff;
-      border: 0;
-      background: linear-gradient(110deg, #4664ed, #5274f5);
-      box-shadow: 0 10px 24px rgba(70, 102, 238, .20);
-    }
-
-    .primary-btn:hover:not(:disabled) {
-      transform: translateY(-1px);
-    }
-
-    .secondary-btn {
-      color: var(--primary-dark);
-      border: 1px solid var(--border);
-      background: #fff;
-    }
-
-    button:disabled {
-      opacity: .65;
-      cursor: wait;
-    }
-
-    .security-note {
-      margin-top: 25px;
-      padding: 17px;
-      color: #50618b;
-      background: #f1f5ff;
-      border: 1px solid #e0e8ff;
-      border-radius: 19px;
-      font-size: 14px;
-      line-height: 1.85;
-    }
-
-    .notice {
-      display: none;
-      margin: 0 0 20px;
-      padding: 13px 15px;
-      border-radius: 14px;
-      font-size: 14px;
-      line-height: 1.8;
-      overflow-wrap: anywhere;
-    }
-
-    .notice.show {
-      display: block;
-    }
-
-    .notice.error {
-      color: #922323;
-      background: #fff0f0;
-      border: 1px solid #ffd4d4;
-    }
-
-    .notice.success {
-      color: #12643d;
-      background: #edfbf3;
-      border: 1px solid #c8f0d8;
-    }
-
-    .notice.info {
-      color: #254a9b;
-      background: #eff4ff;
-      border: 1px solid #d7e4ff;
-    }
-
-    .links {
-      margin-top: 26px;
-      text-align: center;
-      line-height: 2;
-    }
-
-    .links p {
-      margin: 9px 0;
-      color: var(--muted);
-    }
-
-    a {
-      color: var(--primary);
-      font-weight: 750;
-      text-decoration: none;
-    }
-
-    a:hover {
-      text-decoration: underline;
-    }
-
-    .footer {
-      margin: 22px 0 0;
-      color: #929bb0;
-      text-align: center;
-      font-size: 12px;
-      line-height: 1.9;
-    }
-
-    .recaptcha-area {
-      margin: 16px 0;
-      overflow-x: auto;
-    }
-
-    .hidden {
-      display: none !important;
-    }
-
-    @media (max-width: 520px) {
-      body {
-        padding: 17px 12px;
-        align-items: flex-start;
-      }
-
-      .brand {
-        margin: 5px 0 17px;
-      }
-
-      .brand-mark {
-        width: 51px;
-        height: 51px;
-        border-radius: 17px;
-      }
-
-      .brand h1 {
-        font-size: 29px;
-      }
-
-      .card {
-        padding: 25px 20px;
-        border-radius: 25px;
-      }
-
-      .card h2 {
-        font-size: 23px;
-      }
-
-      input {
-        min-height: 56px;
-        border-radius: 16px;
-      }
-
-      .primary-btn,
-      .secondary-btn {
-        min-height: 58px;
-        border-radius: 16px;
-      }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      *,
-      *::before,
-      *::after {
-        scroll-behavior: auto !important;
-        transition: none !important;
-      }
-    }
-  </style>
+<style>
+:root{
+  --primary:#4666ee;
+  --deep:#3047c8;
+  --ink:#17213b;
+  --muted:#72809a;
+  --line:#e3e9f5;
+  --surface:#fff;
+  --soft:#f2f5ff;
+  --green:#13794b;
+  --red:#b42332;
+  --shadow:0 22px 65px rgba(43,63,135,.16);
+}
+*{box-sizing:border-box}
+body{
+  margin:0;min-height:100vh;padding:22px 14px;
+  font-family:system-ui,-apple-system,"Noto Sans Bengali",
+  "Nirmala UI",sans-serif;color:var(--ink);
+  background:
+    radial-gradient(ellipse at 10% 5%,#dce5ff 0,transparent 42%),
+    radial-gradient(ellipse at 90% 90%,#d7f5ff 0,transparent 40%),
+    linear-gradient(135deg,#f7f8ff,#eef7ff);
+}
+button,input,select{font:inherit}
+button,a,select{touch-action:manipulation}
+.page{width:100%;max-width:760px;margin:auto}
+.brand{text-align:center;margin:8px 0 22px}
+.brand-mark{
+  width:62px;height:62px;margin:auto auto 9px;
+  display:grid;place-items:center;color:white;font-size:30px;
+  font-weight:900;border-radius:21px;
+  background:linear-gradient(145deg,#7188ff,#3045c5);
+  box-shadow:0 12px 24px #4666ee55, inset 0 2px 3px #ffffff77;
+}
+.brand h1{margin:0;color:var(--primary);font-size:34px;letter-spacing:-1px}
+.brand p{margin:5px 0;color:var(--muted);font-size:14px}
+.card{
+  padding:clamp(20px,5vw,38px);
+  background:rgba(255,255,255,.96);
+  border:1px solid #ffffff;border-radius:30px;
+  box-shadow:var(--shadow);
+}
+h2{margin:0 0 7px;font-size:clamp(23px,4vw,29px)}
+.subtitle{margin:0 0 23px;color:var(--muted);line-height:1.8}
+.section-title{font-weight:800;margin:23px 0 13px}
+.first-section{margin-top:0}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.field{min-width:0;margin-bottom:17px}
+label{display:block;margin-bottom:8px;font-weight:750;line-height:1.6}
+input,select{
+  width:100%;min-width:0;min-height:54px;padding:13px 14px;
+  color:var(--ink);background:#fff;border:1.5px solid var(--line);
+  border-radius:15px;outline:none;
+}
+input:focus,select:focus{
+  border-color:var(--primary);
+  box-shadow:0 0 0 4px #4666ee18;
+}
+input[aria-invalid="true"]{border-color:var(--red)}
+.hint{margin:7px 2px 0;color:var(--muted);font-size:12px;line-height:1.7}
+.password-wrap{position:relative}
+.password-wrap input{padding-right:58px}
+.toggle{
+  position:absolute;right:5px;top:5px;min-width:44px;min-height:44px;
+  border:0;border-radius:12px;background:#f1f4ff;cursor:pointer;
+}
+.password-status{font-size:12px;margin-top:6px;line-height:1.7}
+.good{color:var(--green)}.bad{color:var(--red)}
+.step{
+  padding:13px 15px;margin:0 0 23px;border-radius:15px;
+  color:var(--deep);background:linear-gradient(110deg,#eef1ff,#f0faff);
+  font-size:14px;font-weight:800;
+}
+.notice{
+  display:none;padding:13px 15px;margin:0 0 18px;border-radius:14px;
+  font-size:14px;line-height:1.8;overflow-wrap:anywhere;
+}
+.notice.show{display:block}
+.notice.error{color:#922323;background:#fff0f0;border:1px solid #ffd4d4}
+.notice.success{color:#12643d;background:#edfbf3;border:1px solid #c8f0d8}
+.notice.info{color:#254a9b;background:#eff4ff;border:1px solid #d7e4ff}
+.btn{
+  display:block;width:100%;min-height:57px;padding:14px 18px;
+  border-radius:16px;font-weight:800;cursor:pointer;
+  transition:transform .18s,box-shadow .18s;
+}
+.btn-primary{
+  color:white;border:0;
+  background:linear-gradient(110deg,#4664ed,#6b80ff);
+  box-shadow:0 9px 23px #4666ee38;
+}
+.btn-primary:hover:not(:disabled){transform:translateY(-2px);box-shadow:0 13px 28px #4666ee44}
+.btn-secondary{background:white;color:var(--deep);border:1px solid var(--line);margin-top:12px}
+button:disabled{opacity:.6;cursor:wait}
+.security{
+  padding:15px;margin-top:20px;border-radius:16px;
+  background:#f2f5ff;border:1px solid #e0e8ff;
+  color:#50618b;font-size:13px;line-height:1.9;
+}
+.links{text-align:center;line-height:2;margin-top:22px;color:var(--muted);font-size:14px}
+a{color:var(--primary);font-weight:750;text-decoration:none}
+a:hover{text-decoration:underline}
+.footer{text-align:center;color:#8994aa;font-size:12px;line-height:1.8;margin:20px 0}
+.hidden{display:none!important}
+.recaptcha-area{overflow-x:auto;margin:14px 0}
+.check-row{display:flex;align-items:flex-start;gap:10px;margin:18px 0;line-height:1.8;font-size:14px}
+.check-row input{width:20px;min-width:20px;min-height:20px;margin-top:4px}
+@media(max-width:560px){
+  body{padding:12px 10px}
+  .brand{margin:5px 0 16px}
+  .brand-mark{width:52px;height:52px;border-radius:17px}
+  .brand h1{font-size:29px}
+  .card{padding:22px 17px;border-radius:24px}
+  .grid{grid-template-columns:1fr;gap:0}
+  input,select{min-height:53px}
+}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{transition:none!important;scroll-behavior:auto!important}
+}
+</style>
 </head>
 
 <body>
-  <main class="page">
-    <header class="brand">
-      <div class="brand-mark" aria-hidden="true">Z</div>
-      <h1>Zemivo</h1>
-      <p>Connect with the world, in your language.</p>
-    </header>
+<main class="page">
+  <header class="brand">
+    <div class="brand-mark" aria-hidden="true">Z</div>
+    <h1>Zemivo</h1>
+    <p id="brand-tagline">Connect with the world, in your language.</p>
+  </header>
 
-    <section class="card" aria-labelledby="page-title">
-      <h2 id="page-title">নতুন অ্যাকাউন্ট তৈরি করুন</h2>
-      <p class="subtitle">
-        Zemivo-তে যোগ দিন এবং বিশ্বের মানুষের সঙ্গে যুক্ত হোন।
-      </p>
+  <section class="card">
+    <h2 id="page-title">নতুন অ্যাকাউন্ট তৈরি করুন</h2>
+    <p class="subtitle" id="subtitle">আপনার দেশ ও ভাষা নির্বাচন করে Zemivo-তে যোগ দিন।</p>
 
-      <div id="step-label" class="step-label">
-        ধাপ ১ / ২ — আপনার তথ্য দিন
-      </div>
+    <div id="step-label" class="step">ধাপ ১ / ২ — দেশ, ভাষা ও অ্যাকাউন্টের তথ্য</div>
+    <div id="notice" class="notice" role="status" aria-live="polite"></div>
 
-      <div id="notice" class="notice" role="status" aria-live="polite"></div>
+    <form id="signup-form" novalidate>
+      <section id="account-step">
+        <div class="section-title first-section">🌍 প্রথমে দেশ ও ভাষা নির্বাচন করুন</div>
 
-      <form id="signup-form" novalidate>
-        <section id="account-step">
+        <div class="grid">
           <div class="field">
-            <label for="fullName">আপনার পুরো নাম</label>
-            <input id="fullName" name="fullName"
-              type="text" autocomplete="name"
-              maxlength="80" required
-              placeholder="আপনার নাম লিখুন">
-          </div>
-
-          <div class="field">
-            <label for="email">ইমেইল ঠিকানা</label>
-            <input id="email" name="email"
-              type="email" autocomplete="email"
-              maxlength="254" required
-              placeholder="name@example.com">
-          </div>
-
-          <div class="field">
-            <label for="birthDate">জন্মতারিখ</label>
-            <input id="birthDate" name="birthDate"
-              type="date" autocomplete="bday"
-              required>
-            <p class="hint">অ্যাকাউন্ট তৈরির জন্য আপনার বয়স কমপক্ষে ১৮ বছর হতে হবে।</p>
-          </div>
-
-          <div class="field">
-            <label for="phone">ফোন নম্বর</label>
-            <input id="phone" name="phone"
-              type="tel" autocomplete="tel"
-              inputmode="tel" maxlength="16"
-              required placeholder="+8801XXXXXXXXX">
-            <p class="hint">দেশের কোডসহ নম্বর লিখুন, যেমন +8801XXXXXXXXX</p>
+            <label for="country">আপনার দেশ / Country</label>
+            <select id="country" name="country" required>
+              <option value="BD" data-dial="+880" selected>🇧🇩 Bangladesh (+880)</option>
+              <option value="US" data-dial="+1">🇺🇸 United States (+1)</option>
+              <option value="GB" data-dial="+44">🇬🇧 United Kingdom (+44)</option>
+              <option value="IN" data-dial="+91">🇮🇳 India (+91)</option>
+              <option value="PK" data-dial="+92">🇵🇰 Pakistan (+92)</option>
+              <option value="CN" data-dial="+86">🇨🇳 China (+86)</option>
+              <option value="JP" data-dial="+81">🇯🇵 Japan (+81)</option>
+              <option value="KR" data-dial="+82">🇰🇷 South Korea (+82)</option>
+              <option value="SA" data-dial="+966">🇸🇦 Saudi Arabia (+966)</option>
+              <option value="AE" data-dial="+971">🇦🇪 United Arab Emirates (+971)</option>
+              <option value="MY" data-dial="+60">🇲🇾 Malaysia (+60)</option>
+              <option value="SG" data-dial="+65">🇸🇬 Singapore (+65)</option>
+              <option value="ID" data-dial="+62">🇮🇩 Indonesia (+62)</option>
+              <option value="TR" data-dial="+90">🇹🇷 Türkiye (+90)</option>
+              <option value="DE" data-dial="+49">🇩🇪 Germany (+49)</option>
+              <option value="FR" data-dial="+33">🇫🇷 France (+33)</option>
+              <option value="IT" data-dial="+39">🇮🇹 Italy (+39)</option>
+              <option value="ES" data-dial="+34">🇪🇸 Spain (+34)</option>
+              <option value="CA" data-dial="+1">🇨🇦 Canada (+1)</option>
+              <option value="AU" data-dial="+61">🇦🇺 Australia (+61)</option>
+              <option value="BR" data-dial="+55">🇧🇷 Brazil (+55)</option>
+              <option value="NG" data-dial="+234">🇳🇬 Nigeria (+234)</option>
+              <option value="ZA" data-dial="+27">🇿🇦 South Africa (+27)</option>
+              <option value="OTHER" data-dial="">🌐 Other country / দেশ খুঁজুন</option>
+            </select>
+            <p class="hint">দেশ অনুযায়ী ফোন নম্বরের কোড সাজেস্ট করা হবে।</p>
           </div>
 
           <div class="field">
-            <label for="password">পাসওয়ার্ড</label>
-            <div class="password-wrap">
-              <input id="password" name="password"
-                type="password" autocomplete="new-password"
-                minlength="12" maxlength="128"
-                required placeholder="শক্তিশালী পাসওয়ার্ড দিন"
-                aria-describedby="password-hint password-status">
-              <button class="toggle-password" type="button"
-                data-target="password" aria-label="পাসওয়ার্ড দেখান"
-                aria-pressed="false">
-                <svg class="eye" viewBox="0 0 24 24"
-                  fill="none" stroke="currentColor"
-                  stroke-width="2" stroke-linecap="round"
-                  stroke-linejoin="round" aria-hidden="true">
-                  <path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12Z"/>
-                  <circle cx="12" cy="12" r="3"/>
-                </svg>
-              </button>
-            </div>
-            <p class="hint" id="password-hint">
-              কমপক্ষে ১২ অক্ষর; বড় হাতের ও ছোট হাতের অক্ষর,
-              সংখ্যা এবং একটি চিহ্ন রাখুন।
-            </p>
-            <div id="password-status" class="password-status"
-              aria-live="polite"></div>
+            <label for="language">আপনার ভাষা / Language</label>
+            <select id="language" name="language" required>
+              <option value="bn" selected>বাংলা — Bengali</option>
+              <option value="en">English</option>
+              <option value="hi">हिन्दी — Hindi</option>
+              <option value="ur">اردو — Urdu</option>
+              <option value="zh">中文 — Chinese</option>
+              <option value="ja">日本語 — Japanese</option>
+              <option value="ko">한국어 — Korean</option>
+              <option value="ar">العربية — Arabic</option>
+              <option value="ms">Bahasa Melayu</option>
+              <option value="id">Bahasa Indonesia</option>
+              <option value="tr">Türkçe — Turkish</option>
+              <option value="fr">Français — French</option>
+              <option value="de">Deutsch — German</option>
+              <option value="es">Español — Spanish</option>
+              <option value="it">Italiano — Italian</option>
+              <option value="pt">Português — Portuguese</option>
+              <option value="ru">Русский — Russian</option>
+            </select>
+            <p class="hint">এটি আপনার পছন্দের ভাষা। স্বয়ংক্রিয় অনুবাদের জন্য আলাদা ব্যবস্থা প্রয়োজন।</p>
           </div>
+        </div>
 
-          <div class="field">
-            <label for="confirmPassword">পাসওয়ার্ড নিশ্চিত করুন</label>
-            <div class="password-wrap">
-              <input id="confirmPassword" name="confirmPassword"
-                type="password" autocomplete="new-password"
-                minlength="12" maxlength="128"
-                required placeholder="একই পাসওয়ার্ড আবার লিখুন"
-                aria-describedby="confirm-status">
-              <button class="toggle-password" type="button"
-                data-target="confirmPassword"
-                aria-label="নিশ্চিতকরণ পাসওয়ার্ড দেখান"
-                aria-pressed="false">
-                <svg class="eye" viewBox="0 0 24 24"
-                  fill="none" stroke="currentColor"
-                  stroke-width="2" stroke-linecap="round"
-                  stroke-linejoin="round" aria-hidden="true">
-                  <path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12Z"/>
-                  <circle cx="12" cy="12" r="3"/>
-                </svg>
-              </button>
-            </div>
-            <div id="confirm-status" class="password-status"
-              aria-live="polite"></div>
+        <div class="section-title">👤 আপনার অ্যাকাউন্টের তথ্য</div>
+
+        <div class="field">
+          <label for="fullName">আপনার পুরো নাম / Full name</label>
+          <input id="fullName" name="fullName" type="text"
+            autocomplete="name" maxlength="80" required
+            placeholder="আপনার নাম লিখুন">
+        </div>
+
+        <div class="field">
+          <label for="email">ইমেইল ঠিকানা / Email</label>
+          <input id="email" name="email" type="email"
+            autocomplete="email" maxlength="254" required
+            placeholder="name@example.com">
+        </div>
+
+        <div class="field">
+          <label for="birthDate">জন্মতারিখ / Date of birth</label>
+          <input id="birthDate" name="birthDate" type="date"
+            autocomplete="bday" required>
+          <p class="hint">এই ফর্মে ন্যূনতম ১৮ বছর বয়স প্রয়োজন।</p>
+        </div>
+
+        <div class="field">
+          <label for="phone">ফোন নম্বর / Phone number</label>
+          <input id="phone" name="phone" type="tel"
+            autocomplete="tel" inputmode="tel" maxlength="20"
+            required placeholder="+8801XXXXXXXXX">
+          <p id="phone-hint" class="hint">দেশের কোডসহ আন্তর্জাতিক নম্বর লিখুন।</p>
+        </div>
+
+        <div class="field">
+          <label for="password">পাসওয়ার্ড / Password</label>
+          <div class="password-wrap">
+            <input id="password" name="password" type="password"
+              autocomplete="new-password" minlength="12" maxlength="128"
+              required placeholder="শক্তিশালী পাসওয়ার্ড দিন">
+            <button class="toggle" type="button" data-target="password"
+              aria-label="পাসওয়ার্ড দেখান" aria-pressed="false">👁️</button>
           </div>
+          <p class="hint">কমপক্ষে ১২ অক্ষর; বড় হাতের, ছোট হাতের, সংখ্যা ও চিহ্ন ব্যবহার করুন।</p>
+          <div id="password-status" class="password-status" aria-live="polite"></div>
+        </div>
 
-          <button id="create-account-btn" class="primary-btn" type="submit">
-            অ্যাকাউন্ট তৈরি করুন
-          </button>
-        </section>
-
-        <section id="phone-step" class="hidden">
-          <p>
-            আপনার ফোন নম্বরে SMS যাচাইকরণ কোড পাঠানোর চেষ্টা করা হবে।
-            কোডটি পাওয়ার পর নিচে লিখুন।
-          </p>
-
-          <div class="recaptcha-area">
-            <div id="recaptcha-container"></div>
+        <div class="field">
+          <label for="confirmPassword">পাসওয়ার্ড নিশ্চিত করুন</label>
+          <div class="password-wrap">
+            <input id="confirmPassword" name="confirmPassword" type="password"
+              autocomplete="new-password" minlength="12" maxlength="128"
+              required placeholder="একই পাসওয়ার্ড আবার লিখুন">
+            <button class="toggle" type="button" data-target="confirmPassword"
+              aria-label="নিশ্চিতকরণ পাসওয়ার্ড দেখান" aria-pressed="false">👁️</button>
           </div>
+          <div id="confirm-status" class="password-status" aria-live="polite"></div>
+        </div>
 
-          <button id="send-otp-btn" class="primary-btn" type="button">
-            ফোনে OTP পাঠান
-          </button>
+        <label class="check-row">
+          <input id="terms" type="checkbox" required>
+          <span>আমি Zemivo-এর <a href="terms.html">শর্তাবলি</a> ও <a href="privacy.html">গোপনীয়তা নীতি</a> পড়েছি এবং সম্মত।</span>
+        </label>
 
-          <div class="field" style="margin-top:22px">
-            <label for="otp">SMS যাচাইকরণ কোড</label>
-            <input id="otp" name="otp"
-              type="text" inputmode="numeric"
-              autocomplete="one-time-code"
-              maxlength="6" pattern="[0-9]{6}"
-              placeholder="৬ সংখ্যার OTP লিখুন">
-          </div>
+        <button id="create-account-btn" class="btn btn-primary" type="submit">
+          অ্যাকাউন্ট তৈরি করুন →
+        </button>
+      </section>
 
-          <button id="verify-otp-btn" class="primary-btn" type="button">
-            OTP যাচাই করে অ্যাকাউন্ট সম্পন্ন করুন
-          </button>
+      <section id="phone-step" class="hidden">
+        <div class="section-title">📱 ফোন নম্বর যাচাই করুন</div>
+        <p class="subtitle">
+          আপনার অ্যাকাউন্ট তৈরি হয়েছে। ফোন যাচাই সম্পন্ন করতে SMS কোডের ধাপ অনুসরণ করুন।
+        </p>
 
-          <button id="retry-save-btn"
-            class="primary-btn hidden" type="button"
-            style="margin-top:12px">
-            অ্যাকাউন্টের তথ্য আবার সংরক্ষণ করুন
-          </button>
+        <div class="recaptcha-area">
+          <div id="recaptcha-container"></div>
+        </div>
 
-          <button id="back-btn" class="secondary-btn"
-            type="button" style="margin-top:12px">
-            আগের ধাপে ফিরুন
-          </button>
-        </section>
-      </form>
+        <button id="send-otp-btn" class="btn btn-primary" type="button">ফোনে OTP পাঠান</button>
 
-      <div class="security-note">
-        🔒 আপনার পাসওয়ার্ড Firebase Authentication-এর মাধ্যমে
-        ব্যবস্থাপিত হয়। পাসওয়ার্ড বা OTP কাউকে দেবেন না।
-      </div>
+        <div class="field" style="margin-top:20px">
+          <label for="otp">SMS যাচাইকরণ কোড</label>
+          <input id="otp" type="text" inputmode="numeric"
+            autocomplete="one-time-code" maxlength="6"
+            placeholder="৬ সংখ্যার OTP লিখুন">
+        </div>
 
-      <nav class="links" aria-label="অ্যাকাউন্ট নেভিগেশন">
-        <p><a href="index.html">← Zemivo-তে ফিরে যান</a></p>
-        <p>আগে থেকেই অ্যাকাউন্ট আছে? <a href="login.html">লগইন</a></p>
-      </nav>
-    </section>
+        <button id="verify-otp-btn" class="btn btn-primary" type="button">
+          OTP যাচাই করে অ্যাকাউন্ট সম্পন্ন করুন
+        </button>
 
-    <footer class="footer">
-      বৈশ্বিক ব্যবহারের উপযোগী • Responsive ডিজাইন • গোপনীয়তাকে গুরুত্ব দিয়ে
-    </footer>
-  </main>
+        <button id="retry-save-btn" class="btn btn-primary hidden"
+          type="button" style="margin-top:12px">
+          অ্যাকাউন্টের তথ্য আবার সংরক্ষণ করুন
+        </button>
 
-  <script type="module">
-    import { auth, db } from "./zemivo-security.js";
+        <button id="back-btn" class="btn btn-secondary" type="button">
+          আগের ধাপে ফিরুন
+        </button>
+      </section>
+    </form>
 
-    import {
-      createUserWithEmailAndPassword,
-      updateProfile,
-      sendEmailVerification,
-      RecaptchaVerifier,
-      linkWithPhoneNumber,
-      signOut
-    } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
+    <div class="security">
+      🔒 আপনার পাসওয়ার্ড সরাসরি Firestore-এ রাখা হয় না। Firebase Authentication
+      সেটি পরিচালনা করে। পাসওয়ার্ড বা OTP কারও সঙ্গে শেয়ার করবেন না।
+    </div>
 
-    import {
-      doc,
-      writeBatch,
-      serverTimestamp
-    } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
+    <nav class="links" aria-label="অ্যাকাউন্ট নেভিগেশন">
+      <p><a href="index.html">← Zemivo-তে ফিরে যান</a></p>
+      <p>আগে থেকেই অ্যাকাউন্ট আছে? <a href="login.html">লগইন করুন</a></p>
+    </nav>
+  </section>
 
-    const $ = (id) => document.getElementById(id);
+  <footer class="footer">
+    Global-ready architecture • Responsive design • Privacy-minded experience
+  </footer>
+</main>
 
-    const form = $("signup-form");
-    const accountStep = $("account-step");
-    const phoneStep = $("phone-step");
-    const notice = $("notice");
+<script type="module">
+import { auth, db } from "./zemivo-security.js";
 
-    const fullNameInput = $("fullName");
-    const emailInput = $("email");
-    const birthDateInput = $("birthDate");
-    const phoneInput = $("phone");
-    const passwordInput = $("password");
-    const confirmInput = $("confirmPassword");
-    const otpInput = $("otp");
+import {
+  createUserWithEmailAndPassword,
+  updateProfile,
+  sendEmailVerification,
+  RecaptchaVerifier,
+  linkWithPhoneNumber,
+  signOut
+} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
 
-    const createBtn = $("create-account-btn");
-    const sendOtpBtn = $("send-otp-btn");
-    const verifyBtn = $("verify-otp-btn");
-    const retrySaveBtn = $("retry-save-btn");
-    const backBtn = $("back-btn");
+import {
+  doc, writeBatch, serverTimestamp
+} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
 
-    let recaptchaVerifier = null;
-    let confirmationResult = null;
-    let accountCreated = false;
-    let phoneVerified = false;
-    let profileSaved = false;
-    let emailVerificationSent = false;
-    let isBusy = false;
+const $ = id => document.getElementById(id);
+const form = $("signup-form");
+const notice = $("notice");
+const country = $("country");
+const language = $("language");
+const phoneInput = $("phone");
+const passwordInput = $("password");
+const confirmInput = $("confirmPassword");
+const createBtn = $("create-account-btn");
+const sendOtpBtn = $("send-otp-btn");
+const verifyBtn = $("verify-otp-btn");
+const retrySaveBtn = $("retry-save-btn");
 
-    let accountDetails = null;
+let recaptchaVerifier = null;
+let confirmationResult = null;
+let accountDetails = null;
+let accountCreated = false;
+let phoneVerified = false;
+let profileSaved = false;
+let isBusy = false;
 
-    function showNotice(message, type = "info") {
-      notice.textContent = message;
-      notice.className = `notice show ${type}`;
+const dialCodes = {
+  BD:"+880", US:"+1", GB:"+44", IN:"+91", PK:"+92",
+  CN:"+86", JP:"+81", KR:"+82", SA:"+966", AE:"+971",
+  MY:"+60", SG:"+65", ID:"+62", TR:"+90", DE:"+49",
+  FR:"+33", IT:"+39", ES:"+34", CA:"+1", AU:"+61",
+  BR:"+55", NG:"+234", ZA:"+27"
+};
+
+const languageByCountry = {
+  BD:"bn", IN:"hi", PK:"ur", CN:"zh", JP:"ja",
+  KR:"ko", SA:"ar", AE:"ar", MY:"ms", ID:"id",
+  TR:"tr", DE:"de", FR:"fr", IT:"it", ES:"es",
+  BR:"pt", US:"en", GB:"en", CA:"en", AU:"en"
+};
+
+function showNotice(message, type="info") {
+  notice.textContent = message;
+  notice.className = `notice show ${type}`;
+}
+function clearNotice() {
+  notice.textContent = "";
+  notice.className = "notice";
+}
+function setBusy(value, button, label) {
+  isBusy = value;
+  if (!button) return;
+  if (value) {
+    button.dataset.originalText ||= button.textContent;
+    button.disabled = true;
+    button.textContent = label || "অপেক্ষা করুন...";
+  } else {
+    button.disabled = false;
+    button.textContent = button.dataset.originalText || button.textContent;
+    delete button.dataset.originalText;
+  }
+}
+function validPassword(value) {
+  return value.length >= 12 && value.length <= 128 &&
+    /[A-Z]/.test(value) && /[a-z]/.test(value) &&
+    /[0-9]/.test(value) && /[^A-Za-z0-9]/.test(value);
+}
+function updatePasswordStatus() {
+  const p = passwordInput.value;
+  const c = confirmInput.value;
+  $("password-status").textContent = !p ? "" :
+    validPassword(p) ? "✓ পাসওয়ার্ডের শর্ত পূরণ হয়েছে।" :
+    "১২–১২৮ অক্ষর, বড়/ছোট হাতের অক্ষর, সংখ্যা ও চিহ্ন দিন।";
+  $("password-status").className = "password-status " +
+    (!p ? "" : validPassword(p) ? "good" : "bad");
+  $("confirm-status").textContent = !c ? "" :
+    p === c ? "✓ দুই পাসওয়ার্ড মিলেছে।" : "✗ পাসওয়ার্ড মিলছে না।";
+  $("confirm-status").className = "password-status " +
+    (!c ? "" : p === c ? "good" : "bad");
+}
+passwordInput.addEventListener("input", updatePasswordStatus);
+confirmInput.addEventListener("input", updatePasswordStatus);
+
+document.querySelectorAll(".toggle").forEach(button => {
+  button.addEventListener("click", () => {
+    const input = $(button.dataset.target);
+    const show = input.type === "password";
+    input.type = show ? "text" : "password";
+    button.textContent = show ? "🙈" : "👁️";
+    button.setAttribute("aria-pressed", String(show));
+    button.setAttribute("aria-label", show ? "পাসওয়ার্ড লুকান" : "পাসওয়ার্ড দেখান");
+  });
+});
+
+country.addEventListener("change", () => {
+  const dial = dialCodes[country.value] || "";
+  $("phone-hint").textContent = dial
+    ? `নির্বাচিত দেশের কোড ${dial}। নম্বরের শুরুতে এই কোড ব্যবহার করুন।`
+    : "দেশের কোডসহ আন্তর্জাতিক নম্বর লিখুন।";
+
+  if (dial && !phoneInput.value.trim()) phoneInput.value = dial;
+
+  if (languageByCountry[country.value]) {
+    language.value = languageByCountry[country.value];
+  }
+});
+
+$("birthDate").max = new Date().toISOString().slice(0,10);
+
+function calculateAge(value) {
+  if (!value) return -1;
+  const dob = new Date(`${value}T00:00:00`);
+  if (Number.isNaN(dob.getTime())) return -1;
+  const today = new Date();
+  let age = today.getFullYear() - dob.getFullYear();
+  if (today.getMonth() < dob.getMonth() ||
+    (today.getMonth() === dob.getMonth() && today.getDate() < dob.getDate())) age--;
+  return age;
+}
+
+function validateForm() {
+  const name = $("fullName").value.trim();
+  const email = $("email").value.trim();
+  const birthDate = $("birthDate").value;
+  const phone = phoneInput.value.trim();
+
+  if (name.length < 2) return fail("সঠিক নাম লিখুন।", $("fullName"));
+  if (!email || !$("email").validity.valid) return fail("সঠিক ইমেইল ঠিকানা লিখুন।", $("email"));
+
+  const age = calculateAge(birthDate);
+  if (age < 18 || age > 120) return fail("এই ফর্মে বয়স ১৮ থেকে ১২০ বছরের মধ্যে হতে হবে।", $("birthDate"));
+
+  if (!/^\+[1-9]\d{7,14}$/.test(phone))
+    return fail("দেশের কোডসহ সঠিক আন্তর্জাতিক ফোন নম্বর লিখুন।", phoneInput);
+
+  if (!validPassword(passwordInput.value))
+    return fail("পাসওয়ার্ডের সব শর্ত পূরণ করুন।", passwordInput);
+
+  if (passwordInput.value !== confirmInput.value)
+    return fail("দুই পাসওয়ার্ড মিলছে না।", confirmInput);
+
+  if (!$("terms").checked)
+    return fail("অ্যাকাউন্ট তৈরি করতে শর্তাবলিতে সম্মতি দিন।", $("terms"));
+
+  return true;
+}
+function fail(message, field) {
+  showNotice(message, "error");
+  field.focus();
+  return false;
+}
+
+function friendlyError(error) {
+  const messages = {
+    "auth/email-already-in-use":"এই ইমেইলে অ্যাকাউন্ট আছে। লগইন করুন অথবা অন্য ইমেইল ব্যবহার করুন।",
+    "auth/invalid-email":"ইমেইল ঠিকানাটি সঠিক নয়।",
+    "auth/weak-password":"পাসওয়ার্ড আরও শক্তিশালী করুন।",
+    "auth/invalid-phone-number":"আন্তর্জাতিক ফরম্যাটে সঠিক ফোন নম্বর লিখুন।",
+    "auth/too-many-requests":"অনেকবার চেষ্টা হয়েছে। কিছুক্ষণ পর আবার চেষ্টা করুন।",
+    "auth/quota-exceeded":"SMS কোটা শেষ হয়েছে। পরে আবার চেষ্টা করুন।",
+    "auth/captcha-check-failed":"reCAPTCHA যাচাই হয়নি। আবার চেষ্টা করুন।",
+    "auth/network-request-failed":"ইন্টারনেট সংযোগ পরীক্ষা করুন।",
+    "auth/invalid-verification-code":"OTP সঠিক নয়। আবার লিখুন।",
+    "auth/code-expired":"OTP-এর মেয়াদ শেষ। নতুন OTP নিন।",
+    "auth/credential-already-in-use":"এই ফোন নম্বর অন্য অ্যাকাউন্টে যুক্ত আছে।",
+    "auth/operation-not-allowed":"Firebase Console-এ প্রয়োজনীয় Authentication provider চালু নেই।",
+    "auth/unauthorized-domain":"Firebase Authentication-এ এই ওয়েবসাইটের ডোমেইন অনুমোদিত নয়।"
+  };
+  return messages[error?.code] ||
+    "কাজটি সম্পন্ন হয়নি। Firebase Console, Security Rules ও ইন্টারনেট সংযোগ পরীক্ষা করুন।";
+}
+
+function showPhoneStep() {
+  $("account-step").classList.add("hidden");
+  $("phone-step").classList.remove("hidden");
+  $("step-label").textContent = "ধাপ ২ / ২ — ফোন যাচাই করুন";
+  clearNotice();
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+function showAccountStep() {
+  $("account-step").classList.remove("hidden");
+  $("phone-step").classList.add("hidden");
+  $("step-label").textContent = "ধাপ ১ / ২ — দেশ, ভাষা ও অ্যাকাউন্টের তথ্য";
+}
+
+async function createAccount() {
+  if (isBusy) return;
+  if (auth.currentUser) {
+    showNotice("এই ব্রাউজারে ইতিমধ্যে একটি অ্যাকাউন্ট লগইন করা আছে। আগে লগআউট করুন।", "error");
+    return;
+  }
+  if (!validateForm()) return;
+
+  accountDetails = {
+    displayName: $("fullName").value.trim(),
+    email: $("email").value.trim(),
+    birthDate: $("birthDate").value,
+    phone: phoneInput.value.trim(),
+    countryCode: country.value,
+    countryName: country.options[country.selectedIndex].text,
+    language: language.value
+  };
+
+  setBusy(true, createBtn, "অ্যাকাউন্ট তৈরি হচ্ছে...");
+  clearNotice();
+
+  try {
+    const result = await createUserWithEmailAndPassword(
+      auth, accountDetails.email, passwordInput.value
+    );
+    accountCreated = true;
+
+    try {
+      await updateProfile(result.user, {displayName:accountDetails.displayName});
+    } catch (error) {
+      console.warn("Display name update failed", error);
     }
 
-    function clearNotice() {
-      notice.textContent = "";
-      notice.className = "notice";
+    try {
+      await sendEmailVerification(result.user);
+    } catch (error) {
+      console.warn("Verification email could not be sent", error);
     }
 
-    function setBusy(value, button = null, label = "") {
-      isBusy = value;
-      if (button) {
-        button.disabled = value;
-        if (value) {
-          button.dataset.originalText = button.textContent;
-          button.textContent = label || "অপেক্ষা করুন...";
-        } else {
-          button.textContent =
-            button.dataset.originalText || button.textContent;
-        }
-      }
+    passwordInput.value = "";
+    confirmInput.value = "";
+    updatePasswordStatus();
+    showPhoneStep();
+    showNotice(
+      "অ্যাকাউন্ট তৈরি হয়েছে। ইমেইল যাচাইকরণ লিংক পাঠানোর চেষ্টা করা হয়েছে। এবার ফোন যাচাই করুন।",
+      "success"
+    );
+  } catch (error) {
+    showNotice(friendlyError(error), "error");
+  } finally {
+    setBusy(false, createBtn);
+  }
+}
+
+async function makeRecaptcha() {
+  if (recaptchaVerifier) {
+    try { await recaptchaVerifier.clear(); } catch {}
+    recaptchaVerifier = null;
+  }
+  recaptchaVerifier = new RecaptchaVerifier(auth, "recaptcha-container", {
+    size:"normal",
+    callback:()=>{},
+    "expired-callback":()=>showNotice("reCAPTCHA-এর মেয়াদ শেষ। আবার চেষ্টা করুন।","error")
+  });
+  await recaptchaVerifier.render();
+  return recaptchaVerifier;
+}
+
+async function sendOtp() {
+  if (isBusy) return;
+  if (!accountCreated || !auth.currentUser || !accountDetails) {
+    showNotice("আগে অ্যাকাউন্ট তৈরি করুন।","error");
+    return;
+  }
+
+  setBusy(true, sendOtpBtn, "OTP পাঠানো হচ্ছে...");
+  clearNotice();
+  try {
+    const verifier = await makeRecaptcha();
+    confirmationResult = await linkWithPhoneNumber(
+      auth.currentUser, accountDetails.phone, verifier
+    );
+    showNotice("SMS পাঠানোর অনুরোধ সফল হয়েছে। ফোনে আসা ৬ সংখ্যার OTP লিখুন।","success");
+    $("otp").focus();
+  } catch (error) {
+    showNotice(friendlyError(error),"error");
+    if (recaptchaVerifier) {
+      try { await recaptchaVerifier.clear(); } catch {}
+      recaptchaVerifier = null;
     }
+  } finally {
+    setBusy(false, sendOtpBtn);
+  }
+}
 
-    function validPassword(password) {
-      return password.length >= 12 &&
-        password.length <= 128 &&
-        /[A-Z]/.test(password) &&
-        /[a-z]/.test(password) &&
-        /[0-9]/.test(password) &&
-        /[^A-Za-z0-9]/.test(password);
+async function saveAccountData() {
+  const user = auth.currentUser;
+  if (!user || !accountDetails || !phoneVerified) {
+    throw new Error("PHONE_VERIFICATION_REQUIRED");
+  }
+
+  const batch = writeBatch(db);
+  const profileRef = doc(db, "profiles", user.uid);
+  const privateRef = doc(db, "users", user.uid, "private", "account");
+
+  batch.set(profileRef, {
+    uid:user.uid,
+    displayName:accountDetails.displayName,
+    email:accountDetails.email,
+    countryCode:accountDetails.countryCode,
+    countryName:accountDetails.countryName,
+    language:accountDetails.language,
+    createdAt:serverTimestamp(),
+    accountStatus:"active",
+    role:"user"
+  }, {merge:true});
+
+  batch.set(privateRef, {
+    uid:user.uid,
+    email:accountDetails.email,
+    phone:accountDetails.phone,
+    birthDate:accountDetails.birthDate,
+    countryCode:accountDetails.countryCode,
+    language:accountDetails.language,
+    emailVerified:Boolean(user.emailVerified),
+    phoneVerified:true,
+    updatedAt:serverTimestamp()
+  }, {merge:true});
+
+  await batch.commit();
+  profileSaved = true;
+}
+
+async function verifyOtp() {
+  if (isBusy) return;
+  if (!confirmationResult) {
+    showNotice("প্রথমে ফোনে OTP পাঠান।","error");
+    return;
+  }
+
+  const otp = $("otp").value.trim();
+  if (!/^\d{6}$/.test(otp)) {
+    showNotice("৬ সংখ্যার OTP লিখুন।","error");
+    $("otp").focus();
+    return;
+  }
+
+  setBusy(true, verifyBtn, "OTP যাচাই হচ্ছে...");
+  clearNotice();
+
+  try {
+    await confirmationResult.confirm(otp);
+    phoneVerified = true;
+    sendOtpBtn.classList.add("hidden");
+    verifyBtn.classList.add("hidden");
+    showNotice("ফোন যাচাই হয়েছে। প্রোফাইল সংরক্ষণ করা হচ্ছে...","info");
+
+    await saveAccountData();
+    showNotice("অ্যাকাউন্ট সম্পন্ন হয়েছে। প্রোফাইলে নিয়ে যাওয়া হচ্ছে...","success");
+    window.location.replace("profile.html");
+  } catch (error) {
+    console.error(error);
+    if (phoneVerified) {
+      retrySaveBtn.classList.remove("hidden");
+      showNotice("ফোন যাচাই হয়েছে, কিন্তু প্রোফাইল সংরক্ষণ ব্যর্থ হয়েছে। আবার চেষ্টা করুন।","error");
+    } else {
+      showNotice(friendlyError(error),"error");
     }
-
-    function updatePasswordStatus() {
-      const password = passwordInput.value;
-      const confirm = confirmInput.value;
-      const passwordStatus = $("password-status");
-      const confirmStatus = $("confirm-status");
-
-      if (!password) {
-        passwordStatus.textContent = "";
-        passwordStatus.className = "password-status";
-      } else if (validPassword(password)) {
-        passwordStatus.textContent = "✓ পাসওয়ার্ডের শর্ত পূরণ হয়েছে।";
-        passwordStatus.className = "password-status good";
-      } else {
-        passwordStatus.textContent =
-          "১২–১২৮ অক্ষর এবং বড় হাতের, ছোট হাতের, সংখ্যা ও চিহ্ন ব্যবহার করুন।";
-        passwordStatus.className = "password-status bad";
-      }
-
-      if (!confirm) {
-        confirmStatus.textContent = "";
-        confirmStatus.className = "password-status";
-      } else if (password === confirm) {
-        confirmStatus.textContent = "✓ দুই পাসওয়ার্ড মিলেছে।";
-        confirmStatus.className = "password-status good";
-      } else {
-        confirmStatus.textContent = "✗ দুই পাসওয়ার্ড মিলছে না।";
-        confirmStatus.className = "password-status bad";
-      }
-    }
-
-    document.querySelectorAll(".toggle-password").forEach((button) => {
-      button.addEventListener("click", () => {
-        const input = $(button.dataset.target);
-        const show = input.type === "password";
-
-        input.type = show ? "text" : "password";
-        button.setAttribute("aria-pressed", String(show));
-        button.setAttribute(
-          "aria-label",
-          show ? "পাসওয়ার্ড লুকান" : "পাসওয়ার্ড দেখান"
-        );
-
-        button.innerHTML = show
-          ? '<svg class="eye" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3l18 18"/><path d="M10.6 10.6a2 2 0 0 0 2.8 2.8"/><path d="M9.9 5.2A11 11 0 0 1 12 5c6.4 0 10 7 10 7a16 16 0 0 1-3.1 3.9"/><path d="M6.2 6.2C3.5 8 2 12 2 12s3.6 7 10 7a10 10 0 0 0 4-.8"/></svg>'
-          : '<svg class="eye" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg>';
-      });
-    });
-
-    passwordInput.addEventListener("input", updatePasswordStatus);
-    confirmInput.addEventListener("input", updatePasswordStatus);
-
-    function calculateAge(dateString) {
-      const dob = new Date(`${dateString}T00:00:00`);
-      if (Number.isNaN(dob.getTime())) return -1;
-
-      const today = new Date();
-      let age = today.getFullYear() - dob.getFullYear();
-
-      const beforeBirthday =
-        today.getMonth() < dob.getMonth() ||
-        (today.getMonth() === dob.getMonth() &&
-          today.getDate() < dob.getDate());
-
-      if (beforeBirthday) age--;
-      return age;
-    }
-
-    function validateForm() {
-      const name = fullNameInput.value.trim();
-      const email = emailInput.value.trim();
-      const birthDate = birthDateInput.value;
-      const phone = phoneInput.value.trim();
-      const password = passwordInput.value;
-      const confirm = confirmInput.value;
-
-      if (name.length < 2) {
-        showNotice("অনুগ্রহ করে আপনার পুরো নাম লিখুন।", "error");
-        fullNameInput.focus();
-        return false;
-      }
-
-      if (!emailInput.validity.valid || !email) {
-        showNotice("সঠিক ইমেইল ঠিকানা লিখুন।", "error");
-        emailInput.focus();
-        return false;
-      }
-
-      const age = calculateAge(birthDate);
-      if (!birthDate || age < 18 || age > 120) {
-        showNotice("অ্যাকাউন্ট তৈরি করতে আপনার বয়স ১৮ থেকে ১২০ বছরের মধ্যে হতে হবে।", "error");
-        birthDateInput.focus();
-        return false;
-      }
-
-      if (!/^\+[1-9]\d{7,14}$/.test(phone)) {
-        showNotice("দেশের কোডসহ সঠিক ফোন নম্বর লিখুন, যেমন +8801XXXXXXXXX।", "error");
-        phoneInput.focus();
-        return false;
-      }
-
-      if (!validPassword(password)) {
-        showNotice("পাসওয়ার্ডের সব শর্ত পূরণ করুন।", "error");
-        passwordInput.focus();
-        return false;
-      }
-
-      if (password !== confirm) {
-        showNotice("দুইটি পাসওয়ার্ড মিলছে না। আবার মিলিয়ে লিখুন।", "error");
-        confirmInput.focus();
-        return false;
-      }
-
-      return true;
-    }
-
-    function showPhoneStep() {
-      accountStep.classList.add("hidden");
-      phoneStep.classList.remove("hidden");
-      $("step-label").textContent = "ধাপ ২ / ২ — ফোন যাচাই করুন";
-      clearNotice();
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    }
-
-    function showAccountStep() {
-      accountStep.classList.remove("hidden");
-      phoneStep.classList.add("hidden");
-      $("step-label").textContent = "ধাপ ১ / ২ — আপনার তথ্য দিন";
-      clearNotice();
-    }
-
-    function friendlyError(error) {
-      const code = error?.code || "";
-
-      const messages = {
-        "auth/email-already-in-use":
-          "এই ইমেইল দিয়ে আগে থেকেই অ্যাকাউন্ট আছে। লগইন করুন অথবা অন্য ইমেইল ব্যবহার করুন।",
-        "auth/invalid-email":
-          "ইমেইল ঠিকানাটি সঠিক নয়। আবার পরীক্ষা করুন।",
-        "auth/weak-password":
-          "পাসওয়ার্ড আরও শক্তিশালী করুন।",
-        "auth/invalid-phone-number":
-          "ফোন নম্বরটি সঠিক আন্তর্জাতিক ফরম্যাটে লিখুন।",
-        "auth/too-many-requests":
-          "অনেকবার চেষ্টা করা হয়েছে। কিছুক্ষণ অপেক্ষা করে আবার চেষ্টা করুন।",
-        "auth/quota-exceeded":
-          "এই মুহূর্তে SMS সীমা অতিক্রম করেছে। পরে আবার চেষ্টা করুন।",
-        "auth/captcha-check-failed":
-          "reCAPTCHA যাচাই হয়নি। পেজ রিফ্রেশ করে আবার চেষ্টা করুন।",
-        "auth/network-request-failed":
-          "ইন্টারনেট সংযোগ পরীক্ষা করে আবার চেষ্টা করুন।",
-        "auth/invalid-verification-code":
-          "OTP ভুল হয়েছে। SMS-এর কোডটি আবার পরীক্ষা করুন।",
-        "auth/code-expired":
-          "OTP-এর মেয়াদ শেষ হয়েছে। নতুন কোড নিন।",
-        "auth/credential-already-in-use":
-          "এই ফোন নম্বরটি অন্য অ্যাকাউন্টে যুক্ত আছে।"
-      };
-
-      return messages[code] ||
-        "কাজটি সম্পন্ন হয়নি। Firebase সেটিংস ও ইন্টারনেট পরীক্ষা করে আবার চেষ্টা করুন।";
-    }
-
-    async function createAccount() {
-      if (isBusy) return;
-
-      if (auth.currentUser) {
-        showNotice(
-          "এই ব্রাউজারে ইতিমধ্যে একটি Firebase অ্যাকাউন্ট লগইন করা আছে। আগে লগআউট করে আবার চেষ্টা করুন।",
-          "error"
-        );
-        return;
-      }
-
-      if (!validateForm()) return;
-
-      accountDetails = {
-        displayName: fullNameInput.value.trim(),
-        email: emailInput.value.trim(),
-        birthDate: birthDateInput.value,
-        phone: phoneInput.value.trim()
-      };
-
-      setBusy(true, createBtn, "অ্যাকাউন্ট তৈরি হচ্ছে...");
-      clearNotice();
-
-      try {
-        const credential = await createUserWithEmailAndPassword(
-          auth,
-          accountDetails.email,
-          passwordInput.value
-        );
-
-        accountCreated = true;
-
-        try {
-          await updateProfile(credential.user, {
-            displayName: accountDetails.displayName
-          });
-        } catch {
-          showNotice(
-            "অ্যাকাউন্ট তৈরি হয়েছে, কিন্তু প্রোফাইল নাম আপডেট হয়নি। পরের ধাপে যেতে পারবেন।",
-            "info"
-          );
-        }
-
-        try {
-          await sendEmailVerification(credential.user);
-          emailVerificationSent = true;
-        } catch {
-          emailVerificationSent = false;
-        }
-
-        passwordInput.value = "";
-        confirmInput.value = "";
-        updatePasswordStatus();
-
-        showPhoneStep();
-
-        showNotice(
-          emailVerificationSent
-            ? "অ্যাকাউন্ট তৈরি হয়েছে। ইমেইলে যাচাইকরণ লিংক পাঠানো হয়েছে। এখন ফোন যাচাই করুন।"
-            : "অ্যাকাউন্ট তৈরি হয়েছে, কিন্তু ইমেইল যাচাইকরণ পাঠানো যায়নি। ফোন যাচাই করুন; পরে ইমেইল আবার পাঠাতে হবে।",
-          "info"
-        );
-      } catch (error) {
-        showNotice(friendlyError(error), "error");
-      } finally {
-        setBusy(false, createBtn);
-      }
-    }
-
-    async function getRecaptcha() {
-      if (recaptchaVerifier) {
-        try {
-          recaptchaVerifier.clear();
-        } catch {}
-        recaptchaVerifier = null;
-      }
-
-      recaptchaVerifier = new RecaptchaVerifier(auth, "recaptcha-container", {
-        size: "normal",
-        callback: () => {
-          // reCAPTCHA completed
-        },
-        "expired-callback": () => {
-          showNotice("reCAPTCHA-এর মেয়াদ শেষ হয়েছে। আবার যাচাই করুন।", "error");
-        }
-      });
-
-      await recaptchaVerifier.render();
-      return recaptchaVerifier;
-    }
-
-    async function sendOtp() {
-      if (isBusy) return;
-
-      const user = auth.currentUser;
-      if (!accountCreated || !user || !accountDetails) {
-        showNotice("প্রথমে অ্যাকাউন্ট তৈরির ধাপ সম্পন্ন করুন।", "error");
-        return;
-      }
-
-      setBusy(true, sendOtpBtn, "OTP পাঠানো হচ্ছে...");
-      clearNotice();
-
-      try {
-        const verifier = await getRecaptcha();
-
-        confirmationResult = await linkWithPhoneNumber(
-          user,
-          accountDetails.phone,
-          verifier
-        );
-
-        showNotice(
-          "SMS পাঠানোর অনুরোধ সফল হয়েছে। ফোনে আসা OTP লিখুন। SMS আসতে কিছু সময় লাগতে পারে।",
-          "success"
-        );
-
-        otpInput.focus();
-      } catch (error) {
-        showNotice(friendlyError(error), "error");
-
-        if (recaptchaVerifier) {
-          try {
-            recaptchaVerifier.clear();
-          } catch {}
-          recaptchaVerifier = null;
-        }
-      } finally {
-        setBusy(false, sendOtpBtn);
-      }
-    }
-
-    async function saveAccountData() {
-      const user = auth.currentUser;
-
-      if (!user || !accountDetails || !phoneVerified) {
-        throw new Error("PHONE_VERIFICATION_REQUIRED");
-      }
-
-      const batch = writeBatch(db);
-      const profileRef = doc(db, "profiles", user.uid);
-      const privateRef = doc(db, "users", user.uid, "private", "account");
-
-      batch.set(profileRef, {
-        uid: user.uid,
-        displayName: accountDetails.displayName,
-        email: accountDetails.email,
-        phone: accountDetails.phone,
-        createdAt: serverTimestamp(),
-        accountStatus: "active",
-        role: "user"
-      }, { merge: true });
-
-      batch.set(privateRef, {
-        uid: user.uid,
-        email: accountDetails.email,
-        phone: accountDetails.phone,
-        birthDate: accountDetails.birthDate,
-        emailVerified: Boolean(user.emailVerified),
-        phoneVerified: true,
-        createdAt: serverTimestamp()
-      }, { merge: true });
-
-      await batch.commit();
-      profileSaved = true;
-    }
-
-    async function verifyOtp() {
-      if (isBusy) return;
-
-      if (!confirmationResult) {
-        showNotice("প্রথমে ফোনে OTP পাঠান।", "error");
-        return;
-      }
-
-      const otp = otpInput.value.trim();
-      if (!/^\d{6}$/.test(otp)) {
-        showNotice("৬ সংখ্যার সঠিক OTP লিখুন।", "error");
-        otpInput.focus();
-        return;
-      }
-
-      setBusy(true, verifyBtn, "OTP যাচাই হচ্ছে...");
-      clearNotice();
-
-      try {
-        await confirmationResult.confirm(otp);
-        phoneVerified = true;
-
-        verifyBtn.classList.add("hidden");
-        sendOtpBtn.classList.add("hidden");
-
-        showNotice(
-          "ফোন যাচাই সফল হয়েছে। এখন আপনার অ্যাকাউন্টের তথ্য সংরক্ষণ করা হচ্ছে।",
-          "info"
-        );
-
-        await saveAccountData();
-
-        showNotice(
-          "অ্যাকাউন্ট তৈরি সম্পন্ন হয়েছে। প্রোফাইল পেজে নিয়ে যাওয়া হচ্ছে...",
-          "success"
-        );
-
-        window.location.replace("profile.html");
-      } catch (error) {
-        if (phoneVerified) {
-          retrySaveBtn.classList.remove("hidden");
-          showNotice(
-            "ফোন যাচাই সফল হয়েছে, কিন্তু অ্যাকাউন্টের তথ্য সংরক্ষণ হয়নি। নিচের বোতাম দিয়ে আবার চেষ্টা করুন।",
-            "error"
-          );
-        } else {
-          showNotice(friendlyError(error), "error");
-        }
-      } finally {
-        setBusy(false, verifyBtn);
-      }
-    }
-
-    async function retrySave() {
-      if (isBusy) return;
-
-      setBusy(true, retrySaveBtn, "তথ্য সংরক্ষণ হচ্ছে...");
-      clearNotice();
-
-      try {
-        await saveAccountData();
-
-        showNotice(
-          "অ্যাকাউন্টের তথ্য সংরক্ষণ হয়েছে। প্রোফাইল পেজে নিয়ে যাওয়া হচ্ছে...",
-          "success"
-        );
-
-        window.location.replace("profile.html");
-      } catch {
-        showNotice(
-          "তথ্য সংরক্ষণ করা যায়নি। Firestore Security Rules এবং ইন্টারনেট সংযোগ পরীক্ষা করুন।",
-          "error"
-        );
-      } finally {
-        setBusy(false, retrySaveBtn);
-      }
-    }
-
-    form.addEventListener("submit", async (event) => {
-      event.preventDefault();
-      await createAccount();
-    });
-
-    sendOtpBtn.addEventListener("click", sendOtp);
-    verifyBtn.addEventListener("click", verifyOtp);
-    retrySaveBtn.addEventListener("click", retrySave);
-
-    backBtn.addEventListener("click", () => {
-      if (phoneVerified) {
-        showNotice(
-          "ফোন যাচাই সম্পন্ন হয়েছে। অ্যাকাউন্টের তথ্য সংরক্ষণ করতে নিচের বোতামটি ব্যবহার করুন।",
-          "info"
-        );
-        retrySaveBtn.classList.remove("hidden");
-        return;
-      }
-
-      if (accountCreated) {
-        showNotice(
-          "অ্যাকাউন্ট ইতিমধ্যে তৈরি হয়েছে। আবার শুরু করলে একই ইমেইল দিয়ে নতুন অ্যাকাউন্ট তৈরি করা যাবে না। নিরাপত্তার জন্য অ্যাকাউন্ট স্বয়ংক্রিয়ভাবে মুছে ফেলা হবে না।",
-          "info"
-        );
-        return;
-      }
-
-      showAccountStep();
-    });
-
-    // Birth date cannot be in the future.
-    birthDateInput.max = new Date().toISOString().slice(0, 10);
-  </script>
+  } finally {
+    setBusy(false, verifyBtn);
+  }
+}
+
+async function retrySave() {
+  if (isBusy) return;
+  setBusy(true, retrySaveBtn, "তথ্য সংরক্ষণ হচ্ছে...");
+  clearNotice();
+  try {
+    await saveAccountData();
+    showNotice("প্রোফাইল সংরক্ষণ হয়েছে।","success");
+    window.location.replace("profile.html");
+  } catch (error) {
+    console.error(error);
+    showNotice("তথ্য সংরক্ষণ হয়নি। Firestore Security Rules পরীক্ষা করুন।","error");
+  } finally {
+    setBusy(false, retrySaveBtn);
+  }
+}
+
+form.addEventListener("submit", async event => {
+  event.preventDefault();
+  await createAccount();
+});
+sendOtpBtn.addEventListener("click", sendOtp);
+verifyBtn.addEventListener("click", verifyOtp);
+retrySaveBtn.addEventListener("click", retrySave);
+
+$("back-btn").addEventListener("click", () => {
+  if (phoneVerified) {
+    retrySaveBtn.classList.remove("hidden");
+    showNotice("ফোন যাচাই সম্পন্ন হয়েছে। তথ্য সংরক্ষণ করার চেষ্টা করুন।","info");
+    return;
+  }
+  if (accountCreated) {
+    showNotice("অ্যাকাউন্ট ইতিমধ্যে তৈরি হয়েছে। একই ইমেইল দিয়ে নতুন অ্যাকাউন্ট তৈরি করা যাবে না। নিরাপত্তার জন্য এটি স্বয়ংক্রিয়ভাবে মুছে ফেলা হচ্ছে না।","info");
+    return;
+  }
+  showAccountStep();
+});
+
+// Prefill the Bangladesh country code, without overwriting user input.
+if (!phoneInput.value) phoneInput.value = "+880";
+</script>
 </body>
 </html>
