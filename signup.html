@@ -554,6 +554,137 @@ if(savedCountry&&countries[savedCountry])country.value=savedCountry;
 dialCode.value=(countries[country.value]||countries.US).code;
 language.value=savedLanguage&&copy[savedLanguage]?savedLanguage:"en";
 applyLanguage(language.value);
+ 
+/* ZEMIVO: 31-DAY LIVING 3D THEME */
+:root {
+  --z3-a: #8b5cf6;
+  --z3-b: #06b6d4;
+  --z3-c: #111735;
+  --z3-d: #67e8f9;
+  --z3-e: #4f46e5;
+  --z3-glow: #a5b4fc;
+}
+
+body {
+  background:
+    radial-gradient(ellipse at 12% 15%,
+      color-mix(in srgb, var(--z3-a) 78%, transparent), transparent 42%),
+    radial-gradient(ellipse at 88% 85%,
+      color-mix(in srgb, var(--z3-b) 78%, transparent), transparent 42%),
+    linear-gradient(135deg, #071329, var(--z3-c) 55%, #111735);
+  background-attachment: fixed;
+  transition: background 1s ease;
+}
+
+.card {
+  border-color: color-mix(in srgb, var(--z3-d) 55%, white);
+  box-shadow:
+    0 35px 90px #02061799,
+    inset 0 1px 1px #ffffff90,
+    0 0 35px color-mix(in srgb, var(--z3-a) 24%, transparent);
+  transition: border-color 1s ease, box-shadow 1s ease;
+}
+
+.card:before {
+  background: radial-gradient(
+    circle,
+    color-mix(in srgb, var(--z3-glow) 65%, transparent),
+    transparent 70%
+  );
+  animation: z3-light 8s ease-in-out infinite alternate;
+}
+
+.brand span {
+  color: var(--z3-d);
+  transition: color 1s ease;
+}
+
+input:focus, select:focus {
+  border-color: var(--z3-d);
+  box-shadow:
+    0 0 0 3px color-mix(in srgb, var(--z3-d) 22%, transparent),
+    0 0 25px color-mix(in srgb, var(--z3-b) 30%, transparent);
+}
+
+.eye {
+  border-color: color-mix(in srgb, var(--z3-d) 55%, white);
+  background: linear-gradient(135deg, #ffffff35, var(--z3-a));
+}
+
+.primary {
+  background: linear-gradient(
+    110deg, var(--z3-a), var(--z3-e) 48%, var(--z3-b)
+  );
+  box-shadow:
+    0 7px 0 color-mix(in srgb, var(--z3-e) 75%, #111735),
+    0 18px 35px color-mix(in srgb, var(--z3-a) 35%, transparent),
+    inset 0 1px 1px #ffffff90;
+}
+
+.primary:hover {
+  filter: brightness(1.12);
+}
+
+@keyframes z3-light {
+  from { transform: translate3d(0, 0, 0) scale(.92); }
+  to   { transform: translate3d(-24px, 28px, 0) scale(1.12); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card:before { animation: none; }
+  .card, body, .brand span { transition: none; }
+}
+
+/* ZEMIVO: AUTOMATIC 31-DAY THEME SYSTEM */
+const zemivo31Themes = [
+  ["#8b5cf6","#06b6d4","#111735","#67e8f9","#4f46e5","#a5b4fc"],
+  ["#0ea5e9","#22d3ee","#082f49","#a5f3fc","#2563eb","#7dd3fc"],
+  ["#10b981","#34d399","#052e2b","#a7f3d0","#047857","#6ee7b7"],
+  ["#f59e0b","#fb7185","#451a03","#fde68a","#c2410c","#fdba74"],
+  ["#ec4899","#a78bfa","#3b0764","#fbcfe8","#9333ea","#f0abfc"],
+  ["#6366f1","#38bdf8","#172554","#bfdbfe","#4338ca","#818cf8"],
+  ["#14b8a6","#818cf8","#042f2e","#99f6e4","#0f766e","#5eead4"],
+  ["#f97316","#facc15","#431407","#fde68a","#c2410c","#fdba74"],
+  ["#a855f7","#e879f9","#3b0764","#f5d0fe","#7e22ce","#d8b4fe"],
+  ["#0284c7","#67e8f9","#082f49","#cffafe","#0369a1","#38bdf8"],
+  ["#84cc16","#4ade80","#1a2e05","#d9f99d","#3f6212","#bef264"],
+  ["#e11d48","#fb7185","#4c0519","#fecdd3","#be123c","#fda4af"],
+  ["#7c3aed","#60a5fa","#1e1b4b","#c4b5fd","#4338ca","#a5b4fc"],
+  ["#0891b2","#2dd4bf","#083344","#a5f3fc","#0e7490","#67e8f9"],
+  ["#ca8a04","#fbbf24","#422006","#fef08a","#a16207","#fde68a"],
+  ["#9333ea","#818cf8","#2e1065","#ddd6fe","#6d28d9","#c4b5fd"],
+  ["#059669","#2dd4bf","#022c22","#a7f3d0","#047857","#6ee7b7"],
+  ["#db2777","#f9a8d4","#500724","#fce7f3","#9d174d","#fbcfe8"],
+  ["#4f46e5","#22d3ee","#172554","#a5f3fc","#3730a3","#818cf8"],
+  ["#ea580c","#fbbf24","#431407","#fed7aa","#c2410c","#fdba74"],
+  ["#0d9488","#5eead4","#042f2e","#ccfbf1","#115e59","#99f6e4"],
+  ["#7c3aed","#f472b6","#2e1065","#f5d0fe","#6d28d9","#c4b5fd"],
+  ["#2563eb","#93c5fd","#172554","#dbeafe","#1d4ed8","#60a5fa"],
+  ["#c026d3","#818cf8","#4a044e","#f5d0fe","#86198f","#e879f9"],
+  ["#65a30d","#a3e635","#1a2e05","#ecfccb","#4d7c0f","#bef264"],
+  ["#e11d48","#fda4af","#4c0519","#ffe4e6","#be123c","#f9a8d4"],
+  ["#0284c7","#a78bfa","#172554","#e0f2fe","#4338ca","#93c5fd"],
+  ["#d97706","#fcd34d","#451a03","#fef3c7","#b45309","#fbbf24"],
+  ["#059669","#67e8f9","#022c22","#ccfbf1","#0f766e","#6ee7b7"],
+  ["#9333ea","#38bdf8","#1e1b4b","#e9d5ff","#6d28d9","#a5b4fc"],
+  ["#0891b2","#c084fc","#082f49","#cffafe","#6d28d9","#67e8f9"]
+];
+
+function applyZemivoDailyTheme() {
+  const day = new Date().getDate();
+  const colors = zemivo31Themes[day - 1];
+  const root = document.documentElement;
+
+  ["--z3-a","--z3-b","--z3-c","--z3-d","--z3-e","--z3-glow"]
+    .forEach((name, index) => {
+      root.style.setProperty(name, colors[index]);
+    });
+
+  root.dataset.zemivoThemeDay = String(day);
+}
+
+applyZemivoDailyTheme();
+
 </script>
 </body>
 </html>
