@@ -8,88 +8,103 @@
 
 <style>
 *{box-sizing:border-box}
-:root{font-family:Arial,Helvetica,sans-serif;color:#17213e}
+:root{font-family:Arial,Helvetica,sans-serif;color:#fff}
 body{
  margin:0;min-height:100vh;padding:28px 14px;
  display:flex;align-items:center;justify-content:center;
  background:
- radial-gradient(ellipse at 15% 15%,#8b5cf6 0,transparent 35%),
- radial-gradient(ellipse at 85% 85%,#06b6d4 0,transparent 35%),
- linear-gradient(135deg,#0b1028,#202c59 55%,#111735);
+ radial-gradient(ellipse at 12% 15%,#8b5cf6bb,transparent 38%),
+ radial-gradient(ellipse at 88% 85%,#06b6d4bb,transparent 38%),
+ linear-gradient(135deg,#071329,#174477 55%,#111735);
  background-attachment:fixed;
 }
 button,input,select{font:inherit}
 button{cursor:pointer}
-.page{width:100%;max-width:720px;perspective:1200px}
+.page{width:100%;max-width:720px;perspective:1400px}
 .card{
  position:relative;overflow:hidden;
  padding:clamp(22px,5vw,42px);
- border:1px solid #ffffff70;border-radius:30px;
- background:linear-gradient(145deg,#ffffffed,#f0f4ffeb);
- box-shadow:0 35px 90px #03071885,inset 0 1px #fff;
+ border:1px solid #ffffff80;border-radius:30px;
+ background:linear-gradient(135deg,#ffffff32,#dbeafe15 50%,#8b5cf630);
+ backdrop-filter:blur(25px) saturate(155%);
+ -webkit-backdrop-filter:blur(25px) saturate(155%);
+ box-shadow:0 35px 90px #02061799,inset 0 1px 1px #ffffff90;
  transform-style:preserve-3d;
 }
 .card:before{
- content:"";position:absolute;top:-100px;right:-100px;
- width:260px;height:260px;border-radius:50%;
- background:radial-gradient(circle,#a5b4fc75,transparent 70%);
+ content:"";position:absolute;top:-110px;right:-100px;
+ width:280px;height:280px;border-radius:50%;
+ background:radial-gradient(circle,#a5b4fc65,transparent 70%);
  pointer-events:none;
 }
-.brand{position:relative;font-size:30px;font-weight:900;letter-spacing:-1px;color:#4338ca}
-.brand span{color:#0891b2}
-h1{position:relative;font-size:clamp(26px,5vw,36px);margin:18px 0 8px}
-.subtitle{position:relative;color:#65708d;line-height:1.7;margin:0 0 25px}
-.section{
- position:relative;margin:23px 0 14px;font-weight:800;
- font-size:17px;color:#29345b;
+.card:after{
+ content:"";position:absolute;inset:0;border-radius:inherit;
+ background:linear-gradient(120deg,#ffffff12,transparent 40%,transparent 75%,#a5b4fc15);
+ pointer-events:none;
 }
+.brand{position:relative;font-size:30px;font-weight:900;letter-spacing:-1px;color:#fff;text-shadow:0 0 24px #60a5fa70}
+.brand span{color:#67e8f9}
+h1{position:relative;font-size:clamp(26px,5vw,36px);margin:18px 0 8px;color:#fff}
+.subtitle{position:relative;color:#dbeafe;line-height:1.7;margin:0 0 25px}
+.section{position:relative;margin:23px 0 14px;font-weight:800;font-size:17px;color:#fff}
 .grid{display:grid;grid-template-columns:1fr 1fr;gap:15px}
 .field{min-width:0;margin-bottom:15px}
 .full{grid-column:1/-1}
-label{display:block;font-size:13px;font-weight:750;margin-bottom:8px}
+label{display:block;font-size:13px;font-weight:750;margin-bottom:8px;color:#f1f5ff}
 input,select{
  width:100%;min-width:0;min-height:49px;padding:13px 12px;
- border:1px solid #d4dcf1;border-radius:13px;
- color:#17213e;background:linear-gradient(145deg,#fff,#f5f7ff);
- box-shadow:inset 2px 2px 5px #dfe5f3,inset -2px -2px 5px #fff;
+ border:1px solid #ffffff60;border-radius:13px;color:#fff;
+ background:linear-gradient(135deg,#ffffff25,#dbeafe10);
+ box-shadow:inset 0 1px 1px #ffffff35,0 8px 22px #02061720;
+ backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
  outline:none;transition:.2s;
 }
+input::placeholder{color:#dbeafeaa}
+select option{color:#17213e;background:#fff}
 input:focus,select:focus{
- border-color:#6366f1;box-shadow:0 0 0 3px #6366f125,0 5px 15px #6366f115;
+ border-color:#67e8f9;
+ box-shadow:0 0 0 3px #67e8f930,0 0 25px #38bdf830;
 }
-.hint{font-size:12px;line-height:1.6;color:#76809a;margin-top:7px}
+.hint{font-size:12px;line-height:1.6;color:#dbeafe;margin-top:7px}
 .phone{display:grid;grid-template-columns:120px 1fr;gap:8px}
 .password-wrap{position:relative}
 .password-wrap input{padding-right:55px}
 .eye{
  position:absolute;right:7px;top:50%;transform:translateY(-50%);
  display:grid;place-items:center;width:39px;height:39px;
- border:1px solid #dce3fa;border-radius:12px;
- color:#4338ca;background:linear-gradient(145deg,#fff,#e0e7ff);
- box-shadow:3px 3px 7px #c4cce080,-3px -3px 7px #fff;
+ border:1px solid #ffffff55;border-radius:12px;color:#fff;
+ background:linear-gradient(135deg,#ffffff35,#6366f155);
+ box-shadow:0 5px 18px #02061735;
 }
 .eye svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-.terms{display:flex;gap:10px;align-items:flex-start;font-size:13px;line-height:1.7;margin:8px 0 18px}
+.terms{display:flex;gap:10px;align-items:flex-start;font-size:13px;line-height:1.7;margin:8px 0 18px;color:#e0eaff}
 .terms input{width:18px;min-height:18px;height:18px;padding:0;margin:3px 0 0;flex-shrink:0}
-a{color:#4338ca;font-weight:700}
+a{color:#67e8f9;font-weight:700}
 .primary{
- width:100%;padding:16px;border:1px solid #ffffff60;border-radius:15px;
+ width:100%;padding:16px;border:1px solid #ffffff70;border-radius:15px;
  color:white;font-size:16px;font-weight:800;
- background:linear-gradient(120deg,#6366f1,#4338ca 48%,#0891b2);
- box-shadow:0 8px 0 #30258c,0 17px 30px #3730a355;
+ background:linear-gradient(110deg,#a855f7,#4f46e5 48%,#06b6d4);
+ box-shadow:0 7px 0 #312e81,0 18px 35px #4338ca60,inset 0 1px 1px #ffffff90;
  transition:transform .15s,box-shadow .15s;
 }
-.primary:hover{transform:translateY(-2px);box-shadow:0 10px 0 #30258c,0 22px 35px #3730a355}
-.primary:active{transform:translateY(5px);box-shadow:0 3px 0 #30258c}
+.primary:hover{transform:translateY(-2px);box-shadow:0 9px 0 #312e81,0 24px 40px #4338ca70}
+.primary:active{transform:translateY(5px);box-shadow:0 3px 0 #312e81}
 .primary:disabled{opacity:.65;cursor:wait;transform:none}
 .status{display:none;margin-top:16px;padding:13px;border-radius:12px;font-size:13px;line-height:1.6;overflow-wrap:anywhere}
 .status.show{display:block}
-.status.error{background:#fff0f0;color:#a61b1b}
-.status.ok{background:#e8fff3;color:#067647}
-.otp{display:none;margin-top:20px;padding:18px;border-radius:18px;background:linear-gradient(145deg,#eef2ff,#fff);box-shadow:inset 3px 3px 8px #dfe5f3,inset -3px -3px 8px white}
+.status.error{background:#fee2e2;color:#991b1b}
+.status.ok{background:#d1fae5;color:#065f46}
+.otp{
+ display:none;margin-top:20px;padding:18px;border:1px solid #ffffff60;
+ border-radius:18px;background:linear-gradient(135deg,#ffffff25,#c4b5fd20);
+ backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
+ box-shadow:inset 0 1px 1px #ffffff50,0 10px 30px #02061730;
+}
 .otp.show{display:block}
-.footer{text-align:center;font-size:13px;color:#65708d;margin:25px 0 0}
-.note{font-size:12px;color:#7b849a;line-height:1.6;margin-top:17px}
+.otp p{color:#e0eaff}
+.footer{text-align:center;font-size:13px;color:#dbeafe;margin:25px 0 0}
+.note{font-size:12px;color:#dbeafe;line-height:1.6;margin-top:17px}
+#recaptcha-container{position:fixed;bottom:0;left:0;z-index:5}
 @media(max-width:540px){
  body{padding:12px 8px;align-items:flex-start}
  .card{padding:23px 16px;border-radius:23px;margin:8px 0}
@@ -109,7 +124,6 @@ a{color:#4338ca;font-weight:700}
 
  <form id="signupForm">
   <div class="section" id="preferencesTitle">🌍 Country & Language</div>
-
   <div class="grid">
    <div class="field">
     <label for="country" id="countryLabel">Country</label>
@@ -140,7 +154,6 @@ a{color:#4338ca;font-weight:700}
     </select>
     <div class="hint" id="countryHint">Choose your country. The calling code updates automatically.</div>
    </div>
-
    <div class="field">
     <label for="language" id="languageLabel">Preferred Language</label>
     <select id="language">
@@ -167,23 +180,19 @@ a{color:#4338ca;font-weight:700}
   </div>
 
   <div class="section" id="accountTitle">👤 Account Information</div>
-
   <div class="grid">
    <div class="field full">
     <label for="fullName" id="nameLabel">Full Name</label>
     <input id="fullName" autocomplete="name" required maxlength="100" placeholder="Enter your full name">
    </div>
-
    <div class="field full">
     <label for="email" id="emailLabel">Email Address</label>
     <input id="email" type="email" autocomplete="email" required maxlength="254" placeholder="you@example.com">
    </div>
-
    <div class="field">
     <label for="dob" id="dobLabel">Date of Birth</label>
     <input id="dob" type="date" required>
    </div>
-
    <div class="field">
     <label for="phone" id="phoneLabel">Mobile Number</label>
     <div class="phone">
@@ -191,7 +200,6 @@ a{color:#4338ca;font-weight:700}
      <input id="phone" type="tel" autocomplete="tel-national" required maxlength="20" placeholder="Phone number">
     </div>
    </div>
-
    <div class="field full">
     <label for="password" id="passwordLabel">Password</label>
     <div class="password-wrap">
@@ -202,7 +210,6 @@ a{color:#4338ca;font-weight:700}
     </div>
     <div class="hint" id="passwordHint">At least 8 characters, with uppercase, lowercase, number and symbol.</div>
    </div>
-
    <div class="field full">
     <label for="confirmPassword" id="confirmLabel">Confirm Password</label>
     <div class="password-wrap">
@@ -248,9 +255,7 @@ import {
  RecaptchaVerifier,
  linkWithPhoneNumber
 } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
-import {
- doc,setDoc,serverTimestamp
-} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
+import {doc,setDoc,serverTimestamp} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
 
 const $=id=>document.getElementById(id);
 const form=$("signupForm"),country=$("country"),language=$("language");
@@ -258,28 +263,17 @@ const dialCode=$("dialCode"),phone=$("phone"),statusBox=$("status");
 const createButton=$("createButton"),otpBox=$("otpBox"),verifyButton=$("verifyButton");
 
 const countries={
- US:{code:"+1",lang:"en",name:"United States"},
- BD:{code:"+880",lang:"bn",name:"Bangladesh"},
- GB:{code:"+44",lang:"en",name:"United Kingdom"},
- IN:{code:"+91",lang:"hi",name:"India"},
- PK:{code:"+92",lang:"ur",name:"Pakistan"},
- CN:{code:"+86",lang:"zh",name:"China"},
- JP:{code:"+81",lang:"ja",name:"Japan"},
- KR:{code:"+82",lang:"ko",name:"South Korea"},
- SA:{code:"+966",lang:"ar",name:"Saudi Arabia"},
- AE:{code:"+971",lang:"ar",name:"United Arab Emirates"},
- MY:{code:"+60",lang:"ms",name:"Malaysia"},
- SG:{code:"+65",lang:"en",name:"Singapore"},
- ID:{code:"+62",lang:"id",name:"Indonesia"},
- TR:{code:"+90",lang:"tr",name:"Türkiye"},
- FR:{code:"+33",lang:"fr",name:"France"},
- DE:{code:"+49",lang:"de",name:"Germany"},
- IT:{code:"+39",lang:"it",name:"Italy"},
- ES:{code:"+34",lang:"es",name:"Spain"},
- CA:{code:"+1",lang:"en",name:"Canada"},
- AU:{code:"+61",lang:"en",name:"Australia"},
- NG:{code:"+234",lang:"en",name:"Nigeria"},
- ZA:{code:"+27",lang:"en",name:"South Africa"},
+ US:{code:"+1",lang:"en",name:"United States"},BD:{code:"+880",lang:"bn",name:"Bangladesh"},
+ GB:{code:"+44",lang:"en",name:"United Kingdom"},IN:{code:"+91",lang:"hi",name:"India"},
+ PK:{code:"+92",lang:"ur",name:"Pakistan"},CN:{code:"+86",lang:"zh",name:"China"},
+ JP:{code:"+81",lang:"ja",name:"Japan"},KR:{code:"+82",lang:"ko",name:"South Korea"},
+ SA:{code:"+966",lang:"ar",name:"Saudi Arabia"},AE:{code:"+971",lang:"ar",name:"United Arab Emirates"},
+ MY:{code:"+60",lang:"ms",name:"Malaysia"},SG:{code:"+65",lang:"en",name:"Singapore"},
+ ID:{code:"+62",lang:"id",name:"Indonesia"},TR:{code:"+90",lang:"tr",name:"Türkiye"},
+ FR:{code:"+33",lang:"fr",name:"France"},DE:{code:"+49",lang:"de",name:"Germany"},
+ IT:{code:"+39",lang:"it",name:"Italy"},ES:{code:"+34",lang:"es",name:"Spain"},
+ CA:{code:"+1",lang:"en",name:"Canada"},AU:{code:"+61",lang:"en",name:"Australia"},
+ NG:{code:"+234",lang:"en",name:"Nigeria"},ZA:{code:"+27",lang:"en",name:"South Africa"},
  BR:{code:"+55",lang:"pt",name:"Brazil"}
 };
 
@@ -291,16 +285,17 @@ const copy={
   accountTitle:"👤 Account Information",nameLabel:"Full Name",namePlaceholder:"Enter your full name",
   emailLabel:"Email Address",dobLabel:"Date of Birth",phoneLabel:"Mobile Number",phonePlaceholder:"Phone number",
   passwordLabel:"Password",passwordPlaceholder:"Create a strong password",passwordHint:"At least 8 characters, with uppercase, lowercase, number and symbol.",
-  confirmLabel:"Confirm Password",confirmPlaceholder:"Enter your password again",termsPrefix:"I agree to the ",
-  termsName:"Terms of Service",termsMiddle:" and ",privacyName:"Privacy Policy",termsSuffix:".",
+  confirmLabel:"Confirm Password",confirmPlaceholder:"Enter your password again",
+  termsPrefix:"I agree to the ",termsName:"Terms of Service",termsMiddle:" and ",privacyName:"Privacy Policy",termsSuffix:".",
   create:"Create Account",otpTitle:"Verify Your Mobile Number",otpDescription:"Enter the SMS verification code sent to your phone.",
   otpLabel:"SMS Verification Code",otpPlaceholder:"Enter verification code",verify:"Verify & Finish Signup",
   loginPrefix:"Already have an account? ",login:"Log in",
   note:"Your country and language preferences are saved to your profile. Full site-wide translation must be connected separately.",
-  age:"You must be at least 18 years old.",badPassword:"Password must be 8–128 characters and include uppercase, lowercase, a number and a symbol.",
+  age:"You must be at least 18 years old.",
+  badPassword:"Password must be 8–128 characters and include uppercase, lowercase, a number and a symbol.",
   mismatch:"Passwords do not match.",termsError:"Please accept the Terms of Service and Privacy Policy.",
-  badPhone:"Enter a valid phone number without the country calling code.",
-  creating:"Creating account…",smsSent:"SMS verification code sent. Enter it below.",
+  badPhone:"Enter a valid phone number without the country calling code.",creating:"Creating account…",
+  smsSent:"SMS verification code sent. Enter it below.",
   emailError:"Your account was created, but the verification email could not be sent.",
   phoneError:"Could not start phone verification. Check the number and Firebase Phone Authentication settings.",
   otpError:"Phone verification failed. Check the code and try again.",
@@ -315,21 +310,25 @@ const copy={
   languageLabel:"পছন্দের ভাষা",languageHint:"আপনি চাইলে অন্য ভাষা নির্বাচন করতে পারবেন।",
   accountTitle:"👤 অ্যাকাউন্টের তথ্য",nameLabel:"পুরো নাম",namePlaceholder:"আপনার পুরো নাম লিখুন",
   emailLabel:"ইমেইল ঠিকানা",dobLabel:"জন্মতারিখ",phoneLabel:"মোবাইল নম্বর",phonePlaceholder:"ফোন নম্বর",
-  passwordLabel:"পাসওয়ার্ড",passwordPlaceholder:"শক্তিশালী পাসওয়ার্ড তৈরি করুন",passwordHint:"কমপক্ষে ৮ অক্ষর; বড় হাতের, ছোট হাতের অক্ষর, সংখ্যা ও প্রতীক দিন।",
-  confirmLabel:"পাসওয়ার্ড নিশ্চিত করুন",confirmPlaceholder:"আবার পাসওয়ার্ড লিখুন",termsPrefix:"আমি ",
-  termsName:"সেবার শর্তাবলি",termsMiddle:" এবং ",privacyName:"গোপনীয়তা নীতি",termsSuffix:"-তে সম্মত।",
+  passwordLabel:"পাসওয়ার্ড",passwordPlaceholder:"শক্তিশালী পাসওয়ার্ড তৈরি করুন",
+  passwordHint:"কমপক্ষে ৮ অক্ষর; বড় হাতের, ছোট হাতের অক্ষর, সংখ্যা ও প্রতীক দিন।",
+  confirmLabel:"পাসওয়ার্ড নিশ্চিত করুন",confirmPlaceholder:"আবার পাসওয়ার্ড লিখুন",
+  termsPrefix:"আমি ",termsName:"সেবার শর্তাবলি",termsMiddle:" এবং ",privacyName:"গোপনীয়তা নীতি",termsSuffix:"-তে সম্মত।",
   create:"অ্যাকাউন্ট তৈরি করুন",otpTitle:"মোবাইল নম্বর যাচাই করুন",otpDescription:"মোবাইলে পাঠানো SMS কোডটি লিখুন।",
   otpLabel:"SMS যাচাইকরণ কোড",otpPlaceholder:"কোড লিখুন",verify:"যাচাই করে শেষ করুন",
   loginPrefix:"আগেই অ্যাকাউন্ট আছে? ",login:"লগইন করুন",
   note:"আপনার দেশ ও ভাষা প্রোফাইলে সংরক্ষিত হবে। পুরো সাইটে অনুবাদ চালু করতে আলাদা ব্যবস্থা যুক্ত করতে হবে।",
-  age:"আপনার বয়স কমপক্ষে ১৮ বছর হতে হবে।",badPassword:"পাসওয়ার্ডে ৮–১২৮ অক্ষর, বড় ও ছোট হাতের অক্ষর, সংখ্যা ও প্রতীক থাকতে হবে।",
+  age:"আপনার বয়স কমপক্ষে ১৮ বছর হতে হবে।",
+  badPassword:"পাসওয়ার্ডে ৮–১২৮ অক্ষর, বড় ও ছোট হাতের অক্ষর, সংখ্যা ও প্রতীক থাকতে হবে।",
   mismatch:"দুটি পাসওয়ার্ড মিলছে না।",termsError:"সেবার শর্তাবলি ও গোপনীয়তা নীতিতে সম্মতি দিন।",
   badPhone:"দেশের কোড বাদ দিয়ে সঠিক ফোন নম্বর লিখুন।",creating:"অ্যাকাউন্ট তৈরি হচ্ছে…",
-  smsSent:"SMS কোড পাঠানো হয়েছে। নিচে কোড লিখুন।",emailError:"অ্যাকাউন্ট তৈরি হয়েছে, কিন্তু যাচাইকরণ ইমেইল পাঠানো যায়নি।",
+  smsSent:"SMS কোড পাঠানো হয়েছে। নিচে কোড লিখুন।",
+  emailError:"অ্যাকাউন্ট তৈরি হয়েছে, কিন্তু যাচাইকরণ ইমেইল পাঠানো যায়নি।",
   phoneError:"ফোন যাচাই শুরু হয়নি। নম্বর ও Firebase সেটিংস পরীক্ষা করুন।",
   otpError:"ফোন যাচাই হয়নি। কোড পরীক্ষা করে আবার চেষ্টা করুন।",
   saveError:"ফোন যাচাই হয়েছে, কিন্তু প্রোফাইল সংরক্ষণ হয়নি। সহায়তা নিন।",
-  saved:"অ্যাকাউন্ট যাচাই ও প্রোফাইল সংরক্ষণ হয়েছে।",generalError:"সাইনআপ ব্যর্থ হয়েছে। তথ্য পরীক্ষা করে আবার চেষ্টা করুন।",
+  saved:"অ্যাকাউন্ট যাচাই ও প্রোফাইল সংরক্ষণ হয়েছে।",
+  generalError:"সাইনআপ ব্যর্থ হয়েছে। তথ্য পরীক্ষা করে আবার চেষ্টা করুন।",
   already:"এই ইমেইলটি আগে নিবন্ধিত হয়ে থাকতে পারে।"
  },
  zh:{
@@ -339,13 +338,14 @@ const copy={
   accountTitle:"👤 账户信息",nameLabel:"姓名",namePlaceholder:"请输入姓名",emailLabel:"电子邮箱",
   dobLabel:"出生日期",phoneLabel:"手机号码",phonePlaceholder:"电话号码",passwordLabel:"密码",
   passwordPlaceholder:"创建强密码",passwordHint:"至少8个字符，包含大小写字母、数字和符号。",
-  confirmLabel:"确认密码",confirmPlaceholder:"再次输入密码",termsPrefix:"我同意",
-  termsName:"服务条款",termsMiddle:"和",privacyName:"隐私政策",termsSuffix:"。",
+  confirmLabel:"确认密码",confirmPlaceholder:"再次输入密码",
+  termsPrefix:"我同意",termsName:"服务条款",termsMiddle:"和",privacyName:"隐私政策",termsSuffix:"。",
   create:"创建账户",otpTitle:"验证手机号码",otpDescription:"请输入发送到手机的短信验证码。",
   otpLabel:"短信验证码",otpPlaceholder:"输入验证码",verify:"验证并完成注册",
   loginPrefix:"已有账户？",login:"登录",
   note:"所选国家和语言将保存到个人资料。整个网站的翻译需要单独接入。",
-  age:"您必须年满18岁。",badPassword:"密码必须为8至128个字符，并包含大小写字母、数字和符号。",
+  age:"您必须年满18岁。",
+  badPassword:"密码必须为8至128个字符，并包含大小写字母、数字和符号。",
   mismatch:"两次密码不一致。",termsError:"请同意服务条款和隐私政策。",
   badPhone:"请输入不含国家代码的有效电话号码。",creating:"正在创建账户…",
   smsSent:"验证码已发送，请在下方输入。",emailError:"账户已创建，但验证邮件发送失败。",
@@ -361,30 +361,30 @@ const copy={
   languageLabel:"पसंदीदा भाषा",languageHint:"डिफ़ॉल्ट अंग्रेज़ी है। आप दूसरी भाषा चुन सकते हैं।",
   accountTitle:"👤 खाते की जानकारी",nameLabel:"पूरा नाम",namePlaceholder:"अपना पूरा नाम दर्ज करें",
   emailLabel:"ईमेल पता",dobLabel:"जन्म तिथि",phoneLabel:"मोबाइल नंबर",phonePlaceholder:"फ़ोन नंबर",
-  passwordLabel:"पासवर्ड",passwordPlaceholder:"मज़बूत पासवर्ड बनाएँ",passwordHint:"कम से कम 8 अक्षर, बड़े और छोटे अक्षर, संख्या और प्रतीक शामिल करें।",
-  confirmLabel:"पासवर्ड की पुष्टि करें",confirmPlaceholder:"पासवर्ड फिर दर्ज करें",termsPrefix:"मैं ",
-  termsName:"सेवा की शर्तें",termsMiddle:" और ",privacyName:"गोपनीयता नीति",termsSuffix:" से सहमत हूँ।",
+  passwordLabel:"पासवर्ड",passwordPlaceholder:"मज़बूत पासवर्ड बनाएँ",
+  passwordHint:"कम से कम 8 अक्षर, बड़े और छोटे अक्षर, संख्या और प्रतीक शामिल करें।",
+  confirmLabel:"पासवर्ड की पुष्टि करें",confirmPlaceholder:"पासवर्ड फिर दर्ज करें",
+  termsPrefix:"मैं ",termsName:"सेवा की शर्तें",termsMiddle:" और ",privacyName:"गोपनीयता नीति",termsSuffix:" से सहमत हूँ।",
   create:"खाता बनाएँ",otpTitle:"मोबाइल नंबर सत्यापित करें",otpDescription:"फ़ोन पर भेजा गया SMS कोड दर्ज करें।",
   otpLabel:"SMS सत्यापन कोड",otpPlaceholder:"सत्यापन कोड दर्ज करें",verify:"सत्यापित करें और पूरा करें",
   loginPrefix:"पहले से खाता है? ",login:"लॉग इन करें",
   note:"आपका देश और भाषा प्रोफ़ाइल में सहेजे जाएँगे। पूरी साइट का अनुवाद अलग से जोड़ना होगा।",
-  age:"आपकी आयु कम से कम 18 वर्ष होनी चाहिए।",badPassword:"पासवर्ड में 8–128 अक्षर, बड़े और छोटे अक्षर, संख्या और प्रतीक होने चाहिए।",
+  age:"आपकी आयु कम से कम 18 वर्ष होनी चाहिए।",
+  badPassword:"पासवर्ड में 8–128 अक्षर, बड़े और छोटे अक्षर, संख्या और प्रतीक होने चाहिए।",
   mismatch:"दोनों पासवर्ड मेल नहीं खाते।",termsError:"कृपया शर्तों और गोपनीयता नीति को स्वीकार करें।",
   badPhone:"देश कोड के बिना सही फ़ोन नंबर दर्ज करें।",creating:"खाता बनाया जा रहा है…",
-  smsSent:"SMS कोड भेज दिया गया है। नीचे दर्ज करें।",emailError:"खाता बन गया, लेकिन सत्यापन ईमेल नहीं भेजा जा सका।",
+  smsSent:"SMS कोड भेज दिया गया है। नीचे दर्ज करें।",
+  emailError:"खाता बन गया, लेकिन सत्यापन ईमेल नहीं भेजा जा सका।",
   phoneError:"फ़ोन सत्यापन शुरू नहीं हो सका। नंबर और Firebase सेटिंग्स जाँचें।",
   otpError:"फ़ोन सत्यापित नहीं हुआ। कोड जाँचकर फिर प्रयास करें।",
   saveError:"फ़ोन सत्यापित हुआ, लेकिन प्रोफ़ाइल सहेजी नहीं गई। सहायता लें।",
-  saved:"खाता सत्यापित हुआ और प्रोफ़ाइल सहेजी गई।",generalError:"साइनअप विफल हुआ। जानकारी जाँचकर फिर प्रयास करें।",
+  saved:"खाता सत्यापित हुआ और प्रोफ़ाइल सहेजी गई।",
+  generalError:"साइनअप विफल हुआ। जानकारी जाँचकर फिर प्रयास करें।",
   already:"यह ईमेल पहले से पंजीकृत हो सकता है।"
  }
 };
 
-const suggestions={
- BD:"bn",US:"en",GB:"en",IN:"hi",PK:"ur",CN:"zh",JP:"ja",KR:"ko",
- SA:"ar",AE:"ar",MY:"ms",SG:"en",ID:"id",TR:"tr",FR:"fr",DE:"de",
- IT:"it",ES:"es",CA:"en",AU:"en",NG:"en",ZA:"en",BR:"pt"
-};
+const suggestions={BD:"bn",US:"en",GB:"en",IN:"hi",PK:"ur",CN:"zh",JP:"ja",KR:"ko",SA:"ar",AE:"ar",MY:"ms",SG:"en",ID:"id",TR:"tr",FR:"fr",DE:"de",IT:"it",ES:"es",CA:"en",AU:"en",NG:"en",ZA:"en",BR:"pt"};
 
 let t=copy.en,user=null,confirmation=null,recaptcha=null,phoneNumber="";
 
@@ -392,51 +392,37 @@ function showStatus(message,type="error"){
  statusBox.textContent=message;
  statusBox.className="status show "+type;
 }
-function clearStatus(){
- statusBox.textContent="";
- statusBox.className="status";
-}
-function set(id,key){
- if($(id)&&t[key]!==undefined) $(id).textContent=t[key];
-}
-function placeholder(id,key){
- if($(id)&&t[key]!==undefined) $(id).placeholder=t[key];
-}
+function clearStatus(){statusBox.textContent="";statusBox.className="status"}
+function set(id,key){if($(id)&&t[key]!==undefined)$(id).textContent=t[key]}
+function placeholder(id,key){if($(id)&&t[key]!==undefined)$(id).placeholder=t[key]}
+
 function eyeSvg(open){
  return open
  ?'<svg viewBox="0 0 24 24"><path d="M3 3l18 18"/><path d="M10.6 5.1A10 10 0 0112 5c6.5 0 10 7 10 7a16 16 0 01-3 3.8"/><path d="M6.2 6.2C3.5 8 2 12 2 12s3.5 7 10 7c1.4 0 2.7-.4 3.8-1"/><path d="M9.9 9.9a3 3 0 004.2 4.2"/></svg>'
  :'<svg viewBox="0 0 24 24"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg>';
 }
+
 function richLinks(){
  const el=$("termsText");
  el.replaceChildren();
  el.append(document.createTextNode(t.termsPrefix));
- const a=document.createElement("a");
- a.href="terms.html";a.textContent=t.termsName;
+ const a=document.createElement("a");a.href="terms.html";a.textContent=t.termsName;
  const middle=document.createTextNode(t.termsMiddle);
- const b=document.createElement("a");
- b.href="privacy.html";b.textContent=t.privacyName;
+ const b=document.createElement("a");b.href="privacy.html";b.textContent=t.privacyName;
  el.append(a,middle,b,document.createTextNode(t.termsSuffix));
-
  const login=$("loginText");
  login.replaceChildren(document.createTextNode(t.loginPrefix));
- const link=document.createElement("a");
- link.href="login.html";link.textContent=t.login;
+ const link=document.createElement("a");link.href="login.html";link.textContent=t.login;
  login.append(link);
 }
+
 function applyLanguage(code){
  t=copy[code]||copy.en;
  document.documentElement.lang=code;
  document.documentElement.dir=(code==="ar"||code==="ur")?"rtl":"ltr";
- [
-  "title","subtitle","preferencesTitle","countryLabel","countryHint",
-  "languageLabel","languageHint","accountTitle","nameLabel","emailLabel",
-  "dobLabel","phoneLabel","passwordLabel","passwordHint","confirmLabel",
-  "createButton","otpTitle","otpDescription","otpLabel","verifyButton","note"
- ].forEach(id=>{
-  const key=id==="createButton"?"create":id;
-  set(id,key);
- });
+ ["title","subtitle","preferencesTitle","countryLabel","countryHint","languageLabel","languageHint","accountTitle","nameLabel","emailLabel","dobLabel","phoneLabel","passwordLabel","passwordHint","confirmLabel","otpTitle","otpDescription","otpLabel","note"].forEach(id=>set(id,id));
+ $("createButton").textContent=t.create;
+ $("verifyButton").textContent=t.verify;
  placeholder("fullName","namePlaceholder");
  placeholder("email","emailPlaceholder");
  placeholder("phone","phonePlaceholder");
@@ -454,11 +440,9 @@ function applyLanguage(code){
 
 function fillDialCodes(){
  dialCode.replaceChildren();
- const codes=[...new Set(Object.values(countries).map(x=>x.code))];
- codes.forEach(code=>{
+ [...new Set(Object.values(countries).map(x=>x.code))].forEach(code=>{
   const option=document.createElement("option");
-  option.value=code;option.textContent=code;
-  dialCode.append(option);
+  option.value=code;option.textContent=code;dialCode.append(option);
  });
 }
 function syncCountry(){
@@ -467,10 +451,7 @@ function syncCountry(){
  language.value=suggestions[country.value]||"en";
  applyLanguage(language.value);
 }
-country.addEventListener("change",()=>{
- syncCountry();
- phone.value="";
-});
+country.addEventListener("change",()=>{syncCountry();phone.value=""});
 language.addEventListener("change",()=>applyLanguage(language.value));
 
 document.querySelectorAll("[data-toggle]").forEach(btn=>{
@@ -485,206 +466,91 @@ document.querySelectorAll("[data-toggle]").forEach(btn=>{
 
 function getPhone(){
  let raw=phone.value.trim().replace(/[\s().-]/g,"");
- if(raw.startsWith("+")) return raw;
+ if(raw.startsWith("+"))return raw;
  raw=raw.replace(/\D/g,"");
  return dialCode.value+raw;
 }
 
 function validForm(){
- if(!form.reportValidity()) return false;
-
+ if(!form.reportValidity())return false;
  const birth=new Date($("dob").value+"T12:00:00");
  const now=new Date();
  let age=now.getFullYear()-birth.getFullYear();
-
- if(now.getMonth()<birth.getMonth()||
-  (now.getMonth()===birth.getMonth()&&now.getDate()<birth.getDate())) age--;
-
- if(!Number.isFinite(birth.getTime())||age<18||age>120){
-  showStatus(t.age);return false;
- }
-
+ if(now.getMonth()<birth.getMonth()||(now.getMonth()===birth.getMonth()&&now.getDate()<birth.getDate()))age--;
+ if(!Number.isFinite(birth.getTime())||age<18||age>120){showStatus(t.age);return false}
  const p=$("password").value;
-
- // Password must be 8–128 characters and include all four character types.
- if(p.length<8||p.length>128||!/[a-z]/.test(p)||!/[A-Z]/.test(p)||!/[0-9]/.test(p)||!/[^\w]/.test(p)){
-  showStatus(t.badPassword);return false;
- }
-
- if(p!==$("confirmPassword").value){
-  showStatus(t.mismatch);return false;
- }
-
- if(!$("agree").checked){
-  showStatus(t.termsError);return false;
- }
-
+ if(p.length<8||p.length>128||!/[a-z]/.test(p)||!/[A-Z]/.test(p)||!/[0-9]/.test(p)||!/[^\w]/.test(p)){showStatus(t.badPassword);return false}
+ if(p!==$("confirmPassword").value){showStatus(t.mismatch);return false}
+ if(!$("agree").checked){showStatus(t.termsError);return false}
  phoneNumber=getPhone();
-
- if(!/^\+[1-9]\d{7,14}$/.test(phoneNumber)){
-  showStatus(t.badPhone);return false;
- }
-
+ if(!/^\+[1-9]\d{7,14}$/.test(phoneNumber)){showStatus(t.badPhone);return false}
  return true;
 }
 
 form.addEventListener("submit",async e=>{
- e.preventDefault();
- clearStatus();
-
- if(!validForm()) return;
-
- createButton.disabled=true;
- createButton.textContent=t.creating;
-
+ e.preventDefault();clearStatus();
+ if(!validForm())return;
+ createButton.disabled=true;createButton.textContent=t.creating;
  try{
-  const result=await createUserWithEmailAndPassword(
-   auth,
-   $("email").value.trim(),
-   $("password").value
-  );
-
+  const result=await createUserWithEmailAndPassword(auth,$("email").value.trim(),$("password").value);
   user=result.user;
-
+  try{await sendEmailVerification(user)}
+  catch(err){console.error("Email verification:",err);showStatus(t.emailError,"error")}
   try{
-   await sendEmailVerification(user);
-  }catch(err){
-   console.error("Email verification:",err);
-   showStatus(t.emailError,"error");
-  }
-
-  try{
-   if(!recaptcha){
-    recaptcha=new RecaptchaVerifier(
-     auth,
-     "recaptcha-container",
-     {size:"invisible"}
-    );
-   }
-
+   if(!recaptcha)recaptcha=new RecaptchaVerifier(auth,"recaptcha-container",{size:"invisible"});
    confirmation=await linkWithPhoneNumber(user,phoneNumber,recaptcha);
    otpBox.classList.add("show");
    showStatus(t.smsSent,"ok");
-
-  }catch(err){
-   console.error("Phone verification:",err);
-   showStatus(t.phoneError);
-  }
-
+  }catch(err){console.error("Phone verification:",err);showStatus(t.phoneError)}
  }catch(err){
   console.error("Signup:",err);
-  showStatus(
-   err.code==="auth/email-already-in-use"
-    ?t.already
-    :t.generalError
-  );
-
+  showStatus(err.code==="auth/email-already-in-use"?t.already:t.generalError);
  }finally{
-  createButton.disabled=false;
-  createButton.textContent=t.create;
+  createButton.disabled=false;createButton.textContent=t.create;
  }
 });
 
 verifyButton.addEventListener("click",async()=>{
  clearStatus();
-
- if(!user||!confirmation){
-  showStatus(t.phoneError);
-  return;
- }
-
+ if(!user||!confirmation){showStatus(t.phoneError);return}
  const code=$("otp").value.trim();
-
- if(!/^\d{4,8}$/.test(code)){
-  showStatus(t.otpError);
-  return;
- }
-
+ if(!/^\d{4,8}$/.test(code)){showStatus(t.otpError);return}
  verifyButton.disabled=true;
-
  try{
-  const result=await confirmation.confirm(code);
-  user=result.user;
-
+  const result=await confirmation.confirm(code);user=result.user;
   const countryInfo=countries[country.value]||countries.US;
   const name=$("fullName").value.trim();
-
   const profile={
-   uid:user.uid,
-   displayName:name,
-   name,
-   email:user.email,
-   dateOfBirth:$("dob").value,
-   countryCode:country.value,
-   countryName:countryInfo.name,
-   phoneNumber,
-   language:language.value,
-   emailVerified:user.emailVerified,
-   phoneVerified:true,
-   createdAt:serverTimestamp(),
-   updatedAt:serverTimestamp()
+   uid:user.uid,displayName:name,name,email:user.email,dateOfBirth:$("dob").value,
+   countryCode:country.value,countryName:countryInfo.name,phoneNumber,
+   language:language.value,emailVerified:user.emailVerified,phoneVerified:true,
+   createdAt:serverTimestamp(),updatedAt:serverTimestamp()
   };
-
-  await setDoc(
-   doc(db,"profiles",user.uid),
-   profile,
-   {merge:true}
-  );
-
-  await setDoc(
-   doc(db,"users",user.uid,"private","account"),
-   {
-    uid:user.uid,
-    email:user.email,
-    phoneNumber,
-    countryCode:country.value,
-    language:language.value,
-    dateOfBirth:$("dob").value,
-    createdAt:serverTimestamp(),
-    updatedAt:serverTimestamp()
-   },
-   {merge:true}
-  );
-
+  await setDoc(doc(db,"profiles",user.uid),profile,{merge:true});
+  await setDoc(doc(db,"users",user.uid,"private","account"),{
+   uid:user.uid,email:user.email,phoneNumber,countryCode:country.value,
+   language:language.value,dateOfBirth:$("dob").value,
+   createdAt:serverTimestamp(),updatedAt:serverTimestamp()
+  },{merge:true});
   localStorage.setItem("zemivo-language",language.value);
   localStorage.setItem("zemivo-country",country.value);
-
   showStatus(t.saved,"ok");
   setTimeout(()=>location.href="profile.html",1200);
-
  }catch(err){
   console.error("OTP or profile saving:",err);
-  showStatus(
-   err.code==="auth/invalid-verification-code"
-    ?t.otpError
-    :t.saveError
-  );
-
- }finally{
-  verifyButton.disabled=false;
- }
+  showStatus(err.code==="auth/invalid-verification-code"?t.otpError:t.saveError);
+ }finally{verifyButton.disabled=false}
 });
 
 function localDateString(d){
- return d.getFullYear()+"-"+
-  String(d.getMonth()+1).padStart(2,"0")+"-"+
-  String(d.getDate()).padStart(2,"0");
+ return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");
 }
-
 const now=new Date();
-$("dob").max=localDateString(
- new Date(now.getFullYear()-18,now.getMonth(),now.getDate())
-);
-
+$("dob").max=localDateString(new Date(now.getFullYear()-18,now.getMonth(),now.getDate()));
 fillDialCodes();
-
 const savedCountry=localStorage.getItem("zemivo-country");
 const savedLanguage=localStorage.getItem("zemivo-language");
-
-if(savedCountry&&countries[savedCountry]){
- country.value=savedCountry;
-}
-
+if(savedCountry&&countries[savedCountry])country.value=savedCountry;
 dialCode.value=(countries[country.value]||countries.US).code;
 language.value=savedLanguage&&copy[savedLanguage]?savedLanguage:"en";
 applyLanguage(language.value);
