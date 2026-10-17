@@ -1,1923 +1,828 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#eff7ff">
+<title>Zemivo | 3D Profile</title>
 
-  <meta charset="UTF-8">
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
-  >
+<style>
+:root {
+  --accent: #1677ff;
+  --accent2: #6855f5;
+  --glow: rgba(22,119,255,.20);
+  --page: #edf5ff;
+  --glass: rgba(255,255,255,.83);
+  --ink: #142b56;
+  --muted: #61789e;
+  --line: rgba(90,140,220,.19);
+  --shadow: 0 12px 30px rgba(51,102,180,.13);
+}
 
-  <title>Zemivo Profile</title>
+* { box-sizing: border-box; }
 
-  <style>
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: Arial, Helvetica, sans-serif;
+  color: var(--ink);
+  background:
+    radial-gradient(ellipse at 15% 10%, rgba(255,255,255,.98), transparent 38%),
+    radial-gradient(ellipse at 90% 30%, var(--glow), transparent 40%),
+    linear-gradient(135deg, var(--page), #fff 55%, var(--page));
+  transition: background .7s ease, color .5s ease;
+}
 
-    * {
-      box-sizing: border-box;
-    }
+button, input { font: inherit; }
+button, a { -webkit-tap-highlight-color: transparent; }
 
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #f4f6f8;
-      color: #222;
-    }
+a { color: var(--accent); text-decoration: none; }
 
-    .topbar {
-      background: white;
-      padding: 14px 20px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-      position: sticky;
-      top: 0;
-      z-index: 100;
-    }
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  min-height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 12px clamp(14px, 4vw, 40px);
+  background: var(--glass);
+  border-bottom: 1px solid var(--line);
+  backdrop-filter: blur(22px);
+  box-shadow: 0 5px 22px rgba(30,70,140,.08);
+}
 
-    .logo {
-      color: #2563eb;
-      font-size: 26px;
-      font-weight: bold;
-    }
+.logo {
+  font-size: clamp(25px, 4vw, 34px);
+  font-weight: 900;
+  letter-spacing: -1.4px;
+  color: var(--accent);
+  text-shadow: 0 2px 0 white, 0 5px 12px var(--glow);
+}
 
-    .back {
-      color: #2563eb;
-      text-decoration: none;
-      font-weight: bold;
-    }
+.top-actions { display: flex; gap: 9px; align-items: center; }
 
-    .profile {
-      max-width: 700px;
-      margin: 30px auto;
-      padding: 0 15px 30px;
-    }
+.top-link, .theme-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 40px;
+  padding: 9px 14px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: linear-gradient(145deg, #fff, rgba(230,241,255,.8));
+  color: var(--accent);
+  font-weight: 800;
+  box-shadow: 0 4px 10px var(--glow), inset 0 1px 0 white;
+  cursor: pointer;
+}
 
-    .card {
-      background: white;
-      border-radius: 18px;
-      padding: 25px;
-      margin-bottom: 20px;
-      box-shadow: 0 3px 12px rgba(0,0,0,0.07);
-    }
+.page {
+  width: min(1180px, 100%);
+  margin: 24px auto;
+  padding: 0 18px 40px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 285px;
+  align-items: start;
+  gap: 20px;
+}
 
-    .profile-header {
-      text-align: center;
-    }
+.main-column, .side-column { min-width: 0; }
 
-    .avatar {
-      width: 100px;
-      height: 100px;
-      border-radius: 50%;
-      background: #2563eb;
-      color: white;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      font-size: 40px;
-      font-weight: bold;
-      margin: auto;
-      overflow: hidden;
-    }
+.card {
+  position: relative;
+  margin-bottom: 18px;
+  padding: 23px;
+  border: 1px solid rgba(255,255,255,.95);
+  border-radius: 23px;
+  background: var(--glass);
+  box-shadow: var(--shadow), inset 0 1px 0 white;
+  backdrop-filter: blur(18px);
+  overflow: hidden;
+}
 
-    .avatar img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: none;
-    }
+.card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 8%;
+  right: 8%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, white, transparent);
+}
 
-    .name {
-      margin-top: 15px;
-      font-size: 28px;
-      font-weight: bold;
-      word-break: break-word;
-    }
+.profile-hero {
+  padding: 0;
+}
 
-    .username {
-      color: #666;
-      margin-top: 5px;
-      word-break: break-word;
-    }
+.cover {
+  min-height: 190px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 28px 18px;
+  text-align: center;
+  overflow: hidden;
+  color: white;
+  background:
+    radial-gradient(circle at 80% 20%, rgba(255,255,255,.8), transparent 15%),
+    radial-gradient(circle at 20% 85%, rgba(255,255,255,.35), transparent 20%),
+    linear-gradient(125deg, var(--accent), var(--accent2), #8ddcff);
+}
 
-    .verified {
-      display: inline-block;
-      margin-top: 10px;
-      background: #e8f1ff;
-      color: #2563eb;
-      padding: 6px 12px;
-      border-radius: 20px;
-      font-size: 14px;
-      font-weight: bold;
-    }
+.cover::before, .cover::after {
+  content: "";
+  position: absolute;
+  border: 1px solid rgba(255,255,255,.45);
+  border-radius: 50%;
+  transform: rotate(-25deg);
+}
 
-    .country {
-      margin-top: 10px;
-      font-weight: bold;
-    }
+.cover::before {
+  width: 260px;
+  height: 95px;
+  right: -35px;
+  top: 22px;
+}
 
-    .email {
-      margin-top: 8px;
-      color: #666;
-      font-size: 14px;
-      word-break: break-word;
-    }
+.cover::after {
+  width: 190px;
+  height: 70px;
+  left: -30px;
+  bottom: 12px;
+}
 
-    .stats {
-      display: flex;
-      justify-content: space-around;
-      text-align: center;
-      margin-top: 25px;
-      gap: 10px;
-    }
+.cover-content { position: relative; z-index: 1; }
 
-    .stat {
-      flex: 1;
-    }
+.cover-brand {
+  font-size: clamp(30px, 5vw, 49px);
+  font-weight: 900;
+  letter-spacing: -1px;
+  text-shadow: 0 2px 0 rgba(255,255,255,.35), 0 5px 0 rgba(0,44,135,.28), 0 12px 22px rgba(0,30,100,.35);
+}
 
-    .stat strong {
-      display: block;
-      font-size: 21px;
-    }
+.cover-tagline {
+  margin-top: 9px;
+  font-size: clamp(14px, 2.5vw, 19px);
+  font-weight: 800;
+  text-shadow: 0 3px 10px rgba(0,25,80,.35);
+}
 
-    .stat span {
-      color: #777;
-      font-size: 14px;
-    }
+.profile-summary {
+  position: relative;
+  padding: 0 24px 25px;
+}
 
-    .voice-card {
-      text-align: center;
-      background: #eef5ff;
-    }
+.profile-top {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 17px;
+  margin-top: -48px;
+  position: relative;
+}
 
-    .voice-title {
-      font-size: 20px;
-      font-weight: bold;
-      margin-bottom: 10px;
-    }
+.avatar {
+  width: 112px;
+  height: 112px;
+  flex: 0 0 112px;
+  border: 5px solid white;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  background: linear-gradient(145deg, var(--accent), var(--accent2));
+  color: white;
+  font-size: 39px;
+  font-weight: 900;
+  box-shadow: 0 8px 23px var(--glow), inset 0 2px 4px rgba(255,255,255,.6);
+}
 
-    .voice-message {
-      color: #444;
-      line-height: 1.6;
-      margin-bottom: 15px;
-    }
+.avatar img { width: 100%; height: 100%; object-fit: cover; display: none; }
 
-    .voice-button {
-      border: none;
-      background: #2563eb;
-      color: white;
-      padding: 12px 22px;
-      border-radius: 25px;
-      font-weight: bold;
-      cursor: pointer;
-      font-size: 15px;
-    }
+.profile-title {
+  min-width: 0;
+  flex: 1;
+  padding-top: 46px;
+}
 
-    .voice-button:disabled {
-      opacity: 0.6;
-      cursor: not-allowed;
-    }
+.profile-name {
+  font-size: clamp(22px, 3.5vw, 29px);
+  font-weight: 900;
+  line-height: 1.25;
+  overflow-wrap: anywhere;
+  text-shadow: 0 1px 0 white, 0 3px 7px var(--glow);
+}
 
-    .identity {
-      text-align: left;
-    }
+.handle { margin-top: 6px; color: var(--muted); overflow-wrap: anywhere; }
 
-    .identity h3 {
-      margin-top: 0;
-    }
+.verified {
+  display: inline-block;
+  margin-left: 5px;
+  color: var(--accent);
+  text-shadow: 0 2px 5px var(--glow);
+}
 
-    .identity-row {
-      padding: 12px 0;
-      border-bottom: 1px solid #eee;
-    }
+.bio { margin-top: 13px; line-height: 1.6; color: var(--muted); overflow-wrap: anywhere; }
 
-    .identity-row:last-child {
-      border-bottom: none;
-    }
+.pills { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 13px; }
 
-    .identity-label {
-      color: #777;
-      font-size: 13px;
-    }
+.pill {
+  padding: 7px 11px;
+  border-radius: 12px;
+  background: rgba(255,255,255,.7);
+  border: 1px solid var(--line);
+  color: var(--muted);
+  font-size: 13px;
+}
 
-    .identity-value {
-      font-weight: bold;
-      margin-top: 4px;
-      word-break: break-word;
-    }
+.stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-top: 24px;
+}
 
-    .verification-badge {
-      display: inline-block;
-      margin-top: 5px;
-      padding: 5px 9px;
-      border-radius: 15px;
-      background: #dcfce7;
-      color: #15803d;
-      font-size: 12px;
-      font-weight: bold;
-    }
+.stat {
+  padding: 14px 8px;
+  text-align: center;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: linear-gradient(145deg, rgba(255,255,255,.98), rgba(226,239,255,.65));
+  box-shadow: 0 4px 12px rgba(40,90,160,.06), inset 0 1px 0 white;
+}
 
-    .logout {
-      width: 100%;
-      border: none;
-      background: #dc2626;
-      color: white;
-      padding: 13px;
-      border-radius: 25px;
-      font-weight: bold;
-      cursor: pointer;
-      font-size: 16px;
-    }
+.stat strong { display: block; font-size: 23px; color: var(--accent); }
+.stat span { display: block; margin-top: 4px; color: var(--muted); font-size: 13px; }
 
-    .logout:disabled {
-      opacity: 0.6;
-      cursor: not-allowed;
-    }
+.section-title { font-size: 19px; font-weight: 900; margin: 0 0 16px; }
 
-    .notice {
-      text-align: center;
-      color: #777;
-      font-size: 13px;
-      line-height: 1.5;
-      margin-top: 18px;
-    }
+.identity-row { padding: 12px 0; border-bottom: 1px solid var(--line); }
+.identity-row:last-child { border-bottom: 0; }
+.identity-label { font-size: 12px; color: var(--muted); }
+.identity-value { margin-top: 5px; font-weight: 800; overflow-wrap: anywhere; }
+.status { color: #12834b; }
+.status-warning { color: #a86a00; }
 
-    .loading {
-      text-align: center;
-      padding: 40px;
-      color: #666;
-    }
+.voice-card { text-align: center; }
+.voice-orb {
+  width: 65px;
+  height: 65px;
+  display: grid;
+  place-items: center;
+  margin: 0 auto 14px;
+  border-radius: 50%;
+  font-size: 28px;
+  background: linear-gradient(145deg, white, #dceaff);
+  box-shadow: 0 8px 18px var(--glow), inset 0 2px 5px white;
+}
+.voice-message { color: var(--muted); line-height: 1.7; margin: 12px 0 18px; }
 
-    .error {
-      max-width: 700px;
-      margin: 30px auto;
-      padding: 20px;
-      text-align: center;
-      color: #dc2626;
-      background: #fff;
-      border-radius: 15px;
-    }
+.primary-button, .secondary-button, .logout {
+  min-height: 44px;
+  padding: 11px 17px;
+  border: 0;
+  border-radius: 14px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: transform .2s, box-shadow .2s;
+}
 
-    #profileContent {
-      display: none;
-    }
+.primary-button {
+  color: white;
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  box-shadow: 0 7px 16px var(--glow), inset 0 1px 0 rgba(255,255,255,.45);
+}
 
-    @media (max-width: 600px) {
+.secondary-button {
+  color: var(--accent);
+  background: linear-gradient(145deg, white, #e8f1ff);
+  border: 1px solid var(--line);
+  box-shadow: 0 4px 10px var(--glow);
+}
 
-      .topbar {
-        padding: 13px 15px;
-      }
+.primary-button:hover, .secondary-button:hover, .logout:hover, .top-link:hover {
+  transform: translateY(-2px);
+}
 
-      .logo {
-        font-size: 23px;
-      }
+.primary-button:disabled, .logout:disabled { opacity: .6; cursor: wait; transform: none; }
 
-      .profile {
-        margin-top: 20px;
-        padding-left: 10px;
-        padding-right: 10px;
-      }
+.identity-actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 18px; }
 
-      .card {
-        padding: 20px;
-        border-radius: 16px;
-      }
+.logout {
+  width: 100%;
+  color: white;
+  background: linear-gradient(135deg, #ed4444, #bc202f);
+  box-shadow: 0 7px 16px rgba(200,30,50,.17);
+}
 
-      .avatar {
-        width: 90px;
-        height: 90px;
-        font-size: 36px;
-      }
+.notice { color: var(--muted); font-size: 12px; line-height: 1.6; margin-top: 14px; }
 
-      .name {
-        font-size: 24px;
-      }
+#loading, #errorMessage {
+  width: min(700px, calc(100% - 32px));
+  margin: 50px auto;
+  padding: 24px;
+  text-align: center;
+  border-radius: 20px;
+  background: var(--glass);
+  box-shadow: var(--shadow);
+  color: var(--muted);
+}
 
-      .stats {
-        margin-top: 22px;
-      }
+#errorMessage { color: #bd2838; display: none; }
+#profileContent { display: none; }
 
-      .stat strong {
-        font-size: 19px;
-      }
+@media (max-width: 800px) {
+  .page { grid-template-columns: minmax(0, 1fr); max-width: 680px; }
+  .side-column { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+  .side-column .card { margin-bottom: 0; }
+}
 
-      .stat span {
-        font-size: 12px;
-      }
+@media (max-width: 520px) {
+  .topbar { min-height: 60px; padding: 10px 13px; }
+  .logo { font-size: 26px; }
+  .top-link, .theme-button { min-height: 37px; padding: 8px 10px; font-size: 13px; }
+  .page { margin: 14px auto; padding: 0 11px 28px; gap: 13px; }
+  .card { padding: 18px; border-radius: 19px; margin-bottom: 13px; }
+  .profile-hero { padding: 0; }
+  .cover { min-height: 150px; }
+  .profile-summary { padding: 0 16px 19px; }
+  .profile-top { gap: 10px; margin-top: -38px; }
+  .avatar { width: 82px; height: 82px; flex-basis: 82px; font-size: 29px; border-width: 4px; }
+  .profile-title { padding-top: 42px; }
+  .profile-name { font-size: 21px; }
+  .stats { gap: 6px; margin-top: 19px; }
+  .stat { padding: 12px 4px; }
+  .stat strong { font-size: 19px; }
+  .stat span { font-size: 11px; }
+  .side-column { grid-template-columns: minmax(0, 1fr); gap: 13px; }
+  .identity-actions > * { flex: 1; }
+}
 
-    }
-
-  </style>
-
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition: none !important; }
+}
+</style>
 </head>
 
-
 <body>
-
-
-  <!-- TOP BAR -->
-
-  <header class="topbar">
-
-    <div class="logo">
-      Zemivo
-    </div>
-
-    <a
-      class="back"
-      href="index.html"
-    >
-      ← Home
-    </a>
-
-  </header>
-
-
-  <!-- LOADING -->
-
-  <div
-    id="loading"
-    class="loading"
-  >
-    Loading Zemivo Profile...
+<header class="topbar">
+  <div class="logo">🌐 Zemivo</div>
+  <div class="top-actions">
+    <button id="themeButton" class="theme-button" type="button" aria-label="Change daily theme">✨ Theme</button>
+    <a class="top-link" href="index.html">⌂ Home</a>
   </div>
+</header>
 
+<div id="loading" role="status">✨ Loading your Zemivo 3D Profile...</div>
 
-  <!-- ERROR -->
+<div id="errorMessage" role="alert">
+  Unable to load your profile. Please refresh and try again.
+  <p><a href="login.html">Return to Login</a></p>
+</div>
 
-  <div
-    id="errorMessage"
-    class="error"
-    style="display:none;"
-  >
-    Unable to load your Zemivo profile.
-  </div>
+<main class="page" id="profileContent">
+  <div class="main-column">
 
-
-  <!-- PROFILE -->
-
-  <main
-    class="profile"
-    id="profileContent"
-  >
-
-
-    <!-- PROFILE CARD -->
-
-    <section class="card profile-header">
-
-      <div
-        class="avatar"
-        id="avatar"
-      >
-
-        <span id="avatarLetter">
-          Z
-        </span>
-
-        <img
-          id="avatarImage"
-          alt="Zemivo profile photo"
-        >
-
+    <section class="card profile-hero">
+      <div class="cover">
+        <div class="cover-content">
+          <div class="cover-brand">Zemivo</div>
+          <div class="cover-tagline">Dream Bigger · Connect Globally · Create Together</div>
+        </div>
       </div>
 
+      <div class="profile-summary">
+        <div class="profile-top">
+          <div class="avatar" id="avatar">
+            <span id="avatarLetter">Z</span>
+            <img id="avatarImage" alt="Profile photo">
+          </div>
 
-      <div
-        class="name"
-        id="profileName"
-      >
-        Zemivo User
-      </div>
-
-
-      <div
-        class="username"
-        id="username"
-      >
-        @zemivo_user
-      </div>
-
-
-      <div
-        class="verified"
-        id="verifiedBadge"
-      >
-        ✓ Account Verified
-      </div>
-
-
-      <div
-        class="country"
-        id="country"
-      >
-        🌍 Global
-      </div>
-
-
-      <div
-        class="email"
-        id="userEmail"
-      >
-        Loading...
-      </div>
-
-
-      <!-- STATS -->
-
-      <div class="stats">
-
-        <div class="stat">
-
-          <strong id="followersCount">
-            0
-          </strong>
-
-          <span>
-            Followers
-          </span>
-
+          <div class="profile-title">
+            <div class="profile-name">
+              <span id="profileName">Zemivo User</span><span class="verified" id="verifiedBadge" aria-label="Signed-in account">✓</span>
+            </div>
+            <div class="handle" id="username">@zemivo_user</div>
+            <div class="bio" id="bio">Connect · Create · Earn · Make a better tomorrow.</div>
+          </div>
         </div>
 
-
-        <div class="stat">
-
-          <strong id="followingCount">
-            0
-          </strong>
-
-          <span>
-            Following
-          </span>
-
+        <div class="pills">
+          <span class="pill" id="country">🌍 Global</span>
+          <span class="pill" id="language">🌐 Language: English</span>
+          <span class="pill">💎 Zemivo Community</span>
         </div>
 
-
-        <div class="stat">
-
-          <strong id="postsCount">
-            0
-          </strong>
-
-          <span>
-            Posts
-          </span>
-
+        <div class="stats">
+          <div class="stat"><strong id="postsCount">0</strong><span>Posts</span></div>
+          <div class="stat"><strong id="followersCount">0</strong><span>Followers</span></div>
+          <div class="stat"><strong id="followingCount">0</strong><span>Following</span></div>
         </div>
 
+        <div class="identity-actions">
+          <button id="refreshButton" class="primary-button" type="button">↻ Refresh Profile</button>
+          <a class="secondary-button" href="settings.html">⚙ Settings</a>
+        </div>
       </div>
-
     </section>
-
-
-    <!-- VOICE PROFILE EXPERIENCE -->
 
     <section class="card voice-card">
-
-      <div class="voice-title">
-        🔊 Zemivo Welcome
-      </div>
-
-
-      <div
-        class="voice-message"
-        id="voiceMessage"
-      >
-        Zemivo-তে স্বাগতম।
-      </div>
-
-
-      <button
-        class="voice-button"
-        id="voiceButton"
-        type="button"
-      >
-        🔊 Play Welcome
-      </button>
-
+      <div class="voice-orb">🔊</div>
+      <h2 class="section-title">Zemivo Welcome</h2>
+      <div class="voice-message" id="voiceMessage">Welcome to Zemivo. Connect, create and discover.</div>
+      <button id="voiceButton" class="primary-button" type="button">▶ Play Welcome</button>
+      <p class="notice">Voice availability depends on the languages supported by your device.</p>
     </section>
-
-
-    <!-- IDENTITY -->
-
-    <section class="card identity">
-
-      <h3>
-        🌍 Identity
-      </h3>
-
-
-      <div class="identity-row">
-
-        <div class="identity-label">
-          Verified Name
-        </div>
-
-        <div
-          class="identity-value"
-          id="verifiedName"
-        >
-          Not available
-        </div>
-
-      </div>
-
-
-      <div class="identity-row">
-
-        <div class="identity-label">
-          Country
-        </div>
-
-        <div
-          class="identity-value"
-          id="identityCountry"
-        >
-          Global
-        </div>
-
-      </div>
-
-
-      <div class="identity-row">
-
-        <div class="identity-label">
-          Email Verification
-        </div>
-
-        <div
-          class="identity-value"
-          id="emailVerificationStatus"
-        >
-          Checking...
-        </div>
-
-      </div>
-
-
-      <div class="identity-row">
-
-        <div class="identity-label">
-          Phone Verification
-        </div>
-
-        <div
-          class="identity-value"
-          id="phoneVerificationStatus"
-        >
-          Checking...
-        </div>
-
-      </div>
-
-
-      <div class="identity-row">
-
-        <div class="identity-label">
-          Verification Status
-        </div>
-
-        <div
-          class="identity-value"
-          id="accountStatus"
-        >
-          Checking...
-        </div>
-
-      </div>
-
-
-      <div class="identity-row">
-
-        <div class="identity-label">
-          Zemivo User ID
-        </div>
-
-        <div
-          class="identity-value"
-          id="zemivoId"
-        >
-          Loading...
-        </div>
-
-      </div>
-
-
-      <p class="notice">
-        Sensitive identity documents will not be displayed publicly.
-      </p>
-
-    </section>
-
-
-    <!-- LOGOUT -->
 
     <section class="card">
+      <h2 class="section-title">🌍 Your Identity</h2>
 
-      <button
-        class="logout"
-        id="logoutButton"
-        type="button"
-      >
-        Log Out
-      </button>
+      <div class="identity-row">
+        <div class="identity-label">Account Name</div>
+        <div class="identity-value" id="verifiedName">Not available</div>
+      </div>
 
+      <div class="identity-row">
+        <div class="identity-label">Country</div>
+        <div class="identity-value" id="identityCountry">Global</div>
+      </div>
+
+      <div class="identity-row">
+        <div class="identity-label">Email Verification</div>
+        <div class="identity-value" id="emailVerificationStatus">Checking...</div>
+      </div>
+
+      <div class="identity-row">
+        <div class="identity-label">Phone Verification</div>
+        <div class="identity-value" id="phoneVerificationStatus">Checking...</div>
+      </div>
+
+      <div class="identity-row">
+        <div class="identity-label">Account Status</div>
+        <div class="identity-value status">✓ Signed in</div>
+      </div>
+
+      <div class="identity-row">
+        <div class="identity-label">Zemivo User ID</div>
+        <div class="identity-value" id="zemivoId">Loading...</div>
+      </div>
+
+      <p class="notice">Your email and account identifier are shown only in your signed-in profile page. Never share account identifiers or passwords publicly.</p>
     </section>
 
-
-  </main>
-
-
-  <!-- FIREBASE + ZEMIVO SYSTEM -->
-
-  <script type="module">
-
-
-    /*
-     * =====================================================
-     * ZEMIVO PROFILE
-     * Security Foundation Integration
-     * =====================================================
-     *
-     * Firebase initialization is handled by:
-     *
-     * ./zemivo-security.js
-     *
-     * This keeps App Check and Firebase services
-     * centralized instead of initializing them again
-     * on every page.
-     *
-     * =====================================================
-     */
-
-
-    import {
-      auth,
-      db
-    } from "./zemivo-security.js";
-
-
-    import {
-      onAuthStateChanged,
-      signOut
-    } from
-      "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
-
-
-    import {
-      doc,
-      getDoc
-    } from
-      "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
-
-
-    /* =====================================================
-       ELEMENTS
-       ===================================================== */
-
-
-    const loading =
-      document.getElementById(
-        "loading"
-      );
-
-
-    const errorMessage =
-      document.getElementById(
-        "errorMessage"
-      );
-
-
-    const profileContent =
-      document.getElementById(
-        "profileContent"
-      );
-
-
-    const profileName =
-      document.getElementById(
-        "profileName"
-      );
-
-
-    const username =
-      document.getElementById(
-        "username"
-      );
-
-
-    const userEmail =
-      document.getElementById(
-        "userEmail"
-      );
-
-
-    const avatarLetter =
-      document.getElementById(
-        "avatarLetter"
-      );
-
-
-    const avatarImage =
-      document.getElementById(
-        "avatarImage"
-      );
-
-
-    const verifiedName =
-      document.getElementById(
-        "verifiedName"
-      );
-
-
-    const country =
-      document.getElementById(
-        "country"
-      );
-
-
-    const identityCountry =
-      document.getElementById(
-        "identityCountry"
-      );
-
-
-    const zemivoId =
-      document.getElementById(
-        "zemivoId"
-      );
-
-
-    const followersCount =
-      document.getElementById(
-        "followersCount"
-      );
-
-
-    const followingCount =
-      document.getElementById(
-        "followingCount"
-      );
-
-
-    const postsCount =
-      document.getElementById(
-        "postsCount"
-      );
-
-
-    const emailVerificationStatus =
-      document.getElementById(
-        "emailVerificationStatus"
-      );
-
-
-    const phoneVerificationStatus =
-      document.getElementById(
-        "phoneVerificationStatus"
-      );
-
-
-    const accountStatus =
-      document.getElementById(
-        "accountStatus"
-      );
-
-
-    const voiceMessage =
-      document.getElementById(
-        "voiceMessage"
-      );
-
-
-    const voiceButton =
-      document.getElementById(
-        "voiceButton"
-      );
-
-
-    const logoutButton =
-      document.getElementById(
-        "logoutButton"
-      );
-
-
-    /* =====================================================
-       SAFE TEXT
-       ===================================================== */
-
-    function safeText(
-      value,
-      fallback = ""
-    ) {
-
-      if (
-        value === null ||
-        value === undefined
-      ) {
-
-        return fallback;
-
-      }
-
-
-      const text =
-        String(value).trim();
-
-
-      return text ||
-        fallback;
-
-    }
-
-
-    /* =====================================================
-       SAFE NUMBER
-       ===================================================== */
-
-    function safeNumber(
-      value
-    ) {
-
-      const number =
-        Number(value);
-
-
-      if (
-        !Number.isFinite(number) ||
-        number < 0
-      ) {
-
-        return 0;
-
-      }
-
-
-      return Math.floor(
-        number
-      );
-
-    }
-
-
-    /* =====================================================
-       USERNAME
-       ===================================================== */
-
-    function createUsername(
-      displayName,
-      email,
-      profileUsername
-    ) {
-
-      const savedUsername =
-        safeText(
-          profileUsername
-        );
-
-
-      if (
-        savedUsername
-      ) {
-
-        return savedUsername
-          .startsWith("@")
-          ? savedUsername
-          : "@" + savedUsername;
-
-      }
-
-
-      const name =
-        safeText(
-          displayName
-        );
-
-
-      if (name) {
-
-        const generated =
-          name
-            .toLowerCase()
-            .replace(
-              /[^a-z0-9]+/g,
-              "_"
-            )
-            .replace(
-              /^_+|_+$/g,
-              ""
-            );
-
-
-        if (generated) {
-
-          return "@" +
-            generated;
-
-        }
-
-      }
-
-
-      const emailName =
-        safeText(
-          email
-            .split("@")[0],
-          "zemivo_user"
-        );
-
-
-      const generatedEmailName =
-        emailName
-          .toLowerCase()
-          .replace(
-            /[^a-z0-9]+/g,
-            "_"
-          )
-          .replace(
-            /^_+|_+$/g,
-            ""
-          );
-
-
-      return "@" +
-        (
-          generatedEmailName ||
-          "zemivo_user"
-        );
-
-    }
-
-
-    /* =====================================================
-       AVATAR
-       ===================================================== */
-
-    function setAvatar(
-      displayName,
-      photoURL
-    ) {
-
-      const name =
-        safeText(
-          displayName,
-          "Zemivo User"
-        );
-
-
-      const firstLetter =
-        name
-          .charAt(0)
-          .toUpperCase();
-
-
-      avatarLetter.textContent =
-        firstLetter ||
-        "Z";
-
-
-      const imageURL =
-        safeText(
-          photoURL
-        );
-
-
-      if (
-        imageURL
-      ) {
-
-        avatarImage.src =
-          imageURL;
-
-
-        avatarImage.onload =
-          function() {
-
-            avatarImage.style.display =
-              "block";
-
-            avatarLetter.style.display =
-              "none";
-
-          };
-
-
-        avatarImage.onerror =
-          function() {
-
-            avatarImage.style.display =
-              "none";
-
-            avatarLetter.style.display =
-              "block";
-
-          };
-
-      }
-      else {
-
-        avatarImage.style.display =
-          "none";
-
-        avatarLetter.style.display =
-          "block";
-
-      }
-
-    }
-
-
-    /* =====================================================
-       COUNTRY
-       ===================================================== */
-
-    function formatCountry(
-      profile
-    ) {
-
-      const savedCountry =
-        safeText(
-          profile.country
-        );
-
-
-      const countryCode =
-        safeText(
-          profile.countryCode
-        );
-
-
-      if (
-        savedCountry
-      ) {
-
-        if (
-          countryCode
-        ) {
-
-          return (
-            countryFlag(
-              countryCode
-            ) +
-            " " +
-            savedCountry
-          );
-
-        }
-
-
-        return "🌍 " +
-          savedCountry;
-
-      }
-
-
-      return "🌍 Global";
-
-    }
-
-
-    /* =====================================================
-       COUNTRY FLAG
-       ===================================================== */
-
-    function countryFlag(
-      countryCode
-    ) {
-
-      const code =
-        countryCode
-          .toUpperCase();
-
-
-      if (
-        !/^[A-Z]{2}$/.test(
-          code
-        )
-      ) {
-
-        return "🌍";
-
-      }
-
-
-      return code
-        .split("")
-        .map(
-          function(letter) {
-
-            return String
-              .fromCodePoint(
-                127397 +
-                letter.charCodeAt(0)
-              );
-
-          }
-        )
-        .join("");
-
-    }
-
-
-    /* =====================================================
-       VOICE DATABASE
-       ===================================================== */
-
-    const greetings = {
-
-      bn: [
-
-        "Zemivo-তে স্বাগতম। নতুন একটি সংযোগের গল্প আবিষ্কার করুন।",
-
-        "আপনাকে Zemivo-তে স্বাগতম। হয়তো এই সংযোগ থেকেই শুরু হবে নতুন একটি গল্প।",
-
-        "Zemivo-তে আপনাকে পেয়ে ভালো লাগছে। এই প্রোফাইলটি আবিষ্কার করুন।",
-
-        "একটি নতুন পরিচয়, একটি নতুন গল্প। Zemivo-তে স্বাগতম।",
-
-        "আপনার এই যাত্রা সুন্দর হোক। Zemivo-তে স্বাগতম।"
-
-      ],
-
-
-      en: [
-
-        "Welcome to this Zemivo profile. Discover a new connection.",
-
-        "Welcome to Zemivo. Every connection can begin a new story.",
-
-        "Glad to see you here. Explore this Zemivo profile.",
-
-        "A new connection can begin with a simple visit. Welcome to Zemivo."
-
-      ],
-
-
-      hi: [
-
-        "Zemivo प्रोफ़ाइल में आपका स्वागत है। एक नया जुड़ाव खोजें।"
-
-      ],
-
-
-      ar: [
-
-        "مرحبًا بك في ملف Zemivo. اكتشف اتصالًا جديدًا."
-
-      ],
-
-
-      fr: [
-
-        "Bienvenue sur ce profil Zemivo. Découvrez une nouvelle connexion."
-
-      ],
-
-
-      es: [
-
-        "Bienvenido a este perfil de Zemivo. Descubre una nueva conexión."
-
-      ],
-
-
-      de: [
-
-        "Willkommen auf diesem Zemivo-Profil. Entdecke eine neue Verbindung."
-
-      ],
-
-
-      ja: [
-
-        "Zemivoプロフィールへようこそ。新しいつながりを見つけてください。"
-
-      ],
-
-
-      ko: [
-
-        "Zemivo 프로필에 오신 것을 환영합니다. 새로운 인연을 만나보세요."
-
-      ]
-
-    };
-
-
-    /* =====================================================
-       LANGUAGE
-       ===================================================== */
-
-    function getLanguage() {
-
-      const browserLanguage =
-        (
-          navigator.language ||
-          "en-US"
-        ).toLowerCase();
-
-
-      const languageCode =
-        browserLanguage
-          .split("-")[0];
-
-
-      if (
-        greetings[
-          languageCode
-        ]
-      ) {
-
-        return languageCode;
-
-      }
-
-
-      return "en";
-
-    }
-
-
-    /* =====================================================
-       GREETING
-       ===================================================== */
-
-    function getGreeting() {
-
-      const language =
-        getLanguage();
-
-
-      const list =
-        greetings[
-          language
-        ];
-
-
-      const index =
-        Math.floor(
-          Math.random() *
-          list.length
-        );
-
-
-      return {
-
-        text:
-          list[index],
-
-        language:
-          language
-
-      };
-
-    }
-
-
-    let selectedGreeting =
-      getGreeting();
-
-
-    voiceMessage.textContent =
-      selectedGreeting.text;
-
-
-    /* =====================================================
-       VOICE ENGINE
-       ===================================================== */
-
-    let availableVoices =
-      [];
-
-
-    function loadVoices() {
-
-      if (
-        "speechSynthesis" in window
-      ) {
-
-        availableVoices =
-          window.speechSynthesis
-            .getVoices();
-
-      }
-
-    }
-
-
-    loadVoices();
-
-
-    if (
-      "speechSynthesis" in window
-    ) {
-
-      window.speechSynthesis
-        .onvoiceschanged =
-        function() {
-
-          loadVoices();
-
-        };
-
-    }
-
-
-    function speakGreeting() {
-
-      if (
-        !(
-          "speechSynthesis"
-          in window
-        )
-      ) {
-
-        alert(
-          "Voice playback is not supported on this device."
-        );
-
-        return;
-
-      }
-
-
-      voiceButton.disabled =
-        true;
-
-
-      voiceButton.textContent =
-        "🔊 Playing...";
-
-
-      window.speechSynthesis
-        .cancel();
-
-
-      try {
-
-        window.speechSynthesis
-          .resume();
-
-      }
-      catch (error) {}
-
-
-      loadVoices();
-
-
-      const speech =
-        new SpeechSynthesisUtterance(
-          selectedGreeting.text
-        );
-
-
-      speech.lang =
-        selectedGreeting.language ===
-        "bn"
-          ? "bn-BD"
-          : selectedGreeting.language;
-
-
-      speech.rate =
-        0.88;
-
-
-      speech.pitch =
-        1;
-
-
-      speech.volume =
-        1;
-
-
-      let matchingVoice =
-        availableVoices.find(
-          function(voice) {
-
-            return voice.lang
-              .toLowerCase()
-              .startsWith(
-                selectedGreeting.language
-              );
-
-          }
-        );
-
-
-      if (
-        !matchingVoice &&
-        selectedGreeting.language ===
-          "bn"
-      ) {
-
-        matchingVoice =
-          availableVoices.find(
-            function(voice) {
-
-              const voiceLanguage =
-                voice.lang
-                  .toLowerCase();
-
-
-              const voiceName =
-                voice.name
-                  .toLowerCase();
-
-
-              return (
-
-                voiceLanguage
-                  .includes("bn")
-
-                ||
-
-                voiceLanguage
-                  .includes("ben")
-
-                ||
-
-                voiceName
-                  .includes("bengali")
-
-                ||
-
-                voiceName
-                  .includes("bangla")
-
-              );
-
-            }
-          );
-
-      }
-
-
-      if (
-        matchingVoice
-      ) {
-
-        speech.voice =
-          matchingVoice;
-
-      }
-
-
-      speech.onend =
-        function() {
-
-          voiceButton.disabled =
-            false;
-
-          voiceButton.textContent =
-            "🔊 Play Welcome";
-
-        };
-
-
-      speech.onerror =
-        function() {
-
-          voiceButton.disabled =
-            false;
-
-          voiceButton.textContent =
-            "🔊 Play Welcome";
-
-        };
-
-
-      try {
-
-        window.speechSynthesis
-          .speak(
-            speech
-          );
-
-      }
-      catch (error) {
-
-        console.error(
-          "Zemivo voice error:",
-          error
-        );
-
-
-        voiceButton.disabled =
-          false;
-
-
-        voiceButton.textContent =
-          "🔊 Play Welcome";
-
-
-        alert(
-          "Voice playback could not start. Please try again."
-        );
-
-      }
-
-    }
-
-
-    voiceButton.addEventListener(
-      "click",
-      speakGreeting
-    );
-
-
-    /* =====================================================
-       PROFILE DATA
-       ===================================================== */
-
-    async function loadProfile(
-      user
-    ) {
-
-      let profile = {};
-
-
-      try {
-
-        const profileReference =
-          doc(
-            db,
-            "profiles",
-            user.uid
-          );
-
-
-        const profileSnapshot =
-          await getDoc(
-            profileReference
-          );
-
-
-        if (
-          profileSnapshot.exists()
-        ) {
-
-          profile =
-            profileSnapshot.data() ||
-            {};
-
-        }
-
-      }
-      catch (error) {
-
-        /*
-         * Authentication can still be
-         * displayed if the optional
-         * profile document cannot be read.
-         */
-
-        console.error(
-          "Zemivo profile read error:",
-          error
-        );
-
-      }
-
-
-      /*
-       * Firebase Auth displayName has
-       * priority when available.
-       */
-
-      const displayName =
-        safeText(
-          user.displayName
-        ) ||
-
-        safeText(
-          profile.displayName
-        ) ||
-
-        safeText(
-          profile.name
-        ) ||
-
-        "Zemivo User";
-
-
-      const email =
-        safeText(
-          user.email
-        ) ||
-
-        safeText(
-          profile.email
-        ) ||
-
-        "Email unavailable";
-
-
-      const photoURL =
-        safeText(
-          user.photoURL
-        ) ||
-
-        safeText(
-          profile.photoURL
-        ) ||
-
-        safeText(
-          profile.photoUrl
-        );
-
-
-      const profileUsername =
-        safeText(
-          profile.username
-        );
-
-
-      const userCountry =
-        formatCountry(
-          profile
-        );
-
-
-      /*
-       * Main profile
-       */
-
-      profileName.textContent =
-        displayName;
-
-
-      username.textContent =
-        createUsername(
-          displayName,
-          email,
-          profileUsername
-        );
-
-
-      userEmail.textContent =
-        email;
-
-
-      setAvatar(
-        displayName,
-        photoURL
-      );
-
-
-      country.textContent =
-        userCountry;
-
-
-      verifiedName.textContent =
-        displayName;
-
-
-      identityCountry.textContent =
-        userCountry;
-
-
-      /*
-       * UID
-       *
-       * The actual Firebase UID is
-       * displayed only as a shortened
-       * public identifier.
-       */
-
-      zemivoId.textContent =
-        "ZMV-" +
-        user.uid.substring(
-          0,
-          12
-        );
-
-
-      /*
-       * Statistics
-       *
-       * These values are read from
-       * the profile document when
-       * available.
-       */
-
-      followersCount.textContent =
-        safeNumber(
-          profile.followersCount ??
-          profile.followers
-        );
-
-
-      followingCount.textContent =
-        safeNumber(
-          profile.followingCount ??
-          profile.following
-        );
-
-
-      postsCount.textContent =
-        safeNumber(
-          profile.postsCount ??
-          profile.posts
-        );
-
-
-      /*
-       * Email verification
-       */
-
-      if (
-        user.emailVerified
-      ) {
-
-        emailVerificationStatus
-          .innerHTML =
-          '<span class="verification-badge">✓ Verified</span>';
-
-      }
-      else {
-
-        emailVerificationStatus
-          .innerHTML =
-          '<span style="color:#b45309;">Not verified</span>';
-
-      }
-
-
-      /*
-       * Phone verification
-       *
-       * Firebase Auth exposes
-       * providerData for linked
-       * authentication providers.
-       */
-
-      const hasPhoneProvider =
-        Array.isArray(
-          user.providerData
-        ) &&
-        user.providerData.some(
-          function(provider) {
-
-            return (
-              provider.providerId ===
-              "phone"
-            );
-
-          }
-        );
-
-
-      if (
-        hasPhoneProvider
-      ) {
-
-        phoneVerificationStatus
-          .innerHTML =
-          '<span class="verification-badge">✓ Verified</span>';
-
-      }
-      else {
-
-        phoneVerificationStatus
-          .innerHTML =
-          '<span style="color:#b45309;">Not linked</span>';
-
-      }
-
-
-      /*
-       * Account status
-       */
-
-      accountStatus.innerHTML =
-        '<span class="verification-badge">✓ Account Active</span>';
-
-
-      /*
-       * Show page
-       */
-
-      loading.style.display =
-        "none";
-
-
-      errorMessage.style.display =
-        "none";
-
-
-      profileContent.style.display =
-        "block";
-
-    }
-
-
-    /* =====================================================
-       AUTH STATE
-       ===================================================== */
-
-    onAuthStateChanged(
-      auth,
-      async function(user) {
-
-        if (!user) {
-
-          window.location.href =
-            "login.html";
-
-          return;
-
-        }
-
-
-        try {
-
-          await loadProfile(
-            user
-          );
-
-        }
-        catch (error) {
-
-          console.error(
-            "Zemivo profile loading error:",
-            error
-          );
-
-
-          loading.style.display =
-            "none";
-
-
-          profileContent.style.display =
-            "none";
-
-
-          errorMessage.style.display =
-            "block";
-
-        }
-
-      }
-    );
-
-
-    /* =====================================================
-       LOGOUT
-       ===================================================== */
-
-    logoutButton.addEventListener(
-      "click",
-      async function() {
-
-        logoutButton.disabled =
-          true;
-
-
-        logoutButton.textContent =
-          "Logging out...";
-
-
-        try {
-
-          await signOut(
-            auth
-          );
-
-
-          window.location.href =
-            "login.html";
-
-        }
-        catch (error) {
-
-          console.error(
-            "Zemivo logout error:",
-            error
-          );
-
-
-          logoutButton.disabled =
-            false;
-
-
-          logoutButton.textContent =
-            "Log Out";
-
-
-          alert(
-            "Logout failed. Please try again."
-          );
-
-        }
-
-      }
-    );
-
-
-  </script>
-
-
+    <section class="card">
+      <button class="logout" id="logoutButton" type="button">↪ Log Out</button>
+    </section>
+  </div>
+
+  <aside class="side-column">
+    <section class="card">
+      <h2 class="section-title">✨ About Me</h2>
+      <div class="identity-row">
+        <div class="identity-label">Display Name</div>
+        <div class="identity-value" id="aboutName">Zemivo User</div>
+      </div>
+      <div class="identity-row">
+        <div class="identity-label">Country</div>
+        <div class="identity-value" id="aboutCountry">Global</div>
+      </div>
+      <div class="identity-row">
+        <div class="identity-label">Member</div>
+        <div class="identity-value">Zemivo Community</div>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2 class="section-title">🌐 Explore Zemivo</h2>
+      <div class="identity-row"><a href="feed.html">📰 Home Feed</a></div>
+      <div class="identity-row"><a href="friends.html">👥 Friends</a></div>
+      <div class="identity-row"><a href="groups.html">🌍 Groups</a></div>
+      <div class="identity-row"><a href="messenger.html">💬 Messenger</a></div>
+      <div class="identity-row"><a href="notifications.html">🔔 Notifications</a></div>
+      <div class="identity-row"><a href="marketplace.html">🛍 Marketplace</a></div>
+    </section>
+
+    <section class="card">
+      <h2 class="section-title">💠 Daily 3D Theme</h2>
+      <p class="voice-message">A new color atmosphere each day, while your profile remains familiar and easy to use.</p>
+      <button id="sideThemeButton" class="secondary-button" type="button">✨ Change Theme</button>
+    </section>
+  </aside>
+</main>
+
+<script type="module">
+import { auth, db } from "./zemivo-security.js";
+
+import {
+  onAuthStateChanged,
+  signOut
+} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
+
+import {
+  doc,
+  getDoc
+} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
+
+const $ = id => document.getElementById(id);
+
+const loading = $("loading");
+const errorMessage = $("errorMessage");
+const profileContent = $("profileContent");
+
+let currentUser = null;
+let currentProfile = {};
+let authReady = false;
+
+const themes = [
+  { accent:"#1677ff", accent2:"#6855f5", glow:"rgba(22,119,255,.20)", page:"#edf5ff" },
+  { accent:"#00a889", accent2:"#25a6c8", glow:"rgba(0,168,137,.20)", page:"#eafbf6" },
+  { accent:"#d97706", accent2:"#ed9b38", glow:"rgba(217,119,6,.20)", page:"#fff7e9" },
+  { accent:"#8b5cf6", accent2:"#d946ef", glow:"rgba(139,92,246,.20)", page:"#f5efff" },
+  { accent:"#e44d91", accent2:"#8b5cf6", glow:"rgba(228,77,145,.20)", page:"#fff0f7" },
+  { accent:"#087eaf", accent2:"#1d4ed8", glow:"rgba(8,126,175,.20)", page:"#eaf8ff" },
+  { accent:"#3f8c4b", accent2:"#14a5a5", glow:"rgba(63,140,75,.20)", page:"#effbf0" }
+];
+
+function applyDailyTheme() {
+  const now = new Date();
+  const dayNumber = Math.floor(
+    Date.UTC(now.getFullYear(), now.getMonth(), now.getDate()) / 86400000
+  );
+  const theme = themes[((dayNumber % themes.length) + themes.length) % themes.length];
+
+  for (const [key, value] of Object.entries(theme)) {
+    document.documentElement.style.setProperty("--" + key, value);
+  }
+}
+
+function cycleTheme() {
+  const current = getComputedStyle(document.documentElement)
+    .getPropertyValue("--accent").trim();
+  const index = themes.findIndex(theme => theme.accent === current);
+  const theme = themes[(index + 1 + themes.length) % themes.length];
+
+  for (const [key, value] of Object.entries(theme)) {
+    document.documentElement.style.setProperty("--" + key, value);
+  }
+}
+
+$("themeButton").addEventListener("click", cycleTheme);
+$("sideThemeButton").addEventListener("click", cycleTheme);
+applyDailyTheme();
+
+function setText(id, value, fallback = "Not available") {
+  $(id).textContent = value == null || String(value).trim() === ""
+    ? fallback
+    : String(value).trim();
+}
+
+function safeCount(value) {
+  const number = Number(value);
+  return Number.isFinite(number) && number >= 0
+    ? Math.floor(number).toLocaleString()
+    : "0";
+}
+
+function setAvatar(name, photoURL) {
+  const image = $("avatarImage");
+  const letter = $("avatarLetter");
+
+  letter.textContent = (name || "Z").trim().charAt(0).toUpperCase() || "Z";
+  image.style.display = "none";
+  letter.style.display = "block";
+  image.removeAttribute("src");
+
+  if (!photoURL) return;
+
+  image.onload = () => {
+    image.style.display = "block";
+    letter.style.display = "none";
+  };
+
+  image.onerror = () => {
+    image.style.display = "none";
+    letter.style.display = "block";
+  };
+
+  image.src = photoURL;
+}
+
+function usernameFor(user, profile, name) {
+  const saved = String(profile.username || "").trim();
+  if (saved) return saved.startsWith("@") ? saved : "@" + saved;
+
+  const base = (name || "").toLowerCase()
+    .normalize("NFKD")
+    .replace(/[^a-z0-9]+/g, "_")
+    .replace(/^_+|_+$/g, "");
+
+  if (base) return "@" + base;
+
+  return "@" + (user.uid || "zemivo_user").slice(0, 12);
+}
+
+function countryLabel(profile) {
+  const name = String(profile.country || "").trim();
+  const code = String(profile.countryCode || "").trim().toUpperCase();
+
+  if (name && /^[A-Z]{2}$/.test(code)) {
+    const flag = String.fromCodePoint(...[...code].map(c => 127397 + c.charCodeAt(0)));
+    return flag + " " + name;
+  }
+
+  return name ? "🌍 " + name : "🌍 Global";
+}
+
+function setVerification(id, verified, positiveText, negativeText) {
+  const element = $(id);
+  element.textContent = verified ? "✓ " + positiveText : negativeText;
+  element.className = "identity-value " + (verified ? "status" : "status-warning");
+}
+
+function greetingForLanguage() {
+  const lang = String(
+    currentProfile.language ||
+    localStorage.getItem("zemivoLanguage") ||
+    navigator.language ||
+    "en"
+  ).toLowerCase().split("-")[0];
+
+  const greetings = {
+    bn: ["Zemivo-তে স্বাগতম। নতুন সংযোগ আবিষ্কার করুন।", "আপনার Zemivo যাত্রা সুন্দর হোক।", "একটি নতুন পরিচয়, একটি নতুন গল্প।"],
+    en: ["Welcome to Zemivo. Connect, create and discover.", "Every connection can begin a new story. Welcome to Zemivo."],
+    hi: ["Zemivo में आपका स्वागत है। नई कनेक्शन खोजें।"],
+    fr: ["Bienvenue sur Zemivo. Découvrez de nouvelles connexions."],
+    es: ["Te damos la bienvenida a Zemivo. Descubre nuevas conexiones."],
+    ar: ["مرحبًا بك في Zemivo. اكتشف اتصالات جديدة."],
+    zh: ["欢迎来到 Zemivo。发现新的连接。"],
+    ja: ["Zemivoへようこそ。新しいつながりを見つけましょう。"]
+  };
+
+  const list = greetings[lang] || greetings.en;
+  return {
+    text: list[Math.floor(Math.random() * list.length)],
+    language: lang
+  };
+}
+
+let selectedGreeting = greetingForLanguage();
+$("voiceMessage").textContent = selectedGreeting.text;
+
+$("voiceButton").addEventListener("click", () => {
+  if (!("speechSynthesis" in window)) {
+    $("voiceMessage").textContent = "Voice playback is not supported by this browser.";
+    return;
+  }
+
+  window.speechSynthesis.cancel();
+
+  const speech = new SpeechSynthesisUtterance(selectedGreeting.text);
+  speech.lang = ({
+    bn:"bn-BD", en:"en-US", hi:"hi-IN", fr:"fr-FR",
+    es:"es-ES", ar:"ar-SA", zh:"zh-CN", ja:"ja-JP"
+  })[selectedGreeting.language] || "en-US";
+
+  speech.rate = 0.9;
+  $("voiceButton").disabled = true;
+  $("voiceButton").textContent = "🔊 Playing...";
+
+  speech.onend = speech.onerror = () => {
+    $("voiceButton").disabled = false;
+    $("voiceButton").textContent = "▶ Play Welcome";
+  };
+
+  window.speechSynthesis.speak(speech);
+});
+
+async function loadProfile(user) {
+  let profile = {};
+
+  try {
+    const snapshot = await getDoc(doc(db, "profiles", user.uid));
+    if (snapshot.exists()) profile = snapshot.data() || {};
+  } catch (error) {
+    console.error("Profile document could not be read:", error);
+    // Firebase Auth information can still be shown.
+  }
+
+  currentProfile = profile;
+
+  const name = String(
+    user.displayName ||
+    profile.displayName ||
+    profile.name ||
+    "Zemivo User"
+  ).trim();
+
+  const email = user.email || profile.email || "Email unavailable";
+  const country = countryLabel(profile);
+
+  setText("profileName", name);
+  setText("verifiedName", name);
+  setText("aboutName", name);
+  setText("username", usernameFor(user, profile, name));
+  setText("bio", profile.bio, "Connect · Create · Earn · Make a better tomorrow.");
+  setText("country", country);
+  setText("identityCountry", country);
+  setText("aboutCountry", country);
+  setText("language", "🌐 Language: " + (profile.language || "English"));
+  setText("zemivoId", "ZMV-" + user.uid.slice(0, 12));
+
+  setAvatar(name, user.photoURL || profile.photoURL || profile.photoUrl || "");
+
+  $("postsCount").textContent = safeCount(profile.postsCount ?? profile.posts);
+  $("followersCount").textContent = safeCount(profile.followersCount ?? profile.followers);
+  $("followingCount").textContent = safeCount(profile.followingCount ?? profile.following);
+
+  setVerification(
+    "emailVerificationStatus",
+    Boolean(user.emailVerified),
+    "Email verified",
+    "Email not verified"
+  );
+
+  const phoneVerified = Boolean(user.phoneNumber) ||
+    Boolean(user.providerData?.some(provider => provider.providerId === "phone"));
+
+  setVerification(
+    "phoneVerificationStatus",
+    phoneVerified,
+    "Phone linked",
+    "Phone not linked"
+  );
+
+  selectedGreeting = greetingForLanguage();
+  $("voiceMessage").textContent = selectedGreeting.text;
+
+  loading.style.display = "none";
+  errorMessage.style.display = "none";
+  profileContent.style.display = "grid";
+}
+
+function showLoadError(message) {
+  loading.style.display = "none";
+  profileContent.style.display = "none";
+  errorMessage.style.display = "block";
+  errorMessage.firstChild.textContent = message;
+}
+
+onAuthStateChanged(auth, async user => {
+  authReady = true;
+
+  if (!user) {
+    window.location.replace("login.html");
+    return;
+  }
+
+  currentUser = user;
+
+  try {
+    await loadProfile(user);
+  } catch (error) {
+    console.error("Zemivo profile error:", error);
+    showLoadError("Your profile could not be loaded. Please refresh the page and try again.");
+  }
+});
+
+$("refreshButton").addEventListener("click", async () => {
+  if (!authReady || !currentUser) return;
+
+  $("refreshButton").disabled = true;
+  $("refreshButton").textContent = "↻ Refreshing...";
+
+  try {
+    await currentUser.reload();
+    currentUser = auth.currentUser;
+    if (currentUser) await loadProfile(currentUser);
+  } catch (error) {
+    console.error("Profile refresh error:", error);
+    alert("Could not refresh the profile. Please try again.");
+  } finally {
+    $("refreshButton").disabled = false;
+    $("refreshButton").textContent = "↻ Refresh Profile";
+  }
+});
+
+$("logoutButton").addEventListener("click", async () => {
+  const button = $("logoutButton");
+  button.disabled = true;
+  button.textContent = "Logging out...";
+
+  try {
+    if ("speechSynthesis" in window) window.speechSynthesis.cancel();
+    await signOut(auth);
+    window.location.replace("login.html");
+  } catch (error) {
+    console.error("Logout error:", error);
+    button.disabled = false;
+    button.textContent = "↪ Log Out";
+    alert("Logout failed. Please try again.");
+  }
+});
+</script>
 </body>
-
 </html>
