@@ -7,11 +7,11 @@
   <title>Log In - Zemivo</title>
   <style>
     *{box-sizing:border-box}
-    html{width:100%;min-height:100%;height:100%;margin:0;background:#061a3e}
+    html{width:100%;min-height:100%;height:100%;margin:0;background:#061a3e!important;overflow-x:hidden}
     :root{--px:0px;--py:0px}
-    body{margin:0;width:100%;min-height:100vh;min-height:100svh;min-height:100dvh;padding:18px 14px;display:flex;align-items:center;justify-content:center;font-family:Arial,Helvetica,sans-serif;color:#172033;background:transparent;overflow-x:hidden;position:relative;isolation:isolate}
+    body{margin:0;width:100%;min-height:100vh;min-height:100svh;min-height:100dvh;padding:18px 14px;display:flex;align-items:center;justify-content:center;font-family:Arial,Helvetica,sans-serif;color:#172033;background:#061a3e!important;overflow-x:hidden;position:relative;isolation:isolate}
     /* Added 3D world background only; login form and authentication logic are preserved. */
-    .world{position:fixed;inset:0;width:100vw;height:100vh;height:100dvh;z-index:0;overflow:hidden;pointer-events:none;perspective:900px;background:radial-gradient(ellipse at 74% 18%,#fff6c5 0,rgba(255,214,128,.55) 7%,transparent 24%),linear-gradient(180deg,rgba(20,126,222,.2),rgba(2,22,65,.35))}
+    .world{position:fixed;inset:-3px;width:auto;height:auto;min-height:100vh;min-height:100dvh;z-index:0;overflow:hidden;pointer-events:none;perspective:900px;background:radial-gradient(ellipse at 74% 18%,#fff6c5 0,rgba(255,214,128,.55) 7%,transparent 24%),linear-gradient(180deg,rgba(20,126,222,.2),rgba(2,22,65,.35))}
     .world:before{content:"";position:absolute;inset:-5%;background:radial-gradient(ellipse at 13% 18%,#fff 0 1.2%,transparent 1.7%),radial-gradient(ellipse at 19% 20%,#fff 0 1.8%,transparent 2.3%),radial-gradient(ellipse at 55% 12%,#fff 0 1.2%,transparent 1.8%),radial-gradient(ellipse at 83% 32%,#fff 0 1.4%,transparent 2%),radial-gradient(ellipse at 38% 29%,#e8fcff 0 1%,transparent 1.7%);transform:translate3d(var(--px),var(--py),0)}
     .world:after{content:"";position:absolute;left:-8%;right:-8%;bottom:-14%;height:47%;background:linear-gradient(165deg,#4ef2e0 0%,#1295d0 35%,#07508c 65%,#061c4c 100%);clip-path:polygon(0 44%,10% 27%,19% 39%,30% 8%,41% 31%,53% 13%,64% 39%,76% 9%,88% 32%,100% 17%,100% 100%,0 100%);filter:drop-shadow(0 -12px 28px #61f4ff88);transform:translate3d(calc(var(--px)*-.6),calc(var(--py)*-.5),0)}
     .ring{position:absolute;left:-12%;top:36%;width:125%;height:48%;border:2px solid #bafaff55;border-radius:50%;transform:rotate(-17deg) translate3d(var(--px),var(--py),0);box-shadow:0 0 35px #51e8ff22}
