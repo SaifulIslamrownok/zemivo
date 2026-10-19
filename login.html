@@ -41,6 +41,19 @@
     @media(max-width:600px){body{padding:12px 10px;min-height:100vh;min-height:100svh;min-height:100dvh}.planet.p1{right:-17%;top:5%}.castle{right:-12%;top:20%;scale:.72}.island.i1{left:-18%;top:37%}.island.i2{right:-22%;top:53%}.dragon{left:10%;top:14%}.airship{right:24%;top:10%;scale:.8}.banner{left:2%;bottom:13%;scale:.82}.robot{left:2%;bottom:4%;scale:.8}.login-box{padding:29px 21px}}
     @media(max-width:400px){.login-box{padding:27px 19px}.logo{font-size:33px}}
     @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}}
+
+    /* FINAL OVERRIDES: full-screen scene; no white login card */
+    html, body { width:100%; min-width:100%; height:100%; min-height:100%; margin:0 !important; background:#061a3e !important; }
+    body { min-height:100vh; min-height:100svh; min-height:100dvh; padding:0 !important; overflow-x:hidden; }
+    .world { position:fixed !important; inset:0 !important; width:100vw !important; height:100vh !important; height:100dvh !important; min-height:100vh !important; min-height:100dvh !important; z-index:0 !important; }
+    .login-box { width:min(100%,430px) !important; max-width:430px !important; margin:auto; padding:clamp(16px,4vh,30px) clamp(18px,5vw,24px) !important; background:transparent !important; background-color:transparent !important; border:0 !important; border-radius:0 !important; box-shadow:none !important; backdrop-filter:none !important; -webkit-backdrop-filter:none !important; }
+    .logo { color:#c8f5ff; background:none; -webkit-text-fill-color:#c8f5ff; text-shadow:0 2px 14px #00204f; }
+    h2,.subtitle,label,.signup-link,.back { color:#fff !important; text-shadow:0 2px 8px #00163f, 0 0 12px #00163f; }
+    .forgot,.signup-link a,.back { color:#c8f5ff !important; }
+    input { background:rgba(3,19,52,.76) !important; color:#fff !important; border:1px solid rgba(205,246,255,.8) !important; }
+    input::placeholder { color:#e5f4ff !important; }
+    .toggle-password { background:#eaf0ff !important; color:#2563eb !important; text-shadow:none; }
+    @media(max-height:720px) { body { align-items:flex-start !important; overflow-y:auto; } .login-box { padding-top:14px !important; padding-bottom:14px !important; } h2 { margin-bottom:16px !important; } .subtitle { margin-bottom:17px !important; } input { margin-bottom:12px !important; } .signup-link { margin-top:16px !important; } }
   </style>
 </head>
 <body>
