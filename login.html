@@ -3,365 +3,86 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#2563eb">
+  <meta name="theme-color" content="#071b3b">
   <title>Log In - Zemivo</title>
-
   <style>
-    * {
-      box-sizing: border-box;
-    }
-
-    body {
-      margin: 0;
-      min-height: 100vh;
-      padding: 20px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: Arial, Helvetica, sans-serif;
-      color: #172033;
-      background: linear-gradient(135deg, #eaf0ff, #f5f3ff, #e0f7ff);
-    }
-
-    .login-box {
-      width: 100%;
-      max-width: 430px;
-      padding: 32px 25px;
-      border: 1px solid rgba(255,255,255,.9);
-      border-radius: 24px;
-      background: rgba(255,255,255,.94);
-      box-shadow: 0 18px 50px rgba(37,99,235,.13);
-    }
-
-    .logo {
-      text-align: center;
-      font-size: 36px;
-      font-weight: 800;
-      color: #2563eb;
-      letter-spacing: -.8px;
-      margin-bottom: 8px;
-    }
-
-    h2 {
-      text-align: center;
-      margin: 0 0 25px;
-      font-size: 25px;
-    }
-
-    .subtitle {
-      text-align: center;
-      color: #64748b;
-      font-size: 14px;
-      margin: -15px 0 24px;
-    }
-
-    label {
-      display: block;
-      margin: 0 0 7px;
-      font-size: 14px;
-      font-weight: bold;
-    }
-
-    input {
-      width: 100%;
-      min-height: 49px;
-      padding: 13px 14px;
-      margin-bottom: 17px;
-      border: 1px solid #dbe2ee;
-      border-radius: 12px;
-      background: #f9fbff;
-      font-size: 16px;
-      outline: none;
-    }
-
-    input:focus {
-      border-color: #2563eb;
-      box-shadow: 0 0 0 3px rgba(37,99,235,.12);
-    }
-
-    .password-wrap {
-      position: relative;
-    }
-
-    .password-wrap input {
-      padding-right: 70px;
-    }
-
-    .toggle-password {
-      position: absolute;
-      top: 8px;
-      right: 8px;
-      border: 0;
-      background: #eaf0ff;
-      color: #2563eb;
-      border-radius: 8px;
-      padding: 8px;
-      cursor: pointer;
-    }
-
-    .forgot {
-      display: block;
-      text-align: right;
-      margin: -7px 0 20px;
-      color: #2563eb;
-      text-decoration: none;
-      font-size: 14px;
-      font-weight: bold;
-    }
-
-    .login-button {
-      width: 100%;
-      min-height: 49px;
-      border: 0;
-      border-radius: 14px;
-      background: linear-gradient(135deg, #2563eb, #4f46e5);
-      color: white;
-      font-size: 17px;
-      font-weight: bold;
-      cursor: pointer;
-      box-shadow: 0 7px 16px rgba(37,99,235,.22);
-    }
-
-    .login-button:disabled {
-      opacity: .65;
-      cursor: wait;
-    }
-
-    #message {
-      display: none;
-      margin-top: 16px;
-      padding: 12px;
-      border-radius: 10px;
-      font-size: 14px;
-      line-height: 1.5;
-      overflow-wrap: anywhere;
-    }
-
-    #message.show {
-      display: block;
-    }
-
-    #message.error {
-      color: #b91c1c;
-      background: #fef2f2;
-    }
-
-    #message.success {
-      color: #166534;
-      background: #f0fdf4;
-    }
-
-    .signup-link {
-      text-align: center;
-      margin-top: 24px;
-      line-height: 1.8;
-      color: #475569;
-    }
-
-    .signup-link a,
-    .back {
-      color: #2563eb;
-      text-decoration: none;
-      font-weight: bold;
-    }
-
-    .back {
-      display: block;
-      text-align: center;
-      margin-top: 20px;
-    }
-
-    a:focus-visible,
-    button:focus-visible {
-      outline: 3px solid #93c5fd;
-      outline-offset: 3px;
-    }
-
-    @media (max-width: 400px) {
-      .login-box {
-        padding: 27px 19px;
-      }
-    }
+    *{box-sizing:border-box}
+    :root{--px:0px;--py:0px}
+    body{margin:0;min-height:100vh;padding:20px;display:flex;align-items:center;justify-content:center;font-family:Arial,Helvetica,sans-serif;color:#172033;background:linear-gradient(180deg,#087bd1 0%,#6bd7f5 43%,#124d92 72%,#061a3e 100%);overflow-x:hidden;isolation:isolate}
+    /* Added 3D world background only; login form and authentication logic are preserved. */
+    .world{position:fixed;inset:0;z-index:-1;overflow:hidden;pointer-events:none;perspective:900px;background:radial-gradient(ellipse at 74% 18%,#fff6c5 0,rgba(255,214,128,.55) 7%,transparent 24%),linear-gradient(180deg,rgba(20,126,222,.2),rgba(2,22,65,.35))}
+    .world:before{content:"";position:absolute;inset:-5%;background:radial-gradient(ellipse at 13% 18%,#fff 0 1.2%,transparent 1.7%),radial-gradient(ellipse at 19% 20%,#fff 0 1.8%,transparent 2.3%),radial-gradient(ellipse at 55% 12%,#fff 0 1.2%,transparent 1.8%),radial-gradient(ellipse at 83% 32%,#fff 0 1.4%,transparent 2%),radial-gradient(ellipse at 38% 29%,#e8fcff 0 1%,transparent 1.7%);transform:translate3d(var(--px),var(--py),0)}
+    .world:after{content:"";position:absolute;left:-8%;right:-8%;bottom:-14%;height:47%;background:linear-gradient(165deg,#4ef2e0 0%,#1295d0 35%,#07508c 65%,#061c4c 100%);clip-path:polygon(0 44%,10% 27%,19% 39%,30% 8%,41% 31%,53% 13%,64% 39%,76% 9%,88% 32%,100% 17%,100% 100%,0 100%);filter:drop-shadow(0 -12px 28px #61f4ff88);transform:translate3d(calc(var(--px)*-.6),calc(var(--py)*-.5),0)}
+    .ring{position:absolute;left:-12%;top:36%;width:125%;height:48%;border:2px solid #bafaff55;border-radius:50%;transform:rotate(-17deg) translate3d(var(--px),var(--py),0);box-shadow:0 0 35px #51e8ff22}
+    .ring.r2{left:10%;top:23%;width:80%;height:64%;border-color:#e0b9ff44;transform:rotate(25deg);}
+    .planet{position:absolute;border-radius:50%;background:radial-gradient(circle at 28% 22%,#e4ffff 0,#6eeaff 12%,#2587ec 42%,#243b9e 70%,#07183e 100%);box-shadow:inset -18px -22px 35px #06163e99,0 0 45px #57eaff88;transform:translate3d(var(--px),var(--py),0);animation:planetFloat 9s ease-in-out infinite}
+    .planet.p1{width:clamp(105px,19vw,220px);height:clamp(105px,19vw,220px);right:4%;top:8%}.planet.p2{width:clamp(45px,8vw,90px);height:clamp(45px,8vw,90px);left:7%;top:22%;background:radial-gradient(circle at 28% 22%,#fff3c4,#ffbf5d 35%,#c35d25 75%,#451c4e);animation-delay:-3s}
+    .island{position:absolute;width:clamp(130px,22vw,260px);height:110px;background:linear-gradient(#8affce 0 14%,#2aa778 15% 30%,#80604b 31% 55%,#263c70 56% 100%);clip-path:polygon(0 24%,20% 0,56% 8%,100% 25%,76% 47%,62% 100%,35% 70%,13% 52%);filter:drop-shadow(0 16px 20px #03153e99);animation:islandFloat 8s ease-in-out infinite;transform:translate3d(var(--px),var(--py),0)}
+    .island.i1{left:-2%;top:39%}.island.i2{right:-4%;top:51%;transform:scale(.7);animation-delay:-3s}
+    .castle{position:absolute;right:15%;top:21%;width:130px;height:125px;filter:drop-shadow(0 0 20px #e5f7ff88);opacity:.85;transform:translate3d(var(--px),var(--py),0)}
+    .castle:before{content:"";position:absolute;left:25px;bottom:0;width:82px;height:76px;background:linear-gradient(90deg,#d5eaff,#687ce5,#f6ffff);clip-path:polygon(0 20%,17% 20%,17% 0,33% 0,33% 20%,67% 20%,67% 0,83% 0,83% 20%,100% 20%,100% 100%,0 100%)}
+    .castle:after{content:"";position:absolute;left:12px;bottom:58px;width:108px;height:60px;background:linear-gradient(90deg,#8ca2ff,#f4ffff,#b3a1ff);clip-path:polygon(0 100%,0 28%,15% 28%,15% 0,29% 28%,39% 28%,39% 9%,50% 0,61% 28%,72% 28%,72% 0,85% 28%,100% 28%,100% 100%)}
+    .airship{position:absolute;right:31%;top:12%;width:100px;height:35px;border-radius:55% 48% 45% 55%;background:linear-gradient(180deg,#e9ffff,#72d7ff 45%,#3268c8);box-shadow:0 0 22px #65eaff99;transform:translate3d(var(--px),var(--py),0) rotate(-8deg);animation:airFloat 6s ease-in-out infinite}
+    .airship:before{content:"Z";position:absolute;inset:4px 0;text-align:center;color:#123b8a;font-size:24px;font-weight:900;text-shadow:0 0 8px white}.airship:after{content:"";position:absolute;left:35px;top:29px;width:30px;height:22px;border-left:2px solid #dffaff;border-right:2px solid #dffaff;background:linear-gradient(90deg,#b6efff,#507bdc)}
+    .dragon{position:absolute;left:23%;top:16%;font-size:clamp(28px,4vw,48px);filter:drop-shadow(0 0 12px #fff3a6);transform:translate3d(var(--px),var(--py),0) rotate(-12deg);animation:airFloat 5s ease-in-out infinite}
+    .banner{position:absolute;left:5%;bottom:18%;padding:9px 16px;color:#fff;font-weight:900;letter-spacing:3px;border:1px solid #c4fbff99;border-radius:10px;background:linear-gradient(120deg,#1265bfdd,#7044cddd);box-shadow:0 0 22px #69edff77;transform:perspective(500px) rotateY(12deg) translate3d(var(--px),var(--py),0)}
+    .robot{position:absolute;left:7%;bottom:7%;width:54px;height:50px;border-radius:18px;background:linear-gradient(135deg,#fff,#9beaff 55%,#527aff);border:3px solid #e7ffff;box-shadow:0 0 27px #4deeff;animation:planetFloat 4s ease-in-out infinite}.robot:before{content:"Z";position:absolute;inset:7px 0;text-align:center;color:#0755bd;font-size:26px;font-weight:900}.robot:after{content:"";position:absolute;left:10px;top:13px;width:6px;height:6px;border-radius:50%;background:#fff;box-shadow:22px 0 #fff,0 0 8px #fff,22px 0 8px #fff}
+    .spark{position:absolute;width:4px;height:4px;border-radius:50%;background:#e7ffff;box-shadow:0 0 12px #b4ffff;animation:sparkle 2.5s ease-in-out infinite alternate}
+    @keyframes planetFloat{0%,100%{translate:0 0}50%{translate:-8px 16px}}@keyframes islandFloat{0%,100%{translate:0 0}50%{translate:0 -15px}}@keyframes airFloat{0%,100%{translate:0 0}50%{translate:12px -9px}}@keyframes sparkle{from{opacity:.25;scale:.6}to{opacity:1;scale:1.5}}
+    .login-box{position:relative;z-index:2;width:100%;max-width:430px;padding:32px 25px;border:1px solid rgba(255,255,255,.72);border-radius:24px;background:rgba(255,255,255,.91);backdrop-filter:blur(17px);-webkit-backdrop-filter:blur(17px);box-shadow:0 22px 65px rgba(3,20,70,.3),inset 0 1px 0 #ffffff;transform:perspective(1000px) rotateX(0deg);transition:transform .25s ease,box-shadow .25s ease}
+    .logo{text-align:center;font-size:36px;font-weight:800;background:linear-gradient(100deg,#087bd4,#4f46e5,#0891b2);-webkit-background-clip:text;background-clip:text;color:transparent;letter-spacing:-.8px;margin-bottom:8px;text-shadow:0 8px 24px #4f46e522}
+    h2{text-align:center;margin:0 0 25px;font-size:25px}.subtitle{text-align:center;color:#64748b;font-size:14px;margin:-15px 0 24px}
+    label{display:block;margin:0 0 7px;font-size:14px;font-weight:bold}input{width:100%;min-height:49px;padding:13px 14px;margin-bottom:17px;border:1px solid #dbe2ee;border-radius:12px;background:#f9fbff;font-size:16px;outline:none}input:focus{border-color:#2563eb;box-shadow:0 0 0 3px rgba(37,99,235,.12)}
+    .password-wrap{position:relative}.password-wrap input{padding-right:70px}.toggle-password{position:absolute;top:8px;right:8px;border:0;background:#eaf0ff;color:#2563eb;border-radius:8px;padding:8px;cursor:pointer}
+    .forgot{display:block;text-align:right;margin:-7px 0 20px;color:#2563eb;text-decoration:none;font-size:14px;font-weight:bold}.login-button{width:100%;min-height:49px;border:0;border-radius:14px;background:linear-gradient(135deg,#2563eb,#4f46e5);color:white;font-size:17px;font-weight:bold;cursor:pointer;box-shadow:0 7px 16px rgba(37,99,235,.22)}.login-button:disabled{opacity:.65;cursor:wait}
+    #message{display:none;margin-top:16px;padding:12px;border-radius:10px;font-size:14px;line-height:1.5;overflow-wrap:anywhere}#message.show{display:block}#message.error{color:#b91c1c;background:#fef2f2}#message.success{color:#166534;background:#f0fdf4}
+    .signup-link{text-align:center;margin-top:24px;line-height:1.8;color:#475569}.signup-link a,.back{color:#2563eb;text-decoration:none;font-weight:bold}.back{display:block;text-align:center;margin-top:20px}a:focus-visible,button:focus-visible{outline:3px solid #93c5fd;outline-offset:3px}
+    @media(max-width:600px){body{padding:14px}.planet.p1{right:-17%;top:5%}.castle{right:-12%;top:20%;scale:.72}.island.i1{left:-18%;top:37%}.island.i2{right:-22%;top:53%}.dragon{left:10%;top:14%}.airship{right:24%;top:10%;scale:.8}.banner{left:2%;bottom:13%;scale:.82}.robot{left:2%;bottom:4%;scale:.8}.login-box{padding:29px 21px}}
+    @media(max-width:400px){.login-box{padding:27px 19px}.logo{font-size:33px}}
+    @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}}
   </style>
 </head>
-
 <body>
+  <div class="world" aria-hidden="true">
+    <div class="ring"></div><div class="ring r2"></div>
+    <div class="planet p1"></div><div class="planet p2"></div>
+    <div class="island i1"></div><div class="island i2"></div>
+    <div class="castle"></div><div class="airship"></div><div class="dragon">🐉</div>
+    <div class="banner">ZEMIVO • ONE WORLD</div><div class="robot"></div>
+    <div class="spark" style="left:18%;top:12%"></div><div class="spark" style="left:45%;top:26%;animation-delay:.8s"></div><div class="spark" style="left:68%;top:42%;animation-delay:1.2s"></div><div class="spark" style="left:84%;top:62%;animation-delay:.4s"></div><div class="spark" style="left:33%;top:69%;animation-delay:1.6s"></div>
+  </div>
   <main class="login-box">
     <div class="logo">Zemivo</div>
     <h2>Welcome Back</h2>
     <p class="subtitle">Log in to continue to your account.</p>
-
     <form id="loginForm">
       <label for="email">Email Address</label>
-      <input
-        id="email"
-        name="email"
-        type="email"
-        placeholder="Enter your email"
-        autocomplete="email"
-        required
-      >
-
+      <input id="email" name="email" type="email" placeholder="Enter your email" autocomplete="email" required>
       <label for="password">Password</label>
       <div class="password-wrap">
-        <input
-          id="password"
-          name="password"
-          type="password"
-          placeholder="Enter your password"
-          autocomplete="current-password"
-          required
-        >
-        <button
-          id="togglePassword"
-          class="toggle-password"
-          type="button"
-          aria-label="Show password"
-          aria-pressed="false"
-        >Show</button>
+        <input id="password" name="password" type="password" placeholder="Enter your password" autocomplete="current-password" required>
+        <button id="togglePassword" class="toggle-password" type="button" aria-label="Show password" aria-pressed="false">Show</button>
       </div>
-
       <a id="forgotLink" class="forgot" href="#">Forgot password?</a>
-
-      <button id="loginButton" class="login-button" type="submit">
-        Log In
-      </button>
+      <button id="loginButton" class="login-button" type="submit">Log In</button>
     </form>
-
     <div id="message" role="status" aria-live="polite"></div>
-
-    <div class="signup-link">
-      Don't have an account?
-      <a href="signup.html">Create Account</a>
-    </div>
-
+    <div class="signup-link">Don't have an account? <a href="signup.html">Create Account</a></div>
     <a class="back" href="index.html">← Back to Zemivo</a>
   </main>
-
   <script type="module">
     import { auth } from "./zemivo-security.js";
-
-    import {
-      signInWithEmailAndPassword,
-      sendPasswordResetEmail
-    } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
-
-    const loginForm = document.getElementById("loginForm");
-    const emailInput = document.getElementById("email");
-    const passwordInput = document.getElementById("password");
-    const loginButton = document.getElementById("loginButton");
-    const message = document.getElementById("message");
-    const togglePassword = document.getElementById("togglePassword");
-    const forgotLink = document.getElementById("forgotLink");
-
-    function showMessage(text, type = "error") {
-      message.textContent = text;
-      message.className = "show " + type;
-    }
-
-    function getFriendlyError(error) {
-      switch (error?.code) {
-        case "auth/invalid-email":
-          return "Please enter a valid email address.";
-
-        case "auth/invalid-credential":
-        case "auth/wrong-password":
-        case "auth/user-not-found":
-          return "Email or password is incorrect. Please check and try again.";
-
-        case "auth/user-disabled":
-          return "This account has been disabled. Please contact support.";
-
-        case "auth/too-many-requests":
-          return "Too many attempts. Please wait a while and try again.";
-
-        case "auth/network-request-failed":
-          return "Network error. Check your internet connection.";
-
-        case "auth/operation-not-allowed":
-          return "Email and password login is not enabled in Firebase Authentication.";
-
-        case "auth/unauthorized-domain":
-          return "This website domain is not authorized in Firebase Authentication.";
-
-        case "auth/invalid-api-key":
-          return "Firebase configuration is invalid. Please check the project setup.";
-
-        default:
-          return "Login failed. Please try again. If the problem continues, check the browser console.";
-      }
-    }
-
-    togglePassword.addEventListener("click", () => {
-      const show = passwordInput.type === "password";
-
-      passwordInput.type = show ? "text" : "password";
-      togglePassword.textContent = show ? "Hide" : "Show";
-      togglePassword.setAttribute("aria-pressed", String(show));
-      togglePassword.setAttribute(
-        "aria-label",
-        show ? "Hide password" : "Show password"
-      );
-    });
-
-    loginForm.addEventListener("submit", async (event) => {
-      event.preventDefault();
-
-      const email = emailInput.value.trim();
-      const password = passwordInput.value;
-
-      if (!email || !password) {
-        showMessage("Please enter your email and password.");
-        return;
-      }
-
-      loginButton.disabled = true;
-      loginButton.textContent = "Logging in...";
-      showMessage("", "success");
-
-      try {
-        await signInWithEmailAndPassword(auth, email, password);
-
-        showMessage("Login successful! Opening your profile...", "success");
-
-        window.setTimeout(() => {
-          window.location.assign("profile.html");
-        }, 700);
-
-      } catch (error) {
-        console.error("Zemivo login error:", error);
-        showMessage(getFriendlyError(error));
-        loginButton.disabled = false;
-        loginButton.textContent = "Log In";
-      }
-    });
-
-    forgotLink.addEventListener("click", async (event) => {
-      event.preventDefault();
-
-      const email = emailInput.value.trim();
-
-      if (!email) {
-        showMessage("Enter your email address first, then select Forgot password.");
-        emailInput.focus();
-        return;
-      }
-
-      forgotLink.textContent = "Sending...";
-
-      try {
-        await sendPasswordResetEmail(auth, email);
-        showMessage(
-          "If this email is registered, a password-reset email will be sent. Check your inbox and spam folder.",
-          "success"
-        );
-      } catch (error) {
-        console.error("Zemivo password reset error:", error);
-        showMessage(getFriendlyError(error));
-      } finally {
-        forgotLink.textContent = "Forgot password?";
-      }
-    });
+    import { signInWithEmailAndPassword, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
+    const loginForm=document.getElementById("loginForm"),emailInput=document.getElementById("email"),passwordInput=document.getElementById("password"),loginButton=document.getElementById("loginButton"),message=document.getElementById("message"),togglePassword=document.getElementById("togglePassword"),forgotLink=document.getElementById("forgotLink");
+    function showMessage(text,type="error"){message.textContent=text;message.className="show "+type}
+    function getFriendlyError(error){switch(error?.code){case"auth/invalid-email":return"Please enter a valid email address.";case"auth/invalid-credential":case"auth/wrong-password":case"auth/user-not-found":return"Email or password is incorrect. Please check and try again.";case"auth/user-disabled":return"This account has been disabled. Please contact support.";case"auth/too-many-requests":return"Too many attempts. Please wait a while and try again.";case"auth/network-request-failed":return"Network error. Check your internet connection.";case"auth/operation-not-allowed":return"Email and password login is not enabled in Firebase Authentication.";case"auth/unauthorized-domain":return"This website domain is not authorized in Firebase Authentication.";case"auth/invalid-api-key":return"Firebase configuration is invalid. Please check the project setup.";default:return"Login failed. Please try again. If the problem continues, check the browser console."}}
+    togglePassword.addEventListener("click",()=>{const show=passwordInput.type==="password";passwordInput.type=show?"text":"password";togglePassword.textContent=show?"Hide":"Show";togglePassword.setAttribute("aria-pressed",String(show));togglePassword.setAttribute("aria-label",show?"Hide password":"Show password")});
+    loginForm.addEventListener("submit",async(event)=>{event.preventDefault();const email=emailInput.value.trim(),password=passwordInput.value;if(!email||!password){showMessage("Please enter your email and password.");return}loginButton.disabled=true;loginButton.textContent="Logging in...";showMessage("","success");try{await signInWithEmailAndPassword(auth,email,password);showMessage("Login successful! Opening your profile...","success");window.setTimeout(()=>window.location.assign("profile.html"),700)}catch(error){console.error("Zemivo login error:",error);showMessage(getFriendlyError(error));loginButton.disabled=false;loginButton.textContent="Log In"}});
+    forgotLink.addEventListener("click",async(event)=>{event.preventDefault();const email=emailInput.value.trim();if(!email){showMessage("Enter your email address first, then select Forgot password.");emailInput.focus();return}forgotLink.textContent="Sending...";try{await sendPasswordResetEmail(auth,email);showMessage("If this email is registered, a password-reset email will be sent. Check your inbox and spam folder.","success")}catch(error){console.error("Zemivo password reset error:",error);showMessage(getFriendlyError(error))}finally{forgotLink.textContent="Forgot password?"}});
+    // Gentle parallax responds to mouse and touch without blocking form interaction.
+    const root=document.documentElement;let moveFrame=0;
+    function moveWorld(x,y){if(moveFrame)cancelAnimationFrame(moveFrame);moveFrame=requestAnimationFrame(()=>{root.style.setProperty("--px",((x/Math.max(1,innerWidth))-.5)*18+"px");root.style.setProperty("--py",((y/Math.max(1,innerHeight))-.5)*14+"px")})}
+    window.addEventListener("pointermove",e=>moveWorld(e.clientX,e.clientY),{passive:true});
   </script>
 </body>
 </html>
