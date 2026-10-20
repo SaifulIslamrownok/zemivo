@@ -47,12 +47,15 @@
     body { min-height:100vh; min-height:100svh; min-height:100dvh; padding:0 !important; overflow-x:hidden; }
     .world { position:fixed !important; inset:0 !important; width:100vw !important; height:100vh !important; height:100dvh !important; min-height:100vh !important; min-height:100dvh !important; z-index:0 !important; }
     .login-box { width:min(100%,430px) !important; max-width:430px !important; margin:auto; padding:clamp(16px,4vh,30px) clamp(18px,5vw,24px) !important; background:transparent !important; background-color:transparent !important; border:0 !important; border-radius:0 !important; box-shadow:none !important; backdrop-filter:none !important; -webkit-backdrop-filter:none !important; }
-    .logo { color:#c8f5ff; background:none; -webkit-text-fill-color:#c8f5ff; text-shadow:0 2px 14px #00204f; }
+    .logo { color:#a5f3fc; background:none; -webkit-text-fill-color:#a5f3fc; text-shadow:0 2px 14px #00204f, 0 0 22px rgba(56,189,248,.35); }
     h2,.subtitle,label,.signup-link,.back { color:#fff !important; text-shadow:0 2px 8px #00163f, 0 0 12px #00163f; }
-    .forgot,.signup-link a,.back { color:#c8f5ff !important; }
+    .forgot,.signup-link a,.back { color:#a5f3fc !important; }
     input { background:rgba(3,19,52,.76) !important; color:#fff !important; border:1px solid rgba(205,246,255,.8) !important; }
     input::placeholder { color:#e5f4ff !important; }
-    .toggle-password { background:#eaf0ff !important; color:#2563eb !important; text-shadow:none; }
+    .toggle-password { background:linear-gradient(135deg,#cffafe,#bae6fd) !important; color:#075985 !important; border:1px solid rgba(165,243,252,.8); text-shadow:none; }
+    .login-button { background:linear-gradient(120deg,#0891b2 0%,#0ea5e9 48%,#2563eb 100%) !important; box-shadow:0 7px 20px rgba(14,165,233,.28),0 0 18px rgba(34,211,238,.12) !important; }
+    .forgot { color:#a5f3fc !important; }
+    input:focus { border-color:#67e8f9 !important; box-shadow:0 0 0 3px rgba(34,211,238,.2) !important; }
     @media(max-height:720px) { body { align-items:flex-start !important; overflow-y:auto; } .login-box { padding-top:14px !important; padding-bottom:14px !important; } h2 { margin-bottom:16px !important; } .subtitle { margin-bottom:17px !important; } input { margin-bottom:12px !important; } .signup-link { margin-top:16px !important; } }
   </style>
 </head>
