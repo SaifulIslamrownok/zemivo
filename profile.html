@@ -1,70 +1,189 @@
 <!doctype html>
-<html lang="bn">
+<html lang="en">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Zemivo Profile — Preview</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Zemivo | Profile</title>
 <style>
-:root{--bg:#061747;--panel:#09245d;--panel2:#0b2b70;--cyan:#16e4ff;--blue:#087cff;--purple:#714bff;--white:#f7fbff;--muted:#b9d4ff}
-*{box-sizing:border-box}body{margin:0;color:var(--white);font-family:Arial,"Noto Sans Bengali",sans-serif;background:radial-gradient(ellipse at 10% 20%,#163eaa 0,transparent 35%),radial-gradient(ellipse at 90% 80%,#3c1e98 0,transparent 35%),linear-gradient(135deg,#020c30,#061747 50%,#071d54);min-height:100vh}
-button,input,textarea{font:inherit}button{cursor:pointer;color:white;border:1px solid #27dfff;background:linear-gradient(135deg,#076de8,#303eff 60%,#704aff);border-radius:13px;padding:10px 14px;font-weight:700;box-shadow:0 5px 16px #00123e99}button:hover{filter:brightness(1.16);transform:translateY(-1px)}button:focus-visible,input:focus-visible,textarea:focus-visible{outline:2px solid var(--cyan);outline-offset:2px}
-.top{position:sticky;top:0;z-index:5;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:12px max(14px,calc((100% - 1120px)/2));background:#04123bea;border-bottom:1px solid #1de0ff80;backdrop-filter:blur(16px)}.brand{display:flex;align-items:center;gap:10px;font-size:22px;font-weight:800}.logo{display:grid;place-items:center;width:40px;height:40px;border-radius:12px;background:linear-gradient(135deg,#10e9ff,#0965ff,#8c48ff);font-size:27px;box-shadow:0 0 20px #00cfff80}.tools{display:flex;gap:8px}.iconbtn{width:42px;height:42px;padding:0;font-size:19px;border-radius:12px}
-.layout{max-width:1000px;margin:22px auto 100px;padding:0 14px}.profile{overflow:hidden;border:1px solid #1adfff99;border-radius:25px;background:linear-gradient(145deg,#06194b,#092968 55%,#101c63);box-shadow:0 18px 60px #0007,0 0 30px #00bfff18;transform-style:preserve-3d}
-.cover{height:245px;position:relative;overflow:hidden;background:linear-gradient(125deg,#0759c9,#0b9ad8 35%,#4037bb 68%,#101c62)}.cover:before{content:"";position:absolute;inset:0;background:radial-gradient(ellipse at 75% 25%,#72f6ff88,transparent 25%),radial-gradient(ellipse at 20% 80%,#9c72ff99,transparent 35%),linear-gradient(160deg,transparent 40%,#020e3b99)}.cover-art{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;text-align:center;letter-spacing:2px;font-size:clamp(20px,4vw,36px);font-weight:900;text-shadow:0 3px 15px #00113c}.cover-art small{font-size:13px;letter-spacing:5px;margin-top:10px}.cover .camera{position:absolute;right:16px;bottom:15px}
-.camera{width:42px;height:42px;border-radius:50%;padding:0;font-size:18px;background:linear-gradient(135deg,#00cfff,#164dff);border:2px solid white}
-.identity{padding:0 24px 18px;position:relative}.avatar-wrap{position:relative;width:142px;height:142px;margin-top:-76px;margin-bottom:8px}.avatar{width:142px;height:142px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(145deg,#173d88,#06133d);border:5px solid #071a4c;outline:3px solid var(--cyan);font-size:48px;color:#9fdcff;overflow:hidden}.avatar img,.cover img{width:100%;height:100%;object-fit:cover}.avatar-wrap .camera{position:absolute;right:-3px;bottom:4px}
-.name-row{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap}.name{font-size:clamp(25px,4vw,34px);font-weight:800;margin:2px 0 8px;overflow-wrap:anywhere}.counts{color:#d8eaff;font-size:15px;margin-bottom:10px}.counts b{color:white}.bio{color:#c6e0ff;line-height:1.5;margin:8px 0 14px}.actions{display:flex;gap:10px;flex-wrap:wrap;margin:16px 0 4px}.actions button{min-width:135px}.tabs{display:flex;gap:8px;overflow:auto;padding:14px 20px;border-top:1px solid #21dfff66;border-bottom:1px solid #21dfff66;background:#04184799}.tab{background:transparent;box-shadow:none;border-color:#3974cb;white-space:nowrap}.tab.active{background:linear-gradient(135deg,#10dfff,#1666ff);box-shadow:0 0 18px #00dfff55}
-.content{display:grid;grid-template-columns:minmax(0,0.85fr) minmax(0,1.15fr);gap:14px;padding:16px}.card{background:linear-gradient(145deg,#0a2a69,#071b4a);border:1px solid #15dfff;border-radius:18px;padding:16px;box-shadow:inset 0 1px #ffffff0d}.card h2{font-size:18px;margin:0 0 12px}.card-head{display:flex;justify-content:space-between;align-items:center;gap:10px}.smallbtn{font-size:13px;padding:7px 10px;border-radius:10px}.detail{color:#d6e7ff;line-height:1.8;overflow-wrap:anywhere}.empty{border:1px dashed #5a8ed7;border-radius:12px;padding:18px 12px;text-align:center;color:#c2d8ff;line-height:1.6}.empty strong{display:block;color:white;margin-bottom:5px}.friends-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}.friend-placeholder{border:1px solid #3465a8;border-radius:12px;padding:13px 5px;text-align:center;color:#a9cfff;font-size:13px}.postbox{background:#f8fbff;color:#122958;border-radius:16px;padding:12px}.posttop{display:flex;gap:10px;align-items:center}.mini-avatar{height:38px;width:38px;flex:0 0 38px;border-radius:50%;background:#dce9ff;display:grid;place-items:center;color:#12458b}.postinput{flex:1;text-align:left;color:#526785;background:#e9f0ff;border:0;box-shadow:none}.post-actions{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}.post-actions button{flex:1;background:#e8f1ff;color:#14396e;border:0;box-shadow:none}.post-list{margin-top:12px}.post{padding:12px;border:1px solid #2a69ae;border-radius:12px;margin-top:9px;color:#eaf4ff;white-space:pre-wrap;overflow-wrap:anywhere}.bottom{position:fixed;z-index:6;bottom:0;left:0;right:0;display:flex;justify-content:center;background:#f8fbff;border-top:1px solid #80dfff;box-shadow:0 -8px 30px #0005}.nav{width:min(100%,800px);display:flex;justify-content:space-around;padding:7px 4px calc(7px + env(safe-area-inset-bottom));gap:3px}.nav button{flex:1;min-width:0;padding:7px 3px;background:transparent;color:#174079;border:0;box-shadow:none;border-radius:10px;font-size:11px}.nav button span{display:block;font-size:19px;margin-bottom:3px}.nav button.active{color:#075ff5;background:#e5f2ff}
-.modal-back{display:none;position:fixed;z-index:20;inset:0;background:#0009;align-items:center;justify-content:center;padding:16px}.modal-back.show{display:flex}.modal{width:min(100%,480px);background:#071b4c;border:1px solid var(--cyan);border-radius:20px;padding:20px;box-shadow:0 20px 60px #0009}.modal h2{margin:0 0 14px}.field{display:block;margin:12px 0;color:#cce2ff}.field input,.field textarea{display:block;width:100%;margin-top:6px;padding:11px;border:1px solid #4d83c8;border-radius:10px;background:#041237;color:white}.field textarea{min-height:90px;resize:vertical}.modal-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:16px}.secondary{background:#173363;border-color:#5685bc}.notice{position:fixed;z-index:30;top:78px;left:50%;transform:translateX(-50%);display:none;max-width:90vw;padding:12px 16px;border-radius:12px;background:#eaf7ff;color:#09275a;box-shadow:0 8px 30px #0006}.notice.show{display:block}
-@media(max-width:650px){.top{padding:9px 12px}.brand{font-size:19px}.layout{padding:0 8px;margin:10px auto 95px}.cover{height:180px}.identity{padding:0 15px 14px}.avatar-wrap,.avatar{width:112px;height:112px}.avatar-wrap{margin-top:-58px}.content{grid-template-columns:1fr;padding:10px}.tabs{padding:11px}.tab{padding:9px 13px}.name-row{align-items:flex-start}.actions button{flex:1;min-width:120px}.card{padding:13px}.friends-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+:root{--blue:#0866ff;--purple:#6155f5;--ink:#17233f;--muted:#667795;--line:#e4eaf3;--bg:#f2f5fa;--card:#fff}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);font:15px/1.45 Arial,Helvetica,sans-serif;color:var(--ink)}
+button,input,textarea{font:inherit}button{cursor:pointer;border:0}.topbar{height:72px;background:#fff;display:flex;align-items:center;gap:24px;padding:0 28px;box-shadow:0 2px 10px #17233f0a;position:sticky;top:0;z-index:10}
+.brand{font-size:30px;font-weight:800;letter-spacing:-1px;display:flex;align-items:center;gap:8px;color:#0c1732;white-space:nowrap}.brand-mark{display:grid;place-items:center;width:34px;height:34px;border-radius:10px;background:linear-gradient(135deg,#34d9f5,#0874ff 55%,#7b52ef);color:white;font-size:25px;font-weight:900}
+.search{background:#f0f3f8;border-radius:30px;padding:12px 16px;color:#71809b;max-width:320px;flex:1}.nav{display:flex;align-items:center;justify-content:center;gap:8px;flex:1;height:100%}.nav button{height:100%;min-width:75px;background:transparent;color:#526582;border-bottom:3px solid transparent;padding:7px 10px}.nav button.active{color:var(--blue);border-color:var(--blue)}.nav .ico{display:block;font-size:22px;line-height:1.1;margin-bottom:4px}.top-actions{display:flex;align-items:center;gap:14px;color:#536582}.top-avatar{width:38px;height:38px;border-radius:50%;background:#e8edf5;display:grid;place-items:center;font-size:20px}
+main{max-width:1250px;margin:22px auto;padding:0 18px}.profile-card{background:var(--card);border-radius:9px;overflow:hidden;box-shadow:0 2px 8px #26395808}.cover{height:235px;position:relative;background:linear-gradient(110deg,#1262ae,#52b9e4 45%,#f2c99d);overflow:hidden}.cover img{width:100%;height:100%;object-fit:cover;display:none}.cover:after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,#10254c30,transparent 60%);pointer-events:none}.cover-button{position:absolute;right:22px;bottom:18px;z-index:2;border-radius:8px;background:#fff;padding:10px 13px;color:#273754;font-weight:700;box-shadow:0 2px 7px #0002}
+.identity{display:flex;align-items:center;gap:20px;padding:0 28px 20px;min-height:112px;position:relative}.avatar-wrap{width:174px;height:174px;flex:0 0 174px;margin-top:-66px;position:relative;z-index:3}.avatar{width:100%;height:100%;border-radius:50%;border:6px solid #fff;background:#e7edf6;display:grid;place-items:center;overflow:hidden;color:#9ba9bf;font-size:82px;box-shadow:0 2px 8px #182b4a20}.avatar img{width:100%;height:100%;object-fit:cover;display:none}.camera{position:absolute;right:5px;bottom:5px;width:39px;height:39px;border:3px solid white;border-radius:50%;background:#eaf0fa;color:#243957;font-size:17px}
+.identity-info{padding-top:13px;min-width:0;flex:1}.identity-info h1{margin:0 0 2px;font-size:30px;letter-spacing:-.6px}.bio{color:#344766;margin:0 0 3px}.counts{color:#526582}.identity-actions{display:flex;gap:10px;align-items:center;margin-left:auto;padding-top:16px}.btn{border-radius:8px;padding:11px 16px;font-weight:700;display:inline-flex;align-items:center;gap:8px;justify-content:center}.primary{background:var(--blue);color:white}.secondary{background:var(--purple);color:white}.soft{background:#edf1f8;color:#263956}.tabs{display:flex;align-items:center;gap:8px;border-top:1px solid var(--line);padding:0 25px;min-height:54px;overflow-x:auto}.tabs button{white-space:nowrap;height:54px;padding:0 17px;background:transparent;color:#4c5f7d;font-weight:700;border-bottom:3px solid transparent}.tabs button.active{color:var(--blue);border-color:var(--blue)}
+.content{display:grid;grid-template-columns:minmax(280px, .8fr) minmax(0,1.4fr);gap:16px;margin-top:17px}.column{display:flex;flex-direction:column;gap:14px;min-width:0}.panel{background:white;border-radius:9px;padding:19px 22px;box-shadow:0 2px 8px #26395808}.panel h2{font-size:18px;margin:0 0 14px}.muted{color:var(--muted)}.detail{display:flex;gap:13px;margin:13px 0;color:#4e6180}.detail .symbol{width:22px;text-align:center;font-size:17px}.detail strong{font-weight:600;color:#425573}.detail small{display:block;color:#73839d;margin-top:2px}.composer-head{display:flex;align-items:center;gap:12px}.mini-avatar{height:46px;width:46px;flex:0 0 46px;border-radius:50%;background:#e9eef7;display:grid;place-items:center;color:#9ba9bf;font-size:24px;overflow:hidden}.mini-avatar img{width:100%;height:100%;object-fit:cover;display:none}.composer-input{background:#f0f3f8;color:#6b7b95;border-radius:30px;padding:13px 18px;flex:1;text-align:left}.composer-actions{display:flex;gap:10px;border-top:1px solid var(--line);margin-top:15px;padding-top:12px}.composer-actions button{flex:1;background:transparent;color:#526582;padding:8px;border-radius:7px}.composer-actions button:hover,.tabs button:hover,.nav button:hover{background:#f5f7fb}.empty{text-align:center;padding:45px 15px 40px}.empty-illustration{font-size:50px;margin-bottom:8px;color:#8ba0c3}.empty h2{margin:0 0 5px;font-size:21px}.empty p{margin:0;color:#6f809b}.friend-zero{font-size:25px;font-weight:800;color:#19294a}.hidden{display:none!important}.toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%);background:#15233d;color:white;padding:12px 18px;border-radius:10px;box-shadow:0 5px 20px #0002;z-index:50;max-width:90%;text-align:center}.modal-backdrop{position:fixed;inset:0;background:#0c173b70;display:none;align-items:center;justify-content:center;padding:18px;z-index:40}.modal-backdrop.open{display:flex}.modal{background:white;border-radius:13px;width:min(520px,100%);padding:22px;box-shadow:0 12px 40px #0003}.modal-top{display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line);padding-bottom:12px;margin-bottom:16px}.modal h2{margin:0;font-size:22px}.close{background:#eef2f8;border-radius:50%;width:34px;height:34px;font-size:20px}.field{margin:13px 0}.field label{display:block;font-weight:700;margin-bottom:6px;color:#354866}.field input,.field textarea{width:100%;border:1px solid #ccd6e5;border-radius:8px;padding:11px 12px;background:white;color:var(--ink)}.field textarea{resize:vertical;min-height:90px}.modal-footer{display:flex;justify-content:flex-end;gap:9px;margin-top:18px}.post-text{white-space:pre-wrap;overflow-wrap:anywhere}.post-card{background:white;border-radius:9px;padding:20px;box-shadow:0 2px 8px #26395808}.post-meta{display:flex;gap:10px;align-items:center;margin-bottom:12px}.post-meta strong{display:block}.post-meta small{color:var(--muted)}.post-photo{max-width:100%;max-height:420px;object-fit:contain;border-radius:8px;margin-top:12px}.bottom-nav{display:none}
+@media(max-width:850px){.topbar{padding:0 14px;gap:12px}.brand{font-size:24px}.search{max-width:210px}.nav{gap:0}.nav button{min-width:50px;padding:6px}.nav button .label{display:none}.top-actions{gap:7px}.identity{padding:0 18px 17px;gap:14px;flex-wrap:wrap}.avatar-wrap{width:140px;height:140px;flex-basis:140px;margin-top:-48px}.avatar{font-size:64px}.identity-info h1{font-size:26px}.identity-actions{width:100%;margin-left:154px;padding-top:0;margin-top:-20px}.content{grid-template-columns:minmax(0,1fr) minmax(0,1.3fr)}}
+@media(max-width:620px){.topbar{height:58px;padding:0 12px;gap:10px}.brand{font-size:23px}.brand-mark{width:29px;height:29px;font-size:21px}.search{display:none}.nav{justify-content:flex-end}.nav button{min-width:36px}.top-actions{display:none}main{margin:10px auto;padding:0 8px 75px}.cover{height:155px}.cover-button{right:10px;bottom:10px;padding:8px 10px;font-size:12px}.identity{padding:0 13px 15px;gap:11px;min-height:0}.avatar-wrap{width:112px;height:112px;flex-basis:112px;margin-top:-40px}.avatar{border-width:4px;font-size:52px}.camera{width:32px;height:32px;right:0;bottom:0}.identity-info{padding-top:12px;flex:1}.identity-info h1{font-size:22px}.bio,.counts{font-size:13px}.identity-actions{margin:4px 0 0;width:100%;gap:7px}.identity-actions .btn{flex:1;padding:10px 8px;font-size:13px}.tabs{padding:0 7px;gap:0;min-height:49px}.tabs button{height:49px;padding:0 12px;font-size:13px}.content{grid-template-columns:1fr;gap:12px;margin-top:12px}.content .left-column{order:2}.content .right-column{order:1}.panel{padding:16px}.composer-actions{gap:4px}.composer-actions button{font-size:12px;padding:8px 2px}.empty{padding:35px 10px}.bottom-nav{display:flex;position:fixed;bottom:0;left:0;right:0;height:58px;background:white;border-top:1px solid var(--line);z-index:20;justify-content:space-around;align-items:center}.bottom-nav button{background:transparent;color:#657692;font-size:20px;display:flex;flex-direction:column;align-items:center;gap:1px;min-width:48px}.bottom-nav small{font-size:10px}.bottom-nav button.active{color:var(--blue)}}
 </style>
 </head>
 <body>
-<header class="top">
-  <div class="brand"><button class="iconbtn" id="menuBtn" aria-label="Menu">☰</button><span class="logo">Z</span><span>Zemivo</span></div>
-  <div class="tools"><button class="iconbtn" id="editTop" aria-label="Edit profile">✎</button><button class="iconbtn" id="searchBtn" aria-label="Search">⌕</button><button class="iconbtn" id="moreBtn" aria-label="More options">⋯</button></div>
+<header class="topbar">
+  <div class="brand"><span class="brand-mark">Z</span> Zemivo</div>
+  <div class="search">⌕ &nbsp; Search Zemivo...</div>
+  <nav class="nav" aria-label="Main navigation">
+    <button class="active" data-nav="Home"><span class="ico">⌂</span><span class="label">Home</span></button>
+    <button data-nav="Friends"><span class="ico">♧</span><span class="label">Friends</span></button>
+    <button data-nav="Video"><span class="ico">▣</span><span class="label">Video</span></button>
+    <button data-nav="Marketplace"><span class="ico">▤</span><span class="label">Marketplace</span></button>
+    <button data-nav="Notifications"><span class="ico">♧</span><span class="label">Notifications</span></button>
+  </nav>
+  <div class="top-actions"><div class="top-avatar">♙</div><span>⌄</span><span>⠿</span></div>
 </header>
-<main class="layout">
-<section class="profile">
-  <div class="cover" id="coverArea"><div class="cover-art">CONNECT · CREATE · GROW<small>ONE GLOBAL COMMUNITY</small></div><button class="camera" id="coverCamera" aria-label="Change cover photo">📷</button><input hidden type="file" id="coverFile" accept="image/*"></div>
-  <div class="identity">
-    <div class="avatar-wrap"><div class="avatar" id="avatarArea">Z</div><button class="camera" id="avatarCamera" aria-label="Change profile photo">📷</button><input hidden type="file" id="avatarFile" accept="image/*"></div>
-    <div class="name-row"><div><div class="name" id="profileName">Your Name</div><div class="counts"><b id="followerCount">0</b> followers &nbsp;·&nbsp; <b id="followingCount">0</b> following</div></div><button id="editProfile">✎ Edit Profile</button></div>
-    <div class="bio" id="profileBio">নিজের সম্পর্কে কিছু লিখুন। আপনার পরিচয় ও আগ্রহ অন্যদের সঙ্গে শেয়ার করুন।</div>
-    <div class="actions"><button id="dashboardBtn">▥ Dashboard</button><button id="createBtn">＋ Create</button></div>
-  </div>
-  <nav class="tabs" aria-label="Profile sections"><button class="tab active" data-tab="All">All</button><button class="tab" data-tab="Reels">Reels</button><button class="tab" data-tab="Photos">Photos</button><button class="tab" data-tab="More">More ▾</button></nav>
-  <div class="content">
-    <div class="leftcol">
-      <section class="card"><div class="card-head"><h2>Personal details</h2><button class="smallbtn" id="editDetails">✎ Edit</button></div><div class="detail" id="detailsText">📍 Location not added<br>🎂 Birthday not added<br>💼 Work not added</div></section>
-      <section class="card" style="margin-top:14px"><div class="card-head"><h2>Contact info</h2><button class="smallbtn" id="editContact">✎ Edit</button></div><div class="detail" id="contactText">☎ Phone not added<br>✉ Email not added<br>🔗 Website not added</div></section>
-      <section class="card" style="margin-top:14px"><div class="card-head"><h2>Friends</h2><button class="smallbtn" id="seeFriends">See all</button></div><div class="empty"><strong>এখনও কোনো বন্ধু নেই</strong>বন্ধু যোগ হলে এখানে দেখা যাবে।</div></section>
+<main>
+  <section class="profile-card">
+    <div class="cover" id="coverArea">
+      <img id="coverImage" alt="Profile cover">
+      <button class="cover-button" id="changeCover">▣ &nbsp; Edit cover photo</button>
     </div>
-    <div class="rightcol">
-      <section class="card"><div class="card-head"><h2 id="postsTitle">All posts</h2><button class="smallbtn" id="filtersBtn">Filters</button></div>
-        <div class="postbox"><div class="posttop"><div class="mini-avatar" id="miniAvatar">Z</div><button class="postinput" id="postPrompt">What's on your mind?</button><button class="smallbtn" id="photoPostBtn" style="background:#e5efff;color:#16477f;border:0;box-shadow:none">▧</button></div><div class="post-actions"><button id="reelBtn">▣ Reel</button><button id="liveBtn">◉ Live</button><button id="managePostsBtn">Manage posts</button></div></div>
-        <div class="post-list" id="postList"><div class="empty"><strong>এখনও কোনো পোস্ট নেই</strong>আপনার প্রথম পোস্ট তৈরি করলে এখানে দেখা যাবে।</div></div>
-      </section>
-      <section class="card" id="photosCard" style="margin-top:14px"><h2>Photos</h2><div class="empty">এখনও কোনো ছবি যোগ করা হয়নি।</div></section>
+    <input class="hidden" type="file" id="coverFile" accept="image/*">
+    <div class="identity">
+      <div class="avatar-wrap">
+        <div class="avatar" id="avatarArea"><span id="avatarPlaceholder">♙</span><img id="avatarImage" alt="Profile photo"></div>
+        <button class="camera" id="changeAvatar" aria-label="Change profile photo">▣</button>
+      </div>
+      <input class="hidden" type="file" id="avatarFile" accept="image/*">
+      <div class="identity-info">
+        <h1 id="profileName">Your Name</h1>
+        <p class="bio" id="profileBio">Welcome to my Zemivo profile</p>
+        <div class="counts"><strong id="friendCount">0</strong> friends &nbsp; · &nbsp; <strong id="followerCount">0</strong> followers</div>
+      </div>
+      <div class="identity-actions">
+        <button class="btn primary" id="editProfile">✎ &nbsp; Edit profile</button>
+        <button class="btn secondary" id="addStory">＋ &nbsp; Add to story</button>
+        <button class="btn soft" id="moreButton" aria-label="More options">•••</button>
+      </div>
     </div>
-  </div>
-</section>
+    <nav class="tabs" aria-label="Profile tabs">
+      <button class="active" data-tab="Posts">Posts</button><button data-tab="About">About</button><button data-tab="Friends">Friends</button><button data-tab="Photos">Photos</button><button data-tab="Videos">Videos</button><button data-tab="More">More⌄</button>
+    </nav>
+  </section>
+  <section class="content">
+    <aside class="column left-column">
+      <div class="panel">
+        <h2>♟ &nbsp; Intro</h2>
+        <div class="detail"><span class="symbol">▣</span><div id="introBio" class="muted">Add a short bio about yourself...</div></div>
+      </div>
+      <div class="panel">
+        <h2>◉ &nbsp; Personal details</h2>
+        <div class="detail"><span class="symbol">⌖</span><div><strong>Lives in</strong><small id="locationText">Add your location</small></div></div>
+        <div class="detail"><span class="symbol">▣</span><div><strong>Works at</strong><small id="workText">Add your workplace</small></div></div>
+        <div class="detail"><span class="symbol">◆</span><div><strong>Studied at</strong><small id="schoolText">Add your school or university</small></div></div>
+        <div class="detail"><span class="symbol">♥</span><div><strong>Relationship</strong><small id="relationshipText">Add your relationship status</small></div></div>
+      </div>
+      <div class="panel">
+        <h2>♧ &nbsp; Contact info</h2>
+        <div class="detail"><span class="symbol">✉</span><div><strong>Email</strong><small id="emailText">Add your email address</small></div></div>
+        <div class="detail"><span class="symbol">☎</span><div><strong>Phone</strong><small id="phoneText">Add your phone number</small></div></div>
+        <div class="detail"><span class="symbol">↗</span><div><strong>Website</strong><small id="websiteText">Add your website</small></div></div>
+      </div>
+      <div class="panel"><h2>Friends</h2><div class="friend-zero">0 friends</div><p class="muted">Friends you add will appear here.</p></div>
+    </aside>
+    <div class="column right-column">
+      <div class="panel">
+        <div class="composer-head"><div class="mini-avatar" id="miniAvatar"><span>♙</span><img id="miniAvatarImage" alt=""></div><button class="composer-input" id="openComposer">What's on your mind?</button></div>
+        <div class="composer-actions"><button id="photoAction">▧ &nbsp; Photo/video</button><button id="feelingAction">☻ &nbsp; Feeling/activity</button></div>
+        <input type="file" id="postPhotoFile" accept="image/*" class="hidden">
+      </div>
+      <div id="postsArea">
+        <div class="panel empty" id="emptyPosts"><div class="empty-illustration">▤</div><h2>No posts yet</h2><p>Your posts will appear here.</p></div>
+      </div>
+    </div>
+  </section>
 </main>
-<footer class="bottom"><nav class="nav" aria-label="Main navigation"><button data-nav="Home"><span>⌂</span>Home</button><button data-nav="Reels"><span>▣</span>Reels</button><button data-nav="Friends"><span>♧</span>Friends</button><button data-nav="Marketplace"><span>▤</span>Marketplace</button><button data-nav="Notifications"><span>♧</span>Notifications</button><button class="active" data-nav="Profile"><span>◉</span>Profile</button></nav></footer>
-<div class="modal-back" id="modalBack"><section class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle"><h2 id="modalTitle">Edit</h2><div id="modalFields"></div><div class="modal-actions"><button class="secondary" id="cancelModal">Cancel</button><button id="saveModal">Save</button></div></section></div>
-<div class="notice" id="notice" role="status"></div>
+<nav class="bottom-nav" aria-label="Mobile navigation"><button class="active" data-nav="Home">⌂<small>Home</small></button><button data-nav="Friends">♧<small>Friends</small></button><button data-nav="Video">▣<small>Video</small></button><button data-nav="Notifications">♧<small>Alerts</small></button><button data-nav="Menu">☰<small>Menu</small></button></nav>
+<div class="modal-backdrop" id="editModal" role="dialog" aria-modal="true" aria-labelledby="editTitle">
+ <div class="modal"><div class="modal-top"><h2 id="editTitle">Edit profile</h2><button class="close" data-close="editModal" aria-label="Close">×</button></div>
+  <form id="profileForm">
+   <div class="field"><label for="nameInput">Name</label><input id="nameInput" maxlength="80" placeholder="Your name"></div>
+   <div class="field"><label for="bioInput">Bio</label><textarea id="bioInput" maxlength="240" placeholder="A little about you"></textarea></div>
+   <div class="field"><label for="locationInput">Lives in</label><input id="locationInput" maxlength="100" placeholder="City, country"></div>
+   <div class="field"><label for="workInput">Works at</label><input id="workInput" maxlength="100" placeholder="Workplace"></div>
+   <div class="field"><label for="schoolInput">Studied at</label><input id="schoolInput" maxlength="100" placeholder="School or university"></div>
+   <div class="field"><label for="relationshipInput">Relationship status</label><input id="relationshipInput" maxlength="60" placeholder="Optional"></div>
+   <div class="field"><label for="emailInput">Email</label><input id="emailInput" type="email" maxlength="160" placeholder="Email address"></div>
+   <div class="field"><label for="phoneInput">Phone</label><input id="phoneInput" maxlength="40" placeholder="Phone number"></div>
+   <div class="field"><label for="websiteInput">Website</label><input id="websiteInput" maxlength="200" placeholder="Website URL"></div>
+   <div class="modal-footer"><button type="button" class="btn soft" data-close="editModal">Cancel</button><button class="btn primary" type="submit">Save changes</button></div>
+  </form>
+ </div>
+</div>
+<div class="modal-backdrop" id="postModal" role="dialog" aria-modal="true" aria-labelledby="postTitle">
+ <div class="modal"><div class="modal-top"><h2 id="postTitle">Create post</h2><button class="close" data-close="postModal" aria-label="Close">×</button></div>
+  <form id="postForm"><div class="field"><label for="postTextInput">What's on your mind?</label><textarea id="postTextInput" placeholder="Write something..." maxlength="5000"></textarea></div><div class="field"><label for="postImageInput">Photo (optional)</label><input id="postImageInput" type="file" accept="image/*"></div><div class="modal-footer"><button type="button" class="btn soft" data-close="postModal">Cancel</button><button class="btn primary" type="submit">Post</button></div></form>
+ </div>
+</div>
+<div class="toast hidden" id="toast" role="status"></div>
 <script>
-(()=>{
+(function(){
+'use strict';
 const $=id=>document.getElementById(id);
-const state={name:'Your Name',bio:'নিজের সম্পর্কে কিছু লিখুন। আপনার পরিচয় ও আগ্রহ অন্যদের সঙ্গে শেয়ার করুন।',location:'',birthday:'',work:'',phone:'',email:'',website:'',posts:[],tab:'All'};
-function notice(msg){const n=$('notice');n.textContent=msg;n.classList.add('show');clearTimeout(notice.timer);notice.timer=setTimeout(()=>n.classList.remove('show'),2600)}
-function openModal(title,fields,onSave){$('modalTitle').textContent=title;const root=$('modalFields');root.innerHTML='';fields.forEach(f=>{const label=document.createElement('label');label.className='field';label.textContent=f.label;let el;if(f.type==='textarea'){el=document.createElement('textarea');}else{el=document.createElement('input');el.type=f.type||'text';}el.id='field_'+f.key;el.value=state[f.key]||'';label.appendChild(el);root.appendChild(label)});$('modalBack').classList.add('show');$('saveModal').onclick=()=>{const values={};fields.forEach(f=>values[f.key]=$('field_'+f.key).value.trim());onSave(values);$('modalBack').classList.remove('show')};}
-function editProfile(){openModal('Edit Profile',[{key:'name',label:'Display name'},{key:'bio',label:'Bio',type:'textarea'}],v=>{Object.assign(state,v);render();notice('Profile preview updated')})}
-function render(){ $('profileName').textContent=state.name||'Your Name';$('profileBio').textContent=state.bio||'নিজের সম্পর্কে কিছু লিখুন।';$('detailsText').innerHTML='📍 '+(state.location||'Location not added')+'<br>🎂 '+(state.birthday||'Birthday not added')+'<br>💼 '+(state.work||'Work not added');$('contactText').innerHTML='☎ '+(state.phone||'Phone not added')+'<br>✉ '+(state.email||'Email not added')+'<br>🔗 '+(state.website||'Website not added');$('miniAvatar').textContent=(state.name||'Z').trim().charAt(0).toUpperCase()||'Z';$('postList').innerHTML='';const posts=state.posts.filter(p=>state.tab==='All'||(state.tab==='Reels'?p.type==='Reel':state.tab==='Photos'?p.type==='Photo':true));if(!posts.length){const e=document.createElement('div');e.className='empty';e.innerHTML='<strong>'+(state.tab==='All'?'এখনও কোনো পোস্ট নেই':state.tab+' নেই')+'</strong>আপনার '+(state.tab==='All'?'প্রথম পোস্ট':state.tab)+' যোগ হলে এখানে দেখা যাবে।';$('postList').appendChild(e)}else posts.slice().reverse().forEach(p=>{const el=document.createElement('article');el.className='post';el.textContent=(p.type==='Text'?'':('['+p.type+'] '))+p.text;$('postList').appendChild(el)});$('postsTitle').textContent=state.tab==='More'?'More':state.tab==='All'?'All posts':state.tab}
-function editDetails(){openModal('Personal details',[{key:'location',label:'Location'},{key:'birthday',label:'Birthday'},{key:'work',label:'Work'}],v=>{Object.assign(state,v);render();notice('Personal details saved in this preview')})}
-function editContact(){openModal('Contact info',[{key:'phone',label:'Phone'},{key:'email',label:'Email',type:'email'},{key:'website',label:'Website'}],v=>{Object.assign(state,v);render();notice('Contact info saved in this preview')})}
-function createPost(type='Text'){openModal('Create '+type,[{key:'newPost',label:type==='Photo'?'Photo caption':'Write something',type:'textarea'}],v=>{const t=(v.newPost||'').trim();if(!t){notice('পোস্টের লেখা লিখুন');return}state.posts.push({type,text:t});state.tab='All';document.querySelectorAll('[data-tab]').forEach(b=>b.classList.toggle('active',b.dataset.tab==='All'));render();notice('পোস্টটি শুধু এই প্রিভিউতে যোগ হয়েছে')})}
-$('editTop').onclick=editProfile;$('editProfile').onclick=editProfile;$('editDetails').onclick=editDetails;$('editContact').onclick=editContact;$('createBtn').onclick=()=>createPost();$('postPrompt').onclick=()=>createPost();$('managePostsBtn').onclick=()=>notice('আপনার পোস্টগুলো এই প্রিভিউতে নিচে দেখা যাচ্ছে');$('photoPostBtn').onclick=()=>createPost('Photo');$('reelBtn').onclick=()=>createPost('Reel');$('liveBtn').onclick=()=>notice('Live ফিচারের জন্য backend ও streaming setup দরকার');$('dashboardBtn').onclick=()=>notice('Dashboard এখন preview demo; analytics backend যুক্ত নয়');$('seeFriends').onclick=()=>notice('বন্ধু যোগ হলে এখানে তালিকা দেখা যাবে');$('filtersBtn').onclick=()=>notice('এখনও পোস্ট নেই, তাই ফিল্টার করার কিছু নেই');$('searchBtn').onclick=()=>openModal('Search',[{key:'searchTerm',label:'কী খুঁজতে চান?'}],v=>notice('Search backend এখনো যুক্ত নয়: '+(v.searchTerm||'')));$('moreBtn').onclick=()=>notice('More options');$('menuBtn').onclick=()=>notice('Menu preview');document.querySelectorAll('[data-tab]').forEach(b=>b.onclick=()=>{state.tab=b.dataset.tab;document.querySelectorAll('[data-tab]').forEach(x=>x.classList.toggle('active',x===b));render()});document.querySelectorAll('[data-nav]').forEach(b=>b.onclick=()=>{document.querySelectorAll('[data-nav]').forEach(x=>x.classList.toggle('active',x===b));if(b.dataset.nav!=='Profile')notice(b.dataset.nav+' page navigation is not connected in this preview')});
-function upload(inputId,targetId,isCover){$(inputId).onchange=e=>{const file=e.target.files&&e.target.files[0];if(!file)return;if(!file.type.startsWith('image/')){notice('একটি ছবি নির্বাচন করুন');return}const reader=new FileReader();reader.onload=()=>{const target=$(targetId);target.innerHTML='';const img=document.createElement('img');img.src=reader.result;img.alt=isCover?'Cover photo preview':'Profile photo preview';target.appendChild(img);if(!isCover)$('miniAvatar').textContent='';notice('ছবিটি শুধু এই প্রিভিউতে দেখানো হচ্ছে')};reader.readAsDataURL(file)}};upload('avatarFile','avatarArea',false);upload('coverFile','coverArea',true);$('avatarCamera').onclick=()=>$('avatarFile').click();$('coverCamera').onclick=()=>$('coverFile').click();$('cancelModal').onclick=()=>$('modalBack').classList.remove('show');$('modalBack').onclick=e=>{if(e.target===$('modalBack'))$('modalBack').classList.remove('show')};document.addEventListener('keydown',e=>{if(e.key==='Escape')$('modalBack').classList.remove('show')});render();
+const profile={name:'Your Name',bio:'Welcome to my Zemivo profile',location:'',work:'',school:'',relationship:'',email:'',phone:'',website:''};
+let posts=[];
+let pendingPostPhoto='';
+let toastTimer;
+function showToast(message){const el=$('toast');el.textContent=message;el.classList.remove('hidden');clearTimeout(toastTimer);toastTimer=setTimeout(()=>el.classList.add('hidden'),2800)}
+function safeText(value){return String(value||'').trim()}
+function setText(id,value,fallback){$(id).textContent=safeText(value)||fallback}
+function renderProfile(){
+ $('profileName').textContent=profile.name||'Your Name';
+ $('profileBio').textContent=profile.bio||'Welcome to my Zemivo profile';
+ setText('introBio',profile.bio,'Add a short bio about yourself...');
+ setText('locationText',profile.location,'Add your location');
+ setText('workText',profile.work,'Add your workplace');
+ setText('schoolText',profile.school,'Add your school or university');
+ setText('relationshipText',profile.relationship,'Add your relationship status');
+ setText('emailText',profile.email,'Add your email address');
+ setText('phoneText',profile.phone,'Add your phone number');
+ setText('websiteText',profile.website,'Add your website');
+}
+function openModal(id){$(id).classList.add('open')}
+function closeModal(id){$(id).classList.remove('open')}
+$('editProfile').addEventListener('click',()=>{
+ const map={nameInput:'name',bioInput:'bio',locationInput:'location',workInput:'work',schoolInput:'school',relationshipInput:'relationship',emailInput:'email',phoneInput:'phone',websiteInput:'website'};
+ Object.keys(map).forEach(id=>$(id).value=profile[map[id]]||'');openModal('editModal');
+});
+$('profileForm').addEventListener('submit',e=>{e.preventDefault();
+ const map={nameInput:'name',bioInput:'bio',locationInput:'location',workInput:'work',schoolInput:'school',relationshipInput:'relationship',emailInput:'email',phoneInput:'phone',websiteInput:'website'};
+ Object.keys(map).forEach(id=>profile[map[id]]=safeText($(id).value));renderProfile();closeModal('editModal');showToast('Profile updated in this preview only.');
+});
+document.querySelectorAll('[data-close]').forEach(btn=>btn.addEventListener('click',()=>closeModal(btn.dataset.close)));
+document.querySelectorAll('.modal-backdrop').forEach(back=>back.addEventListener('click',e=>{if(e.target===back)back.classList.remove('open')}));
+function imageUpload(inputId,imageId,placeholderId){
+ const file=$(inputId).files&&$(inputId).files[0];if(!file)return;
+ if(!file.type.startsWith('image/')){showToast('Please choose an image file.');return}
+ if(file.size>8*1024*1024){showToast('Please choose an image smaller than 8 MB.');$(inputId).value='';return}
+ const reader=new FileReader();reader.onload=()=>{const img=$(imageId);img.src=reader.result;img.style.display='block';if(placeholderId)$(placeholderId).style.display='none';showToast('Image preview updated. Not uploaded to your account.')};reader.readAsDataURL(file);
+}
+$('changeCover').addEventListener('click',()=>$('coverFile').click());
+$('coverFile').addEventListener('change',()=>imageUpload('coverFile','coverImage',null));
+$('changeAvatar').addEventListener('click',()=>$('avatarFile').click());
+$('avatarFile').addEventListener('change',()=>{
+ imageUpload('avatarFile','avatarImage','avatarPlaceholder');
+ const file=$('avatarFile').files&&$('avatarFile').files[0];if(!file||!file.type.startsWith('image/')||file.size>8*1024*1024)return;
+ const reader=new FileReader();reader.onload=()=>{$('miniAvatarImage').src=reader.result;$('miniAvatarImage').style.display='block';$('miniAvatar').querySelector('span').style.display='none'};reader.readAsDataURL(file);
+});
+$('openComposer').addEventListener('click',()=>{ $('postTextInput').value='';$('postImageInput').value='';openModal('postModal') });
+$('photoAction').addEventListener('click',()=>{$('postImageInput').click()});
+$('postImageInput').addEventListener('change',()=>{const file=$('postImageInput').files&&$('postImageInput').files[0];if(!file)return;if(!file.type.startsWith('image/')||file.size>8*1024*1024){showToast('Choose an image smaller than 8 MB.');$('postImageInput').value='';return}showToast('Photo selected. Submit the post to preview it.')});
+$('feelingAction').addEventListener('click',()=>{openModal('postModal');$('postTextInput').value='Feeling good 😊 '});
+$('postForm').addEventListener('submit',e=>{e.preventDefault();const text=safeText($('postTextInput').value);const file=$('postImageInput').files&&$('postImageInput').files[0];if(!text&&!file){showToast('Write something or add a photo first.');return}
+ const post={text,time:new Date().toLocaleString(),image:''};
+ const renderPost=imageData=>{post.image=imageData||'';posts.unshift(post);renderPosts();closeModal('postModal');showToast('Post added to this preview only.')};
+ if(file){if(!file.type.startsWith('image/')||file.size>8*1024*1024){showToast('Choose an image smaller than 8 MB.');return}const reader=new FileReader();reader.onload=()=>renderPost(reader.result);reader.readAsDataURL(file)}else renderPost('');
+});
+function renderPosts(){
+ const area=$('postsArea');area.replaceChildren();
+ if(posts.length===0){const empty=document.createElement('div');empty.className='panel empty';empty.innerHTML='<div class="empty-illustration">▤</div><h2>No posts yet</h2><p>Your posts will appear here.</p>';area.appendChild(empty);return}
+ posts.forEach(post=>{const card=document.createElement('article');card.className='post-card';const meta=document.createElement('div');meta.className='post-meta';const av=document.createElement('div');av.className='mini-avatar';av.textContent='♙';const who=document.createElement('div');const name=document.createElement('strong');name.textContent=profile.name||'Your Name';const time=document.createElement('small');time.textContent=post.time;who.append(name,time);meta.append(av,who);card.append(meta);if(post.text){const p=document.createElement('p');p.className='post-text';p.textContent=post.text;card.append(p)}if(post.image){const img=document.createElement('img');img.className='post-photo';img.src=post.image;img.alt='Post photo';card.append(img)}area.append(card)});
+}
+document.querySelectorAll('[data-tab]').forEach(btn=>btn.addEventListener('click',()=>{document.querySelectorAll('[data-tab]').forEach(b=>b.classList.toggle('active',b===btn));const tab=btn.dataset.tab;if(tab==='Posts')showToast('Showing posts.');else if(tab==='About')showToast('About information is shown in the left column.');else if(tab==='Friends')showToast('No friends yet.');else if(tab==='Photos'||tab==='Videos')showToast('No '+tab.toLowerCase()+' yet.');else showToast('More profile sections are planned.')}));
+document.querySelectorAll('[data-nav]').forEach(btn=>btn.addEventListener('click',()=>{const target=btn.dataset.nav;document.querySelectorAll('[data-nav]').forEach(b=>b.classList.toggle('active',b.dataset.nav===target));if(target!=='Home')showToast(target+' navigation is a visual preview; connect its page to enable it.')}));
+$('addStory').addEventListener('click',()=>showToast('Story publishing is not connected in this preview.'));
+$('moreButton').addEventListener('click',()=>showToast('More profile actions are planned.'));
+renderProfile();renderPosts();
 })();
 </script>
-</body></html>
+</body>
+</html>
