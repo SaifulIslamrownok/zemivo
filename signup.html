@@ -51,8 +51,206 @@ document.querySelectorAll('.toggle-password').forEach(function(button){button.ad
 const form=document.getElementById('signupForm'),password=document.getElementById('password'),confirmPassword=document.getElementById('confirmPassword'),status=document.getElementById('formStatus');
 function passwordRules(v){return v.length>=8&&/[A-Z]/.test(v)&&/[a-z]/.test(v)&&/\d/.test(v)&&/[^A-Za-z0-9]/.test(v)}
 </script>
+
 <script type="module">
 import { auth, db } from './zemivo-security.js';
+
+import {
+  createUserWithEmailAndPassword,
+  updateProfile,
+  sendEmailVerification
+} from 'https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js';
+
+import {
+  doc,
+  setDoc,
+  serverTimestamp
+} from 'https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js';
+
+const form = document.getElementById('signupForm');
+const status = document.getElementById('formStatus');
+const submitButton = form.querySelector('.submit-btn');
+
+const password = document.getElementById('password');
+const confirmPassword = document.getElementById('confirmPassword');
+
+function showStatus(message, type = 'error') {
+  status.textContent = message;
+  status.style.color = type === 'success' ? '#a7f3d0' : '#fff';
+}
+
+function friendlyError(error) {
+  const messages = {
+    'auth/email-already-in-use':
+      'এই ইমেইলে ইতিমধ্যে অ্যাকাউন্ট আছে। Sign in করুন।',
+    'auth/invalid-email':
+      'সঠিক ইমেইল ঠিকানা লিখুন।',
+    'auth/weak-password':
+      'আরও শক্তিশালী পাসওয়ার্ড দিন।',
+    'auth/operation-not-allowed':
+      'Firebase-এ Email/Password sign-up চালু নেই।',
+    'auth/unauthorized-domain':
+      'Firebase Authentication-এ এই ডোমেইন অনুমোদিত নয়।',
+    'auth/network-request-failed':
+      'ইন্টারনেট সংযোগ পরীক্ষা করে আবার চেষ্টা করুন।',
+    'auth/invalid-api-key':
+      'Firebase configuration পরীক্ষা করুন।',
+    'auth/too-many-requests':
+      'অনেকবার চেষ্টা হয়েছে। কিছুক্ষণ পরে আবার চেষ্টা করুন।',
+    'permission-denied':
+      'Firestore Security Rules তথ্য সংরক্ষণ করতে বাধা দিচ্ছে।'
+  };
+
+  return messages[error?.code] ||
+    `সমস্যা হয়েছে: ${error?.code || error?.message || 'Unknown error'}`;
+}
+
+function passwordRules(value) {
+  return value.length >= 8 &&
+    /[A-Z]/.test(value) &&
+    /[a-z]/.test(value) &&
+    /\d/.test(value) &&
+    /[^A-Za-z0-9]/.test(value);
+}
+
+form.addEventListener('submit', async (event) => {
+  event.preventDefault();
+
+  if (!form.reportValidity()) {
+    showStatus('সব প্রয়োজনীয় তথ্য পূরণ করুন।');
+    return;
+  }
+
+  if (!passwordRules(password.value)) {
+    showStatus(
+      'পাসওয়ার্ডে অন্তত ৮টি অক্ষর, বড় হাতের অক্ষর, ছোট হাতের অক্ষর, সংখ্যা ও চিহ্ন রাখুন।'
+    );
+    password.focus();
+    return;
+  }
+
+  if (password.value !== confirmPassword.value) {
+    showStatus('দুটি পাসওয়ার্ড মিলছে না।');
+    confirmPassword.focus();
+    return;
+  }
+
+  if (!document.getElementById('terms').checked) {
+    showStatus('Terms & Conditions এবং Privacy Policy-তে সম্মতি দিন।');
+    return;
+  }
+
+  const country = document.getElementById('country');
+  const language = document.getElementById('language');
+
+  const fullName = document.getElementById('fullName').value.trim();
+  const email = document.getElementById('email').value.trim();
+  const dob = document.getElementById('dob').value;
+  const dialCode = document.getElementById('dialCode').value;
+  const mobile = document.getElementById('mobile').value.trim();
+
+  const phoneNumber = `${dialCode}${mobile}`;
+
+  submitButton.disabled = true;
+  submitButton.textContent = 'Creating account…';
+  showStatus('অ্যাকাউন্ট তৈরি ও প্রোফাইল সংরক্ষণ করা হচ্ছে…');
+
+  let createdUser = null;
+
+  try {
+    // 1. Firebase Authentication-এ অ্যাকাউন্ট তৈরি
+    const credential = await createUserWithEmailAndPassword(
+      auth,
+      email,
+      password.value
+    );
+
+    createdUser = credential.user;
+
+    // 2. Firebase Auth-এ নাম সংরক্ষণ
+    await updateProfile(createdUser, {
+      displayName: fullName
+    });
+
+    // 3. Profile page-এর জন্য public profile document
+    // সংবেদনশীল জন্মতারিখ ও ফোন নম্বর এখানে রাখা হচ্ছে না।
+    await setDoc(
+      doc(db, 'profiles', createdUser.uid),
+      {
+        uid: createdUser.uid,
+        displayName: fullName,
+        fullName: fullName,
+        country: country.value,
+        countryName: country.options[country.selectedIndex].text,
+        language: language.value,
+        photoURL: createdUser.photoURL || '',
+        bio: '',
+        createdAt: serverTimestamp(),
+        updatedAt: serverTimestamp()
+      },
+      { merge: true }
+    );
+
+    // 4. ব্যক্তিগত তথ্য আলাদা document-এ সংরক্ষণ
+    await setDoc(
+      doc(db, 'users', createdUser.uid, 'private', 'account'),
+      {
+        uid: createdUser.uid,
+        email: email,
+        dateOfBirth: dob,
+        phoneNumber: phoneNumber,
+        country: country.value,
+        language: language.value,
+        phoneVerified: false,
+        updatedAt: serverTimestamp()
+      },
+      { merge: true }
+    );
+
+    // 5. তথ্য সংরক্ষণের পর verification email পাঠানো
+    let verificationMessage =
+      'অ্যাকাউন্ট ও প্রোফাইলের তথ্য সংরক্ষিত হয়েছে।';
+
+    try {
+      await sendEmailVerification(createdUser);
+      verificationMessage +=
+        ' আপনার ইমেইলে verification link পাঠানো হয়েছে।';
+    } catch (verificationError) {
+      console.error(
+        'Verification email failed:',
+        verificationError
+      );
+
+      verificationMessage +=
+        ' তবে verification email পাঠানো যায়নি।';
+    }
+
+    showStatus(
+      verificationMessage + ' Profile খুলছে…',
+      'success'
+    );
+
+    setTimeout(() => {
+      window.location.href = 'profile.html';
+    }, 1800);
+
+  } catch (error) {
+    console.error('Zemivo signup/profile save error:', error);
+
+    if (createdUser) {
+      showStatus(
+        'অ্যাকাউন্ট তৈরি হয়েছে, কিন্তু প্রোফাইলের তথ্য সংরক্ষণে সমস্যা হয়েছে। Firebase Firestore Security Rules পরীক্ষা করুন।'
+      );
+    } else {
+      showStatus(friendlyError(error));
+    }
+  } finally {
+    submitButton.disabled = false;
+    submitButton.textContent = 'Create Account';
+  }
+});
+</script>
+
 import { createUserWithEmailAndPassword, updateProfile, sendEmailVerification } from 'https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js';
 import { doc, setDoc, serverTimestamp } from 'https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js';
 const form=document.getElementById('signupForm');
