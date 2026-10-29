@@ -1,2975 +1,557 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+<meta name="theme-color" content="#111a42">
 <title>Zemivo Messages</title>
-
 <style>
-
-*{
-  box-sizing:border-box;
-}
-
-html,
-body{
-  margin:0;
-  padding:0;
-  width:100%;
-  height:100%;
-  font-family:Arial,Helvetica,sans-serif;
-  background:#f0f2f5;
-  color:#17202a;
-}
-
-button,
-input{
-  font-family:inherit;
-}
-
-button{
-  cursor:pointer;
-}
-
-/* HEADER */
-
-.header{
-  height:62px;
-  background:#fff;
-  border-bottom:1px solid #ddd;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  padding:0 16px;
-  position:fixed;
-  top:0;
-  left:0;
-  right:0;
-  z-index:500;
-}
-
-.logo{
-  color:#2563eb;
-  font-size:27px;
-  font-weight:800;
-}
-
-.header-actions{
-  display:flex;
-  gap:8px;
-}
-
-.header-button{
-  border:0;
-  width:40px;
-  height:40px;
-  border-radius:50%;
-  background:#f0f2f5;
-  font-size:18px;
-}
-
-/* MAIN */
-
-.app{
-  position:fixed;
-  top:62px;
-  left:0;
-  right:0;
-  bottom:0;
-  max-width:1100px;
-  margin:auto;
-  display:flex;
-  background:#fff;
-  overflow:hidden;
-}
-
-/* USERS */
-
-.users-panel{
-  width:320px;
-  border-right:1px solid #ddd;
-  display:flex;
-  flex-direction:column;
-  min-height:0;
-}
-
-.users-title{
-  padding:18px;
-  font-size:22px;
-  font-weight:bold;
-}
-
-.search-box{
-  padding:0 14px 14px;
-}
-
-.search-box input{
-  width:100%;
-  padding:12px 14px;
-  border:1px solid #ddd;
-  border-radius:22px;
-  outline:none;
-  font-size:15px;
-}
-
-.users-list{
-  flex:1;
-  min-height:0;
-  overflow-y:auto;
-}
-
-.user-item{
-  width:100%;
-  border:0;
-  background:#fff;
-  padding:12px 14px;
-  display:flex;
-  align-items:center;
-  gap:11px;
-  text-align:left;
-}
-
-.user-item:hover{
-  background:#f0f2f5;
-}
-
-.user-item.active{
-  background:#e8f0ff;
-}
-
-.user-avatar{
-  width:46px;
-  height:46px;
-  flex-shrink:0;
-  border-radius:50%;
-  background:#2563eb;
-  color:#fff;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-weight:bold;
-  font-size:17px;
-  object-fit:cover;
-}
-
-.user-name{
-  font-weight:bold;
-  color:#17202a;
-}
-
-.user-email{
-  font-size:12px;
-  color:#777;
-  margin-top:3px;
-  overflow:hidden;
-  text-overflow:ellipsis;
-  white-space:nowrap;
-}
-
-/* CHAT */
-
-.chat-panel{
-  flex:1;
-  min-width:0;
-  min-height:0;
-  display:flex;
-  flex-direction:column;
-  position:relative;
-}
-
-.chat-person{
-  height:70px;
-  min-height:70px;
-  padding:12px 16px;
-  border-bottom:1px solid #eee;
-  display:flex;
-  align-items:center;
-  gap:10px;
-  background:#fff;
-  z-index:20;
-}
-
-.chat-person-name{
-  font-weight:bold;
-}
-
-.chat-person-status{
-  color:#777;
-  font-size:12px;
-  margin-top:3px;
-}
-
-.messages{
-  flex:1;
-  min-height:0;
-  padding:18px;
-  overflow-y:auto;
-  background:#f8fafc;
-}
-
-.empty-chat{
-  height:100%;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  text-align:center;
-  color:#777;
-  padding:30px;
-}
-
-.message-row{
-  display:flex;
-  margin-bottom:10px;
-}
-
-.message-row.sent{
-  justify-content:flex-end;
-}
-
-.message-row.received{
-  justify-content:flex-start;
-}
-
-.message{
-  max-width:75%;
-  padding:10px 13px;
-  border-radius:16px;
-  line-height:1.45;
-  overflow-wrap:anywhere;
-}
-
-.message-row.sent .message{
-  background:#2563eb;
-  color:#fff;
-  border-bottom-right-radius:5px;
-}
-
-.message-row.received .message{
-  background:#e5e7eb;
-  color:#17202a;
-  border-bottom-left-radius:5px;
-}
-
-.message-time{
-  font-size:10px;
-  opacity:.7;
-  margin-top:5px;
-  text-align:right;
-}
-
-/* TRANSLATION */
-
-.translation{
-  margin-top:6px;
-  padding-top:6px;
-  border-top:1px solid rgba(0,0,0,.12);
-  font-size:12px;
-}
-
-.translation-label{
-  font-weight:bold;
-  margin-bottom:3px;
-}
-
-/* COMPOSER */
-
-.composer{
-  min-height:66px;
-  padding:12px;
-  border-top:1px solid #ddd;
-  background:#fff;
-  display:flex;
-  gap:8px;
-  align-items:center;
-  flex-shrink:0;
-  position:relative;
-  z-index:100;
-}
-
-.attach{
-  width:42px;
-  height:42px;
-  flex-shrink:0;
-  border:0;
-  border-radius:50%;
-  background:#f0f2f5;
-  font-size:18px;
-}
-
-.composer input{
-  flex:1;
-  min-width:0;
-  height:42px;
-  padding:10px 15px;
-  border:1px solid #ddd;
-  border-radius:24px;
-  outline:none;
-  font-size:16px;
-  background:#fff;
-}
-
-.send{
-  height:42px;
-  flex-shrink:0;
-  border:0;
-  border-radius:23px;
-  padding:0 19px;
-  background:#2563eb;
-  color:#fff;
-  font-weight:bold;
-}
-
-.send:disabled{
-  opacity:.6;
-}
-
-/* STATUS */
-
-.loading{
-  text-align:center;
-  color:#777;
-  padding:25px;
-}
-
-.error{
-  text-align:center;
-  color:#dc2626;
-  padding:20px;
-}
-
-.toast{
-  position:fixed;
-  left:50%;
-  bottom:80px;
-  transform:translateX(-50%);
-  background:#111827;
-  color:#fff;
-  padding:12px 18px;
-  border-radius:10px;
-  display:none;
-  z-index:1000;
-  max-width:90%;
-  text-align:center;
-}
-
-.toast.show{
-  display:block;
-}
-
-/* NAV */
-
-.bottom-nav{
-  display:none;
-}
-
-/* MOBILE */
-
-@media(max-width:700px){
-
-  .app{
-    top:62px;
-    bottom:58px;
-    width:100%;
-  }
-
-  .users-panel{
-    width:100%;
-    border-right:0;
-  }
-
-  .chat-panel{
-    width:100%;
-    min-width:100%;
-  }
-
-  .app.chat-open .users-panel{
-    display:none;
-  }
-
-  .app:not(.chat-open) .chat-panel{
-    display:none;
-  }
-
-  .chat-person{
-    height:70px;
-    min-height:70px;
-  }
-
-  .messages{
-    padding:15px;
-    padding-bottom:15px;
-  }
-
-  .composer{
-    position:fixed;
-    left:0;
-    right:0;
-    bottom:58px;
-    width:100%;
-    min-height:66px;
-    padding:10px;
-    z-index:600;
-  }
-
-  .composer input{
-    font-size:16px;
-  }
-
-  .send{
-    padding:0 15px;
-  }
-
-  .attach{
-    width:40px;
-    height:40px;
-  }
-
-  .app.chat-open .messages{
-    padding-bottom:82px;
-  }
-
-  .back-button{
-    display:block;
-    border:0;
-    background:#f0f2f5;
-    width:38px;
-    height:38px;
-    border-radius:50%;
-    font-size:18px;
-    flex-shrink:0;
-  }
-
-  .users-title{
-    padding:14px;
-  }
-
-  .bottom-nav{
-    display:flex;
-    position:fixed;
-    left:0;
-    right:0;
-    bottom:0;
-    height:58px;
-    background:#fff;
-    border-top:1px solid #ddd;
-    z-index:700;
-  }
-
-  .bottom-nav a{
-    flex:1;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    text-decoration:none;
-    color:#17202a;
-    font-size:12px;
-  }
-
-  .bottom-nav a.active{
-    color:#2563eb;
-    font-weight:bold;
-  }
-
-}
-
-@media(min-width:701px){
-
-  .back-button{
-    display:none;
-  }
-
-}
-
+:root{--bg:#eef2ff;--panel:rgba(255,255,255,.88);--ink:#172033;--muted:#64748b;--blue:#356dff;--cyan:#4de1e8;--line:rgba(96,116,160,.2);--shadow:0 18px 55px rgba(36,56,120,.14)}
+*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;font-family:Inter,Arial,Helvetica,sans-serif;color:var(--ink);background:radial-gradient(circle at 10% 5%,#d9e8ff 0,transparent 30%),radial-gradient(circle at 90% 90%,#d9d4ff 0,transparent 34%),#edf2ff}button,input{font:inherit}button{cursor:pointer}button:disabled{cursor:not-allowed;opacity:.55}
+.header{height:64px;position:fixed;inset:0 0 auto;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:0 18px;background:rgba(255,255,255,.78);backdrop-filter:blur(18px);border-bottom:1px solid var(--line)}
+.logo{font-size:27px;font-weight:900;letter-spacing:-1px;color:#2859df;text-shadow:0 2px 0 #fff,0 7px 18px #356dff30}.header-actions{display:flex;gap:9px}.header-button{width:41px;height:41px;border:1px solid var(--line);border-radius:15px;background:linear-gradient(145deg,#fff,#e8edff);box-shadow:5px 5px 12px #aab5d333,-4px -4px 10px #fff;color:#25365c;font-size:18px}
+.app{position:fixed;top:78px;bottom:14px;left:50%;transform:translateX(-50%);width:min(1200px,calc(100% - 28px));display:flex;overflow:hidden;border:1px solid #fff9;border-radius:25px;background:var(--panel);backdrop-filter:blur(20px);box-shadow:var(--shadow);perspective:1400px}
+.users-panel{width:325px;min-width:280px;border-right:1px solid var(--line);display:flex;flex-direction:column;min-height:0;background:linear-gradient(155deg,#ffffffed,#f4f7ffed)}.users-title{padding:20px 18px 14px;font-size:23px;font-weight:850;letter-spacing:-.5px}.subtitle{font-size:12px;color:var(--muted);font-weight:500;margin-top:5px}.search-box{padding:0 14px 14px}.search-box input{width:100%;padding:12px 14px;border:1px solid var(--line);border-radius:16px;outline:none;background:#fff;box-shadow:inset 2px 2px 6px #b9c5df25;font-size:15px}.search-box input:focus,.composer input:focus{border-color:#8ca8ff;box-shadow:0 0 0 3px #356dff18}.users-list{flex:1;min-height:0;overflow:auto;padding:0 7px 12px}.user-item{width:100%;border:1px solid transparent;border-radius:16px;background:transparent;padding:11px 10px;display:flex;align-items:center;gap:11px;text-align:left;margin:2px 0;transition:transform .18s,background .18s,box-shadow .18s}.user-item:hover{background:#fff;transform:translateY(-1px);box-shadow:0 7px 18px #536da015}.user-item.active{background:linear-gradient(120deg,#e5edff,#f5f7ff);border-color:#d7e2ff;box-shadow:inset 0 0 0 1px #fff}.user-avatar{width:46px;height:46px;flex-shrink:0;border-radius:15px;background:linear-gradient(145deg,#387bff,#7a52e8);color:white;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:17px;object-fit:cover;box-shadow:0 5px 12px #356dff25}.user-meta{min-width:0;flex:1}.user-name{font-weight:750;color:#172033;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.user-email{font-size:12px;color:var(--muted);margin-top:4px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.chat-panel{flex:1;min-width:0;min-height:0;display:flex;flex-direction:column;position:relative}.chat-person{height:76px;min-height:76px;padding:12px 17px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:11px;background:#ffffffbd;z-index:10;backdrop-filter:blur(12px)}.chat-person-name{font-weight:850}.chat-person-status{color:var(--muted);font-size:12px;margin-top:4px}.back-button{display:none;border:1px solid var(--line);background:#fff;width:38px;height:38px;border-radius:13px;font-size:18px;flex-shrink:0}.messages{flex:1;min-height:0;padding:20px;overflow-y:auto;background:radial-gradient(circle at 85% 15%,#dbe8ff4a,transparent 30%),#f7f9ff}.empty-chat{height:100%;min-height:160px;display:flex;align-items:center;justify-content:center;text-align:center;color:var(--muted);padding:30px}.message-row{display:flex;margin-bottom:13px;animation:rise .18s ease-out}.message-row.sent{justify-content:flex-end}.message-row.received{justify-content:flex-start}@keyframes rise{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}.message{max-width:min(78%,570px);padding:11px 13px;border-radius:18px;line-height:1.48;overflow-wrap:anywhere;box-shadow:0 5px 15px #263c6610}.message-row.sent .message{background:linear-gradient(135deg,#356dff,#6657e9);color:#fff;border-bottom-right-radius:5px}.message-row.received .message{background:#fff;color:var(--ink);border:1px solid #e5eaf5;border-bottom-left-radius:5px}.message-time{font-size:10px;opacity:.76;margin-top:6px;text-align:right}.translation{margin-top:8px;padding-top:8px;border-top:1px solid #ffffff55;font-size:12px}.message-row.received .translation{border-top-color:#dce3f0}.translation-label{font-weight:800;margin-bottom:4px}.reply-quote{font-size:12px;opacity:.85;border-left:3px solid currentColor;padding:4px 7px;margin-bottom:7px;background:#ffffff18;border-radius:3px}.message-actions{display:flex;gap:5px;flex-wrap:wrap;margin-top:8px;justify-content:flex-end}.message-actions button{border:1px solid #ffffff50;background:#ffffff18;color:inherit;border-radius:8px;padding:4px 7px;font-size:11px}.message-row.received .message-actions button{border-color:#dbe2f0;background:#f5f7fc;color:#334155}.composer{min-height:76px;padding:13px;border-top:1px solid var(--line);background:#ffffffd9;display:flex;gap:9px;align-items:center;flex-shrink:0;z-index:12}.attach{width:43px;height:43px;flex-shrink:0;border:1px solid var(--line);border-radius:15px;background:linear-gradient(145deg,#fff,#e8edff);font-size:18px}.composer input{flex:1;min-width:0;height:44px;padding:11px 16px;border:1px solid var(--line);border-radius:16px;outline:none;font-size:16px;background:#fff}.send{height:44px;flex-shrink:0;border:0;border-radius:15px;padding:0 20px;background:linear-gradient(135deg,#356dff,#624fe6);color:#fff;font-weight:800;box-shadow:0 7px 17px #356dff30}.toast{position:fixed;left:50%;bottom:25px;transform:translateX(-50%);background:#111827;color:#fff;padding:12px 18px;border-radius:12px;display:none;z-index:1000;max-width:90%;text-align:center;box-shadow:0 10px 30px #11182733}.toast.show{display:block}.loading,.error{padding:24px;text-align:center;color:var(--muted);font-size:14px}.error{color:#dc2626}.bottom-nav{display:none}
+@media(max-width:700px){.header{height:58px;padding:0 12px}.logo{font-size:24px}.app{top:68px;bottom:66px;left:0;transform:none;width:100%;border-radius:19px 19px 0 0;border-left:0;border-right:0}.users-panel{width:100%;min-width:100%;border-right:0}.chat-panel{width:100%;min-width:100%}.app.chat-open .users-panel{display:none}.app:not(.chat-open) .chat-panel{display:none}.chat-person{height:68px;min-height:68px;padding:9px 12px}.back-button{display:block}.messages{padding:14px 12px 18px}.message{max-width:88%}.composer{position:fixed;left:0;right:0;bottom:58px;width:100%;min-height:66px;padding:9px;gap:6px;z-index:600}.composer input{font-size:16px;padding:10px 12px}.send{padding:0 14px}.attach{width:39px;height:40px}.app.chat-open .messages{padding-bottom:20px}.users-title{padding:15px 15px 12px}.bottom-nav{display:flex;position:fixed;left:0;right:0;bottom:0;height:58px;background:#ffffffed;backdrop-filter:blur(15px);border-top:1px solid var(--line);z-index:700}.bottom-nav a{flex:1;display:flex;flex-direction:column;gap:2px;align-items:center;justify-content:center;text-decoration:none;color:#526079;font-size:11px}.bottom-nav a.active{color:#2859df;font-weight:800}}
+@media(min-width:701px){.back-button{display:none}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
 </style>
 </head>
-
 <body>
-
 <header class="header">
-
-  <div class="logo">
-    Zemivo
-  </div>
-
+  <div class="logo">Zemivo</div>
   <div class="header-actions">
-
-    <button
-      class="header-button"
-      type="button"
-      onclick="location.href='notifications.html'"
-    >
-      🔔
-    </button>
-
-    <button
-      class="header-button"
-      type="button"
-      onclick="location.href='profile.html'"
-    >
-      👤
-    </button>
-
+    <button class="header-button" type="button" aria-label="Notifications" onclick="location.href='notifications.html'">🔔</button>
+    <button class="header-button" type="button" aria-label="Profile" onclick="location.href='profile.html'">👤</button>
   </div>
-
 </header>
 
-
-<main
-  id="app"
-  class="app"
->
-
+<main id="app" class="app">
   <section class="users-panel">
-
-    <div class="users-title">
-      Messages
-    </div>
-
-    <div class="search-box">
-
-      <input
-        id="userSearch"
-        type="search"
-        placeholder="Search people..."
-      >
-
-    </div>
-
-    <div
-      id="usersList"
-      class="users-list"
-    >
-
-      <div class="loading">
-        Loading Zemivo users...
-      </div>
-
-    </div>
-
+    <div class="users-title">Messages<div class="subtitle">Connect across languages 🌍</div></div>
+    <div class="search-box"><input id="userSearch" type="search" placeholder="Search people..." autocomplete="off" aria-label="Search people"></div>
+    <div id="usersList" class="users-list"><div class="loading">Loading Zemivo users…</div></div>
   </section>
-
-
   <section class="chat-panel">
-
     <div class="chat-person">
-
-      <button
-        id="backButton"
-        class="back-button"
-        type="button"
-      >
-        ←
-      </button>
-
-      <div
-        id="chatAvatar"
-        class="user-avatar"
-      >
-        Z
+      <button id="backButton" class="back-button" type="button" aria-label="Back to people">←</button>
+      <div id="chatAvatar" class="user-avatar">Z</div>
+      <div style="min-width:0">
+        <div id="chatName" class="chat-person-name">Select a person</div>
+        <div id="chatStatus" class="chat-person-status">Choose someone to start messaging</div>
       </div>
-
-      <div>
-
-        <div
-          id="chatName"
-          class="chat-person-name"
-        >
-          Select a person
-        </div>
-
-        <div
-          id="chatStatus"
-          class="chat-person-status"
-        >
-          Choose someone to start messaging
-        </div>
-
-      </div>
-
     </div>
-
-
-    <div
-      id="messages"
-      class="messages"
-    >
-
-      <div class="empty-chat">
-
-        <div>
-
-          <div style="font-size:42px;">
-            💬
-          </div>
-
-          <div style="font-weight:bold;margin-top:8px;">
-            Zemivo Messages
-          </div>
-
-          <div style="margin-top:5px;">
-            Select a person to start a conversation.
-          </div>
-
-        </div>
-
-      </div>
-
-    </div>
-
-
+    <div id="messages" class="messages"><div class="empty-chat"><div><div style="font-size:42px">💬</div><div style="font-weight:800;margin-top:8px">Zemivo Messages</div><div style="margin-top:5px">Select a person to start a conversation.</div></div></div></div>
     <div class="composer">
-
-      <button
-        id="attachButton"
-        class="attach"
-        type="button"
-        title="Media coming with Storage integration"
-      >
-        📎
-      </button>
-
-      <input
-        id="messageInput"
-        type="text"
-        placeholder="Type a message..."
-        disabled
-      >
-
-      <button
-        id="sendButton"
-        class="send"
-        type="button"
-        disabled
-      >
-        Send
-      </button>
-
+      <button id="attachButton" class="attach" type="button" title="Media messaging requires Firebase Storage setup" aria-label="Attach media">📎</button>
+      <input id="messageInput" type="text" placeholder="Type a message..." disabled maxlength="5000" autocomplete="off" aria-label="Message">
+      <button id="sendButton" class="send" type="button" disabled>Send</button>
     </div>
-
   </section>
-
 </main>
 
-
-<nav class="bottom-nav">
-
-  <a href="index.html">
-    🏠<br>Home
-  </a>
-
-  <a href="feed.html">
-    📰<br>Feed
-  </a>
-
-  <a
-    href="messenger.html"
-    class="active"
-  >
-    💬<br>Messages
-  </a>
-
-  <a href="profile.html">
-    👤<br>Profile
-  </a>
-
+<nav class="bottom-nav" aria-label="Main navigation">
+  <a href="index.html">🏠<span>Home</span></a>
+  <a href="feed.html">📰<span>Feed</span></a>
+  <a href="messenger.html" class="active">💬<span>Messages</span></a>
+  <a href="profile.html">👤<span>Profile</span></a>
 </nav>
-
-
-<div
-  id="toast"
-  class="toast"
-></div>
-
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
 
 <script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
+import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
+import { getFirestore, collection, query, orderBy, onSnapshot, addDoc, doc, getDoc, setDoc, updateDoc, deleteDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
+import { getDatabase, ref, set, onValue, onDisconnect, serverTimestamp as databaseServerTimestamp } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-database.js";
 
-import {
-  initializeApp
-} from
-"https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
-
-import {
-  getAuth,
-  onAuthStateChanged
-} from
-"https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
-
-import {
-  getFirestore,
-  collection,
-  query,
-  orderBy,
-  onSnapshot,
-  addDoc,
-  doc,
-  setDoc,
-  updateDoc,
-  deleteDoc,
-  serverTimestamp
-} from
-"https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
-
-import {
-  getDatabase,
-  ref,
-  set,
-  onValue,
-  onDisconnect,
-  serverTimestamp as databaseServerTimestamp
-} from
-"https://www.gstatic.com/firebasejs/12.1.0/firebase-database.js";
-
-
-/* FIREBASE CONFIG */
+/*
+ * IMPORTANT:
+ * 1) Configure a secure translation HTTPS endpoint below to enable automatic translation.
+ * 2) The endpoint must authenticate the caller and validate text/language values server-side.
+ * 3) Never put a paid translation-provider secret/API key in this public HTML file.
+ * 4) 193-country readiness means country/locale-aware architecture, not 193 different languages:
+ *    some countries share languages and some countries use multiple languages.
+ */
+const TRANSLATION_ENDPOINT = ""; // Example: https://YOUR-REGION-YOUR-PROJECT.cloudfunctions.net/translateMessage
+const SUPPORTED_LOCALES = new Set([
+  "af","am","ar","az","be","bg","bn","bs","ca","cs","cy","da","de","el","en","es","et","eu","fa","fi","fil","fr","ga","gl","gu","ha","he","hi","hr","hu","hy","id","is","it","ja","jv","ka","kk","km","kn","ko","lo","lt","lv","mk","ml","mn","mr","ms","mt","my","ne","nl","no","pa","pl","ps","pt","ro","ru","si","sk","sl","sq","sr","su","sv","sw","ta","te","th","tr","uk","ur","uz","vi","xh","yo","zh","zu"
+]);
 
 const firebaseConfig = {
-
-  apiKey:
-    "AIzaSyAxJUFBWm2fa0g3oxUWWqdfSTEAc-bRgfI",
-
-  authDomain:
-    "zemivo.firebaseapp.com",
-
-  projectId:
-    "zemivo",
-
-  storageBucket:
-    "zemivo.firebasestorage.app",
-
-  messagingSenderId:
-    "195335939691",
-
-  appId:
-    "1:195335939691:web:5fa5c62c53d0c0aefe732e",
-
-  measurementId:
-    "G-GNHH5S4H09"
-
+  apiKey: "AIzaSyAxJUFBWm2fa0g3oxUWWqdfSTEAc-bRgfI",
+  authDomain: "zemivo.firebaseapp.com",
+  projectId: "zemivo",
+  storageBucket: "zemivo.firebasestorage.app",
+  messagingSenderId: "195335939691",
+  appId: "1:195335939691:web:5fa5c62c53d0c0aefe732e",
+  measurementId: "G-GNHH5S4H09"
 };
 
+const firebaseApp = initializeApp(firebaseConfig);
+const auth = getAuth(firebaseApp);
+const db = getFirestore(firebaseApp);
+const rtdb = getDatabase(firebaseApp, "https://zemivo-default-rtdb.asia-southeast1.firebasedatabase.app");
 
-const app =
-  initializeApp(firebaseConfig);
-
-const auth =
-  getAuth(app);
-
-const db =
-  getFirestore(app);
-
-const rtdb =
-  getDatabase(
-    app,
-    "https://zemivo-default-rtdb.asia-southeast1.firebasedatabase.app"
-  );
-
-
-/* ELEMENTS */
-
-const appElement =
-  document.getElementById("app");
-
-const usersList =
-  document.getElementById("usersList");
-
-const userSearch =
-  document.getElementById("userSearch");
-
-const messagesElement =
-  document.getElementById("messages");
-
-const messageInput =
-  document.getElementById("messageInput");
-
-const sendButton =
-  document.getElementById("sendButton");
-
-const attachButton =
-  document.getElementById("attachButton");
-
-const chatName =
-  document.getElementById("chatName");
-
-const chatStatus =
-  document.getElementById("chatStatus");
-
-const chatAvatar =
-  document.getElementById("chatAvatar");
-
-const backButton =
-  document.getElementById("backButton");
-
-const toast =
-  document.getElementById("toast");
-
-
-/* STATE */
+const $ = id => document.getElementById(id);
+const appElement = $("app");
+const usersList = $("usersList");
+const userSearch = $("userSearch");
+const messagesElement = $("messages");
+const messageInput = $("messageInput");
+const sendButton = $("sendButton");
+const attachButton = $("attachButton");
+const chatName = $("chatName");
+const chatStatus = $("chatStatus");
+const chatAvatar = $("chatAvatar");
+const backButton = $("backButton");
+const toast = $("toast");
 
 let currentUser = null;
-
+let currentUserLanguage = localeBase(navigator.language) || "en";
 let allUsers = [];
-
 let selectedUser = null;
-
-et unsubscribePresence = null;
-let unsubscribeMessages = null;
-
+let unsubscribeUsers = null;
 let unsubscribePresence = null;
-
+let unsubscribeMessages = null;
 let unsubscribeTyping = null;
+let unsubscribeConnection = null;
+let toastTimer = null;
+let currentChatId = null;
+let pendingReply = null;
+let presenceSetupForUid = null;
 
-let typingTimer = null;
+function showToast(message) {
+  toast.textContent = message;
+  toast.classList.add("show");
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => toast.classList.remove("show"), 2800);
+}
+function escapeHtml(value) {
+  return String(value ?? "").replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;").replaceAll("'","&#039;");
+}
+function createChatId(uid1, uid2) { return [uid1, uid2].sort().join("_"); }
+function formatTime(timestamp) {
+  if (!timestamp?.toDate) return "Sending…";
+  try { return timestamp.toDate().toLocaleString(); } catch { return ""; }
+}
+function localeBase(value) {
+  if (!value || typeof value !== "string") return "";
+  const base = value.trim().replace("_","-").split("-")[0].toLowerCase();
+  return SUPPORTED_LOCALES.has(base) ? base : "";
+}
+function getUserLanguage(profile) {
+  return localeBase(profile?.preferredLanguage || profile?.language || profile?.locale) || localeBase(navigator.language) || "en";
+}
+function initials(name) { return (String(name || "Z").trim().charAt(0) || "Z").toLocaleUpperCase(); }
 
-let isTyping = false;
-/* FORWARD */
-
-async function forwardMessage(
-  message
-){
-
-  if(
-    !selectedUser ||
-    !currentUser
-  ){
+onAuthStateChanged(auth, async user => {
+  if (!user) {
+    showToast("Please log in first.");
+    setTimeout(() => { location.href = "login.html"; }, 900);
     return;
   }
-
-  const text =
-    message.text || "";
-
-  if(!text){
-    return;
+  currentUser = user;
+  try {
+    const myProfile = await getDoc(doc(db, "profiles", user.uid));
+    if (myProfile.exists()) currentUserLanguage = getUserLanguage(myProfile.data());
+  } catch (error) {
+    console.warn("Could not load your preferred language from profile; using device language.", error);
   }
+  setupPresence();
+  await loadUsers();
+});
 
-  messageInput.value =
-    text;
-
-  messageInput.focus();
-
-  showToast(
-    "Message ready to forward."
-  );
-
-}
-/* TOAST */
-
-function showToast(text){
-
-  toast.textContent =
-    text;
-
-  toast.classList.add(
-    "show"
-  );
-
-  setTimeout(
-    function(){
-
-      toast.classList.remove(
-        "show"
-      );
-
-    },
-    2500
-  );
-
-}
-
-
-/* ESCAPE HTML */
-
-function escapeHtml(value){
-
-  if(
-    value === undefined ||
-    value === null
-  ){
-
-    return "";
-
-  }
-
-  return String(value)
-    .replaceAll(
-      "&",
-      "&amp;"
-    )
-    .replaceAll(
-      "<",
-      "&lt;"
-    )
-    .replaceAll(
-      ">",
-      "&gt;"
-    )
-    .replaceAll(
-      '"',
-      "&quot;"
-    )
-    .replaceAll(
-      "'",
-      "&#039;"
-    );
-
-}
-
-
-/* CHAT ID */
-
-function createChatId(
-  uid1,
-  uid2
-){
-
-  return [
-    uid1,
-    uid2
-  ]
-    .sort()
-    .join("_");
-
-}
-
-
-/* TIME */
-
-function formatTime(timestamp){
-
-  if(
-    !timestamp ||
-    !timestamp.toDate
-  ){
-
-    return "Sending...";
-
-  }
-
-  return timestamp
-    .toDate()
-    .toLocaleString();
-
-}
-
-
-/* AUTH */
-
-onAuthStateChanged(
-  auth,
-  async function(user){
-
-    if(!user){
-
-      showToast(
-        "Please log in first."
-      );
-
-      setTimeout(
-        function(){
-
-          location.href =
-            "login.html";
-
-        },
-        1200
-      );
-
-      return;
-
+function setupPresence() {
+  if (!currentUser || presenceSetupForUid === currentUser.uid) return;
+  presenceSetupForUid = currentUser.uid;
+  const connectedRef = ref(rtdb, ".info/connected");
+  const myStatusRef = ref(rtdb, "status/" + currentUser.uid);
+  unsubscribeConnection = onValue(connectedRef, async snapshot => {
+    if (snapshot.val() !== true || !currentUser) return;
+    try {
+      await onDisconnect(myStatusRef).set({ state: "offline", lastChanged: databaseServerTimestamp() });
+      await set(myStatusRef, { state: "online", lastChanged: databaseServerTimestamp() });
+    } catch (error) {
+      console.error("Presence setup error:", error);
     }
+  });
+}
 
-    currentUser =
-      user;
-
-    setupPresence();
-
-    await loadUsers();
-
-  }
-);
-
-
-/* ONLINE / OFFLINE PRESENCE */
-
-function setupPresence(){
-
-  const connectedRef =
-    ref(
-      rtdb,
-      ".info/connected"
-    );
-
-  const myStatusRef =
-    ref(
-      rtdb,
-      "status/" +
-      currentUser.uid
-    );
-
-  onValue(
-    connectedRef,
-    function(snapshot){
-
-      if(
-        snapshot.val() !== true
-      ){
-
-        return;
-
-      }
-
-      onDisconnect(
-        myStatusRef
-      )
-      .set({
-
-        state:
-          "offline",
-
-        lastChanged:
-          databaseServerTimestamp()
-
+async function loadUsers() {
+  usersList.innerHTML = '<div class="loading">Loading users…</div>';
+  try {
+    const profilesQuery = query(collection(db, "profiles"));
+    unsubscribeUsers = onSnapshot(profilesQuery, snapshot => {
+      allUsers = [];
+      snapshot.forEach(profileSnapshot => {
+        const profile = profileSnapshot.data() || {};
+        const uid = profileSnapshot.id;
+        if (!currentUser || uid === currentUser.uid) return;
+        allUsers.push({
+          uid,
+          displayName: profile.displayName || profile.fullName || profile.name || "Zemivo User",
+          email: profile.email || "",
+          photoURL: profile.photoURL || profile.photoUrl || "",
+          language: getUserLanguage(profile),
+          country: profile.country || "",
+          countryName: profile.countryName || ""
+        });
       });
-
-      set(
-        myStatusRef,
-        {
-
-          state:
-            "online",
-
-          lastChanged:
-            databaseServerTimestamp()
-
-        }
-      );
-
-    }
-  );
-
+      allUsers.sort((a,b) => a.displayName.localeCompare(b.displayName));
+      filterAndRenderUsers();
+    }, error => {
+      console.error("Users listener error:", error);
+      usersList.innerHTML = '<div class="error">Could not load users. Check Firestore permissions and profiles collection.</div>';
+    });
+  } catch (error) {
+    console.error("Users load error:", error);
+    usersList.innerHTML = '<div class="error">Could not load users.</div>';
+  }
 }
-/* PIN MESSAGE */
 
-async function togglePinMessage(
-  messageId,
-  message
-){
-
-  if(
-    !currentUser ||
-    !selectedUser
-  ){
+function filterAndRenderUsers() {
+  const term = userSearch.value.trim().toLocaleLowerCase();
+  const filtered = !term ? allUsers : allUsers.filter(user =>
+    user.displayName.toLocaleLowerCase().includes(term) ||
+    user.email.toLocaleLowerCase().includes(term) ||
+    user.countryName.toLocaleLowerCase().includes(term)
+  );
+  renderUsers(filtered);
+}
+function renderUsers(users) {
+  usersList.innerHTML = "";
+  if (!users.length) {
+    usersList.innerHTML = '<div class="loading">No other Zemivo users found yet.</div>';
     return;
   }
-
-  showToast(
-    message.pinned
-    ?
-    "Message unpinned."
-    :
-    "Message marked important."
-  );
-
+  users.forEach(user => {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = "user-item" + (selectedUser?.uid === user.uid ? " active" : "");
+    const avatar = user.photoURL
+      ? `<img src="${escapeHtml(user.photoURL)}" class="user-avatar" alt="" loading="lazy">`
+      : `<div class="user-avatar">${escapeHtml(initials(user.displayName))}</div>`;
+    button.innerHTML = `${avatar}<div class="user-meta"><div class="user-name">${escapeHtml(user.displayName)}</div><div class="user-email">${escapeHtml(user.email || user.countryName || "Zemivo member")} · ${escapeHtml(user.language.toUpperCase())}</div></div>`;
+    button.addEventListener("click", () => selectUser(user));
+    usersList.appendChild(button);
+  });
 }
-/* AUTOMATIC TRANSLATION */
+userSearch.addEventListener("input", filterAndRenderUsers);
 
-async function translateMessage(
-  messageId,
-  text
-){
-
-  if(!text){
-    return;
-  }
-
-  /*
-    Secure translation backend
-    will be connected here.
-
-    Original message is never
-    replaced.
-  */
-
-  return null;
-
+function clearChatListeners() {
+  if (unsubscribeMessages) { unsubscribeMessages(); unsubscribeMessages = null; }
+  if (unsubscribePresence) { unsubscribePresence(); unsubscribePresence = null; }
+  if (unsubscribeTyping) { unsubscribeTyping(); unsubscribeTyping = null; }
 }
-  /* ARCHIVE / DELETE CHAT */
-
-function archiveCurrentChat(){
-
-  if(
-    !selectedUser
-  ){
-    return;
-  }
-
-  localStorage.setItem(
-    "zemivo_archive_" +
-    createChatId(
-      currentUser.uid,
-      selectedUser.uid
-    ),
-    "true"
-  );
-
-  showToast(
-    "Chat archived."
-  );
-
-}
-
-
-function deleteCurrentChat(){
-
-  if(
-    !selectedUser
-  ){
-    return;
-  }
-
-  const confirmed =
-    confirm(
-      "Delete this chat from your device view?"
-    );
-
-  if(!confirmed){
-    return;
-  }
-
-  messagesElement.innerHTML =
-    `
-      <div class="empty-chat">
-        Chat removed from this view.
-      </div>
-    `;
-
-  showToast(
-    "Chat removed from this view."
-  );
-
-}
-  /* BACKUP / RECOVERY / MULTI-DEVICE */
-
-async function prepareMessengerBackup(){
-
-  if(
-    !currentUser ||
-    !selectedUser
-  ){
-
-    showToast(
-      "Select a conversation first."
-    );
-
-    return;
-
-  }
-
-  showToast(
-    "Messenger cloud data is stored with your Zemivo account."
-  );
-
-}
-
-
-function enableMultiDeviceSync(){
-
-  if(
-    !currentUser
-  ){
-    return;
-  }
-
-  /*
-    Firestore snapshot listeners
-    keep the current device synchronized
-    with cloud conversation data.
-  */
-
-  console.log(
-    "Zemivo multi-device sync ready."
-  );
-
-}
-  /* BLOCK / UNBLOCK */
-
-function blockUser(){
-
-  if(
-    !selectedUser
-  ){
-    return;
-  }
-
-  const key =
-    "zemivo_blocked_" +
-    selectedUser.uid;
-
-  const blocked =
-    localStorage.getItem(
-      key
-    ) === "true";
-
-  localStorage.setItem(
-    key,
-    blocked
-    ? "false"
-    : "true"
-  );
-
-  showToast(
-    blocked
-    ?
-    "User unblocked."
-    :
-    "User blocked."
-  );
-
-}
-  /* GROUP ADMIN / MODERATOR */
-
-function groupPermission(
-  role
-){
-
-  if(
-    role === "owner"
-  ){
-
-    return {
-      canAdd:true,
-      canRemove:true,
-      canEdit:true,
-      canDelete:true
-    };
-
-  }
-
-
-  if(
-    role === "admin"
-  ){
-
-    return {
-      canAdd:true,
-      canRemove:true,
-      canEdit:true,
-      canDelete:true
-    };
-
-  }
-
-
-  if(
-    role === "moderator"
-  ){
-
-    return {
-      canAdd:false,
-      canRemove:true,
-      canEdit:false,
-      canDelete:true
-    };
-
-  }
-
-
-  return {
-    canAdd:false,
-    canRemove:false,
-    canEdit:false,
-    canDelete:false
-  };
-
-}
-  
-/* LOAD USERS */
-
-async function loadUsers(){
-
-  usersList.innerHTML = `
-
-    <div class="loading">
-      Loading users...
-    </div>
-
-  `;
-
-  try{
-
-    const profilesQuery =
-      query(
-        collection(
-          db,
-          "profiles"
-        )
-      );
-
-    onSnapshot(
-      profilesQuery,
-      function(snapshot){
-
-        allUsers = [];
-
-        snapshot.forEach(
-          function(profileSnapshot){
-
-            const profile =
-              profileSnapshot.data();
-
-            const uid =
-              profileSnapshot.id;
-
-            if(
-              currentUser &&
-              uid ===
-              currentUser.uid
-            ){
-
-              return;
-
-            }
-
-            allUsers.push({
-
-              uid:
-                uid,
-
-              displayName:
-                profile.displayName ||
-                profile.name ||
-                "Zemivo User",
-
-              email:
-                profile.email ||
-                "",
-
-              photoURL:
-                profile.photoURL ||
-                profile.photoUrl ||
-                ""
-
-            });
-
-          }
-        );
-
-        renderUsers(
-          allUsers
-        );
-
-      },
-      function(error){
-
-        console.error(
-          "Users error:",
-          error
-        );
-
-        usersList.innerHTML = `
-
-          <div class="error">
-            Could not load users.
-          </div>
-
-        `;
-
-      }
-    );
-
-  }
-  catch(error){
-
-    console.error(
-      error
-    );
-
-    usersList.innerHTML = `
-
-      <div class="error">
-        Could not load users.
-      </div>
-
-    `;
-
-  }
-
-}
-
-
-/* RENDER USERS */
-
-function renderUsers(users){
-
-  usersList.innerHTML =
-    "";
-
-  if(
-    users.length === 0
-  ){
-
-    usersList.innerHTML = `
-
-      <div class="loading">
-        No other Zemivo users found yet.
-      </div>
-
-    `;
-
-    return;
-
-  }
-
-  users.forEach(
-    function(user){
-
-      const button =
-        document.createElement(
-          "button"
-        );
-
-      button.className =
-        "user-item";
-
-      if(
-        selectedUser &&
-        selectedUser.uid ===
-        user.uid
-      ){
-
-        button.classList.add(
-          "active"
-        );
-
-      }
-
-      const initial =
-        user.displayName
-          .charAt(0)
-          .toUpperCase();
-
-      button.innerHTML = `
-
-        ${
-          user.photoURL
-          ?
-          `<img
-            src="${escapeHtml(
-              user.photoURL
-            )}"
-            class="user-avatar"
-            alt=""
-          >`
-          :
-          `<div class="user-avatar">
-            ${escapeHtml(
-              initial
-            )}
-          </div>`
-        }
-
-        <div style="min-width:0;">
-
-          <div class="user-name">
-            ${escapeHtml(
-              user.displayName
-            )}
-          </div>
-
-          <div class="user-email">
-            ${escapeHtml(
-              user.email
-            )}
-          </div>
-
-        </div>
-
-      `;
-
-      button.addEventListener(
-        "click",
-        function(){
-
-          selectUser(
-            user
-          );
-
-        }
-      );
-
-      usersList.appendChild(
-        button
-      );
-
-    }
-  );
-
-}
-
-
-/* SEARCH */
-
-userSearch.addEventListener(
-  "input",
-  function(){
-
-    const search =
-      userSearch.value
-        .trim()
-        .toLowerCase();
-
-    if(!search){
-
-      renderUsers(
-        allUsers
-      );
-
-      return;
-
-    }
-
-    const filtered =
-      allUsers.filter(
-        function(user){
-
-          return (
-
-            user.displayName
-              .toLowerCase()
-              .includes(
-                search
-              )
-
-            ||
-
-            user.email
-              .toLowerCase()
-              .includes(
-                search
-              )
-
-          );
-
-        }
-      );
-
-    renderUsers(
-      filtered
-    );
-
-  }
-);
-/* TYPING */
-
-function setTyping(value){
-
-  if(
-    !currentUser ||
-    !selectedUser
-  ){
-    return;
-  }
-
-  const typingRef =
-    ref(
-      rtdb,
-      "typing/" +
-      createChatId(
-        currentUser.uid,
-        selectedUser.uid
-      ) +
-      "/" +
-      currentUser.uid
-    );
-
-  set(
-    typingRef,
-    {
-      typing:
-        value,
-      updatedAt:
-        databaseServerTimestamp()
-    }
-  );
-
-}
-
-
-function startTypingListener(){
-
-  if(
-    unsubscribeTyping
-  ){
-    unsubscribeTyping();
-    unsubscribeTyping =
-      null;
-  }
-
-  if(
-    !selectedUser
-  ){
-    return;
-  }
-
-  const typingRef =
-    ref(
-      rtdb,
-      "typing/" +
-      createChatId(
-        currentUser.uid,
-        selectedUser.uid
-      ) +
-      "/" +
-      selectedUser.uid
-    );
-
-  unsubscribeTyping =
-    onValue(
-      typingRef,
-      function(snapshot){
-
-        const data =
-          snapshot.val();
-
-        if(
-          data &&
-          data.typing === true
-        ){
-
-          chatStatus.textContent =
-            "✍️ Typing...";
-
-        }
-        else{
-
-          chatStatus.textContent =
-            "Online";
-
-        }
-
-      }
-    );
-
-}
-
-/* SELECT USER */
-
-async function selectUser(user){
-
-  selectedUser =
-    user;
-
-  chatName.textContent =
-    user.displayName;
-
-  chatStatus.textContent =
-    "Checking status...";
-
-
-  if(
-    unsubscribePresence
-  ){
-
-    unsubscribePresence();
-
-    unsubscribePresence =
-      null;
-
-  }
-
-
-  const selectedStatusRef =
-    ref(
-      rtdb,
-      "status/" +
-      user.uid
-    );
-
-
-  unsubscribePresence =
-    onValue(
-      selectedStatusRef,
-      function(snapshot){
-
-        const status =
-          snapshot.val();
-
-        if(
-          status &&
-          status.state ===
-          "online"
-        ){
-
-          chatStatus.textContent =
-            "🟢 Online";
-
-          return;
-
-        }
-
-        if(
-          status &&
-          status.lastChanged
-        ){
-
-          const lastSeen =
-            new Date(
-              status.lastChanged
-            );
-
-          chatStatus.textContent =
-            "Last seen " +
-            lastSeen.toLocaleString();
-
-          return;
-
-        }
-
-        chatStatus.textContent =
-          "Offline";
-
-      }
-    );
-
-
-  if(
-    user.photoURL
-  ){
-
-    chatAvatar.textContent =
-      "";
-
-    chatAvatar.style.backgroundImage =
-      `url("${escapeHtml(
-        user.photoURL
-      )}")`;
-
-    chatAvatar.style.backgroundSize =
-      "cover";
-
-    chatAvatar.style.backgroundPosition =
-      "center";
-
-  }
-  else{
-
-    chatAvatar.style.backgroundImage =
-      "none";
-
-    chatAvatar.textContent =
-      user.displayName
-        .charAt(0)
-        .toUpperCase();
-
-  }
-
-
-  appElement.classList.add(
-    "chat-open"
-  );
-
-  messageInput.disabled =
-    true;
-
-  sendButton.disabled =
-    true;
-
-  renderUsers(
-    allUsers
-  );
-
-
-  const chatId =
-    createChatId(
-      currentUser.uid,
-      selectedUser.uid
-    );
-
-
-  try{
-
-    const chatRef =
-      doc(
-        db,
-        "chats",
-        chatId
-      );
-
-
-    await setDoc(
-      chatRef,
-      {
-        members: [
-          currentUser.uid,
-          selectedUser.uid
-        ],
-        updatedAt:
-          serverTimestamp()
-      },
-      {
-        merge:true
-      }
-    );
-
-
-    messageInput.disabled =
-      false;
-
-    sendButton.disabled =
-      false;
-
-    messageInput.focus();
-
+async function selectUser(user) {
+  if (!currentUser || !user?.uid) return;
+  clearChatListeners();
+  selectedUser = user;
+  currentChatId = createChatId(currentUser.uid, user.uid);
+  pendingReply = null;
+  chatName.textContent = user.displayName;
+  chatStatus.textContent = "Checking status…";
+  chatAvatar.textContent = user.photoURL ? "" : initials(user.displayName);
+  chatAvatar.style.backgroundImage = user.photoURL ? `url("${user.photoURL.replaceAll('"', "%22")}")` : "none";
+  chatAvatar.style.backgroundSize = "cover";
+  chatAvatar.style.backgroundPosition = "center";
+  appElement.classList.add("chat-open");
+  messageInput.disabled = true;
+  sendButton.disabled = true;
+  messagesElement.innerHTML = '<div class="loading">Opening conversation…</div>';
+  filterAndRenderUsers();
+
+  const statusRef = ref(rtdb, "status/" + user.uid);
+  unsubscribePresence = onValue(statusRef, snapshot => {
+    const status = snapshot.val();
+    if (status?.state === "online") chatStatus.textContent = "🟢 Online";
+    else if (status?.lastChanged) {
+      const ms = typeof status.lastChanged === "number" ? status.lastChanged : Number(status.lastChanged);
+      chatStatus.textContent = ms ? "Last seen " + new Date(ms).toLocaleString() : "Offline";
+    } else chatStatus.textContent = "Offline";
+  }, error => {
+    console.warn("Presence read error:", error);
+    chatStatus.textContent = "Status unavailable";
+  });
+
+  const typingRef = ref(rtdb, "typing/" + currentChatId + "/" + user.uid);
+  unsubscribeTyping = onValue(typingRef, snapshot => {
+    if (snapshot.val()?.typing === true) chatStatus.textContent = "✍️ Typing…";
+  }, error => console.warn("Typing listener error:", error));
+
+  try {
+    await setDoc(doc(db, "chats", currentChatId), {
+      members: [currentUser.uid, user.uid],
+      updatedAt: serverTimestamp()
+    }, { merge: true });
+    if (selectedUser?.uid !== user.uid) return;
+    messageInput.disabled = false;
+    sendButton.disabled = false;
     startMessageListener();
-
-startTypingListener();
-
-  }
-  catch(error){
-
-    console.error(
-      "Chat setup error:",
-      error
-    );
-
-    messageInput.disabled =
-      true;
-
-    sendButton.disabled =
-      true;
-
-    messagesElement.innerHTML = `
-
-      <div class="error">
-        Could not open this conversation.
-      </div>
-
-    `;
-
-  }
-
-}
-
-
-/* MESSAGE LISTENER */
-
-function startMessageListener(){
-
-  if(
-    !selectedUser
-  ){
-
-    return;
-
-  }
-
-
-  if(
-    unsubscribeMessages
-  ){
-
-    unsubscribeMessages();
-
-    unsubscribeMessages =
-      null;
-
-  }
-
-
-  messagesElement.innerHTML = `
-
-    <div class="loading">
-      Loading conversation...
-    </div>
-
-  `;
-
-
-  const chatId =
-    createChatId(
-      currentUser.uid,
-      selectedUser.uid
-    );
-
-
-  const messagesQuery =
-    query(
-      collection(
-        db,
-        "chats",
-        chatId,
-        "messages"
-      ),
-      orderBy(
-        "createdAt",
-        "asc"
-      )
-    );
-
-
-  unsubscribeMessages =
-    onSnapshot(
-      messagesQuery,
-      function(snapshot){
-
-        messagesElement.innerHTML =
-          "";
-
-        if(
-          snapshot.empty
-        ){
-
-          messagesElement.innerHTML = `
-
-            <div class="empty-chat">
-
-              <div>
-
-                <div style="font-size:38px;">
-                  👋
-                </div>
-
-                <div style="font-weight:bold;margin-top:7px;">
-                  Start the conversation
-                </div>
-
-                <div style="margin-top:5px;color:#777;">
-                  Send your first message to
-                  ${escapeHtml(
-                    selectedUser.displayName
-                  )}.
-                </div>
-
-              </div>
-
-            </div>
-
-          `;
-
-          return;
-
-        }
-
-
-snapshot.forEach(
-  function(messageSnapshot){
-
-    const message =
-      messageSnapshot.data();
-
-    renderMessage(
-      message,
-      messageSnapshot.id
-    );
-
-  }
-);
-
-
-/* Mark incoming messages as Delivered + Read */
-
-updateMessageReceipts(
-  snapshot
-);
-
-
-messagesElement.scrollTop =
-  messagesElement.scrollHeight;
-
-
-        messagesElement.scrollTop =
-          messagesElement.scrollHeight;
-
-      },
-      function(error){
-
-        console.error(
-          "Message listener error:",
-          error
-        );
-
-        messagesElement.innerHTML = `
-
-          <div class="error">
-            Could not load messages.<br>
-            Please check Firestore permissions.
-          </div>
-
-        `;
-
-      }
-    );
-
-}
-/* EDIT MESSAGE */
-
-async function editMessage(
-  messageId,
-  oldText
-){
-
-  if(
-    !currentUser ||
-    !selectedUser
-  ){
-
-    return;
-
-  }
-
-
-  const newText =
-    prompt(
-      "Edit your message:",
-      oldText
-    );
-
-
-  if(
-    newText === null
-  ){
-
-    return;
-
-  }
-
-
-  const cleanedText =
-    newText.trim();
-
-
-  if(!cleanedText){
-
-    showToast(
-      "Message cannot be empty."
-    );
-
-    return;
-
-  }
-
-
-  if(
-    cleanedText === oldText
-  ){
-
-    return;
-
-  }
-
-
-  const chatId =
-    createChatId(
-      currentUser.uid,
-      selectedUser.uid
-    );
-
-
-  try{
-
-    const messageRef =
-      doc(
-        db,
-        "chats",
-        chatId,
-        "messages",
-        messageId
-      );
-
-
-    await updateDoc(
-      messageRef,
-      {
-
-        text:
-          cleanedText,
-
-        edited:
-          true,
-
-        editedAt:
-          serverTimestamp(),
-
-        translatedText:
-          null
-
-      }
-    );
-
-
-    showToast(
-      "Message edited."
-    );
-
-  }
-  catch(error){
-
-    console.error(
-      "Edit message error:",
-      error
-    );
-
-    showToast(
-      "Message could not be edited."
-    );
-
-  }
-
-}
-
-
-/* DELETE MESSAGE */
-
-async function deleteMessage(
-  messageId
-){
-
-  if(
-    !currentUser ||
-    !selectedUser
-  ){
-
-    return;
-
-  }
-
-
-  const confirmed =
-    confirm(
-      "Delete this message?"
-    );
-
-
-  if(!confirmed){
-
-    return;
-
-  }
-
-
-  const chatId =
-    createChatId(
-      currentUser.uid,
-      selectedUser.uid
-    );
-
-
-  try{
-
-    const messageRef =
-      doc(
-        db,
-        "chats",
-        chatId,
-        "messages",
-        messageId
-      );
-
-
-    await deleteDoc(
-      messageRef
-    );
-
-
-    showToast(
-      "Message deleted."
-    );
-
-  }
-  catch(error){
-
-    console.error(
-      "Delete message error:",
-      error
-    );
-
-    showToast(
-      "Message could not be deleted."
-    );
-
-  }
-
-}
-const replyButton =
-  document.createElement(
-    "button"
-  );
-
-replyButton.type =
-  "button";
-
-replyButton.textContent =
-  "↩️ Reply";
-
-replyButton.style.border =
-  "0";
-
-replyButton.style.borderRadius =
-  "8px";
-
-replyButton.style.padding =
-  "4px 8px";
-
-replyButton.style.cursor =
-  "pointer";
-
-replyButton.addEventListener(
-  "click",
-  function(){
-
-    replyToMessage(
-      message
-    );
-
-  }
-);
-
-actions.appendChild(
-  replyButton
-);
-/* RENDER MESSAGE */
-
-function renderMessage(
-  message,
-  messageId
-){
-
-  const isSent =
-    message.senderId ===
-    currentUser.uid;
-
-
-  const row =
-    document.createElement(
-      "div"
-    );
-
-  row.className =
-    "message-row " +
-    (
-      isSent
-      ?
-      "sent"
-      :
-      "received"
-    );
-
-
-  const bubble =
-    document.createElement(
-      "div"
-    );
-
-  bubble.className =
-    "message";
-
-
-  const original =
-    document.createElement(
-      "div"
-    );
-
-  original.textContent =
-    message.text ||
-    "";
-
-
-  bubble.appendChild(
-    original
-  );
-
-
-  if(
-    message.translatedText
-  ){
-
-    const translation =
-      document.createElement(
-        "div"
-      );
-
-    translation.className =
-      "translation";
-
-
-    translation.innerHTML = `
-
-      <div class="translation-label">
-        🌍 Translation
-      </div>
-
-      ${escapeHtml(
-        message.translatedText
-      )}
-
-    `;
-
-
-    bubble.appendChild(
-      translation
-    );
-
-  }
-
-
-const time =
-  document.createElement(
-    "div"
-  );
-
-time.className =
-  "message-time";
-
-time.textContent =
-  formatTime(
-    message.createdAt
-  );
-
-
-/* MESSAGE DELIVERY / READ STATUS */
-
-if(
-  isSent
-){
-
-  const status =
-    document.createElement(
-      "span"
-    );
-
-  status.style.marginLeft =
-    "5px";
-
-  status.style.fontSize =
-    "10px";
-
-  status.style.fontWeight =
-    "bold";
-
-
-  if(
-    message.readAt
-  ){
-
-    status.textContent =
-      "✓✓ Read";
-
-  }
-  else if(
-    message.deliveredAt
-  ){
-
-    status.textContent =
-      "✓✓ Delivered";
-
-  }
-  else{
-
-    status.textContent =
-      "✓ Sent";
-
-  }
-
-
-  time.appendChild(
-    status
-  );
-
-}
-
-
-bubble.appendChild(
-  time
-);
-
-
-  /* EDITED LABEL */
-
-  if(
-    message.edited === true
-  ){
-
-    const editedLabel =
-      document.createElement(
-        "span"
-      );
-
-    editedLabel.textContent =
-      " · edited";
-
-    editedLabel.style.fontSize =
-      "10px";
-
-    editedLabel.style.opacity =
-      "0.7";
-
-    time.appendChild(
-      editedLabel
-    );
-
-  }
-
-
-  /* EDIT + DELETE */
-
-  if(
-    isSent
-  ){
-
-    const actions =
-      document.createElement(
-        "div"
-      );
-
-    actions.style.display =
-      "flex";
-
-    actions.style.gap =
-      "6px";
-
-    actions.style.marginTop =
-      "6px";
-
-    actions.style.justifyContent =
-      "flex-end";
-
-
-    const editButton =
-      document.createElement(
-        "button"
-      );
-
-    editButton.type =
-      "button";
-
-    editButton.textContent =
-      "✏️ Edit";
-
-    editButton.style.border =
-      "0";
-
-    editButton.style.borderRadius =
-      "8px";
-
-    editButton.style.padding =
-      "4px 8px";
-
-    editButton.style.cursor =
-      "pointer";
-
-    editButton.style.fontSize =
-      "11px";
-
-
-    editButton.addEventListener(
-      "click",
-      function(){
-
-        editMessage(
-          messageId,
-          message.text || ""
-        );
-
-      }
-    );
-
-
-    const deleteButton =
-      document.createElement(
-        "button"
-      );
-
-    deleteButton.type =
-      "button";
-
-    deleteButton.textContent =
-      "🗑️ Delete";
-
-    deleteButton.style.border =
-      "0";
-
-    deleteButton.style.borderRadius =
-      "8px";
-
-    deleteButton.style.padding =
-      "4px 8px";
-
-    deleteButton.style.cursor =
-      "pointer";
-
-    deleteButton.style.fontSize =
-      "11px";
-
-
-    deleteButton.addEventListener(
-      "click",
-      function(){
-
-        deleteMessage(
-          messageId
-        );
-
-      }
-    );
-
-
-    actions.appendChild(
-      editButton
-    );
-
-    actions.appendChild(
-      deleteButton
-    );
-
-
-    bubble.appendChild(
-      actions
-    );
-
-  }
-
-
-  row.appendChild(
-    bubble
-  );
-
-
-  messagesElement.appendChild(
-    row
-  );
-
-}
-/* UPDATE MESSAGE DELIVERY / READ STATUS */
-
-async function updateMessageReceipts(
-  snapshot
-){
-
-  if(
-    !currentUser ||
-    !selectedUser
-  ){
-
-    return;
-
-  }
-
-
-  const updates = [];
-
-
-  snapshot.forEach(
-    function(messageSnapshot){
-
-      const message =
-        messageSnapshot.data();
-
-      const messageId =
-        messageSnapshot.id;
-
-
-      /* Only incoming messages */
-
-      if(
-        message.senderId !==
-        currentUser.uid
-      ){
-
-        const messageRef =
-          doc(
-            db,
-            "chats",
-            createChatId(
-              currentUser.uid,
-              selectedUser.uid
-            ),
-            "messages",
-            messageId
-          );
-
-
-        const receiptData = {};
-
-
-        /* Delivered */
-
-        if(
-          !message.deliveredAt
-        ){
-
-          receiptData.deliveredAt =
-            serverTimestamp();
-
-        }
-
-
-        /* Read */
-
-        if(
-          !message.readAt
-        ){
-
-          receiptData.readAt =
-            serverTimestamp();
-
-        }
-
-
-        if(
-          Object.keys(
-            receiptData
-          ).length > 0
-        ){
-
-          updates.push(
-            updateDoc(
-              messageRef,
-              receiptData
-            )
-          );
-
-        }
-
-      }
-
-    }
-  );
-
-
-  if(
-    updates.length > 0
-  ){
-
-    try{
-
-      await Promise.all(
-        updates
-      );
-
-    }
-    catch(error){
-
-      console.error(
-        "Message receipt update error:",
-        error
-      );
-
-    }
-
-  }
-
-}
-  /* SHARED LINKS */
-
-function findLinksInText(
-  text
-){
-
-  if(!text){
-    return [];
-  }
-
-  const matches =
-    text.match(
-      /https?:\/\/[^\s]+/gi
-    );
-
-  return matches || [];
-
-}
-
-
-function showSharedLinks(
-  messages
-){
-
-  let links = [];
-
-  messages.forEach(
-    function(message){
-
-      links =
-        links.concat(
-          findLinksInText(
-            message.text
-          )
-        );
-
-    }
-  );
-
-  return [
-    ...new Set(
-      links
-    )
-  ];
-
-}
-  /* REPLY */
-
-function replyToMessage(
-  message
-){
-
-  messageInput.value =
-    "↩️ " +
-    (message.text || "") +
-    "\n";
-
-  messageInput.focus();
-
-  showToast(
-    "Replying to message."
-  );
-
-}
-/* SEND MESSAGE */
-
-async function sendMessage(){
-
-  if(
-    !currentUser ||
-    !selectedUser
-  ){
-
-    showToast(
-      "Select a person first."
-    );
-
-    return;
-
-  }
-
-
-  const text =
-    messageInput.value.trim();
-
-
-  if(!text){
-
-    return;
-
-  }
-
-
-  sendButton.disabled =
-    true;
-
-
-  const chatId =
-    createChatId(
-      currentUser.uid,
-      selectedUser.uid
-    );
-
-
-  try{
-
-    const chatRef =
-      doc(
-        db,
-        "chats",
-        chatId
-      );
-
-
-    await setDoc(
-      chatRef,
-      {
-        members: [
-          currentUser.uid,
-          selectedUser.uid
-        ],
-        updatedAt:
-          serverTimestamp()
-      },
-      {
-        merge:true
-      }
-    );
-
-
-    await addDoc(
-      collection(
-        db,
-        "chats",
-        chatId,
-        "messages"
-      ),
-      {
-
-        senderId:
-          currentUser.uid,
-
-        receiverId:
-          selectedUser.uid,
-
-   text:
-  text,
-
-replyTo:
-  null,
-
-replyText:
-  null,
-
-sourceLanguage:
-  null,
-
-        targetLanguage:
-          null,
-
-        translatedText:
-          null,
-
-   
-createdAt:
-  serverTimestamp(),
-
-deliveredAt:
-  null,
-
-readAt:
-  null
-      }
-    );
-
-
-    messageInput.value =
-      "";
-
     messageInput.focus();
-
+  } catch (error) {
+    console.error("Chat setup error:", error);
+    messagesElement.innerHTML = '<div class="error">Could not open this conversation. Check Firestore chat permissions.</div>';
+    showToast("Could not open conversation.");
   }
-  catch(error){
-
-    console.error(
-      "Send message error:",
-      error
-    );
-
-    showToast(
-      "Message could not be sent."
-    );
-
-  }
-
-
-  sendButton.disabled =
-    false;
-
 }
 
-
-/* SEND BUTTON */
-
-sendButton.addEventListener(
-  "click",
-  sendMessage
-);
-
-
-/* ENTER */
-
-messageInput.addEventListener(
-  "keydown",
-  function(event){
-
-    if(
-      event.key ===
-      "Enter"
-    ){
-
-      event.preventDefault();
-
-      sendMessage();
-
+function startMessageListener() {
+  if (!selectedUser || !currentChatId) return;
+  if (unsubscribeMessages) unsubscribeMessages();
+  messagesElement.innerHTML = '<div class="loading">Loading messages…</div>';
+  const messagesQuery = query(collection(db, "chats", currentChatId, "messages"), orderBy("createdAt", "asc"));
+  unsubscribeMessages = onSnapshot(messagesQuery, snapshot => {
+    if (!selectedUser || !currentChatId) return;
+    messagesElement.innerHTML = "";
+    if (snapshot.empty) {
+      messagesElement.innerHTML = `<div class="empty-chat"><div><div style="font-size:38px">👋</div><div style="font-weight:800;margin-top:7px">Start the conversation</div><div style="margin-top:5px;color:#64748b">Send your first message to ${escapeHtml(selectedUser.displayName)}.</div></div></div>`;
+      return;
     }
+    snapshot.forEach(messageSnapshot => renderMessage(messageSnapshot.data(), messageSnapshot.id));
+    messagesElement.scrollTop = messagesElement.scrollHeight;
+    void updateMessageReceipts(snapshot);
+  }, error => {
+    console.error("Message listener error:", error);
+    messagesElement.innerHTML = '<div class="error">Could not load messages. Check Firestore permissions.</div>';
+  });
+}
 
+function renderMessage(message, messageId) {
+  const isSent = message.senderId === currentUser?.uid;
+  const row = document.createElement("div");
+  row.className = "message-row " + (isSent ? "sent" : "received");
+  const bubble = document.createElement("div");
+  bubble.className = "message";
+
+  if (message.replyText) {
+    const quote = document.createElement("div");
+    quote.className = "reply-quote";
+    quote.textContent = "↩ " + message.replyText;
+    bubble.appendChild(quote);
   }
-);
+  const original = document.createElement("div");
+  original.textContent = message.text || "";
+  bubble.appendChild(original);
 
-
-/* ATTACHMENT */
-
-attachButton.addEventListener(
-  "click",
-  function(){
-
-    showToast(
-      "Media messaging will be connected with Firebase Storage."
-    );
-
+  if (message.translatedText && message.targetLanguage === getUserLanguageForCurrentViewer()) {
+    const translation = document.createElement("div");
+    translation.className = "translation";
+    translation.innerHTML = `<div class="translation-label">🌍 Translation · ${escapeHtml((message.targetLanguage || "").toUpperCase())}</div>${escapeHtml(message.translatedText)}`;
+    bubble.appendChild(translation);
+  } else if (message.translatedText && !isSent) {
+    const translation = document.createElement("div");
+    translation.className = "translation";
+    translation.innerHTML = `<div class="translation-label">🌍 Translation</div>${escapeHtml(message.translatedText)}`;
+    bubble.appendChild(translation);
   }
-);
 
-
-/* BACK */
-
-backButton.addEventListener(
-  "click",
-  function(){
-
-    appElement.classList.remove(
-      "chat-open"
-    );
-
-
-    if(
-      unsubscribeMessages
-    ){
-
-      unsubscribeMessages();
-
-      unsubscribeMessages =
-        null;
-
-    }
-
-
-    if(
-      unsubscribePresence
-    ){
-
-      unsubscribePresence();
-
-      unsubscribePresence =
-        null;
-
-    }
-
+  const time = document.createElement("div");
+  time.className = "message-time";
+  time.textContent = formatTime(message.createdAt);
+  if (isSent) {
+    const status = document.createElement("span");
+    status.style.marginLeft = "5px";
+    status.style.fontWeight = "800";
+    status.textContent = message.readAt ? "✓✓ Read" : message.deliveredAt ? "✓✓ Delivered" : "✓ Sent";
+    time.appendChild(status);
   }
-);
+  if (message.edited === true) time.append(" · edited");
+  bubble.appendChild(time);
 
+  const actions = document.createElement("div");
+  actions.className = "message-actions";
+  const replyButton = document.createElement("button");
+  replyButton.type = "button";
+  replyButton.textContent = "↩ Reply";
+  replyButton.addEventListener("click", () => replyToMessage(message));
+  actions.appendChild(replyButton);
 
-/* CLEANUP */
-
-window.addEventListener(
-  "beforeunload",
-  function(){
-
-    if(
-      unsubscribeMessages
-    ){
-
-      unsubscribeMessages();
-
-    }
-
-
-    if(
-      unsubscribePresence
-    ){
-
-      unsubscribePresence();
-
-    }
-
+  if (isSent) {
+    const editButton = document.createElement("button");
+    editButton.type = "button";
+    editButton.textContent = "✏️ Edit";
+    editButton.addEventListener("click", () => editMessage(messageId, message.text || ""));
+    const deleteButton = document.createElement("button");
+    deleteButton.type = "button";
+    deleteButton.textContent = "🗑 Delete";
+    deleteButton.addEventListener("click", () => deleteMessage(messageId));
+    actions.append(editButton, deleteButton);
   }
-);
+  bubble.appendChild(actions);
+  row.appendChild(bubble);
+  messagesElement.appendChild(row);
+}
 
+function getUserLanguageForCurrentViewer() {
+  // The signed-in user's preferred language should be saved as language/preferredLanguage in profiles/{uid}.
+  return currentUserLanguage || localeBase(navigator.language) || "en";
+}
+
+async function updateMessageReceipts(snapshot) {
+  if (!currentUser || !selectedUser || !currentChatId) return;
+  const tasks = [];
+  snapshot.forEach(messageSnapshot => {
+    const message = messageSnapshot.data();
+    if (message.senderId === currentUser.uid) return;
+    const patch = {};
+    if (!message.deliveredAt) patch.deliveredAt = serverTimestamp();
+    if (!message.readAt) patch.readAt = serverTimestamp();
+    if (Object.keys(patch).length) {
+      tasks.push(updateDoc(doc(db, "chats", currentChatId, "messages", messageSnapshot.id), patch));
+    }
+  });
+  if (tasks.length) {
+    try { await Promise.all(tasks); }
+    catch (error) { console.warn("Receipt update failed; check Firestore rules.", error); }
+  }
+}
+
+async function editMessage(messageId, oldText) {
+  if (!currentUser || !selectedUser || !currentChatId) return;
+  const value = prompt("Edit your message:", oldText);
+  if (value === null) return;
+  const cleaned = value.trim();
+  if (!cleaned) return showToast("Message cannot be empty.");
+  if (cleaned === oldText) return;
+  try {
+    await updateDoc(doc(db, "chats", currentChatId, "messages", messageId), {
+      text: cleaned, edited: true, editedAt: serverTimestamp(),
+      translatedText: null, targetLanguage: null
+    });
+    showToast("Message edited.");
+  } catch (error) {
+    console.error("Edit message error:", error);
+    showToast("Message could not be edited. Check Firestore rules.");
+  }
+}
+async function deleteMessage(messageId) {
+  if (!currentUser || !selectedUser || !currentChatId) return;
+  if (!confirm("Delete this message for everyone?")) return;
+  try {
+    await deleteDoc(doc(db, "chats", currentChatId, "messages", messageId));
+    showToast("Message deleted.");
+  } catch (error) {
+    console.error("Delete message error:", error);
+    showToast("Message could not be deleted. Check Firestore rules.");
+  }
+}
+function replyToMessage(message) {
+  pendingReply = { text: String(message.text || "").slice(0, 500) };
+  messageInput.value = "";
+  messageInput.placeholder = "Replying: " + pendingReply.text.slice(0, 60) + " — type reply…";
+  messageInput.focus();
+  showToast("Reply selected. Type your reply and press Send.");
+}
+function setTyping(value) {
+  if (!currentUser || !selectedUser || !currentChatId) return;
+  const typingRef = ref(rtdb, "typing/" + currentChatId + "/" + currentUser.uid);
+  set(typingRef, { typing: value, updatedAt: databaseServerTimestamp() }).catch(error => console.warn("Typing status update failed:", error));
+}
+let typingTimer = null;
+messageInput.addEventListener("input", () => {
+  setTyping(true);
+  clearTimeout(typingTimer);
+  typingTimer = setTimeout(() => setTyping(false), 1000);
+});
+
+async function translateForRecipient(text, targetLanguage) {
+  if (!TRANSLATION_ENDPOINT) return { translatedText: null, reason: "not-configured" };
+  const token = await currentUser.getIdToken();
+  const response = await fetch(TRANSLATION_ENDPOINT, {
+    method: "POST",
+    headers: { "Content-Type": "application/json", "Authorization": "Bearer " + token },
+    body: JSON.stringify({ text, targetLanguage, sourceLanguage: "auto" })
+  });
+  if (!response.ok) throw new Error("Translation service returned HTTP " + response.status);
+  const data = await response.json();
+  if (typeof data.translatedText !== "string" || !data.translatedText.trim()) throw new Error("Invalid translation response");
+  return { translatedText: data.translatedText, reason: null };
+}
+
+async function sendMessage() {
+  if (!currentUser || !selectedUser || !currentChatId) {
+    showToast("Select a person first.");
+    return;
+  }
+  const text = messageInput.value.trim();
+  if (!text) return;
+  if (text.length > 5000) return showToast("Message is too long.");
+  sendButton.disabled = true;
+  const replyText = pendingReply?.text || null;
+  try {
+    await setDoc(doc(db, "chats", currentChatId), {
+      members: [currentUser.uid, selectedUser.uid],
+      updatedAt: serverTimestamp(),
+      lastMessage: text.slice(0, 300),
+      lastSenderId: currentUser.uid
+    }, { merge: true });
+
+    let translatedText = null;
+    let targetLanguage = selectedUser.language || "en";
+    try {
+      const translated = await translateForRecipient(text, targetLanguage);
+      translatedText = translated.translatedText;
+      if (translated.reason === "not-configured") {
+        // Keep sending functional while translation service is not yet connected.
+        console.info("Translation is not enabled: configure TRANSLATION_ENDPOINT and deploy a secure backend.");
+      }
+    } catch (translationError) {
+      console.error("Translation failed; original message will still be sent:", translationError);
+      showToast("Translation unavailable; sending original message.");
+    }
+
+    await addDoc(collection(db, "chats", currentChatId, "messages"), {
+      senderId: currentUser.uid,
+      receiverId: selectedUser.uid,
+      text,
+      replyTo: null,
+      replyText,
+      sourceLanguage: "auto",
+      targetLanguage: translatedText ? targetLanguage : null,
+      translatedText,
+      createdAt: serverTimestamp(),
+      deliveredAt: null,
+      readAt: null
+    });
+    messageInput.value = "";
+    messageInput.placeholder = "Type a message…";
+    pendingReply = null;
+    setTyping(false);
+    messageInput.focus();
+  } catch (error) {
+    console.error("Send message error:", error);
+    showToast("Message could not be sent. Check Firestore permissions.");
+  } finally {
+    sendButton.disabled = !selectedUser;
+  }
+}
+sendButton.addEventListener("click", sendMessage);
+messageInput.addEventListener("keydown", event => {
+  if (event.key === "Enter" && !event.shiftKey) {
+    event.preventDefault();
+    sendMessage();
+  }
+});
+attachButton.addEventListener("click", () => showToast("Media messaging requires Firebase Storage setup; it has not been enabled in this page yet."));
+backButton.addEventListener("click", () => {
+  appElement.classList.remove("chat-open");
+  clearChatListeners();
+  messageInput.disabled = true;
+  sendButton.disabled = true;
+  setTyping(false);
+});
+window.addEventListener("beforeunload", () => {
+  clearChatListeners();
+  if (unsubscribeUsers) unsubscribeUsers();
+  if (unsubscribeConnection) unsubscribeConnection();
+  if (currentUser && selectedUser && currentChatId) {
+    set(ref(rtdb, "typing/" + currentChatId + "/" + currentUser.uid), {
+      typing: false, updatedAt: databaseServerTimestamp()
+    }).catch(() => {});
+  }
+});
 </script>
-
 </body>
 </html>
