@@ -16,6 +16,142 @@
 @media(max-width:700px){.header{height:58px;padding:0 12px}.logo{font-size:24px}.app{top:68px;bottom:66px;left:0;transform:none;width:100%;border-radius:19px 19px 0 0;border-left:0;border-right:0}.users-panel{width:100%;min-width:100%;border-right:0}.chat-panel{width:100%;min-width:100%}.app.chat-open .users-panel{display:none}.app:not(.chat-open) .chat-panel{display:none}.chat-person{height:68px;min-height:68px;padding:9px 12px}.back-button{display:block}.messages{padding:14px 12px 18px}.message{max-width:88%}.composer{position:fixed;left:0;right:0;bottom:58px;width:100%;min-height:66px;padding:9px;gap:6px;z-index:600}.composer input{font-size:16px;padding:10px 12px}.send{padding:0 14px}.attach{width:39px;height:40px}.app.chat-open .messages{padding-bottom:20px}.users-title{padding:15px 15px 12px}.bottom-nav{display:flex;position:fixed;left:0;right:0;bottom:0;height:58px;background:#ffffffed;backdrop-filter:blur(15px);border-top:1px solid var(--line);z-index:700}.bottom-nav a{flex:1;display:flex;flex-direction:column;gap:2px;align-items:center;justify-content:center;text-decoration:none;color:#526079;font-size:11px}.bottom-nav a.active{color:#2859df;font-weight:800}}
 @media(min-width:701px){.back-button{display:none}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+  
+/* ZEMIVO — INTERACTIVE 3D DESIGN */
+:root {
+  --z-depth: 0 12px 28px rgba(42, 63, 130, .17);
+  --z-glow: 0 0 0 3px rgba(75, 125, 255, .13);
+}
+
+.header,
+.app,
+.users-panel,
+.chat-panel,
+.chat-person,
+.composer {
+  transform-style: preserve-3d;
+}
+
+.app {
+  box-shadow:
+    0 28px 65px rgba(38, 55, 120, .19),
+    inset 0 1px 0 rgba(255, 255, 255, .95);
+}
+
+.header-button,
+.attach,
+.back-button,
+.send {
+  position: relative;
+  transform: translateZ(0);
+  transition:
+    transform .2s ease,
+    box-shadow .2s ease,
+    filter .2s ease;
+}
+
+.header-button,
+.attach,
+.back-button {
+  box-shadow:
+    6px 6px 14px rgba(50, 70, 130, .14),
+    -5px -5px 12px rgba(255, 255, 255, .95),
+    inset 0 1px 0 white;
+}
+
+.send {
+  box-shadow:
+    0 9px 20px rgba(53, 109, 255, .32),
+    inset 0 1px 0 rgba(255, 255, 255, .35);
+}
+
+.header-button:active,
+.attach:active,
+.back-button:active,
+.send:active {
+  transform: translateY(3px) scale(.96);
+  box-shadow:
+    inset 3px 3px 8px rgba(30, 45, 95, .2);
+}
+
+.user-item {
+  transform: perspective(800px) translateZ(0);
+  transition: transform .22s ease, box-shadow .22s ease;
+}
+
+.user-item:hover {
+  transform: perspective(800px)
+    translateY(-3px) translateZ(5px);
+  box-shadow: var(--z-depth);
+}
+
+.user-item.active {
+  box-shadow:
+    inset 2px 2px 6px rgba(55, 75, 130, .10),
+    inset -2px -2px 6px white,
+    0 8px 18px rgba(53, 109, 255, .12);
+}
+
+.user-avatar {
+  box-shadow:
+    0 9px 18px rgba(53, 109, 255, .25),
+    inset 0 1px 0 rgba(255, 255, 255, .45);
+}
+
+.composer input,
+.search-box input {
+  box-shadow:
+    inset 3px 3px 8px rgba(56, 76, 132, .08),
+    inset -2px -2px 6px white;
+  transition: box-shadow .2s ease, border-color .2s ease;
+}
+
+.composer input:focus,
+.search-box input:focus {
+  border-color: #83a3ff;
+  box-shadow:
+    var(--z-glow),
+    inset 2px 2px 5px rgba(56, 76, 132, .05);
+}
+
+.message-row.sent .message {
+  box-shadow:
+    0 9px 20px rgba(53, 109, 255, .20),
+    inset 0 1px 0 rgba(255, 255, 255, .22);
+}
+
+.message-row.received .message {
+  box-shadow:
+    0 7px 17px rgba(44, 61, 102, .09),
+    inset 0 1px 0 white;
+}
+
+@media (hover: hover) and (pointer: fine)
+  and (min-width: 701px) {
+  .header-button:hover,
+  .attach:hover,
+  .back-button:hover,
+  .send:hover {
+    transform: translateY(-2px) translateZ(5px);
+    filter: brightness(1.04);
+  }
+
+  .message-row .message:hover {
+    transform: translateY(-1px) translateZ(3px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .header-button,
+  .attach,
+  .back-button,
+  .send,
+  .user-item,
+  .message {
+    transition: none !important;
+  }
+}
+
 </style>
 </head>
 <body>
@@ -95,6 +231,33 @@ const rtdb = getDatabase(firebaseApp, "https://zemivo-default-rtdb.asia-southeas
 
 const $ = id => document.getElementById(id);
 const appElement = $("app");
+  
+/* Desktop pointer-based 3D movement */
+if (
+  window.matchMedia(
+    "(hover: hover) and (pointer: fine) and (min-width: 701px)"
+  ).matches
+) {
+  const messenger = appElement;
+
+  messenger.addEventListener("pointermove", event => {
+    const rect = messenger.getBoundingClientRect();
+
+    const x = (event.clientX - rect.left) / rect.width - 0.5;
+    const y = (event.clientY - rect.top) / rect.height - 0.5;
+
+    messenger.style.transform =
+      `translateX(-50%) perspective(1500px) ` +
+      `rotateY(${(x * 1.4).toFixed(2)}deg) ` +
+      `rotateX(${(-y * 1.1).toFixed(2)}deg)`;
+  });
+
+  messenger.addEventListener("pointerleave", () => {
+    messenger.style.transform =
+      "translateX(-50%) perspective(1500px)";
+  });
+}
+
 const usersList = $("usersList");
 const userSearch = $("userSearch");
 const messagesElement = $("messages");
