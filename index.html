@@ -1286,37 +1286,261 @@ select{
     animation:none!important;
   }
 }
+  /* ZEMIVO UNIQUE 3D NAV ICONS */
+
+.zemivo-3d-nav{
+  display:flex;
+  align-items:center;
+  justify-content:space-around;
+  gap:12px;
+}
+
+.z3d-icon{
+  width:48px;
+  height:48px;
+  border:1px solid rgba(255,255,255,.35);
+  border-radius:17px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  cursor:pointer;
+  position:relative;
+  overflow:hidden;
+  transform-style:preserve-3d;
+  transition:transform .25s ease,box-shadow .25s ease;
+  box-shadow:
+    inset 0 2px 5px rgba(255,255,255,.55),
+    inset 0 -5px 10px rgba(0,0,0,.18),
+    0 7px 0 rgba(0,0,0,.15),
+    0 12px 20px rgba(0,0,0,.20);
+}
+
+.z3d-icon span{
+  font-size:25px;
+  line-height:1;
+  filter:drop-shadow(0 4px 3px rgba(0,0,0,.30));
+  transform:translateZ(12px);
+  transition:transform .25s ease;
+}
+
+.z3d-icon:active{
+  transform:translateY(5px) scale(.94);
+  box-shadow:0 2px 0 rgba(0,0,0,.2);
+}
+
+.z3d-icon:hover span{
+  transform:translateZ(18px) scale(1.15) rotate(-5deg);
+}
+
+.home-3d{
+  background:linear-gradient(145deg,#48d9ff,#1764df,#172b83);
+}
+
+.friends-3d{
+  background:linear-gradient(145deg,#ff9de2,#a33bea,#5220a0);
+}
+
+.notification-3d{
+  background:linear-gradient(145deg,#fff18b,#ff9d25,#e64b26);
+}
+
+.market-3d{
+  background:linear-gradient(145deg,#83ffd5,#0bbd9b,#087b83);
+}
+
+.insights-3d{
+  background:linear-gradient(145deg,#d8a6ff,#7654ed,#30218d);
+}
+
+.z3d-icon::before{
+  content:"";
+  position:absolute;
+  inset:2px;
+  border-radius:14px;
+  background:linear-gradient(
+    135deg,
+    rgba(255,255,255,.35),
+    transparent 48%,
+    rgba(0,0,0,.12)
+  );
+  pointer-events:none;
+}
+
+@media(max-width:600px){
+  .z3d-icon{
+    width:42px;
+    height:42px;
+    border-radius:14px;
+  }
+
+  .z3d-icon span{
+    font-size:23px;
+  }
+}
+  /* ZEMIVO 3D SIDEBAR ICONS */
+
+.sidebtn{
+  display:flex;
+  align-items:center;
+  gap:13px;
+}
+
+.side-3d{
+  width:43px;
+  height:43px;
+  min-width:43px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  font-size:27px;
+  border-radius:14px;
+  transform:translateZ(0);
+  box-shadow:
+    inset 0 3px 5px rgba(255,255,255,.65),
+    inset 0 -5px 8px rgba(0,0,0,.25),
+    0 6px 0 rgba(0,0,0,.18),
+    0 9px 15px rgba(0,0,0,.22);
+  transition:transform .25s ease,filter .25s ease;
+}
+
+.sidebtn:hover .side-3d{
+  transform:translateY(-4px) scale(1.12) rotate(-6deg);
+  filter:brightness(1.18);
+}
+
+.sidebtn:active .side-3d{
+  transform:translateY(3px) scale(.94);
+}
+
+.home-icon{
+  background:linear-gradient(145deg,#65e5ff,#0878ef);
+}
+.friends-icon{
+  background:linear-gradient(145deg,#ff9be7,#8a2be2);
+}
+.groups-icon{
+  background:linear-gradient(145deg,#ffe36e,#ff8a00);
+}
+.saved-icon{
+  background:linear-gradient(145deg,#d8a0ff,#652bdf);
+}
+.market-icon{
+  background:linear-gradient(145deg,#8bffe0,#009e91);
+}
+.messenger-icon{
+  background:linear-gradient(145deg,#79caff,#2850ed);
+}
+.notification-icon{
+  background:linear-gradient(145deg,#ffb3c7,#f00065);
+}
+.settings-icon{
+  background:linear-gradient(145deg,#d6e8ff,#5479ae);
+}
+.events-icon{
+  background:linear-gradient(145deg,#ff9bea,#8b28c7);
+}
+.search-icon{
+  background:linear-gradient(145deg,#77efff,#0875c9);
+}
+.referrals-icon{
+  background:linear-gradient(145deg,#c69bff,#5124dc);
+}
+.insights-icon{
+  background:linear-gradient(145deg,#7dffbd,#008d75);
+}
+
+@media(max-width:600px){
+  .side-3d{
+    width:39px;
+    height:39px;
+    min-width:39px;
+    font-size:24px;
+  }
+}
 </style>  </head>  <body>  <!-- =========================  
      TOP BAR  
 ========================= -->  <header class="topbar">    <div class="brand">Zemivo</div>  <input  
 id="search"  
 class="search"  
 placeholder="Search Zemivo">
-<nav class="nav">
+<nav class="nav zemivo-3d-nav">
 
-<button onclick="goHome()" title="Home">⌂</button>
-<button onclick="goPage('stories.html')" title="Stories">▣</button>
-<button onclick="goPage('friends.html')" title="Friends">♧</button>
-<button onclick="goPage('marketplace.html')" title="Marketplace">🛍</button>
-<button onclick="goPage('notifications.html')" title="Notifications">🔔</button>
-<button onclick="goPage('profile.html')" title="Profile">◉</button>
+  <button class="z3d-icon home-3d"
+          onclick="goHome()" title="Home">
+    <span>🌐</span>
+  </button>
+
+  <button class="z3d-icon friends-3d"
+          onclick="goPage('friends.html')" title="Friends">
+    <span>🫂</span>
+  </button>
+
+  <button class="z3d-icon notification-3d"
+          onclick="goPage('notifications.html')" title="Notifications">
+    <span>💎</span>
+  </button>
+
+  <button class="z3d-icon market-3d"
+          onclick="goPage('marketplace.html')" title="Marketplace">
+    <span>🏬</span>
+  </button>
+
+  <button class="z3d-icon insights-3d"
+          onclick="goPage('insights.html')" title="Insights">
+    <span>🔮</span>
+  </button>
 
 </nav>  </header>  <main class="layout">  <!-- =========================  
      LEFT  
 ========================= -- <aside class="sidebar panel">
+<button class="sidebtn" onclick="goHome()">
+  <span class="side-3d home-icon">🏡</span> Home
+</button>
 
-<button class="sidebtn" onclick="goHome()">🏠 Home</button>
-<button class="sidebtn" onclick="goPage('friends.html')">👥 Friends</button>
-<button class="sidebtn" onclick="goPage('groups.html')">👨‍👩‍👧 Groups</button>
-<button class="sidebtn" onclick="goPage('saved.html')">🔖 Saved</button>
-<button class="sidebtn" onclick="goPage('marketplace.html')">🛍️ Marketplace</button>
-<button class="sidebtn" onclick="goPage('messenger.html')">💬 Messenger</button>
-<button class="sidebtn" onclick="goPage('notifications.html')">🔔 Notifications</button>
-<button class="sidebtn" onclick="goPage('settings.html')">⚙️ Settings</button>
-<button class="sidebtn" onclick="goPage('events.html')">📅 Events</button>
-<button class="sidebtn" onclick="goPage('search.html')">🔎 Search</button>
-<button class="sidebtn" onclick="goPage('referrals.html')">🔗 Referrals</button>
-<button class="sidebtn" onclick="goPage('insights.html')">📊 Insights</button>
+<button class="sidebtn" onclick="goPage('friends.html')">
+  <span class="side-3d friends-icon">🫂</span> Friends
+</button>
+
+<button class="sidebtn" onclick="goPage('groups.html')">
+  <span class="side-3d groups-icon">🌐</span> Groups
+</button>
+
+<button class="sidebtn" onclick="goPage('saved.html')">
+  <span class="side-3d saved-icon">💠</span> Saved
+</button>
+
+<button class="sidebtn" onclick="goPage('marketplace.html')">
+  <span class="side-3d market-icon">🏪</span> Marketplace
+</button>
+
+<button class="sidebtn" onclick="goPage('messenger.html')">
+  <span class="side-3d messenger-icon">💬</span> Messenger
+</button>
+
+<button class="sidebtn" onclick="goPage('notifications.html')">
+  <span class="side-3d notification-icon">🔔</span> Notifications
+</button>
+
+<button class="sidebtn" onclick="goPage('settings.html')">
+  <span class="side-3d settings-icon">⚙️</span> Settings
+</button>
+
+<button class="sidebtn" onclick="goPage('events.html')">
+  <span class="side-3d events-icon">🎟️</span> Events
+</button>
+
+<button class="sidebtn" onclick="goPage('search.html')">
+  <span class="side-3d search-icon">🔍</span> Search
+</button>
+
+<button class="sidebtn" onclick="goPage('referrals.html')">
+  <span class="side-3d referrals-icon">🔗</span> Referrals
+</button>
+
+<button class="sidebtn" onclick="goPage('insights.html')">
+  <span class="side-3d insights-icon">📈</span> Insights
+</button>
+="sidebtn" onclick="goPage('insights.html')">📊 Insights</button>
 
 </aside>-- =========================  
      FEED  
