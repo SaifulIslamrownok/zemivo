@@ -1132,7 +1132,160 @@ button{
   }  
   
 }  
-  
+  /* =========================================
+   ZEMIVO SHARED GLOBAL DESIGN FOUNDATION
+   Responsive + Interactive 3D
+========================================= */
+
+:root{
+  --z-bg:linear-gradient(135deg,#eef4ff,#f5f0ff,#eafaff);
+  --z-glass:rgba(255,255,255,.82);
+  --z-3d-shadow:0 12px 28px rgba(30,64,175,.12);
+  --z-3d-border:1px solid rgba(255,255,255,.85);
+}
+
+body{
+  background:var(--z-bg);
+  background-attachment:fixed;
+}
+
+.panel,
+.card,
+.sheet,
+.draft-sheet,
+.menu{
+  border:var(--z-3d-border);
+  box-shadow:var(--z-3d-shadow);
+  transition:transform .22s ease,box-shadow .22s ease;
+}
+
+.card,
+.panel{
+  transform-style:preserve-3d;
+}
+
+button,
+input,
+textarea,
+select{
+  transition:
+    transform .18s ease,
+    box-shadow .18s ease,
+    background .18s ease;
+}
+
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible{
+  outline:3px solid rgba(24,119,242,.28);
+  outline-offset:3px;
+}
+
+button:active{
+  transform:scale(.97);
+}
+
+.mind-card,
+.post,
+.right .card,
+.sidebar{
+  backdrop-filter:blur(12px);
+  -webkit-backdrop-filter:blur(12px);
+}
+
+.post{
+  border-radius:18px;
+}
+
+.post-head,
+.writer-user{
+  transform:translateZ(8px);
+}
+
+.post-actions button:hover,
+.sidebtn:hover,
+.writer-tool:hover,
+.tag-btn:hover{
+  transform:translateY(-2px);
+  box-shadow:0 5px 14px rgba(24,119,242,.12);
+}
+
+/* Global responsive safety */
+img,
+video{
+  max-width:100%;
+}
+
+.layout,
+section,
+.card,
+.post{
+  min-width:0;
+}
+
+textarea,
+input,
+select{
+  max-width:100%;
+}
+
+@media(max-width:900px){
+  .layout{
+    width:100%;
+    grid-template-columns:minmax(0,1fr);
+  }
+
+  .feed,
+  section{
+    min-width:0;
+  }
+}
+
+@media(max-width:520px){
+  body{
+    overflow-x:hidden;
+  }
+
+  .topbar{
+    padding:0 8px;
+    gap:6px;
+  }
+
+  .nav{
+    gap:1px;
+  }
+
+  .nav button{
+    min-width:34px;
+  }
+
+  .post-actions{
+    grid-template-columns:repeat(4,minmax(0,1fr));
+  }
+
+  .post-actions button{
+    min-width:0;
+    white-space:nowrap;
+  }
+
+  .sheet{
+    max-height:94dvh;
+    overflow-y:auto;
+    padding-bottom:env(safe-area-inset-bottom,12px);
+  }
+}
+
+/* Respect reduced-motion accessibility */
+@media(prefers-reduced-motion:reduce){
+  *,
+  *::before,
+  *::after{
+    scroll-behavior:auto!important;
+    transition:none!important;
+    animation:none!important;
+  }
+}
 </style>  </head>  <body>  <!-- =========================  
      TOP BAR  
 ========================= -->  <header class="topbar">    <div class="brand">Zemivo</div>  <input  
