@@ -1292,26 +1292,33 @@ select{
 id="search"  
 class="search"  
 placeholder="Search Zemivo">
+<nav class="nav">
 
-  <nav class="nav">  <button onclick="goHome()">⌂</button>  
-<button onclick="showToast('Reels')">▣</button>  
-<button onclick="showToast('Friends')">♧</button>  
-<button onclick="showToast('Marketplace')">🛍</button>  
-<button onclick="showToast('Notifications')">🔔</button>  
-<button onclick="showToast('Profile')">◉</button>
+<button onclick="goHome()" title="Home">⌂</button>
+<button onclick="goPage('stories.html')" title="Stories">▣</button>
+<button onclick="goPage('friends.html')" title="Friends">♧</button>
+<button onclick="goPage('marketplace.html')" title="Marketplace">🛍</button>
+<button onclick="goPage('notifications.html')" title="Notifications">🔔</button>
+<button onclick="goPage('profile.html')" title="Profile">◉</button>
 
-  </nav>  </header>  <main class="layout">  <!-- =========================  
+</nav>  </header>  <main class="layout">  <!-- =========================  
      LEFT  
-========================= -->  <aside class="sidebar panel">  <button class="sidebtn" onclick="goHome()">🏠 Home</button>
-<button class="sidebtn" onclick="showToast('Friends')">👥 Friends</button>
-<button class="sidebtn" onclick="showToast('Groups')">👨‍👩‍👧 Groups</button>
-<button class="sidebtn" onclick="showToast('Saved')">🔖 Saved</button>
-<button class="sidebtn" onclick="showToast('Marketplace')">🛍️ Marketplace</button>
-<button class="sidebtn" onclick="showToast('Messenger')">💬 Messenger</button>
-<button class="sidebtn" onclick="showToast('Notifications')">🔔 Notifications</button>
-<button class="sidebtn" onclick="showToast('Settings')">⚙️ Settings</button>
+========================= -- <aside class="sidebar panel">
 
-</aside>  <!-- =========================  
+<button class="sidebtn" onclick="goHome()">🏠 Home</button>
+<button class="sidebtn" onclick="goPage('friends.html')">👥 Friends</button>
+<button class="sidebtn" onclick="goPage('groups.html')">👨‍👩‍👧 Groups</button>
+<button class="sidebtn" onclick="goPage('saved.html')">🔖 Saved</button>
+<button class="sidebtn" onclick="goPage('marketplace.html')">🛍️ Marketplace</button>
+<button class="sidebtn" onclick="goPage('messenger.html')">💬 Messenger</button>
+<button class="sidebtn" onclick="goPage('notifications.html')">🔔 Notifications</button>
+<button class="sidebtn" onclick="goPage('settings.html')">⚙️ Settings</button>
+<button class="sidebtn" onclick="goPage('events.html')">📅 Events</button>
+<button class="sidebtn" onclick="goPage('search.html')">🔎 Search</button>
+<button class="sidebtn" onclick="goPage('referrals.html')">🔗 Referrals</button>
+<button class="sidebtn" onclick="goPage('insights.html')">📊 Insights</button>
+
+</aside>-- =========================  
      FEED  
 ========================= -->  <section>    <div class="mind-card card">  <div class="mind-row">  
 
@@ -2111,7 +2118,36 @@ function goHome(){
   });  
   
 }  
-  
+ /* =====================================================
+   PAGE NAVIGATION
+===================================================== */
+
+function goPage(page){
+
+  const allowedPages = [
+    "stories.html",
+    "friends.html",
+    "marketplace.html",
+    "notifications.html",
+    "profile.html",
+    "groups.html",
+    "saved.html",
+    "messenger.html",
+    "settings.html",
+    "events.html",
+    "search.html",
+    "referrals.html",
+    "insights.html"
+  ];
+
+  if(!allowedPages.includes(page)){
+    showToast("Page not available");
+    return;
+  }
+
+  window.location.href = page;
+
+} 
   
 /* =====================================================  
    COMPOSER  
