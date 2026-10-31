@@ -3,4955 +3,778 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+<meta name="theme-color" content="#071c35">
 <title>Zemivo Feed</title>
 
 <style>
-*{
-  box-sizing:border-box;
+:root{
+  --bg:#071c35;
+  --blue:#38bdf8;
+  --cyan:#67e8f9;
+  --purple:#8b5cf6;
+  --text:#f8fbff;
+  --muted:#b8c8dc;
+  --glass:rgba(255,255,255,.09);
+  --border:rgba(255,255,255,.15);
 }
-
+*{box-sizing:border-box}
 body{
-  margin:0;
-  font-family:Arial,Helvetica,sans-serif;
-  background:#f0f2f5;
-  color:#17202a;
+  margin:0;min-height:100vh;color:var(--text);
+  font-family:Arial,sans-serif;
+  background:
+  radial-gradient(circle at 10% 10%,rgba(56,189,248,.23),transparent 30%),
+  radial-gradient(circle at 90% 20%,rgba(139,92,246,.24),transparent 32%),
+  linear-gradient(145deg,#071c35,#102b55,#111044);
+  background-attachment:fixed;
 }
-
-button,
-input,
-textarea,
-select{
-  font-family:inherit;
-}
-
-button{
-  cursor:pointer;
-}
-
+button,input,textarea,select{font:inherit}
+button{cursor:pointer}
+a{color:var(--cyan)}
 .topbar{
-  position:sticky;
-  top:0;
-  z-index:100;
-  height:62px;
-  background:#fff;
-  border-bottom:1px solid #ddd;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  padding:0 18px;
+  position:sticky;top:0;z-index:20;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:13px max(14px,calc((100% - 1180px)/2));
+  background:rgba(5,18,39,.88);
+  border-bottom:1px solid var(--border);
+  backdrop-filter:blur(18px);
 }
-
-.logo{
-  color:#2563eb;
-  font-size:28px;
-  font-weight:800;
+.brand{
+  font-size:25px;font-weight:900;letter-spacing:2px;
+  background:linear-gradient(90deg,#fff,var(--cyan),#a78bfa);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
 }
-
-.top-actions{
-  display:flex;
-  gap:8px;
+.top-actions{display:flex;gap:8px}
+.top-btn{
+  padding:9px 12px;border:1px solid var(--border);
+  border-radius:12px;background:var(--glass);
+  color:white;text-decoration:none;font-size:12px;
 }
-
-.icon-btn{
-  width:42px;
-  height:42px;
-  border:0;
-  border-radius:50%;
-  background:#f0f2f5;
-  font-size:19px;
-}
-
 .page{
-  width:100%;
-  max-width:760px;
-  margin:22px auto;
-  padding:0 12px;
+  width:min(1180px,calc(100% - 24px));
+  margin:24px auto 50px;
+  display:grid;grid-template-columns:220px minmax(0,1fr) 220px;
+  gap:17px;align-items:start;
 }
-
-/* COMPOSER */
-
-.composer{
-  background:#fff;
-  border-radius:16px;
-  padding:16px;
-  box-shadow:0 2px 8px rgba(0,0,0,.08);
+.panel,.card{
+  background:var(--glass);
+  border:1px solid var(--border);
+  border-radius:21px;
+  box-shadow:0 18px 50px rgba(0,0,0,.25);
+  backdrop-filter:blur(18px);
 }
-
-.composer-top{
-  display:flex;
-  gap:12px;
-  align-items:flex-start;
+.panel{padding:16px;position:sticky;top:80px}
+.panel h3{font-size:13px;color:var(--cyan);margin:0 0 13px}
+.nav-link{
+  display:flex;gap:10px;align-items:center;
+  padding:11px;border-radius:12px;
+  text-decoration:none;color:#eaf4ff;font-size:13px;
 }
-
+.nav-link:hover{background:rgba(56,189,248,.15)}
+.center{min-width:0}
+.welcome{margin-bottom:15px}
+.welcome h2{font-size:22px;margin:0 0 5px}
+.welcome p{font-size:13px;color:var(--muted);margin:0}
+.card{padding:16px;margin-bottom:16px;min-width:0}
+.composer-head,.post-head{display:flex;align-items:center;gap:10px}
 .avatar{
-  width:46px;
-  height:46px;
-  min-width:46px;
-  border-radius:50%;
-  background:#2563eb;
-  color:#fff;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-weight:bold;
+  width:43px;height:43px;border-radius:50%;flex-shrink:0;
+  display:grid;place-items:center;overflow:hidden;
+  color:#071c35;font-weight:900;
+  background:linear-gradient(135deg,var(--cyan),#a78bfa);
 }
-
-.composer textarea{
-  width:100%;
-  min-height:90px;
-  height:auto;
-  resize:none;
-  border:0 !important;
-  outline:0 !important;
-  box-shadow:none !important;
-  background:transparent;
-  appearance:none;
-  -webkit-appearance:none;
-  font-size:18px;
-  line-height:1.5;
-  padding:8px 4px;
-  margin:0;
-  color:#17202a;
+.avatar img{width:100%;height:100%;object-fit:cover}
+.composer-head strong,.post-person strong{font-size:14px}
+.composer-head small,.post-person small{
+  display:block;color:var(--muted);font-size:11px;margin-top:4px
 }
-
-.composer textarea:focus,
-.composer textarea:active,
-.composer textarea:hover{
-  border:0 !important;
-  outline:0 !important;
-  box-shadow:none !important;
+textarea,input,select{
+  width:100%;padding:12px;border-radius:12px;
+  border:1px solid var(--border);
+  background:rgba(2,12,29,.4);color:white;outline:none;
 }
-
-.composer textarea::placeholder{
-  color:#777;
+textarea{resize:vertical;min-height:105px;margin-top:13px}
+textarea::placeholder,input::placeholder{color:#a9bad0}
+select option{background:#102b55}
+textarea:focus,input:focus,select:focus{
+  border-color:var(--cyan);
+  box-shadow:0 0 0 3px rgba(103,232,249,.1)
 }
-
-.composer-extra{
-  display:none;
-  margin-top:12px;
-  padding-top:12px;
-  border-top:1px solid #eee;
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:9px}
+.composer-tools,.post-actions{
+  display:flex;flex-wrap:wrap;gap:7px;
+  border-top:1px solid var(--border);
+  margin-top:13px;padding-top:12px
 }
-
-.composer-extra.show{
-  display:block;
+.tool-btn,.action-btn,.secondary{
+  padding:9px 11px;border-radius:11px;
+  color:#edf8ff;background:rgba(255,255,255,.07);
+  border:1px solid var(--border);font-size:12px
 }
-
-.field{
-  margin-bottom:10px;
+.tool-btn:hover,.action-btn:hover,.secondary:hover{
+  background:rgba(56,189,248,.18)
 }
-
-.field input,
-.field select{
-  width:100%;
-  padding:11px 12px;
-  border:1px solid #ddd;
-  border-radius:10px;
-  outline:none;
-  background:#fff;
+.publish-row{display:flex;justify-content:flex-end;margin-top:12px}
+.primary{
+  border:0;border-radius:12px;padding:11px 20px;
+  color:#071c35;font-weight:800;
+  background:linear-gradient(110deg,var(--cyan),#60a5fa,#a78bfa);
+  box-shadow:0 6px 20px rgba(56,189,248,.2)
 }
-
-.media-preview{
-  display:none;
-  position:relative;
-  margin-top:10px;
-  border-radius:12px;
-  overflow:hidden;
-  background:#f3f4f6;
+.primary:hover{filter:brightness(1.1)}
+.preview{display:none;position:relative;margin-top:12px}
+.preview img,.preview video{
+  width:100%;max-height:360px;object-fit:contain;
+  border-radius:13px;background:#020817
 }
-
-.media-preview.show{
-  display:block;
+.preview button{
+  position:absolute;right:8px;top:8px;
+  border:0;border-radius:8px;padding:7px;
+  color:white;background:#991b1b
 }
-
-.media-preview img,
-.media-preview video{
-  width:100%;
-  max-height:380px;
-  object-fit:cover;
-  display:block;
-}
-
-.remove-media{
-  position:absolute;
-  top:8px;
-  right:8px;
-  width:34px;
-  height:34px;
-  border:0;
-  border-radius:50%;
-  background:rgba(0,0,0,.65);
-  color:#fff;
-  font-size:18px;
-  z-index:5;
-}
-
-.composer-tools{
-  position:relative;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  margin-top:12px;
-  padding-top:12px;
-  border-top:1px solid #eee;
-}
-
-.tool-left{
-  display:flex;
-  gap:6px;
-  align-items:center;
-}
-
-.tool{
-  border:0;
-  background:#f0f2f5;
-  border-radius:20px;
-  padding:9px 12px;
-  font-size:14px;
-}
-
-.tool:hover{
-  background:#e4e6e9;
-}
-
-.plus-btn{
-  width:42px;
-  height:42px;
-  border:0;
-  border-radius:50%;
-  background:#2563eb;
-  color:white;
-  font-size:25px;
-  font-weight:bold;
-}
-
-.media-menu{
-  display:none;
-  position:absolute;
-  left:0;
-  bottom:54px;
-  width:240px;
-  background:#fff;
-  border-radius:14px;
-  box-shadow:0 5px 22px rgba(0,0,0,.18);
-  padding:8px;
-  z-index:50;
-}
-
-.media-menu.show{
-  display:block;
-}
-
-.media-option{
-  width:100%;
-  border:0;
-  background:#fff;
-  padding:12px;
-  text-align:left;
-  border-radius:10px;
-  font-size:15px;
-}
-
-.media-option:hover{
-  background:#f0f2f5;
-}
-
-.publish-row{
-  margin-top:12px;
-  display:flex;
-  justify-content:space-between;
-  gap:10px;
-}
-
-.audience{
-  flex:1;
-  padding:11px;
-  border:1px solid #ddd;
-  border-radius:10px;
-  background:#fff;
-}
-
-.publish{
-  flex:1;
-  border:0;
-  border-radius:10px;
-  background:#2563eb;
-  color:#fff;
-  font-size:16px;
-  font-weight:bold;
-  min-height:44px;
-}
-
-.publish:disabled{
-  opacity:.6;
-  cursor:not-allowed;
-}
-
-/* ADMIN */
-
-.admin-panel{
-  display:none;
-  background:#fff;
-  border-radius:16px;
-  padding:16px;
-  margin-bottom:16px;
-  border:2px solid #2563eb;
-}
-
-.admin-panel.show{
-  display:block;
-}
-
-.admin-title{
-  font-weight:bold;
-  color:#2563eb;
-  margin-bottom:10px;
-}
-
-.admin-note{
-  font-size:13px;
-  color:#666;
-  margin-bottom:10px;
-}
-
-/* FEED */
-
-.feed{
-  margin-top:18px;
-}
-
-.post{
-  background:#fff;
-  border-radius:16px;
-  margin-bottom:18px;
-  box-shadow:0 2px 8px rgba(0,0,0,.08);
-  overflow:hidden;
-}
-
-.post-head{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  padding:15px 16px 10px;
-}
-
-.post-user{
-  display:flex;
-  align-items:center;
-  gap:10px;
-  min-width:0;
-}
-
-.post-name{
-  font-weight:bold;
-  overflow-wrap:anywhere;
-}
-
-.post-meta{
-  color:#777;
-  font-size:12px;
-  margin-top:3px;
-}
-
-.post-menu-wrap{
-  position:relative;
-}
-
-.dots{
-  width:38px;
-  height:38px;
-  border:0;
-  background:#f0f2f5;
-  border-radius:50%;
-  font-size:20px;
-}
-
-.post-menu{
-  display:none;
-  position:absolute;
-  right:0;
-  top:44px;
-  width:220px;
-  background:#fff;
-  border-radius:12px;
-  box-shadow:0 5px 22px rgba(0,0,0,.2);
-  padding:7px;
-  z-index:80;
-}
-
-.post-menu.show{
-  display:block;
-}
-
-.menu-item{
-  width:100%;
-  border:0;
-  background:#fff;
-  padding:11px;
-  border-radius:9px;
-  text-align:left;
-  font-size:14px;
-}
-
-.menu-item:hover{
-  background:#f0f2f5;
-}
-
-.menu-item.danger{
-  color:#dc2626;
-}
-
-.post-content{
-  padding:4px 16px 12px;
-  font-size:16px;
-  line-height:1.55;
-  white-space:pre-wrap;
-  overflow-wrap:anywhere;
-}
-
-.post-content .hashtag{
-  color:#2563eb;
-}
-
-.post-content .mention{
-  color:#2563eb;
-}
-
+.post-person{flex:1;min-width:0}
+.post-menu{border:0;background:none;color:white;font-size:23px}
+.post-text{white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.65;margin:14px 0}
+.post-text a{text-decoration:none}
 .post-media{
-  width:100%;
-  max-height:550px;
-  object-fit:cover;
-  display:block;
+  width:100%;max-height:500px;object-fit:contain;
+  border-radius:14px;background:#020817;margin-top:8px
 }
-
-.post-info{
-  padding:9px 16px;
-  display:flex;
-  justify-content:space-between;
-  color:#777;
-  font-size:13px;
+.post-meta{
+  display:flex;flex-wrap:wrap;gap:12px;
+  color:var(--muted);font-size:12px;margin-top:12px
 }
-
-.post-actions{
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  border-top:1px solid #eee;
-  border-bottom:1px solid #eee;
+.action-btn{flex:1;min-width:65px}
+.action-btn.active{color:var(--cyan);border-color:var(--cyan)}
+.comments{margin-top:13px;padding-top:12px;border-top:1px solid var(--border)}
+.comment-form,.reply-form{display:flex;gap:7px;margin-bottom:10px}
+.comment-form input,.reply-form input{min-width:0}
+.comment-item{
+  padding:10px;margin:8px 0;
+  background:rgba(0,0,0,.16);border-radius:12px
 }
-
-.action{
-  border:0;
-  background:#fff;
-  padding:12px 5px;
-  font-size:14px;
-  font-weight:600;
+.comment-item strong{font-size:12px}
+.comment-item p{font-size:13px;line-height:1.5;overflow-wrap:anywhere}
+.comment-tools{display:flex;gap:10px;flex-wrap:wrap}
+.comment-tools button{
+  border:0;background:none;color:var(--cyan);font-size:11px;padding:3px
 }
-
-.action:hover{
-  background:#f0f2f5;
-}
-
-.action.active{
-  color:#2563eb;
-}
-
-.action.spark{
-  color:#f59e0b;
-}
-
-/* COMMENTS */
-
-.comments{
-  padding:10px 16px 15px;
-}
-
-.comment{
-  background:#f0f2f5;
-  border-radius:12px;
-  padding:9px 11px;
-  margin-bottom:9px;
-}
-
-.comment-name{
-  font-weight:bold;
-  font-size:13px;
-}
-
-.comment-text{
-  font-size:14px;
-  margin-top:3px;
-  white-space:pre-wrap;
-  overflow-wrap:anywhere;
-}
-
-.comment-actions{
-  display:flex;
-  align-items:center;
-  flex-wrap:wrap;
-  gap:4px;
-  margin-top:6px;
-}
-
-.comment-action{
-  border:0;
-  background:transparent;
-  color:#555;
-  font-size:12px;
-  font-weight:600;
-  padding:4px 6px;
-  border-radius:7px;
-}
-
-.comment-action:hover{
-  background:#e4e6e9;
-}
-
-.comment-action.active{
-  color:#2563eb;
-}
-
-.comment-action.delete-action{
-  color:#dc2626;
-}
-
-.replies{
-  margin-top:7px;
-  margin-left:20px;
-  border-left:2px solid #d9dde3;
-  padding-left:9px;
-}
-
-.reply{
-  background:#fff;
-  border-radius:10px;
-  padding:8px 10px;
-  margin-bottom:6px;
-}
-
-.reply .comment-name{
-  font-size:12px;
-}
-
-.reply .comment-text{
-  font-size:13px;
-}
-
-.reply-form{
-  display:flex;
-  gap:6px;
-  margin-top:7px;
-}
-
-.reply-form input{
-  flex:1;
-  min-width:0;
-  border:1px solid #d9dde3;
-  outline:none;
-  border-radius:18px;
-  padding:8px 12px;
-  background:#fff;
-  font-size:13px;
-}
-
-.reply-form button{
-  border:0;
-  background:#2563eb;
-  color:#fff;
-  border-radius:18px;
-  padding:0 12px;
-  font-size:13px;
-}
-
-.comment-form{
-  display:flex;
-  gap:7px;
-  margin-top:9px;
-}
-
-.comment-form input{
-  flex:1;
-  width:100%;
-  min-width:0;
-  border:1px solid #d9dde3;
-  outline:none !important;
-  box-shadow:none !important;
-  border-radius:22px;
-  padding:10px 15px;
-  background:#fff;
-  color:#17202a;
-  font-size:14px;
-  appearance:none;
-  -webkit-appearance:none;
-}
-
-.comment-form input:focus,
-.comment-form input:active{
-  border-color:#2563eb;
-  outline:none !important;
-  box-shadow:0 0 0 2px rgba(37,99,235,.08) !important;
-}
-
-.comment-form button{
-  border:0;
-  background:#2563eb;
-  color:#fff;
-  border-radius:20px;
-  padding:0 15px;
-}
-
-.empty{
-  text-align:center;
-  color:#777;
-  padding:40px 10px;
-  background:#fff;
-  border-radius:16px;
-}
-
-.loading{
-  text-align:center;
-  padding:30px;
-  color:#777;
-}
-
-.toast{
-  position:fixed;
-  left:50%;
-  bottom:25px;
-  transform:translateX(-50%);
-  background:#111827;
-  color:#fff;
-  padding:12px 18px;
-  border-radius:10px;
-  display:none;
-  z-index:999;
-  max-width:90%;
-  text-align:center;
-}
-
-.toast.show{
-  display:block;
-}
-
-.edit-area{
-  width:100%;
-  min-height:120px;
-  border:1px solid #ddd;
-  border-radius:10px;
-  padding:12px;
-  resize:vertical;
-  outline:none;
-}
-
+.reply-list{margin-left:15px;padding-left:10px;border-left:2px solid rgba(103,232,249,.25)}
+.reply-form input{padding:8px;font-size:12px}
+.empty,.loading{text-align:center;color:var(--muted);padding:25px;font-size:13px}
+.side-stat{padding:13px 0;border-bottom:1px solid var(--border)}
+.side-stat strong{display:block;font-size:20px;color:var(--cyan)}
+.side-stat small{color:var(--muted)}
+.announcement{border-color:rgba(250,204,21,.4)}
+.announcement h3{color:#fde68a;margin-top:0}
 .modal{
-  display:none;
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,.55);
-  z-index:500;
-  align-items:center;
-  justify-content:center;
-  padding:20px;
+  display:none;position:fixed;inset:0;z-index:50;
+  background:rgba(0,0,0,.75);padding:16px;
+  align-items:center;justify-content:center
 }
-
-.modal.show{
-  display:flex;
-}
-
 .modal-box{
-  width:100%;
-  max-width:500px;
-  background:#fff;
-  border-radius:16px;
-  padding:18px;
+  width:min(520px,100%);padding:18px;
+  border-radius:18px;background:#102744;
+  border:1px solid var(--border)
 }
-
-.modal-title{
-  font-size:20px;
-  font-weight:bold;
-  margin-bottom:12px;
+.modal-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:12px}
+.toast{
+  display:none;position:fixed;bottom:20px;left:50%;
+  transform:translateX(-50%);z-index:100;
+  background:#e0f2fe;color:#082f49;padding:11px 17px;
+  border-radius:12px;font-size:13px;max-width:90%;text-align:center
 }
-
-.modal-buttons{
-  display:flex;
-  gap:8px;
-  margin-top:12px;
+.hidden{display:none!important}
+@media(max-width:900px){
+  .page{grid-template-columns:180px minmax(0,1fr)}
+  .right-panel{display:none}
 }
-
-.modal-buttons button{
-  flex:1;
-  padding:11px;
-  border:0;
-  border-radius:10px;
+@media(max-width:620px){
+  .topbar{padding:11px}
+  .brand{font-size:21px}
+  .top-btn{font-size:10px;padding:8px}
+  .page{display:block;width:calc(100% - 16px);margin:14px auto}
+  .left-panel{display:none}
+  .card{padding:13px;border-radius:17px}
+  .form-row{grid-template-columns:1fr}
+  .action-btn{font-size:11px;padding:8px 4px}
 }
-
-.cancel{
-  background:#e5e7eb;
-}
-
-.confirm{
-  background:#2563eb;
-  color:#fff;
-}
-
-@media(max-width:600px){
-
-  .page{
-    margin-top:12px;
-  }
-
-  .topbar{
-    padding:0 12px;
-  }
-
-  .logo{
-    font-size:24px;
-  }
-
-  .tool{
-    padding:8px 9px;
-  }
-
-  .post-actions{
-    font-size:13px;
-  }
-
-  .post-info{
-    gap:10px;
-  }
-
-  .replies{
-    margin-left:10px;
-  }
-
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
 }
 </style>
 </head>
 
 <body>
-
 <header class="topbar">
-
-  <div class="logo">Zemivo</div>
-
+  <div class="brand">ZEMIVO</div>
   <div class="top-actions">
-
-    <button
-      class="icon-btn"
-      type="button"
-      onclick="location.href='notifications.html'"
-    >
-      🔔
-    </button>
-
-    <button
-      class="icon-btn"
-      type="button"
-      onclick="location.href='profile.html'"
-    >
-      👤
-    </button>
-
+    <a class="top-btn" href="index.html">Home</a>
+    <a class="top-btn" href="messenger.html">Messages</a>
+    <a class="top-btn" href="notifications.html">🔔</a>
+    <a class="top-btn" href="profile.html">Profile</a>
   </div>
-
 </header>
 
-
 <main class="page">
+  <aside class="panel left-panel">
+    <h3>YOUR ZEMIVO</h3>
+    <a class="nav-link" href="index.html">🏠 Home</a>
+    <a class="nav-link" href="feed.html">📰 Feed</a>
+    <a class="nav-link" href="friends.html">👥 Friends</a>
+    <a class="nav-link" href="stories.html">⭕ Stories</a>
+    <a class="nav-link" href="groups.html">🌐 Groups</a>
+    <a class="nav-link" href="events.html">📅 Events</a>
+    <a class="nav-link" href="marketplace.html">🛍️ Marketplace</a>
+    <a class="nav-link" href="saved.html">🔖 Saved</a>
+    <a class="nav-link" href="insights.html">📊 Insights</a>
+    <a class="nav-link" href="settings.html">⚙️ Settings</a>
+  </aside>
 
-  <!-- ADMIN -->
-
-  <section
-    id="adminPanel"
-    class="admin-panel"
-  >
-
-    <div class="admin-title">
-      🛡️ Zemivo Admin Announcement
+  <section class="center">
+    <div class="welcome">
+      <h2>Your Global Feed 🌍</h2>
+      <p>Connect, create and share with the world.</p>
     </div>
 
-    <div class="admin-note">
-      This area is visible only to an account recognized as an administrator.
-    </div>
-
-    <textarea
-      id="adminText"
-      class="edit-area"
-      placeholder="Write an official Zemivo announcement..."
-    ></textarea>
-
-    <button
-      class="publish"
-      id="adminPublish"
-      type="button"
-      style="height:44px;margin-top:10px;"
-    >
-      Publish Global Announcement
-    </button>
-
-  </section>
-
-
-  <!-- POST COMPOSER -->
-
-  <section class="composer">
-
-    <div class="composer-top">
-
-      <div
-        class="avatar"
-        id="currentAvatar"
-      >
-        Z
+    <section class="card">
+      <div class="composer-head">
+        <div class="avatar" id="myAvatar">Z</div>
+        <div>
+          <strong id="myName">Loading profile...</strong>
+          <small>Share something with the world</small>
+        </div>
       </div>
 
-      <textarea
-        id="postText"
-        placeholder="What's on your mind?"
-      ></textarea>
+      <textarea id="postText" maxlength="10000" placeholder="What's happening in your world?"></textarea>
 
-    </div>
-
-
-    <div
-      id="composerExtra"
-      class="composer-extra"
-    >
-
-      <div class="field">
-
-        <input
-          id="locationInput"
-          type="text"
-          placeholder="📍 Location"
-        >
-
+      <div class="form-row">
+        <input id="postLocation" maxlength="150" placeholder="📍 Location (optional)">
+        <input id="postGroup" maxlength="100" placeholder="🌐 Group (optional)">
       </div>
-
-
-      <div class="field">
-
-        <input
-          id="groupInput"
-          type="text"
-          placeholder="👥 Group name (optional)"
-        >
-
-      </div>
-
-
-      <div class="field">
-
-        <input
-          id="productInput"
-          type="url"
-          placeholder="🔗 Product / Affiliate link (optional)"
-        >
-
-      </div>
-
-
-      <div class="field">
-
-        <select id="audienceSelect">
-
-          <option value="public">
-            🌎 Public
-          </option>
-
-          <option value="friends">
-            👥 Friends
-          </option>
-
-          <option value="private">
-            🔒 Only me
-          </option>
-
+      <div class="form-row">
+        <input id="productLink" type="url" placeholder="🔗 Product / affiliate link">
+        <select id="audience">
+          <option value="public">🌍 Public</option>
+          <option value="friends">👥 Friends</option>
+          <option value="private">🔒 Only me</option>
         </select>
-
       </div>
 
-    </div>
-
-
-    <!-- MEDIA PREVIEW -->
-
-    <div
-      id="mediaPreview"
-      class="media-preview"
-    >
-
-      <button
-        id="removeMedia"
-        class="remove-media"
-        type="button"
-      >
-        ×
-      </button>
-
-      <img
-        id="imagePreview"
-        style="display:none;"
-        alt="Selected media"
-      >
-
-      <video
-        id="videoPreview"
-        style="display:none;"
-        controls
-      ></video>
-
-    </div>
-
-
-    <!-- TOOLS -->
-
-    <div class="composer-tools">
-
-      <div class="tool-left">
-
-        <button
-          class="plus-btn"
-          id="plusButton"
-          type="button"
-        >
-          +
-        </button>
-
-        <button
-          class="tool"
-          id="detailsButton"
-          type="button"
-        >
-          ⚙ Details
-        </button>
-
+      <input id="mediaInput" type="file" accept="image/*,video/*" hidden>
+      <div class="preview" id="mediaPreview">
+        <button type="button" id="removeMedia">Remove ✕</button>
+        <img id="previewImage" alt="Selected image" class="hidden">
+        <video id="previewVideo" controls class="hidden"></video>
       </div>
 
-
-      <div
-        id="mediaMenu"
-        class="media-menu"
-      >
-
-        <button
-          class="media-option"
-          id="galleryButton"
-          type="button"
-        >
-          🖼️ Gallery / Photo
-        </button>
-
-        <button
-          class="media-option"
-          id="videoButton"
-          type="button"
-        >
-          🎥 Video
-        </button>
-
-        <button
-          class="media-option"
-          id="hashtagButton"
-          type="button"
-        >
-          # Hashtag
-        </button>
-
-        <button
-          class="media-option"
-          id="mentionButton"
-          type="button"
-        >
-          @ Mention
-        </button>
-
-        <button
-          class="media-option"
-          id="locationButton"
-          type="button"
-        >
-          📍 Location
-        </button>
-
+      <div class="composer-tools">
+        <button class="tool-btn" id="photoBtn" type="button">📷 Photo</button>
+        <button class="tool-btn" id="videoBtn" type="button">🎬 Video</button>
+        <button class="tool-btn" id="locationBtn" type="button">📍 Location</button>
+        <button class="tool-btn" id="tagBtn" type="button"># Hashtag</button>
+        <button class="tool-btn" id="mentionBtn" type="button">@ Mention</button>
       </div>
+      <div class="publish-row">
+        <button class="primary" id="publishBtn" type="button">Publish Post ✨</button>
+      </div>
+    </section>
 
-    </div>
+    <section class="card announcement hidden" id="adminPanel">
+      <h3>📢 Official Announcement</h3>
+      <textarea id="announcementText" placeholder="Write an official announcement..."></textarea>
+      <div class="publish-row">
+        <button class="primary" id="announcementBtn" type="button">Publish Announcement</button>
+      </div>
+    </section>
 
-
-    <div class="publish-row">
-
-      <select
-        id="quickAudience"
-        class="audience"
-      >
-
-        <option value="public">
-          🌎 Public
-        </option>
-
-        <option value="friends">
-          👥 Friends
-        </option>
-
-        <option value="private">
-          🔒 Only me
-        </option>
-
-      </select>
-
-
-      <button
-        id="publishButton"
-        class="publish"
-        type="button"
-      >
-        Post
-      </button>
-
-    </div>
-
+    <div id="feedList"><div class="loading">Loading your feed...</div></div>
   </section>
 
-
-  <!-- FEED -->
-
-  <section
-    id="feed"
-    class="feed"
-  >
-
-    <div class="loading">
-      Loading Zemivo feed...
-    </div>
-
-  </section>
-
+  <aside class="panel right-panel">
+    <h3>ZEMIVO OVERVIEW</h3>
+    <div class="side-stat"><strong id="postTotal">—</strong><small>Visible posts</small></div>
+    <div class="side-stat"><strong>🌍</strong><small>Global community</small></div>
+    <div class="side-stat"><strong>✨</strong><small>Create • Connect • Explore</small></div>
+  </aside>
 </main>
 
-
-<!-- FILE INPUTS -->
-
-<input
-  id="imageInput"
-  type="file"
-  accept="image/*"
-  hidden
->
-
-<input
-  id="videoInput"
-  type="file"
-  accept="video/*"
-  hidden
->
-
-
-<!-- EDIT POST MODAL -->
-
-<div
-  id="editModal"
-  class="modal"
->
-
+<div class="modal" id="editModal">
   <div class="modal-box">
-
-    <div class="modal-title">
-      Edit post
+    <h3>Edit your post</h3>
+    <textarea id="editText" maxlength="10000"></textarea>
+    <div class="modal-actions">
+      <button class="secondary" id="cancelEdit">Cancel</button>
+      <button class="primary" id="saveEdit">Save changes</button>
     </div>
-
-    <textarea
-      id="editText"
-      class="edit-area"
-      placeholder="Edit your post..."
-    ></textarea>
-
-    <div class="modal-buttons">
-
-      <button
-        id="cancelEdit"
-        class="cancel"
-        type="button"
-      >
-        Cancel
-      </button>
-
-      <button
-        id="saveEdit"
-        class="confirm"
-        type="button"
-      >
-        Save changes
-      </button>
-
-    </div>
-
   </div>
-
 </div>
-
-
-<div
-  id="toast"
-  class="toast"
-></div>
-
+<div class="toast" id="toast"></div>
 
 <script type="module">
-
-/* FIREBASE */
-
+import {initializeApp} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
+import {getAuth,onAuthStateChanged} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
 import {
-  initializeApp
-} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
-
-import {
-  getAuth,
-  onAuthStateChanged
-} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
-
-import {
-  getFirestore,
-  collection,
-  addDoc,
-  doc,
-  getDoc,
-  setDoc,
-  updateDoc,
-  deleteDoc,
-  query,
-  orderBy,
-  onSnapshot,
-  serverTimestamp,
-  increment,
-  arrayUnion,
-  arrayRemove
+ getFirestore,doc,getDoc,collection,addDoc,updateDoc,deleteDoc,
+ onSnapshot,query,orderBy,serverTimestamp,arrayUnion,arrayRemove,
+ increment,setDoc
 } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
 
-
-/* FIREBASE CONFIG */
-
-const firebaseConfig = {
-
-  apiKey:
-    "AIzaSyAxJUFBWm2fa0g3oxUWWqdfSTEAc-bRgfI",
-
-  authDomain:
-    "zemivo.firebaseapp.com",
-
-  projectId:
-    "zemivo",
-
-  storageBucket:
-    "zemivo.firebasestorage.app",
-
-  messagingSenderId:
-    "195335939691",
-
-  appId:
-    "1:195335939691:web:5fa5c62c53d0c0aefe732e",
-
-  measurementId:
-    "G-GNHH5S4H09"
-
+const firebaseConfig={
+ apiKey:"AIzaSyAxJUFBWm2fa0g3oxUWWqdfSTEAc-bRgfI",
+ authDomain:"zemivo.firebaseapp.com",
+ projectId:"zemivo",
+ storageBucket:"zemivo.firebasestorage.app",
+ messagingSenderId:"195335939691",
+ appId:"1:195335939691:web:5fa5c62c53d0c0aefe732e",
+ measurementId:"G-GNHH5S4H09"
 };
 
+const app=initializeApp(firebaseConfig);
+const auth=getAuth(app);
+const db=getFirestore(app);
 
-const app =
-  initializeApp(firebaseConfig);
+let currentUser=null;
+let currentProfile={};
+let posts=[];
+let feedUnsubscribe=null;
+let editingPostId=null;
+let selectedFile=null;
+let selectedData=null;
+let commentUnsubs=new Map();
+let replyUnsubs=new Map();
 
-const auth =
-  getAuth(app);
+const $=id=>document.getElementById(id);
 
-const db =
-  getFirestore(app);
-
-
-/* ELEMENTS */
-
-const postText =
-  document.getElementById("postText");
-
-const publishButton =
-  document.getElementById("publishButton");
-
-const feed =
-  document.getElementById("feed");
-
-const plusButton =
-  document.getElementById("plusButton");
-
-const mediaMenu =
-  document.getElementById("mediaMenu");
-
-const imageInput =
-  document.getElementById("imageInput");
-
-const videoInput =
-  document.getElementById("videoInput");
-
-const mediaPreview =
-  document.getElementById("mediaPreview");
-
-const imagePreview =
-  document.getElementById("imagePreview");
-
-const videoPreview =
-  document.getElementById("videoPreview");
-
-const removeMedia =
-  document.getElementById("removeMedia");
-
-const composerExtra =
-  document.getElementById("composerExtra");
-
-const detailsButton =
-  document.getElementById("detailsButton");
-
-const locationInput =
-  document.getElementById("locationInput");
-
-const groupInput =
-  document.getElementById("groupInput");
-
-const productInput =
-  document.getElementById("productInput");
-
-const quickAudience =
-  document.getElementById("quickAudience");
-
-const audienceSelect =
-  document.getElementById("audienceSelect");
-
-const currentAvatar =
-  document.getElementById("currentAvatar");
-
-const toast =
-  document.getElementById("toast");
-
-const editModal =
-  document.getElementById("editModal");
-
-const editText =
-  document.getElementById("editText");
-
-const cancelEdit =
-  document.getElementById("cancelEdit");
-
-const saveEdit =
-  document.getElementById("saveEdit");
-
-const adminPanel =
-  document.getElementById("adminPanel");
-
-const adminText =
-  document.getElementById("adminText");
-
-const adminPublish =
-  document.getElementById("adminPublish");
-
-
-/* STATE */
-
-let currentUser = null;
-
-let currentProfile = null;
-
-let selectedFile = null;
-
-let selectedFileType = null;
-
-let editingPostId = null;
-
-let unsubscribeFeed = null;
-
-
-/* TOAST */
-
-function showToast(text){
-
-  toast.textContent =
-    text;
-
-  toast.classList.add(
-    "show"
-  );
-
-  setTimeout(
-    function(){
-
-      toast.classList.remove(
-        "show"
-      );
-
-    },
-    3000
-  );
-
+function toast(message){
+ $("toast").textContent=message;
+ $("toast").style.display="block";
+ clearTimeout(toast.timer);
+ toast.timer=setTimeout(()=>$("toast").style.display="none",2600);
+}
+function escapeHTML(value=""){
+ return String(value).replace(/[&<>"']/g,c=>({
+  "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
+ }[c]));
+}
+function safeURL(value){
+ try{
+  const u=new URL(value);
+  return ["http:","https:"].includes(u.protocol)?u.href:"";
+ }catch{return "";}
+}
+function formatText(value=""){
+ let safe=escapeHTML(value);
+ safe=safe.replace(/(^|\s)(#[\p{L}\p{N}_]+)/gu,'$1<a href="search.html?q=$2">$2</a>');
+ safe=safe.replace(/(^|\s)(@[\p{L}\p{N}_.-]+)/gu,'$1<a href="search.html?q=$2">$2</a>');
+ return safe;
+}
+function dateText(timestamp){
+ if(!timestamp)return "Just now";
+ const d=timestamp.toDate?timestamp.toDate():new Date(timestamp);
+ return d.toLocaleString();
+}
+function initials(name="Zemivo"){
+ return escapeHTML(name.trim().charAt(0).toUpperCase()||"Z");
+}
+function avatarHTML(profile,name){
+ const url=safeURL(profile?.photoURL||profile?.avatar||"");
+ return url?`<div class="avatar"><img src="${escapeHTML(url)}" alt=""></div>`:
+ `<div class="avatar">${initials(name)}</div>`;
+}
+function mediaHTML(post){
+ if(!post.mediaData)return "";
+ if(post.mediaType==="video"){
+  return `<video class="post-media" controls preload="metadata" src="${escapeHTML(post.mediaData)}"></video>`;
+ }
+ return `<img class="post-media" loading="lazy" src="${escapeHTML(post.mediaData)}" alt="Post image">`;
 }
 
+onAuthStateChanged(auth,async user=>{
+ if(!user){location.href="login.html";return;}
+ currentUser=user;
+ try{
+  const snap=await getDoc(doc(db,"profiles",user.uid));
+  currentProfile=snap.exists()?snap.data():{};
+  const name=currentProfile.fullName||currentProfile.name||user.displayName||"Zemivo User";
+  $("myName").textContent=name;
+  $("myAvatar").textContent=initials(name);
+  const photo=safeURL(currentProfile.photoURL||currentProfile.avatar||"");
+  if(photo)$("myAvatar").innerHTML=`<img src="${escapeHTML(photo)}" alt="">`;
+  if(currentProfile.role==="admin")$("adminPanel").classList.remove("hidden");
+  startFeed();
+ }catch(error){
+  console.error(error);toast("Profile could not be loaded.");
+ }
+});
 
-/* ESCAPE */
-
-function escapeHtml(value){
-
-  if(
-    value === undefined ||
-    value === null
-  ){
-
-    return "";
-
-  }
-
-  return String(value)
-    .replaceAll("&","&amp;")
-    .replaceAll("<","&lt;")
-    .replaceAll(">","&gt;")
-    .replaceAll('"',"&quot;")
-    .replaceAll("'","&#039;");
-
+function startFeed(){
+ if(feedUnsubscribe)feedUnsubscribe();
+ const q=query(collection(db,"posts"),orderBy("createdAt","desc"));
+ feedUnsubscribe=onSnapshot(q,snapshot=>{
+  posts=snapshot.docs.map(d=>({id:d.id,...d.data()}))
+   .filter(p=>!["trash","archived"].includes(p.status));
+  renderFeed();
+ },error=>{
+  console.error(error);
+  $("feedList").innerHTML='<div class="card empty">Could not load feed. Check your connection and Firestore rules.</div>';
+ });
 }
 
-
-/* TEXT FORMAT */
-
-function formatPostText(text){
-
-  let safe =
-    escapeHtml(text);
-
-  safe =
-    safe.replace(
-      /(^|\s)(#[a-zA-Z0-9_]+)/g,
-      '$1<span class="hashtag">$2</span>'
-    );
-
-  safe =
-    safe.replace(
-      /(^|\s)(@[a-zA-Z0-9_]+)/g,
-      '$1<span class="mention">$2</span>'
-    );
-
-  return safe;
-
-}
-
-
-/* AUTH */
-
-onAuthStateChanged(
-  auth,
-  async function(user){
-
-    if(!user){
-
-      currentUser =
-        null;
-
-      feed.innerHTML = `
-        <div class="empty">
-          Please log in to use Zemivo Feed.
-        </div>
-      `;
-
-      showToast(
-        "Please log in first."
-      );
-
-      setTimeout(
-        function(){
-
-          location.href =
-            "login.html";
-
-        },
-        1500
-      );
-
-      return;
-
-    }
-
-
-    currentUser =
-      user;
-
-
-    const profileRef =
-      doc(
-        db,
-        "profiles",
-        user.uid
-      );
-
-
-    try{
-
-      const profileSnap =
-        await getDoc(
-          profileRef
-        );
-
-
-      if(
-        profileSnap.exists()
-      ){
-
-        currentProfile =
-          profileSnap.data();
-
-      }
-      else{
-
-        currentProfile = {
-
-          displayName:
-            user.displayName ||
-            "Zemivo User",
-
-          role:
-            "user"
-
-        };
-
-      }
-
-
-      const name =
-        currentProfile.displayName ||
-        user.displayName ||
-        "Zemivo User";
-
-
-      currentAvatar.textContent =
-        name
-          .charAt(0)
-          .toUpperCase();
-
-
-      if(
-        currentProfile.role ===
-        "admin"
-      ){
-
-        adminPanel.classList.add(
-          "show"
-        );
-
-      }
-
-
-    }
-    catch(error){
-
-      console.error(
-        "Profile error:",
-        error
-      );
-
-
-      currentProfile = {
-
-        displayName:
-          user.displayName ||
-          "Zemivo User",
-
-        role:
-          "user"
-
-      };
-
-
-      currentAvatar.textContent =
-        currentProfile.displayName
-          .charAt(0)
-          .toUpperCase();
-
-    }
-
-
-    startFeedListener();
-
-  }
-);
-
-
-/* FEED */
-
-function startFeedListener(){
-
-  if(
-    unsubscribeFeed
-  ){
-
-    unsubscribeFeed();
-
-    unsubscribeFeed =
-      null;
-
-  }
-
-
-  feed.innerHTML = `
-    <div class="loading">
-      Loading Zemivo feed...
+function renderFeed(){
+ $("postTotal").textContent=posts.length;
+ if(!posts.length){
+  $("feedList").innerHTML='<div class="card empty">No posts yet. Be the first to share something! ✨</div>';
+  return;
+ }
+ $("feedList").innerHTML=posts.map(post=>{
+  const name=post.authorName||"Zemivo User";
+  const liked=(post.likes||[]).includes(currentUser.uid);
+  const sparked=(post.sparkBy||[]).includes(currentUser.uid);
+  const audience={public:"🌍 Public",friends:"👥 Friends",private:"🔒 Only me"}[post.audience]||"🌍 Public";
+  const link=safeURL(post.productLink||"");
+  return `
+  <article class="card" data-post="${escapeHTML(post.id)}">
+   <div class="post-head">
+    ${avatarHTML({photoURL:post.authorPhoto},name)}
+    <div class="post-person">
+     <strong>${escapeHTML(name)}</strong>
+     <small>${escapeHTML(dateText(post.createdAt))} · ${audience}</small>
+     ${post.group?`<small>🌐 ${escapeHTML(post.group)}</small>`:""}
     </div>
-  `;
-
-
-  const postsQuery =
-    query(
-      collection(
-        db,
-        "posts"
-      ),
-      orderBy(
-        "createdAt",
-        "desc"
-      )
-    );
-
-
-  unsubscribeFeed =
-    onSnapshot(
-      postsQuery,
-
-      function(snapshot){
-
-        const posts = [];
-
-
-        snapshot.forEach(
-          function(postSnapshot){
-
-            const post =
-              postSnapshot.data();
-
-            const postId =
-              postSnapshot.id;
-
-
-            if(
-              post.status === "trash" ||
-              post.status === "archived"
-            ){
-
-              return;
-
-            }
-
-
-            posts.push({
-              id:postId,
-              data:post
-            });
-
-          }
-        );
-
-
-        if(
-          posts.length === 0
-        ){
-
-          feed.innerHTML = `
-            <div class="empty">
-              No posts yet.<br>
-              Be the first person to post on Zemivo.
-            </div>
-          `;
-
-          return;
-
-        }
-
-
-        feed.innerHTML =
-          "";
-
-
-        posts.forEach(
-          function(item){
-
-            renderPost(
-              item.id,
-              item.data
-            );
-
-          }
-        );
-
-      },
-
-      function(error){
-
-        console.error(
-          "Feed listener error:",
-          error
-        );
-
-
-        feed.innerHTML = `
-          <div class="empty">
-            <strong>
-              Zemivo Feed could not load.
-            </strong>
-            <br><br>
-            Please check Firebase Firestore permissions.
-          </div>
-        `;
-
-      }
-    );
-
+    <button class="post-menu" data-action="menu" title="Post options">⋯</button>
+   </div>
+   ${post.text?`<div class="post-text">${formatText(post.text)}</div>`:""}
+   ${mediaHTML(post)}
+   ${post.location?`<div class="post-meta">📍 ${escapeHTML(post.location)}</div>`:""}
+   ${link?`<div class="post-meta">🔗 <a href="${escapeHTML(link)}" target="_blank" rel="noopener noreferrer">View product / link</a></div>`:""}
+   <div class="post-meta">
+    <span>❤️ ${(post.likes||[]).length} likes</span>
+    <span>💬 ${post.commentCount||0} comments</span>
+    <span>✨ ${(post.sparkBy||[]).length} sparks</span>
+   </div>
+   <div class="post-actions">
+    <button class="action-btn ${liked?"active":""}" data-action="like">❤️ Like</button>
+    <button class="action-btn" data-action="comments">💬 Comment</button>
+    <button class="action-btn" data-action="share">↗ Share</button>
+    <button class="action-btn ${sparked?"active":""}" data-action="spark">✨ Spark</button>
+   </div>
+   <div class="comments hidden" id="comments-${escapeHTML(post.id)}">
+    <form class="comment-form" data-form="comment">
+     <input name="comment" maxlength="2000" placeholder="Write a comment..." required>
+     <button class="primary">Send</button>
+    </form>
+    <div class="comment-list" id="comment-list-${escapeHTML(post.id)}"></div>
+   </div>
+  </article>`;
+ }).join("");
 }
 
+async function publishPost(extra={}){
+ const text=$("postText").value.trim();
+ const locationText=$("postLocation").value.trim();
+ const group=$("postGroup").value.trim();
+ const rawLink=$("productLink").value.trim();
+ const productLink=safeURL(rawLink);
+ if(!text&&!selectedData&&!rawLink){toast("Write something or add media first.");return;}
+ if(rawLink&&!productLink){toast("Enter a valid http or https link.");return;}
+ const btn=$("publishBtn");btn.disabled=true;
+ try{
+  await addDoc(collection(db,"posts"),{
+   authorId:currentUser.uid,
+   authorName:currentProfile.fullName||currentProfile.name||currentUser.displayName||"Zemivo User",
+   authorPhoto:currentProfile.photoURL||currentProfile.avatar||"",
+   text,location:locationText,group,productLink,
+   audience:$("audience").value,
+   mediaData:selectedData||"",
+   mediaType:selectedFile?.type.startsWith("video/")?"video":"image",
+   likes:[],sparkBy:[],commentCount:0,shareCount:0,
+   status:"active",createdAt:serverTimestamp(),...extra
+  });
+  $("postText").value="";$("postLocation").value="";
+  $("postGroup").value="";$("productLink").value="";
+  clearMedia();toast("Your post has been published!");
+ }catch(error){
+  console.error(error);toast("Post could not be published. Check Firestore rules.");
+ }finally{btn.disabled=false;}
+}
+$("publishBtn").addEventListener("click",()=>publishPost());
 
-/* RENDER POST */
-
-function renderPost(
-  postId,
-  post
-){
-
-  const article =
-    document.createElement(
-      "article"
-    );
-
-
-  article.className =
-    "post";
-
-
-  const name =
-    post.displayName ||
-    "Zemivo User";
-
-
-  const initial =
-    name
-      .charAt(0)
-      .toUpperCase();
-
-
-  let created =
-    new Date();
-
-
-  if(
-    post.createdAt &&
-    typeof post.createdAt.toDate ===
-    "function"
-  ){
-
-    created =
-      post.createdAt.toDate();
-
+$("photoBtn").addEventListener("click",()=>{
+ $("mediaInput").accept="image/*";$("mediaInput").click();
+});
+$("videoBtn").addEventListener("click",()=>{
+ $("mediaInput").accept="video/*";$("mediaInput").click();
+});
+$("mediaInput").addEventListener("change",e=>{
+ const file=e.target.files?.[0];if(!file)return;
+ if(file.size>700*1024){
+  toast("For now, media must be 700 KB or smaller.");
+  e.target.value="";return;
+ }
+ selectedFile=file;
+ const reader=new FileReader();
+ reader.onload=()=>{
+  selectedData=reader.result;
+  $("mediaPreview").style.display="block";
+  $("previewImage").classList.add("hidden");
+  $("previewVideo").classList.add("hidden");
+  if(file.type.startsWith("video/")){
+   $("previewVideo").src=selectedData;
+   $("previewVideo").classList.remove("hidden");
+  }else{
+   $("previewImage").src=selectedData;
+   $("previewImage").classList.remove("hidden");
   }
+ };
+ reader.readAsDataURL(file);
+});
+function clearMedia(){
+ selectedFile=null;selectedData=null;$("mediaInput").value="";
+ $("previewImage").src="";$("previewVideo").src="";
+ $("mediaPreview").style.display="none";
+}
+$("removeMedia").addEventListener("click",clearMedia);
+$("locationBtn").addEventListener("click",()=>$("postLocation").focus());
+$("tagBtn").addEventListener("click",()=>insertAtCursor($("postText"),"#"));
+$("mentionBtn").addEventListener("click",()=>insertAtCursor($("postText"),"@"));
+function insertAtCursor(el,value){
+ const start=el.selectionStart,end=el.selectionEnd;
+ el.setRangeText(value,start,end,"end");el.focus();
+}
 
+$("announcementBtn").addEventListener("click",async()=>{
+ if(currentProfile.role!=="admin"){toast("Not authorized.");return;}
+ const text=$("announcementText").value.trim();if(!text)return;
+ try{
+  await addDoc(collection(db,"posts"),{
+   authorId:currentUser.uid,authorName:"Zemivo Official",authorPhoto:"",
+   text,audience:"public",likes:[],sparkBy:[],commentCount:0,
+   shareCount:0,status:"active",isAnnouncement:true,createdAt:serverTimestamp()
+  });
+  $("announcementText").value="";toast("Announcement published.");
+ }catch(e){console.error(e);toast("Announcement failed.");}
+});
 
-  const dateText =
-    created.toLocaleString();
-
-
-  const isOwner =
-    currentUser &&
-    post.uid ===
-    currentUser.uid;
-
-
-  const isAdmin =
-    currentProfile &&
-    currentProfile.role ===
-    "admin";
-
-
-  let menuItems = `
-
-    <button
-      class="menu-item"
-      data-action="save"
-      type="button"
-    >
-      🔖 Save post
-    </button>
-
-    <button
-      class="menu-item"
-      data-action="copy"
-      type="button"
-    >
-      🔗 Copy link
-    </button>
-
-  `;
-
-
-  if(isOwner){
-
-    menuItems += `
-
-      <button
-        class="menu-item"
-        data-action="edit"
-        type="button"
-      >
-        ✏️ Edit post
-      </button>
-
-      <button
-        class="menu-item"
-        data-action="archive"
-        type="button"
-      >
-        📦 Move to archive
-      </button>
-
-      <button
-        class="menu-item danger"
-        data-action="delete"
-        type="button"
-      >
-        🗑️ Move to trash
-      </button>
-
-    `;
-
+$("feedList").addEventListener("click",async e=>{
+ const btn=e.target.closest("[data-action]");if(!btn)return;
+ const article=btn.closest("[data-post]");if(!article)return;
+ const postId=article.dataset.post;
+ const post=posts.find(p=>p.id===postId);if(!post)return;
+ const action=btn.dataset.action;
+ try{
+  if(action==="like"){
+   const liked=(post.likes||[]).includes(currentUser.uid);
+   await updateDoc(doc(db,"posts",postId),{
+    likes:liked?arrayRemove(currentUser.uid):arrayUnion(currentUser.uid)
+   });
   }
-
-
-  if(isAdmin){
-
-    menuItems += `
-
-      <button
-        class="menu-item"
-        data-action="adminFeature"
-        type="button"
-      >
-        🛡️ Admin control
-      </button>
-
-    `;
-
+  if(action==="spark"){
+   if((post.sparkBy||[]).includes(currentUser.uid)){
+    toast("You already sent a Spark.");return;
+   }
+   await updateDoc(doc(db,"posts",postId),{sparkBy:arrayUnion(currentUser.uid)});
   }
-
-
-  let mediaHTML =
-    "";
-
-
-  if(
-    post.mediaPreview
-  ){
-
-    if(
-      post.mediaType ===
-      "video"
-    ){
-
-      mediaHTML = `
-        <video
-          class="post-media"
-          src="${escapeHtml(post.mediaPreview)}"
-          controls
-          playsinline
-        ></video>
-      `;
-
-    }
-    else{
-
-      mediaHTML = `
-        <img
-          class="post-media"
-          src="${escapeHtml(post.mediaPreview)}"
-          alt="Zemivo post"
-        >
-      `;
-
-    }
-
+  if(action==="comments"){
+   const box=$(`comments-${postId}`);
+   box.classList.toggle("hidden");
+   if(!box.classList.contains("hidden"))loadComments(postId);
+   else stopCommentListeners(postId);
   }
+  if(action==="share"){
+   const url=new URL("feed.html",location.href);url.hash=postId;
+   try{
+    if(navigator.share)await navigator.share({title:"Zemivo Post",url:url.href});
+    else{await navigator.clipboard.writeText(url.href);toast("Post link copied.");}
+    await updateDoc(doc(db,"posts",postId),{shareCount:increment(1)});
+   }catch(err){if(err.name!=="AbortError")throw err;}
+  }
+  if(action==="menu")showPostMenu(post);
+ }catch(error){console.error(error);toast("Action failed.");}
+});
 
+function showPostMenu(post){
+ const owner=post.authorId===currentUser.uid;
+ const options=owner?
+ "Post options:\n1 Save / Unsave\n2 Copy link\n3 Edit post\n4 Archive post\n5 Move to trash":
+ "Post options:\n1 Save / Unsave\n2 Copy link";
+ const choice=prompt(options);
+ if(choice==="1")savePost(post);
+ if(choice==="2"){
+  const url=new URL("feed.html",location.href);url.hash=post.id;
+  navigator.clipboard?.writeText(url.href).then(()=>toast("Link copied."));
+ }
+ if(choice==="3"&&owner)openEdit(post);
+ if(choice==="4"&&owner)changeStatus(post,"archived");
+ if(choice==="5"&&owner&&confirm("Move this post to trash?"))changeStatus(post,"trash");
+}
+async function savePost(post){
+ try{
+  const ref=doc(db,"users",currentUser.uid,"saved",post.id);
+  const snap=await getDoc(ref);
+  if(snap.exists())await deleteDoc(ref);
+  else await setDoc(ref,{postId:post.id,savedAt:serverTimestamp()});
+  toast(snap.exists()?"Removed from saved.":"Post saved.");
+ }catch(e){console.error(e);toast("Could not save post.");}
+}
+async function changeStatus(post,status){
+ try{
+  await updateDoc(doc(db,"posts",post.id),{status});
+  toast("Post updated.");
+ }catch(e){console.error(e);toast("Could not update post.");}
+}
+function openEdit(post){
+ editingPostId=post.id;$("editText").value=post.text||"";
+ $("editModal").style.display="flex";
+}
+$("cancelEdit").addEventListener("click",()=>{
+ $("editModal").style.display="none";editingPostId=null;
+});
+$("saveEdit").addEventListener("click",async()=>{
+ if(!editingPostId)return;
+ try{
+  await updateDoc(doc(db,"posts",editingPostId),{
+   text:$("editText").value.trim(),editedAt:serverTimestamp()
+  });
+  $("editModal").style.display="none";editingPostId=null;
+  toast("Post updated.");
+ }catch(e){console.error(e);toast("Edit failed.");}
+});
 
-  const productHTML =
-    post.productLink
-    ?
-    `
-      <div style="padding:10px 16px;">
-        <a
-          href="${escapeHtml(post.productLink)}"
-          target="_blank"
-          rel="noopener noreferrer"
-          style="
-            color:#2563eb;
-            font-weight:bold;
-            text-decoration:none;
-          "
-        >
-          🔗 View product / affiliate link
-        </a>
-      </div>
-    `
-    :
-    "";
-
-
-  const locationHTML =
-    post.location
-    ?
-    `
-      <div
-        style="
-          padding:0 16px 10px;
-          color:#666;
-          font-size:13px;
-        "
-      >
-        📍 ${escapeHtml(post.location)}
-      </div>
-    `
-    :
-    "";
-
-
-  const groupHTML =
-    post.group
-    ?
-    `
-      <div
-        style="
-          padding:0 16px 10px;
-          color:#2563eb;
-          font-size:13px;
-        "
-      >
-        👥 ${escapeHtml(post.group)}
-      </div>
-    `
-    :
-    "";
-
-
-  const liked =
-    Array.isArray(post.likedBy) &&
-    currentUser &&
-    post.likedBy.includes(
-      currentUser.uid
-    );
-
-
-  const likes =
-    Number(post.likes || 0);
-
-
-  const commentsCount =
-    Number(
-      post.commentsCount || 0
-    );
-
-
-  const shares =
-    Number(
-      post.shares || 0
-    );
-
-
-  const sparks =
-    Number(
-      post.sparks || 0
-    );
-
-
-  article.innerHTML = `
-
-    <div class="post-head">
-
-      <div class="post-user">
-
-        <div class="avatar">
-          ${escapeHtml(initial)}
-        </div>
-
-        <div>
-
-          <div class="post-name">
-
-            ${escapeHtml(name)}
-
-            ${
-              post.isAdminAnnouncement
-              ?
-              `
-                <span
-                  style="
-                    color:#2563eb;
-                    font-size:12px;
-                    margin-left:5px;
-                  "
-                >
-                  🛡️ Official
-                </span>
-              `
-              :
-              ""
-            }
-
-          </div>
-
-          <div class="post-meta">
-
-            ${escapeHtml(dateText)}
-
-            ·
-
-            ${escapeHtml(
-              post.audience ||
-              "public"
-            )}
-
-          </div>
-
-        </div>
-
-      </div>
-
-
-      <div class="post-menu-wrap">
-
-        <button
-          class="dots"
-          data-menu-button
-          type="button"
-        >
-          ⋯
-        </button>
-
-        <div class="post-menu">
-
-          ${menuItems}
-
-        </div>
-
-      </div>
-
+function stopCommentListeners(postId){
+ if(commentUnsubs.has(postId)){
+  commentUnsubs.get(postId)();commentUnsubs.delete(postId);
+ }
+ for(const [key,unsub] of replyUnsubs){
+  if(key.startsWith(postId+"/")){unsub();replyUnsubs.delete(key);}
+ }
+}
+function loadComments(postId){
+ if(commentUnsubs.has(postId))commentUnsubs.get(postId)();
+ const q=query(collection(db,"posts",postId,"comments"),orderBy("createdAt","asc"));
+ const unsub=onSnapshot(q,snapshot=>{
+  const list=$(`comment-list-${postId}`);if(!list)return;
+  list.innerHTML=snapshot.docs.map(d=>{
+   const c=d.data(),id=d.id;
+   const liked=(c.likes||[]).includes(currentUser.uid);
+   return `<div class="comment-item" data-comment="${escapeHTML(id)}">
+    <strong>${escapeHTML(c.authorName||"User")}</strong>
+    <p>${formatText(c.text||"")}</p>
+    <div class="comment-tools">
+     <button data-comment-action="like">${liked?"Unlike":"Like"} (${(c.likes||[]).length})</button>
+     <button data-comment-action="reply">Reply</button>
+     ${c.authorId===currentUser.uid?'<button data-comment-action="delete">Delete</button>':""}
     </div>
-
-
-    <div class="post-content">
-
-      ${formatPostText(
-        post.text || ""
-      )}
-
+    <div class="reply-list" id="replies-${escapeHTML(id)}"></div>
+    <form class="reply-form" data-form="reply">
+     <input name="reply" maxlength="1000" placeholder="Write a reply..." required>
+     <button class="secondary">Send</button>
+    </form>
+   </div>`;
+  }).join("")||'<div class="empty">No comments yet.</div>';
+  snapshot.docs.forEach(d=>loadReplies(postId,d.id));
+ },console.error);
+ commentUnsubs.set(postId,unsub);
+}
+function loadReplies(postId,commentId){
+ const key=postId+"/"+commentId;
+ if(replyUnsubs.has(key))replyUnsubs.get(key)();
+ const q=query(collection(db,"posts",postId,"comments",commentId,"replies"),orderBy("createdAt","asc"));
+ const unsub=onSnapshot(q,snapshot=>{
+  const target=$(`replies-${commentId}`);if(!target)return;
+  target.innerHTML=snapshot.docs.map(d=>{
+   const r=d.data();
+   return `<div class="comment-item" data-reply="${escapeHTML(d.id)}">
+    <strong>${escapeHTML(r.authorName||"User")}</strong>
+    <p>${formatText(r.text||"")}</p>
+    <div class="comment-tools">
+     <button data-reply-action="like">Like (${(r.likes||[]).length})</button>
+     ${r.authorId===currentUser.uid?'<button data-reply-action="delete">Delete</button>':""}
     </div>
-
-
-    ${locationHTML}
-
-    ${groupHTML}
-
-    ${mediaHTML}
-
-    ${productHTML}
-
-
-    <div class="post-info">
-
-      <span>
-        ❤️ ${likes}
-      </span>
-
-      <span>
-        💬 ${commentsCount}
-        ·
-        🔄 ${shares}
-        ·
-        ✨ ${sparks}
-      </span>
-
-    </div>
-
-
-    <div class="post-actions">
-
-      <button
-        class="action ${liked ? "active" : ""}"
-        data-action="like"
-        type="button"
-      >
-        ${
-          liked
-          ?
-          "❤️ Liked"
-          :
-          "♡ Like"
-        }
-      </button>
-
-
-      <button
-        class="action"
-        data-action="comment"
-        type="button"
-      >
-        💬 Comment
-      </button>
-
-
-      <button
-        class="action"
-        data-action="share"
-        type="button"
-      >
-        🔄 Share
-      </button>
-
-
-      <button
-        class="action spark"
-        data-action="spark"
-        type="button"
-      >
-        ✨ Spark
-      </button>
-
-    </div>
-
-
-    <div class="comments">
-
-      <div
-        class="comments-list"
-        data-comments
-      ></div>
-
-
-      <div class="comment-form">
-
-        <input
-          type="text"
-          placeholder="Write a comment..."
-          data-comment-input
-          spellcheck="false"
-          autocomplete="off"
-          autocorrect="off"
-          autocapitalize="sentences"
-        >
-
-        <button
-          data-comment-button
-          type="button"
-        >
-          Send
-        </button>
-
-      </div>
-
-    </div>
-
-  `;
-
-
-  feed.appendChild(
-    article
-  );
-
-
-  loadComments(
-    postId,
-    article
-  );
-
-
-  /* POST ACTIONS */
-
-  article.addEventListener(
-    "click",
-    async function(event){
-
-      const actionButton =
-        event.target.closest(
-          "[data-action]"
-        );
-
-
-      if(!actionButton){
-        return;
-      }
-
-
-      const action =
-        actionButton.dataset.action;
-
-
-      try{
-
-        if(
-          action === "like"
-        ){
-
-          await toggleLike(
-            postId,
-            post
-          );
-
-        }
-
-
-        if(
-          action === "share"
-        ){
-
-          await sharePost(
-            postId,
-            post
-          );
-
-        }
-
-
-        if(
-          action === "spark"
-        ){
-
-          await sparkPost(
-            postId
-          );
-
-        }
-
-
-        if(
-          action === "comment"
-        ){
-
-          const input =
-            article.querySelector(
-              "[data-comment-input]"
-            );
-
-          if(input){
-            input.focus();
-          }
-
-        }
-
-
-        if(
-          action === "save"
-        ){
-
-          await savePost(
-            postId
-          );
-
-        }
-
-
-        if(
-          action === "edit"
-        ){
-
-          if(!isOwner){
-            return;
-          }
-
-          openEditModal(
-            postId,
-            post.text || ""
-          );
-
-        }
-
-
-        if(
-          action === "delete"
-        ){
-
-          if(!isOwner){
-            return;
-          }
-
-          await moveToTrash(
-            postId
-          );
-
-        }
-
-
-        if(
-          action === "archive"
-        ){
-
-          if(!isOwner){
-            return;
-          }
-
-          await archivePost(
-            postId
-          );
-
-        }
-
-
-        if(
-          action === "copy"
-        ){
-
-          await copyPostLink(
-            postId
-          );
-
-        }
-
-
-        if(
-          action === "adminFeature"
-        ){
-
-          if(!isAdmin){
-            return;
-          }
-
-          showToast(
-            "Admin controls are ready for the secure backend phase."
-          );
-
-        }
-
-      }
-      catch(error){
-
-        console.error(
-          "Action error:",
-          error
-        );
-
-        showToast(
-          "Something went wrong."
-        );
-
-      }
-
-    }
-  );
-
-
-  /* MENU */
-
-  const menuButton =
-    article.querySelector(
-      "[data-menu-button]"
-    );
-
-
-  const postMenu =
-    article.querySelector(
-      ".post-menu"
-    );
-
-
-  if(
-    menuButton &&
-    postMenu
-  ){
-
-    menuButton.addEventListener(
-      "click",
-      function(event){
-
-        event.stopPropagation();
-
-
-        document
-          .querySelectorAll(
-            ".post-menu.show"
-          )
-          .forEach(
-            function(menu){
-
-              menu.classList.remove(
-                "show"
-              );
-
-            }
-          );
-
-
-        postMenu.classList.toggle(
-          "show"
-        );
-
-      }
-    );
-
-  }
-
-
-  /* COMMENT */
-
-  const commentButton =
-    article.querySelector(
-      "[data-comment-button]"
-    );
-
-
-  const commentInput =
-    article.querySelector(
-      "[data-comment-input]"
-    );
-
-
-  if(
-    commentButton &&
-    commentInput
-  ){
-
-    commentButton.addEventListener(
-      "click",
-      async function(){
-
-        await submitComment(
-          postId,
-          commentInput
-        );
-
-      }
-    );
-
-
-    commentInput.addEventListener(
-      "keydown",
-      async function(event){
-
-        if(
-          event.key === "Enter"
-        ){
-
-          event.preventDefault();
-
-          await submitComment(
-            postId,
-            commentInput
-          );
-
-        }
-
-      }
-    );
-
-  }
-
+   </div>`;
+  }).join("");
+ },console.error);
+ replyUnsubs.set(key,unsub);
 }
 
-
-/* CLOSE POST MENU */
-
-document.addEventListener(
-  "click",
-  function(){
-
-    document
-      .querySelectorAll(
-        ".post-menu.show"
-      )
-      .forEach(
-        function(menu){
-
-          menu.classList.remove(
-            "show"
-          );
-
-        }
-      );
-
+$("feedList").addEventListener("submit",async e=>{
+ const form=e.target.closest("form[data-form]");
+ if(!form)return;
+ e.preventDefault();
+ const article=form.closest("[data-post]");
+ const postId=article.dataset.post;
+ const input=form.querySelector("input");
+ const text=input.value.trim();if(!text)return;
+ try{
+  if(form.dataset.form==="comment"){
+   await addDoc(collection(db,"posts",postId,"comments"),{
+    authorId:currentUser.uid,
+    authorName:currentProfile.fullName||currentProfile.name||"Zemivo User",
+    text,likes:[],createdAt:serverTimestamp()
+   });
+   await updateDoc(doc(db,"posts",postId),{commentCount:increment(1)});
+  }else{
+   const commentId=form.closest("[data-comment]").dataset.comment;
+   await addDoc(collection(db,"posts",postId,"comments",commentId,"replies"),{
+    authorId:currentUser.uid,
+    authorName:currentProfile.fullName||currentProfile.name||"Zemivo User",
+    text,likes:[],createdAt:serverTimestamp()
+   });
   }
-);
+  input.value="";
+ }catch(error){console.error(error);toast("Could not send your message.");}
+});
 
-
-/* PLUS */
-
-plusButton.addEventListener(
-  "click",
-  function(event){
-
-    event.stopPropagation();
-
-    mediaMenu.classList.toggle(
-      "show"
-    );
-
+$("feedList").addEventListener("click",async e=>{
+ const commentButton=e.target.closest("[data-comment-action]");
+ const replyButton=e.target.closest("[data-reply-action]");
+ if(!commentButton&&!replyButton)return;
+ const article=e.target.closest("[data-post]");
+ const postId=article.dataset.post;
+ try{
+  if(commentButton){
+   const item=commentButton.closest("[data-comment]");
+   const commentId=item.dataset.comment;
+   const ref=doc(db,"posts",postId,"comments",commentId);
+   if(commentButton.dataset.commentAction==="like"){
+    const snap=await getDoc(ref);if(!snap.exists())return;
+    const likes=snap.data().likes||[];
+    await updateDoc(ref,{likes:likes.includes(currentUser.uid)?
+     arrayRemove(currentUser.uid):arrayUnion(currentUser.uid)});
+   }
+   if(commentButton.dataset.commentAction==="delete"){
+    if(!confirm("Delete this comment?"))return;
+    await deleteDoc(ref);
+    await updateDoc(doc(db,"posts",postId),{commentCount:increment(-1)});
+   }
+   if(commentButton.dataset.commentAction==="reply"){
+    item.querySelector('input[name="reply"]')?.focus();
+   }
   }
-);
-
-
-/* DETAILS */
-
-detailsButton.addEventListener(
-  "click",
-  function(){
-
-    composerExtra.classList.toggle(
-      "show"
-    );
-
+  if(replyButton){
+   const item=replyButton.closest("[data-reply]");
+   const commentItem=item.closest("[data-comment]");
+   const commentId=commentItem.dataset.comment;
+   const replyId=item.dataset.reply;
+   const ref=doc(db,"posts",postId,"comments",commentId,"replies",replyId);
+   if(replyButton.dataset.replyAction==="like"){
+    const snap=await getDoc(ref);if(!snap.exists())return;
+    const likes=snap.data().likes||[];
+    await updateDoc(ref,{likes:likes.includes(currentUser.uid)?
+     arrayRemove(currentUser.uid):arrayUnion(currentUser.uid)});
+   }
+   if(replyButton.dataset.replyAction==="delete"){
+    if(!confirm("Delete this reply?"))return;
+    await deleteDoc(ref);
+   }
   }
-);
-
-
-/* GALLERY */
-
-document
-  .getElementById(
-    "galleryButton"
-  )
-  .addEventListener(
-    "click",
-    function(){
-
-      imageInput.click();
-
-      mediaMenu.classList.remove(
-        "show"
-      );
-
-    }
-  );
-
-
-/* VIDEO */
-
-document
-  .getElementById(
-    "videoButton"
-  )
-  .addEventListener(
-    "click",
-    function(){
-
-      videoInput.click();
-
-      mediaMenu.classList.remove(
-        "show"
-      );
-
-    }
-  );
-
-
-/* IMAGE */
-
-imageInput.addEventListener(
-  "change",
-  function(){
-
-    const file =
-      imageInput.files[0];
-
-
-    if(!file){
-      return;
-    }
-
-
-    selectedFile =
-      file;
-
-    selectedFileType =
-      "image";
-
-
-    previewSelectedFile();
-
-  }
-);
-
-
-/* VIDEO */
-
-videoInput.addEventListener(
-  "change",
-  function(){
-
-    const file =
-      videoInput.files[0];
-
-
-    if(!file){
-      return;
-    }
-
-
-    selectedFile =
-      file;
-
-    selectedFileType =
-      "video";
-
-
-    previewSelectedFile();
-
-  }
-);
-
-
-/* PREVIEW */
-
-function previewSelectedFile(){
-
-  if(!selectedFile){
-    return;
-  }
-
-
-  const reader =
-    new FileReader();
-
-
-  reader.onload =
-    function(event){
-
-      mediaPreview.classList.add(
-        "show"
-      );
-
-
-      if(
-        selectedFileType === "image"
-      ){
-
-        imagePreview.src =
-          event.target.result;
-
-        imagePreview.style.display =
-          "block";
-
-        videoPreview.style.display =
-          "none";
-
-      }
-      else{
-
-        videoPreview.src =
-          event.target.result;
-
-        videoPreview.style.display =
-          "block";
-
-        imagePreview.style.display =
-          "none";
-
-      }
-
-    };
-
-
-  reader.onerror =
-    function(){
-
-      showToast(
-        "Could not preview this file."
-      );
-
-    };
-
-
-  reader.readAsDataURL(
-    selectedFile
-  );
-
-}
-
-
-/* REMOVE MEDIA */
-
-removeMedia.addEventListener(
-  "click",
-  function(){
-
-    selectedFile =
-      null;
-
-    selectedFileType =
-      null;
-
-    imageInput.value =
-      "";
-
-    videoInput.value =
-      "";
-
-    imagePreview.src =
-      "";
-
-    videoPreview.src =
-      "";
-
-    imagePreview.style.display =
-      "none";
-
-    videoPreview.style.display =
-      "none";
-
-    mediaPreview.classList.remove(
-      "show"
-    );
-
-  }
-);
-
-
-/* HASHTAG */
-
-document
-  .getElementById(
-    "hashtagButton"
-  )
-  .addEventListener(
-    "click",
-    function(){
-
-      insertTextAtCursor("#");
-
-      postText.focus();
-
-      mediaMenu.classList.remove(
-        "show"
-      );
-
-    }
-  );
-
-
-/* MENTION */
-
-document
-  .getElementById(
-    "mentionButton"
-  )
-  .addEventListener(
-    "click",
-    function(){
-
-      insertTextAtCursor("@");
-
-      postText.focus();
-
-      mediaMenu.classList.remove(
-        "show"
-      );
-
-    }
-  );
-
-
-/* LOCATION */
-
-document
-  .getElementById(
-    "locationButton"
-  )
-  .addEventListener(
-    "click",
-    function(){
-
-      composerExtra.classList.add(
-        "show"
-      );
-
-      locationInput.focus();
-
-      mediaMenu.classList.remove(
-        "show"
-      );
-
-    }
-  );
-
-
-/* INSERT TEXT */
-
-function insertTextAtCursor(text){
-
-  const start =
-    postText.selectionStart;
-
-  const end =
-    postText.selectionEnd;
-
-
-  const before =
-    postText.value.substring(
-      0,
-      start
-    );
-
-
-  const after =
-    postText.value.substring(
-      end
-    );
-
-
-  postText.value =
-    before +
-    text +
-    after;
-
-
-  postText.selectionStart =
-    postText.selectionEnd =
-      start + text.length;
-
-}
-
-
-/* AUDIENCE */
-
-quickAudience.addEventListener(
-  "change",
-  function(){
-
-    audienceSelect.value =
-      quickAudience.value;
-
-  }
-);
-
-
-audienceSelect.addEventListener(
-  "change",
-  function(){
-
-    quickAudience.value =
-      audienceSelect.value;
-
-  }
-);
-
-
-/* CREATE POST */
-
-publishButton.addEventListener(
-  "click",
-  async function(){
-
-    if(!currentUser){
-
-      showToast(
-        "Please log in first."
-      );
-
-      return;
-
-    }
-
-
-    const text =
-      postText.value.trim();
-
-
-    if(
-      !text &&
-      !selectedFile
-    ){
-
-      showToast(
-        "Write something or select media first."
-      );
-
-      return;
-
-    }
-
-
-    if(
-      selectedFile &&
-      selectedFile.size > 700000
-    ){
-
-      showToast(
-        "For now use a small image/video. Firebase Storage will be connected later for large media."
-      );
-
-      return;
-
-    }
-
-
-    publishButton.disabled =
-      true;
-
-    publishButton.textContent =
-      "Posting...";
-
-
-    try{
-
-      let mediaPreviewData =
-        null;
-
-
-      if(selectedFile){
-
-        mediaPreviewData =
-          await readFileAsDataURL(
-            selectedFile
-          );
-
-      }
-
-
-      const postData = {
-
-        uid:
-          currentUser.uid,
-
-        displayName:
-          currentProfile?.displayName ||
-          currentUser.displayName ||
-          "Zemivo User",
-
-        text:
-          text,
-
-        createdAt:
-          serverTimestamp(),
-
-        updatedAt:
-          serverTimestamp(),
-
-        audience:
-          quickAudience.value,
-
-        location:
-          locationInput.value.trim(),
-
-        group:
-          groupInput.value.trim(),
-
-        productLink:
-          productInput.value.trim(),
-
-        mediaType:
-          selectedFileType ||
-          null,
-
-        mediaPreview:
-          mediaPreviewData,
-
-        likes:
-          0,
-
-        commentsCount:
-          0,
-
-        shares:
-          0,
-
-        sparks:
-          0,
-
-        likedBy:
-          [],
-
-        sparkBy:
-          [],
-
-        status:
-          "published",
-
-        isAdminAnnouncement:
-          false
-
-      };
-
-
-      await addDoc(
-        collection(
-          db,
-          "posts"
-        ),
-        postData
-      );
-
-
-      clearComposer();
-
-
-      showToast(
-        "Post published successfully."
-      );
-
-    }
-    catch(error){
-
-      console.error(
-        "POST ERROR:",
-        error
-      );
-
-
-      if(
-        error.code ===
-        "permission-denied"
-      ){
-
-        showToast(
-          "Firebase permission denied. Firestore Rules need to allow logged-in users to create posts."
-        );
-
-      }
-      else{
-
-        showToast(
-          "Post could not be published."
-        );
-
-      }
-
-    }
-    finally{
-
-      publishButton.disabled =
-        false;
-
-      publishButton.textContent =
-        "Post";
-
-    }
-
-  }
-);
-
-
-/* FILE READER */
-
-function readFileAsDataURL(file){
-
-  return new Promise(
-    function(resolve,reject){
-
-      const reader =
-        new FileReader();
-
-
-      reader.onload =
-        function(){
-
-          resolve(
-            reader.result
-          );
-
-        };
-
-
-      reader.onerror =
-        function(error){
-
-          reject(error);
-
-        };
-
-
-      reader.readAsDataURL(
-        file
-      );
-
-    }
-  );
-
-}
-
-
-/* CLEAR */
-
-function clearComposer(){
-
-  postText.value =
-    "";
-
-  locationInput.value =
-    "";
-
-  groupInput.value =
-    "";
-
-  productInput.value =
-    "";
-
-  selectedFile =
-    null;
-
-  selectedFileType =
-    null;
-
-  imageInput.value =
-    "";
-
-  videoInput.value =
-    "";
-
-  imagePreview.src =
-    "";
-
-  videoPreview.src =
-    "";
-
-  imagePreview.style.display =
-    "none";
-
-  videoPreview.style.display =
-    "none";
-
-  mediaPreview.classList.remove(
-    "show"
-  );
-
-  composerExtra.classList.remove(
-    "show"
-  );
-
-}
-
-
-/* POST LIKE */
-
-async function toggleLike(
-  postId,
-  post
-){
-
-  if(!currentUser){
-    return;
-  }
-
-
-  const ref =
-    doc(
-      db,
-      "posts",
-      postId
-    );
-
-
-  const liked =
-    Array.isArray(post.likedBy) &&
-    post.likedBy.includes(
-      currentUser.uid
-    );
-
-
-  try{
-
-    if(liked){
-
-      await updateDoc(
-        ref,
-        {
-
-          likes:
-            increment(-1),
-
-          likedBy:
-            arrayRemove(
-              currentUser.uid
-            )
-
-        }
-      );
-
-    }
-    else{
-
-      await updateDoc(
-        ref,
-        {
-
-          likes:
-            increment(1),
-
-          likedBy:
-            arrayUnion(
-              currentUser.uid
-            )
-
-        }
-      );
-
-    }
-
-  }
-  catch(error){
-
-    console.error(
-      "Like error:",
-      error
-    );
-
-    showToast(
-      "Could not update reaction."
-    );
-
-  }
-
-}
-
-
-/* SPARK */
-
-async function sparkPost(postId){
-
-  if(!currentUser){
-    return;
-  }
-
-
-  try{
-
-    await updateDoc(
-      doc(
-        db,
-        "posts",
-        postId
-      ),
-      {
-
-        sparks:
-          increment(1),
-
-        sparkBy:
-          arrayUnion(
-            currentUser.uid
-          )
-
-      }
-    );
-
-
-    showToast(
-      "✨ Spark added!"
-    );
-
-  }
-  catch(error){
-
-    console.error(
-      "Spark error:",
-      error
-    );
-
-    showToast(
-      "Could not add Spark."
-    );
-
-  }
-
-}
-
-
-/* SHARE */
-
-async function sharePost(
-  postId,
-  post
-){
-
-  try{
-
-    const shareUrl =
-      location.origin +
-      location.pathname +
-      "?post=" +
-      encodeURIComponent(
-        postId
-      );
-
-
-    if(navigator.share){
-
-      await navigator.share({
-
-        title:
-          "Zemivo post",
-
-        text:
-          post.text ||
-          "Check this post on Zemivo.",
-
-        url:
-          shareUrl
-
-      });
-
-    }
-    else if(navigator.clipboard){
-
-      await navigator.clipboard.writeText(
-        shareUrl
-      );
-
-      showToast(
-        "Post link copied."
-      );
-
-    }
-
-
-    await updateDoc(
-      doc(
-        db,
-        "posts",
-        postId
-      ),
-      {
-
-        shares:
-          increment(1)
-
-      }
-    );
-
-  }
-  catch(error){
-
-    console.error(
-      "Share error:",
-      error
-    );
-
-  }
-
-}
-
-
-/* COPY LINK */
-
-async function copyPostLink(postId){
-
-  const url =
-    location.origin +
-    location.pathname +
-    "?post=" +
-    encodeURIComponent(
-      postId
-    );
-
-
-  try{
-
-    await navigator.clipboard.writeText(
-      url
-    );
-
-    showToast(
-      "Post link copied."
-    );
-
-  }
-  catch(error){
-
-    console.error(error);
-
-    showToast(
-      "Could not copy the link."
-    );
-
-  }
-
-}
-
-
-/* SAVE */
-
-async function savePost(postId){
-
-  if(!currentUser){
-    return;
-  }
-
-
-  try{
-
-    await setDoc(
-      doc(
-        db,
-        "users",
-        currentUser.uid,
-        "saved",
-        postId
-      ),
-      {
-
-        postId:
-          postId,
-
-        savedAt:
-          serverTimestamp()
-
-      }
-    );
-
-
-    showToast(
-      "Post saved."
-    );
-
-  }
-  catch(error){
-
-    console.error(
-      "Save error:",
-      error
-    );
-
-    showToast(
-      "Could not save post."
-    );
-
-  }
-
-}
-
-
-/* EDIT POST */
-
-function openEditModal(
-  postId,
-  text
-){
-
-  editingPostId =
-    postId;
-
-  editText.value =
-    text;
-
-  editModal.classList.add(
-    "show"
-  );
-
-  editText.focus();
-
-}
-
-
-cancelEdit.addEventListener(
-  "click",
-  function(){
-
-    editingPostId =
-      null;
-
-    editModal.classList.remove(
-      "show"
-    );
-
-  }
-);
-
-
-saveEdit.addEventListener(
-  "click",
-  async function(){
-
-    if(!editingPostId){
-      return;
-    }
-
-
-    const text =
-      editText.value.trim();
-
-
-    if(!text){
-
-      showToast(
-        "Post cannot be empty."
-      );
-
-      return;
-
-    }
-
-
-    try{
-
-      await updateDoc(
-        doc(
-          db,
-          "posts",
-          editingPostId
-        ),
-        {
-
-          text:
-            text,
-
-          updatedAt:
-            serverTimestamp()
-
-        }
-      );
-
-
-      editModal.classList.remove(
-        "show"
-      );
-
-
-      editingPostId =
-        null;
-
-
-      showToast(
-        "Post updated successfully."
-      );
-
-    }
-    catch(error){
-
-      console.error(
-        "Edit error:",
-        error
-      );
-
-      showToast(
-        "Could not update post."
-      );
-
-    }
-
-  }
-);
-
-
-/* TRASH */
-
-async function moveToTrash(postId){
-
-  if(!currentUser){
-    return;
-  }
-
-
-  if(
-    !confirm(
-      "Move this post to trash?"
-    )
-  ){
-
-    return;
-
-  }
-
-
-  try{
-
-    await updateDoc(
-      doc(
-        db,
-        "posts",
-        postId
-      ),
-      {
-
-        status:
-          "trash",
-
-        trashedAt:
-          serverTimestamp()
-
-      }
-    );
-
-
-    showToast(
-      "Post moved to trash."
-    );
-
-  }
-  catch(error){
-
-    console.error(
-      "Trash error:",
-      error
-    );
-
-    showToast(
-      "Could not move post to trash."
-    );
-
-  }
-
-}
-
-
-/* ARCHIVE */
-
-async function archivePost(postId){
-
-  try{
-
-    await updateDoc(
-      doc(
-        db,
-        "posts",
-        postId
-      ),
-      {
-
-        status:
-          "archived",
-
-        archivedAt:
-          serverTimestamp()
-
-      }
-    );
-
-
-    showToast(
-      "Post archived."
-    );
-
-  }
-  catch(error){
-
-    console.error(
-      "Archive error:",
-      error
-    );
-
-    showToast(
-      "Could not archive post."
-    );
-
-  }
-
-}
-
-
-/* ===========================
-   COMMENTS
-   =========================== */
-
-
-/* SUBMIT COMMENT */
-
-async function submitComment(
-  postId,
-  input
-){
-
-  if(!currentUser){
-    return;
-  }
-
-
-  const text =
-    input.value.trim();
-
-
-  if(!text){
-    return;
-  }
-
-
-  try{
-
-    await addDoc(
-      collection(
-        db,
-        "posts",
-        postId,
-        "comments"
-      ),
-      {
-
-        uid:
-          currentUser.uid,
-
-        displayName:
-          currentProfile?.displayName ||
-          currentUser.displayName ||
-          "Zemivo User",
-
-        text:
-          text,
-
-        likes:
-          0,
-
-        likedBy:
-          [],
-
-        createdAt:
-          serverTimestamp(),
-
-        updatedAt:
-          serverTimestamp()
-
-      }
-    );
-
-
-    await updateDoc(
-      doc(
-        db,
-        "posts",
-        postId
-      ),
-      {
-
-        commentsCount:
-          increment(1)
-
-      }
-    );
-
-
-    input.value =
-      "";
-
-  }
-  catch(error){
-
-    console.error(
-      "Comment error:",
-      error
-    );
-
-    showToast(
-      "Could not send comment."
-    );
-
-  }
-
-}
-
-
-/* LOAD COMMENTS */
-
-function loadComments(
-  postId,
-  article
-){
-
-  const commentsList =
-    article.querySelector(
-      "[data-comments]"
-    );
-
-
-  if(!commentsList){
-    return;
-  }
-
-
-  const commentsQuery =
-    query(
-      collection(
-        db,
-        "posts",
-        postId,
-        "comments"
-      ),
-      orderBy(
-        "createdAt",
-        "asc"
-      )
-    );
-
-
-  onSnapshot(
-    commentsQuery,
-
-    function(snapshot){
-
-      commentsList.innerHTML =
-        "";
-
-
-      snapshot.forEach(
-        function(commentSnapshot){
-
-          renderComment(
-            postId,
-            commentSnapshot.id,
-            commentSnapshot.data(),
-            commentsList
-          );
-
-        }
-      );
-
-    },
-
-    function(error){
-
-      console.error(
-        "Comment listener error:",
-        error
-      );
-
-    }
-  );
-
-}
-
-
-/* RENDER COMMENT */
-
-function renderComment(
-  postId,
-  commentId,
-  comment,
-  commentsList
-){
-
-  const div =
-    document.createElement(
-      "div"
-    );
-
-
-  div.className =
-    "comment";
-
-
-  const isOwner =
-    currentUser &&
-    comment.uid ===
-    currentUser.uid;
-
-
-  const liked =
-    Array.isArray(comment.likedBy) &&
-    currentUser &&
-    comment.likedBy.includes(
-      currentUser.uid
-    );
-
-
-  const likes =
-    Number(
-      comment.likes || 0
-    );
-
-
-  div.innerHTML = `
-
-    <div class="comment-name">
-      ${escapeHtml(
-        comment.displayName ||
-        "Zemivo User"
-      )}
-    </div>
-
-    <div
-      class="comment-text"
-      data-comment-text
-    >
-      ${formatPostText(
-        comment.text || ""
-      )}
-    </div>
-
-    <div class="comment-actions">
-
-      <button
-        class="comment-action ${liked ? "active" : ""}"
-        data-comment-action="like"
-        type="button"
-      >
-        ${liked ? "❤️ Unlike" : "♡ Like"}
-        ${likes > 0 ? "(" + likes + ")" : ""}
-      </button>
-
-      <button
-        class="comment-action"
-        data-comment-action="reply"
-        type="button"
-      >
-        ↩ Reply
-      </button>
-
-      ${
-        isOwner
-        ?
-        `
-          <button
-            class="comment-action"
-            data-comment-action="edit"
-            type="button"
-          >
-            ✏️ Edit
-          </button>
-
-          <button
-            class="comment-action delete-action"
-            data-comment-action="delete"
-            type="button"
-          >
-            🗑️ Delete
-          </button>
-        `
-        :
-        ""
-      }
-
-    </div>
-
-    <div
-      class="replies"
-      data-replies
-    ></div>
-
-    <div
-      class="reply-form"
-      data-reply-form
-      style="display:none;"
-    >
-
-      <input
-        type="text"
-        placeholder="Write a reply..."
-        data-reply-input
-        autocomplete="off"
-        autocorrect="off"
-        spellcheck="false"
-      >
-
-      <button
-        type="button"
-        data-reply-button
-      >
-        Send
-      </button>
-
-    </div>
-
-  `;
-
-
-  commentsList.appendChild(
-    div
-  );
-
-
-  loadReplies(
-    postId,
-    commentId,
-    div
-  );
-
-
-  const actionButtons =
-    div.querySelectorAll(
-      "[data-comment-action]"
-    );
-
-
-  actionButtons.forEach(
-    function(button){
-
-      button.addEventListener(
-        "click",
-        async function(){
-
-          const action =
-            button.dataset.commentAction;
-
-
-          if(
-            action === "like"
-          ){
-
-            await toggleCommentLike(
-              postId,
-              commentId,
-              comment
-            );
-
-          }
-
-
-          if(
-            action === "reply"
-          ){
-
-            const form =
-              div.querySelector(
-                "[data-reply-form]"
-              );
-
-            const input =
-              div.querySelector(
-                "[data-reply-input]"
-              );
-
-
-            if(form){
-
-              form.style.display =
-                form.style.display ===
-                "none"
-                ?
-                "flex"
-                :
-                "none";
-
-            }
-
-
-            if(
-              input &&
-              form &&
-              form.style.display === "flex"
-            ){
-
-              input.focus();
-
-            }
-
-          }
-
-
-          if(
-            action === "edit"
-          ){
-
-            if(!isOwner){
-              return;
-            }
-
-            await editComment(
-              postId,
-              commentId,
-              comment
-            );
-
-          }
-
-
-          if(
-            action === "delete"
-          ){
-
-            if(!isOwner){
-              return;
-            }
-
-            await deleteComment(
-              postId,
-              commentId
-            );
-
-          }
-
-        }
-      );
-
-    }
-  );
-
-
-  const replyButton =
-    div.querySelector(
-      "[data-reply-button]"
-    );
-
-
-  const replyInput =
-    div.querySelector(
-      "[data-reply-input]"
-    );
-
-
-  if(
-    replyButton &&
-    replyInput
-  ){
-
-    replyButton.addEventListener(
-      "click",
-      async function(){
-
-        await submitReply(
-          postId,
-          commentId,
-          replyInput
-        );
-
-      }
-    );
-
-
-    replyInput.addEventListener(
-      "keydown",
-      async function(event){
-
-        if(
-          event.key === "Enter"
-        ){
-
-          event.preventDefault();
-
-          await submitReply(
-            postId,
-            commentId,
-            replyInput
-          );
-
-        }
-
-      }
-    );
-
-  }
-
-}
-
-
-/* COMMENT LIKE / UNLIKE */
-
-async function toggleCommentLike(
-  postId,
-  commentId,
-  comment
-){
-
-  if(!currentUser){
-    return;
-  }
-
-
-  const ref =
-    doc(
-      db,
-      "posts",
-      postId,
-      "comments",
-      commentId
-    );
-
-
-  const liked =
-    Array.isArray(comment.likedBy) &&
-    comment.likedBy.includes(
-      currentUser.uid
-    );
-
-
-  try{
-
-    if(liked){
-
-      await updateDoc(
-        ref,
-        {
-
-          likes:
-            increment(-1),
-
-          likedBy:
-            arrayRemove(
-              currentUser.uid
-            )
-
-        }
-      );
-
-    }
-    else{
-
-      await updateDoc(
-        ref,
-        {
-
-          likes:
-            increment(1),
-
-          likedBy:
-            arrayUnion(
-              currentUser.uid
-            )
-
-        }
-      );
-
-    }
-
-  }
-  catch(error){
-
-    console.error(
-      "Comment like error:",
-      error
-    );
-
-    showToast(
-      "Could not update comment reaction."
-    );
-
-  }
-
-}
-
-
-/* EDIT COMMENT */
-
-async function editComment(
-  postId,
-  commentId,
-  comment
-){
-
-  const newText =
-    prompt(
-      "Edit your comment:",
-      comment.text || ""
-    );
-
-
-  if(
-    newText === null
-  ){
-
-    return;
-
-  }
-
-
-  const text =
-    newText.trim();
-
-
-  if(!text){
-
-    showToast(
-      "Comment cannot be empty."
-    );
-
-    return;
-
-  }
-
-
-  try{
-
-    await updateDoc(
-      doc(
-        db,
-        "posts",
-        postId,
-        "comments",
-        commentId
-      ),
-      {
-
-        text:
-          text,
-
-        updatedAt:
-          serverTimestamp()
-
-      }
-    );
-
-
-    showToast(
-      "Comment updated."
-    );
-
-  }
-  catch(error){
-
-    console.error(
-      "Edit comment error:",
-      error
-    );
-
-    showToast(
-      "Could not edit comment."
-    );
-
-  }
-
-}
-
-
-/* DELETE COMMENT */
-
-async function deleteComment(
-  postId,
-  commentId
-){
-
-  if(
-    !confirm(
-      "Delete this comment?"
-    )
-  ){
-
-    return;
-
-  }
-
-
-  try{
-
-    await deleteDoc(
-      doc(
-        db,
-        "posts",
-        postId,
-        "comments",
-        commentId
-      )
-    );
-
-
-    await updateDoc(
-      doc(
-        db,
-        "posts",
-        postId
-      ),
-      {
-
-        commentsCount:
-          increment(-1)
-
-      }
-    );
-
-
-    showToast(
-      "Comment deleted."
-    );
-
-  }
-  catch(error){
-
-    console.error(
-      "Delete comment error:",
-      error
-    );
-
-    showToast(
-      "Could not delete comment."
-    );
-
-  }
-
-}
-
-
-/* ===========================
-   REPLIES
-   =========================== */
-
-
-/* SUBMIT REPLY */
-
-async function submitReply(
-  postId,
-  commentId,
-  input
-){
-
-  if(!currentUser){
-    return;
-  }
-
-
-  const text =
-    input.value.trim();
-
-
-  if(!text){
-    return;
-  }
-
-
-  try{
-
-    await addDoc(
-      collection(
-        db,
-        "posts",
-        postId,
-        "comments",
-        commentId,
-        "replies"
-      ),
-      {
-
-        uid:
-          currentUser.uid,
-
-        displayName:
-          currentProfile?.displayName ||
-          currentUser.displayName ||
-          "Zemivo User",
-
-        text:
-          text,
-
-        likes:
-          0,
-
-        likedBy:
-          [],
-
-        createdAt:
-          serverTimestamp(),
-
-        updatedAt:
-          serverTimestamp()
-
-      }
-    );
-
-
-    input.value =
-      "";
-
-  }
-  catch(error){
-
-    console.error(
-      "Reply error:",
-      error
-    );
-
-    showToast(
-      "Could not send reply."
-    );
-
-  }
-
-}
-
-
-/* LOAD REPLIES */
-
-function loadReplies(
-  postId,
-  commentId,
-  commentElement
-){
-
-  const repliesContainer =
-    commentElement.querySelector(
-      "[data-replies]"
-    );
-
-
-  if(!repliesContainer){
-    return;
-  }
-
-
-  const repliesQuery =
-    query(
-      collection(
-        db,
-        "posts",
-        postId,
-        "comments",
-        commentId,
-        "replies"
-      ),
-      orderBy(
-        "createdAt",
-        "asc"
-      )
-    );
-
-
-  onSnapshot(
-    repliesQuery,
-
-    function(snapshot){
-
-      repliesContainer.innerHTML =
-        "";
-
-
-      snapshot.forEach(
-        function(replySnapshot){
-
-          renderReply(
-            postId,
-            commentId,
-            replySnapshot.id,
-            replySnapshot.data(),
-            repliesContainer
-          );
-
-        }
-      );
-
-    },
-
-    function(error){
-
-      console.error(
-        "Reply listener error:",
-        error
-      );
-
-    }
-  );
-
-}
-
-
-/* RENDER REPLY */
-
-function renderReply(
-  postId,
-  commentId,
-  replyId,
-  reply,
-  repliesContainer
-){
-
-  const div =
-    document.createElement(
-      "div"
-    );
-
-
-  div.className =
-    "reply";
-
-
-  const isOwner =
-    currentUser &&
-    reply.uid ===
-    currentUser.uid;
-
-
-  const liked =
-    Array.isArray(reply.likedBy) &&
-    currentUser &&
-    reply.likedBy.includes(
-      currentUser.uid
-    );
-
-
-  const likes =
-    Number(
-      reply.likes || 0
-    );
-
-
-  div.innerHTML = `
-
-    <div class="comment-name">
-      ${escapeHtml(
-        reply.displayName ||
-        "Zemivo User"
-      )}
-    </div>
-
-    <div
-      class="comment-text"
-      data-reply-text
-    >
-      ${formatPostText(
-        reply.text || ""
-      )}
-    </div>
-
-    <div class="comment-actions">
-
-      <button
-        class="comment-action ${liked ? "active" : ""}"
-        data-reply-action="like"
-        type="button"
-      >
-        ${liked ? "❤️ Unlike" : "♡ Like"}
-        ${likes > 0 ? "(" + likes + ")" : ""}
-      </button>
-
-      ${
-        isOwner
-        ?
-        `
-          <button
-            class="comment-action"
-            data-reply-action="edit"
-            type="button"
-          >
-            ✏️ Edit
-          </button>
-
-          <button
-            class="comment-action delete-action"
-            data-reply-action="delete"
-            type="button"
-          >
-            🗑️ Delete
-          </button>
-        `
-        :
-        ""
-      }
-
-    </div>
-
-  `;
-
-
-  repliesContainer.appendChild(
-    div
-  );
-
-
-  div
-    .querySelectorAll(
-      "[data-reply-action]"
-    )
-    .forEach(
-      function(button){
-
-        button.addEventListener(
-          "click",
-          async function(){
-
-            const action =
-              button.dataset.replyAction;
-
-
-            if(
-              action === "like"
-            ){
-
-              await toggleReplyLike(
-                postId,
-                commentId,
-                replyId,
-                reply
-              );
-
-            }
-
-
-            if(
-              action === "edit"
-            ){
-
-              if(!isOwner){
-                return;
-              }
-
-              await editReply(
-                postId,
-                commentId,
-                replyId,
-                reply
-              );
-
-            }
-
-
-            if(
-              action === "delete"
-            ){
-
-              if(!isOwner){
-                return;
-              }
-
-              await deleteReply(
-                postId,
-                commentId,
-                replyId
-              );
-
-            }
-
-          }
-        );
-
-      }
-    );
-
-}
-
-
-/* REPLY LIKE / UNLIKE */
-
-async function toggleReplyLike(
-  postId,
-  commentId,
-  replyId,
-  reply
-){
-
-  if(!currentUser){
-    return;
-  }
-
-
-  const ref =
-    doc(
-      db,
-      "posts",
-      postId,
-      "comments",
-      commentId,
-      "replies",
-      replyId
-    );
-
-
-  const liked =
-    Array.isArray(reply.likedBy) &&
-    reply.likedBy.includes(
-      currentUser.uid
-    );
-
-
-  try{
-
-    if(liked){
-
-      await updateDoc(
-        ref,
-        {
-
-          likes:
-            increment(-1),
-
-          likedBy:
-            arrayRemove(
-              currentUser.uid
-            )
-
-        }
-      );
-
-    }
-    else{
-
-      await updateDoc(
-        ref,
-        {
-
-          likes:
-            increment(1),
-
-          likedBy:
-            arrayUnion(
-              currentUser.uid
-            )
-
-        }
-      );
-
-    }
-
-  }
-  catch(error){
-
-    console.error(
-      "Reply like error:",
-      error
-    );
-
-    showToast(
-      "Could not update reply reaction."
-    );
-
-  }
-
-}
-
-
-/* EDIT REPLY */
-
-async function editReply(
-  postId,
-  commentId,
-  replyId,
-  reply
-){
-
-  const newText =
-    prompt(
-      "Edit your reply:",
-      reply.text || ""
-    );
-
-
-  if(
-    newText === null
-  ){
-
-    return;
-
-  }
-
-
-  const text =
-    newText.trim();
-
-
-  if(!text){
-
-    showToast(
-      "Reply cannot be empty."
-    );
-
-    return;
-
-  }
-
-
-  try{
-
-    await updateDoc(
-      doc(
-        db,
-        "posts",
-        postId,
-        "comments",
-        commentId,
-        "replies",
-        replyId
-      ),
-      {
-
-        text:
-          text,
-
-        updatedAt:
-          serverTimestamp()
-
-      }
-    );
-
-
-    showToast(
-      "Reply updated."
-    );
-
-  }
-  catch(error){
-
-    console.error(
-      "Edit reply error:",
-      error
-    );
-
-    showToast(
-      "Could not edit reply."
-    );
-
-  }
-
-}
-
-
-/* DELETE REPLY */
-
-async function deleteReply(
-  postId,
-  commentId,
-  replyId
-){
-
-  if(
-    !confirm(
-      "Delete this reply?"
-    )
-  ){
-
-    return;
-
-  }
-
-
-  try{
-
-    await deleteDoc(
-      doc(
-        db,
-        "posts",
-        postId,
-        "comments",
-        commentId,
-        "replies",
-        replyId
-      )
-    );
-
-
-    showToast(
-      "Reply deleted."
-    );
-
-  }
-  catch(error){
-
-    console.error(
-      "Delete reply error:",
-      error
-    );
-
-    showToast(
-      "Could not delete reply."
-    );
-
-  }
-
-}
-
-
-/* ADMIN */
-
-adminPublish.addEventListener(
-  "click",
-  async function(){
-
-    if(
-      !currentUser ||
-      !currentProfile ||
-      currentProfile.role !== "admin"
-    ){
-
-      showToast(
-        "Administrator permission required."
-      );
-
-      return;
-
-    }
-
-
-    const text =
-      adminText.value.trim();
-
-
-    if(!text){
-
-      showToast(
-        "Write an announcement first."
-      );
-
-      return;
-
-    }
-
-
-    adminPublish.disabled =
-      true;
-
-    adminPublish.textContent =
-      "Publishing...";
-
-
-    try{
-
-      await addDoc(
-        collection(
-          db,
-          "posts"
-        ),
-        {
-
-          uid:
-            currentUser.uid,
-
-          displayName:
-            currentProfile.displayName ||
-            "Zemivo Administration",
-
-          text:
-            text,
-
-          createdAt:
-            serverTimestamp(),
-
-          updatedAt:
-            serverTimestamp(),
-
-          audience:
-            "global",
-
-          likes:
-            0,
-
-          commentsCount:
-            0,
-
-          shares:
-            0,
-
-          sparks:
-            0,
-
-          likedBy:
-            [],
-
-          sparkBy:
-            [],
-
-          status:
-            "published",
-
-          isAdminAnnouncement:
-            true
-
-        }
-      );
-
-
-      adminText.value =
-        "";
-
-
-      showToast(
-        "Official announcement published."
-      );
-
-    }
-    catch(error){
-
-      console.error(
-        "Admin post error:",
-        error
-      );
-
-      showToast(
-        "Announcement failed."
-      );
-
-    }
-    finally{
-
-      adminPublish.disabled =
-        false;
-
-      adminPublish.textContent =
-        "Publish Global Announcement";
-
-    }
-
-  }
-);
-
+ }catch(error){console.error(error);toast("Could not complete this action.");}
+});
+
+window.addEventListener("beforeunload",()=>{
+ if(feedUnsubscribe)feedUnsubscribe();
+ for(const unsub of commentUnsubs.values())unsub();
+ for(const unsub of replyUnsubs.values())unsub();
+});
 </script>
-
 </body>
 </html>
