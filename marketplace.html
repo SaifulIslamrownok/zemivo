@@ -1,1570 +1,980 @@
+
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
 <meta charset="UTF-8">
-
-<meta
-  name="viewport"
-  content="width=device-width, initial-scale=1.0"
->
-
-<title>Zemivo - Marketplace</title>
-
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#071c35">
+<meta name="description" content="Discover products and opportunities in Zemivo Marketplace.">
+<title>Zemivo | 3D Marketplace</title>
 
 <style>
-
-*{
-  box-sizing:border-box;
-  margin:0;
-  padding:0;
-}
-
 :root{
   --blue:#2563eb;
-  --blue-dark:#1d4ed8;
-  --cyan:#38bdf8;
-  --text:#17202a;
-  --muted:#64748b;
-  --glass:rgba(255,255,255,.76);
+  --blue2:#4f8df7;
+  --cyan:#67e8f9;
+  --ink:#14243b;
+  --muted:#52647b;
+  --glass:rgba(255,255,255,.24);
+  --glass-light:rgba(255,255,255,.42);
+  --glass-border:rgba(255,255,255,.68);
+  --shadow:0 20px 55px rgba(15,35,70,.14);
 }
-
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
 body{
-
   min-height:100vh;
-
-  font-family:
-    Arial,
-    Helvetica,
-    sans-serif;
-
-  color:var(--text);
-
-  background:
-
-    radial-gradient(
-      circle at 10% 10%,
-      rgba(37,99,235,.18),
-      transparent 30%
-    ),
-
-    radial-gradient(
-      circle at 90% 20%,
-      rgba(56,189,248,.15),
-      transparent 28%
-    ),
-
-    linear-gradient(
-      135deg,
-      #eef5ff,
-      #f8fafc 50%,
-      #eef6ff
-    );
-
   overflow-x:hidden;
+  isolation:isolate;
+  font-family:Arial,Helvetica,sans-serif;
+  color:var(--ink);
+  background:
+    radial-gradient(ellipse at 12% 8%,#c9e2ff 0,transparent 35%),
+    radial-gradient(ellipse at 88% 24%,#c9f3ff 0,transparent 34%),
+    radial-gradient(ellipse at 50% 95%,#d9ddff 0,transparent 40%),
+    linear-gradient(135deg,#eaf3ff,#f7fbff 50%,#eaf5ff);
+}
+button,input,select{font:inherit}
+button{cursor:pointer}
+a{-webkit-tap-highlight-color:transparent}
+
+/* ===== GLOBAL 3D BACKGROUND ===== */
+.world{
+  position:fixed;
+  inset:0;
+  z-index:0;
+  overflow:hidden;
+  pointer-events:none;
+  perspective:1000px;
+}
+.orb{
+  position:absolute;
+  border-radius:50%;
+  filter:blur(2px);
+  opacity:.8;
+  mix-blend-mode:multiply;
+  animation:orbFloat 13s ease-in-out infinite alternate;
+}
+.orb.a{
+  width:390px;height:390px;left:-140px;top:80px;
+  background:radial-gradient(circle at 35% 30%,rgba(96,165,250,.65),rgba(37,99,235,.13) 55%,transparent 72%);
+}
+.orb.b{
+  width:430px;height:430px;right:-170px;top:220px;
+  background:radial-gradient(circle at 35% 30%,rgba(103,232,249,.58),rgba(56,189,248,.13) 55%,transparent 72%);
+  animation-delay:2s;
+}
+.orb.c{
+  width:330px;height:330px;left:38%;bottom:-180px;
+  background:radial-gradient(circle,rgba(129,140,248,.35),transparent 70%);
+  animation-delay:4s;
+}
+.orb.d{
+  width:190px;height:190px;right:23%;top:4%;
+  background:radial-gradient(circle,rgba(255,255,255,.9),transparent 70%);
+  animation-delay:1s;
+}
+.world-grid{
+  position:absolute;
+  left:-20%;right:-20%;bottom:-38%;
+  height:75%;
+  opacity:.22;
+  background-image:
+    linear-gradient(rgba(37,99,235,.22) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(37,99,235,.22) 1px,transparent 1px);
+  background-size:54px 54px;
+  transform:perspective(650px) rotateX(62deg);
+  transform-origin:center top;
+  mask-image:linear-gradient(to bottom,transparent,black 35%);
+}
+@keyframes orbFloat{
+  from{transform:translate3d(0,0,0) scale(1)}
+  to{transform:translate3d(30px,-38px,35px) scale(1.08)}
 }
 
-button,
-input{
-  font-family:inherit;
-}
+/* Keep content above the background */
+.topbar,.container,.footer{position:relative;z-index:2}
 
-button{
-  cursor:pointer;
-}
-
-
-/* TOPBAR */
-
+/* ===== GLASS TOP NAVIGATION ===== */
 .topbar{
-
   position:sticky;
   top:0;
   z-index:100;
-
-  min-height:68px;
-
-  padding:
-    12px 20px;
-
+  min-height:72px;
+  padding:12px 22px;
   display:flex;
   align-items:center;
   justify-content:space-between;
-  gap:15px;
-
-  background:
-    rgba(255,255,255,.84);
-
-  backdrop-filter:
-    blur(18px);
-
-  -webkit-backdrop-filter:
-    blur(18px);
-
-  border-bottom:
-    1px solid
-    rgba(255,255,255,.8);
-
-  box-shadow:
-    0 8px 30px
-    rgba(15,23,42,.08);
-}
-
-.logo{
-
-  font-size:28px;
-
-  font-weight:900;
-
-  color:var(--blue);
-
-  letter-spacing:-1px;
-}
-
-.nav{
-
-  display:flex;
-
-  flex-wrap:wrap;
-
-  justify-content:flex-end;
-
-  gap:5px;
-}
-
-.nav a{
-
-  color:#334155;
-
-  text-decoration:none;
-
-  font-weight:bold;
-
-  font-size:13px;
-
-  padding:
-    8px 10px;
-
-  border-radius:12px;
-
-  transition:.2s;
-}
-
-.nav a:hover{
-
-  background:#e8f0ff;
-
-  color:var(--blue);
-
-}
-
-
-/* CONTAINER */
-
-.container{
-
-  width:
-    min(
-      1100px,
-      calc(100% - 30px)
-    );
-
-  margin:
-    30px auto;
-}
-
-
-/* HERO */
-
-.hero{
-
-  position:relative;
-
-  overflow:hidden;
-
-  min-height:260px;
-
-  padding:32px;
-
-  display:flex;
-
-  align-items:center;
-
-  justify-content:space-between;
-
-  gap:30px;
-
-  border:
-    1px solid
-    rgba(255,255,255,.7);
-
-  border-radius:26px;
-
-  background:
-    linear-gradient(
-      135deg,
-      rgba(255,255,255,.9),
-      rgba(239,246,255,.72)
-    );
-
-  backdrop-filter:
-    blur(20px);
-
-  -webkit-backdrop-filter:
-    blur(20px);
-
-  box-shadow:
-    0 20px 55px
-    rgba(37,99,235,.12);
-}
-
-.hero-content{
-
-  position:relative;
-
-  z-index:3;
-
-  max-width:570px;
-}
-
-.hero-badge{
-
-  display:inline-flex;
-
-  padding:
-    7px 12px;
-
-  margin-bottom:14px;
-
-  border-radius:999px;
-
-  background:
-    rgba(37,99,235,.1);
-
-  color:var(--blue);
-
-  font-size:12px;
-
-  font-weight:bold;
-}
-
-.hero h1{
-
-  color:var(--blue);
-
-  font-size:36px;
-
-  line-height:1.1;
-
-  margin-bottom:10px;
-}
-
-.hero p{
-
-  color:var(--muted);
-
-  line-height:1.6;
-
-  font-size:15px;
-}
-
-
-/* MARKETPLACE 3D WORLD */
-
-.market-world{
-
-  position:relative;
-
-  width:250px;
-  height:190px;
-
-  flex-shrink:0;
-
-  perspective:700px;
-}
-
-.market-platform{
-
-  position:absolute;
-
-  width:190px;
-  height:80px;
-
-  left:50%;
-  top:55%;
-
-  transform:
-    translate(-50%,-50%)
-    rotateX(62deg);
-
-  border-radius:50%;
-
-  background:
-    linear-gradient(
-      135deg,
-      rgba(37,99,235,.3),
-      rgba(56,189,248,.1)
-    );
-
-  border:
-    2px solid
-    rgba(37,99,235,.25);
-
-  box-shadow:
-    0 20px 40px
-    rgba(37,99,235,.18);
-
-  animation:
-    platformSpin
-    9s
-    linear
-    infinite;
-}
-
-.market-cube{
-
-  position:absolute;
-
-  width:95px;
-  height:95px;
-
-  left:50%;
-  top:45%;
-
-  transform:
-    translate(-50%,-50%)
-    rotateX(55deg)
-    rotateZ(35deg);
-
-  border-radius:22px;
-
-  background:
-    linear-gradient(
-      135deg,
-      #2563eb,
-      #38bdf8
-    );
-
-  box-shadow:
-    0 30px 60px
-    rgba(37,99,235,.35);
-
-  animation:
-    productFloat
-    5s
-    ease-in-out
-    infinite;
-}
-
-.market-item{
-
-  position:absolute;
-
-  display:flex;
-
-  align-items:center;
-
-  justify-content:center;
-
-  width:34px;
-  height:34px;
-
-  border-radius:50%;
-
-  background:
-    rgba(255,255,255,.9);
-
-  box-shadow:
-    0 8px 22px
-    rgba(37,99,235,.18);
-
-  font-size:17px;
-
-  animation:
-    itemFloat
-    4s
-    ease-in-out
-    infinite;
-}
-
-.market-item.one{
-  top:20px;
-  left:30px;
-}
-
-.market-item.two{
-  top:45px;
-  right:10px;
-  animation-delay:1s;
-}
-
-.market-item.three{
-  bottom:15px;
-  left:80px;
-  animation-delay:2s;
-}
-
-@keyframes productFloat{
-
-  0%,
-  100%{
-    transform:
-      translate(-50%,-50%)
-      rotateX(55deg)
-      rotateZ(35deg)
-      translateY(0);
-  }
-
-  50%{
-    transform:
-      translate(-50%,-50%)
-      rotateX(55deg)
-      rotateZ(35deg)
-      translateY(-12px);
-  }
-}
-
-@keyframes platformSpin{
-
-  from{
-    transform:
-      translate(-50%,-50%)
-      rotateX(62deg)
-      rotateZ(0deg);
-  }
-
-  to{
-    transform:
-      translate(-50%,-50%)
-      rotateX(62deg)
-      rotateZ(360deg);
-  }
-}
-
-@keyframes itemFloat{
-
-  0%,
-  100%{
-    transform:translateY(0);
-  }
-
-  50%{
-    transform:translateY(-9px);
-  }
-}
-
-
-/* CARD */
-
-.card{
-
-  margin-top:20px;
-
-  padding:22px;
-
-  border:
-    1px solid
-    rgba(255,255,255,.7);
-
-  border-radius:22px;
-
-  background:
-    var(--glass);
-
-  backdrop-filter:
-    blur(18px);
-
-  -webkit-backdrop-filter:
-    blur(18px);
-
-  box-shadow:
-    0 14px 40px
-    rgba(15,23,42,.07);
-}
-
-.card h2{
-
-  font-size:21px;
-
-  margin-bottom:7px;
-}
-
-.card-description{
-
-  color:var(--muted);
-
-  font-size:13px;
-
-  line-height:1.5;
-
-  margin-bottom:18px;
-}
-
-
-/* PRODUCTS */
-
-.products{
-
-  display:grid;
-
-  grid-template-columns:
-    repeat(3,1fr);
-
   gap:18px;
-
-  margin-top:20px;
+  background:rgba(255,255,255,.32);
+  border-bottom:1px solid rgba(255,255,255,.78);
+  backdrop-filter:blur(26px) saturate(180%);
+  -webkit-backdrop-filter:blur(26px) saturate(180%);
+  box-shadow:0 8px 30px rgba(15,23,42,.09),inset 0 1px 0 rgba(255,255,255,.7);
 }
-
-
-/* PRODUCT */
-
-.product{
-
-  position:relative;
-
-  overflow:hidden;
-
-  border:
-    1px solid
-    rgba(226,232,240,.9);
-
-  border-radius:20px;
-
-  background:
-    rgba(255,255,255,.72);
-
-  transition:
-    transform .25s,
-    box-shadow .25s;
+.logo{
+  color:var(--blue);
+  font-size:29px;
+  font-weight:900;
+  letter-spacing:-1.2px;
+  text-decoration:none;
+  text-shadow:0 5px 18px rgba(37,99,235,.18);
+  white-space:nowrap;
 }
-
-.product:hover{
-
-  transform:
-    translateY(-7px);
-
-  box-shadow:
-    0 20px 40px
-    rgba(37,99,235,.14);
-}
-
-
-/*
- * PRODUCT 3D STAGE
- *
- * Every published product gets
- * this independent 3D presentation
- * layer.
- */
-
-.product-stage{
-
-  position:relative;
-
-  height:190px;
-
+.nav{
   display:flex;
-
   align-items:center;
-
-  justify-content:center;
-
-  overflow:hidden;
-
-  perspective:650px;
-
-  background:
-
-    radial-gradient(
-      circle at center,
-      rgba(219,234,254,.9),
-      rgba(239,246,255,.5)
-    );
+  gap:5px;
+  overflow-x:auto;
+  scrollbar-width:none;
 }
-
-
-/* 3D PRODUCT OBJECT */
-
-.product-object{
-
-  position:relative;
-
-  width:105px;
-  height:105px;
-
-  display:flex;
-
-  align-items:center;
-
-  justify-content:center;
-
-  font-size:58px;
-
-  border-radius:28px;
-
-  background:
-    linear-gradient(
-      135deg,
-      rgba(255,255,255,.95),
-      rgba(219,234,254,.82)
-    );
-
-  border:
-    1px solid
-    rgba(255,255,255,.95);
-
-  box-shadow:
-
-    0 25px 40px
-    rgba(37,99,235,.22),
-
-    inset 0 0 25px
-    rgba(255,255,255,.8);
-
-  transform:
-    rotateX(15deg)
-    rotateY(-18deg)
-    rotateZ(3deg);
-
-  animation:
-    productObjectFloat
-    4.5s
-    ease-in-out
-    infinite;
-
-  transform-style:preserve-3d;
-}
-
-
-/* 3D depth */
-
-.product-object::before{
-
-  content:"";
-
-  position:absolute;
-
-  inset:8px;
-
-  border-radius:22px;
-
-  border:
-    1px solid
-    rgba(255,255,255,.8);
-
-  transform:
-    translateZ(12px);
-
-  pointer-events:none;
-}
-
-.product-object::after{
-
-  content:"";
-
-  position:absolute;
-
-  width:75px;
-  height:18px;
-
-  left:50%;
-  bottom:-30px;
-
-  transform:
-    translateX(-50%)
-    rotateX(65deg);
-
-  border-radius:50%;
-
-  background:
-    rgba(37,99,235,.16);
-
-  filter:
-    blur(7px);
-}
-
-
-@keyframes productObjectFloat{
-
-  0%,
-  100%{
-
-    transform:
-      rotateX(15deg)
-      rotateY(-18deg)
-      rotateZ(3deg)
-      translateY(0);
-
-  }
-
-  50%{
-
-    transform:
-      rotateX(18deg)
-      rotateY(18deg)
-      rotateZ(-2deg)
-      translateY(-8px);
-
-  }
-}
-
-
-/* PRODUCT INFO */
-
-.product-info{
-
-  padding:17px;
-}
-
-.product-info h3{
-
-  margin-bottom:7px;
-
-  font-size:17px;
-}
-
-.product-info p{
-
-  color:var(--muted);
-
+.nav::-webkit-scrollbar{display:none}
+.nav a{
+  color:#263b55;
+  text-decoration:none;
   font-size:13px;
-
-  line-height:1.45;
-
-  min-height:38px;
-}
-
-.price{
-
-  color:#16a34a;
-
-  font-size:20px;
-
   font-weight:bold;
-
-  margin:
-    10px 0;
+  padding:10px 12px;
+  border-radius:13px;
+  white-space:nowrap;
+  transition:.22s;
 }
-
-.buy-button{
-
-  width:100%;
-
-  border:0;
-
-  padding:
-    11px;
-
-  border-radius:20px;
-
+.nav a:hover{
+  background:rgba(255,255,255,.55);
+  color:var(--blue);
+  transform:translateY(-2px);
+}
+.nav a.active{
   color:white;
+  background:linear-gradient(135deg,#2563eb,#60a5fa);
+  box-shadow:0 8px 20px rgba(37,99,235,.3),inset 0 1px 1px rgba(255,255,255,.4);
+}
 
-  background:
-    linear-gradient(
-      135deg,
-      #2563eb,
-      #1d4ed8
-    );
+/* ===== PAGE CONTAINER ===== */
+.container{
+  width:min(1160px,calc(100% - 32px));
+  margin:28px auto 50px;
+}
 
+/* ===== GLASS HERO ===== */
+.hero{
+  position:relative;
+  overflow:hidden;
+  min-height:300px;
+  padding:35px;
+  display:grid;
+  grid-template-columns:1.15fr .85fr;
+  align-items:center;
+  gap:25px;
+  border:1px solid var(--glass-border);
+  border-radius:30px;
+  background:linear-gradient(135deg,rgba(255,255,255,.46),rgba(219,234,254,.19));
+  backdrop-filter:blur(28px) saturate(180%);
+  -webkit-backdrop-filter:blur(28px) saturate(180%);
+  box-shadow:var(--shadow),inset 0 1px 1px rgba(255,255,255,.9);
+}
+.hero:before,.glass-panel:before{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  background:linear-gradient(125deg,rgba(255,255,255,.35),transparent 38%,rgba(255,255,255,.06));
+}
+.hero-content{position:relative;z-index:2}
+.hero-badge{
+  display:inline-flex;
+  align-items:center;
+  padding:8px 14px;
+  margin-bottom:17px;
+  border-radius:30px;
+  color:#1d4ed8;
+  font-size:12px;
   font-weight:bold;
+  background:rgba(255,255,255,.48);
+  border:1px solid rgba(255,255,255,.8);
+  box-shadow:0 5px 16px rgba(37,99,235,.08);
+}
+.hero h1{
+  color:#173c78;
+  font-size:clamp(32px,5vw,49px);
+  line-height:1.08;
+  letter-spacing:-1.5px;
+  margin-bottom:14px;
+  text-shadow:0 4px 18px rgba(37,99,235,.12);
+}
+.hero h1 span{color:#2563eb}
+.hero p{
+  max-width:580px;
+  color:#405873;
+  font-size:15px;
+  line-height:1.75;
+}
+.hero-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}
+.primary-button,.secondary-button{
+  min-height:44px;
+  padding:11px 19px;
+  border-radius:15px;
+  font-weight:bold;
+  text-decoration:none;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  transition:.22s;
+}
+.primary-button{
+  color:white;
+  border:1px solid rgba(255,255,255,.45);
+  background:linear-gradient(135deg,#2563eb,#60a5fa);
+  box-shadow:0 9px 22px rgba(37,99,235,.25),inset 0 1px 1px rgba(255,255,255,.4);
+}
+.secondary-button{
+  color:#1d4ed8;
+  border:1px solid rgba(255,255,255,.85);
+  background:rgba(255,255,255,.42);
+  backdrop-filter:blur(15px);
+  -webkit-backdrop-filter:blur(15px);
+}
+.primary-button:hover,.secondary-button:hover{transform:translateY(-3px)}
 
-  box-shadow:
-    0 8px 18px
-    rgba(37,99,235,.18);
+/* ===== MARKETPLACE 3D SCENE ===== */
+.market-scene{
+  position:relative;
+  min-height:240px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  perspective:1000px;
+}
+.scene-ring{
+  position:absolute;
+  width:240px;height:100px;
+  border:1px solid rgba(37,99,235,.38);
+  border-radius:50%;
+  transform:rotateX(68deg) rotateZ(-15deg);
+  box-shadow:0 0 25px rgba(37,99,235,.1);
+}
+.scene-ring.r2{
+  width:200px;height:170px;
+  transform:rotateY(65deg) rotateZ(25deg);
+  border-color:rgba(56,189,248,.45);
+}
+.scene-platform{
+  position:absolute;
+  width:205px;height:85px;
+  border-radius:50%;
+  background:linear-gradient(135deg,rgba(37,99,235,.30),rgba(103,232,249,.16));
+  border:1px solid rgba(255,255,255,.85);
+  box-shadow:0 25px 45px rgba(37,99,235,.17),inset 0 2px 8px rgba(255,255,255,.8);
+  transform:rotateX(65deg) translateY(35px);
+  animation:platformPulse 5s ease-in-out infinite;
+}
+.scene-cube{
+  position:relative;
+  width:100px;height:115px;
+  border-radius:23px;
+  background:linear-gradient(140deg,#60a5fa,#2563eb 55%,#1e40af);
+  border:1px solid rgba(255,255,255,.75);
+  box-shadow:inset 8px 8px 20px rgba(255,255,255,.38),inset -10px -10px 20px rgba(15,23,42,.16),0 28px 45px rgba(37,99,235,.3);
+  transform:rotateX(12deg) rotateY(-22deg) rotateZ(-5deg);
+  animation:cubeFloat 5s ease-in-out infinite;
+}
+.scene-cube:before{
+  content:"Z";
+  position:absolute;
+  inset:0;
+  display:grid;
+  place-items:center;
+  color:rgba(255,255,255,.95);
+  font-size:66px;
+  font-weight:900;
+  text-shadow:0 5px 15px rgba(15,23,42,.2);
+  transform:translateZ(16px);
+}
+.scene-cube:after{
+  content:"";
+  position:absolute;
+  width:85px;height:20px;
+  left:8px;bottom:-25px;
+  background:rgba(37,99,235,.25);
+  filter:blur(9px);
+  border-radius:50%;
+}
+.scene-float{
+  position:absolute;
+  width:43px;height:43px;
+  display:grid;
+  place-items:center;
+  border:1px solid white;
+  border-radius:14px;
+  background:rgba(255,255,255,.62);
+  backdrop-filter:blur(12px);
+  -webkit-backdrop-filter:blur(12px);
+  box-shadow:0 12px 25px rgba(37,99,235,.17),inset 0 1px 1px white;
+  font-size:22px;
+  animation:floatItem 4s ease-in-out infinite;
+}
+.scene-float.f1{left:10%;top:25%}
+.scene-float.f2{right:9%;top:18%;animation-delay:1s}
+.scene-float.f3{right:15%;bottom:10%;animation-delay:2s}
+@keyframes cubeFloat{
+  0%,100%{transform:rotateX(12deg) rotateY(-22deg) rotateZ(-5deg) translateY(0)}
+  50%{transform:rotateX(17deg) rotateY(18deg) rotateZ(3deg) translateY(-12px)}
+}
+@keyframes floatItem{0%,100%{translate:0 0}50%{translate:0 -12px}}
+@keyframes platformPulse{0%,100%{scale:1}50%{scale:1.06}}
 
+/* ===== SEARCH + FILTER PANEL ===== */
+.glass-panel{
+  position:relative;
+  overflow:hidden;
+  margin-top:22px;
+  padding:19px;
+  border:1px solid rgba(255,255,255,.78);
+  border-radius:22px;
+  background:rgba(255,255,255,.31);
+  backdrop-filter:blur(26px) saturate(175%);
+  -webkit-backdrop-filter:blur(26px) saturate(175%);
+  box-shadow:0 12px 35px rgba(15,35,70,.09),inset 0 1px 1px white;
+}
+.toolbar{
+  position:relative;
+  z-index:1;
+  display:grid;
+  grid-template-columns:1fr 210px;
+  gap:12px;
+}
+.search-wrap{position:relative}
+.search-wrap span{
+  position:absolute;
+  left:15px;top:50%;
+  transform:translateY(-50%);
+}
+.search-wrap input,.category-select{
+  width:100%;
+  min-height:48px;
+  padding:12px 15px;
+  border:1px solid rgba(255,255,255,.85);
+  border-radius:14px;
+  outline:none;
+  color:#1e344e;
+  background:rgba(255,255,255,.43);
+  backdrop-filter:blur(16px);
+  -webkit-backdrop-filter:blur(16px);
+  box-shadow:inset 0 1px 1px white,0 5px 15px rgba(15,23,42,.04);
+}
+.search-wrap input{padding-left:43px}
+.search-wrap input::placeholder{color:#64748b}
+.search-wrap input:focus,.category-select:focus{
+  border-color:#60a5fa;
+  background:rgba(255,255,255,.68);
+  box-shadow:0 0 0 4px rgba(37,99,235,.1);
+}
+.category-select{cursor:pointer}
+.section-heading{
+  position:relative;
+  z-index:1;
+  display:flex;
+  align-items:flex-end;
+  justify-content:space-between;
+  gap:12px;
+  margin-bottom:17px;
+}
+.section-heading h2{font-size:23px;color:#18375e}
+.section-heading p{font-size:13px;color:#52647b;line-height:1.5;margin-top:5px}
+.result-count{font-size:12px;color:#52647b;white-space:nowrap}
+
+/* ===== PRODUCT GRID ===== */
+.products{
+  position:relative;
+  z-index:1;
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:19px;
+}
+.product{
+  min-width:0;
+  overflow:hidden;
+  border:1px solid rgba(255,255,255,.88);
+  border-radius:22px;
+  background:rgba(255,255,255,.30);
+  backdrop-filter:blur(22px) saturate(170%);
+  -webkit-backdrop-filter:blur(22px) saturate(170%);
+  box-shadow:0 12px 30px rgba(15,35,70,.09),inset 0 1px 1px rgba(255,255,255,.95);
+  transition:transform .28s,box-shadow .28s;
+}
+.product:hover{
+  transform:translateY(-7px);
+  box-shadow:0 22px 42px rgba(37,99,235,.15),inset 0 1px 1px white;
+}
+
+/* PRODUCT VISUAL STAGE */
+.product-stage{
+  position:relative;
+  height:220px;
+  overflow:hidden;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  perspective:850px;
+  background:
+    radial-gradient(ellipse at 50% 45%,rgba(255,255,255,.62),transparent 52%),
+    linear-gradient(145deg,rgba(219,234,254,.42),rgba(186,230,253,.18));
+  border-bottom:1px solid rgba(255,255,255,.7);
+}
+.product-stage:before{
+  content:"";
+  position:absolute;
+  width:180px;height:180px;
+  border-radius:50%;
+  background:radial-gradient(circle,rgba(255,255,255,.68),rgba(96,165,250,.09) 60%,transparent 72%);
+}
+.product-stage:after{
+  content:"";
+  position:absolute;
+  width:145px;height:28px;
+  left:50%;bottom:24px;
+  transform:translateX(-50%) rotateX(65deg);
+  border-radius:50%;
+  background:rgba(37,99,235,.22);
+  filter:blur(11px);
+}
+.product-halo{
+  position:absolute;
+  width:160px;height:65px;
+  border:1px solid rgba(37,99,235,.25);
+  border-radius:50%;
+  transform:rotateX(68deg) rotateZ(-12deg);
+}
+.product-halo:after{
+  content:"";
+  position:absolute;
+  inset:-13px;
+  border:1px solid rgba(56,189,248,.23);
+  border-radius:50%;
+}
+.product-visual{
+  position:relative;
+  z-index:2;
+  display:grid;
+  place-items:center;
+  width:140px;height:140px;
+  transform-style:preserve-3d;
+  animation:productLevitate 4.8s ease-in-out infinite;
+}
+.product-visual .emoji{
+  position:relative;
+  z-index:2;
+  font-size:88px;
+  line-height:1;
+  filter:drop-shadow(12px 20px 12px rgba(24,55,100,.25));
+  transform:rotateY(-13deg) rotateX(8deg) translateZ(22px);
+}
+.product-visual .shine{
+  position:absolute;
+  width:115px;height:115px;
+  border-radius:30px;
+  border:1px solid rgba(255,255,255,.85);
+  background:linear-gradient(135deg,rgba(255,255,255,.58),rgba(96,165,250,.10));
+  box-shadow:inset 0 1px 1px white,0 18px 35px rgba(37,99,235,.12);
+  transform:rotateX(58deg) rotateZ(35deg) translateZ(-15px);
+}
+.product-visual .orbit-dot{
+  position:absolute;
+  width:13px;height:13px;
+  right:2px;top:15px;
+  border-radius:50%;
+  background:linear-gradient(135deg,#fff,#38bdf8);
+  box-shadow:0 0 17px rgba(56,189,248,.8);
+  transform:translateZ(48px);
+}
+@keyframes productLevitate{
+  0%,100%{transform:translateY(0) rotateY(-5deg)}
+  50%{transform:translateY(-10px) rotateY(7deg)}
+}
+
+/* Product color accents */
+.product[data-color="purple"] .product-stage{background:radial-gradient(ellipse,rgba(221,214,254,.62),transparent 65%),linear-gradient(145deg,rgba(237,233,254,.5),rgba(224,231,255,.2))}
+.product[data-color="cyan"] .product-stage{background:radial-gradient(ellipse,rgba(165,243,252,.55),transparent 65%),linear-gradient(145deg,rgba(207,250,254,.5),rgba(219,234,254,.2))}
+.product[data-color="pink"] .product-stage{background:radial-gradient(ellipse,rgba(251,207,232,.55),transparent 65%),linear-gradient(145deg,rgba(252,231,243,.5),rgba(224,231,255,.2))}
+.product[data-color="green"] .product-stage{background:radial-gradient(ellipse,rgba(187,247,208,.55),transparent 65%),linear-gradient(145deg,rgba(220,252,231,.5),rgba(219,234,254,.2))}
+.product[data-color="orange"] .product-stage{background:radial-gradient(ellipse,rgba(254,215,170,.55),transparent 65%),linear-gradient(145deg,rgba(255,237,213,.5),rgba(219,234,254,.2))}
+
+.product-info{padding:17px}
+.product-category{
+  display:inline-block;
+  padding:5px 9px;
+  border-radius:20px;
+  margin-bottom:9px;
+  color:#1d4ed8;
+  background:rgba(219,234,254,.65);
+  font-size:10px;
+  font-weight:bold;
+}
+.product-info h3{font-size:17px;color:#193654;margin-bottom:7px}
+.product-info p{min-height:38px;color:#52647b;font-size:13px;line-height:1.5}
+.product-bottom{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  margin:13px 0;
+}
+.price{font-size:21px;font-weight:900;color:#137b51}
+.price small{font-size:11px;font-weight:normal;color:#64748b}
+.buy-button{
+  width:100%;
+  min-height:42px;
+  border:1px solid rgba(255,255,255,.55);
+  border-radius:13px;
+  color:white;
+  font-weight:bold;
+  background:linear-gradient(135deg,#2563eb,#60a5fa);
+  box-shadow:0 7px 18px rgba(37,99,235,.2),inset 0 1px 1px rgba(255,255,255,.35);
   transition:.2s;
 }
-
-.buy-button:hover{
-
-  transform:
-    translateY(-2px);
-
-  box-shadow:
-    0 12px 25px
-    rgba(37,99,235,.25);
-}
-
-
-/* PRODUCT STATUS */
-
+.buy-button:hover{transform:translateY(-2px);filter:brightness(1.06)}
 .product-status{
-
   display:none;
-
-  margin-top:12px;
-
-  padding:10px 13px;
-
+  margin-top:10px;
+  padding:10px 12px;
   border-radius:11px;
-
-  background:
-    rgba(37,99,235,.07);
-
-  color:#475569;
-
+  color:#38516d;
+  background:rgba(219,234,254,.58);
+  border:1px solid rgba(255,255,255,.8);
   font-size:12px;
-}
-
-.product-status.show{
-  display:block;
-}
-
-
-/* SECURITY */
-
-.security-card{
-
-  margin-top:20px;
-
-  padding:18px;
-
-  border-radius:18px;
-
-  background:
-    rgba(239,246,255,.7);
-
-  border:
-    1px solid
-    #dbeafe;
-}
-
-.security-card h3{
-
-  margin-bottom:7px;
-
-  color:var(--blue);
-}
-
-.security-card p{
-
-  color:var(--muted);
-
-  font-size:13px;
-
   line-height:1.5;
 }
+.product-status.show{display:block}
+.empty-state{
+  display:none;
+  position:relative;
+  z-index:1;
+  text-align:center;
+  padding:45px 15px;
+  color:#52647b;
+}
+.empty-state strong{display:block;color:#193654;font-size:18px;margin-bottom:6px}
 
+/* ===== SELLER / SECURITY PANEL ===== */
+.bottom-panel{
+  position:relative;
+  overflow:hidden;
+  margin-top:22px;
+  padding:22px;
+  border-radius:22px;
+  border:1px solid rgba(255,255,255,.8);
+  background:rgba(255,255,255,.31);
+  backdrop-filter:blur(25px) saturate(175%);
+  -webkit-backdrop-filter:blur(25px) saturate(175%);
+  box-shadow:0 14px 35px rgba(15,35,70,.08),inset 0 1px 1px white;
+}
+.bottom-panel h3{position:relative;z-index:1;color:#1d4ed8;margin-bottom:8px}
+.bottom-panel p{position:relative;z-index:1;color:#52647b;font-size:13px;line-height:1.7}
+.account-status{margin-top:8px}
 
 /* FOOTER */
-
 .footer{
-
+  padding:25px 15px 35px;
   text-align:center;
-
-  color:#64748b;
-
-  padding:
-    15px 20px
-    35px;
-
+  color:#52647b;
   font-size:13px;
 }
 
-
-/* MOBILE */
-
-@media(max-width:800px){
-
-  .topbar{
-
-    flex-direction:column;
-
-    align-items:flex-start;
-  }
-
-  .nav{
-
-    justify-content:flex-start;
-  }
-
-  .hero{
-
-    flex-direction:column;
-
-    align-items:flex-start;
-  }
-
-  .market-world{
-
-    align-self:center;
-  }
-
-  .products{
-
-    grid-template-columns:
-      repeat(2,1fr);
-  }
-
+/* ===== RESPONSIVE ===== */
+@media(max-width:900px){
+  .topbar{align-items:flex-start;flex-direction:column;gap:10px}
+  .nav{width:100%}
+  .hero{grid-template-columns:1fr;padding:27px}
+  .market-scene{min-height:210px}
+  .products{grid-template-columns:repeat(2,minmax(0,1fr))}
 }
-
-@media(max-width:550px){
-
-  .container{
-
-    width:
-      calc(100% - 20px);
-
-    margin-top:15px;
-  }
-
-  .hero{
-
-    padding:25px;
-  }
-
-  .hero h1{
-
-    font-size:29px;
-  }
-
-  .products{
-
-    grid-template-columns:1fr;
-  }
-
-  .nav a{
-
-    font-size:11px;
-
-    padding:
-      7px 8px;
-  }
-
+@media(max-width:580px){
+  .container{width:calc(100% - 20px);margin-top:15px}
+  .topbar{padding:12px}
+  .logo{font-size:26px}
+  .nav a{font-size:11px;padding:8px 9px}
+  .hero{padding:21px;border-radius:23px}
+  .hero h1{font-size:33px}
+  .hero p{font-size:14px}
+  .market-scene{min-height:195px}
+  .toolbar{grid-template-columns:1fr}
+  .section-heading{align-items:flex-start;flex-direction:column}
+  .products{grid-template-columns:1fr;gap:15px}
+  .product-stage{height:215px}
+  .glass-panel,.bottom-panel{padding:16px}
 }
-
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{
+    animation-duration:.01ms!important;
+    animation-iteration-count:1!important;
+    scroll-behavior:auto!important;
+    transition-duration:.01ms!important;
+  }
+}
 </style>
-
 </head>
-
 
 <body>
 
+<!-- Background remains behind the transparent glass panels -->
+<div class="world" aria-hidden="true">
+  <div class="orb a"></div>
+  <div class="orb b"></div>
+  <div class="orb c"></div>
+  <div class="orb d"></div>
+  <div class="world-grid"></div>
+</div>
 
 <header class="topbar">
+  <a class="logo" href="index.html">Zemivo</a>
 
-  <div class="logo">
-    Zemivo
-  </div>
-
-  <nav class="nav">
-
-    <a href="index.html">
-      🏠 Home
-    </a>
-
-    <a href="profile.html">
-      👤 Profile
-    </a>
-
-    <a href="friends.html">
-      👥 Friends
-    </a>
-
-    <a href="videos.html">
-      🎥 Videos
-    </a>
-
-    <a href="groups.html">
-      👥 Groups
-    </a>
-
-    <a href="pages.html">
-      📄 Pages
-    </a>
-
+  <nav class="nav" aria-label="Main navigation">
+    <a href="index.html">🏠 Home</a>
+    <a href="profile.html">👤 Profile</a>
+    <a href="friends.html">👥 Friends</a>
+    <a href="groups.html">👥 Groups</a>
+    <a href="events.html">📅 Events</a>
+    <a href="messenger.html">💬 Messenger</a>
+    <a href="notifications.html">🔔 Alerts</a>
+    <a href="marketplace.html" class="active" aria-current="page">🛒 Market</a>
+    <a href="settings.html">⚙️ Settings</a>
   </nav>
-
 </header>
 
-
-<main
-  class="container"
-  id="marketplacePage"
->
-
+<main class="container" id="marketplacePage">
 
   <!-- HERO -->
-
   <section class="hero">
-
     <div class="hero-content">
-
-      <div class="hero-badge">
-        ✦ Zemivo 3D Marketplace
-      </div>
-
-      <h1>
-        🛒 Zemivo Marketplace
-      </h1>
-
+      <div class="hero-badge">✦ ZEMIVO GLOBAL MARKETPLACE</div>
+      <h1>Discover a New <span>Shopping World</span></h1>
       <p>
-        Discover products, services and
-        opportunities from the Zemivo community.
-        Every product is designed to have its own
-        immersive 3D presentation.
+        Explore products, discover new sellers and connect with opportunities
+        across the Zemivo community. A modern marketplace experience with
+        immersive product presentations.
       </p>
-
+      <div class="hero-actions">
+        <a href="#featuredProducts" class="primary-button">Explore Products</a>
+        <button type="button" class="secondary-button" id="sellerButton">Seller Access</button>
+      </div>
     </div>
 
-
-    <!-- MARKETPLACE 3D WORLD -->
-
-    <div
-      class="market-world"
-      aria-hidden="true"
-    >
-
-      <div class="market-platform"></div>
-
-      <div class="market-cube"></div>
-
-      <div class="market-item one">
-        📱
-      </div>
-
-      <div class="market-item two">
-        🎧
-      </div>
-
-      <div class="market-item three">
-        🎮
-      </div>
-
+    <div class="market-scene" aria-hidden="true">
+      <div class="scene-ring"></div>
+      <div class="scene-ring r2"></div>
+      <div class="scene-platform"></div>
+      <div class="scene-cube"></div>
+      <div class="scene-float f1">📱</div>
+      <div class="scene-float f2">🎧</div>
+      <div class="scene-float f3">🎮</div>
     </div>
-
   </section>
 
+  <!-- SEARCH AND FILTER -->
+  <section class="glass-panel" aria-label="Product search and filters">
+    <div class="toolbar">
+      <div class="search-wrap">
+        <span aria-hidden="true">🔎</span>
+        <input id="productSearch" type="search" placeholder="Search products..." autocomplete="off" aria-label="Search products">
+      </div>
 
-  <!-- PRODUCTS -->
+      <select id="categoryFilter" class="category-select" aria-label="Filter by category">
+        <option value="all">All Categories</option>
+        <option value="electronics">Electronics</option>
+        <option value="fashion">Fashion</option>
+        <option value="gaming">Gaming</option>
+        <option value="lifestyle">Lifestyle</option>
+      </select>
+    </div>
+  </section>
 
-  <section class="card">
+  <!-- PRODUCT COLLECTION -->
+  <section class="glass-panel" id="featuredProducts">
+    <div class="section-heading">
+      <div>
+        <h2>Featured Products</h2>
+        <p>Explore the product collection in a 3D-inspired visual experience.</p>
+      </div>
+      <div class="result-count" id="resultCount">6 products</div>
+    </div>
 
-    <h2>
-      Featured Products
-    </h2>
+    <div class="products" id="products">
 
-    <p class="card-description">
+      <article class="product" data-category="electronics" data-search="smart phone mobile smartphone electronics">
+        <div class="product-stage">
+          <div class="product-halo"></div>
+          <div class="product-visual">
+            <div class="shine"></div>
+            <span class="emoji">📱</span>
+            <span class="orbit-dot"></span>
+          </div>
+        </div>
+        <div class="product-info">
+          <span class="product-category">ELECTRONICS</span>
+          <h3>Smart Phone</h3>
+          <p>Modern smartphone for everyday communication and entertainment.</p>
+          <div class="product-bottom"><div class="price">$199 <small>demo price</small></div></div>
+          <button class="buy-button" type="button" data-product="Smart Phone">View Product</button>
+          <div class="product-status" aria-live="polite"></div>
+        </div>
+      </article>
 
-      Products published by sellers will
-      use this independent 3D product
-      presentation layer.
+      <article class="product" data-category="electronics" data-color="purple" data-search="wireless headphones audio music headset">
+        <div class="product-stage">
+          <div class="product-halo"></div>
+          <div class="product-visual">
+            <div class="shine"></div>
+            <span class="emoji">🎧</span>
+            <span class="orbit-dot"></span>
+          </div>
+        </div>
+        <div class="product-info">
+          <span class="product-category">ELECTRONICS</span>
+          <h3>Wireless Headphones</h3>
+          <p>Comfortable headphones for music, calls and daily listening.</p>
+          <div class="product-bottom"><div class="price">$49 <small>demo price</small></div></div>
+          <button class="buy-button" type="button" data-product="Wireless Headphones">View Product</button>
+          <div class="product-status" aria-live="polite"></div>
+        </div>
+      </article>
 
+      <article class="product" data-category="fashion" data-color="pink" data-search="fashion collection shirt clothing apparel">
+        <div class="product-stage">
+          <div class="product-halo"></div>
+          <div class="product-visual">
+            <div class="shine"></div>
+            <span class="emoji">👕</span>
+            <span class="orbit-dot"></span>
+          </div>
+        </div>
+        <div class="product-info">
+          <span class="product-category">FASHION</span>
+          <h3>Fashion Collection</h3>
+          <p>Discover clothing and fashion products for everyday style.</p>
+          <div class="product-bottom"><div class="price">$29 <small>demo price</small></div></div>
+          <button class="buy-button" type="button" data-product="Fashion Collection">View Product</button>
+          <div class="product-status" aria-live="polite"></div>
+        </div>
+      </article>
+
+      <article class="product" data-category="electronics" data-color="cyan" data-search="laptop computer work study">
+        <div class="product-stage">
+          <div class="product-halo"></div>
+          <div class="product-visual">
+            <div class="shine"></div>
+            <span class="emoji">💻</span>
+            <span class="orbit-dot"></span>
+          </div>
+        </div>
+        <div class="product-info">
+          <span class="product-category">ELECTRONICS</span>
+          <h3>Laptop</h3>
+          <p>A computer concept for work, education and productivity.</p>
+          <div class="product-bottom"><div class="price">$599 <small>demo price</small></div></div>
+          <button class="buy-button" type="button" data-product="Laptop">View Product</button>
+          <div class="product-status" aria-live="polite"></div>
+        </div>
+      </article>
+
+      <article class="product" data-category="gaming" data-color="green" data-search="gaming accessories controller game">
+        <div class="product-stage">
+          <div class="product-halo"></div>
+          <div class="product-visual">
+            <div class="shine"></div>
+            <span class="emoji">🎮</span>
+            <span class="orbit-dot"></span>
+          </div>
+        </div>
+        <div class="product-info">
+          <span class="product-category">GAMING</span>
+          <h3>Gaming Accessories</h3>
+          <p>Gaming accessories and equipment for your setup.</p>
+          <div class="product-bottom"><div class="price">$39 <small>demo price</small></div></div>
+          <button class="buy-button" type="button" data-product="Gaming Accessories">View Product</button>
+          <div class="product-status" aria-live="polite"></div>
+        </div>
+      </article>
+
+      <article class="product" data-category="lifestyle" data-color="orange" data-search="bag accessories lifestyle fashion">
+        <div class="product-stage">
+          <div class="product-halo"></div>
+          <div class="product-visual">
+            <div class="shine"></div>
+            <span class="emoji">👜</span>
+            <span class="orbit-dot"></span>
+          </div>
+        </div>
+        <div class="product-info">
+          <span class="product-category">LIFESTYLE</span>
+          <h3>Accessories</h3>
+          <p>Useful lifestyle and fashion accessories for daily use.</p>
+          <div class="product-bottom"><div class="price">$25 <small>demo price</small></div></div>
+          <button class="buy-button" type="button" data-product="Accessories">View Product</button>
+          <div class="product-status" aria-live="polite"></div>
+        </div>
+      </article>
+
+    </div>
+
+    <div class="empty-state" id="emptyState">
+      <strong>No products found</strong>
+      Try a different search or category.
+    </div>
+  </section>
+
+  <!-- ACCOUNT / SELLER FOUNDATION -->
+  <section class="bottom-panel">
+    <h3>🔐 Zemivo Marketplace Account</h3>
+    <p id="accountStatus" class="account-status">Checking your Zemivo account...</p>
+    <p>
+      Seller publishing, real product listings, inventory, checkout, payments,
+      affiliate providers and order tracking require the protected Marketplace
+      backend and matching database security rules.
     </p>
-
-
-    <div
-      class="products"
-      id="products"
-    >
-
-
-      <!-- PRODUCT 1 -->
-
-      <article
-        class="product"
-        data-product-id="smart-phone"
-      >
-
-        <div class="product-stage">
-
-          <div class="product-object">
-            📱
-          </div>
-
-        </div>
-
-
-        <div class="product-info">
-
-          <h3>
-            Smart Phone
-          </h3>
-
-          <p>
-            Modern smartphone for everyday use.
-          </p>
-
-          <div class="price">
-            $199
-          </div>
-
-          <button
-            class="buy-button"
-            type="button"
-            data-product="Smart Phone"
-          >
-            View Product
-          </button>
-
-          <div class="product-status"></div>
-
-        </div>
-
-      </article>
-
-
-      <!-- PRODUCT 2 -->
-
-      <article
-        class="product"
-        data-product-id="wireless-headphones"
-      >
-
-        <div class="product-stage">
-
-          <div class="product-object">
-            🎧
-          </div>
-
-        </div>
-
-
-        <div class="product-info">
-
-          <h3>
-            Wireless Headphones
-          </h3>
-
-          <p>
-            Comfortable headphones for music and calls.
-          </p>
-
-          <div class="price">
-            $49
-          </div>
-
-          <button
-            class="buy-button"
-            type="button"
-            data-product="Wireless Headphones"
-          >
-            View Product
-          </button>
-
-          <div class="product-status"></div>
-
-        </div>
-
-      </article>
-
-
-      <!-- PRODUCT 3 -->
-
-      <article
-        class="product"
-        data-product-id="fashion-collection"
-      >
-
-        <div class="product-stage">
-
-          <div class="product-object">
-            👕
-          </div>
-
-        </div>
-
-
-        <div class="product-info">
-
-          <h3>
-            Fashion Collection
-          </h3>
-
-          <p>
-            Discover new fashion products.
-          </p>
-
-          <div class="price">
-            $29
-          </div>
-
-          <button
-            class="buy-button"
-            type="button"
-            data-product="Fashion Collection"
-          >
-            View Product
-          </button>
-
-          <div class="product-status"></div>
-
-        </div>
-
-      </article>
-
-
-      <!-- PRODUCT 4 -->
-
-      <article
-        class="product"
-        data-product-id="laptop"
-      >
-
-        <div class="product-stage">
-
-          <div class="product-object">
-            💻
-          </div>
-
-        </div>
-
-
-        <div class="product-info">
-
-          <h3>
-            Laptop
-          </h3>
-
-          <p>
-            Powerful laptop for work and study.
-          </p>
-
-          <div class="price">
-            $599
-          </div>
-
-          <button
-            class="buy-button"
-            type="button"
-            data-product="Laptop"
-          >
-            View Product
-          </button>
-
-          <div class="product-status"></div>
-
-        </div>
-
-      </article>
-
-
-      <!-- PRODUCT 5 -->
-
-      <article
-        class="product"
-        data-product-id="gaming-accessories"
-      >
-
-        <div class="product-stage">
-
-          <div class="product-object">
-            🎮
-          </div>
-
-        </div>
-
-
-        <div class="product-info">
-
-          <h3>
-            Gaming Accessories
-          </h3>
-
-          <p>
-            Gaming products for your setup.
-          </p>
-
-          <div class="price">
-            $39
-          </div>
-
-          <button
-            class="buy-button"
-            type="button"
-            data-product="Gaming Accessories"
-          >
-            View Product
-          </button>
-
-          <div class="product-status"></div>
-
-        </div>
-
-      </article>
-
-
-      <!-- PRODUCT 6 -->
-
-      <article
-        class="product"
-        data-product-id="accessories"
-      >
-
-        <div class="product-stage">
-
-          <div class="product-object">
-            👜
-          </div>
-
-        </div>
-
-
-        <div class="product-info">
-
-          <h3>
-            Accessories
-          </h3>
-
-          <p>
-            Useful lifestyle and fashion accessories.
-          </p>
-
-          <div class="price">
-            $25
-          </div>
-
-          <button
-            class="buy-button"
-            type="button"
-            data-product="Accessories"
-          >
-            View Product
-          </button>
-
-          <div class="product-status"></div>
-
-        </div>
-
-      </article>
-
-
-    </div>
-
   </section>
-
-
-  <!-- SECURITY -->
-
-  <section class="security-card">
-
-    <h3>
-      🔐 Marketplace Security
-    </h3>
-
-    <p id="accountStatus">
-      Checking your Zemivo account...
-    </p>
-
-  </section>
-
 
 </main>
 
-
 <footer class="footer">
-
-  © 2026 Zemivo —
-  Connect. Create. Earn.
-
+  © 2026 Zemivo — Connect. Create. Earn.
 </footer>
 
+<div id="toast" role="status" aria-live="polite" style="
+  position:fixed;left:50%;bottom:22px;z-index:500;
+  max-width:calc(100% - 30px);padding:12px 18px;
+  border-radius:13px;background:#14243b;color:white;
+  text-align:center;font-size:14px;opacity:0;
+  pointer-events:none;transform:translate(-50%,18px);
+  transition:.25s;
+"></div>
 
 <script type="module">
-
-
-/*
- * ZEMIVO MARKETPLACE
- *
- * SECURITY FOUNDATION
- * Firebase services come from
- * zemivo-security.js.
- *
- * PAGE ISOLATION
- * Marketplace logic stays inside
- * this page and does not modify
- * other Zemivo pages.
- *
- * LIVING 3D WORLD
- * Product presentation is modular.
- * The future Living 3D World engine
- * can connect here later.
- */
-
-
-import {
-  auth
-} from "./zemivo-security.js";
-
-
+import { auth } from "./zemivo-security.js";
 import {
   onAuthStateChanged
-} from
-  "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
+} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
 
+const accountStatus = document.getElementById("accountStatus");
+const productSearch = document.getElementById("productSearch");
+const categoryFilter = document.getElementById("categoryFilter");
+const products = document.getElementById("products");
+const resultCount = document.getElementById("resultCount");
+const emptyState = document.getElementById("emptyState");
+const toast = document.getElementById("toast");
+const sellerButton = document.getElementById("sellerButton");
 
-/* ELEMENTS */
+let currentUser = null;
+let authReady = false;
+let toastTimer = null;
 
-const accountStatus =
-  document.getElementById(
-    "accountStatus"
-  );
+function showToast(message) {
+  toast.textContent = message;
+  toast.style.opacity = "1";
+  toast.style.transform = "translate(-50%,0)";
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => {
+    toast.style.opacity = "0";
+    toast.style.transform = "translate(-50%,18px)";
+  }, 2600);
+}
 
+/* ACCOUNT STATUS */
+onAuthStateChanged(auth, user => {
+  currentUser = user;
+  authReady = true;
 
-const productButtons =
-  document.querySelectorAll(
-    ".buy-button"
-  );
+  accountStatus.textContent = user
+    ? "Your Zemivo account is connected. Marketplace seller and shopping services are awaiting backend activation."
+    : "You are browsing the public Marketplace preview. Log in to access account-based services.";
+});
 
+/* PRODUCT SEARCH AND CATEGORY FILTER */
+function filterProducts() {
+  const term = productSearch.value.trim().toLocaleLowerCase();
+  const category = categoryFilter.value;
+  const cards = [...products.querySelectorAll(".product")];
+  let visible = 0;
 
-/* PAGE ISOLATION */
+  cards.forEach(card => {
+    const text = (
+      (card.dataset.search || "") + " " + card.textContent
+    ).toLocaleLowerCase();
 
-const ZemivoMarketplacePage =
-  Object.freeze({
+    const matchesText = !term || text.includes(term);
+    const matchesCategory =
+      category === "all" || card.dataset.category === category;
 
-    name:
-      "Zemivo Marketplace",
+    const show = matchesText && matchesCategory;
+    card.hidden = !show;
 
-    version:
-      "1.0.0",
-
-    productPresentation:
-      "3D",
-
-    initialized:
-      false
-
+    if (show) visible++;
   });
 
+  resultCount.textContent =
+    `${visible} ${visible === 1 ? "product" : "products"}`;
 
-Object.defineProperty(
-  window,
-  "ZemivoMarketplacePage",
-  {
+  emptyState.style.display = visible === 0 ? "block" : "none";
+}
 
-    value:
-      ZemivoMarketplacePage,
+productSearch.addEventListener("input", filterProducts);
+categoryFilter.addEventListener("change", filterProducts);
 
-    writable:false,
+/* PRODUCT PREVIEW */
+products.addEventListener("click", event => {
+  const button = event.target.closest(".buy-button");
+  if (!button) return;
 
-    configurable:false,
+  const card = button.closest(".product");
+  const status = card.querySelector(".product-status");
+  const productName = button.dataset.product || "Product";
 
-    enumerable:false
+  status.textContent =
+    `${productName}: this is a visual product preview. A real product page, seller information and checkout are not connected yet.`;
 
+  status.classList.add("show");
+});
+
+/* SELLER ACCESS */
+sellerButton.addEventListener("click", () => {
+  if (!authReady) {
+    showToast("Please wait while your account loads.");
+    return;
   }
-);
 
-
-/* PRODUCT BUTTONS */
-
-productButtons.forEach(
-  function(button){
-
-    button.addEventListener(
-      "click",
-      function(){
-
-        const product =
-          button.dataset.product ||
-          "Product";
-
-
-        const card =
-          button.closest(
-            ".product"
-          );
-
-
-        const status =
-          card.querySelector(
-            ".product-status"
-          );
-
-
-        status.textContent =
-          product +
-          " 3D product view is ready. The full product page will be connected when the Marketplace backend is active.";
-
-
-        status.classList.add(
-          "show"
-        );
-
-      }
-    );
-
+  if (!currentUser) {
+    showToast("Please log in to access seller services.");
+    return;
   }
-);
 
+  showToast("Seller dashboard will be connected with the secure Marketplace backend.");
+});
 
-/* AUTH */
+/* PAGE MODULE */
+const pageInfo = Object.freeze({
+  name: "Zemivo Marketplace",
+  page: "marketplace",
+  version: "2.0.0",
+  visualSystem: "transparent-3d-glass",
+  responsive: true
+});
 
-onAuthStateChanged(
-  auth,
-  function(user){
+Object.defineProperty(window, "ZemivoMarketplacePage", {
+  value: pageInfo,
+  writable: false,
+  configurable: false,
+  enumerable: false
+});
 
-    if(!user){
+/* LIVING WORLD COMPATIBILITY */
+window.ZemivoLivingWorld = window.ZemivoLivingWorld || {};
+window.ZemivoLivingWorld.page = "marketplace";
+window.ZemivoLivingWorld.contentType = "marketplace";
+window.ZemivoLivingWorld.ready = true;
 
-      accountStatus.textContent =
-        "Please log in to use your Zemivo Marketplace account.";
-
-      return;
-
-    }
-
-
-    accountStatus.textContent =
-      "Your Zemivo account is securely connected. Product publishing, seller data and purchases will be connected through the protected Marketplace backend.";
-
-  }
-);
-
-
-/*
- * FUTURE PRODUCT 3D DATA MODEL
- *
- * When real Marketplace backend
- * is connected, each product can carry
- * its own 3D presentation information,
- * for example:
- *
- * product.visualType = "3d"
- * product.modelUrl
- * product.imageUrl
- * product.material
- * product.color
- * product.rotation
- *
- * This page does NOT upload or trust
- * arbitrary model URLs yet.
- *
- * Seller/product validation must happen
- * through the secure backend first.
- */
-
-
-/* LIVING WORLD EVENT */
-
-window.dispatchEvent(
-  new CustomEvent(
-    "zemivo:marketplace-ready",
-    {
-      detail:{
-
-        page:
-          "marketplace",
-
-        version:
-          ZemivoMarketplacePage.version,
-
-        productPresentation:
-          "3d"
-
-      }
-    }
-  )
-);
-
-
-console.log(
-  "Zemivo Marketplace loaded.",
-  ZemivoMarketplacePage.version
-);
-
+window.dispatchEvent(new CustomEvent("zemivo:marketplace-ready", {
+  detail: pageInfo
+}));
 </script>
 
-
 </body>
-
 </html>
