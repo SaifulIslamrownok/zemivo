@@ -363,6 +363,104 @@ body {
     animation: none !important;
   }
 }
+  
+/* =========================================
+   ZEMIVO MESSENGER — FULL SCREEN 3D FIX
+   ========================================= */
+
+/* 3D Nature Background দৃশ্যমান রাখবে */
+#zemivoWorld {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* Messenger পুরো স্ক্রিন ব্যবহার করবে */
+.app {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+
+  width: 100%;
+  max-width: none;
+  height: 100%;
+  margin: 0;
+
+  transform: none;
+  border-radius: 0;
+  z-index: 1;
+}
+
+/* Chat-এর পেছনে 3D দৃশ্য দেখা যাবে */
+.chat-panel,
+.users-panel {
+  background: rgba(255,255,255,.16) !important;
+  min-height: 0;
+}
+
+/* Chat Header হবে স্বচ্ছ Glass */
+.chat-person {
+  background: rgba(255,255,255,.28) !important;
+  flex-shrink: 0;
+}
+
+/* Message Area নিজে Scroll করবে */
+.messages {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  overscroll-behavior: contain;
+  background: rgba(235,245,255,.16) !important;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Message পাঠানোর জায়গা নিচে থাকবে */
+.composer {
+  position: relative;
+  flex: 0 0 auto;
+  width: 100%;
+  min-height: 72px;
+  z-index: 30;
+  background: rgba(255,255,255,.32) !important;
+}
+
+/* Mobile Screen */
+@media(max-width:700px) {
+  .app {
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 0;
+  }
+
+  .chat-panel {
+    width: 100%;
+    height: 100%;
+    min-height: 0;
+  }
+
+  .messages {
+    padding: 14px 12px 18px;
+  }
+
+  .composer {
+    position: relative;
+    left: auto;
+    right: auto;
+    bottom: auto;
+    width: 100%;
+    flex-shrink: 0;
+    padding: 9px;
+  }
+}
+
 </style>
 </head>
 <body>
@@ -374,13 +472,6 @@ body {
   <div class="world-forest"></div>
   <div class="world-haze"></div>
 </div>
-<header class="header">
-  <div class="logo">Zemivo</div>
-  <div class="header-actions">
-    <button class="header-button" type="button" aria-label="Notifications" onclick="location.href='notifications.html'">🔔</button>
-    <button class="header-button" type="button" aria-label="Profile" onclick="location.href='profile.html'">👤</button>
-  </div>
-</header>
 
 <main id="app" class="app">
   <section class="users-panel">
@@ -420,12 +511,6 @@ body {
   </section>
 </main>
 
-<nav class="bottom-nav" aria-label="Main navigation">
-  <a href="index.html">🏠<span>Home</span></a>
-  <a href="feed.html">📰<span>Feed</span></a>
-  <a href="messenger.html" class="active">💬<span>Messages</span></a>
-  <a href="profile.html">👤<span>Profile</span></a>
-</nav>
 <div id="toast" class="toast" role="status" aria-live="polite"></div>
 
 <script type="module">
