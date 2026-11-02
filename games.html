@@ -1,594 +1,474 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Zemivo - Gaming Center</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#050b20">
+<title>Zemivo 3D Gaming World</title>
 
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    body {
-      font-family: Arial, sans-serif;
-      background: #f4f6f8;
-      color: #222;
-    }
-
-    .topbar {
-      background: white;
-      padding: 15px 20px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-      flex-wrap: wrap;
-      gap: 10px;
-    }
-
-    .logo {
-      font-size: 26px;
-      font-weight: bold;
-      color: #2563eb;
-    }
-
-    .nav {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-    }
-
-    .nav a {
-      color: #2563eb;
-      text-decoration: none;
-      font-weight: bold;
-    }
-
-    .container {
-      max-width: 1000px;
-      margin: 25px auto;
-      padding: 0 15px;
-    }
-
-    .card {
-      background: white;
-      padding: 20px;
-      margin-bottom: 18px;
-      border-radius: 15px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-    }
-
-    h1 {
-      color: #2563eb;
-      margin-bottom: 8px;
-    }
-
-    .balance {
-      text-align: center;
-      background: #eff6ff;
-    }
-
-    .game-icon {
-      font-size: 55px;
-      margin-bottom: 8px;
-    }
-
-    .balance h2 {
-      color: #2563eb;
-      font-size: 32px;
-      margin: 8px 0;
-    }
-
-    .balance p {
-      color: #666;
-    }
-
-    .games {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 15px;
-      margin-top: 18px;
-    }
-
-    .game {
-      border: 1px solid #eee;
-      border-radius: 12px;
-      padding: 18px;
-      text-align: center;
-    }
-
-    .game-emoji {
-      font-size: 50px;
-      margin-bottom: 10px;
-    }
-
-    .game h3 {
-      margin-bottom: 7px;
-    }
-
-    .game p {
-      color: #666;
-      line-height: 1.5;
-      margin-bottom: 12px;
-    }
-
-    .play-button {
-      background: #2563eb;
-      color: white;
-      border: none;
-      padding: 10px 18px;
-      border-radius: 20px;
-      cursor: pointer;
-      font-weight: bold;
-    }
-
-    .play-button:hover {
-      background: #1d4ed8;
-    }
-
-    .reward {
-      margin-top: 8px;
-      color: #16a34a;
-      font-weight: bold;
-    }
-
-    .missions {
-      margin-top: 15px;
-    }
-
-    .mission {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 10px;
-      padding: 14px 5px;
-      border-bottom: 1px solid #eee;
-    }
-
-    .mission:last-child {
-      border-bottom: none;
-    }
-
-    .mission-info strong {
-      display: block;
-      margin-bottom: 4px;
-    }
-
-    .mission-info span {
-      color: #777;
-      font-size: 13px;
-    }
-
-    .mission-button {
-      background: #16a34a;
-      color: white;
-      border: none;
-      padding: 8px 13px;
-      border-radius: 18px;
-      cursor: pointer;
-      font-weight: bold;
-    }
-
-    .mission-button.completed {
-      background: #64748b;
-    }
-
-    .leaderboard {
-      margin-top: 15px;
-    }
-
-    .player {
-      display: flex;
-      justify-content: space-between;
-      padding: 13px 5px;
-      border-bottom: 1px solid #eee;
-    }
-
-    .player:last-child {
-      border-bottom: none;
-    }
-
-    .rank {
-      font-weight: bold;
-      width: 45px;
-    }
-
-    .player-name {
-      flex: 1;
-    }
-
-    .score {
-      color: #2563eb;
-      font-weight: bold;
-    }
-
-    .notice {
-      background: #fff7ed;
-      border-radius: 10px;
-      padding: 14px;
-      color: #9a3412;
-      margin-top: 15px;
-      line-height: 1.5;
-    }
-
-    .footer {
-      text-align: center;
-      color: #777;
-      padding: 25px;
-    }
-
-    @media (max-width: 750px) {
-      .games {
-        grid-template-columns: repeat(2, 1fr);
-      }
-    }
-
-    @media (max-width: 520px) {
-      .games {
-        grid-template-columns: 1fr;
-      }
-
-      .topbar {
-        justify-content: center;
-      }
-
-      .nav {
-        justify-content: center;
-      }
-
-      .nav a {
-        font-size: 13px;
-      }
-
-      .mission {
-        align-items: flex-start;
-      }
-    }
-  </style>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  background:#050b20;color:white;
+  font-family:Arial,sans-serif;overflow:hidden;
+}
+#world{position:fixed;inset:0;z-index:0}
+canvas{display:block}
+.topbar{
+  position:fixed;top:0;left:0;width:100%;z-index:5;
+  padding:14px 20px;display:flex;align-items:center;
+  justify-content:space-between;gap:12px;flex-wrap:wrap;
+  background:rgba(5,12,35,.72);
+  backdrop-filter:blur(14px);
+  border-bottom:1px solid #ffffff20;
+}
+.logo{
+  font-size:23px;font-weight:900;letter-spacing:2px;
+  background:linear-gradient(90deg,#67e8f9,#a78bfa);
+  -webkit-background-clip:text;color:transparent;
+}
+.stats{display:flex;gap:10px;flex-wrap:wrap}
+.stat{
+  padding:9px 13px;border-radius:12px;
+  background:#ffffff12;border:1px solid #ffffff25;
+  font-size:13px;font-weight:bold;
+}
+.hud{
+  position:fixed;z-index:4;left:18px;top:90px;
+  max-width:290px;padding:17px;border-radius:18px;
+  background:#07152ddd;border:1px solid #ffffff25;
+  backdrop-filter:blur(12px);
+}
+.hud h2{font-size:18px;margin-bottom:9px;color:#67e8f9}
+.hud p{font-size:13px;line-height:1.6;color:#d1d5db}
+.hud button,.action{
+  border:0;border-radius:12px;padding:11px 15px;
+  color:white;font-weight:bold;cursor:pointer;
+  background:linear-gradient(100deg,#2563eb,#9333ea);
+}
+.hud button{margin-top:12px}
+.bottom{
+  position:fixed;z-index:4;bottom:18px;left:50%;
+  transform:translateX(-50%);
+  display:flex;gap:9px;align-items:center;
+}
+.control{
+  width:52px;height:52px;border-radius:16px;
+  border:1px solid #ffffff35;background:#10254dcc;
+  color:white;font-size:22px;touch-action:none;
+}
+#message{
+  position:fixed;z-index:10;top:50%;left:50%;
+  transform:translate(-50%,-50%);
+  display:none;width:min(90%,380px);
+  padding:24px;border-radius:22px;text-align:center;
+  background:#0b1735f5;border:1px solid #67e8f955;
+  box-shadow:0 15px 50px #0009;
+}
+#message h2{color:#67e8f9;margin-bottom:10px}
+#message p{font-size:14px;line-height:1.6;color:#dbeafe}
+#message button{margin-top:17px}
+#help{
+  position:fixed;right:16px;bottom:18px;z-index:4;
+  color:#cbd5e1;background:#07152dcc;
+  border:1px solid #ffffff25;border-radius:12px;
+  padding:10px;font-size:11px;
+}
+@media(max-width:600px){
+  .topbar{padding:11px}
+  .logo{font-size:19px}
+  .stat{font-size:11px;padding:8px}
+  .hud{top:80px;left:10px;max-width:215px;padding:12px}
+  .hud h2{font-size:15px}
+  .hud p{font-size:11px}
+  .control{width:46px;height:46px}
+  #help{display:none}
+}
+</style>
 </head>
 
 <body>
-
-  <header class="topbar">
-
-    <div class="logo">Zemivo</div>
-
-    <nav class="nav">
-      <a href="index.html">🏠 Home</a>
-      <a href="coin.html">🪙 Coins</a>
-      <a href="wallet.html">👛 Wallet</a>
-      <a href="earn.html">💰 Earn</a>
-      <a href="creator.html">🏆 Creator</a>
-      <a href="profile.html">👤 Profile</a>
-    </nav>
-
-  </header>
-
-  <main class="container">
-
-    <div class="card">
-
-      <h1>🎮 Zemivo Gaming Center</h1>
-
-      <p>
-        Play games, complete missions and discover future Zemivo gaming rewards.
-      </p>
-
-      <div class="notice">
-        ⚠️ Gaming rewards shown on this page are currently a demo system.
-        Real games, secure reward validation and Coin transactions will be
-        connected later through the Zemivo backend.
-      </div>
-
-    </div>
-
-    <div class="card balance">
-
-      <div class="game-icon">🪙</div>
-
-      <p>Your Gaming Coin Balance</p>
-
-      <h2 id="coinBalance">0</h2>
-
-      <p>
-        Demo coins earned from gaming activities.
-      </p>
-
-    </div>
-
-    <div class="card">
-
-      <h2>🎯 Available Games</h2>
-
-      <div class="games">
-
-        <div class="game">
-
-          <div class="game-emoji">🧠</div>
-
-          <h3>Brain Challenge</h3>
-
-          <p>
-            Test your knowledge and complete quick challenges.
-          </p>
-
-          <button class="play-button" onclick="playGame('Brain Challenge', 10)">
-            Play
-          </button>
-
-          <div class="reward">
-            🪙 Reward: 10 Coins
-          </div>
-
-        </div>
-
-        <div class="game">
-
-          <div class="game-emoji">🎯</div>
-
-          <h3>Daily Target</h3>
-
-          <p>
-            Complete the daily target and earn a reward.
-          </p>
-
-          <button class="play-button" onclick="playGame('Daily Target', 15)">
-            Play
-          </button>
-
-          <div class="reward">
-            🪙 Reward: 15 Coins
-          </div>
-
-        </div>
-
-        <div class="game">
-
-          <div class="game-emoji">🏆</div>
-
-          <h3>Quick Quiz</h3>
-
-          <p>
-            Answer quiz questions and improve your score.
-          </p>
-
-          <button class="play-button" onclick="playGame('Quick Quiz', 20)">
-            Play
-          </button>
-
-          <div class="reward">
-            🪙 Reward: 20 Coins
-          </div>
-
-        </div>
-
-        <div class="game">
-
-          <div class="game-emoji">🧩</div>
-
-          <h3>Puzzle Zone</h3>
-
-          <p>
-            Solve puzzles and complete your gaming challenge.
-          </p>
-
-          <button class="play-button" onclick="playGame('Puzzle Zone', 25)">
-            Play
-          </button>
-
-          <div class="reward">
-            🪙 Reward: 25 Coins
-          </div>
-
-        </div>
-
-        <div class="game">
-
-          <div class="game-emoji">⚡</div>
-
-          <h3>Speed Challenge</h3>
-
-          <p>
-            Complete a fast challenge and earn demo rewards.
-          </p>
-
-          <button class="play-button" onclick="playGame('Speed Challenge', 30)">
-            Play
-          </button>
-
-          <div class="reward">
-            🪙 Reward: 30 Coins
-          </div>
-
-        </div>
-
-        <div class="game">
-
-          <div class="game-emoji">🌍</div>
-
-          <h3>World Challenge</h3>
-
-          <p>
-            A future global multiplayer gaming experience.
-          </p>
-
-          <button class="play-button" onclick="playGame('World Challenge', 50)">
-            Play
-          </button>
-
-          <div class="reward">
-            🪙 Reward: 50 Coins
-          </div>
-
-        </div>
-
-      </div>
-
-    </div>
-
-    <div class="card">
-
-      <h2>🎁 Daily Missions</h2>
-
-      <div class="missions">
-
-        <div class="mission">
-
-          <div class="mission-info">
-            <strong>🎮 Play 1 Game</strong>
-            <span>Complete one gaming activity.</span>
-          </div>
-
-          <button class="mission-button" onclick="completeMission(this, 10)">
-            Claim 10
-          </button>
-
-        </div>
-
-        <div class="mission">
-
-          <div class="mission-info">
-            <strong>🏆 Complete 3 Challenges</strong>
-            <span>Finish three available challenges.</span>
-          </div>
-
-          <button class="mission-button" onclick="completeMission(this, 25)">
-            Claim 25
-          </button>
-
-        </div>
-
-        <div class="mission">
-
-          <div class="mission-info">
-            <strong>🔥 Daily Streak</strong>
-            <span>Return and complete your daily activity.</span>
-          </div>
-
-          <button class="mission-button" onclick="completeMission(this, 50)">
-            Claim 50
-          </button>
-
-        </div>
-
-      </div>
-
-    </div>
-
-    <div class="card">
-
-      <h2>🏆 Leaderboard</h2>
-
-      <div class="leaderboard">
-
-        <div class="player">
-          <div class="rank">🥇</div>
-          <div class="player-name">Zemivo Player</div>
-          <div class="score">1,250 XP</div>
-        </div>
-
-        <div class="player">
-          <div class="rank">🥈</div>
-          <div class="player-name">Creator Gamer</div>
-          <div class="score">980 XP</div>
-        </div>
-
-        <div class="player">
-          <div class="rank">🥉</div>
-          <div class="player-name">Gaming Master</div>
-          <div class="score">760 XP</div>
-        </div>
-
-        <div class="player">
-          <div class="rank">4</div>
-          <div class="player-name">New Player</div>
-          <div class="score">420 XP</div>
-        </div>
-
-      </div>
-
-    </div>
-
-  </main>
-
-  <footer class="footer">
-    © 2026 Zemivo — Connect. Create. Earn.
-  </footer>
-
-  <script>
-
-    let coinBalance = 0;
-
-    const balanceElement =
-      document.getElementById("coinBalance");
-
-    function updateBalance() {
-
-      balanceElement.textContent =
-        coinBalance.toLocaleString();
-
-    }
-
-    function addCoins(amount) {
-
-      coinBalance += amount;
-
-      updateBalance();
-
-    }
-
-    function playGame(gameName, reward) {
-
-      const confirmed =
-        confirm(
-          "Start " +
-          gameName +
-          "?\n\nDemo reward: " +
-          reward +
-          " Zemivo Coins"
+<div id="world"></div>
+
+<header class="topbar">
+  <div class="logo">ZEMIVO 3D</div>
+  <div class="stats">
+    <div class="stat">🪙 Demo Coins: <span id="coins">0</span></div>
+    <div class="stat">💎 Gems: <span id="gems">0</span></div>
+    <div class="stat">🏆 Score: <span id="score">0</span></div>
+  </div>
+</header>
+
+<section class="hud">
+  <h2>🌍 Gaming World</h2>
+  <p id="instructions">
+    Explore the 3D world. Collect glowing gems and visit the game portals.
+    Use WASD or arrow keys to move.
+  </p>
+  <button id="start">▶ Start Adventure</button>
+</section>
+
+<div id="message">
+  <h2 id="messageTitle">Welcome!</h2>
+  <p id="messageText"></p>
+  <button class="action" id="closeMessage">Continue</button>
+</div>
+
+<div class="bottom">
+  <button class="control" data-move="left">◀</button>
+  <button class="control" data-move="forward">▲</button>
+  <button class="control" data-move="back">▼</button>
+  <button class="control" data-move="right">▶</button>
+</div>
+
+<div id="help">WASD / Arrow Keys • Collect glowing gems</div>
+
+<script type="module">
+import * as THREE from
+'https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js';
+
+const scene = new THREE.Scene();
+scene.background = new THREE.Color(0x050b20);
+scene.fog = new THREE.Fog(0x050b20, 28, 100);
+
+const camera = new THREE.PerspectiveCamera(
+  65, innerWidth/innerHeight, 0.1, 200
+);
+
+const renderer = new THREE.WebGLRenderer({
+  antialias:true, powerPreference:"high-performance"
+});
+renderer.setPixelRatio(Math.min(devicePixelRatio,2));
+renderer.setSize(innerWidth,innerHeight);
+renderer.shadowMap.enabled=true;
+renderer.shadowMap.type=THREE.PCFSoftShadowMap;
+document.getElementById("world").appendChild(renderer.domElement);
+
+scene.add(new THREE.HemisphereLight(0x9bdcff,0x172044,2));
+
+const sun = new THREE.DirectionalLight(0xffffff,2.5);
+sun.position.set(12,20,10);
+sun.castShadow=true;
+scene.add(sun);
+
+const ground = new THREE.Mesh(
+  new THREE.PlaneGeometry(150,150),
+  new THREE.MeshStandardMaterial({
+    color:0x101e43,roughness:.85
+  })
+);
+ground.rotation.x=-Math.PI/2;
+ground.receiveShadow=true;
+scene.add(ground);
+
+const grid = new THREE.GridHelper(120,60,0x22d3ee,0x263b66);
+grid.position.y=.015;
+scene.add(grid);
+
+// Decorative floating lights
+for(let i=0;i<90;i++){
+  const star=new THREE.Mesh(
+    new THREE.SphereGeometry(.045,6,6),
+    new THREE.MeshBasicMaterial({color:0x8be9ff})
+  );
+  star.position.set(
+    (Math.random()-.5)*100,
+    2+Math.random()*24,
+    (Math.random()-.5)*100
+  );
+  scene.add(star);
+}
+
+// Player
+const player = new THREE.Group();
+
+const body = new THREE.Mesh(
+  new THREE.CapsuleGeometry(.38,.75,4,8),
+  new THREE.MeshStandardMaterial({
+    color:0x38bdf8,metalness:.25,roughness:.35
+  })
+);
+body.position.y=.95;
+body.castShadow=true;
+player.add(body);
+
+const head = new THREE.Mesh(
+  new THREE.SphereGeometry(.3,16,16),
+  new THREE.MeshStandardMaterial({color:0xffd7b5})
+);
+head.position.y=1.65;
+player.add(head);
+
+const visor = new THREE.Mesh(
+  new THREE.BoxGeometry(.38,.12,.08),
+  new THREE.MeshStandardMaterial({
+    color:0x172554,emissive:0x164e63
+  })
+);
+visor.position.set(0,1.69,.25);
+player.add(visor);
+
+const glow = new THREE.PointLight(0x22d3ee,1.2,5);
+glow.position.y=1.5;
+player.add(glow);
+
+player.position.set(0,0,8);
+scene.add(player);
+
+// Game portals
+const portals=[];
+const portalData=[
+  {name:"Brain Challenge",x:-12,z:-8,color:0x8b5cf6,icon:"🧠"},
+  {name:"Racing Zone",x:12,z:-8,color:0x22d3ee,icon:"🏎️"},
+  {name:"Puzzle World",x:-12,z:-22,color:0xf59e0b,icon:"🧩"},
+  {name:"World Arena",x:12,z:-22,color:0xec4899,icon:"🌍"}
+];
+
+portalData.forEach(data=>{
+  const group=new THREE.Group();
+  group.position.set(data.x,0,data.z);
+
+  const ring=new THREE.Mesh(
+    new THREE.TorusGeometry(2.1,.17,12,48),
+    new THREE.MeshStandardMaterial({
+      color:data.color,emissive:data.color,
+      emissiveIntensity:1.4,metalness:.4
+    })
+  );
+  ring.position.y=2.4;
+  group.add(ring);
+
+  const inner=new THREE.Mesh(
+    new THREE.CircleGeometry(1.85,40),
+    new THREE.MeshBasicMaterial({
+      color:data.color,transparent:true,
+      opacity:.17,side:THREE.DoubleSide
+    })
+  );
+  inner.position.y=2.4;
+  group.add(inner);
+
+  const base=new THREE.Mesh(
+    new THREE.CylinderGeometry(2.3,2.6,.25,32),
+    new THREE.MeshStandardMaterial({
+      color:0x243b68,metalness:.6,roughness:.3
+    })
+  );
+  base.position.y=.15;
+  group.add(base);
+
+  const light=new THREE.PointLight(data.color,3,9);
+  light.position.y=2.5;
+  group.add(light);
+
+  scene.add(group);
+  portals.push({group,ring,data});
+});
+
+// Collectible gems
+const gems=[];
+const gemMaterial=new THREE.MeshStandardMaterial({
+  color:0x22d3ee,emissive:0x0891b2,
+  emissiveIntensity:1.8,metalness:.5,roughness:.2
+});
+
+for(let i=0;i<24;i++){
+  const gem=new THREE.Mesh(
+    new THREE.OctahedronGeometry(.42),
+    gemMaterial
+  );
+  gem.position.set(
+    (Math.random()-.5)*27,
+    .9+Math.random()*1.2,
+    -28+Math.random()*42
+  );
+  gem.castShadow=true;
+  scene.add(gem);
+  gems.push(gem);
+}
+
+// Floating landscape decorations
+for(let i=0;i<25;i++){
+  const rock=new THREE.Mesh(
+    new THREE.DodecahedronGeometry(.5+Math.random()),
+    new THREE.MeshStandardMaterial({
+      color:0x243b66,roughness:.8
+    })
+  );
+  rock.position.set(
+    (Math.random()>.5?1:-1)*(18+Math.random()*15),
+    .5,
+    -Math.random()*55
+  );
+  rock.castShadow=true;
+  scene.add(rock);
+}
+
+const keys={};
+const touch={};
+let started=false;
+let coins=0,score=0,gemCount=0;
+let collected=0;
+
+addEventListener("keydown",e=>{
+  keys[e.key.toLowerCase()]=true;
+  if(["ArrowUp","ArrowDown","ArrowLeft","ArrowRight"," "].includes(e.key))
+    e.preventDefault();
+});
+addEventListener("keyup",e=>keys[e.key.toLowerCase()]=false);
+
+document.querySelectorAll("[data-move]").forEach(button=>{
+  const direction=button.dataset.move;
+  button.addEventListener("pointerdown",e=>{
+    e.preventDefault();
+    touch[direction]=true;
+  });
+  ["pointerup","pointercancel","pointerleave"].forEach(event=>{
+    button.addEventListener(event,()=>touch[direction]=false);
+  });
+});
+
+const coinEl=document.getElementById("coins");
+const scoreEl=document.getElementById("score");
+const gemEl=document.getElementById("gems");
+
+function updateStats(){
+  coinEl.textContent=coins;
+  scoreEl.textContent=score;
+  gemEl.textContent=gemCount;
+}
+
+function showMessage(title,text){
+  document.getElementById("messageTitle").textContent=title;
+  document.getElementById("messageText").textContent=text;
+  document.getElementById("message").style.display="block";
+}
+
+document.getElementById("closeMessage").onclick=()=>{
+  document.getElementById("message").style.display="none";
+};
+
+document.getElementById("start").onclick=()=>{
+  started=true;
+  document.getElementById("instructions").textContent=
+    "Adventure started! Move around and collect the glowing gems.";
+  document.getElementById("start").textContent="✓ Adventure Started";
+  showMessage("Adventure Started!","Explore the world. Collect gems to earn demo game points.");
+};
+
+function distance(a,b){
+  return Math.hypot(a.x-b.x,a.z-b.z);
+}
+
+function movePlayer(delta){
+  if(!started)return;
+
+  let forward=0,side=0;
+  if(keys.w||keys.arrowup||touch.forward)forward-=1;
+  if(keys.s||keys.arrowdown||touch.back)forward+=1;
+  if(keys.a||keys.arrowleft||touch.left)side-=1;
+  if(keys.d||keys.arrowright||touch.right)side+=1;
+
+  const length=Math.hypot(forward,side);
+  if(length>0){
+    forward/=length;side/=length;
+    const speed=8*delta;
+    player.position.z+=forward*speed;
+    player.position.x+=side*speed;
+    player.position.x=THREE.MathUtils.clamp(player.position.x,-30,30);
+    player.position.z=THREE.MathUtils.clamp(player.position.z,-65,18);
+    player.rotation.y=Math.atan2(side,forward);
+    body.position.y=.95+Math.sin(performance.now()*.012)*.08;
+  }
+}
+
+function checkGems(){
+  gems.forEach(gem=>{
+    if(!gem.visible)return;
+    if(distance(player.position,gem.position)<1.35){
+      gem.visible=false;
+      coins+=1;
+      score+=10;
+      gemCount++;
+      collected++;
+      updateStats();
+
+      if(collected===24){
+        showMessage(
+          "World Explored!",
+          "You collected all available gems! This is a demo score, not real ZMV Coin."
         );
-
-      if (!confirmed) {
-        return;
       }
-
-      addCoins(reward);
-
-      alert(
-        "Demo game completed!\n\n+" +
-        reward +
-        " Zemivo Coins added."
-      );
-
     }
+  });
+}
 
-    function completeMission(button, reward) {
-
-      if (button.classList.contains("completed")) {
-        return;
+function checkPortals(){
+  portals.forEach(portal=>{
+    if(distance(player.position,portal.group.position)<2.6){
+      if(!portal.notified){
+        portal.notified=true;
+        showMessage(
+          portal.data.icon+" "+portal.data.name,
+          "This game portal is a preview. Its playable game will be developed in a later phase."
+        );
       }
-
-      addCoins(reward);
-
-      button.classList.add("completed");
-
-      button.textContent =
-        "✓ Claimed";
-
-      alert(
-        "Mission completed!\n\n+" +
-        reward +
-        " Zemivo Coins added."
-      );
-
+    }else{
+      portal.notified=false;
     }
+  });
+}
 
-    updateBalance();
+camera.position.set(0,7,17);
+const cameraTarget=new THREE.Vector3();
 
-  </script>
+function animate(){
+  requestAnimationFrame(animate);
+  const delta=Math.min(clock.getDelta(),.04);
+  const time=clock.elapsedTime;
 
+  gems.forEach((gem,i)=>{
+    if(gem.visible){
+      gem.rotation.y+=delta*1.6;
+      gem.rotation.x+=delta*.7;
+      gem.position.y=1+Math.sin(time*2+i)*.22;
+    }
+  });
+
+  portals.forEach((portal,i)=>{
+    portal.ring.rotation.y+=delta*.35;
+    portal.group.position.y=Math.sin(time*1.2+i)*.08;
+  });
+
+  movePlayer(delta);
+  checkGems();
+  checkPortals();
+
+  cameraTarget.set(
+    player.position.x,
+    6,
+    player.position.z+10
+  );
+  camera.position.lerp(cameraTarget,1-Math.exp(-delta*3));
+  camera.lookAt(
+    player.position.x,
+    1.2,
+    player.position.z-3
+  );
+
+  renderer.render(scene,camera);
+}
+
+const clock=new THREE.Clock();
+animate();
+
+addEventListener("resize",()=>{
+  camera.aspect=innerWidth/innerHeight;
+  camera.updateProjectionMatrix();
+  renderer.setSize(innerWidth,innerHeight);
+  renderer.setPixelRatio(Math.min(devicePixelRatio,2));
+});
+</script>
 </body>
 </html>
