@@ -36,7 +36,78 @@
 .logo{text-shadow:0 1px 0 #fff,0 3px 0 rgba(91,123,220,.18),0 8px 18px rgba(53,109,255,.18)}
 @media(hover:hover) and (pointer:fine) and (min-width:701px){.header-button:hover,.attach:hover,.back-button:hover,.send:hover{transform:translateY(-2px) translateZ(5px);filter:brightness(1.04)}.message-row .message:hover{transform:translateY(-1px) translateZ(3px)}}
 @media(prefers-reduced-motion:reduce){.header-button,.attach,.back-button,.send,.user-item,.user-avatar,.composer input,.search-box input,.message,.bottom-nav a{transition:none!important}}
+/* ZEMIVO MESSENGER FIX */
+.chat-panel{
+  min-height:0;
+  overflow:hidden;
+}
 
+.messages{
+  flex:1 1 auto;
+  min-height:0;
+  overflow-y:auto;
+  overscroll-behavior:contain;
+  padding-bottom:15px;
+}
+
+.composer{
+  position:relative;
+  left:auto;
+  right:auto;
+  bottom:auto;
+  width:100%;
+  flex:0 0 auto;
+  min-height:72px;
+  z-index:30;
+  background:rgba(255,255,255,.88);
+  backdrop-filter:blur(22px);
+  -webkit-backdrop-filter:blur(22px);
+  box-shadow:0 -8px 25px rgba(35,65,140,.12);
+}
+
+@media(max-width:700px){
+  .composer{
+    position:relative;
+    left:auto;
+    right:auto;
+    bottom:auto;
+    width:100%;
+    padding:9px;
+  }
+
+  .chat-panel{
+    height:100%;
+    min-height:0;
+  }
+}
+
+.composer-menu{
+  display:none;
+  position:absolute;
+  bottom:calc(100% + 10px);
+  left:10px;
+  z-index:100;
+  width:180px;
+  padding:9px;
+  border-radius:18px;
+  background:rgba(255,255,255,.95);
+  box-shadow:0 12px 35px #263c6633;
+}
+
+.composer-menu.open{
+  display:grid;
+  gap:7px;
+}
+
+.composer-menu button{
+  border:0;
+  border-radius:12px;
+  padding:12px;
+  text-align:left;
+  background:#edf2ff;
+  color:#172033;
+  font-weight:700;
+}
 </style>
 </head>
 <body>
@@ -65,10 +136,24 @@
     </div>
     <div id="messages" class="messages"><div class="empty-chat"><div><div style="font-size:42px">💬</div><div style="font-weight:800;margin-top:8px">Zemivo Messages</div><div style="margin-top:5px">Select a person to start a conversation.</div></div></div></div>
     <div class="composer">
-      <button id="attachButton" class="attach" type="button" title="Media messaging requires Firebase Storage setup" aria-label="Attach media">📎</button>
-      <input id="messageInput" type="text" placeholder="Type a message..." disabled maxlength="5000" autocomplete="off" aria-label="Message">
-      <button id="sendButton" class="send" type="button" disabled>Send</button>
-    </div>
+  <button id="attachButton" class="attach" type="button">＋</button>
+
+  <div id="composerMenu" class="composer-menu">
+    <button type="button" id="photoButton">🖼️ Photo</button>
+    <button type="button" id="cameraButton">📷 Camera</button>
+    <button type="button" id="emojiButton">😊 Emoji</button>
+    <button type="button" id="voiceButton">🎤 Voice</button>
+  </div>
+
+  <input id="photoInput" type="file" accept="image/*" hidden>
+  <input id="cameraInput" type="file" accept="image/*" capture="environment" hidden>
+
+  <input id="messageInput" type="text"
+    placeholder="Type a message..."
+    disabled maxlength="5000" autocomplete="off">
+
+  <button id="sendButton" class="send" type="button" disabled>Send</button>
+</div>
   </section>
 </main>
 
@@ -583,7 +668,47 @@ messageInput.addEventListener("keydown", event => {
     sendMessage();
   }
 });
-attachButton.addEventListener("click", () => showToast("Media messaging requires Firebase Storage setup; it has not been enabled in this page yet."));
+const composerMenu = $("composerMenu");
+const photoInput = $("photoInput");
+const cameraInput = $("cameraInput");
+
+attachButton.addEventListener("click", () => {
+  composerMenu.classList.toggle("open");
+});
+
+$("photoButton").addEventListener("click", () => {
+  composerMenu.classList.remove("open");
+  photoInput.click();
+});
+
+$("cameraButton").addEventListener("click", () => {
+  composerMenu.classList.remove("open");
+  cameraInput.click();
+});
+
+$("emojiButton").addEventListener("click", () => {
+  composerMenu.classList.remove("open");
+  messageInput.value += " 😊";
+  messageInput.focus();
+});
+
+$("voiceButton").addEventListener("click", () => {
+  composerMenu.classList.remove("open");
+  showToast("Voice message upload is not connected yet.");
+});
+
+photoInput.addEventListener("change", () => {
+  if (photoInput.files.length) {
+    showToast("Photo selected. Upload connection is still needed.");
+  }
+});
+
+cameraInput.addEventListener("change", () => {
+  if (cameraInput.files.length) {
+    showToast("Camera photo selected. Upload connection is still needed.");
+  }
+});
+  
 backButton.addEventListener("click", () => {
   appElement.classList.remove("chat-open");
   clearChatListeners();
