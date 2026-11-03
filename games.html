@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta name="theme-color" content="#050b20">
 <title>Zemivo 3D Gaming World</title>
 
@@ -12,14 +12,16 @@
 body{
   background:#050b20;color:white;
   font-family:Arial,sans-serif;overflow:hidden;
+  touch-action:none;
 }
 #world{position:fixed;inset:0;z-index:0}
-canvas{display:block}
+canvas{display:block;width:100%;height:100%}
+
 .topbar{
   position:fixed;top:0;left:0;width:100%;z-index:5;
   padding:14px 20px;display:flex;align-items:center;
   justify-content:space-between;gap:12px;flex-wrap:wrap;
-  background:rgba(5,12,35,.72);
+  background:rgba(5,12,35,.78);
   backdrop-filter:blur(14px);
   border-bottom:1px solid #ffffff20;
 }
@@ -48,6 +50,7 @@ canvas{display:block}
   background:linear-gradient(100deg,#2563eb,#9333ea);
 }
 .hud button{margin-top:12px}
+
 .bottom{
   position:fixed;z-index:4;bottom:18px;left:50%;
   transform:translateX(-50%);
@@ -57,7 +60,10 @@ canvas{display:block}
   width:52px;height:52px;border-radius:16px;
   border:1px solid #ffffff35;background:#10254dcc;
   color:white;font-size:22px;touch-action:none;
+  user-select:none;-webkit-user-select:none;
 }
+.control:active{background:#2563eb}
+
 #message{
   position:fixed;z-index:10;top:50%;left:50%;
   transform:translate(-50%,-50%);
@@ -69,26 +75,45 @@ canvas{display:block}
 #message h2{color:#67e8f9;margin-bottom:10px}
 #message p{font-size:14px;line-height:1.6;color:#dbeafe}
 #message button{margin-top:17px}
+
 #help{
   position:fixed;right:16px;bottom:18px;z-index:4;
   color:#cbd5e1;background:#07152dcc;
   border:1px solid #ffffff25;border-radius:12px;
   padding:10px;font-size:11px;
 }
+
+#error{
+  display:none;position:fixed;z-index:20;
+  inset:0;background:#050b20;color:white;
+  align-items:center;justify-content:center;
+  text-align:center;padding:25px;
+}
+#error div{max-width:400px}
+#error h2{color:#67e8f9;margin-bottom:12px}
+#error p{line-height:1.6;color:#cbd5e1}
+
 @media(max-width:600px){
-  .topbar{padding:11px}
-  .logo{font-size:19px}
-  .stat{font-size:11px;padding:8px}
-  .hud{top:80px;left:10px;max-width:215px;padding:12px}
+  .topbar{padding:10px}
+  .logo{font-size:18px}
+  .stats{gap:5px}
+  .stat{font-size:10px;padding:7px}
+  .hud{top:82px;left:9px;max-width:210px;padding:11px}
   .hud h2{font-size:15px}
   .hud p{font-size:11px}
   .control{width:46px;height:46px}
+  .bottom{bottom:12px;gap:6px}
   #help{display:none}
+  #message{padding:19px}
+}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{scroll-behavior:auto!important}
 }
 </style>
 </head>
 
 <body>
+
 <div id="world"></div>
 
 <header class="topbar">
@@ -116,35 +141,53 @@ canvas{display:block}
 </div>
 
 <div class="bottom">
-  <button class="control" data-move="left">◀</button>
-  <button class="control" data-move="forward">▲</button>
-  <button class="control" data-move="back">▼</button>
-  <button class="control" data-move="right">▶</button>
+  <button class="control" data-move="left" aria-label="Move left">◀</button>
+  <button class="control" data-move="forward" aria-label="Move forward">▲</button>
+  <button class="control" data-move="back" aria-label="Move backward">▼</button>
+  <button class="control" data-move="right" aria-label="Move right">▶</button>
 </div>
 
 <div id="help">WASD / Arrow Keys • Collect glowing gems</div>
+
+<div id="error">
+  <div>
+    <h2>3D World Could Not Start</h2>
+    <p>
+      Your browser may not support WebGL, or the 3D library could not load.
+      Please check your internet connection and try again.
+    </p>
+  </div>
+</div>
 
 <script type="module">
 import * as THREE from
 'https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js';
 
+try {
+
+/* SCENE */
 const scene = new THREE.Scene();
 scene.background = new THREE.Color(0x050b20);
-scene.fog = new THREE.Fog(0x050b20, 28, 100);
+scene.fog = new THREE.Fog(0x050b20,28,100);
 
+/* CAMERA */
 const camera = new THREE.PerspectiveCamera(
-  65, innerWidth/innerHeight, 0.1, 200
+  65,innerWidth/innerHeight,0.1,200
 );
 
+/* RENDERER */
 const renderer = new THREE.WebGLRenderer({
-  antialias:true, powerPreference:"high-performance"
+  antialias:true,
+  powerPreference:"high-performance"
 });
-renderer.setPixelRatio(Math.min(devicePixelRatio,2));
+
+renderer.setPixelRatio(Math.min(devicePixelRatio,1.5));
 renderer.setSize(innerWidth,innerHeight);
 renderer.shadowMap.enabled=true;
 renderer.shadowMap.type=THREE.PCFSoftShadowMap;
 document.getElementById("world").appendChild(renderer.domElement);
 
+/* LIGHTING */
 scene.add(new THREE.HemisphereLight(0x9bdcff,0x172044,2));
 
 const sun = new THREE.DirectionalLight(0xffffff,2.5);
@@ -152,6 +195,7 @@ sun.position.set(12,20,10);
 sun.castShadow=true;
 scene.add(sun);
 
+/* GROUND */
 const ground = new THREE.Mesh(
   new THREE.PlaneGeometry(150,150),
   new THREE.MeshStandardMaterial({
@@ -166,12 +210,13 @@ const grid = new THREE.GridHelper(120,60,0x22d3ee,0x263b66);
 grid.position.y=.015;
 scene.add(grid);
 
-// Decorative floating lights
+/* STARS */
 for(let i=0;i<90;i++){
   const star=new THREE.Mesh(
     new THREE.SphereGeometry(.045,6,6),
     new THREE.MeshBasicMaterial({color:0x8be9ff})
   );
+
   star.position.set(
     (Math.random()-.5)*100,
     2+Math.random()*24,
@@ -180,7 +225,7 @@ for(let i=0;i<90;i++){
   scene.add(star);
 }
 
-// Player
+/* PLAYER */
 const player = new THREE.Group();
 
 const body = new THREE.Mesh(
@@ -216,8 +261,9 @@ player.add(glow);
 player.position.set(0,0,8);
 scene.add(player);
 
-// Game portals
+/* GAME PORTALS */
 const portals=[];
+
 const portalData=[
   {name:"Brain Challenge",x:-12,z:-8,color:0x8b5cf6,icon:"🧠"},
   {name:"Racing Zone",x:12,z:-8,color:0x22d3ee,icon:"🏎️"},
@@ -232,8 +278,10 @@ portalData.forEach(data=>{
   const ring=new THREE.Mesh(
     new THREE.TorusGeometry(2.1,.17,12,48),
     new THREE.MeshStandardMaterial({
-      color:data.color,emissive:data.color,
-      emissiveIntensity:1.4,metalness:.4
+      color:data.color,
+      emissive:data.color,
+      emissiveIntensity:1.4,
+      metalness:.4
     })
   );
   ring.position.y=2.4;
@@ -242,8 +290,10 @@ portalData.forEach(data=>{
   const inner=new THREE.Mesh(
     new THREE.CircleGeometry(1.85,40),
     new THREE.MeshBasicMaterial({
-      color:data.color,transparent:true,
-      opacity:.17,side:THREE.DoubleSide
+      color:data.color,
+      transparent:true,
+      opacity:.17,
+      side:THREE.DoubleSide
     })
   );
   inner.position.y=2.4;
@@ -252,7 +302,9 @@ portalData.forEach(data=>{
   const base=new THREE.Mesh(
     new THREE.CylinderGeometry(2.3,2.6,.25,32),
     new THREE.MeshStandardMaterial({
-      color:0x243b68,metalness:.6,roughness:.3
+      color:0x243b68,
+      metalness:.6,
+      roughness:.3
     })
   );
   base.position.y=.15;
@@ -263,32 +315,40 @@ portalData.forEach(data=>{
   group.add(light);
 
   scene.add(group);
-  portals.push({group,ring,data});
+  portals.push({
+    group,ring,inner,light,data,baseY:2.4,notified:false
+  });
 });
 
-// Collectible gems
+/* GEMS */
 const gems=[];
-const gemMaterial=new THREE.MeshStandardMaterial({
-  color:0x22d3ee,emissive:0x0891b2,
-  emissiveIntensity:1.8,metalness:.5,roughness:.2
-});
 
 for(let i=0;i<24;i++){
+  const material=new THREE.MeshStandardMaterial({
+    color:0x22d3ee,
+    emissive:0x0891b2,
+    emissiveIntensity:1.8,
+    metalness:.5,
+    roughness:.2
+  });
+
   const gem=new THREE.Mesh(
     new THREE.OctahedronGeometry(.42),
-    gemMaterial
+    material
   );
+
   gem.position.set(
     (Math.random()-.5)*27,
     .9+Math.random()*1.2,
     -28+Math.random()*42
   );
+
   gem.castShadow=true;
   scene.add(gem);
   gems.push(gem);
 }
 
-// Floating landscape decorations
+/* LANDSCAPE DECORATIONS */
 for(let i=0;i<25;i++){
   const rock=new THREE.Mesh(
     new THREE.DodecahedronGeometry(.5+Math.random()),
@@ -296,38 +356,26 @@ for(let i=0;i<25;i++){
       color:0x243b66,roughness:.8
     })
   );
+
   rock.position.set(
     (Math.random()>.5?1:-1)*(18+Math.random()*15),
     .5,
     -Math.random()*55
   );
+
   rock.castShadow=true;
   scene.add(rock);
 }
 
+/* GAME STATE */
 const keys={};
 const touch={};
+
 let started=false;
-let coins=0,score=0,gemCount=0;
+let coins=0;
+let score=0;
+let gemCount=0;
 let collected=0;
-
-addEventListener("keydown",e=>{
-  keys[e.key.toLowerCase()]=true;
-  if(["ArrowUp","ArrowDown","ArrowLeft","ArrowRight"," "].includes(e.key))
-    e.preventDefault();
-});
-addEventListener("keyup",e=>keys[e.key.toLowerCase()]=false);
-
-document.querySelectorAll("[data-move]").forEach(button=>{
-  const direction=button.dataset.move;
-  button.addEventListener("pointerdown",e=>{
-    e.preventDefault();
-    touch[direction]=true;
-  });
-  ["pointerup","pointercancel","pointerleave"].forEach(event=>{
-    button.addEventListener(event,()=>touch[direction]=false);
-  });
-});
 
 const coinEl=document.getElementById("coins");
 const scoreEl=document.getElementById("score");
@@ -339,9 +387,47 @@ function updateStats(){
   gemEl.textContent=gemCount;
 }
 
-function showMessage(title,text){
+/* KEYBOARD */
+addEventListener("keydown",e=>{
+  keys[e.key.toLowerCase()]=true;
+
+  if([
+    "ArrowUp","ArrowDown","ArrowLeft","ArrowRight"," "
+  ].includes(e.key)){
+    e.preventDefault();
+  }
+});
+
+addEventListener("keyup",e=>{
+  keys[e.key.toLowerCase()]=false;
+});
+
+addEventListener("blur",()=>{
+  Object.keys(keys).forEach(key=>keys[key]=false);
+  Object.keys(touch).forEach(key=>touch[key]=false);
+});
+
+/* MOBILE CONTROLS */
+document.querySelectorAll("[data-move]").forEach(button=>{
+  const direction=button.dataset.move;
+
+  button.addEventListener("pointerdown",e=>{
+    e.preventDefault();
+    button.setPointerCapture(e.pointerId);
+    touch[direction]=true;
+  });
+
+  ["pointerup","pointercancel","lostpointercapture"].forEach(event=>{
+    button.addEventListener(event,()=>{
+      touch[direction]=false;
+    });
+  });
+});
+
+/* MESSAGES */
+function showMessage(title,messageText){
   document.getElementById("messageTitle").textContent=title;
-  document.getElementById("messageText").textContent=text;
+  document.getElementById("messageText").textContent=messageText;
   document.getElementById("message").style.display="block";
 }
 
@@ -349,66 +435,99 @@ document.getElementById("closeMessage").onclick=()=>{
   document.getElementById("message").style.display="none";
 };
 
+/* START */
 document.getElementById("start").onclick=()=>{
+  if(started)return;
+
   started=true;
+
   document.getElementById("instructions").textContent=
     "Adventure started! Move around and collect the glowing gems.";
+
   document.getElementById("start").textContent="✓ Adventure Started";
-  showMessage("Adventure Started!","Explore the world. Collect gems to earn demo game points.");
+
+  showMessage(
+    "Adventure Started!",
+    "Explore the world and collect gems to earn demo game points."
+  );
 };
 
+/* DISTANCE */
 function distance(a,b){
   return Math.hypot(a.x-b.x,a.z-b.z);
 }
 
+/* PLAYER MOVEMENT */
 function movePlayer(delta){
   if(!started)return;
 
-  let forward=0,side=0;
+  let forward=0;
+  let side=0;
+
   if(keys.w||keys.arrowup||touch.forward)forward-=1;
   if(keys.s||keys.arrowdown||touch.back)forward+=1;
   if(keys.a||keys.arrowleft||touch.left)side-=1;
   if(keys.d||keys.arrowright||touch.right)side+=1;
 
   const length=Math.hypot(forward,side);
+
   if(length>0){
-    forward/=length;side/=length;
+    forward/=length;
+    side/=length;
+
     const speed=8*delta;
+
     player.position.z+=forward*speed;
     player.position.x+=side*speed;
-    player.position.x=THREE.MathUtils.clamp(player.position.x,-30,30);
-    player.position.z=THREE.MathUtils.clamp(player.position.z,-65,18);
+
+    player.position.x=THREE.MathUtils.clamp(
+      player.position.x,-30,30
+    );
+
+    player.position.z=THREE.MathUtils.clamp(
+      player.position.z,-65,18
+    );
+
     player.rotation.y=Math.atan2(side,forward);
+
     body.position.y=.95+Math.sin(performance.now()*.012)*.08;
+  }else{
+    body.position.y=.95;
   }
 }
 
+/* GEM COLLECTION */
 function checkGems(){
   gems.forEach(gem=>{
     if(!gem.visible)return;
+
     if(distance(player.position,gem.position)<1.35){
       gem.visible=false;
+
       coins+=1;
       score+=10;
       gemCount++;
       collected++;
+
       updateStats();
 
       if(collected===24){
         showMessage(
           "World Explored!",
-          "You collected all available gems! This is a demo score, not real ZMV Coin."
+          "You collected all available gems! This is demo score, not real ZMV Coin."
         );
       }
     }
   });
 }
 
+/* PORTAL DETECTION */
 function checkPortals(){
   portals.forEach(portal=>{
     if(distance(player.position,portal.group.position)<2.6){
       if(!portal.notified){
         portal.notified=true;
+
         showMessage(
           portal.data.icon+" "+portal.data.name,
           "This game portal is a preview. Its playable game will be developed in a later phase."
@@ -420,11 +539,18 @@ function checkPortals(){
   });
 }
 
+/* CAMERA */
 camera.position.set(0,7,17);
+
 const cameraTarget=new THREE.Vector3();
 
+/* CLOCK MUST BE CREATED BEFORE ANIMATION */
+const clock=new THREE.Clock();
+
+/* ANIMATION */
 function animate(){
   requestAnimationFrame(animate);
+
   const delta=Math.min(clock.getDelta(),.04);
   const time=clock.elapsedTime;
 
@@ -438,7 +564,10 @@ function animate(){
 
   portals.forEach((portal,i)=>{
     portal.ring.rotation.y+=delta*.35;
-    portal.group.position.y=Math.sin(time*1.2+i)*.08;
+    portal.ring.position.y=
+      portal.baseY+Math.sin(time*1.2+i)*.08;
+
+    portal.inner.position.y=portal.ring.position.y;
   });
 
   movePlayer(delta);
@@ -450,7 +579,12 @@ function animate(){
     6,
     player.position.z+10
   );
-  camera.position.lerp(cameraTarget,1-Math.exp(-delta*3));
+
+  camera.position.lerp(
+    cameraTarget,
+    1-Math.exp(-delta*3)
+  );
+
   camera.lookAt(
     player.position.x,
     1.2,
@@ -460,15 +594,22 @@ function animate(){
   renderer.render(scene,camera);
 }
 
-const clock=new THREE.Clock();
 animate();
 
+/* RESPONSIVE RESIZE */
 addEventListener("resize",()=>{
   camera.aspect=innerWidth/innerHeight;
   camera.updateProjectionMatrix();
+
   renderer.setSize(innerWidth,innerHeight);
-  renderer.setPixelRatio(Math.min(devicePixelRatio,2));
+  renderer.setPixelRatio(Math.min(devicePixelRatio,1.5));
 });
+
+} catch(error) {
+  console.error("Zemivo Gaming World Error:",error);
+  document.getElementById("error").style.display="flex";
+}
 </script>
+
 </body>
 </html>
