@@ -100,6 +100,142 @@
     const root=document.documentElement;let moveFrame=0;
     function moveWorld(x,y){if(moveFrame)cancelAnimationFrame(moveFrame);moveFrame=requestAnimationFrame(()=>{root.style.setProperty("--px",((x/Math.max(1,innerWidth))-.5)*18+"px");root.style.setProperty("--py",((y/Math.max(1,innerHeight))-.5)*14+"px")})}
     window.addEventListener("pointermove",e=>moveWorld(e.clientX,e.clientY),{passive:true});
+    
+// ===== ZEMIVO DAILY LIVING WORLD =====
+(() => {
+  const world = document.querySelector(".world");
+  if (!world) return;
+
+  // প্রতিদিনের তারিখ থেকে নির্দিষ্ট দৃশ্য নির্বাচন
+  const today = new Date();
+  const dateKey = `${today.getFullYear()}-${today.getMonth()+1}-${today.getDate()}`;
+
+  let hash = 0;
+  for (let i = 0; i < dateKey.length; i++) {
+    hash = (hash * 31 + dateKey.charCodeAt(i)) >>> 0;
+  }
+
+  // ১০,০০০টি আলাদা দৃশ্য-সমন্বয়ের সূচক
+  const sceneNumber = hash % 10000;
+
+  const scenes = [
+    ["#061a3e","#075985","#22d3ee","#a5f3fc","#8b5cf6"],
+    ["#10213d","#164e63","#67e8f9","#dbeafe","#38bdf8"],
+    ["#20143d","#4c1d95","#c4b5fd","#f0abfc","#818cf8"],
+    ["#082f2b","#166534","#86efac","#d9f99d","#2dd4bf"],
+    ["#321b35","#7c2d12","#fdba74","#fef3c7","#fb7185"],
+    ["#101c36","#1e3a8a","#93c5fd","#e0f2fe","#60a5fa"],
+    ["#142b3a","#155e75","#a5f3fc","#ccfbf1","#2dd4bf"],
+    ["#261b45","#6d28d9","#ddd6fe","#f5d0fe","#a78bfa"],
+    ["#102b3b","#0f766e","#99f6e4","#ecfeff","#5eead4"],
+    ["#241b36","#713f12","#fde68a","#fef3c7","#f472b6"]
+  ];
+
+  const names = [
+    "Aurora Valley",
+    "Crystal Ocean",
+    "Floating Gardens",
+    "Neon Metropolis",
+    "Moonlit Desert",
+    "Cloud Kingdom",
+    "Enchanted Forest",
+    "Solar Coast",
+    "Starlight Harbor",
+    "Emerald Highlands"
+  ];
+
+  const palette = scenes[sceneNumber % scenes.length];
+  const sceneName = names[sceneNumber % names.length];
+
+  // আজকের দৃশ্যের রং
+  world.style.background =
+    `radial-gradient(ellipse at 75% 15%, ${palette[3]}, transparent 28%),
+     linear-gradient(180deg, ${palette[0]}, ${palette[1]} 60%, #061a3e)`;
+
+  // বিদ্যমান 3D গ্রহ ও ব্যানারের রং পরিবর্তন
+  const planet = world.querySelector(".planet.p1");
+  const smallPlanet = world.querySelector(".planet.p2");
+  const banner = world.querySelector(".banner");
+
+  if (planet) {
+    planet.style.background =
+      `radial-gradient(circle at 28% 22%, ${palette[3]}, ${palette[2]} 35%, ${palette[1]} 75%, ${palette[0]})`;
+  }
+
+  if (smallPlanet) {
+    smallPlanet.style.background =
+      `radial-gradient(circle at 28% 22%, #fff, ${palette[4]} 40%, ${palette[1]})`;
+  }
+
+  if (banner) {
+    banner.style.background =
+      `linear-gradient(120deg, ${palette[1]}, ${palette[4]})`;
+  }
+
+  // দৈনিক দৃশ্যের ছোট আলোকবিন্দু
+  const oldOrbs = world.querySelector(".daily-orbs");
+  if (oldOrbs) oldOrbs.remove();
+
+  const orbLayer = document.createElement("div");
+  orbLayer.className = "daily-orbs";
+  orbLayer.setAttribute("aria-hidden", "true");
+
+  for (let i = 0; i < 18; i++) {
+    const orb = document.createElement("span");
+    orb.style.cssText = `
+      position:absolute;
+      left:${(i * 37 + sceneNumber % 97) % 96}%;
+      top:${(i * 23 + sceneNumber % 83) % 90}%;
+      width:${5 + (i % 4) * 3}px;
+      height:${5 + (i % 4) * 3}px;
+      border-radius:50%;
+      background:${palette[3]};
+      opacity:.55;
+      box-shadow:0 0 14px ${palette[2]};
+      animation:dailyGlow ${4 + (i % 5)}s ease-in-out infinite alternate;
+      animation-delay:-${i % 4}s;
+    `;
+    orbLayer.appendChild(orb);
+  }
+
+  world.appendChild(orbLayer);
+
+  // দৃশ্যের নাম
+  const label = document.createElement("div");
+  label.textContent = `TODAY'S WORLD • ${sceneName} • ${sceneNumber + 1}/10,000`;
+  label.style.cssText = `
+    position:absolute;
+    right:12px;
+    bottom:12px;
+    z-index:2;
+    padding:7px 11px;
+    border:1px solid #ffffff66;
+    border-radius:20px;
+    background:#061a3ecc;
+    color:white;
+    font:600 11px Arial,sans-serif;
+    pointer-events:none;
+  `;
+  world.appendChild(label);
+
+  // অ্যানিমেশন
+  if (!document.getElementById("dailyGlowStyle")) {
+    const style = document.createElement("style");
+    style.id = "dailyGlowStyle";
+    style.textContent = `
+      @keyframes dailyGlow {
+        from { transform:translateY(0) scale(.8); opacity:.25; }
+        to { transform:translateY(-14px) scale(1.2); opacity:.8; }
+      }
+      @media(prefers-reduced-motion:reduce) {
+        .daily-orbs span { animation:none!important; }
+      }
+    `;
+    document.head.appendChild(style);
+  }
+})();
+// ===== END DAILY LIVING WORLD =====
+
   </script>
 </body>
 </html>
