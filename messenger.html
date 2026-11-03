@@ -2,512 +2,331 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#111a42">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#8bd5ff">
 <title>Zemivo Messages</title>
+
 <style>
-:root{--bg:#eef2ff;--panel:rgba(255,255,255,.88);--ink:#172033;--muted:#64748b;--blue:#356dff;--cyan:#4de1e8;--line:rgba(96,116,160,.2);--shadow:0 18px 55px rgba(36,56,120,.14)}
-*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;font-family:Inter,Arial,Helvetica,sans-serif;color:var(--ink);background:radial-gradient(circle at 10% 5%,#d9e8ff 0,transparent 30%),radial-gradient(circle at 90% 90%,#d9d4ff 0,transparent 34%),#edf2ff}button,input{font:inherit}button{cursor:pointer}button:disabled{cursor:not-allowed;opacity:.55}
-.header{height:64px;position:fixed;inset:0 0 auto;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:0 18px;background:rgba(255,255,255,.78);backdrop-filter:blur(18px);border-bottom:1px solid var(--line)}
-.logo{font-size:27px;font-weight:900;letter-spacing:-1px;color:#2859df;text-shadow:0 2px 0 #fff,0 7px 18px #356dff30}.header-actions{display:flex;gap:9px}.header-button{width:41px;height:41px;border:1px solid var(--line);border-radius:15px;background:linear-gradient(145deg,#fff,#e8edff);box-shadow:5px 5px 12px #aab5d333,-4px -4px 10px #fff;color:#25365c;font-size:18px}
-.app{position:fixed;top:78px;bottom:14px;left:50%;transform:translateX(-50%);width:min(1200px,calc(100% - 28px));display:flex;overflow:hidden;border:1px solid #fff9;border-radius:25px;background:var(--panel);backdrop-filter:blur(20px);box-shadow:var(--shadow);perspective:1400px}
-.users-panel{width:325px;min-width:280px;border-right:1px solid var(--line);display:flex;flex-direction:column;min-height:0;background:linear-gradient(155deg,#ffffffed,#f4f7ffed)}.users-title{padding:20px 18px 14px;font-size:23px;font-weight:850;letter-spacing:-.5px}.subtitle{font-size:12px;color:var(--muted);font-weight:500;margin-top:5px}.search-box{padding:0 14px 14px}.search-box input{width:100%;padding:12px 14px;border:1px solid var(--line);border-radius:16px;outline:none;background:#fff;box-shadow:inset 2px 2px 6px #b9c5df25;font-size:15px}.search-box input:focus,.composer input:focus{border-color:#8ca8ff;box-shadow:0 0 0 3px #356dff18}.users-list{flex:1;min-height:0;overflow:auto;padding:0 7px 12px}.user-item{width:100%;border:1px solid transparent;border-radius:16px;background:transparent;padding:11px 10px;display:flex;align-items:center;gap:11px;text-align:left;margin:2px 0;transition:transform .18s,background .18s,box-shadow .18s}.user-item:hover{background:#fff;transform:translateY(-1px);box-shadow:0 7px 18px #536da015}.user-item.active{background:linear-gradient(120deg,#e5edff,#f5f7ff);border-color:#d7e2ff;box-shadow:inset 0 0 0 1px #fff}.user-avatar{width:46px;height:46px;flex-shrink:0;border-radius:15px;background:linear-gradient(145deg,#387bff,#7a52e8);color:white;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:17px;object-fit:cover;box-shadow:0 5px 12px #356dff25}.user-meta{min-width:0;flex:1}.user-name{font-weight:750;color:#172033;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.user-email{font-size:12px;color:var(--muted);margin-top:4px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.chat-panel{flex:1;min-width:0;min-height:0;display:flex;flex-direction:column;position:relative}.chat-person{height:76px;min-height:76px;padding:12px 17px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:11px;background:#ffffffbd;z-index:10;backdrop-filter:blur(12px)}.chat-person-name{font-weight:850}.chat-person-status{color:var(--muted);font-size:12px;margin-top:4px}.back-button{display:none;border:1px solid var(--line);background:#fff;width:38px;height:38px;border-radius:13px;font-size:18px;flex-shrink:0}.messages{flex:1;min-height:0;padding:20px;overflow-y:auto;background:radial-gradient(circle at 85% 15%,#dbe8ff4a,transparent 30%),#f7f9ff}.empty-chat{height:100%;min-height:160px;display:flex;align-items:center;justify-content:center;text-align:center;color:var(--muted);padding:30px}.message-row{display:flex;margin-bottom:13px;animation:rise .18s ease-out}.message-row.sent{justify-content:flex-end}.message-row.received{justify-content:flex-start}@keyframes rise{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}.message{max-width:min(78%,570px);padding:11px 13px;border-radius:18px;line-height:1.48;overflow-wrap:anywhere;box-shadow:0 5px 15px #263c6610}.message-row.sent .message{background:linear-gradient(135deg,#356dff,#6657e9);color:#fff;border-bottom-right-radius:5px}.message-row.received .message{background:#fff;color:var(--ink);border:1px solid #e5eaf5;border-bottom-left-radius:5px}.message-time{font-size:10px;opacity:.76;margin-top:6px;text-align:right}.translation{margin-top:8px;padding-top:8px;border-top:1px solid #ffffff55;font-size:12px}.message-row.received .translation{border-top-color:#dce3f0}.translation-label{font-weight:800;margin-bottom:4px}.reply-quote{font-size:12px;opacity:.85;border-left:3px solid currentColor;padding:4px 7px;margin-bottom:7px;background:#ffffff18;border-radius:3px}.message-actions{display:flex;gap:5px;flex-wrap:wrap;margin-top:8px;justify-content:flex-end}.message-actions button{border:1px solid #ffffff50;background:#ffffff18;color:inherit;border-radius:8px;padding:4px 7px;font-size:11px}.message-row.received .message-actions button{border-color:#dbe2f0;background:#f5f7fc;color:#334155}.composer{min-height:76px;padding:13px;border-top:1px solid var(--line);background:#ffffffd9;display:flex;gap:9px;align-items:center;flex-shrink:0;z-index:12}.attach{width:43px;height:43px;flex-shrink:0;border:1px solid var(--line);border-radius:15px;background:linear-gradient(145deg,#fff,#e8edff);font-size:18px}.composer input{flex:1;min-width:0;height:44px;padding:11px 16px;border:1px solid var(--line);border-radius:16px;outline:none;font-size:16px;background:#fff}.send{height:44px;flex-shrink:0;border:0;border-radius:15px;padding:0 20px;background:linear-gradient(135deg,#356dff,#624fe6);color:#fff;font-weight:800;box-shadow:0 7px 17px #356dff30}.toast{position:fixed;left:50%;bottom:25px;transform:translateX(-50%);background:#111827;color:#fff;padding:12px 18px;border-radius:12px;display:none;z-index:1000;max-width:90%;text-align:center;box-shadow:0 10px 30px #11182733}.toast.show{display:block}.loading,.error{padding:24px;text-align:center;color:var(--muted);font-size:14px}.error{color:#dc2626}.bottom-nav{display:none}
-@media(max-width:700px){.header{height:58px;padding:0 12px}.logo{font-size:24px}.app{top:68px;bottom:66px;left:0;transform:none;width:100%;border-radius:19px 19px 0 0;border-left:0;border-right:0}.users-panel{width:100%;min-width:100%;border-right:0}.chat-panel{width:100%;min-width:100%}.app.chat-open .users-panel{display:none}.app:not(.chat-open) .chat-panel{display:none}.chat-person{height:68px;min-height:68px;padding:9px 12px}.back-button{display:block}.messages{padding:14px 12px 18px}.message{max-width:88%}.composer{position:fixed;left:0;right:0;bottom:58px;width:100%;min-height:66px;padding:9px;gap:6px;z-index:600}.composer input{font-size:16px;padding:10px 12px}.send{padding:0 14px}.attach{width:39px;height:40px}.app.chat-open .messages{padding-bottom:20px}.users-title{padding:15px 15px 12px}.bottom-nav{display:flex;position:fixed;left:0;right:0;bottom:0;height:58px;background:#ffffffed;backdrop-filter:blur(15px);border-top:1px solid var(--line);z-index:700}.bottom-nav a{flex:1;display:flex;flex-direction:column;gap:2px;align-items:center;justify-content:center;text-decoration:none;color:#526079;font-size:11px}.bottom-nav a.active{color:#2859df;font-weight:800}}
-@media(min-width:701px){.back-button{display:none}}
-@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
-
-/* ZEMIVO INTERACTIVE 3D DEPTH — visual + press feedback */
-:root{--z3-shadow:rgba(39,59,125,.17);--z3-glow:rgba(53,109,255,.16)}
-.header,.app,.users-panel,.chat-panel,.chat-person,.composer,.bottom-nav{transform-style:preserve-3d}
-.header{box-shadow:0 8px 25px rgba(45,62,125,.09)}
-.app{box-shadow:0 25px 62px rgba(36,56,120,.19),inset 0 1px 0 rgba(255,255,255,.95);transition:box-shadow .25s ease}
-.header-button,.attach,.back-button,.send,.user-avatar,.user-item,.composer input,.search-box input,.message,.bottom-nav a{transition:transform .2s ease,box-shadow .2s ease,border-color .2s ease,filter .2s ease}
-.header-button,.attach,.back-button{box-shadow:6px 6px 13px rgba(60,78,133,.13),-5px -5px 12px rgba(255,255,255,.96),inset 0 1px 0 #fff}
-.send{box-shadow:0 9px 20px rgba(53,109,255,.31),inset 0 1px 0 rgba(255,255,255,.35)}
-.header-button:active,.attach:active,.back-button:active,.send:active{transform:translateY(2px) scale(.97);box-shadow:inset 3px 3px 8px rgba(34,52,105,.17)}
-.user-item:hover{transform:translateY(-2px) translateZ(4px);box-shadow:0 10px 20px rgba(43,65,130,.12),inset 0 1px 0 #fff}
-.user-item.active{transform:translateZ(3px);box-shadow:inset 2px 2px 6px rgba(63,89,158,.08),inset -2px -2px 6px #fff,0 7px 15px rgba(53,109,255,.09)}
-.user-avatar{box-shadow:0 8px 16px rgba(53,109,255,.22),inset 0 1px 0 rgba(255,255,255,.45)}
-.composer input,.search-box input{box-shadow:inset 3px 3px 8px rgba(56,76,132,.07),inset -2px -2px 6px #fff}
-.composer input:focus,.search-box input:focus{box-shadow:0 0 0 3px var(--z3-glow),inset 2px 2px 5px rgba(56,76,132,.05)}
-.message-row.sent .message{box-shadow:0 9px 20px rgba(53,109,255,.2),inset 0 1px 0 rgba(255,255,255,.22)}
-.message-row.received .message{box-shadow:0 7px 17px rgba(44,61,102,.09),inset 0 1px 0 #fff}
-.logo{text-shadow:0 1px 0 #fff,0 3px 0 rgba(91,123,220,.18),0 8px 18px rgba(53,109,255,.18)}
-@media(hover:hover) and (pointer:fine) and (min-width:701px){.header-button:hover,.attach:hover,.back-button:hover,.send:hover{transform:translateY(-2px) translateZ(5px);filter:brightness(1.04)}.message-row .message:hover{transform:translateY(-1px) translateZ(3px)}}
-@media(prefers-reduced-motion:reduce){.header-button,.attach,.back-button,.send,.user-item,.user-avatar,.composer input,.search-box input,.message,.bottom-nav a{transition:none!important}}
-/* ZEMIVO MESSENGER FIX */
-.chat-panel{
-  min-height:0;
+:root{
+  --blue:#356dff;
+  --purple:#6657e9;
+  --ink:#172033;
+  --muted:#64748b;
+  --line:rgba(96,116,160,.2);
+  --glass:rgba(255,255,255,.34);
+  --shadow:0 20px 55px rgba(36,56,120,.18);
+  --sky1:#8bd5ff;
+  --sky2:#e7f7ff;
+  --mountain:#799bb5;
+  --forest:#244f49;
+}
+*{box-sizing:border-box}
+html,body{margin:0;width:100%;height:100%;font-family:Arial,Helvetica,sans-serif;color:var(--ink)}
+body{
   overflow:hidden;
+  background:linear-gradient(180deg,var(--sky1),var(--sky2) 65%,#b5d7c3);
+}
+button,input{font:inherit}
+button{cursor:pointer}
+button:disabled{opacity:.5;cursor:not-allowed}
+
+/* Nature world */
+.world{position:fixed;inset:0;overflow:hidden;pointer-events:none;z-index:0}
+.sun{
+  position:absolute;width:clamp(90px,15vw,170px);aspect-ratio:1;
+  border-radius:50%;right:12%;top:10%;
+  background:#fff2b0;filter:blur(2px);
+  box-shadow:0 0 70px 25px #fff2b055;
+}
+.cloud{
+  position:absolute;width:190px;height:48px;top:23%;
+  left:-220px;border-radius:50%;
+  background:#ffffff77;filter:blur(9px);
+  animation:drift 42s linear infinite;
+}
+.cloud.two{top:36%;animation-delay:-20s;transform:scale(.7)}
+@keyframes drift{to{translate:calc(100vw + 500px) 0}}
+.mountains{
+  position:absolute;inset:28% -5% 0;
+  background:
+    linear-gradient(145deg,transparent 0 22%,var(--mountain) 22.2% 43%,transparent 43.2%),
+    linear-gradient(35deg,transparent 0 30%,#9bb7c2 30.2% 51%,transparent 51.2%),
+    linear-gradient(145deg,transparent 0 42%,#426f70 42.2% 68%,transparent 68.2%);
+  background-size:75% 100%,85% 100%,100% 100%;
+  background-position:left bottom,center bottom,right bottom;
+  background-repeat:no-repeat;
+  opacity:.8;
+}
+.forest{
+  position:absolute;bottom:-3%;left:-5%;right:-5%;height:34%;
+  background:
+    radial-gradient(ellipse at 8% 100%,#244b43 0 15%,transparent 15.5%),
+    radial-gradient(ellipse at 22% 100%,#356b51 0 19%,transparent 19.5%),
+    radial-gradient(ellipse at 39% 100%,#1f5144 0 17%,transparent 17.5%),
+    radial-gradient(ellipse at 57% 100%,#39745a 0 20%,transparent 20.5%),
+    radial-gradient(ellipse at 76% 100%,#245346 0 18%,transparent 18.5%),
+    radial-gradient(ellipse at 94% 100%,#183f3b 0 20%,transparent 20.5%);
+}
+.haze{position:absolute;inset:30% 0 0;background:linear-gradient(transparent,#ffffff30)}
+
+/* Header */
+.header{
+  height:64px;position:fixed;inset:0 0 auto;z-index:10;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 20px;background:#ffffff50;
+  border-bottom:1px solid #ffffff90;
+  backdrop-filter:blur(18px);
+}
+.logo{
+  font-size:27px;font-weight:900;letter-spacing:-1px;
+  color:#2859df;text-shadow:0 3px 12px #356dff35;
+}
+.header-actions{display:flex;gap:9px}
+.header-button{
+  width:42px;height:42px;border:1px solid #ffffffaa;
+  border-radius:15px;background:#ffffff80;
+  box-shadow:5px 5px 12px #6078a322,-4px -4px 10px #ffffffb0;
 }
 
+/* Main app */
+.app{
+  position:fixed;z-index:2;top:78px;bottom:14px;
+  left:50%;transform:translateX(-50%);
+  width:min(1200px,calc(100% - 28px));
+  display:flex;overflow:hidden;
+  border:1px solid #ffffffbb;border-radius:25px;
+  background:#ffffff30;backdrop-filter:blur(18px) saturate(145%);
+  box-shadow:var(--shadow),inset 0 1px 0 #ffffff;
+}
+.users-panel{
+  width:325px;min-width:280px;min-height:0;
+  display:flex;flex-direction:column;
+  border-right:1px solid #ffffffa0;
+  background:#ffffff38;backdrop-filter:blur(16px);
+}
+.users-title{padding:20px 18px 14px;font-size:23px;font-weight:850}
+.subtitle{font-size:12px;color:#526079;margin-top:5px;font-weight:500}
+.search-box{padding:0 14px 14px}
+.search-box input{
+  width:100%;padding:12px 14px;border:1px solid #ffffffb0;
+  border-radius:16px;outline:none;background:#ffffffa0;
+  box-shadow:inset 2px 2px 6px #b9c5df25;
+}
+.search-box input:focus,.composer input:focus{
+  border-color:#8ca8ff;box-shadow:0 0 0 3px #356dff20;
+}
+.users-list{flex:1;min-height:0;overflow:auto;padding:0 7px 12px}
+.user-item{
+  width:100%;border:1px solid transparent;border-radius:16px;
+  background:#ffffff24;padding:11px 10px;
+  display:flex;align-items:center;gap:11px;text-align:left;
+  margin:3px 0;transition:.2s;
+}
+.user-item:hover{background:#ffffff90;transform:translateY(-2px)}
+.user-item.active{background:#ffffffa8;border-color:#ffffff}
+.user-avatar{
+  width:46px;height:46px;flex-shrink:0;border-radius:15px;
+  background:linear-gradient(145deg,#387bff,#7a52e8);
+  color:white;display:flex;align-items:center;justify-content:center;
+  font-weight:800;font-size:17px;object-fit:cover;
+  box-shadow:0 6px 15px #356dff35;
+}
+.user-meta{min-width:0;flex:1}
+.user-name{font-weight:750;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.user-email{font-size:12px;color:var(--muted);margin-top:4px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+
+/* Chat */
+.chat-panel{flex:1;min-width:0;min-height:0;display:flex;flex-direction:column}
+.chat-person{
+  height:76px;min-height:76px;padding:12px 17px;
+  border-bottom:1px solid #ffffffa0;
+  display:flex;align-items:center;gap:11px;
+  background:#ffffff50;backdrop-filter:blur(14px);
+}
+.chat-person-name{font-weight:850}
+.chat-person-status{color:var(--muted);font-size:12px;margin-top:4px}
+.back-button{
+  display:none;width:38px;height:38px;flex-shrink:0;
+  border:1px solid #ffffff;border-radius:13px;background:#ffffff90;
+}
 .messages{
-  flex:1 1 auto;
-  min-height:0;
-  overflow-y:auto;
-  overscroll-behavior:contain;
-  padding-bottom:15px;
+  flex:1 1 auto;min-height:0;padding:20px;overflow-y:auto;
+  overscroll-behavior:contain;background:#edf5ff24;
+  -webkit-overflow-scrolling:touch;
+}
+.empty-chat{
+  height:100%;min-height:160px;display:flex;align-items:center;
+  justify-content:center;text-align:center;color:var(--muted);padding:30px;
+}
+.message-row{display:flex;margin-bottom:13px;animation:rise .18s ease-out}
+.message-row.sent{justify-content:flex-end}
+.message-row.received{justify-content:flex-start}
+@keyframes rise{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}
+.message{
+  max-width:min(78%,570px);padding:11px 13px;
+  border-radius:18px;line-height:1.48;overflow-wrap:anywhere;
+  box-shadow:0 6px 16px #263c6615;
+}
+.message-row.sent .message{
+  background:linear-gradient(135deg,#356dff,#6657e9);
+  color:white;border-bottom-right-radius:5px;
+}
+.message-row.received .message{
+  background:#ffffffed;color:var(--ink);
+  border:1px solid #e5eaf5;border-bottom-left-radius:5px;
+}
+.message-time{font-size:10px;opacity:.76;margin-top:6px;text-align:right}
+.translation{margin-top:8px;padding-top:8px;border-top:1px solid #ffffff55;font-size:12px}
+.translation-label{font-weight:800;margin-bottom:4px}
+.reply-quote{
+  font-size:12px;opacity:.85;border-left:3px solid currentColor;
+  padding:4px 7px;margin-bottom:7px;background:#ffffff18;border-radius:3px;
+}
+.message-actions{display:flex;gap:5px;flex-wrap:wrap;margin-top:8px;justify-content:flex-end}
+.message-actions button{
+  border:1px solid #ffffff60;background:#ffffff20;color:inherit;
+  border-radius:8px;padding:4px 7px;font-size:11px;
+}
+.message-row.received .message-actions button{
+  border-color:#dbe2f0;background:#f5f7fc;color:#334155;
 }
 
+/* Composer */
 .composer{
-  position:relative;
-  left:auto;
-  right:auto;
-  bottom:auto;
-  width:100%;
-  flex:0 0 auto;
-  min-height:72px;
-  z-index:30;
-  background:rgba(255,255,255,.88);
-  backdrop-filter:blur(22px);
-  -webkit-backdrop-filter:blur(22px);
-  box-shadow:0 -8px 25px rgba(35,65,140,.12);
+  position:relative;min-height:76px;padding:13px;
+  border-top:1px solid #ffffffa0;background:#ffffff60;
+  display:flex;gap:9px;align-items:center;flex-shrink:0;
+  backdrop-filter:blur(20px);z-index:12;
 }
-
-@media(max-width:700px){
-  .composer{
-    position:relative;
-    left:auto;
-    right:auto;
-    bottom:auto;
-    width:100%;
-    padding:9px;
-  }
-
-  .chat-panel{
-    height:100%;
-    min-height:0;
-  }
+.attach{
+  width:43px;height:43px;flex-shrink:0;border:1px solid #ffffff;
+  border-radius:15px;background:#ffffff90;font-size:20px;
 }
-
+.composer input{
+  flex:1;min-width:0;height:44px;padding:11px 16px;
+  border:1px solid #ffffffb0;border-radius:16px;
+  outline:none;font-size:16px;background:#ffffffbd;
+}
+.send{
+  height:44px;flex-shrink:0;border:0;border-radius:15px;
+  padding:0 20px;background:linear-gradient(135deg,#356dff,#624fe6);
+  color:white;font-weight:800;box-shadow:0 7px 17px #356dff35;
+}
 .composer-menu{
-  display:none;
-  position:absolute;
-  bottom:calc(100% + 10px);
-  left:10px;
-  z-index:100;
-  width:180px;
-  padding:9px;
-  border-radius:18px;
-  background:rgba(255,255,255,.95);
-  box-shadow:0 12px 35px #263c6633;
+  display:none;position:absolute;bottom:calc(100% + 10px);left:10px;
+  z-index:100;width:180px;padding:9px;border-radius:18px;
+  background:#ffffffed;box-shadow:0 12px 35px #263c6633;
 }
-
-.composer-menu.open{
-  display:grid;
-  gap:7px;
-}
-
+.composer-menu.open{display:grid;gap:7px}
 .composer-menu button{
-  border:0;
-  border-radius:12px;
-  padding:12px;
-  text-align:left;
-  background:#edf2ff;
-  color:#172033;
-  font-weight:700;
+  border:0;border-radius:12px;padding:12px;text-align:left;
+  background:#edf2ff;color:#172033;font-weight:700;
 }
-  /* =========================================
-   ZEMIVO 3D NATURE GLASS WORLD
-   Visual layer only — does not change Firebase
-========================================= */
-
-:root {
-  --world-sky-top: #8bd5ff;
-  --world-sky-bottom: #e7f7ff;
-  --world-sun: #fff2b0;
-  --world-mountain-back: #799bb5;
-  --world-mountain-front: #426f70;
-  --world-forest: #244f49;
-  --world-glass: rgba(255,255,255,.25);
-  --world-glass-border: rgba(255,255,255,.62);
+.loading,.error{padding:24px;text-align:center;color:var(--muted);font-size:14px}
+.error{color:#dc2626}
+.toast{
+  position:fixed;left:50%;bottom:25px;transform:translateX(-50%);
+  background:#111827;color:white;padding:12px 18px;border-radius:12px;
+  display:none;z-index:1000;max-width:90%;text-align:center;
 }
+.toast.show{display:block}
+.bottom-nav{display:none}
 
-body {
-  isolation: isolate;
-  background: transparent;
-}
-
-/* Full-screen nature environment */
-.zemivo-world {
-  position: fixed;
-  inset: 0;
-  z-index: -1;
-  overflow: hidden;
-  pointer-events: none;
-  background:
-    linear-gradient(
-      180deg,
-      var(--world-sky-top) 0%,
-      var(--world-sky-bottom) 58%,
-      #b5d7c3 100%
-    );
-  perspective: 1000px;
-  transform-style: preserve-3d;
-}
-
-/* Sun */
-.world-sun {
-  position: absolute;
-  width: clamp(90px, 16vw, 180px);
-  aspect-ratio: 1;
-  border-radius: 50%;
-  top: 12%;
-  right: 15%;
-  background: var(--world-sun);
-  filter: blur(2px);
-  box-shadow:
-    0 0 45px 18px rgba(255,245,190,.35),
-    0 0 100px 35px rgba(255,255,255,.2);
-}
-
-/* Soft moving clouds */
-.world-cloud {
-  position: absolute;
-  width: 190px;
-  height: 48px;
-  border-radius: 50%;
-  background: rgba(255,255,255,.48);
-  filter: blur(9px);
-  animation: cloudDrift 38s linear infinite;
-}
-
-.cloud-one {
-  top: 20%;
-  left: -220px;
-}
-
-.cloud-two {
-  top: 34%;
-  left: -280px;
-  transform: scale(.7);
-  animation-delay: -18s;
-}
-
-@keyframes cloudDrift {
-  from { translate: 0 0; }
-  to { translate: calc(100vw + 500px) 0; }
-}
-
-/* Layered mountain scenery */
-.world-mountains {
-  position: absolute;
-  inset: 25% -5% 0;
-  background:
-    linear-gradient(
-      145deg,
-      transparent 0 22%,
-      var(--world-mountain-back) 22.2% 43%,
-      transparent 43.2%
-    ),
-    linear-gradient(
-      35deg,
-      transparent 0 30%,
-      #9bb7c2 30.2% 51%,
-      transparent 51.2%
-    ),
-    linear-gradient(
-      145deg,
-      transparent 0 42%,
-      var(--world-mountain-front) 42.2% 68%,
-      transparent 68.2%
-    );
-  background-size: 75% 100%, 85% 100%, 100% 100%;
-  background-position: left bottom, center bottom, right bottom;
-  background-repeat: no-repeat;
-  transform: translateZ(-100px) scale(1.12);
-  opacity: .82;
-}
-
-/* Deep forest foreground */
-.world-forest {
-  position: absolute;
-  left: -5%;
-  right: -5%;
-  bottom: -2%;
-  height: 36%;
-  background:
-    radial-gradient(ellipse at 8% 100%, #244b43 0 15%, transparent 15.5%),
-    radial-gradient(ellipse at 22% 100%, #356b51 0 19%, transparent 19.5%),
-    radial-gradient(ellipse at 39% 100%, #1f5144 0 17%, transparent 17.5%),
-    radial-gradient(ellipse at 57% 100%, #39745a 0 20%, transparent 20.5%),
-    radial-gradient(ellipse at 76% 100%, #245346 0 18%, transparent 18.5%),
-    radial-gradient(ellipse at 94% 100%, #183f3b 0 20%, transparent 20.5%);
-  filter: drop-shadow(0 -8px 15px rgba(20,65,50,.16));
-  transform: translateZ(35px);
-}
-
-/* Atmospheric depth */
-.world-haze {
-  position: absolute;
-  inset: 30% 0 0;
-  background: linear-gradient(
-    180deg,
-    transparent,
-    rgba(255,255,255,.18) 45%,
-    rgba(221,245,233,.25)
-  );
-}
-
-/* Make the app itself a transparent glass window */
-.app {
-  background: rgba(255,255,255,.22) !important;
-  border: 1px solid var(--world-glass-border) !important;
-  backdrop-filter: blur(13px) saturate(145%);
-  -webkit-backdrop-filter: blur(13px) saturate(145%);
-  box-shadow:
-    0 25px 65px rgba(28,55,100,.20),
-    inset 0 1px 0 rgba(255,255,255,.85),
-    inset 0 -1px 0 rgba(255,255,255,.25);
-}
-
-/* Transparent glass panels */
-.users-panel {
-  background: rgba(255,255,255,.22) !important;
-  backdrop-filter: blur(15px) saturate(140%);
-  -webkit-backdrop-filter: blur(15px) saturate(140%);
-}
-
-.chat-person {
-  background: rgba(255,255,255,.28) !important;
-  backdrop-filter: blur(18px) saturate(150%);
-  -webkit-backdrop-filter: blur(18px) saturate(150%);
-}
-
-.messages {
-  background: rgba(235,245,255,.16) !important;
-  backdrop-filter: blur(3px);
-  -webkit-backdrop-filter: blur(3px);
-}
-
-.composer {
-  background: rgba(255,255,255,.32) !important;
-  backdrop-filter: blur(22px) saturate(155%);
-  -webkit-backdrop-filter: blur(22px) saturate(155%);
-  border-top: 1px solid rgba(255,255,255,.65);
-}
-
-.bottom-nav {
-  background: rgba(255,255,255,.32) !important;
-  backdrop-filter: blur(20px) saturate(150%);
-  -webkit-backdrop-filter: blur(20px) saturate(150%);
-}
-
-/* Glass effect on people and message controls */
-.user-item {
-  background: rgba(255,255,255,.18);
-  border-color: rgba(255,255,255,.24);
-}
-
-.user-item.active {
-  background: rgba(255,255,255,.42);
-  border-color: rgba(255,255,255,.75);
-}
-
-.composer input,
-.search-box input {
-  background: rgba(255,255,255,.62);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-}
-
-.header-button,
-.attach,
-.back-button {
-  background: rgba(255,255,255,.48);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-}
-
-/* Keep message text readable over the scenery */
-.message-row.received .message {
-  background: rgba(255,255,255,.88);
-  backdrop-filter: blur(12px);
-}
-
-.message-row.sent .message {
-  background: linear-gradient(
-    135deg,
-    rgba(40,105,255,.94),
-    rgba(100,75,230,.94)
-  );
-}
-
-/* Responsive scenery */
-@media(max-width:700px) {
-  .zemivo-world {
-    position: fixed;
+/* Mobile */
+@media(max-width:700px){
+  .header{height:58px;padding:0 12px}
+  .logo{font-size:24px}
+  .app{
+    top:58px;bottom:0;left:0;transform:none;
+    width:100%;border-radius:0;border-left:0;border-right:0;
   }
-
-  .world-mountains {
-    inset: 30% -30% 0;
-    background-size: 100% 100%, 110% 100%, 125% 100%;
-  }
-
-  .world-forest {
-    height: 30%;
-  }
-
-  .app {
-    background: rgba(255,255,255,.22) !important;
-  }
-
-  .messages {
-    background: rgba(235,245,255,.16) !important;
-  }
+  .users-panel{width:100%;min-width:100%;border-right:0}
+  .chat-panel{width:100%;min-width:100%}
+  .app.chat-open .users-panel{display:none}
+  .app:not(.chat-open) .chat-panel{display:none}
+  .chat-person{height:66px;min-height:66px;padding:9px 12px}
+  .back-button{display:block}
+  .messages{padding:14px 12px 18px}
+  .message{max-width:88%}
+  .composer{min-height:66px;padding:9px;gap:6px}
+  .composer input{font-size:16px;padding:10px 12px}
+  .send{padding:0 14px}
+  .attach{width:39px;height:40px}
+  .users-title{padding:15px 15px 12px}
 }
-
-@media(prefers-reduced-motion:reduce) {
-  .world-cloud {
-    animation: none !important;
-  }
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
 }
-  
-/* =========================================
-   ZEMIVO MESSENGER — FULL SCREEN 3D FIX
-   ========================================= */
-
-/* 3D Nature Background দৃশ্যমান রাখবে */
-#zemivoWorld {
-  position: fixed;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-}
-
-/* Messenger পুরো স্ক্রিন ব্যবহার করবে */
-.app {
-  position: fixed;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-
-  width: 100%;
-  max-width: none;
-  height: 100%;
-  margin: 0;
-
-  transform: none;
-  border-radius: 0;
-  z-index: 1;
-}
-
-/* Chat-এর পেছনে 3D দৃশ্য দেখা যাবে */
-.chat-panel,
-.users-panel {
-  background: rgba(255,255,255,.16) !important;
-  min-height: 0;
-}
-
-/* Chat Header হবে স্বচ্ছ Glass */
-.chat-person {
-  background: rgba(255,255,255,.28) !important;
-  flex-shrink: 0;
-}
-
-/* Message Area নিজে Scroll করবে */
-.messages {
-  flex: 1 1 auto;
-  min-height: 0;
-  overflow-y: auto;
-  overflow-x: hidden;
-  overscroll-behavior: contain;
-  background: rgba(235,245,255,.16) !important;
-  -webkit-overflow-scrolling: touch;
-}
-
-/* Message পাঠানোর জায়গা নিচে থাকবে */
-.composer {
-  position: relative;
-  flex: 0 0 auto;
-  width: 100%;
-  min-height: 72px;
-  z-index: 30;
-  background: rgba(255,255,255,.32) !important;
-}
-
-/* Mobile Screen */
-@media(max-width:700px) {
-  .app {
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    width: 100%;
-    height: 100%;
-    border-radius: 0;
-  }
-
-  .chat-panel {
-    width: 100%;
-    height: 100%;
-    min-height: 0;
-  }
-
-  .messages {
-    padding: 14px 12px 18px;
-  }
-
-  .composer {
-    position: relative;
-    left: auto;
-    right: auto;
-    bottom: auto;
-    width: 100%;
-    flex-shrink: 0;
-    padding: 9px;
-  }
-}
-
 </style>
 </head>
+
 <body>
-  <div id="zemivoWorld" class="zemivo-world" aria-hidden="true">
-  <div class="world-sun"></div>
-  <div class="world-cloud cloud-one"></div>
-  <div class="world-cloud cloud-two"></div>
-  <div class="world-mountains"></div>
-  <div class="world-forest"></div>
-  <div class="world-haze"></div>
+<div class="world" aria-hidden="true">
+  <div class="sun"></div>
+  <div class="cloud"></div>
+  <div class="cloud two"></div>
+  <div class="mountains"></div>
+  <div class="forest"></div>
+  <div class="haze"></div>
 </div>
+
+<header class="header">
+  <div class="logo">ZEMIVO</div>
+  <div class="header-actions">
+    <button class="header-button" type="button" title="Messages">💬</button>
+  </div>
+</header>
 
 <main id="app" class="app">
   <section class="users-panel">
-    <div class="users-title">Messages<div class="subtitle">Connect across languages 🌍</div></div>
-    <div class="search-box"><input id="userSearch" type="search" placeholder="Search people..." autocomplete="off" aria-label="Search people"></div>
-    <div id="usersList" class="users-list"><div class="loading">Loading Zemivo users…</div></div>
+    <div class="users-title">
+      Messages
+      <div class="subtitle">Connect across languages 🌍</div>
+    </div>
+    <div class="search-box">
+      <input id="userSearch" type="search" placeholder="Search people..." autocomplete="off" aria-label="Search people">
+    </div>
+    <div id="usersList" class="users-list">
+      <div class="loading">Loading Zemivo users…</div>
+    </div>
   </section>
+
   <section class="chat-panel">
     <div class="chat-person">
-      <button id="backButton" class="back-button" type="button" aria-label="Back to people">←</button>
+      <button id="backButton" class="back-button" type="button" aria-label="Back">←</button>
       <div id="chatAvatar" class="user-avatar">Z</div>
       <div style="min-width:0">
         <div id="chatName" class="chat-person-name">Select a person</div>
         <div id="chatStatus" class="chat-person-status">Choose someone to start messaging</div>
       </div>
     </div>
-    <div id="messages" class="messages"><div class="empty-chat"><div><div style="font-size:42px">💬</div><div style="font-weight:800;margin-top:8px">Zemivo Messages</div><div style="margin-top:5px">Select a person to start a conversation.</div></div></div></div>
+
+    <div id="messages" class="messages">
+      <div class="empty-chat">
+        <div>
+          <div style="font-size:42px">💬</div>
+          <div style="font-weight:800;margin-top:8px">Zemivo Messages</div>
+          <div style="margin-top:5px">Select a person to start a conversation.</div>
+        </div>
+      </div>
+    </div>
+
     <div class="composer">
-  <button id="attachButton" class="attach" type="button">＋</button>
+      <button id="attachButton" class="attach" type="button" aria-label="Attachments">＋</button>
 
-  <div id="composerMenu" class="composer-menu">
-    <button type="button" id="photoButton">🖼️ Photo</button>
-    <button type="button" id="cameraButton">📷 Camera</button>
-    <button type="button" id="emojiButton">😊 Emoji</button>
-    <button type="button" id="voiceButton">🎤 Voice</button>
-  </div>
+      <div id="composerMenu" class="composer-menu">
+        <button type="button" id="photoButton">🖼️ Photo</button>
+        <button type="button" id="cameraButton">📷 Camera</button>
+        <button type="button" id="emojiButton">😊 Emoji</button>
+        <button type="button" id="voiceButton">🎤 Voice</button>
+      </div>
 
-  <input id="photoInput" type="file" accept="image/*" hidden>
-  <input id="cameraInput" type="file" accept="image/*" capture="environment" hidden>
+      <input id="photoInput" type="file" accept="image/*" hidden>
+      <input id="cameraInput" type="file" accept="image/*" capture="environment" hidden>
 
-  <input id="messageInput" type="text"
-    placeholder="Type a message..."
-    disabled maxlength="5000" autocomplete="off">
-
-  <button id="sendButton" class="send" type="button" disabled>Send</button>
-</div>
+      <input id="messageInput" type="text" placeholder="Type a message..." disabled maxlength="5000" autocomplete="off">
+      <button id="sendButton" class="send" type="button" disabled>Send</button>
+    </div>
   </section>
 </main>
 
@@ -516,21 +335,21 @@ body {
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
 import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
-import { getFirestore, collection, query, orderBy, onSnapshot, addDoc, doc, getDoc, setDoc, updateDoc, deleteDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
-import { getDatabase, ref, set, onValue, onDisconnect, serverTimestamp as databaseServerTimestamp } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-database.js";
+import {
+  getFirestore, collection, query, orderBy, onSnapshot, addDoc,
+  doc, getDoc, setDoc, updateDoc, deleteDoc, serverTimestamp
+} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
+import {
+  getDatabase, ref, set, onValue, onDisconnect,
+  serverTimestamp as databaseServerTimestamp
+} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-database.js";
 
 /*
- * IMPORTANT:
- * 1) Configure a secure translation HTTPS endpoint below to enable automatic translation.
- * 2) The endpoint must authenticate the caller and validate text/language values server-side.
- * 3) Never put a paid translation-provider secret/API key in this public HTML file.
- * 4) 193-country readiness means country/locale-aware architecture, not 193 different languages:
- *    some countries share languages and some countries use multiple languages.
- */
-const TRANSLATION_ENDPOINT = ""; // Example: https://YOUR-REGION-YOUR-PROJECT.cloudfunctions.net/translateMessage
-const SUPPORTED_LOCALES = new Set([
-  "af","am","ar","az","be","bg","bn","bs","ca","cs","cy","da","de","el","en","es","et","eu","fa","fi","fil","fr","ga","gl","gu","ha","he","hi","hr","hu","hy","id","is","it","ja","jv","ka","kk","km","kn","ko","lo","lt","lv","mk","ml","mn","mr","ms","mt","my","ne","nl","no","pa","pl","ps","pt","ro","ru","si","sk","sl","sq","sr","su","sv","sw","ta","te","th","tr","uk","ur","uz","vi","xh","yo","zh","zu"
-]);
+  Translation:
+  Configure a secure authenticated HTTPS backend endpoint.
+  Never place a paid translation API key in this public file.
+*/
+const TRANSLATION_ENDPOINT = "";
 
 const firebaseConfig = {
   apiKey: "AIzaSyAxJUFBWm2fa0g3oxUWWqdfSTEAc-bRgfI",
@@ -545,7 +364,7 @@ const firebaseConfig = {
 const firebaseApp = initializeApp(firebaseConfig);
 const auth = getAuth(firebaseApp);
 const db = getFirestore(firebaseApp);
-const rtdb = getDatabase(firebaseApp, "https://zemivo-default-rtdb.asia-southeast1.firebasedatabase.app");
+const rtdb = getDatabase(firebaseApp,"https://zemivo-default-rtdb.asia-southeast1.firebasedatabase.app");
 
 const $ = id => document.getElementById(id);
 const appElement = $("app");
@@ -554,606 +373,732 @@ const userSearch = $("userSearch");
 const messagesElement = $("messages");
 const messageInput = $("messageInput");
 const sendButton = $("sendButton");
-const attachButton = $("attachButton");
 const chatName = $("chatName");
 const chatStatus = $("chatStatus");
 const chatAvatar = $("chatAvatar");
 const backButton = $("backButton");
 const toast = $("toast");
-/* Daily changing Zemivo nature themes */
-const natureThemes = [
-  {
-    skyTop: "#8bd5ff",
-    skyBottom: "#e7f7ff",
-    sun: "#fff2b0",
-    mountainBack: "#799bb5",
-    mountainFront: "#426f70",
-    forest: "#244f49"
-  },
-  {
-    skyTop: "#ffb88c",
-    skyBottom: "#ffe8c8",
-    sun: "#fff0ad",
-    mountainBack: "#ad827b",
-    mountainFront: "#6e665c",
-    forest: "#385548"
-  },
-  {
-    skyTop: "#8299d8",
-    skyBottom: "#d8e2ff",
-    sun: "#f7e6bd",
-    mountainBack: "#7584a9",
-    mountainFront: "#465b75",
-    forest: "#263e49"
-  },
-  {
-    skyTop: "#a4d9c3",
-    skyBottom: "#e3f5df",
-    sun: "#fff3c4",
-    mountainBack: "#8cae9c",
-    mountainFront: "#537b68",
-    forest: "#285342"
-  },
-  {
-    skyTop: "#b9a6e8",
-    skyBottom: "#f0ddf8",
-    sun: "#ffe0bd",
-    mountainBack: "#9986b5",
-    mountainFront: "#625b83",
-    forest: "#35445c"
-  },
-  {
-    skyTop: "#70b8c9",
-    skyBottom: "#d9f0ed",
-    sun: "#fff1b9",
-    mountainBack: "#6f9eaa",
-    mountainFront: "#3c7472",
-    forest: "#20564c"
-  },
-  {
-    skyTop: "#f2c58e",
-    skyBottom: "#f8e9cf",
-    sun: "#fff2c7",
-    mountainBack: "#b59b80",
-    mountainFront: "#7b755d",
-    forest: "#53634b"
-  }
-];
-
-function updateDailyNatureScene() {
-  const today = new Date();
-  const startOfYear = new Date(today.getFullYear(), 0, 0);
-  const dayNumber = Math.floor(
-    (today - startOfYear) / 86400000
-  );
-
-  const theme = natureThemes[
-    dayNumber % natureThemes.length
-  ];
-
-  const root = document.documentElement;
-
-  root.style.setProperty("--world-sky-top", theme.skyTop);
-  root.style.setProperty("--world-sky-bottom", theme.skyBottom);
-  root.style.setProperty("--world-sun", theme.sun);
-  root.style.setProperty("--world-mountain-back", theme.mountainBack);
-  root.style.setProperty("--world-mountain-front", theme.mountainFront);
-  root.style.setProperty("--world-forest", theme.forest);
-}
-
-updateDailyNatureScene();
-/* Subtle pointer-based 3D tilt on desktop only; no touch-screen scroll interference. */
-if (window.matchMedia("(hover: hover) and (pointer: fine) and (min-width: 701px)").matches) {
-  appElement.addEventListener("pointermove", event => {
-    const rect = appElement.getBoundingClientRect();
-    if (!rect.width || !rect.height) return;
-    const x = (event.clientX - rect.left) / rect.width - 0.5;
-    const y = (event.clientY - rect.top) / rect.height - 0.5;
-    appElement.style.transform = `translateX(-50%) perspective(1400px) rotateY(${(x * 1.1).toFixed(2)}deg) rotateX(${(-y * 0.8).toFixed(2)}deg)`;
-  });
-  appElement.addEventListener("pointerleave", () => {
-    appElement.style.transform = "translateX(-50%)";
-  });
-}
-
+const composerMenu = $("composerMenu");
+const photoInput = $("photoInput");
+const cameraInput = $("cameraInput");
 
 let currentUser = null;
-let currentUserLanguage = localeBase(navigator.language) || "en";
+let currentUserLanguage = "en";
 let allUsers = [];
 let selectedUser = null;
+let currentChatId = null;
+let pendingReply = null;
+
 let unsubscribeUsers = null;
 let unsubscribePresence = null;
 let unsubscribeMessages = null;
 let unsubscribeTyping = null;
 let unsubscribeConnection = null;
-let toastTimer = null;
-let currentChatId = null;
-let pendingReply = null;
-let presenceSetupForUid = null;
-let basePresenceStatus = "Offline";
 
-function showToast(message) {
+let typingTimer = null;
+let toastTimer = null;
+let basePresenceStatus = "Offline";
+let presenceSetupForUid = null;
+
+/* Daily changing nature theme */
+const natureThemes = [
+  ["#8bd5ff","#e7f7ff","#799bb5","#244f49"],
+  ["#ffb88c","#ffe8c8","#ad827b","#385548"],
+  ["#8299d8","#d8e2ff","#7584a9","#263e49"],
+  ["#a4d9c3","#e3f5df","#8cae9c","#285342"],
+  ["#b9a6e8","#f0ddf8","#9986b5","#35445c"],
+  ["#70b8c9","#d9f0ed","#6f9eaa","#20564c"],
+  ["#f2c58e","#f8e9cf","#b59b80","#53634b"]
+];
+
+function updateDailyTheme(){
+  const day = Math.floor((Date.now()-new Date(new Date().getFullYear(),0,0).getTime())/86400000);
+  const theme = natureThemes[day % natureThemes.length];
+  const root = document.documentElement;
+  root.style.setProperty("--sky1",theme[0]);
+  root.style.setProperty("--sky2",theme[1]);
+  root.style.setProperty("--mountain",theme[2]);
+  root.style.setProperty("--forest",theme[3]);
+}
+updateDailyTheme();
+
+function showToast(message){
   toast.textContent = message;
   toast.classList.add("show");
   clearTimeout(toastTimer);
-  toastTimer = setTimeout(() => toast.classList.remove("show"), 2800);
+  toastTimer = setTimeout(()=>toast.classList.remove("show"),2800);
 }
-function escapeHtml(value) {
-  return String(value ?? "").replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;").replaceAll("'","&#039;");
+
+function escapeHtml(value){
+  return String(value ?? "")
+    .replaceAll("&","&amp;")
+    .replaceAll("<","&lt;")
+    .replaceAll(">","&gt;")
+    .replaceAll('"',"&quot;")
+    .replaceAll("'","&#039;");
 }
-function createChatId(uid1, uid2) { return [uid1, uid2].sort().join("_"); }
-function formatTime(timestamp) {
-  if (!timestamp?.toDate) return "Sending…";
-  try { return timestamp.toDate().toLocaleString(); } catch { return ""; }
-}
-function localeBase(value) {
-  if (!value || typeof value !== "string") return "";
-  try {
-    // Accept valid BCP-47 language tags instead of restricting users to a short fixed list.
-    const language = new Intl.Locale(value.trim().replaceAll("_", "-")).language.toLowerCase();
+
+function localeBase(value){
+  if(!value || typeof value !== "string") return "";
+  try{
+    const language = new Intl.Locale(value.trim().replaceAll("_","-")).language.toLowerCase();
     return /^[a-z]{2,3}$/.test(language) ? language : "";
-  } catch { return ""; }
+  }catch{return "";}
 }
-function getUserLanguage(profile) {
+
+function getUserLanguage(profile){
   return localeBase(profile?.preferredLanguage) ||
     localeBase(profile?.preferred_language) ||
-    localeBase(profile?.language) || localeBase(profile?.locale) || "en";
+    localeBase(profile?.language) ||
+    localeBase(profile?.locale) || "en";
 }
-function initials(name) { return (String(name || "Z").trim().charAt(0) || "Z").toLocaleUpperCase(); }
 
-onAuthStateChanged(auth, async user => {
-  if (!user) {
+function initials(name){
+  return (String(name || "Z").trim().charAt(0) || "Z").toLocaleUpperCase();
+}
+
+function createChatId(uid1,uid2){
+  return [uid1,uid2].sort().join("_");
+}
+
+function formatTime(timestamp){
+  if(!timestamp?.toDate) return "Sending…";
+  try{return timestamp.toDate().toLocaleString();}
+  catch{return "";}
+}
+
+function getViewerLanguage(){
+  return currentUserLanguage || localeBase(navigator.language) || "en";
+}
+
+/* Authentication */
+onAuthStateChanged(auth,async user=>{
+  if(!user){
+    currentUser = null;
     showToast("Please log in first.");
-    setTimeout(() => { location.href = "login.html"; }, 900);
+    setTimeout(()=>location.href="login.html",900);
     return;
   }
+
   currentUser = user;
-  try {
-    const myProfile = await getDoc(doc(db, "profiles", user.uid));
-    if (myProfile.exists()) currentUserLanguage = getUserLanguage(myProfile.data());
-  } catch (error) {
-    console.warn("Could not load your preferred language from profile; using device language.", error);
+
+  try{
+    const profile = await getDoc(doc(db,"profiles",user.uid));
+    if(profile.exists()) currentUserLanguage = getUserLanguage(profile.data());
+  }catch(error){
+    console.warn("Could not load language preference:",error);
   }
+
   setupPresence();
   await loadUsers();
 });
 
-function setupPresence() {
-  if (!currentUser || presenceSetupForUid === currentUser.uid) return;
+/* Presence */
+function setupPresence(){
+  if(!currentUser || presenceSetupForUid === currentUser.uid) return;
   presenceSetupForUid = currentUser.uid;
-  const connectedRef = ref(rtdb, ".info/connected");
-  const myStatusRef = ref(rtdb, "status/" + currentUser.uid);
-  unsubscribeConnection = onValue(connectedRef, async snapshot => {
-    if (snapshot.val() !== true || !currentUser) return;
-    try {
-      await onDisconnect(myStatusRef).set({ state: "offline", lastChanged: databaseServerTimestamp() });
-      await set(myStatusRef, { state: "online", lastChanged: databaseServerTimestamp() });
-    } catch (error) {
-      console.error("Presence setup error:", error);
+
+  const connectedRef = ref(rtdb,".info/connected");
+  const myStatusRef = ref(rtdb,"status/"+currentUser.uid);
+
+  unsubscribeConnection = onValue(connectedRef,async snapshot=>{
+    if(snapshot.val() !== true || !currentUser) return;
+
+    try{
+      await onDisconnect(myStatusRef).set({
+        state:"offline",
+        lastChanged:databaseServerTimestamp()
+      });
+
+      await set(myStatusRef,{
+        state:"online",
+        lastChanged:databaseServerTimestamp()
+      });
+    }catch(error){
+      console.error("Presence setup error:",error);
     }
   });
 }
 
-async function loadUsers() {
+/* Users */
+async function loadUsers(){
   usersList.innerHTML = '<div class="loading">Loading users…</div>';
-  try {
-    const profilesQuery = query(collection(db, "profiles"));
-    unsubscribeUsers = onSnapshot(profilesQuery, snapshot => {
+
+  try{
+    const profilesQuery = query(collection(db,"profiles"));
+
+    unsubscribeUsers = onSnapshot(profilesQuery,snapshot=>{
       allUsers = [];
-      snapshot.forEach(profileSnapshot => {
+
+      snapshot.forEach(profileSnapshot=>{
         const profile = profileSnapshot.data() || {};
         const uid = profileSnapshot.id;
-        if (!currentUser || uid === currentUser.uid) return;
+
+        if(!currentUser || uid === currentUser.uid) return;
+
         allUsers.push({
           uid,
-          displayName: profile.displayName || profile.fullName || profile.name || "Zemivo User",
-          email: profile.email || "",
-          photoURL: profile.photoURL || profile.photoUrl || "",
-          language: getUserLanguage(profile),
-          country: profile.country || "",
-          countryName: profile.countryName || ""
+          displayName:profile.displayName || profile.fullName || profile.name || "Zemivo User",
+          email:profile.email || "",
+          photoURL:profile.photoURL || profile.photoUrl || "",
+          language:getUserLanguage(profile),
+          countryName:profile.countryName || ""
         });
       });
-      allUsers.sort((a,b) => a.displayName.localeCompare(b.displayName));
+
+      allUsers.sort((a,b)=>a.displayName.localeCompare(b.displayName));
       filterAndRenderUsers();
-    }, error => {
-      console.error("Users listener error:", error);
-      usersList.innerHTML = '<div class="error">Could not load users. Check Firestore permissions and profiles collection.</div>';
+    },error=>{
+      console.error("Users listener error:",error);
+      usersList.innerHTML = '<div class="error">Could not load users. Check Firestore permissions.</div>';
     });
-  } catch (error) {
-    console.error("Users load error:", error);
+  }catch(error){
+    console.error(error);
     usersList.innerHTML = '<div class="error">Could not load users.</div>';
   }
 }
 
-function filterAndRenderUsers() {
+function filterAndRenderUsers(){
   const term = userSearch.value.trim().toLocaleLowerCase();
-  const filtered = !term ? allUsers : allUsers.filter(user =>
+
+  const filtered = !term ? allUsers : allUsers.filter(user=>
     user.displayName.toLocaleLowerCase().includes(term) ||
-user.countryName.toLocaleLowerCase().includes(term)
+    user.countryName.toLocaleLowerCase().includes(term)
   );
+
   renderUsers(filtered);
 }
-function renderUsers(users) {
+
+function renderUsers(users){
   usersList.innerHTML = "";
-  if (!users.length) {
+
+  if(!users.length){
     usersList.innerHTML = '<div class="loading">No other Zemivo users found yet.</div>';
     return;
   }
-  users.forEach(user => {
+
+  users.forEach(user=>{
     const button = document.createElement("button");
     button.type = "button";
     button.className = "user-item" + (selectedUser?.uid === user.uid ? " active" : "");
+
     const avatar = user.photoURL
       ? `<img src="${escapeHtml(user.photoURL)}" class="user-avatar" alt="" loading="lazy">`
       : `<div class="user-avatar">${escapeHtml(initials(user.displayName))}</div>`;
-     button.innerHTML = `${avatar}<div class="user-meta"><div class="user-name">${escapeHtml(user.displayName)}</div><div class="user-email">${escapeHtml(user.countryName || "Zemivo member")} · ${escapeHtml(user.language.toUpperCase())}</div></div>`;
-    button.addEventListener("click", () => selectUser(user));
+
+    button.innerHTML =
+      `${avatar}<div class="user-meta">
+        <div class="user-name">${escapeHtml(user.displayName)}</div>
+        <div class="user-email">${escapeHtml(user.countryName || "Zemivo member")} · ${escapeHtml(user.language.toUpperCase())}</div>
+      </div>`;
+
+    button.addEventListener("click",()=>selectUser(user));
     usersList.appendChild(button);
   });
 }
-userSearch.addEventListener("input", filterAndRenderUsers);
 
-function clearChatListeners() {
-  if (unsubscribeMessages) { unsubscribeMessages(); unsubscribeMessages = null; }
-  if (unsubscribePresence) { unsubscribePresence(); unsubscribePresence = null; }
-  if (unsubscribeTyping) { unsubscribeTyping(); unsubscribeTyping = null; }
+userSearch.addEventListener("input",filterAndRenderUsers);
+
+/* Chat listeners */
+function clearChatListeners(){
+  if(unsubscribeMessages){unsubscribeMessages();unsubscribeMessages=null;}
+  if(unsubscribePresence){unsubscribePresence();unsubscribePresence=null;}
+  if(unsubscribeTyping){unsubscribeTyping();unsubscribeTyping=null;}
 }
-async function selectUser(user) {
-  if (!currentUser || !user?.uid) return;
+
+async function selectUser(user){
+  if(!currentUser || !user?.uid) return;
+
   setTyping(false);
   clearTimeout(typingTimer);
   clearChatListeners();
+
   selectedUser = user;
-  currentChatId = createChatId(currentUser.uid, user.uid);
+  currentChatId = createChatId(currentUser.uid,user.uid);
   pendingReply = null;
+
   chatName.textContent = user.displayName;
   chatStatus.textContent = "Checking status…";
   chatStatus.dataset.typing = "false";
+
   chatAvatar.textContent = user.photoURL ? "" : initials(user.displayName);
-  chatAvatar.style.backgroundImage = user.photoURL ? `url("${user.photoURL.replaceAll('"', "%22")}")` : "none";
+  chatAvatar.style.backgroundImage = user.photoURL ? `url("${user.photoURL.replaceAll('"',"%22")}")` : "none";
   chatAvatar.style.backgroundSize = "cover";
   chatAvatar.style.backgroundPosition = "center";
+
   appElement.classList.add("chat-open");
   messageInput.disabled = true;
   sendButton.disabled = true;
+  messageInput.value = "";
+  messageInput.placeholder = "Type a message...";
   messagesElement.innerHTML = '<div class="loading">Opening conversation…</div>';
+
   filterAndRenderUsers();
 
-  const statusRef = ref(rtdb, "status/" + user.uid);
-  unsubscribePresence = onValue(statusRef, snapshot => {
+  const statusRef = ref(rtdb,"status/"+user.uid);
+
+  unsubscribePresence = onValue(statusRef,snapshot=>{
     const status = snapshot.val();
-    if (status?.state === "online") basePresenceStatus = "🟢 Online";
-    else if (status?.lastChanged) {
-      const ms = typeof status.lastChanged === "number" ? status.lastChanged : Number(status.lastChanged);
-      basePresenceStatus = ms ? "Last seen " + new Date(ms).toLocaleString() : "Offline";
-    } else basePresenceStatus = "Offline";
-    if (chatStatus.dataset.typing !== "true") chatStatus.textContent = basePresenceStatus;
-  }, error => {
-    console.warn("Presence read error:", error);
+
+    if(status?.state === "online"){
+      basePresenceStatus = "🟢 Online";
+    }else if(status?.lastChanged){
+      const ms = Number(status.lastChanged);
+      basePresenceStatus = ms ? "Last seen "+new Date(ms).toLocaleString() : "Offline";
+    }else{
+      basePresenceStatus = "Offline";
+    }
+
+    if(chatStatus.dataset.typing !== "true"){
+      chatStatus.textContent = basePresenceStatus;
+    }
+  },error=>{
+    console.warn("Presence read error:",error);
     basePresenceStatus = "Status unavailable";
-    if (chatStatus.dataset.typing !== "true") chatStatus.textContent = basePresenceStatus;
+    if(chatStatus.dataset.typing !== "true") chatStatus.textContent = basePresenceStatus;
   });
 
-  const typingRef = ref(rtdb, "typing/" + currentChatId + "/" + user.uid);
-  unsubscribeTyping = onValue(typingRef, snapshot => {
+  const typingRef = ref(rtdb,"typing/"+currentChatId+"/"+user.uid);
+
+  unsubscribeTyping = onValue(typingRef,snapshot=>{
     const isTyping = snapshot.val()?.typing === true;
     chatStatus.dataset.typing = isTyping ? "true" : "false";
     chatStatus.textContent = isTyping ? "✍️ Typing…" : basePresenceStatus;
-  }, error => console.warn("Typing listener error:", error));
+  },error=>console.warn("Typing listener error:",error));
 
-  try {
-    await setDoc(doc(db, "chats", currentChatId), {
-      members: [currentUser.uid, user.uid],
-      updatedAt: serverTimestamp()
-    }, { merge: true });
-    if (selectedUser?.uid !== user.uid) return;
+  try{
+    await setDoc(doc(db,"chats",currentChatId),{
+      members:[currentUser.uid,user.uid],
+      updatedAt:serverTimestamp()
+    },{merge:true});
+
+    if(selectedUser?.uid !== user.uid) return;
+
     messageInput.disabled = false;
     sendButton.disabled = false;
     startMessageListener();
     messageInput.focus();
-  } catch (error) {
-    console.error("Chat setup error:", error);
+  }catch(error){
+    console.error("Chat setup error:",error);
     messagesElement.innerHTML = '<div class="error">Could not open this conversation. Check Firestore chat permissions.</div>';
     showToast("Could not open conversation.");
   }
 }
 
-function startMessageListener() {
-  if (!selectedUser || !currentChatId) return;
-  if (unsubscribeMessages) unsubscribeMessages();
+function startMessageListener(){
+  if(!selectedUser || !currentChatId) return;
+
+  if(unsubscribeMessages) unsubscribeMessages();
+
   messagesElement.innerHTML = '<div class="loading">Loading messages…</div>';
-  const messagesQuery = query(collection(db, "chats", currentChatId, "messages"), orderBy("createdAt", "asc"));
-  unsubscribeMessages = onSnapshot(messagesQuery, snapshot => {
-    if (!selectedUser || !currentChatId) return;
+
+  const messagesQuery = query(
+    collection(db,"chats",currentChatId,"messages"),
+    orderBy("createdAt","asc")
+  );
+
+  unsubscribeMessages = onSnapshot(messagesQuery,snapshot=>{
+    if(!selectedUser || !currentChatId) return;
+
     messagesElement.innerHTML = "";
-    if (snapshot.empty) {
-      messagesElement.innerHTML = `<div class="empty-chat"><div><div style="font-size:38px">👋</div><div style="font-weight:800;margin-top:7px">Start the conversation</div><div style="margin-top:5px;color:#64748b">Send your first message to ${escapeHtml(selectedUser.displayName)}.</div></div></div>`;
+
+    if(snapshot.empty){
+      messagesElement.innerHTML =
+        `<div class="empty-chat"><div>
+          <div style="font-size:38px">👋</div>
+          <div style="font-weight:800;margin-top:7px">Start the conversation</div>
+          <div style="margin-top:5px;color:#64748b">Send your first message to ${escapeHtml(selectedUser.displayName)}.</div>
+        </div></div>`;
       return;
     }
-    snapshot.forEach(messageSnapshot => renderMessage(messageSnapshot.data(), messageSnapshot.id));
+
+    snapshot.forEach(messageSnapshot=>{
+      renderMessage(messageSnapshot.data(),messageSnapshot.id);
+    });
+
     messagesElement.scrollTop = messagesElement.scrollHeight;
     void updateMessageReceipts(snapshot);
-  }, error => {
-    console.error("Message listener error:", error);
+  },error=>{
+    console.error("Message listener error:",error);
     messagesElement.innerHTML = '<div class="error">Could not load messages. Check Firestore permissions.</div>';
   });
 }
 
-function renderMessage(message, messageId) {
+/* Message display */
+function renderMessage(message,messageId){
   const isSent = message.senderId === currentUser?.uid;
   const row = document.createElement("div");
-  row.className = "message-row " + (isSent ? "sent" : "received");
+  row.className = "message-row "+(isSent ? "sent" : "received");
+
   const bubble = document.createElement("div");
   bubble.className = "message";
 
-  if (message.replyText) {
+  if(message.replyText){
     const quote = document.createElement("div");
     quote.className = "reply-quote";
-    quote.textContent = "↩ " + message.replyText;
+    quote.textContent = "↩ "+message.replyText;
     bubble.appendChild(quote);
   }
+
   const original = document.createElement("div");
   original.textContent = message.text || "";
   bubble.appendChild(original);
 
-  if (message.translatedText && message.targetLanguage === getUserLanguageForCurrentViewer()) {
+  if(message.translatedText && message.targetLanguage === getViewerLanguage()){
     const translation = document.createElement("div");
     translation.className = "translation";
-    translation.innerHTML = `<div class="translation-label">🌍 Translation · ${escapeHtml((message.targetLanguage || "").toUpperCase())}</div>${escapeHtml(message.translatedText)}`;
-    bubble.appendChild(translation);
-  } else if (message.translatedText && !isSent) {
-    const translation = document.createElement("div");
-    translation.className = "translation";
-    translation.innerHTML = `<div class="translation-label">🌍 Translation</div>${escapeHtml(message.translatedText)}`;
+
+    const label = document.createElement("div");
+    label.className = "translation-label";
+    label.textContent = "🌍 Translation · "+message.targetLanguage.toUpperCase();
+
+    const translated = document.createElement("div");
+    translated.textContent = message.translatedText;
+
+    translation.append(label,translated);
     bubble.appendChild(translation);
   }
 
   const time = document.createElement("div");
   time.className = "message-time";
   time.textContent = formatTime(message.createdAt);
-  if (isSent) {
+
+  if(isSent){
     const status = document.createElement("span");
     status.style.marginLeft = "5px";
     status.style.fontWeight = "800";
     status.textContent = message.readAt ? "✓✓ Read" : message.deliveredAt ? "✓✓ Delivered" : "✓ Sent";
     time.appendChild(status);
   }
-  if (message.edited === true) time.append(" · edited");
+
+  if(message.edited === true) time.append(" · edited");
   bubble.appendChild(time);
 
   const actions = document.createElement("div");
   actions.className = "message-actions";
+
   const replyButton = document.createElement("button");
   replyButton.type = "button";
   replyButton.textContent = "↩ Reply";
-  replyButton.addEventListener("click", () => replyToMessage(message));
+  replyButton.addEventListener("click",()=>replyToMessage(message));
   actions.appendChild(replyButton);
 
-  if (isSent) {
+  if(isSent){
     const editButton = document.createElement("button");
     editButton.type = "button";
     editButton.textContent = "✏️ Edit";
-    editButton.addEventListener("click", () => editMessage(messageId, message.text || ""));
+    editButton.addEventListener("click",()=>editMessage(messageId,message.text || ""));
+
     const deleteButton = document.createElement("button");
     deleteButton.type = "button";
     deleteButton.textContent = "🗑 Delete";
-    deleteButton.addEventListener("click", () => deleteMessage(messageId));
-    actions.append(editButton, deleteButton);
+    deleteButton.addEventListener("click",()=>deleteMessage(messageId));
+
+    actions.append(editButton,deleteButton);
   }
+
   bubble.appendChild(actions);
   row.appendChild(bubble);
   messagesElement.appendChild(row);
 }
 
-function getUserLanguageForCurrentViewer() {
-  // The signed-in user's preferred language should be saved as language/preferredLanguage in profiles/{uid}.
-  return currentUserLanguage || localeBase(navigator.language) || "en";
-}
+/* Read receipts */
+async function updateMessageReceipts(snapshot){
+  if(!currentUser || !selectedUser || !currentChatId) return;
 
-async function updateMessageReceipts(snapshot) {
-  if (!currentUser || !selectedUser || !currentChatId) return;
   const tasks = [];
-  snapshot.forEach(messageSnapshot => {
+
+  snapshot.forEach(messageSnapshot=>{
     const message = messageSnapshot.data();
-    if (message.senderId === currentUser.uid) return;
+
+    if(message.senderId === currentUser.uid) return;
+
     const patch = {};
-    if (!message.deliveredAt) patch.deliveredAt = serverTimestamp();
-    if (!message.readAt) patch.readAt = serverTimestamp();
-    if (Object.keys(patch).length) {
-      tasks.push(updateDoc(doc(db, "chats", currentChatId, "messages", messageSnapshot.id), patch));
+    if(!message.deliveredAt) patch.deliveredAt = serverTimestamp();
+    if(!message.readAt) patch.readAt = serverTimestamp();
+
+    if(Object.keys(patch).length){
+      tasks.push(updateDoc(
+        doc(db,"chats",currentChatId,"messages",messageSnapshot.id),
+        patch
+      ));
     }
   });
-  if (tasks.length) {
-    try { await Promise.all(tasks); }
-    catch (error) { console.warn("Receipt update failed; check Firestore rules.", error); }
+
+  if(tasks.length){
+    try{await Promise.all(tasks);}
+    catch(error){console.warn("Receipt update failed:",error);}
   }
 }
 
-async function editMessage(messageId, oldText) {
-  if (!currentUser || !selectedUser || !currentChatId) return;
-  const value = prompt("Edit your message:", oldText);
-  if (value === null) return;
+/* Edit and delete */
+async function editMessage(messageId,oldText){
+  if(!currentUser || !selectedUser || !currentChatId) return;
+
+  const value = prompt("Edit your message:",oldText);
+  if(value === null) return;
+
   const cleaned = value.trim();
-  if (!cleaned) return showToast("Message cannot be empty.");
-  if (cleaned === oldText) return;
-  try {
-    await updateDoc(doc(db, "chats", currentChatId, "messages", messageId), {
-      text: cleaned, edited: true, editedAt: serverTimestamp(),
-      translatedText: null, targetLanguage: null
+  if(!cleaned) return showToast("Message cannot be empty.");
+  if(cleaned === oldText) return;
+
+  try{
+    await updateDoc(doc(db,"chats",currentChatId,"messages",messageId),{
+      text:cleaned,
+      edited:true,
+      editedAt:serverTimestamp(),
+      translatedText:null,
+      targetLanguage:null
     });
     showToast("Message edited.");
-  } catch (error) {
-    console.error("Edit message error:", error);
+  }catch(error){
+    console.error(error);
     showToast("Message could not be edited. Check Firestore rules.");
   }
 }
-async function deleteMessage(messageId) {
-  if (!currentUser || !selectedUser || !currentChatId) return;
-  if (!confirm("Delete this message for everyone?")) return;
-  try {
-    await deleteDoc(doc(db, "chats", currentChatId, "messages", messageId));
+
+async function deleteMessage(messageId){
+  if(!currentUser || !selectedUser || !currentChatId) return;
+  if(!confirm("Delete this message for everyone?")) return;
+
+  try{
+    await deleteDoc(doc(db,"chats",currentChatId,"messages",messageId));
     showToast("Message deleted.");
-  } catch (error) {
-    console.error("Delete message error:", error);
+  }catch(error){
+    console.error(error);
     showToast("Message could not be deleted. Check Firestore rules.");
   }
 }
-function replyToMessage(message) {
-  pendingReply = { text: String(message.text || "").slice(0, 500) };
+
+function replyToMessage(message){
+  pendingReply = {text:String(message.text || "").slice(0,500)};
   messageInput.value = "";
-  messageInput.placeholder = "Replying: " + pendingReply.text.slice(0, 60) + " — type reply…";
+  messageInput.placeholder = "Replying: "+pendingReply.text.slice(0,60)+" — type reply…";
   messageInput.focus();
   showToast("Reply selected. Type your reply and press Send.");
 }
-function setTyping(value) {
-  if (!currentUser || !selectedUser || !currentChatId) return;
-  const typingRef = ref(rtdb, "typing/" + currentChatId + "/" + currentUser.uid);
-  set(typingRef, { typing: value, updatedAt: databaseServerTimestamp() }).catch(error => console.warn("Typing status update failed:", error));
+
+/* Typing status */
+function setTyping(value){
+  if(!currentUser || !selectedUser || !currentChatId) return;
+
+  const typingRef = ref(rtdb,"typing/"+currentChatId+"/"+currentUser.uid);
+
+  set(typingRef,{
+    typing:value,
+    updatedAt:databaseServerTimestamp()
+  }).catch(error=>console.warn("Typing status update failed:",error));
 }
-let typingTimer = null;
-messageInput.addEventListener("input", () => {
+
+messageInput.addEventListener("input",()=>{
+  if(!selectedUser) return;
+
   setTyping(true);
   clearTimeout(typingTimer);
-  typingTimer = setTimeout(() => setTyping(false), 1000);
+  typingTimer = setTimeout(()=>setTyping(false),1000);
 });
 
-async function translateForRecipient(text, targetLanguage) {
-  if (!TRANSLATION_ENDPOINT) return { translatedText: null, reason: "not-configured" };
+/* Translation backend */
+async function translateForRecipient(text,targetLanguage){
+  if(!TRANSLATION_ENDPOINT){
+    return {translatedText:null,reason:"not-configured"};
+  }
+
   const token = await currentUser.getIdToken();
-  const response = await fetch(TRANSLATION_ENDPOINT, {
-    method: "POST",
-    headers: { "Content-Type": "application/json", "Authorization": "Bearer " + token },
-    body: JSON.stringify({ text, targetLanguage, sourceLanguage: "auto" })
+
+  const response = await fetch(TRANSLATION_ENDPOINT,{
+    method:"POST",
+    headers:{
+      "Content-Type":"application/json",
+      "Authorization":"Bearer "+token
+    },
+    body:JSON.stringify({
+      text,
+      targetLanguage,
+      sourceLanguage:"auto"
+    })
   });
-  if (!response.ok) throw new Error("Translation service returned HTTP " + response.status);
+
+  if(!response.ok) throw new Error("Translation service returned HTTP "+response.status);
+
   const data = await response.json();
-  if (typeof data.translatedText !== "string" || !data.translatedText.trim()) throw new Error("Invalid translation response");
-  return { translatedText: data.translatedText, reason: null };
+
+  if(typeof data.translatedText !== "string" || !data.translatedText.trim()){
+    throw new Error("Invalid translation response");
+  }
+
+  return {translatedText:data.translatedText,reason:null};
 }
 
-async function sendMessage() {
-  if (!currentUser || !selectedUser || !currentChatId) {
+/* Send message */
+async function sendMessage(){
+  if(!currentUser || !selectedUser || !currentChatId){
     showToast("Select a person first.");
     return;
   }
+
   const text = messageInput.value.trim();
-  if (!text) return;
-  if (text.length > 5000) return showToast("Message is too long.");
+  if(!text) return;
+  if(text.length > 5000) return showToast("Message is too long.");
+
   sendButton.disabled = true;
   const replyText = pendingReply?.text || null;
-  try {
-    await setDoc(doc(db, "chats", currentChatId), {
-      members: [currentUser.uid, selectedUser.uid],
-      updatedAt: serverTimestamp(),
-      lastMessage: text.slice(0, 300),
-      lastSenderId: currentUser.uid
-    }, { merge: true });
+
+  try{
+    await setDoc(doc(db,"chats",currentChatId),{
+      members:[currentUser.uid,selectedUser.uid],
+      updatedAt:serverTimestamp(),
+      lastMessage:text.slice(0,300),
+      lastSenderId:currentUser.uid
+    },{merge:true});
 
     let translatedText = null;
-    let targetLanguage = selectedUser.language || "en";
-    try {
-      const translated = await translateForRecipient(text, targetLanguage);
+    const targetLanguage = selectedUser.language || "en";
+
+    try{
+      const translated = await translateForRecipient(text,targetLanguage);
       translatedText = translated.translatedText;
-      if (translated.reason === "not-configured") {
-        // Keep sending functional while translation service is not yet connected.
-        console.info("Translation is not enabled: configure TRANSLATION_ENDPOINT and deploy a secure backend.");
+
+      if(translated.reason === "not-configured"){
+        console.info("Translation backend is not configured yet.");
       }
-    } catch (translationError) {
-      console.error("Translation failed; original message will still be sent:", translationError);
+    }catch(error){
+      console.error("Translation failed:",error);
       showToast("Translation unavailable; sending original message.");
     }
 
-    await addDoc(collection(db, "chats", currentChatId, "messages"), {
-      senderId: currentUser.uid,
-      receiverId: selectedUser.uid,
+    await addDoc(collection(db,"chats",currentChatId,"messages"),{
+      senderId:currentUser.uid,
+      receiverId:selectedUser.uid,
       text,
-      replyTo: null,
+      replyTo:null,
       replyText,
-      sourceLanguage: "auto",
-      targetLanguage: translatedText ? targetLanguage : null,
+      sourceLanguage:"auto",
+      targetLanguage:translatedText ? targetLanguage : null,
       translatedText,
-      createdAt: serverTimestamp(),
-      deliveredAt: null,
-      readAt: null
+      createdAt:serverTimestamp(),
+      deliveredAt:null,
+      readAt:null
     });
+
     messageInput.value = "";
-    messageInput.placeholder = "Type a message…";
+    messageInput.placeholder = "Type a message...";
     pendingReply = null;
     setTyping(false);
     messageInput.focus();
-  } catch (error) {
-    console.error("Send message error:", error);
+  }catch(error){
+    console.error("Send message error:",error);
     showToast("Message could not be sent. Check Firestore permissions.");
-  } finally {
+  }finally{
     sendButton.disabled = !selectedUser;
   }
 }
-sendButton.addEventListener("click", sendMessage);
-messageInput.addEventListener("keydown", event => {
-  if (event.key === "Enter" && !event.shiftKey) {
+
+sendButton.addEventListener("click",sendMessage);
+
+messageInput.addEventListener("keydown",event=>{
+  if(event.key === "Enter" && !event.shiftKey){
     event.preventDefault();
     sendMessage();
   }
 });
-const composerMenu = $("composerMenu");
-const photoInput = $("photoInput");
-const cameraInput = $("cameraInput");
 
-attachButton.addEventListener("click", () => {
+/* Attachment menu */
+$("attachButton").addEventListener("click",()=>{
   composerMenu.classList.toggle("open");
 });
 
-$("photoButton").addEventListener("click", () => {
+$("photoButton").addEventListener("click",()=>{
   composerMenu.classList.remove("open");
   photoInput.click();
 });
 
-$("cameraButton").addEventListener("click", () => {
+$("cameraButton").addEventListener("click",()=>{
   composerMenu.classList.remove("open");
   cameraInput.click();
 });
 
-$("emojiButton").addEventListener("click", () => {
+$("emojiButton").addEventListener("click",()=>{
   composerMenu.classList.remove("open");
   messageInput.value += " 😊";
   messageInput.focus();
 });
 
-$("voiceButton").addEventListener("click", () => {
+$("voiceButton").addEventListener("click",()=>{
   composerMenu.classList.remove("open");
   showToast("Voice message upload is not connected yet.");
 });
 
-photoInput.addEventListener("change", () => {
-  if (photoInput.files.length) {
-    showToast("Photo selected. Upload connection is still needed.");
+photoInput.addEventListener("change",()=>{
+  if(photoInput.files.length){
+    showToast("Photo selected. Secure upload connection is still needed.");
   }
 });
 
-cameraInput.addEventListener("change", () => {
-  if (cameraInput.files.length) {
-    showToast("Camera photo selected. Upload connection is still needed.");
+cameraInput.addEventListener("change",()=>{
+  if(cameraInput.files.length){
+    showToast("Camera photo selected. Secure upload connection is still needed.");
   }
 });
-  
-backButton.addEventListener("click", () => {
-  appElement.classList.remove("chat-open");
+
+/* Back to user list */
+backButton.addEventListener("click",()=>{
+  setTyping(false);
+  clearTimeout(typingTimer);
   clearChatListeners();
+
+  appElement.classList.remove("chat-open");
+  selectedUser = null;
+  currentChatId = null;
+  pendingReply = null;
+
   messageInput.disabled = true;
   sendButton.disabled = true;
-  setTyping(false);
+  messageInput.value = "";
+  messageInput.placeholder = "Type a message...";
+  chatName.textContent = "Select a person";
+  chatStatus.textContent = "Choose someone to start messaging";
+  chatAvatar.textContent = "Z";
+  chatAvatar.style.backgroundImage = "none";
+
+  messagesElement.innerHTML =
+    '<div class="empty-chat"><div><div style="font-size:42px">💬</div><div style="font-weight:800;margin-top:8px">Zemivo Messages</div><div style="margin-top:5px">Select a person to start a conversation.</div></div></div>';
+
+  filterAndRenderUsers();
 });
-window.addEventListener("beforeunload", () => {
+
+/* Clean up listeners */
+window.addEventListener("beforeunload",()=>{
   clearChatListeners();
-  if (unsubscribeUsers) unsubscribeUsers();
-  if (unsubscribeConnection) unsubscribeConnection();
-  if (currentUser && selectedUser && currentChatId) {
-    set(ref(rtdb, "typing/" + currentChatId + "/" + currentUser.uid), {
-      typing: false, updatedAt: databaseServerTimestamp()
-    }).catch(() => {});
+
+  if(unsubscribeUsers) unsubscribeUsers();
+  if(unsubscribeConnection) unsubscribeConnection();
+
+  if(currentUser && currentChatId){
+    set(ref(rtdb,"typing/"+currentChatId+"/"+currentUser.uid),{
+      typing:false,
+      updatedAt:databaseServerTimestamp()
+    }).catch(()=>{});
   }
 });
+
+/* Desktop-only subtle 3D movement */
+if(window.matchMedia("(hover:hover) and (pointer:fine) and (min-width:701px)").matches){
+  appElement.addEventListener("pointermove",event=>{
+    const rect = appElement.getBoundingClientRect();
+    if(!rect.width || !rect.height) return;
+
+    const x = (event.clientX-rect.left)/rect.width-.5;
+    const y = (event.clientY-rect.top)/rect.height-.5;
+
+    appElement.style.transform =
+      `translateX(-50%) perspective(1400px) rotateY(${(x*1.1).toFixed(2)}deg) rotateX(${(-y*.8).toFixed(2)}deg)`;
+  });
+
+  appElement.addEventListener("pointerleave",()=>{
+    appElement.style.transform = "translateX(-50%)";
+  });
+}
 </script>
 </body>
 </html>
