@@ -257,6 +257,82 @@ button:disabled{opacity:.5;cursor:not-allowed}
 @media(prefers-reduced-motion:reduce){
   *,*::before,*::after{animation:none!important;transition:none!important}
 }
+  
+/* ZEMIVO LIVING — CLEAR NATURE VIEW FIX */
+.world {
+  z-index: 0;
+  opacity: 1;
+}
+
+/* Remove the heavy blur covering the nature scene */
+.app {
+  background: rgba(255, 255, 255, 0.10);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+/* Make panels transparent */
+.users-panel {
+  background: rgba(255, 255, 255, 0.12);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+.chat-person {
+  background: rgba(255, 255, 255, 0.20);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+.messages {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.composer {
+  background: rgba(255, 255, 255, 0.22);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+/* Keep the nature layers clearly visible */
+.sun {
+  filter: none;
+  box-shadow: 0 0 65px 22px rgba(255, 242, 176, 0.45);
+}
+
+.cloud {
+  filter: blur(4px);
+  opacity: 0.85;
+}
+
+.mountains {
+  opacity: 0.95;
+}
+
+.forest {
+  opacity: 1;
+}
+
+.haze {
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    rgba(255,255,255,0.04) 55%,
+    rgba(255,255,255,0.12) 100%
+  );
+}
+
+/* Preserve mobile transparency */
+@media (max-width: 700px) {
+  .app {
+    background: rgba(255,255,255,0.08);
+  }
+
+  .messages {
+    background: rgba(255,255,255,0.04);
+  }
+}
+
 </style>
 </head>
 
