@@ -68,7 +68,64 @@ button:disabled{opacity:.5;cursor:not-allowed}
     radial-gradient(ellipse at 94% 100%,#183f3b 0 20%,transparent 20.5%);
 }
 .haze{position:absolute;inset:30% 0 0;background:linear-gradient(transparent,#ffffff30)}
+/* ZEMIVO LIVING — 3D MOTION SYSTEM */
 
+.world{
+  perspective:1200px;
+  transform-style:preserve-3d;
+}
+
+.sun{
+  animation:sunGlow 8s ease-in-out infinite alternate;
+}
+
+.cloud{
+  animation:
+    drift 42s linear infinite,
+    cloudFloat 7s ease-in-out infinite alternate;
+}
+
+.cloud.two{
+  animation:
+    drift 52s linear infinite,
+    cloudFloat 9s ease-in-out infinite alternate;
+}
+
+.mountains{
+  transform:translateZ(-25px) scale(1.04);
+  animation:mountainFloat 14s ease-in-out infinite alternate;
+}
+
+.forest{
+  transform:translateZ(12px);
+  animation:forestFloat 10s ease-in-out infinite alternate;
+}
+
+@keyframes sunGlow{
+  from{
+    transform:scale(1);
+    filter:brightness(1);
+  }
+  to{
+    transform:scale(1.12);
+    filter:brightness(1.2);
+  }
+}
+
+@keyframes cloudFloat{
+  from{margin-top:-5px}
+  to{margin-top:9px}
+}
+
+@keyframes mountainFloat{
+  from{translate:0 0}
+  to{translate:0 -8px}
+}
+
+@keyframes forestFloat{
+  from{translate:0 0}
+  to{translate:0 -4px}
+}
 /* Header */
 .header{
   height:64px;position:fixed;inset:0 0 auto;z-index:10;
@@ -477,14 +534,20 @@ let basePresenceStatus = "Offline";
 let presenceSetupForUid = null;
 
 /* Daily changing nature theme */
+/* ZEMIVO LIVING — DAILY COLOR THEMES */
 const natureThemes = [
-  ["#8bd5ff","#e7f7ff","#799bb5","#244f49"],
-  ["#ffb88c","#ffe8c8","#ad827b","#385548"],
-  ["#8299d8","#d8e2ff","#7584a9","#263e49"],
-  ["#a4d9c3","#e3f5df","#8cae9c","#285342"],
-  ["#b9a6e8","#f0ddf8","#9986b5","#35445c"],
-  ["#70b8c9","#d9f0ed","#6f9eaa","#20564c"],
-  ["#f2c58e","#f8e9cf","#b59b80","#53634b"]
+  ["#75CFFF","#E8F8FF","#7899C5","#174C46"],
+  ["#FFB58C","#FFF0D5","#B77E79","#365344"],
+  ["#8298E8","#E6E9FF","#777DB5","#293D58"],
+  ["#83D8BD","#E5FFF0","#7CAFA0","#205846"],
+  ["#B69AEF","#F4E8FF","#9A83BE","#3C365C"],
+  ["#54BFCB","#DDF8F4","#6C9DAA","#20534C"],
+  ["#F3C477","#FFF1D2","#B69A72","#536044"],
+  ["#F08FAE","#FFE6EF","#B77D99","#594052"],
+  ["#70A9A0","#E0F5EA","#779C91","#244A43"],
+  ["#A5B8E8","#F0F3FF","#8998C0","#34465C"],
+  ["#D69A78","#FCE8D7","#A77B70","#51423B"],
+  ["#79C6E8","#E5F7FF","#789CB5","#254B55"]
 ];
 
 function updateDailyTheme(){
