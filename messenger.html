@@ -8,6 +8,10 @@
 
 <style>
 :root{
+  --theme-primary:#356dff;
+--theme-secondary:#6657e9;
+--theme-glow:#356dff55;
+--theme-text:#ffffff;
   --blue:#356dff;
   --purple:#6657e9;
   --ink:#172033;
@@ -225,8 +229,10 @@ button:disabled{opacity:.5;cursor:not-allowed}
   box-shadow:0 6px 16px #263c6615;
 }
 .message-row.sent .message{
-  background:linear-gradient(135deg,#356dff,#6657e9);
-  color:white;border-bottom-right-radius:5px;
+  background:linear-gradient(135deg,var(--theme-primary),var(--theme-secondary));
+  color:white;
+  border-bottom-right-radius:5px;
+  box-shadow:0 8px 22px var(--theme-glow);
 }
 .message-row.received .message{
   background:#ffffffed;color:var(--ink);
@@ -265,9 +271,20 @@ button:disabled{opacity:.5;cursor:not-allowed}
   outline:none;font-size:16px;background:#ffffffbd;
 }
 .send{
-  height:44px;flex-shrink:0;border:0;border-radius:15px;
-  padding:0 20px;background:linear-gradient(135deg,#356dff,#624fe6);
-  color:white;font-weight:800;box-shadow:0 7px 17px #356dff35;
+  height:44px;
+  flex-shrink:0;
+  border:0;
+  border-radius:15px;
+  padding:0 20px;
+  background:linear-gradient(135deg,var(--theme-primary),var(--theme-secondary));
+  color:white;
+  font-weight:800;
+  box-shadow:0 7px 20px var(--theme-glow);
+  transition:transform .25s,box-shadow .25s;
+}
+
+.send:active{
+  transform:scale(.95);
 }
 .composer-menu{
   display:none;position:absolute;bottom:calc(100% + 10px);left:10px;
@@ -549,7 +566,21 @@ const natureThemes = [
   ["#D69A78","#FCE8D7","#A77B70","#51423B"],
   ["#79C6E8","#E5F7FF","#789CB5","#254B55"]
 ];
-
+/* ZEMIVO LIVING — DAILY COLOR THEMES */
+const natureThemes = [
+  ["#75CFFF","#E8F8FF","#7899C5","#174C46","#1677D2","#5548D9"],
+  ["#FFB58C","#FFF0D5","#B77E79","#365344","#E66B45","#A84978"],
+  ["#8298E8","#E6E9FF","#777DB5","#293D58","#5267D5","#794BCB"],
+  ["#83D8BD","#E5FFF0","#7CAFA0","#205846","#159B78","#3275C9"],
+  ["#B69AEF","#F4E8FF","#9A83BE","#3C365C","#8255D5","#C04DA8"],
+  ["#54BFCB","#DDF8F4","#6C9DAA","#20534C","#168FAD","#4263C8"],
+  ["#F3C477","#FFF1D2","#B69A72","#536044","#D58A25","#A65B36"],
+  ["#F08FAE","#FFE6EF","#B77D99","#594052","#D64F86","#8652C9"],
+  ["#70A9A0","#E0F5EA","#779C91","#244A43","#278D78","#3975B9"],
+  ["#A5B8E8","#F0F3FF","#8998C0","#34465C","#587BCB","#6656B7"],
+  ["#D69A78","#FCE8D7","#A77B70","#51423B","#C46D43","#8955A2"],
+  ["#79C6E8","#E5F7FF","#789CB5","#254B55","#268BBE","#4F5BC5"]
+];
 function updateDailyTheme(){
   const day = Math.floor((Date.now()-new Date(new Date().getFullYear(),0,0).getTime())/86400000);
   const theme = natureThemes[day % natureThemes.length];
@@ -558,8 +589,12 @@ function updateDailyTheme(){
   root.style.setProperty("--sky2",theme[1]);
   root.style.setProperty("--mountain",theme[2]);
   root.style.setProperty("--forest",theme[3]);
+  root.style.setProperty("--theme-primary",theme[4]);
+root.style.setProperty("--theme-secondary",theme[5]);
+root.style.setProperty("--theme-glow",theme[4]+"55");
+root.style.setProperty("--theme-text","#ffffff");
 }
-updateDailyTheme();
+  
 
 function showToast(message){
   toast.textContent = message;
