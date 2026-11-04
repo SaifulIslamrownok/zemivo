@@ -1,720 +1,824 @@
-
 <!DOCTYPE html>
 <html lang="bn">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#071c35">
-<title>Zemivo | Music</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#06142f">
+<title>Zemivo | 3D Living Music</title>
 
 <style>
 #zemivoMusic {
-  --bg1:#071c35;
-  --bg2:#102e58;
-  --cyan:#67e8f9;
-  --purple:#8b5cf6;
-  --glass:rgba(255,255,255,.10);
-  color:#fff;
+  --cyan:#00e5ff;
+  --blue:#176bff;
+  --purple:#9b42ff;
+  --pink:#ff38d1;
   min-height:100vh;
-  font-family:Arial, sans-serif;
-  background:linear-gradient(135deg,var(--bg1),var(--bg2),#312e81);
-  position:relative;
+  color:#fff;
+  font-family:Arial,sans-serif;
+  background:
+    radial-gradient(ellipse at 50% 45%,#172c75 0%,#091b42 48%,#030b20 100%);
   overflow:hidden;
+  position:relative;
   isolation:isolate;
 }
 #zemivoMusic * {box-sizing:border-box}
-#zemivoMusic button,
-#zemivoMusic select,
-#zemivoMusic input {font:inherit}
-#zemivoMusic button {cursor:pointer}
-#zemivoMusic .scene {
-  position:fixed; inset:0; z-index:-1; overflow:hidden; pointer-events:none;
+#zemivoMusic button,#zemivoMusic select {font:inherit}
+#zemivoMusic button {cursor:pointer;color:white}
+#zemivoMusic .wrap {
+  max-width:1100px;width:calc(100% - 24px);
+  margin:auto;padding:18px 0 40px;
 }
-#zemivoMusic .orb {
-  position:absolute; border-radius:50%;
-  filter:blur(2px);
-  opacity:.5;
-  animation:zmFloat 12s ease-in-out infinite alternate;
-}
-#zemivoMusic .orb.one {
-  width:260px;height:260px;left:-80px;top:12%;
-  background:radial-gradient(circle at 30% 30%,#a5f3fc,#2563eb 55%,transparent 75%);
-}
-#zemivoMusic .orb.two {
-  width:320px;height:320px;right:-100px;bottom:5%;
-  background:radial-gradient(circle at 35% 35%,#c4b5fd,#7c3aed 55%,transparent 75%);
-  animation-delay:-4s;
-}
-#zemivoMusic .orb.three {
-  width:130px;height:130px;right:20%;top:15%;
-  background:radial-gradient(circle at 35% 35%,#fff,#22d3ee 55%,transparent 75%);
-  animation-delay:-7s;
-}
-@keyframes zmFloat {
-  from {transform:translate3d(0,0,0) rotate(0deg)}
-  to {transform:translate3d(35px,-35px,0) rotate(35deg)}
-}
-#zemivoMusic .container {
-  width:min(100% - 28px,1050px);
-  margin:auto;
-  padding:22px 0 45px;
-}
-#zemivoMusic .topbar {
+#zemivoMusic .top {
   display:flex;align-items:center;justify-content:space-between;
-  gap:12px;flex-wrap:wrap;margin-bottom:22px;
+  gap:12px;flex-wrap:wrap;margin-bottom:16px;
 }
-#zemivoMusic .brand {
-  font-size:25px;font-weight:900;letter-spacing:2px;
-  background:linear-gradient(90deg,#fff,#67e8f9,#c4b5fd);
+#zemivoMusic .logo {
+  font-size:28px;font-weight:900;letter-spacing:2px;
+  background:linear-gradient(90deg,#fff,#00e5ff,#ba7bff);
   color:transparent;background-clip:text;
 }
-#zemivoMusic .top-actions {display:flex;gap:9px;align-items:center;flex-wrap:wrap}
-#zemivoMusic .btn {
-  border:1px solid rgba(255,255,255,.2);
-  color:#fff;background:rgba(255,255,255,.12);
-  border-radius:14px;padding:10px 14px;
-  text-decoration:none;display:inline-flex;align-items:center;
-  justify-content:center;gap:7px;
-}
-#zemivoMusic .btn:hover {background:rgba(255,255,255,.22)}
-#zemivoMusic .primary {
-  background:linear-gradient(120deg,#0891b2,#6366f1);
-  border:0;font-weight:700;
-}
+#zemivoMusic .actions {display:flex;gap:9px;align-items:center}
 #zemivoMusic .glass {
-  background:var(--glass);
-  border:1px solid rgba(255,255,255,.17);
-  border-radius:22px;
-  backdrop-filter:blur(18px);
-  -webkit-backdrop-filter:blur(18px);
-  box-shadow:0 15px 45px rgba(0,0,0,.18);
+  background:rgba(40,90,180,.20);
+  border:1px solid rgba(125,210,255,.32);
+  border-radius:20px;
+  box-shadow:inset 0 0 25px rgba(0,200,255,.07),0 12px 35px #0005;
+  backdrop-filter:blur(16px);
+  -webkit-backdrop-filter:blur(16px);
 }
-#zemivoMusic .profile-strip {
-  display:flex;align-items:center;gap:13px;
-  padding:14px 17px;margin-bottom:18px;
+#zemivoMusic .btn,#zemivoMusic .lang {
+  padding:10px 14px;border-radius:13px;
+  border:1px solid #75cfff66;
+  background:#ffffff16;color:white;
+}
+#zemivoMusic .lang option {color:#111}
+#zemivoMusic .intro {
+  padding:20px;margin-bottom:15px;
+  background:linear-gradient(110deg,#007bba55,#5734bd66);
+}
+#zemivoMusic h1 {font-size:clamp(26px,5vw,40px);margin:0 0 9px}
+#zemivoMusic h2 {font-size:19px;margin:0 0 13px}
+#zemivoMusic p {line-height:1.6}
+#zemivoMusic .profile {
+  padding:12px 15px;display:flex;align-items:center;gap:12px;
+  margin-bottom:15px;
 }
 #zemivoMusic .avatar {
-  width:53px;height:53px;border-radius:50%;
-  display:grid;place-items:center;flex-shrink:0;
-  background:linear-gradient(135deg,#06b6d4,#7c3aed);
-  border:2px solid rgba(255,255,255,.6);
-  overflow:hidden;font-weight:bold;font-size:20px;
+  width:46px;height:46px;border-radius:50%;
+  display:grid;place-items:center;background:linear-gradient(130deg,#00baff,#8b42ff);
+  overflow:hidden;font-size:20px;font-weight:bold;
 }
 #zemivoMusic .avatar img {width:100%;height:100%;object-fit:cover}
-#zemivoMusic .profile-info {min-width:0;flex:1}
-#zemivoMusic .profile-info strong {display:block;overflow-wrap:anywhere}
-#zemivoMusic .muted {color:#cbd5e1;font-size:13px;line-height:1.6}
-#zemivoMusic .hero {
-  padding:27px 22px;margin-bottom:18px;
-  background:linear-gradient(120deg,rgba(8,145,178,.25),rgba(124,58,237,.25));
+#zemivoMusic .muted {color:#c6d9f6;font-size:13px}
+#zemivoMusic .sensor-panel {
+  padding:17px;margin-bottom:15px;
 }
-#zemivoMusic h1 {font-size:clamp(27px,5vw,43px);margin:0 0 10px}
-#zemivoMusic h2 {font-size:20px;margin:0 0 15px}
-#zemivoMusic .hero p {color:#dbeafe;line-height:1.7;margin:0}
-#zemivoMusic .layout {
-  display:grid;grid-template-columns:1.15fr .85fr;gap:17px;
+#zemivoMusic .sensor-head {
+  display:flex;justify-content:space-between;align-items:center;gap:8px;
+  flex-wrap:wrap;
 }
-#zemivoMusic .panel {padding:20px;min-width:0}
-#zemivoMusic .upload-area {
-  border:1px dashed rgba(255,255,255,.4);
-  border-radius:17px;padding:19px;text-align:center;
-  margin-bottom:16px;background:rgba(255,255,255,.05);
+#zemivoMusic .sensor-grid {
+  display:grid;grid-template-columns:repeat(4,1fr);gap:10px;
+  margin-top:14px;
 }
-#zemivoMusic input[type=file] {display:none}
-#zemivoMusic .song-list {display:grid;gap:10px}
-#zemivoMusic .song {
-  display:flex;align-items:center;gap:10px;
-  padding:12px;border-radius:15px;
-  background:rgba(255,255,255,.08);
-  border:1px solid rgba(255,255,255,.09);
+#zemivoMusic .sensor {
+  min-width:0;text-align:center;padding:13px 5px;
+  border-radius:15px;background:#061b465e;
+  border:1px solid #55cfff44;
 }
-#zemivoMusic .song-icon {
-  width:40px;height:40px;border-radius:12px;
-  display:grid;place-items:center;flex-shrink:0;
-  background:linear-gradient(135deg,#0891b2,#7c3aed);
+#zemivoMusic .sensor .symbol {font-size:25px;display:block;margin-bottom:7px}
+#zemivoMusic .sensor strong {display:block;font-size:13px;overflow-wrap:anywhere}
+#zemivoMusic .sensor small {display:block;margin-top:6px;color:#8fffd5}
+#zemivoMusic .sensor .value {font-size:12px;color:#c7e9ff;margin-top:5px}
+#zemivoMusic .status-dot {
+  display:inline-block;width:9px;height:9px;border-radius:50%;
+  background:#ffb52e;margin-right:5px;
 }
-#zemivoMusic .song-info {flex:1;min-width:0}
-#zemivoMusic .song-info strong {
-  display:block;overflow-wrap:anywhere;font-size:14px;
+#zemivoMusic .status-dot.on {background:#24ff91;box-shadow:0 0 10px #24ff91}
+#zemivoMusic .status-dot.off {background:#ffb52e}
+#zemivoMusic .sensor-actions {display:flex;gap:8px;flex-wrap:wrap;margin-top:13px}
+#zemivoMusic .sensor-actions button {
+  background:linear-gradient(110deg,#087cb8,#5d43c5);
+  border:1px solid #8adfff66;padding:10px 13px;border-radius:12px;
 }
-#zemivoMusic .song-info small {color:#cbd5e1}
-#zemivoMusic .song-actions {display:flex;gap:6px;align-items:center}
-#zemivoMusic .icon-btn {
-  border:0;background:rgba(255,255,255,.12);color:#fff;
-  border-radius:10px;padding:9px;min-width:37px;
+#zemivoMusic .visual-stage {
+  min-height:390px;position:relative;overflow:hidden;
+  display:grid;place-items:center;margin-bottom:15px;
+  background:radial-gradient(ellipse at center,#154b9b77,#08163c99 65%,#030b20);
+  perspective:900px;
 }
-#zemivoMusic .icon-btn:hover {background:rgba(255,255,255,.25)}
-#zemivoMusic .player {text-align:center}
+#zemivoMusic .stage-label {
+  position:absolute;top:15px;left:16px;z-index:5;
+  font-weight:bold;text-shadow:0 2px 9px #000;
+}
+#zemivoMusic .bars {
+  position:absolute;bottom:18px;left:5%;right:5%;
+  height:120px;display:flex;align-items:end;justify-content:center;
+  gap:4px;z-index:1;opacity:.9;
+}
+#zemivoMusic .bar {
+  flex:1;max-width:13px;height:5%;
+  border-radius:9px 9px 2px 2px;
+  background:linear-gradient(to top,#00d9ff,#637bff,#f34cff);
+  box-shadow:0 0 10px #00cfff;
+  transition:height .08s linear;
+}
+#zemivoMusic .platform {
+  position:relative;width:min(68vw,440px);height:min(68vw,440px);
+  max-height:440px;max-width:440px;
+  display:grid;place-items:center;z-index:2;
+  transform-style:preserve-3d;
+}
+#zemivoMusic .ring {
+  position:absolute;width:100%;height:100%;border-radius:50%;
+  border:2px solid #00e5ff99;
+  box-shadow:0 0 15px #00cfff, inset 0 0 18px #00cfff55;
+  transform:rotateX(68deg);
+}
+#zemivoMusic .ring.r2 {
+  width:83%;height:83%;border-color:#b45bff;
+  box-shadow:0 0 17px #a34cff;
+  transform:rotateX(68deg) rotateZ(25deg);
+}
+#zemivoMusic .ring.r3 {
+  width:65%;height:65%;border-color:#ff43d6;
+  transform:rotateX(68deg) rotateZ(-25deg);
+}
 #zemivoMusic .disc {
-  width:145px;height:145px;border-radius:50%;
-  margin:15px auto 20px;
-  background:repeating-radial-gradient(circle,#111827 0 5px,#273449 6px 8px);
-  border:7px solid rgba(255,255,255,.18);
-  box-shadow:0 12px 35px rgba(0,0,0,.3);
+  width:48%;height:48%;border-radius:50%;
   display:grid;place-items:center;
-  animation:zmSpin 8s linear infinite;
+  background:repeating-radial-gradient(circle,#0a1530 0 6px,#253c70 7px 10px);
+  border:5px solid #4ccfff;
+  box-shadow:0 0 22px #00d9ff,0 0 60px #7c39ff;
+  animation:zmSpin 9s linear infinite;
   animation-play-state:paused;
+  transform:translateZ(30px);
 }
 #zemivoMusic .disc.playing {animation-play-state:running}
-#zemivoMusic .disc span {
-  width:45px;height:45px;border-radius:50%;
-  background:linear-gradient(135deg,#67e8f9,#8b5cf6);
-  display:grid;place-items:center;
+#zemivoMusic .disc-core {
+  width:35%;height:35%;border-radius:50%;
+  display:grid;place-items:center;font-size:clamp(20px,5vw,40px);
+  background:linear-gradient(135deg,#00e5ff,#7b40ff,#fa39ce);
+  box-shadow:0 0 25px #00e5ff;
 }
-@keyframes zmSpin {to{transform:rotate(360deg)}}
-#zemivoMusic .now-title {font-size:17px;font-weight:700;overflow-wrap:anywhere}
-#zemivoMusic .progress-row {
-  display:flex;align-items:center;gap:8px;
-  margin:16px 0 8px;font-size:12px;color:#cbd5e1;
+@keyframes zmSpin {to{transform:translateZ(30px) rotate(360deg)}}
+#zemivoMusic .stage-caption {
+  position:absolute;bottom:12px;left:0;right:0;text-align:center;
+  z-index:4;text-shadow:0 2px 8px #000;font-size:13px;
 }
-#zemivoMusic input[type=range] {width:100%;accent-color:#67e8f9}
-#zemivoMusic .player-controls {
-  display:flex;align-items:center;justify-content:center;gap:13px;
-  margin:16px 0;
+#zemivoMusic .player {
+  padding:18px;margin-bottom:15px;
+  display:grid;grid-template-columns:100px 1fr;gap:16px;align-items:center;
 }
-#zemivoMusic .play-main {
-  width:53px;height:53px;border-radius:50%;font-size:20px;
-  background:linear-gradient(135deg,#0891b2,#7c3aed);
-  color:#fff;border:0;
+#zemivoMusic .cover {
+  height:100px;border-radius:17px;display:grid;place-items:center;
+  font-size:42px;background:linear-gradient(135deg,#087cb8,#773cff);
+  box-shadow:0 0 22px #00bfff66;
 }
-#zemivoMusic .empty {
-  color:#cbd5e1;text-align:center;padding:22px 8px;
-  line-height:1.7;font-size:14px;
+#zemivoMusic .track-name {font-weight:bold;overflow-wrap:anywhere}
+#zemivoMusic .progress {
+  display:flex;align-items:center;gap:8px;margin:13px 0;
+  font-size:12px;color:#c9e5ff;
 }
-#zemivoMusic .section-heading {
-  display:flex;align-items:center;justify-content:space-between;
-  gap:10px;margin-bottom:14px;
+#zemivoMusic input[type=range] {width:100%;accent-color:#00e5ff}
+#zemivoMusic .controls {
+  display:flex;align-items:center;gap:10px;flex-wrap:wrap;
+}
+#zemivoMusic .controls button {
+  border:0;border-radius:50%;width:40px;height:40px;
+  background:#ffffff22;font-size:17px;
+}
+#zemivoMusic .controls .main-play {
+  width:52px;height:52px;font-size:22px;
+  background:linear-gradient(135deg,#00cfff,#773dff);
+}
+#zemivoMusic .library {padding:18px}
+#zemivoMusic .upload {
+  padding:18px;text-align:center;border:1px dashed #8bdfff88;
+  border-radius:15px;margin:12px 0;
+}
+#zemivoMusic input[type=file] {display:none}
+#zemivoMusic .song-list {display:grid;gap:9px}
+#zemivoMusic .song {
+  padding:11px;display:flex;align-items:center;gap:9px;
+  border-radius:13px;background:#ffffff12;
+}
+#zemivoMusic .song-info {flex:1;min-width:0}
+#zemivoMusic .song-info strong {overflow-wrap:anywhere;font-size:14px}
+#zemivoMusic .song-info small {display:block;color:#bcd8f4;margin-top:4px}
+#zemivoMusic .song button {
+  border:0;background:#ffffff20;border-radius:10px;padding:9px;
 }
 #zemivoMusic .notice {
-  margin-top:15px;padding:13px;border-radius:14px;
-  background:rgba(8,145,178,.12);color:#dbeafe;
-  font-size:12px;line-height:1.7;
+  color:#c5dafa;font-size:12px;line-height:1.6;margin-top:12px;
 }
-#zemivoMusic .language {
-  background:rgba(255,255,255,.12);color:white;
-  border:1px solid rgba(255,255,255,.25);
-  padding:9px;border-radius:12px;
-}
-#zemivoMusic .language option {color:#111}
-#zemivoMusic .hidden {display:none!important}
-#zemivoMusic .footer {
-  text-align:center;color:#cbd5e1;font-size:12px;
-  padding:25px 8px 5px;
-}
-@media(max-width:760px) {
-  #zemivoMusic .layout {grid-template-columns:1fr}
-  #zemivoMusic .container {width:min(100% - 20px,600px);padding-top:14px}
-  #zemivoMusic .panel {padding:16px}
-}
-@media(max-width:420px) {
-  #zemivoMusic .song {gap:7px;padding:9px}
-  #zemivoMusic .song-actions {gap:4px}
-  #zemivoMusic .icon-btn {min-width:33px;padding:7px}
-  #zemivoMusic .topbar {align-items:flex-start}
+#zemivoMusic .empty {padding:20px;text-align:center;color:#c5dafa}
+@media(max-width:600px) {
+  #zemivoMusic .sensor-grid {grid-template-columns:repeat(2,1fr)}
+  #zemivoMusic .visual-stage {min-height:330px}
+  #zemivoMusic .player {grid-template-columns:1fr}
+  #zemivoMusic .cover {height:75px}
+  #zemivoMusic .platform {width:min(75vw,330px);height:min(75vw,330px)}
 }
 @media(prefers-reduced-motion:reduce) {
-  #zemivoMusic *,#zemivoMusic *::before,#zemivoMusic *::after {
-    animation-duration:.01ms!important;animation-iteration-count:1!important;
-    scroll-behavior:auto!important;
-  }
+  #zemivoMusic .disc {animation:none}
 }
 </style>
 </head>
 
 <body style="margin:0">
 <div id="zemivoMusic">
-  <div class="scene" aria-hidden="true">
-    <div class="orb one"></div>
-    <div class="orb two"></div>
-    <div class="orb three"></div>
+<div class="wrap">
+
+<header class="top">
+  <div class="logo">♫ ZEMIVO</div>
+  <div class="actions">
+    <select class="lang" id="zmLang" aria-label="Language">
+      <option value="bn">বাংলা</option>
+      <option value="en">English</option>
+      <option value="hi">हिन्दी</option>
+      <option value="ur">اردو</option>
+      <option value="ar">العربية</option>
+      <option value="zh">中文</option>
+      <option value="ja">日本語</option>
+      <option value="ko">한국어</option>
+      <option value="fr">Français</option>
+      <option value="de">Deutsch</option>
+      <option value="es">Español</option>
+      <option value="pt">Português</option>
+      <option value="ru">Русский</option>
+      <option value="tr">Türkçe</option>
+      <option value="id">Indonesia</option>
+      <option value="ms">Melayu</option>
+    </select>
+    <a class="btn" href="profile.html">👤 Profile</a>
+  </div>
+</header>
+
+<section class="glass profile">
+  <div class="avatar" id="zmAvatar">Z</div>
+  <div>
+    <strong id="zmName">Your Name</strong>
+    <div class="muted">Zemivo Music Space</div>
+  </div>
+</section>
+
+<section class="glass intro">
+  <h1 data-i18n="heading">🎵 Zemivo Music</h1>
+  <p data-i18n="intro">তোমার পছন্দের গান শোনো, নিজের গান যোগ করো।</p>
+</section>
+
+<!-- REAL SENSOR STATUS -->
+<section class="glass sensor-panel">
+  <div class="sensor-head">
+    <h2 data-i18n="sensors">◉ Live Sensors</h2>
+    <span class="muted"><span class="status-dot off" id="zmOverallDot"></span><span id="zmOverall">Waiting</span></span>
   </div>
 
-  <main class="container">
-    <header class="topbar">
-      <div class="brand">ZEMIVO</div>
-      <div class="top-actions">
-        <select class="language" id="zmLanguage" aria-label="Language">
-          <option value="bn">বাংলা</option>
-          <option value="en">English</option>
-        </select>
-        <a class="btn" href="profile.html" id="zmProfileLink">👤 Profile</a>
-      </div>
-    </header>
+  <div class="sensor-grid">
+    <div class="sensor">
+      <span class="symbol">🎧</span>
+      <strong data-i18n="audio">Audio Sensor</strong>
+      <small id="zmAudioStatus">OFF</small>
+      <div class="value" id="zmAudioValue">0</div>
+    </div>
+    <div class="sensor">
+      <span class="symbol">📊</span>
+      <strong data-i18n="beat">Beat Sensor</strong>
+      <small id="zmBeatStatus">WAITING</small>
+      <div class="value" id="zmBeatValue">0 BPM*</div>
+    </div>
+    <div class="sensor">
+      <span class="symbol">🧭</span>
+      <strong data-i18n="motion">Motion Sensor</strong>
+      <small id="zmMotionStatus">OFF</small>
+      <div class="value" id="zmMotionValue">—</div>
+    </div>
+    <div class="sensor">
+      <span class="symbol">☀️</span>
+      <strong data-i18n="light">Light Sensor</strong>
+      <small id="zmLightStatus">CHECKING</small>
+      <div class="value" id="zmLightValue">—</div>
+    </div>
+  </div>
 
-    <section class="glass profile-strip">
-      <div class="avatar" id="zmAvatar">Z</div>
-      <div class="profile-info">
-        <strong id="zmProfileName">Your Name</strong>
-        <div class="muted" id="zmProfileCaption">তোমার Zemivo Music Space</div>
-      </div>
-    </section>
+  <div class="sensor-actions">
+    <button id="zmMotionBtn" data-i18n="enableMotion">Enable Motion</button>
+    <button id="zmLightBtn" data-i18n="checkLight">Check Light Sensor</button>
+  </div>
+  <div class="notice" data-i18n="sensorNote">
+    সেন্সর ডিভাইস ও ব্রাউজারের সমর্থনের ওপর নির্ভর করে। অনুমতি ছাড়া সেন্সর চালু হবে না।
+  </div>
+</section>
 
-    <section class="glass hero">
-      <h1 data-bn="🎵 Zemivo Music" data-en="🎵 Zemivo Music">🎵 Zemivo Music</h1>
-      <p data-bn="তোমার পছন্দের অডিও শোনো, নিজের গান যোগ করো এবং পছন্দের গান Favorite-এ রাখো।"
-         data-en="Listen to your audio, add your own music, and save favorites.">
-        তোমার পছন্দের অডিও শোনো, নিজের গান যোগ করো এবং পছন্দের গান Favorite-এ রাখো।
-      </p>
-    </section>
+<!-- 3D LIVING DISPLAY -->
+<section class="glass visual-stage">
+  <div class="stage-label" data-i18n="living">✧ 3D Zemivo Living</div>
+  <div class="bars" id="zmBars"></div>
+  <div class="platform" id="zmPlatform">
+    <div class="ring"></div>
+    <div class="ring r2"></div>
+    <div class="ring r3"></div>
+    <div class="disc" id="zmDisc">
+      <div class="disc-core">♫</div>
+    </div>
+  </div>
+  <div class="stage-caption" data-i18n="visualCaption">
+    Audio ও Motion অনুযায়ী 3D ডিসপ্লে প্রতিক্রিয়া দেখাবে
+  </div>
+</section>
 
-    <div class="layout">
-      <section class="glass panel">
-        <div class="section-heading">
-          <h2 data-bn="🎼 তোমার Music Library" data-en="🎼 Your Music Library">🎼 তোমার Music Library</h2>
-          <span class="muted" id="zmSongCount">0 গান</span>
-        </div>
+<!-- PLAYER -->
+<section class="glass player">
+  <div class="cover">🎧</div>
+  <div>
+    <div class="track-name" id="zmTrackName" data-i18n="noTrack">কোনো গান নির্বাচন করা হয়নি</div>
+    <div class="muted" id="zmTrackStatus" data-i18n="addStart">শুরু করতে গান যোগ করো</div>
 
-        <div class="upload-area">
-          <div style="font-size:28px">🎧</div>
-          <p data-bn="নিজের ডিভাইস থেকে অডিও ফাইল যোগ করো"
-             data-en="Add audio files from your device">
-            নিজের ডিভাইস থেকে অডিও ফাইল যোগ করো
-          </p>
-          <label class="btn primary" for="zmAudioFiles"
-                 data-bn="＋ গান যোগ করো" data-en="＋ Add Music">＋ গান যোগ করো</label>
-          <input id="zmAudioFiles" type="file" accept="audio/*" multiple>
-        </div>
-
-        <div class="section-heading">
-          <h2 data-bn="গানের তালিকা" data-en="Track List">গানের তালিকা</h2>
-          <button class="btn" id="zmShowAll">সব গান</button>
-          <button class="btn" id="zmShowFav">♥ Favorite</button>
-        </div>
-
-        <div class="song-list" id="zmSongList">
-          <div class="empty" data-bn="এখনো কোনো গান যোগ করা হয়নি। উপরের বাটনে চাপ দিয়ে অডিও যোগ করো।"
-               data-en="No songs added yet. Use the button above to add audio.">
-            এখনো কোনো গান যোগ করা হয়নি। উপরের বাটনে চাপ দিয়ে অডিও যোগ করো।
-          </div>
-        </div>
-
-        <div class="notice"
-             data-bn="নোট: গান তোমার ডিভাইস থেকে এই পেজে চালানো হবে। গান সার্ভারে আপলোড বা Profile-এ সংরক্ষণ করা হচ্ছে না।"
-             data-en="Note: Audio plays from files selected on your device. Files are not uploaded to a server or saved in your Profile.">
-          নোট: গান তোমার ডিভাইস থেকে এই পেজে চালানো হবে। গান সার্ভারে আপলোড বা Profile-এ সংরক্ষণ করা হচ্ছে না।
-        </div>
-      </section>
-
-      <section class="glass panel player">
-        <h2 data-bn="🎶 Music Player" data-en="🎶 Music Player">🎶 Music Player</h2>
-        <div class="disc" id="zmDisc"><span>♪</span></div>
-        <div class="now-title" id="zmNowTitle"
-             data-bn="কোনো গান নির্বাচন করা হয়নি"
-             data-en="No track selected">কোনো গান নির্বাচন করা হয়নি</div>
-        <div class="muted" id="zmPlayerStatus"
-             data-bn="শুরু করতে একটি গান যোগ করো"
-             data-en="Add a track to get started">শুরু করতে একটি গান যোগ করো</div>
-
-        <div class="progress-row">
-          <span id="zmCurrentTime">0:00</span>
-          <input type="range" id="zmProgress" min="0" max="100" value="0">
-          <span id="zmDuration">0:00</span>
-        </div>
-
-        <div class="player-controls">
-          <button class="icon-btn" id="zmPrevious" aria-label="Previous">⏮</button>
-          <button class="play-main" id="zmPlay" aria-label="Play">▶</button>
-          <button class="icon-btn" id="zmNext" aria-label="Next">⏭</button>
-        </div>
-
-        <div style="text-align:left">
-          <label for="zmVolume" class="muted"
-                 data-bn="🔊 ভলিউম" data-en="🔊 Volume">🔊 ভলিউম</label>
-          <input type="range" id="zmVolume" min="0" max="1" step="0.01" value="0.8">
-        </div>
-        <button class="btn" id="zmCurrentFav" style="margin-top:16px">♡ Favorite</button>
-      </section>
+    <div class="progress">
+      <span id="zmTime">0:00</span>
+      <input type="range" id="zmProgress" min="0" max="100" value="0">
+      <span id="zmDuration">0:00</span>
     </div>
 
-    <footer class="footer">© Zemivo Music · Connect • Create • Explore</footer>
-  </main>
+    <div class="controls">
+      <button id="zmPrev" aria-label="Previous">⏮</button>
+      <button class="main-play" id="zmPlay" aria-label="Play">▶</button>
+      <button id="zmNext" aria-label="Next">⏭</button>
+      <button id="zmFav" aria-label="Favorite">♡</button>
+      <span class="muted">🔊</span>
+      <input type="range" id="zmVolume" min="0" max="1" step=".01" value=".8" style="max-width:100px">
+    </div>
+  </div>
+</section>
 
-  <audio id="zmAudio" preload="metadata"></audio>
+<!-- LIBRARY -->
+<section class="glass library">
+  <h2 data-i18n="library">🎼 Music Library</h2>
+  <div class="upload">
+    <div style="font-size:30px">🎵</div>
+    <p data-i18n="uploadText">ডিভাইস থেকে অডিও ফাইল যোগ করো</p>
+    <label for="zmFiles" class="btn" style="display:inline-block;background:#176bff">
+      ＋ <span data-i18n="addMusic">গান যোগ করো</span>
+    </label>
+    <input type="file" id="zmFiles" accept="audio/*" multiple>
+  </div>
+
+  <div style="display:flex;gap:9px;flex-wrap:wrap;margin:12px 0">
+    <button class="btn" id="zmAll" data-i18n="allSongs">সব গান</button>
+    <button class="btn" id="zmFavorites" data-i18n="favorites">♥ Favorite</button>
+  </div>
+  <div class="song-list" id="zmList">
+    <div class="empty" data-i18n="empty">এখনো কোনো গান যোগ করা হয়নি।</div>
+  </div>
+  <div class="notice" data-i18n="storageNote">
+    গান এই ডিভাইস থেকে চালানো হবে। অডিও সার্ভারে আপলোড করা হচ্ছে না। Favorite-এর তথ্য সংরক্ষিত থাকবে; পেজ পুনরায় খুললে গান আবার নির্বাচন করতে হবে।
+  </div>
+</section>
+
+</div>
+<audio id="zmAudio" crossorigin="anonymous"></audio>
 </div>
 
 <script>
 (() => {
-  "use strict";
+"use strict";
 
-  const zmRoot = document.getElementById("zemivoMusic");
-  if (!zmRoot) return;
+const root = document.getElementById("zemivoMusic");
+const $ = id => document.getElementById(id);
 
-  // আলাদা Music storage keys; Profile storage key পরিবর্তন করা হবে না।
-  const zmProfileKey = "zemivo_profile_demo_v2";
-  const zmMusicKey = "zemivo_music_demo_v1";
-  const zmLanguageKey = "zemivo_music_language_v1";
+const translations = {
+bn:{
+heading:"🎵 Zemivo Music",
+intro:"তোমার পছন্দের গান শোনো, নিজের গান যোগ করো।",
+sensors:"◉ Live Sensors",audio:"Audio Sensor",beat:"Beat Sensor",
+motion:"Motion Sensor",light:"Light Sensor",
+enableMotion:"Motion চালু করো",checkLight:"Light Sensor পরীক্ষা",
+sensorNote:"সেন্সর ডিভাইস ও ব্রাউজারের সমর্থনের ওপর নির্ভর করে। অনুমতি ছাড়া সেন্সর চালু হবে না।",
+living:"✧ 3D Zemivo Living",
+visualCaption:"Audio ও Motion অনুযায়ী 3D ডিসপ্লে প্রতিক্রিয়া দেখাবে",
+noTrack:"কোনো গান নির্বাচন করা হয়নি",addStart:"শুরু করতে গান যোগ করো",
+library:"🎼 Music Library",uploadText:"ডিভাইস থেকে অডিও ফাইল যোগ করো",
+addMusic:"গান যোগ করো",allSongs:"সব গান",favorites:"♥ Favorite",
+empty:"এখনো কোনো গান যোগ করা হয়নি।",
+storageNote:"গান এই ডিভাইস থেকে চালানো হবে। অডিও সার্ভারে আপলোড করা হচ্ছে না। Favorite-এর তথ্য সংরক্ষিত থাকবে; পেজ পুনরায় খুললে গান আবার নির্বাচন করতে হবে।",
+playing:"গান চলছে",paused:"গান থেমে আছে",waiting:"অপেক্ষা করছে",
+on:"চালু",off:"বন্ধ",unsupported:"সমর্থিত নয়",permission:"অনুমতি প্রয়োজন",
+noFavorites:"এখনো Favorite গান নেই।",deviceAudio:"ডিভাইসের অডিও",
+motionReady:"Motion সক্রিয়",lightReady:"Light Sensor সক্রিয়",
+lightUnsupported:"এই ব্রাউজারে নেই",motionUnsupported:"Motion সমর্থিত নয়",
+error:"অডিও চালানো যায়নি",sensorWaiting:"Waiting"
+},
+en:{
+heading:"🎵 Zemivo Music",intro:"Listen to your music and add your own tracks.",
+sensors:"◉ Live Sensors",audio:"Audio Sensor",beat:"Beat Sensor",
+motion:"Motion Sensor",light:"Light Sensor",enableMotion:"Enable Motion",
+checkLight:"Check Light Sensor",sensorNote:"Sensors depend on device and browser support. Permission is required where applicable.",
+living:"✧ 3D Zemivo Living",visualCaption:"3D display reacts to audio and motion",
+noTrack:"No track selected",addStart:"Add a track to get started",
+library:"🎼 Music Library",uploadText:"Add audio files from your device",
+addMusic:"Add Music",allSongs:"All Songs",favorites:"♥ Favorites",
+empty:"No music added yet.",
+storageNote:"Audio plays from this device. Files are not uploaded to a server. Favorite information is saved; reselect audio files after reopening the page.",
+playing:"Playing",paused:"Paused",waiting:"Waiting",
+on:"ON",off:"OFF",unsupported:"Unsupported",permission:"Permission needed",
+noFavorites:"No favorites yet.",deviceAudio:"Device audio",
+motionReady:"Motion active",lightReady:"Light sensor active",
+lightUnsupported:"Not available in this browser",motionUnsupported:"Motion unsupported",
+error:"Could not play audio",sensorWaiting:"Waiting"
+},
+hi:{
+heading:"🎵 Zemivo Music",intro:"अपना संगीत सुनें और अपने गाने जोड़ें।",
+sensors:"◉ लाइव सेंसर",audio:"ऑडियो सेंसर",beat:"बीट सेंसर",
+motion:"मोशन सेंसर",light:"लाइट सेंसर",enableMotion:"मोशन चालू करें",
+checkLight:"लाइट सेंसर जाँचें",sensorNote:"सेंसर डिवाइस और ब्राउज़र के समर्थन पर निर्भर करते हैं।",
+living:"✧ 3D Zemivo Living",visualCaption:"3D डिस्प्ले ऑडियो और मोशन पर प्रतिक्रिया देगा",
+noTrack:"कोई गाना चुना नहीं गया",addStart:"शुरू करने के लिए गाना जोड़ें",
+library:"🎼 म्यूज़िक लाइब्रेरी",uploadText:"डिवाइस से ऑडियो जोड़ें",
+addMusic:"गाना जोड़ें",allSongs:"सभी गाने",favorites:"♥ पसंदीदा",
+empty:"अभी कोई गाना नहीं जोड़ा गया।",storageNote:"गाना इसी डिवाइस से चलेगा।",
+playing:"चल रहा है",paused:"रुका हुआ",waiting:"प्रतीक्षा",
+on:"चालू",off:"बंद",unsupported:"समर्थित नहीं",permission:"अनुमति चाहिए",
+noFavorites:"अभी पसंदीदा गाने नहीं हैं।",deviceAudio:"डिवाइस ऑडियो",
+motionReady:"मोशन सक्रिय",lightReady:"लाइट सेंसर सक्रिय",
+lightUnsupported:"इस ब्राउज़र में उपलब्ध नहीं",motionUnsupported:"मोशन समर्थित नहीं",
+error:"ऑडियो नहीं चला",sensorWaiting:"प्रतीक्षा"
+},
+ur:{
+heading:"🎵 زمویو میوزک",intro:"اپنی موسیقی سنیں اور گانے شامل کریں۔",
+sensors:"◉ لائیو سینسر",audio:"آڈیو سینسر",beat:"بیٹ سینسر",
+motion:"موشن سینسر",light:"لائٹ سینسر",enableMotion:"موشن فعال کریں",
+checkLight:"لائٹ سینسر چیک کریں",sensorNote:"سینسر ڈیوائس اور براؤزر کی حمایت پر منحصر ہیں۔",
+living:"✧ 3D زمویو لیونگ",visualCaption:"3D ڈسپلے آڈیو اور حرکت پر ردعمل دے گا",
+noTrack:"کوئی گانا منتخب نہیں",addStart:"شروع کرنے کے لیے گانا شامل کریں",
+library:"🎼 میوزک لائبریری",uploadText:"ڈیوائس سے آڈیو شامل کریں",
+addMusic:"گانا شامل کریں",allSongs:"تمام گانے",favorites:"♥ پسندیدہ",
+empty:"ابھی کوئی گانا شامل نہیں۔",storageNote:"آڈیو اسی ڈیوائس سے چلے گا۔",
+playing:"چل رہا ہے",paused:"رکا ہوا",waiting:"انتظار",
+on:"فعال",off:"بند",unsupported:"غیر معاون",permission:"اجازت درکار",
+noFavorites:"ابھی پسندیدہ گانے نہیں۔",deviceAudio:"ڈیوائس آڈیو",
+motionReady:"موشن فعال",lightReady:"لائٹ سینسر فعال",
+lightUnsupported:"اس براؤزر میں دستیاب نہیں",motionUnsupported:"موشن غیر معاون",
+error:"آڈیو نہیں چل سکا",sensorWaiting:"انتظار"
+},
+ar:{
+heading:"🎵 موسيقى زيميفو",intro:"استمع إلى الموسيقى وأضف أغانيك.",
+sensors:"◉ المستشعرات المباشرة",audio:"مستشعر الصوت",beat:"مستشعر الإيقاع",
+motion:"مستشعر الحركة",light:"مستشعر الضوء",enableMotion:"تفعيل الحركة",
+checkLight:"فحص مستشعر الضوء",sensorNote:"يعتمد توفر المستشعرات على الجهاز والمتصفح.",
+living:"✧ عالم زيميفو ثلاثي الأبعاد",visualCaption:"تتفاعل الشاشة مع الصوت والحركة",
+noTrack:"لم يتم اختيار أغنية",addStart:"أضف أغنية للبدء",
+library:"🎼 مكتبة الموسيقى",uploadText:"أضف ملفات صوتية من جهازك",
+addMusic:"إضافة أغنية",allSongs:"كل الأغاني",favorites:"♥ المفضلة",
+empty:"لم تتم إضافة أغاني بعد.",storageNote:"يتم تشغيل الصوت من جهازك.",
+playing:"يعمل",paused:"متوقف",waiting:"انتظار",
+on:"يعمل",off:"متوقف",unsupported:"غير مدعوم",permission:"يتطلب إذنًا",
+noFavorites:"لا توجد مفضلات بعد.",deviceAudio:"صوت الجهاز",
+motionReady:"الحركة نشطة",lightReady:"مستشعر الضوء نشط",
+lightUnsupported:"غير متاح في هذا المتصفح",motionUnsupported:"الحركة غير مدعومة",
+error:"تعذر تشغيل الصوت",sensorWaiting:"انتظار"
+}
+};
 
-  const zm = {
-    tracks: [],
-    favorites: [],
-    currentIndex: -1,
-    filter: "all",
-    audio: zmRoot.querySelector("#zmAudio"),
-    language: "bn"
-  };
-
-  const $ = (selector) => zmRoot.querySelector(selector);
-
-  function zmReadJSON(key, fallback) {
-    try {
-      const value = localStorage.getItem(key);
-      return value ? JSON.parse(value) : fallback;
-    } catch (error) {
-      return fallback;
-    }
-  }
-
-  function zmSaveMusic() {
-    try {
-      localStorage.setItem(zmMusicKey, JSON.stringify({
-        favorites: zm.favorites
-      }));
-    } catch (error) {
-      console.warn("Music preferences could not be saved.", error);
-    }
-  }
-
-  function zmLoadProfile() {
-    const profile = zmReadJSON(zmProfileKey, {});
-    const name = typeof profile.name === "string" && profile.name.trim()
-      ? profile.name.trim()
-      : "Your Name";
-
-    $("#zmProfileName").textContent = name;
-    $("#zmProfileCaption").textContent =
-      zm.language === "bn" ? "তোমার Zemivo Music Space" : "Your Zemivo Music Space";
-
-    const avatar = $("#zmAvatar");
-    avatar.textContent = name.charAt(0).toUpperCase() || "Z";
-
-    if (typeof profile.avatar === "string" && profile.avatar.trim()) {
-      const img = document.createElement("img");
-      img.src = profile.avatar;
-      img.alt = "Profile photo";
-      img.onerror = () => {
-        avatar.textContent = name.charAt(0).toUpperCase() || "Z";
-      };
-      avatar.textContent = "";
-      avatar.appendChild(img);
-    }
-  }
-
-  function zmSetLanguage(language) {
-    zm.language = language === "en" ? "en" : "bn";
-    document.documentElement.lang = zm.language;
-    $("#zmLanguage").value = zm.language;
-
-    zmRoot.querySelectorAll("[data-bn][data-en]").forEach(element => {
-      element.textContent = element.dataset[zm.language];
-    });
-
-    $("#zmProfileCaption").textContent = zm.language === "bn"
-      ? "তোমার Zemivo Music Space"
-      : "Your Zemivo Music Space";
-
-    zmLoadProfile();
-    zmRenderSongs();
-    zmUpdatePlayerText();
-    try {
-      localStorage.setItem(zmLanguageKey, zm.language);
-    } catch (error) {}
-  }
-
-  function zmText(bn, en) {
-    return zm.language === "bn" ? bn : en;
-  }
-
-  function zmFormatTime(seconds) {
-    if (!Number.isFinite(seconds)) return "0:00";
-    const minutes = Math.floor(seconds / 60);
-    const remainder = Math.floor(seconds % 60);
-    return minutes + ":" + String(remainder).padStart(2, "0");
-  }
-
-  function zmTrackKey(file) {
-    return [file.name, file.size, file.lastModified].join("|");
-  }
-
-  function zmIsFavorite(track) {
-    return zm.favorites.some(item => item.key === track.key);
-  }
-
-  function zmUpdateCount() {
-    const count = zm.filter === "favorites"
-      ? zm.tracks.filter(zmIsFavorite).length
-      : zm.tracks.length;
-
-    $("#zmSongCount").textContent = zm.language === "bn"
-      ? count + " গান"
-      : count + " tracks";
-  }
-
-  function zmRenderSongs() {
-    const list = $("#zmSongList");
-    list.replaceChildren();
-
-    const visibleTracks = zm.tracks
-      .map((track, index) => ({track, index}))
-      .filter(item => zm.filter !== "favorites" || zmIsFavorite(item.track));
-
-    zmUpdateCount();
-
-    if (!visibleTracks.length) {
-      const empty = document.createElement("div");
-      empty.className = "empty";
-      empty.textContent = zm.filter === "favorites"
-        ? zmText("এখনো কোনো Favorite গান লোড করা হয়নি। আগে গান যোগ করো।",
-                 "No favorite tracks are loaded. Add your audio files again.")
-        : zmText("এখনো কোনো গান যোগ করা হয়নি। উপরের বাটনে চাপ দিয়ে অডিও যোগ করো।",
-                 "No songs added yet. Use the button above to add audio.");
-      list.appendChild(empty);
-      return;
-    }
-
-    visibleTracks.forEach(({track, index}) => {
-      const row = document.createElement("div");
-      row.className = "song";
-
-      const icon = document.createElement("div");
-      icon.className = "song-icon";
-      icon.textContent = "♫";
-
-      const info = document.createElement("div");
-      info.className = "song-info";
-
-      const title = document.createElement("strong");
-      title.textContent = track.name;
-
-      const subtitle = document.createElement("small");
-      subtitle.textContent = zmIsFavorite(track)
-        ? zmText("♥ Favorite", "♥ Favorite")
-        : zmText("তোমার ডিভাইসের অডিও", "Audio from your device");
-
-      info.append(title, subtitle);
-
-      const actions = document.createElement("div");
-      actions.className = "song-actions";
-
-      const playButton = document.createElement("button");
-      playButton.className = "icon-btn";
-      playButton.textContent = zm.currentIndex === index && !zm.audio.paused
-        ? "⏸" : "▶";
-      playButton.setAttribute("aria-label", "Play or pause");
-      playButton.addEventListener("click", () => zmPlayTrack(index));
-
-      const favoriteButton = document.createElement("button");
-      favoriteButton.className = "icon-btn";
-      favoriteButton.textContent = zmIsFavorite(track) ? "♥" : "♡";
-      favoriteButton.setAttribute("aria-label", "Favorite");
-      favoriteButton.addEventListener("click", () => zmToggleFavorite(track));
-
-      actions.append(playButton, favoriteButton);
-      row.append(icon, info, actions);
-      list.appendChild(row);
-    });
-  }
-
-  function zmUpdatePlayerText() {
-    if (zm.currentIndex < 0 || !zm.tracks[zm.currentIndex]) {
-      $("#zmNowTitle").textContent = zmText(
-        "কোনো গান নির্বাচন করা হয়নি", "No track selected"
-      );
-      $("#zmPlayerStatus").textContent = zmText(
-        "শুরু করতে একটি গান যোগ করো", "Add a track to get started"
-      );
-      $("#zmCurrentFav").textContent = "♡ Favorite";
-      return;
-    }
-
-    const track = zm.tracks[zm.currentIndex];
-    $("#zmNowTitle").textContent = track.name;
-    $("#zmPlayerStatus").textContent = zm.audio.paused
-      ? zmText("গান প্রস্তুত", "Track ready")
-      : zmText("এখন গান চলছে", "Now playing");
-
-    $("#zmCurrentFav").textContent = zmIsFavorite(track)
-      ? "♥ Favorite" : "♡ Favorite";
-  }
-
-  function zmPlayTrack(index) {
-    const track = zm.tracks[index];
-    if (!track) return;
-
-    if (zm.currentIndex === index) {
-      if (zm.audio.paused) {
-        zm.audio.play().catch(() => {
-          $("#zmPlayerStatus").textContent = zmText(
-            "গান চালানো যায়নি। আবার Play চাপো।",
-            "Could not play audio. Try Play again."
-          );
-        });
-      } else {
-        zm.audio.pause();
-      }
-      return;
-    }
-
-    zm.currentIndex = index;
-    zm.audio.src = track.url;
-    zm.audio.load();
-
-    zm.audio.play().catch(() => {
-      $("#zmPlayerStatus").textContent = zmText(
-        "এই অডিও ফাইলটি চালানো যায়নি।",
-        "This audio file could not be played."
-      );
-    });
-
-    zmRenderSongs();
-    zmUpdatePlayerText();
-  }
-
-  function zmToggleFavorite(track) {
-    const exists = zmIsFavorite(track);
-
-    if (exists) {
-      zm.favorites = zm.favorites.filter(item => item.key !== track.key);
-    } else {
-      zm.favorites.push({key: track.key, name: track.name});
-    }
-
-    zmSaveMusic();
-    zmRenderSongs();
-    zmUpdatePlayerText();
-  }
-
-  function zmAddFiles(files) {
-    Array.from(files).forEach(file => {
-      if (!file.type.startsWith("audio/")) return;
-
-      const key = zmTrackKey(file);
-      if (zm.tracks.some(track => track.key === key)) return;
-
-      zm.tracks.push({
-        key,
-        name: file.name,
-        url: URL.createObjectURL(file)
-      });
-    });
-
-    zmRenderSongs();
-  }
-
-  $("#zmAudioFiles").addEventListener("change", event => {
-    zmAddFiles(event.target.files);
-    event.target.value = "";
+// Other selected languages use English fallback until their full translation
+// catalog is added. The selector remains ready for additional translations.
+const langKey = "zemivo_music_language_v2";
+let lang = "bn";
+try { lang = localStorage.getItem(langKey) || "bn"; } catch(e) {}
+function tr(key) {
+  return (translations[lang] && translations[lang][key]) ||
+         translations.en[key] || key;
+}
+function setLanguage(value) {
+  lang = value;
+  document.documentElement.lang = value;
+  document.documentElement.dir = ["ar","ur"].includes(value) ? "rtl" : "ltr";
+  root.querySelectorAll("[data-i18n]").forEach(el => {
+    el.textContent = tr(el.dataset.i18n);
   });
+  try { localStorage.setItem(langKey,value); } catch(e) {}
+  render();
+  updatePlayer();
+}
+$("zmLang").value = translations[lang] ? lang : "en";
+if (!translations[lang]) lang = "en";
+$("zmLang").addEventListener("change",e=>setLanguage(e.target.value));
 
-  $("#zmPlay").addEventListener("click", () => {
-    if (zm.currentIndex < 0) {
-      if (zm.tracks.length) zmPlayTrack(0);
-      return;
-    }
-    zmPlayTrack(zm.currentIndex);
-  });
+/* Read Profile only. Never overwrite Profile storage. */
+try {
+  const profile = JSON.parse(localStorage.getItem("zemivo_profile_demo_v2") || "{}");
+  const name = profile.name || "Your Name";
+  $("zmName").textContent = name;
+  $("zmAvatar").textContent = name.charAt(0).toUpperCase() || "Z";
+  if (profile.avatar) {
+    const img = document.createElement("img");
+    img.src = profile.avatar;
+    img.alt = "Profile";
+    img.onerror = () => { $("zmAvatar").textContent = name.charAt(0).toUpperCase(); };
+    $("zmAvatar").textContent = "";
+    $("zmAvatar").appendChild(img);
+  }
+} catch(e) {}
 
-  $("#zmPrevious").addEventListener("click", () => {
-    if (!zm.tracks.length) return;
-    const next = zm.currentIndex <= 0
-      ? zm.tracks.length - 1 : zm.currentIndex - 1;
-    zmPlayTrack(next);
-  });
+/* Audio player and visual analyser */
+const audio = $("zmAudio");
+let tracks = [];
+let current = -1;
+let favorites = [];
+let audioContext = null;
+let analyser = null;
+let source = null;
+let frequencyData = null;
+let visualFrame = null;
+let beatHistory = [];
+let lastBeat = 0;
+let beatBpm = 0;
+let motionActive = false;
+let lightSensor = null;
 
-  $("#zmNext").addEventListener("click", () => {
-    if (!zm.tracks.length) return;
-    const next = zm.currentIndex < 0 ||
-      zm.currentIndex >= zm.tracks.length - 1
-      ? 0 : zm.currentIndex + 1;
-    zmPlayTrack(next);
-  });
+try {
+  const saved = JSON.parse(localStorage.getItem("zemivo_music_demo_v1") || "{}");
+  favorites = Array.isArray(saved.favorites) ? saved.favorites : [];
+} catch(e) {}
 
-  $("#zmCurrentFav").addEventListener("click", () => {
-    if (zm.currentIndex < 0) return;
-    zmToggleFavorite(zm.tracks[zm.currentIndex]);
-  });
+const bars = [];
+for (let i=0;i<48;i++) {
+  const bar=document.createElement("div");
+  bar.className="bar";
+  $("zmBars").appendChild(bar);
+  bars.push(bar);
+}
 
-  $("#zmShowAll").addEventListener("click", () => {
-    zm.filter = "all";
-    zmRenderSongs();
-  });
-
-  $("#zmShowFav").addEventListener("click", () => {
-    zm.filter = "favorites";
-    zmRenderSongs();
-  });
-
-  $("#zmLanguage").addEventListener("change", event => {
-    zmSetLanguage(event.target.value);
-  });
-
-  $("#zmVolume").addEventListener("input", event => {
-    zm.audio.volume = Number(event.target.value);
-  });
-
-  $("#zmProgress").addEventListener("input", event => {
-    if (Number.isFinite(zm.audio.duration) && zm.audio.duration > 0) {
-      zm.audio.currentTime =
-        (Number(event.target.value) / 100) * zm.audio.duration;
-    }
-  });
-
-  zm.audio.addEventListener("timeupdate", () => {
-    const duration = zm.audio.duration;
-    const current = zm.audio.currentTime;
-
-    $("#zmCurrentTime").textContent = zmFormatTime(current);
-    $("#zmDuration").textContent = zmFormatTime(duration);
-    $("#zmProgress").value = Number.isFinite(duration) && duration > 0
-      ? (current / duration) * 100 : 0;
-  });
-
-  zm.audio.addEventListener("play", () => {
-    $("#zmPlay").textContent = "⏸";
-    $("#zmDisc").classList.add("playing");
-    zmUpdatePlayerText();
-    zmRenderSongs();
-  });
-
-  zm.audio.addEventListener("pause", () => {
-    $("#zmPlay").textContent = "▶";
-    $("#zmDisc").classList.remove("playing");
-    zmUpdatePlayerText();
-    zmRenderSongs();
-  });
-
-  zm.audio.addEventListener("ended", () => {
-    if (zm.tracks.length > 1) {
-      zmPlayTrack((zm.currentIndex + 1) % zm.tracks.length);
-    } else {
-      zmUpdatePlayerText();
-    }
-  });
-
-  // Favorite metadata থাকবে; অডিও ফাইল পুনরায় নির্বাচন করতে হবে।
-  const savedMusic = zmReadJSON(zmMusicKey, {});
-  zm.favorites = Array.isArray(savedMusic.favorites)
-    ? savedMusic.favorites.filter(item =>
-        item && typeof item.key === "string" &&
-        typeof item.name === "string")
-    : [];
-
-  const savedLanguage = zmReadJSON(zmLanguageKey, null);
-  let language = "bn";
+function formatTime(value) {
+  if (!Number.isFinite(value)) return "0:00";
+  return Math.floor(value/60)+":"+String(Math.floor(value%60)).padStart(2,"0");
+}
+function saveFavorites() {
   try {
-    language = localStorage.getItem(zmLanguageKey) || "bn";
-  } catch (error) {}
-
-  zm.audio.volume = 0.8;
-  zmSetLanguage(language);
-  zmRenderSongs();
-  zmUpdatePlayerText();
-
-  // পেজ বন্ধ হলে অস্থায়ী অডিও URL পরিষ্কার হবে।
-  window.addEventListener("pagehide", () => {
-    zm.tracks.forEach(track => URL.revokeObjectURL(track.url));
+    localStorage.setItem("zemivo_music_demo_v1",
+      JSON.stringify({favorites}));
+  } catch(e) {}
+}
+function isFav(track) {
+  return favorites.some(f=>f.key===track.key);
+}
+function updatePlayer() {
+  if (current<0 || !tracks[current]) {
+    $("zmTrackName").textContent=tr("noTrack");
+    $("zmTrackStatus").textContent=tr("addStart");
+    $("zmFav").textContent="♡";
+    return;
+  }
+  $("zmTrackName").textContent=tracks[current].name;
+  $("zmTrackStatus").textContent=audio.paused?tr("paused"):tr("playing");
+  $("zmFav").textContent=isFav(tracks[current])?"♥":"♡";
+}
+function render() {
+  const list=$("zmList");
+  list.replaceChildren();
+  const filter=list.dataset.filter || "all";
+  const visible=tracks.map((t,i)=>({t,i}))
+    .filter(x=>filter==="all" || isFav(x.t));
+  if (!visible.length) {
+    const empty=document.createElement("div");
+    empty.className="empty";
+    empty.textContent=filter==="favorites"?tr("noFavorites"):tr("empty");
+    list.appendChild(empty);
+    return;
+  }
+  visible.forEach(({t,i})=>{
+    const row=document.createElement("div");
+    row.className="song";
+    const icon=document.createElement("span");
+    icon.textContent="🎵";
+    const info=document.createElement("div");
+    info.className="song-info";
+    const name=document.createElement("strong");
+    name.textContent=t.name;
+    const sub=document.createElement("small");
+    sub.textContent=tr("deviceAudio");
+    info.append(name,sub);
+    const play=document.createElement("button");
+    play.textContent=current===i&&!audio.paused?"⏸":"▶";
+    play.addEventListener("click",()=>playTrack(i));
+    const fav=document.createElement("button");
+    fav.textContent=isFav(t)?"♥":"♡";
+    fav.addEventListener("click",()=>toggleFavorite(t));
+    row.append(icon,info,play,fav);
+    list.appendChild(row);
   });
+}
+function toggleFavorite(track) {
+  favorites=isFav(track)?favorites.filter(f=>f.key!==track.key):
+    [...favorites,{key:track.key,name:track.name}];
+  saveFavorites();
+  render();
+  updatePlayer();
+}
+function playTrack(index) {
+  if (!tracks[index]) return;
+  if (current===index) {
+    if (audio.paused) audio.play().catch(()=>{$("zmTrackStatus").textContent=tr("error");});
+    else audio.pause();
+    return;
+  }
+  current=index;
+  audio.src=tracks[index].url;
+  audio.load();
+  audio.play().catch(()=>{$("zmTrackStatus").textContent=tr("error");});
+  render();
+  updatePlayer();
+}
+$("zmFiles").addEventListener("change",e=>{
+  Array.from(e.target.files).forEach(file=>{
+    if (!file.type.startsWith("audio/")) return;
+    const key=[file.name,file.size,file.lastModified].join("|");
+    if (tracks.some(t=>t.key===key)) return;
+    tracks.push({key,name:file.name,url:URL.createObjectURL(file)});
+  });
+  render();
+  e.target.value="";
+});
+$("zmPlay").addEventListener("click",()=>{
+  if(current<0) {if(tracks.length) playTrack(0);return;}
+  playTrack(current);
+});
+$("zmPrev").addEventListener("click",()=>{
+  if(tracks.length) playTrack((current<=0?tracks.length-1:current-1));
+});
+$("zmNext").addEventListener("click",()=>{
+  if(tracks.length) playTrack((current+1)%tracks.length);
+});
+$("zmFav").addEventListener("click",()=>{
+  if(current>=0) toggleFavorite(tracks[current]);
+});
+$("zmAll").addEventListener("click",()=>{
+  $("zmList").dataset.filter="all";render();
+});
+$("zmFavorites").addEventListener("click",()=>{
+  $("zmList").dataset.filter="favorites";render();
+});
+$("zmVolume").addEventListener("input",e=>audio.volume=Number(e.target.value));
+$("zmProgress").addEventListener("input",e=>{
+  if(Number.isFinite(audio.duration)&&audio.duration>0)
+    audio.currentTime=Number(e.target.value)/100*audio.duration;
+});
+audio.addEventListener("timeupdate",()=>{
+  $("zmTime").textContent=formatTime(audio.currentTime);
+  $("zmDuration").textContent=formatTime(audio.duration);
+  $("zmProgress").value=audio.duration?audio.currentTime/audio.duration*100:0;
+});
+audio.addEventListener("play",()=>{
+  $("zmPlay").textContent="Ⅱ";
+  $("zmDisc").classList.add("playing");
+  startAudioVisuals();
+  updatePlayer();render();
+});
+audio.addEventListener("pause",()=>{
+  $("zmPlay").textContent="▶";
+  $("zmDisc").classList.remove("playing");
+  updatePlayer();render();
+});
+audio.addEventListener("ended",()=>{
+  if(tracks.length>1) playTrack((current+1)%tracks.length);
+});
+
+/* Create Web Audio analyser only after user starts playback. */
+function startAudioVisuals() {
+  const AudioCtx=window.AudioContext||window.webkitAudioContext;
+  if (!AudioCtx) {
+    $("zmAudioStatus").textContent=tr("unsupported");
+    return;
+  }
+  try {
+    if (!audioContext) {
+      audioContext=new AudioCtx();
+      analyser=audioContext.createAnalyser();
+      analyser.fftSize=128;
+      frequencyData=new Uint8Array(analyser.frequencyBinCount);
+      source=audioContext.createMediaElementSource(audio);
+      source.connect(analyser);
+      analyser.connect(audioContext.destination);
+    }
+    if(audioContext.state==="suspended") audioContext.resume();
+    $("zmAudioStatus").textContent=tr("on");
+    $("zmOverallDot").className="status-dot on";
+    $("zmOverall").textContent=tr("on");
+    if(!visualFrame) drawVisuals();
+  } catch(error) {
+    $("zmAudioStatus").textContent=tr("unsupported");
+  }
+}
+function drawVisuals() {
+  visualFrame=requestAnimationFrame(drawVisuals);
+  if(!analyser||!frequencyData) return;
+  analyser.getByteFrequencyData(frequencyData);
+  let sum=0,peak=0;
+  for(let i=0;i<frequencyData.length;i++) {
+    sum+=frequencyData[i];
+    if(frequencyData[i]>peak) peak=frequencyData[i];
+    const barIndex=Math.floor(i/frequencyData.length*bars.length);
+    if(bars[barIndex]) bars[barIndex].style.height=
+      Math.max(4,frequencyData[i]/255*100)+"%";
+  }
+  const level=Math.round(sum/frequencyData.length);
+  $("zmAudioValue").textContent=level;
+  $("zmAudioStatus").textContent=tr("on");
+  $("zmPlatform").style.transform=
+    "rotateX("+(motionTilt.x*.10)+"deg) rotateY("+(motionTilt.y*.10)+"deg)";
+  $("zmDisc").style.filter="brightness("+(1+level/220)+")";
+  const now=performance.now();
+  if(peak>165 && now-lastBeat>280) {
+    if(lastBeat) {
+      const interval=now-lastBeat;
+      const bpm=Math.round(60000/interval);
+      if(bpm>=45&&bpm<=200) {
+        beatHistory.push(bpm);
+        if(beatHistory.length>5) beatHistory.shift();
+        beatBpm=Math.round(beatHistory.reduce((a,b)=>a+b,0)/beatHistory.length);
+      }
+    }
+    lastBeat=now;
+    $("zmBeatStatus").textContent=tr("on");
+    $("zmBeatValue").textContent=beatBpm?beatBpm+" BPM*":"Beat";
+    $("zmPlatform").animate(
+      [{scale:1},{scale:1.035},{scale:1}],
+      {duration:180,easing:"ease-out"}
+    );
+  }
+}
+
+/* Device motion sensor. User action is required. */
+let motionTilt={x:0,y:0};
+function motionHandler(event) {
+  const x=event.gamma||0;
+  const y=event.beta||0;
+  motionTilt={x,y};
+  $("zmMotionValue").textContent=
+    "X "+Math.round(x)+"° / Y "+Math.round(y)+"°";
+  $("zmMotionStatus").textContent=tr("on");
+  $("zmPlatform").style.transform=
+    "rotateX("+(y*.18)+"deg) rotateY("+(x*.18)+"deg)";
+}
+$("zmMotionBtn").addEventListener("click",async()=>{
+  if(!("DeviceOrientationEvent" in window)) {
+    $("zmMotionStatus").textContent=tr("unsupported");
+    $("zmMotionValue").textContent=tr("motionUnsupported");
+    return;
+  }
+  try {
+    if(typeof DeviceOrientationEvent.requestPermission==="function") {
+      const result=await DeviceOrientationEvent.requestPermission();
+      if(result!=="granted") throw new Error("Permission denied");
+    }
+    window.addEventListener("deviceorientation",motionHandler);
+    motionActive=true;
+    $("zmMotionStatus").textContent=tr("on");
+    $("zmMotionValue").textContent=tr("motionReady");
+  } catch(error) {
+    $("zmMotionStatus").textContent=tr("permission");
+    $("zmMotionValue").textContent=tr("permission");
+  }
+});
+
+/* Ambient light sensor: supported only on some browsers/devices. */
+$("zmLightBtn").addEventListener("click",()=>{
+  if(!("AmbientLightSensor" in window)) {
+    $("zmLightStatus").textContent=tr("unsupported");
+    $("zmLightValue").textContent=tr("lightUnsupported");
+    return;
+  }
+  try {
+    lightSensor=new AmbientLightSensor();
+    lightSensor.addEventListener("reading",()=>{
+      $("zmLightStatus").textContent=tr("on");
+      $("zmLightValue").textContent=Math.round(lightSensor.illuminance)+" lux";
+      $("zmDisc").style.filter=
+        "brightness("+Math.min(1.6,.8+lightSensor.illuminance/500)+")";
+    });
+    lightSensor.addEventListener("error",()=>{
+      $("zmLightStatus").textContent=tr("permission");
+      $("zmLightValue").textContent=tr("permission");
+    });
+    lightSensor.start();
+  } catch(error) {
+    $("zmLightStatus").textContent=tr("unsupported");
+    $("zmLightValue").textContent=tr("lightUnsupported");
+  }
+});
+
+audio.volume=.8;
+setLanguage(lang);
+render();
+updatePlayer();
+
+window.addEventListener("pagehide",()=>{
+  tracks.forEach(t=>URL.revokeObjectURL(t.url));
+  if(lightSensor) {
+    try {lightSensor.stop();} catch(e) {}
+  }
+});
 })();
 </script>
-</div>
 </body>
 </html>
