@@ -1,91 +1,634 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="bn">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#07152f">
-<title>Zemivo Living — Daily 3D Worlds</title>
+<title>Zemivo | Living World Music</title>
 <style>
-:root{--sky1:#f6b96d;--sky2:#f28b79;--sky3:#7658a8;--far:#526a9a;--mid:#315b67;--near:#123e3b;--water:#42c5c0;--sun:#fff0b4;--leaf:#39865b;--leaf2:#76b85d;--glow:#ffe7a2;--ink:#fff}
-*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;font-family:system-ui,"Noto Sans Bengali","Segoe UI",sans-serif}
-body{overflow:hidden;background:#07152f;color:var(--ink)}
-.world{height:100svh;min-height:560px;position:relative;overflow:hidden;isolation:isolate;background:linear-gradient(180deg,var(--sky1) 0%,var(--sky2) 35%,var(--sky3) 72%,#1d4654 100%);transition:background 1.8s ease}
-.sky-glow{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 24%,#fff9d488,transparent 39%),linear-gradient(180deg,#fff5d522,transparent 60%);z-index:-5}
-.sun{position:absolute;top:13%;left:50%;width:clamp(115px,22vw,230px);aspect-ratio:1;transform:translateX(-50%);border-radius:50%;background:radial-gradient(circle,#fffde9 0 24%,var(--sun) 42%,#fff0b344 68%,transparent 72%);filter:drop-shadow(0 0 40px var(--glow));z-index:-4;transition:all 1.5s}
-.cloud{position:absolute;width:190px;height:42px;border-radius:50px;background:#fff8e8aa;filter:blur(7px);z-index:-3;animation:cloud 34s linear infinite}
-.cloud:before,.cloud:after{content:"";position:absolute;bottom:10px;border-radius:50%;background:inherit}.cloud:before{width:75px;height:75px;left:30px}.cloud:after{width:95px;height:95px;left:78px}.c1{top:25%;left:-220px}.c2{top:39%;left:55%;transform:scale(.65);animation-duration:46s;animation-delay:-17s;opacity:.65}
-.peaks{position:absolute;inset:0;z-index:-2}
-.peak{position:absolute;bottom:28%;width:0;height:0;border-left:var(--w) solid transparent;border-right:var(--w) solid transparent;border-bottom:var(--h) solid var(--color);filter:drop-shadow(0 16px 14px #102b3344);transition:border-bottom-color 1.5s}
-.peak:after{content:"";position:absolute;left:calc(var(--snoww)*-1);top:0;border-left:var(--snoww) solid transparent;border-right:var(--snoww) solid transparent;border-bottom:var(--snowh) solid #fff9e9}
-.p1{left:-9%;--w:17vw;--h:40vh;--snoww:5vw;--snowh:10vh;--color:#687e9c}
-.p2{left:16%;--w:18vw;--h:55vh;--snoww:6vw;--snowh:13vh;--color:#506b8c;bottom:29%}
-.p3{left:42%;--w:20vw;--h:63vh;--snoww:7vw;--snowh:16vh;--color:#405a7e;bottom:29%}
-.p4{left:72%;--w:17vw;--h:48vh;--snoww:5vw;--snowh:11vh;--color:#637c96}
-.p5{left:91%;--w:14vw;--h:37vh;--snoww:4vw;--snowh:9vh;--color:#71879a}
-.hill{position:absolute;left:-12%;right:-12%;bottom:12%;height:38%;border-radius:50% 50% 0 0;background:linear-gradient(165deg,var(--mid),var(--near) 80%);transform:rotate(-3deg);z-index:-1;transition:background 1.5s}
-.hill.back{bottom:20%;height:25%;background:linear-gradient(165deg,#8ba878,var(--mid));transform:rotate(4deg);opacity:.9}
-.water{position:absolute;left:24%;bottom:-16%;width:53%;height:49%;border-radius:50%;background:radial-gradient(ellipse at 48% 0%,#c3fff0,var(--water) 32%,#176b72 75%);transform:rotate(-8deg);box-shadow:0 0 75px color-mix(in srgb,var(--water),transparent 45%);animation:water 8s ease-in-out infinite alternate;z-index:0;transition:background 1.5s}
-.ripples{position:absolute;left:31%;bottom:10%;width:42%;height:11%;border-radius:50%;background:repeating-linear-gradient(175deg,transparent 0 8px,#ffffff55 9px 11px,transparent 12px 21px);filter:blur(2px);transform:rotate(-8deg);animation:ripple 6s linear infinite;z-index:1}
-.tree{position:absolute;bottom:var(--b);left:var(--l);width:var(--w);height:var(--h);transform-origin:50% 100%;animation:sway var(--s,5s) ease-in-out infinite alternate;filter:drop-shadow(8px 12px 8px #0006);z-index:2}
-.tree:before{content:"";position:absolute;left:46%;bottom:0;width:9%;height:46%;background:linear-gradient(90deg,#4c3020,#a16c3e,#4c3020);border-radius:8px}
-.tree:after{content:"";position:absolute;inset:0 0 24%;background:linear-gradient(125deg,var(--leaf),var(--leaf2) 50%,#1e593d);clip-path:polygon(50% 0,66% 27%,61% 27%,82% 53%,70% 52%,100% 83%,59% 78%,50% 100%,39% 78%,0 83%,30% 52%,18% 53%,39% 27%,34% 27%);transition:background 1.5s}
-.tree.round:after{border-radius:48% 52% 35% 35%;clip-path:polygon(50% 0,83% 22%,100% 55%,78% 83%,50% 100%,20% 83%,0 53%,18% 22%)}
-.fog{position:absolute;left:-20%;width:140%;height:13%;border-radius:50%;background:#fff9e555;filter:blur(28px);animation:fog 20s ease-in-out infinite alternate;z-index:3}.f1{top:40%}.f2{top:58%;animation-delay:-9s;opacity:.65}
-.foreground{position:absolute;z-index:4;left:-5%;right:-5%;bottom:-15%;height:36%;background:linear-gradient(var(--near),#071f25);clip-path:polygon(0 26%,9% 13%,19% 34%,29% 8%,40% 30%,51% 4%,62% 25%,72% 10%,83% 32%,93% 8%,100% 24%,100% 100%,0 100%)}
-.top{position:absolute;z-index:7;top:24px;left:50%;transform:translateX(-50%);white-space:nowrap;font-size:clamp(9px,1.2vw,12px);font-weight:900;letter-spacing:.25em;text-shadow:0 2px 14px #172238}
-.copy{position:absolute;z-index:8;left:50%;top:49%;transform:translate(-50%,-50%);width:min(780px,calc(100% - 32px));padding:clamp(27px,4vw,48px) 20px;text-align:center;border:1px solid #fff9d988;background:linear-gradient(135deg,#07182cce,#102c39a8);box-shadow:0 24px 80px #07152277,inset 0 1px #ffffff44;backdrop-filter:blur(11px);border-radius:19px}
-.kicker{font-size:clamp(10px,1.5vw,14px);font-weight:900;letter-spacing:.24em;color:#fff2d3}
-h1{margin:14px 0 10px;font-size:clamp(34px,7vw,72px);line-height:1.05;letter-spacing:.07em;text-shadow:0 4px 24px #0009}
-.sub{font-size:clamp(11px,1.7vw,16px);letter-spacing:.12em;color:#fff0c9;font-weight:850}
-p{margin:19px auto 0;max-width:570px;color:#f5fffb;font-size:clamp(14px,1.7vw,17px);line-height:1.9;text-shadow:0 1px 5px #0008}
-.bottom{position:absolute;z-index:7;bottom:19px;left:50%;transform:translateX(-50%);white-space:nowrap;font-size:10px;font-weight:800;letter-spacing:.2em;color:#fff}
-.scene-label{position:absolute;z-index:7;right:17px;top:22px;border:1px solid #ffffff66;border-radius:30px;background:#0a1d3577;padding:8px 12px;font-size:10px;letter-spacing:.12em;backdrop-filter:blur(8px)}
-@keyframes sway{from{transform:rotate(-4deg)}to{transform:rotate(5deg)}}
-@keyframes water{from{transform:rotate(-8deg) scaleX(.96)}to{transform:rotate(-5deg) scaleX(1.04)}}
-@keyframes ripple{from{background-position:0 0}to{background-position:100px 0}}
-@keyframes fog{from{transform:translateX(-8%)}to{transform:translateX(8%) translateY(12px)}}
-@keyframes cloud{from{translate:-20vw 0}to{translate:120vw 0}}
-@media(max-width:600px){.peak{bottom:31%}.hill{bottom:17%;height:33%}.hill.back{bottom:23%;height:22%}.copy{top:48%;padding:27px 15px;border-radius:16px}.top{top:18px;font-size:8px;letter-spacing:.15em}.scene-label{top:42px;right:10px;font-size:8px}.bottom{font-size:8px;letter-spacing:.12em}.tree{scale:.78;transform-origin:bottom center}.water{width:65%;left:18%}}
-@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;animation-iteration-count:1!important}}
+:root{
+  --cyan:#75f2ff;--violet:#a994ff;--pink:#ff9bcf;
+  --gold:#ffe4a3;--text:#fff;--muted:#d2def5;
+  --glass:rgba(8,20,43,.78);--line:rgba(220,240,255,.24);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+ margin:0;background:#07152f;color:var(--text);
+ font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;
+ min-height:100vh;overflow-x:hidden
+}
+button,input,select{font:inherit}
+button{cursor:pointer}
+button:focus-visible,input:focus-visible,select:focus-visible{
+ outline:3px solid var(--cyan);outline-offset:3px
+}
+.app{width:min(1250px,calc(100% - 26px));margin:auto;padding:18px 0 45px}
+.topbar{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:15px}
+.brand{display:flex;align-items:center;gap:12px}
+.logo{
+ width:48px;height:48px;border-radius:16px;display:grid;place-items:center;
+ color:#07152f;font-weight:1000;font-size:25px;
+ background:linear-gradient(135deg,var(--cyan),var(--violet),var(--pink));
+ box-shadow:0 0 28px #75f2ff55
+}
+.brand-name{font-weight:950;letter-spacing:4px;font-size:20px}
+.brand-sub{font-size:10px;color:#d5e6ff;letter-spacing:2px}
+.top-actions{display:flex;gap:8px}
+select,.ghost{
+ color:white;background:#10274a;border:1px solid var(--line);
+ border-radius:13px;padding:10px
+}
+.glass{
+ background:var(--glass);border:1px solid var(--line);
+ backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
+ box-shadow:0 18px 55px #0008;border-radius:24px
+}
+
+/* 3D LIVING WORLD */
+.world{
+ height:430px;position:relative;overflow:hidden;border-radius:30px;
+ border:1px solid #c4e8ff55;
+ background:linear-gradient(#3c91c7 0%,#9bd6e7 37%,#f9d49c 62%,#244b55 100%);
+ box-shadow:0 25px 75px #0009;margin-bottom:20px;
+ isolation:isolate
+}
+.world:before{
+ content:"";position:absolute;inset:0;z-index:-1;
+ background:linear-gradient(180deg,transparent 45%,#07152f99 100%)
+}
+.sun{
+ position:absolute;top:65px;right:16%;width:75px;height:75px;
+ border-radius:50%;background:#fff1bd;
+ box-shadow:0 0 65px 25px #fff0b988
+}
+.cloud{
+ position:absolute;width:150px;height:35px;border-radius:50px;
+ background:#ffffffb5;filter:blur(3px);
+ animation:cloudMove 35s linear infinite
+}
+.cloud:before,.cloud:after{
+ content:"";position:absolute;background:inherit;border-radius:50%;
+ width:65px;height:65px;top:-28px;left:20px
+}
+.cloud:after{width:85px;height:85px;left:65px;top:-42px}
+.c1{top:100px;left:-170px}
+.c2{top:165px;left:45%;transform:scale(.7);animation-duration:48s}
+@keyframes cloudMove{to{translate:150vw 0}}
+.mountains{
+ position:absolute;bottom:105px;width:100%;height:220px;
+ background:#365c75;clip-path:polygon(0 85%,15% 18%,28% 72%,43% 8%,58% 76%,72% 20%,87% 70%,100% 25%,100% 100%,0 100%);
+ filter:drop-shadow(0 10px 10px #122a3b)
+}
+.mountains.back{
+ bottom:120px;height:190px;background:#7296a5;opacity:.72;
+ transform:scaleX(1.15)
+}
+.forest{
+ position:absolute;bottom:48px;width:120%;height:155px;left:-10%;
+ background:#123e3b;
+ clip-path:polygon(0 100%,0 68%,4% 68%,6% 25%,9% 68%,12% 12%,15% 68%,19% 30%,22% 68%,25% 4%,29% 68%,33% 25%,36% 68%,40% 12%,43% 68%,47% 24%,50% 68%,54% 5%,58% 68%,62% 20%,65% 68%,69% 9%,72% 68%,76% 22%,80% 68%,84% 5%,88% 68%,92% 25%,95% 68%,100% 50%,100% 100%);
+ filter:drop-shadow(0 -5px 10px #071c20)
+}
+.temple-city{
+ position:absolute;bottom:62px;left:50%;transform:translateX(-50%);
+ width:min(650px,95%);height:210px;display:flex;
+ align-items:flex-end;justify-content:center;gap:12px;
+ filter:drop-shadow(0 12px 12px #07152f88)
+}
+.temple{
+ position:relative;width:100px;height:105px;
+ background:linear-gradient(90deg,#b87842,#f3c77e 50%,#9b613b);
+ clip-path:polygon(50% 0,64% 25%,64% 35%,85% 52%,85% 100%,15% 100%,15% 52%,36% 35%,36% 25%);
+}
+.temple.big{width:150px;height:185px}
+.temple.small{height:85px;width:78px}
+.temple:before{
+ content:"";position:absolute;bottom:0;left:39%;width:22%;height:55%;
+ background:#342c36;box-shadow:0 0 0 3px #f4d69a
+}
+.temple:after{
+ content:"";position:absolute;top:26%;left:15%;right:15%;height:5px;
+ background:#ffdfa0;box-shadow:0 18px #ffdfa0,0 36px #ffdfa0
+}
+.temple.big:after{top:25%}
+.temple.big:before{left:42%;width:16%}
+.ground{
+ position:absolute;bottom:0;width:100%;height:95px;
+ background:linear-gradient(#286b58,#0c3b35);
+ clip-path:polygon(0 28%,25% 8%,48% 35%,70% 10%,100% 25%,100% 100%,0 100%)
+}
+.river{
+ position:absolute;bottom:-30px;left:0;width:100%;height:90px;
+ background:linear-gradient(90deg,#2ba7bd,#83e7e8,#197eae);
+ opacity:.82;clip-path:polygon(0 25%,20% 55%,43% 30%,67% 62%,100% 20%,100% 100%,0 100%);
+ animation:water 5s ease-in-out infinite alternate
+}
+@keyframes water{to{filter:brightness(1.25);transform:translateY(-5px)}}
+.scene-title{
+ position:absolute;z-index:5;top:24px;left:20px;right:20px;
+ text-align:center;text-shadow:0 3px 12px #00152b,0 0 25px #00152b;
+}
+.scene-title .tag{
+ display:inline-block;padding:7px 15px;border-radius:50px;
+ background:#06172bc9;border:1px solid #ffffff77;
+ color:#a8f7ff;font-size:11px;letter-spacing:3px;font-weight:900
+}
+.scene-title h1{
+ margin:12px 0 7px;font-size:clamp(29px,5vw,54px);
+ line-height:1.12;font-weight:1000;letter-spacing:-1px;
+ color:#fff;text-shadow:0 4px 14px #00152b,0 0 30px #00152b
+}
+.scene-title p{font-size:14px;font-weight:700;margin:0;color:white}
+.scene-bottom{
+ position:absolute;bottom:15px;left:0;right:0;text-align:center;
+ font-size:11px;letter-spacing:2px;font-weight:900;
+ text-shadow:0 2px 8px #000
+}
+.scene-dots{position:absolute;bottom:12px;right:15px;z-index:7;display:flex;gap:6px}
+.scene-dot{width:8px;height:8px;border-radius:50%;background:#ffffff77}
+.scene-dot.active{background:white;box-shadow:0 0 10px white}
+.world.scene-2{background:linear-gradient(#193d76,#75b8d3 52%,#164a56)}
+.world.scene-2 .temple-city{display:none}
+.world.scene-2 .mountains{background:#24486b}
+.world.scene-2 .forest{background:#0b5145}
+.world.scene-2 .river{height:130px;background:linear-gradient(90deg,#1688bd,#a2f5f1,#176da1)}
+.world.scene-3{background:linear-gradient(#594d92,#dca9bb 52%,#315b52)}
+.world.scene-3 .temple-city{transform:translateX(-50%) scale(.82)}
+.world.scene-3 .mountains{background:#66517d}
+.world.scene-3 .forest{background:#214d43}
+.world.scene-4{background:linear-gradient(#4d9ec4,#d9d5c1 55%,#34564e)}
+.world.scene-4 .temple-city{display:none}
+.world.scene-4 .mountains{background:#d2e4e8;bottom:130px}
+.world.scene-4 .forest{background:#164f40}
+.world.scene-4 .river{background:linear-gradient(90deg,#52a9c6,#d0f7ef,#398eb0)}
+
+.section-grid{display:grid;grid-template-columns:1.08fr .92fr;gap:20px}
+.panel{padding:22px;min-width:0}
+.heading{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:17px}
+.heading h2{font-size:20px;margin:0}
+.muted{color:var(--muted)}
+.tiny{font-size:12px}
+.upload{
+ border:1px dashed #a7d7ff88;border-radius:18px;padding:20px;
+ text-align:center;background:#18365a99;margin-bottom:16px
+}
+.upload .music-icon{font-size:35px;color:var(--cyan)}
+.upload p{font-size:13px;color:var(--muted)}
+.primary{
+ border:0;border-radius:14px;padding:12px 18px;font-weight:900;
+ color:#07152f;background:linear-gradient(100deg,var(--cyan),var(--violet),var(--pink))
+}
+.file-input{display:none}
+.search{
+ width:100%;padding:13px;border-radius:13px;border:1px solid var(--line);
+ color:white;background:#07152f;margin-bottom:13px
+}
+.tabs{display:flex;gap:8px;margin-bottom:13px}
+.tab{
+ border:1px solid var(--line);background:#12294c;color:white;
+ padding:9px 14px;border-radius:30px
+}
+.tab.active{background:linear-gradient(100deg,#347e9c,#725cb5);border-color:var(--cyan)}
+.song-list{display:grid;gap:9px;max-height:400px;overflow:auto}
+.song{
+ display:flex;align-items:center;gap:10px;padding:11px;
+ border-radius:15px;background:#14294a;border:1px solid transparent
+}
+.song.active{border-color:var(--cyan);background:#1c4262}
+.cover{
+ width:43px;height:43px;border-radius:13px;flex:none;
+ display:grid;place-items:center;color:#07152f;font-size:20px;
+ background:linear-gradient(135deg,var(--cyan),var(--violet),var(--pink))
+}
+.song-info{flex:1;min-width:0}
+.song-name{font-size:13px;font-weight:850;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.song-meta{font-size:11px;color:var(--muted);margin-top:4px}
+.song-actions{display:flex;gap:5px}
+.small{
+ width:34px;height:34px;border-radius:10px;border:1px solid var(--line);
+ color:white;background:#203b60
+}
+.small.fav{color:#ff9acb}
+.empty{text-align:center;color:var(--muted);padding:30px 8px;line-height:1.7}
+.player{position:sticky;top:12px}
+.now-art{
+ height:205px;border-radius:20px;display:grid;place-items:center;
+ background:radial-gradient(circle,#4a76a5,#1c3566 60%,#101c3b);
+ overflow:hidden;position:relative
+}
+.now-art:before,.now-art:after{
+ content:"";position:absolute;width:175px;height:175px;
+ border:1px solid #8cf3ff77;border-radius:50%;animation:rotate 16s linear infinite
+}
+.now-art:after{width:230px;height:230px;animation-direction:reverse}
+@keyframes rotate{to{transform:rotate(360deg)}}
+.disc{
+ width:125px;height:125px;border-radius:50%;
+ background:repeating-radial-gradient(circle,#0b1832 0 3px,#36517c 4px 6px);
+ border:7px solid #243b61;display:grid;place-items:center;
+ box-shadow:0 0 35px #75f2ff88;animation:rotate 12s linear infinite
+}
+.disc-core{
+ width:38px;height:38px;border-radius:50%;
+ background:linear-gradient(135deg,var(--cyan),var(--violet),var(--pink))
+}
+.now-title{font-size:20px;font-weight:900;margin:17px 0 5px;overflow-wrap:anywhere}
+.now-artist{font-size:13px;color:var(--muted)}
+.progress-wrap{margin:18px 0 8px}
+input[type=range]{accent-color:var(--cyan);width:100%;cursor:pointer}
+.time{display:flex;justify-content:space-between;color:var(--muted);font-size:11px}
+.controls{display:flex;justify-content:center;align-items:center;gap:10px;margin:18px 0}
+.control{
+ width:42px;height:42px;border:1px solid var(--line);border-radius:50%;
+ background:#1a3155;color:white;font-size:16px
+}
+.control.main{
+ width:57px;height:57px;border:0;color:#07152f;
+ background:linear-gradient(135deg,var(--cyan),var(--violet))
+}
+.control.selected{color:var(--cyan);border-color:var(--cyan)}
+.volume{display:flex;align-items:center;gap:10px;color:var(--muted);font-size:12px}
+.volume input{flex:1}
+.status{min-height:20px;text-align:center;color:var(--cyan);font-size:12px;margin-top:13px}
+.note{text-align:center;color:#a9bddc;font-size:11px;line-height:1.6;margin-top:16px}
+@media(max-width:820px){
+ .section-grid{grid-template-columns:1fr}
+ .player{position:static}
+ .world{height:390px}
+}
+@media(max-width:480px){
+ .app{width:calc(100% - 18px);padding-top:12px}
+ .brand-name{font-size:17px}
+ .brand-sub{font-size:8px}
+ .logo{width:42px;height:42px}
+ .panel{padding:15px}
+ .world{height:370px;border-radius:22px}
+ .scene-title{top:18px}
+ .scene-title h1{font-size:31px}
+ .scene-title p{font-size:12px}
+ .temple-city{gap:5px;transform:translateX(-50%) scale(.78);transform-origin:bottom center}
+ .temple.big{height:155px}
+ .temple{height:90px}
+ .top-actions select{max-width:110px}
+ .controls{gap:7px}
+ .control{width:38px;height:38px}
+ .control.main{width:52px;height:52px}
+}
+@media(prefers-reduced-motion:reduce){
+ *,*:before,*:after{animation:none!important;scroll-behavior:auto!important}
+}
 </style>
 </head>
 <body>
-<main class="world" id="world" aria-label="Zemivo Living daily animated landscape">
-<div class="sky-glow"></div><div class="sun"></div><div class="cloud c1"></div><div class="cloud c2"></div>
-<div class="peaks"><i class="peak p1"></i><i class="peak p2"></i><i class="peak p3"></i><i class="peak p4"></i><i class="peak p5"></i></div>
-<div class="hill back"></div><div class="hill"></div><div class="water"></div><div class="ripples"></div>
-<div class="tree" style="--l:2%;--b:7%;--w:150px;--h:290px;--s:5.4s"></div>
-<div class="tree round" style="--l:14%;--b:8%;--w:105px;--h:205px;--s:4.4s"></div>
-<div class="tree" style="--l:25%;--b:6%;--w:65px;--h:145px;--s:5s"></div>
-<div class="tree" style="--l:81%;--b:7%;--w:145px;--h:280px;--s:4.8s"></div>
-<div class="tree round" style="--l:71%;--b:7%;--w:95px;--h:185px;--s:5.2s"></div>
-<div class="tree round" style="--l:92%;--b:9%;--w:75px;--h:160px;--s:4.6s"></div>
-<div class="fog f1"></div><div class="fog f2"></div><div class="foreground"></div>
-<div class="top">ZEMIVO • A WORLD OF YOUR OWN</div><div class="scene-label" id="sceneLabel">DAILY WORLD</div>
-<section class="copy">
-<div class="kicker">WELCOME TO A LIVING WORLD</div>
-<h1>ZEMIVO LIVING</h1>
-<div class="sub">YOUR WORLD • YOUR MOMENTS • YOUR LIFE</div>
-<p>প্রতিদিন নতুন দৃশ্য, নতুন রং—একটি জীবন্ত পৃথিবী, যেখানে প্রতিটি মুহূর্তের নিজস্ব গল্প আছে।</p>
+<div class="app" id="zemivoMusic">
+
+<header class="topbar">
+ <div class="brand">
+  <div class="logo">Z</div>
+  <div><div class="brand-name">ZEMIVO</div><div class="brand-sub">LIVING WORLD MUSIC</div></div>
+ </div>
+ <div class="top-actions">
+  <select id="language" aria-label="Language">
+   <option value="bn">বাংলা</option>
+   <option value="en">English</option>
+  </select>
+  <button class="ghost" id="themeBtn" type="button" aria-label="Change colors">✦</button>
+ </div>
+</header>
+
+<!-- CINEMATIC 3D SCENE -->
+<section class="world" id="world" aria-label="Animated scenic world">
+ <div class="sun"></div>
+ <div class="cloud c1"></div><div class="cloud c2"></div>
+ <div class="mountains back"></div>
+ <div class="mountains"></div>
+ <div class="forest"></div>
+ <div class="temple-city" aria-hidden="true">
+  <div class="temple small"></div>
+  <div class="temple"></div>
+  <div class="temple big"></div>
+  <div class="temple"></div>
+  <div class="temple small"></div>
+ </div>
+ <div class="ground"></div>
+ <div class="river"></div>
+ <div class="scene-title">
+  <span class="tag" id="sceneTag">ZEMIVO • LIVING WORLD</span>
+  <h1 id="sceneHeading">Temple City</h1>
+  <p id="sceneText">প্রকৃতির মাঝে সুরের এক নতুন জগৎ</p>
+ </div>
+ <div class="scene-bottom" id="sceneBottom">DISCOVER • LISTEN • FEEL</div>
+ <div class="scene-dots" id="sceneDots">
+  <span class="scene-dot active"></span><span class="scene-dot"></span>
+  <span class="scene-dot"></span><span class="scene-dot"></span>
+ </div>
 </section>
-<div class="bottom">EXPLORE • IMAGINE • CONNECT</div>
+
+<main class="section-grid">
+ <section class="glass panel">
+  <div class="heading">
+   <h2 data-bn="তোমার মিউজিক লাইব্রেরি" data-en="Your Music Library">তোমার মিউজিক লাইব্রেরি</h2>
+   <span class="muted tiny" id="songCount">0 গান</span>
+  </div>
+  <div class="upload">
+   <div class="music-icon">♫</div>
+   <strong data-bn="ডিভাইস থেকে গান যোগ করো" data-en="Add music from your device">ডিভাইস থেকে গান যোগ করো</strong>
+   <p data-bn="MP3, WAV, M4A সহ অডিও ফাইল বেছে নাও।"
+      data-en="Choose audio files such as MP3, WAV or M4A.">MP3, WAV, M4A সহ অডিও ফাইল বেছে নাও।</p>
+   <button class="primary" id="uploadBtn" type="button"
+    data-bn="গান নির্বাচন করো" data-en="Choose audio files">গান নির্বাচন করো</button>
+   <input class="file-input" id="fileInput" type="file" accept="audio/*" multiple>
+  </div>
+  <input class="search" id="search" type="search"
+   placeholder="গানের নাম খুঁজুন…" aria-label="Search songs">
+  <div class="tabs">
+   <button class="tab active" data-filter="all" type="button"
+    data-bn="সব গান" data-en="All songs">সব গান</button>
+   <button class="tab" data-filter="favorites" type="button"
+    data-bn="প্রিয় গান" data-en="Favorites">প্রিয় গান</button>
+  </div>
+  <div class="song-list" id="songList">
+   <div class="empty">এখানে তোমার গান দেখা যাবে।<br>শুরু করতে উপরের বাটনে চাপ দাও।</div>
+  </div>
+ </section>
+
+ <section class="glass panel player">
+  <div class="heading">
+   <h2 data-bn="এখন বাজছে" data-en="Now Playing">এখন বাজছে</h2>
+   <span class="muted tiny">PERSONAL PLAYER</span>
+  </div>
+  <div class="now-art"><div class="disc"><div class="disc-core"></div></div></div>
+  <div class="now-title" id="currentTitle">কোনো গান নির্বাচন করা হয়নি</div>
+  <div class="now-artist" id="currentArtist">লাইব্রেরি থেকে একটি গান বেছে নাও</div>
+  <div class="progress-wrap">
+   <input type="range" id="progress" min="0" max="1000" value="0" aria-label="Track progress">
+   <div class="time"><span id="currentTime">0:00</span><span id="duration">0:00</span></div>
+  </div>
+  <div class="controls">
+   <button class="control" id="shuffleBtn" type="button" aria-label="Shuffle">⤨</button>
+   <button class="control" id="prevBtn" type="button" aria-label="Previous">◀|</button>
+   <button class="control main" id="playBtn" type="button" aria-label="Play">▶</button>
+   <button class="control" id="nextBtn" type="button" aria-label="Next">|▶</button>
+   <button class="control" id="repeatBtn" type="button" aria-label="Repeat">↻</button>
+  </div>
+  <div class="volume">
+   <span>◖</span><label for="volume" data-bn="শব্দের মাত্রা" data-en="Volume">শব্দের মাত্রা</label>
+   <input type="range" id="volume" min="0" max="1" step=".01" value=".8">
+  </div>
+  <div class="status" id="status" role="status" aria-live="polite"></div>
+  <div class="note" data-bn="তোমার অডিও এই ব্রাউজার সেশনে চলে। পেজ রিফ্রেশ করলে ফাইল আবার যোগ করতে হবে।"
+   data-en="Your audio plays in this browser session. Add local files again after refreshing.">
+   তোমার অডিও এই ব্রাউজার সেশনে চলে। পেজ রিফ্রেশ করলে ফাইল আবার যোগ করতে হবে।
+  </div>
+ </section>
 </main>
+<audio id="audio" preload="metadata"></audio>
+</div>
+
 <script>
-/* প্রতিদিন তারিখ অনুযায়ী একটি দৃশ্য বেছে নেয়; একই দিনে একই দৃশ্য থাকবে। */
+"use strict";
+
+const $=id=>document.getElementById(id);
+const audio=$("audio");
+const list=$("songList");
+
+let songs=[];
+let favorites=new Set();
+let currentIndex=-1;
+let filter="all";
+let shuffle=false;
+let repeat=false;
+let currentLang="bn";
+let themeFlip=false;
+let sceneIndex=0;
+
 const scenes=[
-{label:"ALPINE SUNRISE",sky:["#f6c879","#e98e80","#8067ad"],far:"#627d9b",mid:"#47746a",near:"#17483c",water:"#54c9c2",sun:"#fff1bd",leaf:"#397b4d",leaf2:"#8cc86b",glow:"#ffe6a4"},
-{label:"TROPICAL PARADISE",sky:["#71d7df","#39aeb8","#277d91"],far:"#477b91",mid:"#287d69",near:"#10483c",water:"#35d6cb",sun:"#fff5b8",leaf:"#167a50",leaf2:"#8cdb68",glow:"#b4fff0"},
-{label:"GOLDEN DESERT",sky:["#ffd18a","#e99a6b","#a85d79"],far:"#98745f",mid:"#9b6748",near:"#593b35",water:"#d9a56a",sun:"#fff0bd",leaf:"#637b46",leaf2:"#b6a65b",glow:"#ffe2a0"},
-{label:"MOONLIT FOREST",sky:["#354b78","#26365f","#171e48"],far:"#354b70",mid:"#244d50",near:"#0b252e",water:"#568dba",sun:"#e3e8ff",leaf:"#1d5a4b",leaf2:"#528c72",glow:"#c7d8ff"},
-{label:"SPRING VALLEY",sky:["#a6e8d1","#78c9bb","#6c91b4"],far:"#829bb1",mid:"#528b69",near:"#24533e",water:"#67d9cb",sun:"#fff6c5",leaf:"#37834e",leaf2:"#a6d66e",glow:"#fff5bd"},
-{label:"AUTUMN LAKE",sky:["#f3b66f","#d87965","#745c88"],far:"#786b78",mid:"#76513f",near:"#3b332d",water:"#bd8d68",sun:"#ffe5a8",leaf:"#a45d32",leaf2:"#e5a64d",glow:"#ffe0a0"},
-{label:"AURORA HIGHLANDS",sky:["#315e78","#267d83","#493d83"],far:"#4c7187",mid:"#28665d",near:"#102e38",water:"#4ac6c0",sun:"#d7ffe8",leaf:"#236b51",leaf2:"#6fc49a",glow:"#a5ffe0"}
+ {title:"Temple City",bn:"প্রাচীন মন্দিরনগরী",text:"প্রকৃতির মাঝে সুরের এক নতুন জগৎ",bottom:"ANCIENT BEAUTY • MUSIC • PEACE"},
+ {title:"Mountain River",bn:"পাহাড়ি নদীর পথ",text:"পাহাড়, নদী আর মেঘের সঙ্গে সুরের যাত্রা",bottom:"MOUNTAINS • RIVERS • FREEDOM"},
+ {title:"Forest Valley",bn:"সবুজ বন উপত্যকা",text:"সবুজের গভীরে হারিয়ে যাও সুরের ছন্দে",bottom:"FOREST • VALLEY • HARMONY"},
+ {title:"Cloud Kingdom",bn:"মেঘের রাজ্য",text:"আকাশ ছোঁয়া পাহাড়ে নতুন সুরের অনুভূতি",bottom:"CLOUDS • SKY • DREAMS"}
 ];
-const now=new Date(),key=Date.UTC(now.getFullYear(),now.getMonth(),now.getDate()),scene=scenes[Math.floor(key/86400000)%scenes.length];
-const root=document.documentElement;
-root.style.setProperty("--sky1",scene.sky[0]);root.style.setProperty("--sky2",scene.sky[1]);root.style.setProperty("--sky3",scene.sky[2]);
-["far","mid","near","water","sun","leaf","leaf2","glow"].forEach(k=>root.style.setProperty("--"+k,scene[k]));
-document.getElementById("sceneLabel").textContent=scene.label;
+
+function showScene(i){
+ sceneIndex=i%scenes.length;
+ const s=scenes[sceneIndex];
+ $("world").className="world"+(sceneIndex?" scene-"+(sceneIndex+1):"");
+ $("sceneHeading").textContent=currentLang==="bn"?s.bn:s.title;
+ $("sceneText").textContent=currentLang==="bn"?s.text:
+ ["A new world of music among nature","A musical journey through mountains and rivers","Feel the rhythm deep in the green valley","A new musical feeling above the clouds"][sceneIndex];
+ $("sceneBottom").textContent=s.bottom;
+ document.querySelectorAll(".scene-dot").forEach((d,n)=>d.classList.toggle("active",n===sceneIndex));
+}
+showScene(0);
+setInterval(()=>showScene((sceneIndex+1)%scenes.length),18000);
+
+/* Daily scene selection */
+const dayNumber=Math.floor(Date.now()/86400000);
+showScene(dayNumber%scenes.length);
+
+function message(text){$("status").textContent=text}
+function timeText(value){
+ if(!Number.isFinite(value))return "0:00";
+ return Math.floor(value/60)+":"+String(Math.floor(value%60)).padStart(2,"0");
+}
+function updateCount(){
+ $("songCount").textContent=songs.length+(currentLang==="bn"?" গান":" tracks");
+}
+function render(){
+ const query=$("search").value.trim().toLowerCase();
+ const shown=songs.map((song,index)=>({...song,index})).filter(song=>
+  (filter!=="favorites"||favorites.has(song.id))&&song.name.toLowerCase().includes(query)
+ );
+ updateCount();
+ if(!shown.length){
+  list.innerHTML='<div class="empty">'+(songs.length?"কোনো গান পাওয়া যায়নি":"এখানে তোমার গান দেখা যাবে।<br>শুরু করতে উপরের বাটনে চাপ দাও।")+'</div>';
+  return;
+ }
+ list.replaceChildren();
+ shown.forEach(song=>{
+  const row=document.createElement("div");
+  row.className="song"+(song.index===currentIndex?" active":"");
+  const cover=document.createElement("div");
+  cover.className="cover";cover.textContent="♫";
+  const info=document.createElement("div");info.className="song-info";
+  const name=document.createElement("div");name.className="song-name";name.textContent=song.name;
+  const meta=document.createElement("div");meta.className="song-meta";meta.textContent=song.size;
+  info.append(name,meta);
+  const actions=document.createElement("div");actions.className="song-actions";
+  const fav=document.createElement("button");
+  fav.className="small fav";fav.type="button";
+  fav.textContent=favorites.has(song.id)?"♥":"♡";
+  fav.setAttribute("aria-label","Toggle favorite");
+  fav.onclick=()=>toggleFavorite(song.id);
+  const play=document.createElement("button");
+  play.className="small";play.type="button";play.textContent="▶";
+  play.setAttribute("aria-label","Play "+song.name);
+  play.onclick=()=>playIndex(song.index);
+  const remove=document.createElement("button");
+  remove.className="small";remove.type="button";remove.textContent="×";
+  remove.setAttribute("aria-label","Remove "+song.name);
+  remove.onclick=()=>removeSong(song.index);
+  actions.append(fav,play,remove);
+  row.append(cover,info,actions);
+  row.ondblclick=()=>playIndex(song.index);
+  list.append(row);
+ });
+}
+function updatePlayer(){
+ const song=songs[currentIndex];
+ if(!song){
+  $("currentTitle").textContent=currentLang==="bn"?"কোনো গান নির্বাচন করা হয়নি":"No track selected";
+  $("currentArtist").textContent=currentLang==="bn"?"লাইব্রেরি থেকে একটি গান বেছে নাও":"Choose a song from your library";
+  $("playBtn").textContent="▶";
+  $("duration").textContent="0:00";
+  $("currentTime").textContent="0:00";
+  $("progress").value=0;
+  render();return;
+ }
+ $("currentTitle").textContent=song.name;
+ $("currentArtist").textContent=song.size;
+ $("playBtn").textContent=audio.paused?"▶":"Ⅱ";
+ $("duration").textContent=timeText(audio.duration);
+ render();
+}
+async function playIndex(index){
+ if(index<0||index>=songs.length)return;
+ currentIndex=index;
+ audio.pause();
+ audio.src=songs[index].url;
+ audio.load();
+ updatePlayer();
+ try{
+  await audio.play();
+  message(currentLang==="bn"?"গান চলছে":"Playing");
+ }catch(error){
+  message(currentLang==="bn"?"এই অডিও চালানো যাচ্ছে না":"Unable to play this audio");
+ }
+}
+function toggleFavorite(id){
+ if(favorites.has(id))favorites.delete(id);
+ else favorites.add(id);
+ render();
+}
+function removeSong(index){
+ const song=songs[index];
+ if(!song)return;
+ const wasCurrent=index===currentIndex;
+ if(wasCurrent){
+  audio.pause();audio.removeAttribute("src");audio.load();
+  currentIndex=-1;
+ }else if(index<currentIndex){
+  currentIndex--;
+ }
+ URL.revokeObjectURL(song.url);
+ songs.splice(index,1);
+ favorites.delete(song.id);
+ updatePlayer();
+ message(currentLang==="bn"?"গানটি সরানো হয়েছে":"Track removed");
+}
+function nextSong(){
+ if(!songs.length)return;
+ let next;
+ if(shuffle&&songs.length>1){
+  do{next=Math.floor(Math.random()*songs.length)}while(next===currentIndex);
+ }else{
+  next=currentIndex<0?0:(currentIndex+1)%songs.length;
+ }
+ playIndex(next);
+}
+$("uploadBtn").addEventListener("click",()=>$("fileInput").click());
+$("fileInput").addEventListener("change",event=>{
+ const files=Array.from(event.target.files||[]).filter(file=>file.type.startsWith("audio/"));
+ files.forEach(file=>{
+  songs.push({
+   id:(crypto.randomUUID?crypto.randomUUID():String(Date.now())+Math.random()),
+   name:file.name.replace(/\.[^.]+$/,""),
+   size:(file.size/1048576).toFixed(1)+" MB",
+   url:URL.createObjectURL(file)
+  });
+ });
+ render();
+ if(files.length)message(currentLang==="bn"?"গান যোগ হয়েছে":"Tracks added");
+ event.target.value="";
+});
+$("search").addEventListener("input",render);
+document.querySelectorAll(".tab").forEach(button=>{
+ button.addEventListener("click",()=>{
+  filter=button.dataset.filter;
+  document.querySelectorAll(".tab").forEach(tab=>tab.classList.toggle("active",tab===button));
+  render();
+ });
+});
+$("playBtn").addEventListener("click",()=>{
+ if(currentIndex<0){if(songs.length)playIndex(0);return}
+ if(audio.paused)audio.play().catch(()=>message("Playback error"));
+ else audio.pause();
+});
+$("prevBtn").addEventListener("click",()=>{
+ if(!songs.length)return;
+ playIndex(currentIndex<=0?songs.length-1:currentIndex-1);
+});
+$("nextBtn").addEventListener("click",nextSong);
+$("shuffleBtn").addEventListener("click",()=>{
+ shuffle=!shuffle;
+ $("shuffleBtn").classList.toggle("selected",shuffle);
+ message(shuffle?"Shuffle on":"Shuffle off");
+});
+$("repeatBtn").addEventListener("click",()=>{
+ repeat=!repeat;
+ audio.loop=repeat;
+ $("repeatBtn").classList.toggle("selected",repeat);
+ message(repeat?"Repeat on":"Repeat off");
+});
+$("volume").addEventListener("input",event=>audio.volume=Number(event.target.value));
+audio.volume=.8;
+
+audio.addEventListener("timeupdate",()=>{
+ if(Number.isFinite(audio.duration)&&audio.duration>0){
+  $("progress").value=audio.currentTime/audio.duration*1000;
+  $("currentTime").textContent=timeText(audio.currentTime);
+ }
+});
+audio.addEventListener("loadedmetadata",()=>{
+ $("duration").textContent=timeText(audio.duration);
+});
+$("progress").addEventListener("input",event=>{
+ if(Number.isFinite(audio.duration)&&audio.duration>0)
+  audio.currentTime=Number(event.target.value)/1000*audio.duration;
+});
+audio.addEventListener("play",updatePlayer);
+audio.addEventListener("pause",updatePlayer);
+audio.addEventListener("ended",()=>{if(!repeat)nextSong()});
+audio.addEventListener("error",()=>{
+ if(audio.src)message("Audio playback error");
+});
+
+$("language").addEventListener("change",event=>{
+ currentLang=event.target.value;
+ document.documentElement.lang=currentLang;
+ document.documentElement.dir="ltr";
+ document.querySelectorAll("[data-bn]").forEach(element=>{
+  element.textContent=element.dataset[currentLang]||element.dataset.bn;
+ });
+ $("search").placeholder=currentLang==="bn"?"গানের নাম খুঁজুন…":"Search your songs…";
+ showScene(sceneIndex);
+ updatePlayer();
+});
+
+$("themeBtn").addEventListener("click",()=>{
+ themeFlip=!themeFlip;
+ document.documentElement.style.setProperty("--cyan",themeFlip?"#ffe18e":"#75f2ff");
+ document.documentElement.style.setProperty("--violet",themeFlip?"#ff91c8":"#a994ff");
+ document.documentElement.style.setProperty("--pink",themeFlip?"#83f2d2":"#ff9bcf");
+ message(currentLang==="bn"?"রঙের থিম পরিবর্তন হয়েছে":"Theme changed");
+});
+
+window.addEventListener("pagehide",()=>{
+ songs.forEach(song=>URL.revokeObjectURL(song.url));
+});
+render();
+updatePlayer();
 </script>
 </body>
 </html>
