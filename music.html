@@ -1,634 +1,130 @@
+
 <!DOCTYPE html>
 <html lang="bn">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#07152f">
-<title>Zemivo | Living World Music</title>
-<style>
-:root{
-  --cyan:#75f2ff;--violet:#a994ff;--pink:#ff9bcf;
-  --gold:#ffe4a3;--text:#fff;--muted:#d2def5;
-  --glass:rgba(8,20,43,.78);--line:rgba(220,240,255,.24);
-}
-*{box-sizing:border-box}
-html{scroll-behavior:smooth}
-body{
- margin:0;background:#07152f;color:var(--text);
- font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;
- min-height:100vh;overflow-x:hidden
-}
-button,input,select{font:inherit}
-button{cursor:pointer}
-button:focus-visible,input:focus-visible,select:focus-visible{
- outline:3px solid var(--cyan);outline-offset:3px
-}
-.app{width:min(1250px,calc(100% - 26px));margin:auto;padding:18px 0 45px}
-.topbar{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:15px}
-.brand{display:flex;align-items:center;gap:12px}
-.logo{
- width:48px;height:48px;border-radius:16px;display:grid;place-items:center;
- color:#07152f;font-weight:1000;font-size:25px;
- background:linear-gradient(135deg,var(--cyan),var(--violet),var(--pink));
- box-shadow:0 0 28px #75f2ff55
-}
-.brand-name{font-weight:950;letter-spacing:4px;font-size:20px}
-.brand-sub{font-size:10px;color:#d5e6ff;letter-spacing:2px}
-.top-actions{display:flex;gap:8px}
-select,.ghost{
- color:white;background:#10274a;border:1px solid var(--line);
- border-radius:13px;padding:10px
-}
-.glass{
- background:var(--glass);border:1px solid var(--line);
- backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
- box-shadow:0 18px 55px #0008;border-radius:24px
-}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#102b45">
+  <title>Zemivo Music — Temple City</title>
 
-/* 3D LIVING WORLD */
-.world{
- height:430px;position:relative;overflow:hidden;border-radius:30px;
- border:1px solid #c4e8ff55;
- background:linear-gradient(#3c91c7 0%,#9bd6e7 37%,#f9d49c 62%,#244b55 100%);
- box-shadow:0 25px 75px #0009;margin-bottom:20px;
- isolation:isolate
-}
-.world:before{
- content:"";position:absolute;inset:0;z-index:-1;
- background:linear-gradient(180deg,transparent 45%,#07152f99 100%)
-}
-.sun{
- position:absolute;top:65px;right:16%;width:75px;height:75px;
- border-radius:50%;background:#fff1bd;
- box-shadow:0 0 65px 25px #fff0b988
-}
-.cloud{
- position:absolute;width:150px;height:35px;border-radius:50px;
- background:#ffffffb5;filter:blur(3px);
- animation:cloudMove 35s linear infinite
-}
-.cloud:before,.cloud:after{
- content:"";position:absolute;background:inherit;border-radius:50%;
- width:65px;height:65px;top:-28px;left:20px
-}
-.cloud:after{width:85px;height:85px;left:65px;top:-42px}
-.c1{top:100px;left:-170px}
-.c2{top:165px;left:45%;transform:scale(.7);animation-duration:48s}
-@keyframes cloudMove{to{translate:150vw 0}}
-.mountains{
- position:absolute;bottom:105px;width:100%;height:220px;
- background:#365c75;clip-path:polygon(0 85%,15% 18%,28% 72%,43% 8%,58% 76%,72% 20%,87% 70%,100% 25%,100% 100%,0 100%);
- filter:drop-shadow(0 10px 10px #122a3b)
-}
-.mountains.back{
- bottom:120px;height:190px;background:#7296a5;opacity:.72;
- transform:scaleX(1.15)
-}
-.forest{
- position:absolute;bottom:48px;width:120%;height:155px;left:-10%;
- background:#123e3b;
- clip-path:polygon(0 100%,0 68%,4% 68%,6% 25%,9% 68%,12% 12%,15% 68%,19% 30%,22% 68%,25% 4%,29% 68%,33% 25%,36% 68%,40% 12%,43% 68%,47% 24%,50% 68%,54% 5%,58% 68%,62% 20%,65% 68%,69% 9%,72% 68%,76% 22%,80% 68%,84% 5%,88% 68%,92% 25%,95% 68%,100% 50%,100% 100%);
- filter:drop-shadow(0 -5px 10px #071c20)
-}
-.temple-city{
- position:absolute;bottom:62px;left:50%;transform:translateX(-50%);
- width:min(650px,95%);height:210px;display:flex;
- align-items:flex-end;justify-content:center;gap:12px;
- filter:drop-shadow(0 12px 12px #07152f88)
-}
-.temple{
- position:relative;width:100px;height:105px;
- background:linear-gradient(90deg,#b87842,#f3c77e 50%,#9b613b);
- clip-path:polygon(50% 0,64% 25%,64% 35%,85% 52%,85% 100%,15% 100%,15% 52%,36% 35%,36% 25%);
-}
-.temple.big{width:150px;height:185px}
-.temple.small{height:85px;width:78px}
-.temple:before{
- content:"";position:absolute;bottom:0;left:39%;width:22%;height:55%;
- background:#342c36;box-shadow:0 0 0 3px #f4d69a
-}
-.temple:after{
- content:"";position:absolute;top:26%;left:15%;right:15%;height:5px;
- background:#ffdfa0;box-shadow:0 18px #ffdfa0,0 36px #ffdfa0
-}
-.temple.big:after{top:25%}
-.temple.big:before{left:42%;width:16%}
-.ground{
- position:absolute;bottom:0;width:100%;height:95px;
- background:linear-gradient(#286b58,#0c3b35);
- clip-path:polygon(0 28%,25% 8%,48% 35%,70% 10%,100% 25%,100% 100%,0 100%)
-}
-.river{
- position:absolute;bottom:-30px;left:0;width:100%;height:90px;
- background:linear-gradient(90deg,#2ba7bd,#83e7e8,#197eae);
- opacity:.82;clip-path:polygon(0 25%,20% 55%,43% 30%,67% 62%,100% 20%,100% 100%,0 100%);
- animation:water 5s ease-in-out infinite alternate
-}
-@keyframes water{to{filter:brightness(1.25);transform:translateY(-5px)}}
-.scene-title{
- position:absolute;z-index:5;top:24px;left:20px;right:20px;
- text-align:center;text-shadow:0 3px 12px #00152b,0 0 25px #00152b;
-}
-.scene-title .tag{
- display:inline-block;padding:7px 15px;border-radius:50px;
- background:#06172bc9;border:1px solid #ffffff77;
- color:#a8f7ff;font-size:11px;letter-spacing:3px;font-weight:900
-}
-.scene-title h1{
- margin:12px 0 7px;font-size:clamp(29px,5vw,54px);
- line-height:1.12;font-weight:1000;letter-spacing:-1px;
- color:#fff;text-shadow:0 4px 14px #00152b,0 0 30px #00152b
-}
-.scene-title p{font-size:14px;font-weight:700;margin:0;color:white}
-.scene-bottom{
- position:absolute;bottom:15px;left:0;right:0;text-align:center;
- font-size:11px;letter-spacing:2px;font-weight:900;
- text-shadow:0 2px 8px #000
-}
-.scene-dots{position:absolute;bottom:12px;right:15px;z-index:7;display:flex;gap:6px}
-.scene-dot{width:8px;height:8px;border-radius:50%;background:#ffffff77}
-.scene-dot.active{background:white;box-shadow:0 0 10px white}
-.world.scene-2{background:linear-gradient(#193d76,#75b8d3 52%,#164a56)}
-.world.scene-2 .temple-city{display:none}
-.world.scene-2 .mountains{background:#24486b}
-.world.scene-2 .forest{background:#0b5145}
-.world.scene-2 .river{height:130px;background:linear-gradient(90deg,#1688bd,#a2f5f1,#176da1)}
-.world.scene-3{background:linear-gradient(#594d92,#dca9bb 52%,#315b52)}
-.world.scene-3 .temple-city{transform:translateX(-50%) scale(.82)}
-.world.scene-3 .mountains{background:#66517d}
-.world.scene-3 .forest{background:#214d43}
-.world.scene-4{background:linear-gradient(#4d9ec4,#d9d5c1 55%,#34564e)}
-.world.scene-4 .temple-city{display:none}
-.world.scene-4 .mountains{background:#d2e4e8;bottom:130px}
-.world.scene-4 .forest{background:#164f40}
-.world.scene-4 .river{background:linear-gradient(90deg,#52a9c6,#d0f7ef,#398eb0)}
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-.section-grid{display:grid;grid-template-columns:1.08fr .92fr;gap:20px}
-.panel{padding:22px;min-width:0}
-.heading{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:17px}
-.heading h2{font-size:20px;margin:0}
-.muted{color:var(--muted)}
-.tiny{font-size:12px}
-.upload{
- border:1px dashed #a7d7ff88;border-radius:18px;padding:20px;
- text-align:center;background:#18365a99;margin-bottom:16px
-}
-.upload .music-icon{font-size:35px;color:var(--cyan)}
-.upload p{font-size:13px;color:var(--muted)}
-.primary{
- border:0;border-radius:14px;padding:12px 18px;font-weight:900;
- color:#07152f;background:linear-gradient(100deg,var(--cyan),var(--violet),var(--pink))
-}
-.file-input{display:none}
-.search{
- width:100%;padding:13px;border-radius:13px;border:1px solid var(--line);
- color:white;background:#07152f;margin-bottom:13px
-}
-.tabs{display:flex;gap:8px;margin-bottom:13px}
-.tab{
- border:1px solid var(--line);background:#12294c;color:white;
- padding:9px 14px;border-radius:30px
-}
-.tab.active{background:linear-gradient(100deg,#347e9c,#725cb5);border-color:var(--cyan)}
-.song-list{display:grid;gap:9px;max-height:400px;overflow:auto}
-.song{
- display:flex;align-items:center;gap:10px;padding:11px;
- border-radius:15px;background:#14294a;border:1px solid transparent
-}
-.song.active{border-color:var(--cyan);background:#1c4262}
-.cover{
- width:43px;height:43px;border-radius:13px;flex:none;
- display:grid;place-items:center;color:#07152f;font-size:20px;
- background:linear-gradient(135deg,var(--cyan),var(--violet),var(--pink))
-}
-.song-info{flex:1;min-width:0}
-.song-name{font-size:13px;font-weight:850;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.song-meta{font-size:11px;color:var(--muted);margin-top:4px}
-.song-actions{display:flex;gap:5px}
-.small{
- width:34px;height:34px;border-radius:10px;border:1px solid var(--line);
- color:white;background:#203b60
-}
-.small.fav{color:#ff9acb}
-.empty{text-align:center;color:var(--muted);padding:30px 8px;line-height:1.7}
-.player{position:sticky;top:12px}
-.now-art{
- height:205px;border-radius:20px;display:grid;place-items:center;
- background:radial-gradient(circle,#4a76a5,#1c3566 60%,#101c3b);
- overflow:hidden;position:relative
-}
-.now-art:before,.now-art:after{
- content:"";position:absolute;width:175px;height:175px;
- border:1px solid #8cf3ff77;border-radius:50%;animation:rotate 16s linear infinite
-}
-.now-art:after{width:230px;height:230px;animation-direction:reverse}
-@keyframes rotate{to{transform:rotate(360deg)}}
-.disc{
- width:125px;height:125px;border-radius:50%;
- background:repeating-radial-gradient(circle,#0b1832 0 3px,#36517c 4px 6px);
- border:7px solid #243b61;display:grid;place-items:center;
- box-shadow:0 0 35px #75f2ff88;animation:rotate 12s linear infinite
-}
-.disc-core{
- width:38px;height:38px;border-radius:50%;
- background:linear-gradient(135deg,var(--cyan),var(--violet),var(--pink))
-}
-.now-title{font-size:20px;font-weight:900;margin:17px 0 5px;overflow-wrap:anywhere}
-.now-artist{font-size:13px;color:var(--muted)}
-.progress-wrap{margin:18px 0 8px}
-input[type=range]{accent-color:var(--cyan);width:100%;cursor:pointer}
-.time{display:flex;justify-content:space-between;color:var(--muted);font-size:11px}
-.controls{display:flex;justify-content:center;align-items:center;gap:10px;margin:18px 0}
-.control{
- width:42px;height:42px;border:1px solid var(--line);border-radius:50%;
- background:#1a3155;color:white;font-size:16px
-}
-.control.main{
- width:57px;height:57px;border:0;color:#07152f;
- background:linear-gradient(135deg,var(--cyan),var(--violet))
-}
-.control.selected{color:var(--cyan);border-color:var(--cyan)}
-.volume{display:flex;align-items:center;gap:10px;color:var(--muted);font-size:12px}
-.volume input{flex:1}
-.status{min-height:20px;text-align:center;color:var(--cyan);font-size:12px;margin-top:13px}
-.note{text-align:center;color:#a9bddc;font-size:11px;line-height:1.6;margin-top:16px}
-@media(max-width:820px){
- .section-grid{grid-template-columns:1fr}
- .player{position:static}
- .world{height:390px}
-}
-@media(max-width:480px){
- .app{width:calc(100% - 18px);padding-top:12px}
- .brand-name{font-size:17px}
- .brand-sub{font-size:8px}
- .logo{width:42px;height:42px}
- .panel{padding:15px}
- .world{height:370px;border-radius:22px}
- .scene-title{top:18px}
- .scene-title h1{font-size:31px}
- .scene-title p{font-size:12px}
- .temple-city{gap:5px;transform:translateX(-50%) scale(.78);transform-origin:bottom center}
- .temple.big{height:155px}
- .temple{height:90px}
- .top-actions select{max-width:110px}
- .controls{gap:7px}
- .control{width:38px;height:38px}
- .control.main{width:52px;height:52px}
-}
-@media(prefers-reduced-motion:reduce){
- *,*:before,*:after{animation:none!important;scroll-behavior:auto!important}
-}
-</style>
+    html, body {
+      width: 100%;
+      min-height: 100%;
+    }
+
+    body {
+      min-height: 100vh;
+      min-height: 100svh;
+      overflow-x: hidden;
+      font-family: Arial, sans-serif;
+      background: #102b45;
+    }
+
+    /* পুরো পেজজুড়ে Temple City ছবি */
+    .temple-world {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background-image: url("./temple-city.png");
+      background-position: center center;
+      background-size: cover;
+      background-repeat: no-repeat;
+      z-index: 0;
+    }
+
+    /* লেখার পেছনে হালকা ছায়া */
+    .temple-world::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(
+          180deg,
+          rgba(5, 18, 35, 0.38),
+          transparent 24%,
+          transparent 76%,
+          rgba(5, 18, 35, 0.18)
+        );
+      pointer-events: none;
+    }
+
+    /* উপরের লেখা */
+    .top-heading {
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      padding: 28px 16px 18px;
+      text-align: center;
+    }
+
+    .brand {
+      color: #fff7d8;
+      font-size: clamp(30px, 6vw, 58px);
+      font-weight: 900;
+      letter-spacing: 5px;
+      text-shadow:
+        0 3px 5px #38200b,
+        0 0 14px #ffd76a,
+        0 0 30px rgba(255, 211, 100, 0.8);
+    }
+
+    .page-title {
+      margin-top: 8px;
+      color: #ffffff;
+      font-size: clamp(19px, 3.5vw, 30px);
+      font-weight: 800;
+      letter-spacing: 4px;
+      text-shadow:
+        0 2px 5px #172536,
+        0 0 14px rgba(255, 255, 255, 0.75);
+    }
+
+    .tagline {
+      margin-top: 9px;
+      color: #fff5d5;
+      font-size: clamp(11px, 2vw, 15px);
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-shadow: 0 2px 7px #172536;
+    }
+
+    /* মোবাইলের জন্য */
+    @media (max-width: 600px) {
+      .top-heading {
+        padding-top: 24px;
+      }
+
+      .brand {
+        letter-spacing: 3px;
+      }
+
+      .page-title {
+        letter-spacing: 2px;
+      }
+    }
+  </style>
 </head>
+
 <body>
-<div class="app" id="zemivoMusic">
 
-<header class="topbar">
- <div class="brand">
-  <div class="logo">Z</div>
-  <div><div class="brand-name">ZEMIVO</div><div class="brand-sub">LIVING WORLD MUSIC</div></div>
- </div>
- <div class="top-actions">
-  <select id="language" aria-label="Language">
-   <option value="bn">বাংলা</option>
-   <option value="en">English</option>
-  </select>
-  <button class="ghost" id="themeBtn" type="button" aria-label="Change colors">✦</button>
- </div>
-</header>
+  <div class="temple-world"></div>
 
-<!-- CINEMATIC 3D SCENE -->
-<section class="world" id="world" aria-label="Animated scenic world">
- <div class="sun"></div>
- <div class="cloud c1"></div><div class="cloud c2"></div>
- <div class="mountains back"></div>
- <div class="mountains"></div>
- <div class="forest"></div>
- <div class="temple-city" aria-hidden="true">
-  <div class="temple small"></div>
-  <div class="temple"></div>
-  <div class="temple big"></div>
-  <div class="temple"></div>
-  <div class="temple small"></div>
- </div>
- <div class="ground"></div>
- <div class="river"></div>
- <div class="scene-title">
-  <span class="tag" id="sceneTag">ZEMIVO • LIVING WORLD</span>
-  <h1 id="sceneHeading">Temple City</h1>
-  <p id="sceneText">প্রকৃতির মাঝে সুরের এক নতুন জগৎ</p>
- </div>
- <div class="scene-bottom" id="sceneBottom">DISCOVER • LISTEN • FEEL</div>
- <div class="scene-dots" id="sceneDots">
-  <span class="scene-dot active"></span><span class="scene-dot"></span>
-  <span class="scene-dot"></span><span class="scene-dot"></span>
- </div>
-</section>
+  <header class="top-heading">
+    <div class="brand">ZEMIVO</div>
+    <div class="page-title">MUSIC</div>
+    <div class="tagline">
+      LISTEN • FEEL • LIVE
+    </div>
+  </header>
 
-<main class="section-grid">
- <section class="glass panel">
-  <div class="heading">
-   <h2 data-bn="তোমার মিউজিক লাইব্রেরি" data-en="Your Music Library">তোমার মিউজিক লাইব্রেরি</h2>
-   <span class="muted tiny" id="songCount">0 গান</span>
-  </div>
-  <div class="upload">
-   <div class="music-icon">♫</div>
-   <strong data-bn="ডিভাইস থেকে গান যোগ করো" data-en="Add music from your device">ডিভাইস থেকে গান যোগ করো</strong>
-   <p data-bn="MP3, WAV, M4A সহ অডিও ফাইল বেছে নাও।"
-      data-en="Choose audio files such as MP3, WAV or M4A.">MP3, WAV, M4A সহ অডিও ফাইল বেছে নাও।</p>
-   <button class="primary" id="uploadBtn" type="button"
-    data-bn="গান নির্বাচন করো" data-en="Choose audio files">গান নির্বাচন করো</button>
-   <input class="file-input" id="fileInput" type="file" accept="audio/*" multiple>
-  </div>
-  <input class="search" id="search" type="search"
-   placeholder="গানের নাম খুঁজুন…" aria-label="Search songs">
-  <div class="tabs">
-   <button class="tab active" data-filter="all" type="button"
-    data-bn="সব গান" data-en="All songs">সব গান</button>
-   <button class="tab" data-filter="favorites" type="button"
-    data-bn="প্রিয় গান" data-en="Favorites">প্রিয় গান</button>
-  </div>
-  <div class="song-list" id="songList">
-   <div class="empty">এখানে তোমার গান দেখা যাবে।<br>শুরু করতে উপরের বাটনে চাপ দাও।</div>
-  </div>
- </section>
-
- <section class="glass panel player">
-  <div class="heading">
-   <h2 data-bn="এখন বাজছে" data-en="Now Playing">এখন বাজছে</h2>
-   <span class="muted tiny">PERSONAL PLAYER</span>
-  </div>
-  <div class="now-art"><div class="disc"><div class="disc-core"></div></div></div>
-  <div class="now-title" id="currentTitle">কোনো গান নির্বাচন করা হয়নি</div>
-  <div class="now-artist" id="currentArtist">লাইব্রেরি থেকে একটি গান বেছে নাও</div>
-  <div class="progress-wrap">
-   <input type="range" id="progress" min="0" max="1000" value="0" aria-label="Track progress">
-   <div class="time"><span id="currentTime">0:00</span><span id="duration">0:00</span></div>
-  </div>
-  <div class="controls">
-   <button class="control" id="shuffleBtn" type="button" aria-label="Shuffle">⤨</button>
-   <button class="control" id="prevBtn" type="button" aria-label="Previous">◀|</button>
-   <button class="control main" id="playBtn" type="button" aria-label="Play">▶</button>
-   <button class="control" id="nextBtn" type="button" aria-label="Next">|▶</button>
-   <button class="control" id="repeatBtn" type="button" aria-label="Repeat">↻</button>
-  </div>
-  <div class="volume">
-   <span>◖</span><label for="volume" data-bn="শব্দের মাত্রা" data-en="Volume">শব্দের মাত্রা</label>
-   <input type="range" id="volume" min="0" max="1" step=".01" value=".8">
-  </div>
-  <div class="status" id="status" role="status" aria-live="polite"></div>
-  <div class="note" data-bn="তোমার অডিও এই ব্রাউজার সেশনে চলে। পেজ রিফ্রেশ করলে ফাইল আবার যোগ করতে হবে।"
-   data-en="Your audio plays in this browser session. Add local files again after refreshing.">
-   তোমার অডিও এই ব্রাউজার সেশনে চলে। পেজ রিফ্রেশ করলে ফাইল আবার যোগ করতে হবে।
-  </div>
- </section>
-</main>
-<audio id="audio" preload="metadata"></audio>
-</div>
-
-<script>
-"use strict";
-
-const $=id=>document.getElementById(id);
-const audio=$("audio");
-const list=$("songList");
-
-let songs=[];
-let favorites=new Set();
-let currentIndex=-1;
-let filter="all";
-let shuffle=false;
-let repeat=false;
-let currentLang="bn";
-let themeFlip=false;
-let sceneIndex=0;
-
-const scenes=[
- {title:"Temple City",bn:"প্রাচীন মন্দিরনগরী",text:"প্রকৃতির মাঝে সুরের এক নতুন জগৎ",bottom:"ANCIENT BEAUTY • MUSIC • PEACE"},
- {title:"Mountain River",bn:"পাহাড়ি নদীর পথ",text:"পাহাড়, নদী আর মেঘের সঙ্গে সুরের যাত্রা",bottom:"MOUNTAINS • RIVERS • FREEDOM"},
- {title:"Forest Valley",bn:"সবুজ বন উপত্যকা",text:"সবুজের গভীরে হারিয়ে যাও সুরের ছন্দে",bottom:"FOREST • VALLEY • HARMONY"},
- {title:"Cloud Kingdom",bn:"মেঘের রাজ্য",text:"আকাশ ছোঁয়া পাহাড়ে নতুন সুরের অনুভূতি",bottom:"CLOUDS • SKY • DREAMS"}
-];
-
-function showScene(i){
- sceneIndex=i%scenes.length;
- const s=scenes[sceneIndex];
- $("world").className="world"+(sceneIndex?" scene-"+(sceneIndex+1):"");
- $("sceneHeading").textContent=currentLang==="bn"?s.bn:s.title;
- $("sceneText").textContent=currentLang==="bn"?s.text:
- ["A new world of music among nature","A musical journey through mountains and rivers","Feel the rhythm deep in the green valley","A new musical feeling above the clouds"][sceneIndex];
- $("sceneBottom").textContent=s.bottom;
- document.querySelectorAll(".scene-dot").forEach((d,n)=>d.classList.toggle("active",n===sceneIndex));
-}
-showScene(0);
-setInterval(()=>showScene((sceneIndex+1)%scenes.length),18000);
-
-/* Daily scene selection */
-const dayNumber=Math.floor(Date.now()/86400000);
-showScene(dayNumber%scenes.length);
-
-function message(text){$("status").textContent=text}
-function timeText(value){
- if(!Number.isFinite(value))return "0:00";
- return Math.floor(value/60)+":"+String(Math.floor(value%60)).padStart(2,"0");
-}
-function updateCount(){
- $("songCount").textContent=songs.length+(currentLang==="bn"?" গান":" tracks");
-}
-function render(){
- const query=$("search").value.trim().toLowerCase();
- const shown=songs.map((song,index)=>({...song,index})).filter(song=>
-  (filter!=="favorites"||favorites.has(song.id))&&song.name.toLowerCase().includes(query)
- );
- updateCount();
- if(!shown.length){
-  list.innerHTML='<div class="empty">'+(songs.length?"কোনো গান পাওয়া যায়নি":"এখানে তোমার গান দেখা যাবে।<br>শুরু করতে উপরের বাটনে চাপ দাও।")+'</div>';
-  return;
- }
- list.replaceChildren();
- shown.forEach(song=>{
-  const row=document.createElement("div");
-  row.className="song"+(song.index===currentIndex?" active":"");
-  const cover=document.createElement("div");
-  cover.className="cover";cover.textContent="♫";
-  const info=document.createElement("div");info.className="song-info";
-  const name=document.createElement("div");name.className="song-name";name.textContent=song.name;
-  const meta=document.createElement("div");meta.className="song-meta";meta.textContent=song.size;
-  info.append(name,meta);
-  const actions=document.createElement("div");actions.className="song-actions";
-  const fav=document.createElement("button");
-  fav.className="small fav";fav.type="button";
-  fav.textContent=favorites.has(song.id)?"♥":"♡";
-  fav.setAttribute("aria-label","Toggle favorite");
-  fav.onclick=()=>toggleFavorite(song.id);
-  const play=document.createElement("button");
-  play.className="small";play.type="button";play.textContent="▶";
-  play.setAttribute("aria-label","Play "+song.name);
-  play.onclick=()=>playIndex(song.index);
-  const remove=document.createElement("button");
-  remove.className="small";remove.type="button";remove.textContent="×";
-  remove.setAttribute("aria-label","Remove "+song.name);
-  remove.onclick=()=>removeSong(song.index);
-  actions.append(fav,play,remove);
-  row.append(cover,info,actions);
-  row.ondblclick=()=>playIndex(song.index);
-  list.append(row);
- });
-}
-function updatePlayer(){
- const song=songs[currentIndex];
- if(!song){
-  $("currentTitle").textContent=currentLang==="bn"?"কোনো গান নির্বাচন করা হয়নি":"No track selected";
-  $("currentArtist").textContent=currentLang==="bn"?"লাইব্রেরি থেকে একটি গান বেছে নাও":"Choose a song from your library";
-  $("playBtn").textContent="▶";
-  $("duration").textContent="0:00";
-  $("currentTime").textContent="0:00";
-  $("progress").value=0;
-  render();return;
- }
- $("currentTitle").textContent=song.name;
- $("currentArtist").textContent=song.size;
- $("playBtn").textContent=audio.paused?"▶":"Ⅱ";
- $("duration").textContent=timeText(audio.duration);
- render();
-}
-async function playIndex(index){
- if(index<0||index>=songs.length)return;
- currentIndex=index;
- audio.pause();
- audio.src=songs[index].url;
- audio.load();
- updatePlayer();
- try{
-  await audio.play();
-  message(currentLang==="bn"?"গান চলছে":"Playing");
- }catch(error){
-  message(currentLang==="bn"?"এই অডিও চালানো যাচ্ছে না":"Unable to play this audio");
- }
-}
-function toggleFavorite(id){
- if(favorites.has(id))favorites.delete(id);
- else favorites.add(id);
- render();
-}
-function removeSong(index){
- const song=songs[index];
- if(!song)return;
- const wasCurrent=index===currentIndex;
- if(wasCurrent){
-  audio.pause();audio.removeAttribute("src");audio.load();
-  currentIndex=-1;
- }else if(index<currentIndex){
-  currentIndex--;
- }
- URL.revokeObjectURL(song.url);
- songs.splice(index,1);
- favorites.delete(song.id);
- updatePlayer();
- message(currentLang==="bn"?"গানটি সরানো হয়েছে":"Track removed");
-}
-function nextSong(){
- if(!songs.length)return;
- let next;
- if(shuffle&&songs.length>1){
-  do{next=Math.floor(Math.random()*songs.length)}while(next===currentIndex);
- }else{
-  next=currentIndex<0?0:(currentIndex+1)%songs.length;
- }
- playIndex(next);
-}
-$("uploadBtn").addEventListener("click",()=>$("fileInput").click());
-$("fileInput").addEventListener("change",event=>{
- const files=Array.from(event.target.files||[]).filter(file=>file.type.startsWith("audio/"));
- files.forEach(file=>{
-  songs.push({
-   id:(crypto.randomUUID?crypto.randomUUID():String(Date.now())+Math.random()),
-   name:file.name.replace(/\.[^.]+$/,""),
-   size:(file.size/1048576).toFixed(1)+" MB",
-   url:URL.createObjectURL(file)
-  });
- });
- render();
- if(files.length)message(currentLang==="bn"?"গান যোগ হয়েছে":"Tracks added");
- event.target.value="";
-});
-$("search").addEventListener("input",render);
-document.querySelectorAll(".tab").forEach(button=>{
- button.addEventListener("click",()=>{
-  filter=button.dataset.filter;
-  document.querySelectorAll(".tab").forEach(tab=>tab.classList.toggle("active",tab===button));
-  render();
- });
-});
-$("playBtn").addEventListener("click",()=>{
- if(currentIndex<0){if(songs.length)playIndex(0);return}
- if(audio.paused)audio.play().catch(()=>message("Playback error"));
- else audio.pause();
-});
-$("prevBtn").addEventListener("click",()=>{
- if(!songs.length)return;
- playIndex(currentIndex<=0?songs.length-1:currentIndex-1);
-});
-$("nextBtn").addEventListener("click",nextSong);
-$("shuffleBtn").addEventListener("click",()=>{
- shuffle=!shuffle;
- $("shuffleBtn").classList.toggle("selected",shuffle);
- message(shuffle?"Shuffle on":"Shuffle off");
-});
-$("repeatBtn").addEventListener("click",()=>{
- repeat=!repeat;
- audio.loop=repeat;
- $("repeatBtn").classList.toggle("selected",repeat);
- message(repeat?"Repeat on":"Repeat off");
-});
-$("volume").addEventListener("input",event=>audio.volume=Number(event.target.value));
-audio.volume=.8;
-
-audio.addEventListener("timeupdate",()=>{
- if(Number.isFinite(audio.duration)&&audio.duration>0){
-  $("progress").value=audio.currentTime/audio.duration*1000;
-  $("currentTime").textContent=timeText(audio.currentTime);
- }
-});
-audio.addEventListener("loadedmetadata",()=>{
- $("duration").textContent=timeText(audio.duration);
-});
-$("progress").addEventListener("input",event=>{
- if(Number.isFinite(audio.duration)&&audio.duration>0)
-  audio.currentTime=Number(event.target.value)/1000*audio.duration;
-});
-audio.addEventListener("play",updatePlayer);
-audio.addEventListener("pause",updatePlayer);
-audio.addEventListener("ended",()=>{if(!repeat)nextSong()});
-audio.addEventListener("error",()=>{
- if(audio.src)message("Audio playback error");
-});
-
-$("language").addEventListener("change",event=>{
- currentLang=event.target.value;
- document.documentElement.lang=currentLang;
- document.documentElement.dir="ltr";
- document.querySelectorAll("[data-bn]").forEach(element=>{
-  element.textContent=element.dataset[currentLang]||element.dataset.bn;
- });
- $("search").placeholder=currentLang==="bn"?"গানের নাম খুঁজুন…":"Search your songs…";
- showScene(sceneIndex);
- updatePlayer();
-});
-
-$("themeBtn").addEventListener("click",()=>{
- themeFlip=!themeFlip;
- document.documentElement.style.setProperty("--cyan",themeFlip?"#ffe18e":"#75f2ff");
- document.documentElement.style.setProperty("--violet",themeFlip?"#ff91c8":"#a994ff");
- document.documentElement.style.setProperty("--pink",themeFlip?"#83f2d2":"#ff9bcf");
- message(currentLang==="bn"?"রঙের থিম পরিবর্তন হয়েছে":"Theme changed");
-});
-
-window.addEventListener("pagehide",()=>{
- songs.forEach(song=>URL.revokeObjectURL(song.url));
-});
-render();
-updatePlayer();
-</script>
 </body>
 </html>
