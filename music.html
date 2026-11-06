@@ -1,130 +1,132 @@
 
 <!DOCTYPE html>
-<html lang="bn">
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#102b45">
-  <title>Zemivo Music — Temple City</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#071c35">
+<title>Zemivo Music</title>
 
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
-    html, body {
-      width: 100%;
-      min-height: 100%;
-    }
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: #071c35;
+  font-family: Arial, sans-serif;
+}
 
-    body {
-      min-height: 100vh;
-      min-height: 100svh;
-      overflow-x: hidden;
-      font-family: Arial, sans-serif;
-      background: #102b45;
-    }
+.music-page {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  height: 100dvh;
+  overflow: hidden;
+  isolation: isolate;
+  background: #071c35;
+}
 
-    /* পুরো পেজজুড়ে Temple City ছবি */
-    .temple-world {
-      position: fixed;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      overflow: hidden;
-      background-image: url("./temple-city.png");
-      background-position: center center;
-      background-size: cover;
-      background-repeat: no-repeat;
-      z-index: 0;
-    }
+/* ছবির ঝাপসা ব্যাকগ্রাউন্ড */
+.bg-blur {
+  position: absolute;
+  inset: -25px;
+  width: calc(100% + 50px);
+  height: calc(100% + 50px);
+  object-fit: cover;
+  filter: blur(22px) brightness(.48);
+  z-index: -2;
+}
 
-    /* লেখার পেছনে হালকা ছায়া */
-    .temple-world::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background:
-        linear-gradient(
-          180deg,
-          rgba(5, 18, 35, 0.38),
-          transparent 24%,
-          transparent 76%,
-          rgba(5, 18, 35, 0.18)
-        );
-      pointer-events: none;
-    }
+/* সম্পূর্ণ Temple City ছবি */
+.temple-image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+  z-index: -1;
+}
 
-    /* উপরের লেখা */
-    .top-heading {
-      position: relative;
-      z-index: 2;
-      width: 100%;
-      padding: 28px 16px 18px;
-      text-align: center;
-    }
+/* উপরের লেখা */
+.heading {
+  position: absolute;
+  top: 22px;
+  left: 0;
+  width: 100%;
+  text-align: center;
+  padding: 12px;
+  z-index: 2;
+}
 
-    .brand {
-      color: #fff7d8;
-      font-size: clamp(30px, 6vw, 58px);
-      font-weight: 900;
-      letter-spacing: 5px;
-      text-shadow:
-        0 3px 5px #38200b,
-        0 0 14px #ffd76a,
-        0 0 30px rgba(255, 211, 100, 0.8);
-    }
+.heading h1 {
+  color: #fff0bd;
+  font-size: clamp(30px, 8vw, 58px);
+  font-weight: 900;
+  letter-spacing: 5px;
+  text-shadow:
+    0 0 8px #fff,
+    0 0 20px #e9bd55,
+    0 0 35px #e9bd55;
+}
 
-    .page-title {
-      margin-top: 8px;
-      color: #ffffff;
-      font-size: clamp(19px, 3.5vw, 30px);
-      font-weight: 800;
-      letter-spacing: 4px;
-      text-shadow:
-        0 2px 5px #172536,
-        0 0 14px rgba(255, 255, 255, 0.75);
-    }
+.heading h2 {
+  color: white;
+  font-size: clamp(22px, 5vw, 36px);
+  margin-top: 8px;
+  letter-spacing: 3px;
+  text-shadow: 0 2px 12px #000;
+}
 
-    .tagline {
-      margin-top: 9px;
-      color: #fff5d5;
-      font-size: clamp(11px, 2vw, 15px);
-      font-weight: 700;
-      letter-spacing: 2px;
-      text-shadow: 0 2px 7px #172536;
-    }
+.heading p {
+  color: #fff0bd;
+  font-size: clamp(11px, 3vw, 17px);
+  font-weight: bold;
+  letter-spacing: 3px;
+  margin-top: 9px;
+  text-shadow: 0 2px 8px #000;
+}
 
-    /* মোবাইলের জন্য */
-    @media (max-width: 600px) {
-      .top-heading {
-        padding-top: 24px;
-      }
+/* ছোট স্ক্রিন */
+@media (max-width: 600px) {
+  .heading {
+    top: 16px;
+  }
 
-      .brand {
-        letter-spacing: 3px;
-      }
-
-      .page-title {
-        letter-spacing: 2px;
-      }
-    }
-  </style>
+  .heading h1 {
+    letter-spacing: 3px;
+  }
+}
+</style>
 </head>
 
 <body>
+<main class="music-page">
 
-  <div class="temple-world"></div>
+  <img
+    class="bg-blur"
+    src="./temple-city.png"
+    alt=""
+  >
 
-  <header class="top-heading">
-    <div class="brand">ZEMIVO</div>
-    <div class="page-title">MUSIC</div>
-    <div class="tagline">
-      LISTEN • FEEL • LIVE
-    </div>
+  <img
+    class="temple-image"
+    src="./temple-city.png"
+    alt="Temple City landscape"
+  >
+
+  <header class="heading">
+    <h1>ZEMIVO</h1>
+    <h2>MUSIC</h2>
+    <p>LISTEN • FEEL • LIVE</p>
   </header>
 
+</main>
 </body>
 </html>
