@@ -53,6 +53,96 @@ button,input,textarea{font:inherit}button{cursor:pointer}button:focus-visible,in
 }
 @media(max-width:370px){.identity-row{gap:7px}.avatar{width:100px;height:100px}.profile-name{font-size:20px}.follow-meta{font-size:12px}.identity-actions .btn{font-size:12px}.tab{padding-left:11px;padding-right:11px}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition:none!important;animation:none!important}}
+ /* Zemivo modern 3D buttons */
+:root{
+  --page:#edf3fb;
+  --line:#dce5f1;
+}
+
+body{
+  background:var(--page);
+}
+
+.card,
+.profile-shell{
+  background:#fff;
+}
+
+.btn,
+.icon-btn,
+.cover-button,
+.tool-btn,
+.nav-btn,
+.post-action,
+.link-btn{
+  transition:transform .18s ease,box-shadow .18s ease,filter .18s ease;
+}
+
+.btn{
+  border:1px solid #ffffff55;
+  box-shadow:
+    0 5px 0 #00000016,
+    0 8px 16px #163b701c,
+    inset 0 1px 0 #ffffff70;
+  transform:translateY(0);
+}
+
+.btn-blue{
+  background:linear-gradient(145deg,#39a0ff,#1264e9 65%,#174fc5);
+  color:#fff;
+}
+
+.btn-grey{
+  background:linear-gradient(145deg,#ffffff,#e1e9f3);
+  color:#202a38;
+  border:1px solid #d6e0ed;
+}
+
+.icon-btn{
+  background:linear-gradient(145deg,#fff,#e6edf6);
+  box-shadow:0 4px 10px #18365b18,inset 0 1px 0 #fff;
+}
+
+.tool-btn{
+  background:linear-gradient(145deg,#fff,#edf3fa);
+  box-shadow:0 3px 8px #18365b12,inset 0 1px 0 #fff;
+}
+
+.cover-button{
+  background:linear-gradient(145deg,#fff,#e8f0fa);
+  box-shadow:0 4px 12px #0003;
+}
+
+.btn:active,
+.icon-btn:active,
+.cover-button:active,
+.tool-btn:active,
+.post-action:active{
+  transform:translateY(3px) scale(.98);
+  box-shadow:0 1px 3px #0002;
+}
+
+@media(hover:hover){
+  .btn:hover,
+  .icon-btn:hover,
+  .cover-button:hover,
+  .tool-btn:hover{
+    filter:brightness(1.04);
+    transform:translateY(-2px);
+  }
+}
+
+.modal{
+  background:linear-gradient(145deg,#fff,#f3f7fd);
+}
+
+.field input,
+.field textarea,
+.field select{
+  border:1px solid #cbd8e8;
+  background:#f9fbff;
+  border-radius:11px;
+}
 </style>
 </head>
 <body>
@@ -99,15 +189,45 @@ button,input,textarea{font:inherit}button{cursor:pointer}button:focus-visible,in
 <script>
 (()=>{
 "use strict";
-const $=id=>document.getElementById(id),KEY="zemivo_profile_demo_v3",OLD_KEY="zemivo_profile_demo_v2";
-const defaults={name:"Your Name",bio:"Add a short introduction so people can get to know you.",location:"",occupation:"",relationship:"",website:"",followers:0,following:0,avatar:"",cover:"",posts:[],friends:[],activeTab:"all",note:""};
-let state=load(),filter="all",timer;
+const $=id=>document.getElementById(id),KEY="zemivo_profile_demo_v3",OLD_KEY="zemivo_profile_demo_v2";location:"",occupation:"",relationship:"",website:"",followers:0,following:0,avatar:"",cover:"",posts:[],friends:[],activeTab:"all",note:""};
+const privacyDefaults={
+  name:"Public",
+  bio:"Public",
+  location:"Public",
+  occupation:"Public",
+  relationship:"Friends",
+  website:"Public"
+};
+
+const defaults={
+ name:"Your Name",
+ bio:"Add a short introduction so people can get to know you.",
+ location:"",
+ occupation:"",
+ relationship:"",
+ website:"",
+ followers:0,
+ following:0,
+ avatar:"",
+ cover:"",
+ posts:[],
+ friends:[],
+ activeTab:"all",
+ note:"",
+ privacy:{...privacyDefaults}
+};
 function load(){
  try{
   const current=localStorage.getItem(KEY);
   const legacy=localStorage.getItem(OLD_KEY);
   const x=JSON.parse(current||legacy||"{}");
-  const migrated={...defaults,...x,posts:Array.isArray(x.posts)?x.posts:[],friends:Array.isArray(x.friends)?x.friends:[]};
+  const migrated={
+  ...defaults,
+  ...x,
+  privacy:{...privacyDefaults,...(x.privacy||{})},
+  posts:Array.isArray(x.posts)?x.posts:[],
+  friends:Array.isArray(x.friends)?x.friends:[]
+};
   if(!current&&legacy){try{localStorage.setItem(KEY,JSON.stringify(migrated));}catch(e){}}
   return migrated;
  }catch(e){return {...defaults}}
@@ -143,8 +263,87 @@ function modal(title,html){$("modalTitle").textContent=title;$("modalBody").inne
 function close(){ $("modalBackdrop").classList.remove("open");document.body.style.overflow=""}
 function field(label,id,value="",placeholder=""){return `<div class="field"><label for="${id}">${label}</label><input id="${id}" value="${esc(value)}" placeholder="${esc(placeholder)}"></div>`}
 function edit(){
- modal("Edit profile",`${field("Name","eName",state.name)}<div class="field"><label for="eBio">Bio</label><textarea id="eBio">${esc(state.bio)}</textarea></div>${field("Location","eLocation",state.location,"City, country")}${field("Work / Creator role","eWork",state.occupation,"Digital creator")}${field("Relationship","eRelationship",state.relationship,"Optional")}${field("Website","eWebsite",state.website,"https://example.com")}<div class="modal-actions"><button class="btn btn-grey" id="cancel">Cancel</button><button class="btn btn-blue" id="save">Save changes</button></div>`);
- $("cancel").onclick=close;$("save").onclick=()=>{const n=$("eName").value.trim();if(!n){toast("নাম লিখুন।");$("eName").focus();return}state.name=n;state.bio=$("eBio").value.trim();state.location=$("eLocation").value.trim();state.occupation=$("eWork").value.trim();state.relationship=$("eRelationship").value.trim();state.website=$("eWebsite").value.trim();save();render();close();toast("প্রোফাইল এই ব্রাউজারে সংরক্ষিত হয়েছে।")};
+ const privacyOptions=[
+  ["Public","Public"],
+  ["Friends of Friends","Friends of Friends"],
+  ["Friends","Friends"],
+  ["Only Me","Only Me"],
+  ["Close Friends","Close Friends"]
+ ];
+
+ function privacyField(label,key){
+  const current=state.privacy?.[key]||"Public";
+
+  return `
+   <div class="field">
+    <label>${label} — Privacy</label>
+    <select id="privacy_${key}">
+     ${privacyOptions.map(([value,text])=>
+       `<option value="${value}" ${current===value?"selected":""}>${text}</option>`
+     ).join("")}
+    </select>
+   </div>
+  `;
+ }
+
+ modal("Edit profile",`
+  ${field("Name","eName",state.name)}
+  ${privacyField("Name","name")}
+
+  <div class="field">
+   <label for="eBio">Bio</label>
+   <textarea id="eBio">${esc(state.bio)}</textarea>
+  </div>
+  ${privacyField("Bio","bio")}
+
+  ${field("Location","eLocation",state.location,"City, country")}
+  ${privacyField("Location","location")}
+
+  ${field("Work / Creator role","eWork",state.occupation,"Digital creator")}
+  ${privacyField("Work","occupation")}
+
+  ${field("Relationship","eRelationship",state.relationship,"Optional")}
+  ${privacyField("Relationship","relationship")}
+
+  ${field("Website","eWebsite",state.website,"https://example.com")}
+  ${privacyField("Website","website")}
+
+  <div class="modal-actions">
+   <button class="btn btn-grey" id="cancel">Cancel</button>
+   <button class="btn btn-blue" id="save">Save changes</button>
+  </div>
+ `);
+
+ $("cancel").onclick=close;
+
+ $("save").onclick=()=>{
+  const n=$("eName").value.trim();
+
+  if(!n){
+   toast("নাম লিখুন।");
+   $("eName").focus();
+   return;
+  }
+
+  state.name=n;
+  state.bio=$("eBio").value.trim();
+  state.location=$("eLocation").value.trim();
+  state.occupation=$("eWork").value.trim();
+  state.relationship=$("eRelationship").value.trim();
+  state.website=$("eWebsite").value.trim();
+
+  state.privacy={};
+
+  ["name","bio","location","occupation","relationship","website"]
+   .forEach(key=>{
+    state.privacy[key]=$("privacy_"+key).value;
+   });
+
+  save();
+  render();
+  close();
+  toast("প্রোফাইল ও Privacy সেটিংস সংরক্ষিত হয়েছে।");
+ };
 }
 function compress(file,max,quality){return new Promise((resolve,reject)=>{const r=new FileReader();r.onerror=reject;r.onload=()=>{const im=new Image();im.onerror=reject;im.onload=()=>{const s=Math.min(1,max/Math.max(im.width,im.height)),c=document.createElement("canvas");c.width=Math.round(im.width*s);c.height=Math.round(im.height*s);const ctx=c.getContext("2d");if(!ctx){reject(Error("Canvas unavailable"));return}ctx.drawImage(im,0,0,c.width,c.height);resolve(c.toDataURL("image/jpeg",quality))};im.src=r.result};r.readAsDataURL(file)})}
 function pick(inputId,max,cb){
