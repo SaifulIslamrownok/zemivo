@@ -2,333 +2,182 @@
 <html lang="bn">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#101b46">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#fff">
 <title>Zemivo | Profile</title>
 <style>
-:root{
-  --ink:#111827;--muted:#667085;--blue:#1769ff;--blue2:#45c6ff;--violet:#8057ff;
-  --surface:rgba(255,255,255,.92);--line:rgba(106,126,174,.22);
-  --shadow:0 14px 34px rgba(27,42,91,.14),inset 0 1px 0 rgba(255,255,255,.9);
-  --deep:0 8px 0 rgba(27,43,100,.08),0 13px 25px rgba(34,64,148,.15);
-}
-*{box-sizing:border-box}
-html{scroll-behavior:smooth}
-body{margin:0;font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;color:var(--ink);background:
-radial-gradient(ellipse at 12% 0%,rgba(79,184,255,.2),transparent 36%),
-radial-gradient(ellipse at 92% 12%,rgba(143,99,255,.17),transparent 32%),
-linear-gradient(145deg,#edf5ff,#f8faff 45%,#edf0ff);min-height:100vh;padding-bottom:100px}
-button,input,textarea,select{font:inherit}
-button{cursor:pointer}
-button:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible{outline:3px solid #7abaff;outline-offset:2px}
-.topbar{position:sticky;top:0;z-index:20;background:rgba(12,23,60,.9);backdrop-filter:blur(18px);color:white;padding:10px max(14px,calc((100vw - 980px)/2));display:flex;align-items:center;gap:12px;border-bottom:1px solid rgba(255,255,255,.15)}
-.brand{display:flex;align-items:center;gap:8px;font-weight:900;font-size:21px;letter-spacing:.2px;margin-right:auto}
-.brand-mark{width:34px;height:34px;border-radius:12px;background:linear-gradient(140deg,#55e4ff,#3975ff 55%,#a56bff);display:grid;place-items:center;color:#fff;box-shadow:0 5px 0 #152e75,0 8px 17px #0004;transform:rotate(-4deg)}
-.top-action{border:1px solid #ffffff2b;background:linear-gradient(145deg,#263969,#111d48);color:white;border-radius:13px;width:42px;height:42px;box-shadow:0 4px 0 #080f2b,0 7px 12px #0003;display:grid;place-items:center;font-size:20px;transition:transform .16s,box-shadow .16s}
-.top-action:active,.nav-btn:active,.tab:active,.btn:active{transform:translateY(3px);box-shadow:0 1px 0 #182b65}
-.wrap{max-width:980px;margin:20px auto;padding:0 14px}
-.profile-card,.panel{background:var(--surface);border:1px solid #fff;border-radius:24px;box-shadow:var(--shadow);overflow:hidden}
-.cover{height:260px;position:relative;background:linear-gradient(125deg,#142e6b,#2e7ad9 43%,#8e73ff 75%,#7de5f1);background-size:cover;background-position:center;isolation:isolate}
-.cover:before{content:"";position:absolute;inset:0;background:linear-gradient(125deg,#0a1d4b44,transparent 52%,#ffffff21);z-index:-1}
-.cover-orb{position:absolute;width:190px;height:190px;right:12%;top:-50px;border-radius:50%;background:linear-gradient(140deg,#ffffff5c,#ffffff08);border:1px solid #ffffff70;box-shadow:inset -14px -16px 25px #15296d30,0 20px 40px #07174420;transform:rotateX(25deg) rotateY(-20deg)}
-.cover-title{position:absolute;left:22px;top:20px;color:#fff;font-size:12px;letter-spacing:2.4px;font-weight:800;text-shadow:0 2px 8px #0018}
-.cover-tools{position:absolute;right:14px;bottom:14px;display:flex;gap:8px}
-.glass-btn{border:1px solid #ffffff70;background:#ffffffd9;color:#15204a;border-radius:13px;padding:9px 12px;font-weight:750;box-shadow:0 5px 0 #10265a24,0 10px 18px #0017;backdrop-filter:blur(10px)}
-.identity{padding:0 24px 20px;position:relative}
-.avatar-row{display:flex;align-items:flex-end;gap:16px;margin-top:-72px;position:relative;z-index:2}
-.avatar-wrap{width:142px;height:142px;position:relative;flex-shrink:0}
-.avatar{width:142px;height:142px;border:5px solid white;border-radius:50%;background:linear-gradient(140deg,#5bd8f4,#4674ff 55%,#9d6dff);display:grid;place-items:center;color:white;font-size:43px;font-weight:900;box-shadow:0 10px 25px #102b6835;overflow:hidden;background-size:cover;background-position:center}
-.avatar-camera{position:absolute;right:0;bottom:3px;border:3px solid white;border-radius:50%;width:43px;height:43px;background:linear-gradient(140deg,#eaf2ff,#dbe6ff);box-shadow:0 5px 0 #16336b22;display:grid;place-items:center;font-size:18px}
-.avatar-row .quick{margin-left:auto;display:flex;gap:8px;margin-bottom:9px}
-.profile-name{font-size:clamp(25px,4vw,36px);line-height:1.15;font-weight:900;margin:16px 0 7px;letter-spacing:-.6px}
-.meta{color:var(--muted);font-size:14px;font-weight:650}
-.bio{margin:12px 0 0;color:#344054;line-height:1.5}
-.action-row{display:flex;gap:10px;margin-top:18px}
-.btn{border:1px solid #ffffffb8;border-radius:15px;padding:12px 15px;font-weight:850;display:flex;align-items:center;justify-content:center;gap:8px;min-height:47px;box-shadow:0 5px 0 #132d6818,0 10px 18px #132d6812;transition:transform .15s,box-shadow .15s;flex:1}
-.btn-primary{background:linear-gradient(145deg,#267aff,#0754e8);color:white;box-shadow:0 5px 0 #073ca7,0 11px 20px #1769ff36}
-.btn-soft{background:linear-gradient(145deg,#fff,#e7edfb);color:#17234b}
-.btn-dark{background:linear-gradient(145deg,#2b3c73,#131e4a);color:white;box-shadow:0 5px 0 #080f2b,0 11px 20px #13234a25}
-.tabs{display:flex;gap:8px;padding:14px 18px;border-top:1px solid var(--line);overflow-x:auto}
-.tab{border:1px solid transparent;background:transparent;color:#667085;font-weight:800;border-radius:14px;padding:11px 17px;white-space:nowrap;transition:.15s}
-.tab.active{color:#0758d7;background:linear-gradient(145deg,#e6f4ff,#dce7ff);border-color:#fff;box-shadow:0 4px 0 #2857ad15,0 8px 18px #356fd51b}
-.main-grid{display:grid;grid-template-columns:minmax(250px,.82fr) minmax(0,1.45fr);gap:16px;margin-top:18px;align-items:start}
-.panel{padding:18px;margin-bottom:16px}
-.panel-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:0 0 14px}
-.panel h2{font-size:19px;margin:0;font-weight:900}
-.text-link{border:0;background:transparent;color:#1769d8;font-weight:800;padding:7px;border-radius:10px}
-.detail-list{display:grid;gap:13px}
-.detail{display:flex;align-items:flex-start;gap:12px;color:#27344d;font-size:14px;line-height:1.4}
-.detail-icon{width:36px;height:36px;display:grid;place-items:center;border-radius:12px;background:linear-gradient(145deg,#f0f6ff,#e0e9ff);box-shadow:0 3px 0 #b8c8ee66;color:#2459bd;flex-shrink:0}
-.friend-row{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
-.friend-empty{grid-column:1/-1;border:1px dashed #b8c5df;border-radius:15px;padding:18px;text-align:center;color:#667085;font-size:13px;background:#f8faff}
-.friend-tile{min-width:0;text-align:center;font-size:12px;font-weight:750}
-.friend-pic{width:100%;aspect-ratio:1;border-radius:16px;background:linear-gradient(145deg,#d7f3ff,#c9d5ff,#eadbff);display:grid;place-items:center;color:#4162ad;font-size:25px;margin-bottom:7px;border:1px solid #fff}
-.composer{display:flex;align-items:center;gap:10px}
-.mini-avatar{width:42px;height:42px;flex-shrink:0;border-radius:50%;background:linear-gradient(140deg,#4dd9f4,#4a6dff,#a96bff);display:grid;place-items:center;color:white;font-weight:900;background-size:cover;background-position:center}
-.composer-open{flex:1;text-align:left;border:1px solid #dce4f3;border-radius:24px;background:linear-gradient(145deg,#f8fbff,#edf2fc);padding:12px 16px;color:#667085;box-shadow:inset 0 2px 5px #172e650a}
-.composer-tools{display:flex;gap:8px;margin-top:13px;flex-wrap:wrap}
-.pill{border:1px solid #dce4f4;border-radius:20px;background:linear-gradient(145deg,#fff,#f0f4fc);padding:9px 13px;font-weight:750;color:#33415f;box-shadow:0 3px 0 #dce4f2}
-.post{padding:0;overflow:hidden}
-.post-head{padding:16px;display:flex;align-items:center;gap:10px}
-.post-author{font-weight:850}
-.post-time{font-size:12px;color:#667085;margin-top:3px}
-.post-menu{margin-left:auto;border:0;background:transparent;font-size:23px;color:#667085}
-.post-text{padding:0 16px 15px;white-space:pre-wrap;overflow-wrap:anywhere}
-.post-image{display:block;width:100%;max-height:500px;object-fit:cover;background:#eaf0fc}
-.post-actions{display:flex;gap:6px;padding:10px 12px;border-top:1px solid var(--line)}
-.post-action{flex:1;border:0;background:linear-gradient(145deg,#fff,#edf2fc);border-radius:12px;padding:10px 4px;color:#44516b;font-weight:750}
-.empty-posts{text-align:center;padding:28px 14px;color:#667085}
-.empty-icon{font-size:34px;margin-bottom:8px}
-.bottom-nav{position:fixed;bottom:0;left:0;right:0;z-index:30;padding:9px max(10px,calc((100vw - 980px)/2)) calc(9px + env(safe-area-inset-bottom));display:flex;justify-content:space-around;gap:7px;background:rgba(246,249,255,.94);backdrop-filter:blur(20px);border-top:1px solid #d8e1f1;box-shadow:0 -8px 24px #18366c10}
-.nav-btn{flex:1;max-width:120px;min-width:0;border:1px solid #ffffff;background:linear-gradient(145deg,#fff,#e5edff);border-radius:15px;padding:8px 5px 6px;color:#53617d;display:flex;flex-direction:column;align-items:center;gap:3px;font-size:20px;box-shadow:0 4px 0 #bccbea,0 8px 14px #25467b12;transition:.15s}
-.nav-btn span{font-size:10px;font-weight:800}
-.nav-btn.active{color:white;background:linear-gradient(145deg,#3187ff,#254de4 65%,#6b5bff);box-shadow:0 4px 0 #1537a4,0 10px 18px #2e65db40}
-.toast{position:fixed;left:50%;bottom:100px;transform:translateX(-50%);background:#101c46;color:white;padding:12px 16px;border-radius:13px;box-shadow:0 10px 28px #06133b40;z-index:60;max-width:calc(100% - 28px);font-size:14px;display:none}
-.toast.show{display:block;animation:pop .2s ease-out}
-@keyframes pop{from{opacity:0;transform:translate(-50%,8px)}to{opacity:1;transform:translate(-50%,0)}}
-.modal-backdrop{position:fixed;inset:0;z-index:50;background:#0813359c;backdrop-filter:blur(7px);display:none;align-items:center;justify-content:center;padding:16px}
-.modal-backdrop.open{display:flex}
-.modal{width:min(560px,100%);max-height:88vh;overflow:auto;background:linear-gradient(145deg,#fff,#f1f5ff);border:1px solid white;border-radius:22px;padding:20px;box-shadow:0 24px 70px #020a2c70}
-.modal-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:16px}
-.modal-head h2{margin:0;font-size:21px}
-.close{border:0;background:#e7edfa;border-radius:12px;width:38px;height:38px;font-size:22px;color:#1a2b57}
-.field{display:grid;gap:6px;margin:12px 0}
-.field label{font-size:13px;font-weight:800;color:#35415f}
-.field input,.field textarea,.field select{width:100%;border:1px solid #cfd9ee;background:#fff;border-radius:12px;padding:12px;color:#17233e}
-.field textarea{min-height:90px;resize:vertical}
-.modal-actions{display:flex;gap:10px;margin-top:16px}
-.modal-actions .btn{flex:1}
-.menu-list{display:grid;gap:8px}
-.menu-item{border:1px solid #dbe4f5;background:linear-gradient(145deg,#fff,#edf3ff);border-radius:13px;text-align:left;padding:13px;font-weight:750;color:#26375f}
-.hidden{display:none!important}
+:root{--blue:#1877f2;--ink:#17191d;--muted:#65676b;--line:#e4e6eb;--page:#f0f2f5}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--page);color:var(--ink);font-family:Arial,Helvetica,sans-serif;padding-bottom:78px}
+button,input,textarea{font:inherit}button{cursor:pointer}button:focus-visible,input:focus-visible,textarea:focus-visible{outline:3px solid #8bbcff;outline-offset:2px}
+.topbar{height:56px;position:sticky;top:0;z-index:30;background:#fff;display:flex;align-items:center;gap:12px;padding:0 max(12px,calc((100% - 1000px)/2));border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:8px;margin-right:auto;font-weight:800;font-size:22px;color:var(--blue)}.brand-mark{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;color:#fff;background:linear-gradient(145deg,#20c9ed,#1769ff 65%,#8057ff)}
+.icon-btn{width:40px;height:40px;border:0;border-radius:50%;background:#f0f2f5;color:#30343b;font-size:21px;display:grid;place-items:center}
+.page{max-width:1000px;margin:auto}.profile-shell{background:#fff;box-shadow:0 1px 2px #0001}
+.cover{height:clamp(190px,34vw,350px);position:relative;background:linear-gradient(130deg,#17356e,#3188d8 50%,#8d78ed) center/cover}
+.cover:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 45%,#0003)}
+.cover-label{position:absolute;z-index:1;top:18px;left:20px;color:white;font-size:12px;letter-spacing:2px;font-weight:800;text-shadow:0 1px 5px #0008}
+.cover-button{position:absolute;z-index:2;right:14px;bottom:14px;background:#fff;border:0;border-radius:9px;padding:9px 12px;font-weight:700}
+.identity{padding:0 24px 15px;position:relative}.identity-row{display:flex;align-items:flex-end;gap:16px;margin-top:-68px;position:relative;z-index:3}
+.avatar-wrap{position:relative;flex:0 0 auto}.avatar{width:148px;height:148px;border:5px solid white;border-radius:50%;background:linear-gradient(140deg,#5bd8f4,#4674ff 55%,#9d6dff) center/cover;display:grid;place-items:center;color:white;font-size:44px;font-weight:800;box-shadow:0 1px 3px #0002;overflow:hidden}
+.camera{position:absolute;right:3px;bottom:6px;width:40px;height:40px;border:2px solid white;border-radius:50%;background:#e4e6eb;font-size:18px}
+.note{position:absolute;z-index:4;left:110px;top:-47px;border:0;border-radius:24px;background:#fff;padding:12px 17px;box-shadow:0 1px 5px #0002;color:#606770}
+.identity-main{min-width:0;flex:1;padding-bottom:4px}.name-line{display:flex;align-items:center;gap:8px;flex-wrap:wrap}.profile-name{font-size:clamp(24px,4vw,34px);font-weight:800;line-height:1.15;margin:0;overflow-wrap:anywhere}
+.verified{color:#fff;background:#1877f2;border-radius:50%;font-size:12px;width:21px;height:21px;display:grid;place-items:center}.follow-meta{font-size:15px;font-weight:700;color:var(--muted);margin-top:7px}.bio{margin:8px 0 0;color:#42464d;font-size:14px;line-height:1.45}
+.identity-actions{display:flex;gap:9px;margin:16px 0 0}.btn{border:0;border-radius:9px;padding:10px 15px;min-height:42px;font-weight:750;display:inline-flex;align-items:center;justify-content:center;gap:8px}.btn-blue{background:var(--blue);color:#fff}.btn-grey{background:#e4e6eb;color:#17191d}.btn-icon{width:46px;padding:0;font-size:19px}
+.profile-tabs{display:flex;gap:4px;overflow-x:auto;padding:9px 16px 0;border-top:1px solid var(--line);scrollbar-width:none}.profile-tabs::-webkit-scrollbar,.friends-strip::-webkit-scrollbar{display:none}
+.tab{border:0;background:transparent;color:var(--muted);padding:13px 18px;font-weight:750;white-space:nowrap;border-bottom:3px solid transparent}.tab.active{color:var(--blue);border-bottom-color:var(--blue)}
+.content{display:grid;grid-template-columns:minmax(250px,.82fr) minmax(0,1.45fr);gap:16px;padding:16px 0}.column{min-width:0}.card{background:#fff;border-radius:12px;padding:16px;margin-bottom:14px;box-shadow:0 1px 2px #0001}
+.card-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:14px}.card-head h2{font-size:20px;margin:0;font-weight:800}.link-btn{border:0;background:transparent;color:var(--blue);font-weight:700;padding:6px}
+.details{display:grid;gap:14px}.detail{display:flex;align-items:center;gap:12px;font-size:15px;line-height:1.35}.detail-icon{width:38px;height:38px;border-radius:50%;background:#f0f2f5;display:grid;place-items:center;font-size:18px;flex-shrink:0}
+.friends-strip{display:flex;gap:12px;overflow-x:auto;padding:2px 0 8px}.friend{width:108px;flex:0 0 108px;text-align:center}.friend-photo{width:100%;aspect-ratio:1;border-radius:50%;background:linear-gradient(145deg,#d7f3ff,#c9d5ff,#eadbff) center/cover;display:grid;place-items:center;color:#4162ad;font-size:27px;border:1px solid var(--line)}
+.friend-name{font-weight:700;font-size:14px;margin-top:7px;overflow-wrap:anywhere}.friend-mutual{font-size:12px;color:var(--muted);margin-top:4px}
+.composer-row{display:flex;align-items:center;gap:10px}.mini-avatar{width:42px;height:42px;flex:0 0 42px;border-radius:50%;background:linear-gradient(140deg,#4dd9f4,#4a6dff,#a96bff) center/cover;display:grid;place-items:center;color:#fff;font-weight:800}
+.composer-open{flex:1;text-align:left;border:0;border-radius:24px;background:#f0f2f5;padding:13px 16px;color:#65676b}.composer-tools{display:flex;gap:9px;border-top:1px solid var(--line);padding-top:12px;margin-top:12px;flex-wrap:wrap}
+.tool-btn{flex:1;min-width:100px;border:1px solid var(--line);background:#fff;border-radius:22px;padding:9px 12px;font-weight:700;color:#34373c}.manage-btn{width:100%;margin-top:14px}
+.post{padding:0;overflow:hidden}.post-head{display:flex;align-items:center;gap:10px;padding:14px 16px}.post-author{font-weight:800}.post-time{font-size:12px;color:var(--muted);margin-top:3px}.post-menu{margin-left:auto;border:0;background:transparent;font-size:22px;color:var(--muted)}
+.post-text{padding:0 16px 14px;white-space:pre-wrap;overflow-wrap:anywhere}.post-image{display:block;width:100%;height:auto;max-height:650px;object-fit:contain;background:#f0f2f5}
+.post-stats{display:flex;justify-content:space-between;gap:8px;color:var(--muted);font-size:13px;padding:9px 14px;border-bottom:1px solid var(--line)}.post-actions{display:flex;gap:4px;padding:6px 10px}.post-action{flex:1;border:0;background:#fff;border-radius:7px;padding:10px 4px;color:#606770;font-weight:700}.post-action.liked{color:var(--blue)}
+.comment-preview{padding:8px 14px 12px}.comment-bubble{display:inline-block;background:#f0f2f5;border-radius:16px;padding:9px 12px;font-size:14px;margin:3px 0}.comment-compose{display:flex;gap:8px;align-items:center;margin-top:10px}.comment-input{flex:1;min-width:0;border:0;border-radius:20px;background:#f0f2f5;padding:11px 14px}
+.empty{text-align:center;color:var(--muted);padding:25px 12px}.bottom-nav{position:fixed;z-index:40;left:0;right:0;bottom:0;background:#fff;border-top:1px solid var(--line);display:flex;justify-content:center;gap:4px;padding:7px max(6px,calc((100% - 1000px)/2)) calc(7px + env(safe-area-inset-bottom))}
+.nav-btn{flex:1;max-width:150px;border:0;background:#fff;color:#34373c;border-radius:9px;padding:6px 2px 4px;display:flex;flex-direction:column;align-items:center;gap:2px;font-size:22px}.nav-btn span{font-size:10px;font-weight:700}.nav-btn.active{color:var(--blue)}
+.toast{position:fixed;z-index:70;left:50%;bottom:90px;transform:translateX(-50%);background:#202124;color:#fff;padding:11px 15px;border-radius:10px;display:none;max-width:calc(100% - 28px);font-size:14px}.toast.show{display:block}
+.modal-backdrop{position:fixed;inset:0;z-index:60;background:#0008;display:none;align-items:center;justify-content:center;padding:14px}.modal-backdrop.open{display:flex}.modal{width:min(540px,100%);max-height:88vh;overflow:auto;background:#fff;border-radius:14px;padding:18px;box-shadow:0 12px 40px #0004}
+.modal-head{display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line);padding-bottom:12px;margin-bottom:12px}.modal-head h2{margin:0;font-size:20px}.close{border:0;border-radius:50%;width:36px;height:36px;background:#f0f2f5;font-size:22px}
+.field{display:grid;gap:6px;margin:12px 0}.field label{font-size:13px;font-weight:750}.field input,.field textarea{width:100%;border:1px solid #ccd0d5;border-radius:9px;padding:11px;background:#fff}.field textarea{min-height:90px;resize:vertical}.modal-actions{display:flex;gap:8px;margin-top:16px}.modal-actions .btn{flex:1}.menu-list{display:grid;gap:8px}.menu-item{border:0;background:#f0f2f5;border-radius:9px;padding:13px;text-align:left;font-weight:700}
 @media(max-width:700px){
- .wrap{padding:0 9px;margin:10px auto}.topbar{padding:8px 11px}.brand{font-size:19px}.top-action{width:38px;height:38px}
- .cover{height:190px}.identity{padding:0 14px 16px}.avatar-row{margin-top:-58px;gap:11px}.avatar,.avatar-wrap{width:112px;height:112px}.avatar-camera{width:36px;height:36px}.avatar-row .quick{gap:6px}
- .profile-name{font-size:26px;margin-top:13px}.meta{font-size:12px}.action-row{gap:8px}.btn{padding:10px 8px;font-size:14px;min-height:44px}
- .tabs{padding:11px 9px;gap:3px}.tab{padding:10px 13px}.main-grid{grid-template-columns:1fr;gap:0;margin-top:12px}.left-column{display:contents}.about-panel{order:1}.friends-panel{order:2}.right-column{order:3}.panel{padding:15px;border-radius:19px;margin-bottom:12px}
- .bottom-nav{gap:4px;padding-left:6px;padding-right:6px}.nav-btn{border-radius:12px;padding:7px 2px 6px;font-size:19px}.nav-btn span{font-size:9px}
+ body{background:#fff;padding-bottom:75px}.topbar{height:54px;padding:0 10px}.page{width:100%}.profile-shell{box-shadow:none}.cover{height:clamp(175px,54vw,245px)}
+ .identity{padding:0 14px 14px}.identity-row{margin-top:-58px;gap:10px;align-items:flex-end}.avatar{width:116px;height:116px;font-size:36px}.note{left:80px;top:-43px;padding:10px 13px;font-size:13px}
+ .profile-name{font-size:clamp(21px,6vw,28px)}.follow-meta{font-size:13px}.bio{font-size:13px}.identity-actions{margin-top:13px;gap:7px}.identity-actions .btn{flex:1;padding:9px 8px;font-size:14px;min-height:42px}.identity-actions .btn-icon{flex:0 0 44px}
+ .profile-tabs{padding:7px 8px 0;gap:0}.tab{padding:12px 14px;font-size:15px}.content{display:flex;flex-direction:column;gap:0;padding:10px 0}.column{display:contents}.about-card{order:1}.friends-card{order:2}.posts-column{order:3}
+ .card{border-radius:0;box-shadow:none;border-bottom:8px solid var(--page);margin:0;padding:15px}.card-head h2{font-size:19px}.friend{width:92px;flex-basis:92px}.friend-name{font-size:13px}.composer-tools{justify-content:flex-start}.tool-btn{flex:0 1 auto;min-width:105px}.post-image{max-height:none}
+ .bottom-nav{justify-content:space-around;gap:2px;padding-left:4px;padding-right:4px}.nav-btn{max-width:none;font-size:22px}.nav-btn span{font-size:9px}
 }
-@media(min-width:701px){.right-column{min-width:0}}
-@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation:none!important;transition:none!important}}
+@media(max-width:370px){.identity-row{gap:7px}.avatar{width:100px;height:100px}.profile-name{font-size:20px}.follow-meta{font-size:12px}.identity-actions .btn{font-size:12px}.tab{padding-left:11px;padding-right:11px}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition:none!important;animation:none!important}}
 </style>
 </head>
 <body>
 <header class="topbar">
-  <button class="top-action" id="menuBtn" aria-label="Open menu" title="Menu">☰</button>
-  <div class="brand"><span class="brand-mark">Z</span><span>Zemivo</span></div>
-  <button class="top-action" id="editTopBtn" aria-label="Edit profile" title="Edit profile">✎</button>
-  <button class="top-action" id="searchBtn" aria-label="Search" title="Search">⌕</button>
-  <button class="top-action" id="moreTopBtn" aria-label="More options" title="More options">•••</button>
+ <button class="icon-btn" id="menuBtn" aria-label="Menu">☰</button>
+ <div class="brand"><span class="brand-mark">Z</span><span>Zemivo</span></div>
+ <button class="icon-btn" id="searchBtn" aria-label="Search">⌕</button>
+ <button class="icon-btn" id="moreTopBtn" aria-label="More">•••</button>
 </header>
-
-<main class="wrap">
-  <section class="profile-card" aria-label="Profile header">
-    <div class="cover" id="cover">
-      <div class="cover-orb"></div><div class="cover-title">YOUR WORLD. YOUR VOICE.</div>
-      <div class="cover-tools"><button class="glass-btn" id="coverUploadBtn">📷 Change cover</button></div>
-    </div>
-    <div class="identity">
-      <div class="avatar-row">
-        <div class="avatar-wrap">
-          <div class="avatar" id="avatar">Z</div>
-          <button class="avatar-camera" id="avatarUploadBtn" aria-label="Change profile picture" title="Change profile picture">📷</button>
-        </div>
-        <div class="quick"><button class="btn btn-soft" id="shareProfileBtn">↗ Share</button><button class="btn btn-soft" id="profileMoreBtn" aria-label="Profile options">⌄</button></div>
-      </div>
-      <h1 class="profile-name" id="profileName">Your Name</h1>
-      <div class="meta" id="followMeta">0 followers · 0 following</div>
-      <p class="bio" id="bioText">Add a short introduction so people can get to know you.</p>
-      <div class="meta" id="profileMeta" style="margin-top:8px">✦ Zemivo member</div>
-      <div class="action-row">
-        <button class="btn btn-primary" id="dashboardBtn">▥ Dashboard</button>
-        <button class="btn btn-soft" id="createBtn">＋ Create</button>
-      </div>
-    </div>
-    <nav class="tabs" aria-label="Profile tabs">
-      <button class="tab active" data-tab="all">All</button>
-      <button class="tab" data-tab="reels">Reels</button>
-      <button class="tab" data-tab="photos">Photos</button>
-      <button class="tab" id="moreTabBtn">More ▾</button>
-    </nav>
+<main class="page">
+<section class="profile-shell">
+ <div class="cover" id="cover"><div class="cover-label">YOUR WORLD. YOUR VOICE.</div><button class="cover-button" id="coverUploadBtn">📷 Change cover</button></div>
+ <div class="identity">
+  <div class="identity-row">
+   <div class="avatar-wrap"><div class="avatar" id="avatar">Z</div><button class="camera" id="avatarUploadBtn" aria-label="Change profile picture">📷</button></div>
+   <button class="note" id="noteBtn">Share a note...</button>
+   <div class="identity-main"><div class="name-line"><h1 class="profile-name" id="profileName">Your Name</h1><span class="verified" title="Zemivo member">✓</span></div><div class="follow-meta" id="followMeta">0 followers · 0 following</div><p class="bio" id="bioText">Add a short introduction so people can get to know you.</p></div>
+  </div>
+  <div class="identity-actions"><button class="btn btn-blue" id="dashboardBtn">▥ Dashboard</button><button class="btn btn-grey" id="createBtn">＋ Create</button><button class="btn btn-grey btn-icon" id="editTopBtn" aria-label="Edit profile">✎</button></div>
+ </div>
+ <nav class="profile-tabs" aria-label="Profile sections"><button class="tab active" data-tab="all">All</button><button class="tab" data-tab="reels">Reels</button><button class="tab" data-tab="photos">Photos</button><button class="tab" id="moreTabBtn">More ▾</button></nav>
+</section>
+<div class="content">
+ <aside class="column">
+  <section class="card about-card"><div class="card-head"><h2>At a glance</h2><button class="link-btn" id="editDetailsBtn">Edit</button></div><div class="details" id="detailsList"><div class="empty">Add personal details to your profile.</div></div></section>
+  <section class="card friends-card"><div class="card-head"><h2>Friends</h2><button class="link-btn" id="seeFriendsBtn">See all</button></div><div class="friends-strip" id="friendsList"><div class="empty">Your friends will appear here when connected.</div></div></section>
+ </aside>
+ <section class="column posts-column">
+  <section class="card"><div class="card-head"><h2 id="postsHeading">All posts</h2><button class="link-btn" id="filterBtn">Filters</button></div>
+   <div class="composer-row"><div class="mini-avatar" id="miniAvatar">Z</div><button class="composer-open" id="composerOpen">What's on your mind?</button><button class="link-btn" id="photoPostBtn" aria-label="Add photo">▧</button></div>
+   <div class="composer-tools"><button class="tool-btn" id="reelBtn">▣ Reel</button><button class="tool-btn" id="liveBtn">◉ Live</button><button class="tool-btn" id="feelingBtn">☺ Feeling</button></div>
+   <button class="btn btn-grey manage-btn" id="managePostsBtn">▤ Manage posts</button>
   </section>
-
-  <div class="main-grid">
-    <aside class="left-column">
-      <section class="panel about-panel">
-        <div class="panel-head"><h2>Personal details</h2><button class="text-link" id="editDetailsBtn" aria-label="Edit personal details">✎ Edit</button></div>
-        <div class="detail-list" id="detailsList"></div>
-      </section>
-      <section class="panel friends-panel">
-        <div class="panel-head"><h2>Friends</h2><button class="text-link" id="seeFriendsBtn">See all</button></div>
-        <div class="friend-row" id="friendsList"><div class="friend-empty">Your friends will appear here when you connect with people on Zemivo.</div></div>
-      </section>
-    </aside>
-    <section class="right-column">
-      <section class="panel">
-        <div class="panel-head"><h2 id="postsHeading">All posts</h2><button class="text-link" id="filterBtn">Filters ▾</button></div>
-        <div class="composer">
-          <div class="mini-avatar" id="miniAvatar">Z</div>
-          <button class="composer-open" id="composerOpen">What's on your mind?</button>
-          <button class="text-link" id="photoPostBtn" aria-label="Add photo to post">▧</button>
-        </div>
-        <div class="composer-tools">
-          <button class="pill" id="reelBtn">▣ Reel</button><button class="pill" id="liveBtn">◉ Live</button><button class="pill" id="feelingBtn">☺ Feeling</button>
-        </div>
-      </section>
-      <section id="postsList"></section>
-    </section>
-  </div>
-</main>
-
-<nav class="bottom-nav" aria-label="Main navigation">
-  <button class="nav-btn" data-nav="Home" aria-label="Home">⌂<span>Home</span></button>
-  <button class="nav-btn" data-nav="Reels" aria-label="Reels">▣<span>Reels</span></button>
-  <button class="nav-btn" data-nav="Friends" aria-label="Friends">♧<span>Friends</span></button>
-  <button class="nav-btn" data-nav="Marketplace" aria-label="Marketplace">▤<span>Market</span></button>
-  <button class="nav-btn" data-nav="Notifications" aria-label="Notifications">♧<span>Alerts</span></button>
-  <button class="nav-btn active" data-nav="Profile" aria-label="Profile">◉<span>Profile</span></button>
-</nav>
-
-<div class="toast" id="toast" role="status" aria-live="polite"></div>
-<div class="modal-backdrop" id="modalBackdrop" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
-  <div class="modal">
-    <div class="modal-head"><h2 id="modalTitle">Edit profile</h2><button class="close" id="closeModal" aria-label="Close">×</button></div>
-    <div id="modalBody"></div>
-  </div>
+  <section id="postsList"></section>
+ </section>
 </div>
-<input type="file" id="avatarFile" accept="image/*" hidden>
-<input type="file" id="coverFile" accept="image/*" hidden>
-<input type="file" id="postFile" accept="image/*" hidden>
-
+</main>
+<nav class="bottom-nav" aria-label="Main navigation">
+ <button class="nav-btn" data-nav="Home">⌂<span>Home</span></button><button class="nav-btn" data-nav="Reels">▣<span>Reels</span></button><button class="nav-btn" data-nav="Friends">♧<span>Friends</span></button><button class="nav-btn" data-nav="Marketplace">▤<span>Market</span></button><button class="nav-btn" data-nav="Notifications">♧<span>Alerts</span></button><button class="nav-btn active" data-nav="Profile">◉<span>Profile</span></button>
+</nav>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<div class="modal-backdrop" id="modalBackdrop" role="dialog" aria-modal="true" aria-labelledby="modalTitle"><div class="modal"><div class="modal-head"><h2 id="modalTitle">Profile</h2><button class="close" id="closeModal" aria-label="Close">×</button></div><div id="modalBody"></div></div></div>
+<input type="file" id="avatarFile" accept="image/*" hidden><input type="file" id="coverFile" accept="image/*" hidden><input type="file" id="postFile" accept="image/*" hidden>
 <script>
-(() => {
-  "use strict";
-  const $ = id => document.getElementById(id);
-  const STORAGE_KEY = "zemivo_profile_demo_v2";
-  const defaults = {
-    name:"Your Name", bio:"Add a short introduction so people can get to know you.",
-    location:"", occupation:"", relationship:"", website:"", followers:0, following:0,
-    avatar:"", cover:"", posts:[], activeTab:"all"
-  };
-  let state = loadState();
-  let pendingPostImage = "";
-  let currentFilter = "all";
-  let toastTimer;
-  function loadState(){
-    try { const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}"); return {...defaults,...saved,posts:Array.isArray(saved.posts)?saved.posts:[]}; }
-    catch(e){ return {...defaults}; }
-  }
-  function saveState(){ try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch(e){ notify("এই ব্রাউজারে সংরক্ষণের জায়গা পূর্ণ হতে পারে। ছোট ছবি ব্যবহার করুন।"); } }
-  function escapeHTML(s){ return String(s ?? "").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c])); }
-  function notify(message){ const el=$("toast");el.textContent=message;el.classList.add("show");clearTimeout(toastTimer);toastTimer=setTimeout(()=>el.classList.remove("show"),2600); }
-  function initials(name){ const bits=String(name||"Z").trim().split(/\s+/).filter(Boolean);return (bits.length>1?bits[0][0]+bits[bits.length-1][0]:bits[0]?.slice(0,1)||"Z").toUpperCase(); }
-  function setImage(el,url,fallback){ if(url){el.style.backgroundImage=`url("${url}")`;el.textContent="";}else{el.style.backgroundImage="";el.textContent=fallback;} }
-  function render(){
-    $("profileName").textContent=state.name||"Your Name";
-    $("bioText").textContent=state.bio||"";
-    $("followMeta").textContent=`${Number(state.followers)||0} followers · ${Number(state.following)||0} following`;
-    $("profileMeta").textContent=[state.occupation||"Zemivo member",state.location].filter(Boolean).join(" · ");
-    setImage($("avatar"),state.avatar,initials(state.name));setImage($("miniAvatar"),state.avatar,initials(state.name));
-    if(state.cover){$("cover").style.backgroundImage=`url("${state.cover}")`; $("cover").style.backgroundSize="cover";$("cover").style.backgroundPosition="center";}
-    else {$("cover").style.backgroundImage="";}
-    const details=[
-      ["⌖","Location",state.location],["✦","Work / Creator",state.occupation],["♡","Relationship",state.relationship],["↗","Website",state.website]
-    ].filter(item=>item[2]);
-    $("detailsList").innerHTML=details.length?details.map(([icon,label,value])=>`<div class="detail"><div class="detail-icon">${icon}</div><div><strong>${escapeHTML(label)}</strong><br>${label==="Website"?`<a href="${escapeHTML(safeURL(value))}" target="_blank" rel="noopener noreferrer">${escapeHTML(value)}</a>`:escapeHTML(value)}</div></div>`).join(""):`<div class="friend-empty">No personal details added yet. Use Edit to add information you want to share.</div>`;
-    renderPosts();
-    document.querySelectorAll(".tab[data-tab]").forEach(btn=>btn.classList.toggle("active",btn.dataset.tab===state.activeTab));
-    $("postsHeading").textContent=state.activeTab==="reels"?"Reels":state.activeTab==="photos"?"Photos":"All posts";
-  }
-  function safeURL(url){const v=String(url||"").trim();if(/^https?:\/\//i.test(v))return v;if(/^[\w.-]+\.[a-z]{2,}/i.test(v))return "https://"+v;return "#";}
-  function renderPosts(){
-    let posts=state.posts.slice().reverse();
-    if(state.activeTab==="reels") posts=posts.filter(p=>p.type==="reel");
-    if(state.activeTab==="photos") posts=posts.filter(p=>!!p.image);
-    if(currentFilter==="withPhoto") posts=posts.filter(p=>!!p.image);
-    if(currentFilter==="textOnly") posts=posts.filter(p=>!p.image);
-    $("postsList").innerHTML=posts.length?posts.map(p=>`
-      <article class="panel post" data-post-id="${escapeHTML(p.id)}">
-        <div class="post-head"><div class="mini-avatar" style="${p.avatar?`background-image:url('${p.avatar}')`:""}">${p.avatar?"":escapeHTML(initials(state.name))}</div><div><div class="post-author">${escapeHTML(state.name||"Your Name")}${p.type==="reel"?' · Reel':""}</div><div class="post-time">${escapeHTML(new Date(p.createdAt).toLocaleString())} · 🌐 Public</div></div><button class="post-menu" data-post-menu="${escapeHTML(p.id)}" aria-label="Post options">•••</button></div>
-        ${p.text?`<div class="post-text">${escapeHTML(p.text)}</div>`:""}
-        ${p.image?`<img class="post-image" src="${p.image}" alt="Post image">`:""}
-        <div class="post-actions"><button class="post-action" data-like="${escapeHTML(p.id)}">♡ Like <span>${p.likes||0}</span></button><button class="post-action" data-comment="${escapeHTML(p.id)}">▢ Comment</button><button class="post-action" data-share="${escapeHTML(p.id)}">↗ Share</button></div>
-      </article>`).join(""):`<section class="panel empty-posts"><div class="empty-icon">✧</div><strong>${state.activeTab==="reels"?"No reels yet":state.activeTab==="photos"?"No photos yet":"No posts yet"}</strong><p>Your content will appear here after you create a post.</p><button class="btn btn-primary" id="emptyCreateBtn">＋ Create your first post</button></section>`;
-    const create=$("emptyCreateBtn");if(create)create.addEventListener("click",openComposer);
-  }
-  function openModal(title,html){$("modalTitle").textContent=title;$("modalBody").innerHTML=html;$("modalBackdrop").classList.add("open");document.body.style.overflow="hidden";}
-  function closeModal(){$("modalBackdrop").classList.remove("open");document.body.style.overflow="";}
-  function field(label,id,value="",placeholder="",type="text"){return `<div class="field"><label for="${id}">${label}</label><input id="${id}" type="${type}" value="${escapeHTML(value)}" placeholder="${escapeHTML(placeholder)}"></div>`;}
-  function editProfile(){
-    openModal("Edit profile",`${field("Name","editName",state.name)}<div class="field"><label for="editBio">Bio</label><textarea id="editBio" placeholder="A short introduction">${escapeHTML(state.bio)}</textarea></div>${field("Location","editLocation",state.location,"City, country")}${field("Work / Creator role","editOccupation",state.occupation,"e.g. Digital creator")}${field("Relationship (optional)","editRelationship",state.relationship,"")}${field("Website (optional)","editWebsite",state.website,"https://example.com")}<div class="modal-actions"><button class="btn btn-soft" id="cancelEdit">Cancel</button><button class="btn btn-primary" id="saveProfile">Save changes</button></div>`);
-    $("cancelEdit").onclick=closeModal;
-    $("saveProfile").onclick=()=>{const name=$("editName").value.trim();if(!name){notify("নাম লিখুন।");$("editName").focus();return;}state.name=name;state.bio=$("editBio").value.trim();state.location=$("editLocation").value.trim();state.occupation=$("editOccupation").value.trim();state.relationship=$("editRelationship").value.trim();state.website=$("editWebsite").value.trim();saveState();render();closeModal();notify("প্রোফাইল এই ব্রাউজারে সংরক্ষণ হয়েছে।");};
-  }
-  function openComposer(type="post"){
-    pendingPostImage="";
-    const heading=type==="reel"?"Create a Reel":type==="live"?"Go Live":type==="feeling"?"Share a feeling":"Create post";
-    openModal(heading,`<div class="field"><label for="postText">What's on your mind?</label><textarea id="postText" placeholder="Write something to share..."></textarea></div><div class="field"><label>Photo (optional)</label><button class="btn btn-soft" id="choosePostPhoto">▧ Choose photo</button><div id="photoStatus" class="meta">No photo selected</div></div>${type==="live"?'<p class="meta">Live streaming needs a secure streaming service and backend integration. This demo will not start a real broadcast.</p>':""}${type==="reel"?'<p class="meta">A photo/text post can be saved here; full video Reel upload needs video storage and processing.</p>':""}<div class="modal-actions"><button class="btn btn-soft" id="cancelPost">Cancel</button><button class="btn btn-primary" id="publishPost">${type==="live"?"Continue":type==="reel"?"Save Reel":"Post"}</button></div>`);
-    $("cancelPost").onclick=closeModal;
-    $("choosePostPhoto").onclick=()=>$("postFile").click();
-    $("postFile").onchange=async e=>{const file=e.target.files?.[0];if(!file)return;if(!file.type.startsWith("image/")){notify("ছবির ফাইল নির্বাচন করুন।");return;}try{pendingPostImage=await compressImage(file,1200,.82);$("photoStatus").textContent="Photo selected";}catch(err){notify("ছবি পড়া যায়নি। আবার চেষ্টা করুন।");}};
-    $("publishPost").onclick=()=>{
-      if(type==="live"){closeModal();notify("বাস্তব Live চালু করতে backend/streaming service যুক্ত করতে হবে।");return;}
-      const text=$("postText").value.trim();if(!text&&!pendingPostImage){notify("পোস্টের লেখা বা ছবি যোগ করুন।");$("postText").focus();return;}
-      state.posts.push({id:crypto.randomUUID?crypto.randomUUID():String(Date.now()),text,image:pendingPostImage,type:type==="reel"?"reel":"post",createdAt:new Date().toISOString(),likes:0});
-      saveState();state.activeTab=type==="reel"?"reels":"all";currentFilter="all";render();closeModal();notify("পোস্ট এই ব্রাউজারে সংরক্ষণ হয়েছে।");
-    };
-  }
-  function compressImage(file,maxSide,quality){return new Promise((resolve,reject)=>{const reader=new FileReader();reader.onerror=reject;reader.onload=()=>{const img=new Image();img.onerror=reject;img.onload=()=>{const scale=Math.min(1,maxSide/Math.max(img.width,img.height));const canvas=document.createElement("canvas");canvas.width=Math.round(img.width*scale);canvas.height=Math.round(img.height*scale);canvas.getContext("2d").drawImage(img,0,0,canvas.width,canvas.height);resolve(canvas.toDataURL("image/jpeg",quality));};img.src=reader.result;};reader.readAsDataURL(file);});}
-  function uploadImage(which){const input=which==="avatar"?$("avatarFile"):$("coverFile");input.onchange=async e=>{const file=e.target.files?.[0];if(!file)return;if(!file.type.startsWith("image/")){notify("ছবির ফাইল নির্বাচন করুন।");return;}try{const data=await compressImage(file,which==="avatar"?900:1800,.82);if(which==="avatar")state.avatar=data;else state.cover=data;saveState();render();notify("ছবি এই ব্রাউজারে সংরক্ষণ হয়েছে।");}catch(err){notify("ছবি আপলোড করা যায়নি।");}input.value="";};input.click();}
-  function showMenu(title,items){openModal(title,`<div class="menu-list">${items.map(([label,action])=>`<button class="menu-item" data-menu-action="${action}">${label}</button>`).join("")}</div>`);$("modalBody").querySelectorAll("[data-menu-action]").forEach(b=>b.onclick=()=>{const action=b.dataset.menuAction;closeModal();handleMenuAction(action);});}
-  function handleMenuAction(action){
-    if(action==="edit")editProfile();
-    else if(action==="share")shareProfile();
-    else if(action==="posts"){currentFilter=currentFilter==="withPhoto"?"all":"withPhoto";render();notify(currentFilter==="withPhoto"?"Showing posts with photos":"Showing all posts");}
-    else if(action==="text"){currentFilter="textOnly";render();notify("Showing text-only posts");}
-    else if(action==="clear"){currentFilter="all";render();notify("Filters cleared");}
-    else if(action==="about")notify("Zemivo profile: account details and public posts.");
-    else if(action==="saved")notify("Saved items page must be connected to the main Zemivo app.");
-    else if(action==="settings")notify("Settings page must be connected to the main Zemivo app.");
-  }
-  async function shareProfile(){const url=location.href;try{if(navigator.share)await navigator.share({title:`${state.name} on Zemivo`,text:state.bio,url});else if(navigator.clipboard){await navigator.clipboard.writeText(url);notify("প্রোফাইল লিংক কপি হয়েছে।");}else notify("Profile link: "+url);}catch(e){if(e.name!=="AbortError")notify("লিংক শেয়ার করা যায়নি।");}}
-  function showDashboard(){openModal("Creator Dashboard",`<p><strong>Profile overview</strong></p><div class="detail-list"><div class="detail"><div class="detail-icon">♡</div><div><strong>${state.followers||0} followers</strong><br><span class="meta">Counts reflect only the current demo data.</span></div></div><div class="detail"><div class="detail-icon">▣</div><div><strong>${state.posts.length} posts</strong><br><span class="meta">Posts stored in this browser only.</span></div></div></div><p class="meta" style="margin-top:14px">Creator earnings, analytics, and monetization are not connected in this standalone file.</p><div class="modal-actions"><button class="btn btn-primary" id="dashboardOk">Close</button></div>`);$("dashboardOk").onclick=closeModal;}
-  function handleMenuActionOrNav(name){if(name==="Profile"){window.scrollTo({top:0,behavior:"smooth"});notify("Profile selected");}else notify(`${name} selected — এই পেজটি মূল Zemivo navigation-এর সঙ্গে যুক্ত করতে হবে।`);}
-  document.querySelectorAll(".tab[data-tab]").forEach(btn=>btn.addEventListener("click",()=>{state.activeTab=btn.dataset.tab;currentFilter="all";saveState();render();}));
-  $("moreTabBtn").addEventListener("click",()=>showMenu("More profile sections",[["About / Personal details","about"],["Posts with photos","posts"],["Text-only posts","text"],["Clear filters","clear"],["Saved items","saved"],["Settings","settings"]]));
-  $("editTopBtn").onclick=editProfile;$("editDetailsBtn").onclick=editProfile;
-  $("avatarUploadBtn").onclick=()=>uploadImage("avatar");$("coverUploadBtn").onclick=()=>uploadImage("cover");
-  $("dashboardBtn").onclick=showDashboard;$("createBtn").onclick=()=>showMenu("Create on Zemivo",[["✎ Create post","post"],["▣ Create Reel","reel"],["◉ Live video","live"],["☺ Feeling / activity","feeling"]]);
-  $("composerOpen").onclick=()=>openComposer();$("photoPostBtn").onclick=()=>{openComposer();setTimeout(()=>$("choosePostPhoto")?.click(),0);};
-  $("reelBtn").onclick=()=>openComposer("reel");$("liveBtn").onclick=()=>openComposer("live");$("feelingBtn").onclick=()=>openComposer("feeling");
-  $("filterBtn").onclick=()=>showMenu("Filter posts",[["All posts","clear"],["Posts with photos","posts"],["Text-only posts","text"]]);
-  $("seeFriendsBtn").onclick=()=>notify("এখনও বন্ধু যুক্ত করা হয়নি। Friends ফিচারটি মূল অ্যাপের সঙ্গে সংযুক্ত হলে এখানে দেখা যাবে।");
-  $("shareProfileBtn").onclick=shareProfile;
-  $("profileMoreBtn").onclick=()=>showMenu("Profile options",[["✎ Edit profile","edit"],["↗ Share profile","share"],["About","about"],["Settings","settings"]]);
-  $("moreTopBtn").onclick=()=>showMenu("More options",[["Edit profile","edit"],["Share profile","share"],["Saved items","saved"],["Settings","settings"]]);
-  $("menuBtn").onclick=()=>showMenu("Zemivo menu",[["Home","nav:Home"],["Friends","nav:Friends"],["Marketplace","nav:Marketplace"],["Notifications","nav:Notifications"],["Edit profile","edit"],["Settings","settings"]]);
-  $("searchBtn").onclick=()=>{openModal("Search Zemivo",`<div class="field"><label for="searchText">Search profiles or posts</label><input id="searchText" placeholder="Type a name or keyword"></div><div class="modal-actions"><button class="btn btn-soft" id="cancelSearch">Close</button><button class="btn btn-primary" id="runSearch">Search this profile</button></div><p class="meta">This standalone page can search only posts saved in this browser.</p>`);$("cancelSearch").onclick=closeModal;$("runSearch").onclick=()=>{const q=$("searchText").value.trim().toLowerCase();closeModal();const found=state.posts.filter(p=>(p.text||"").toLowerCase().includes(q));if(!q){notify("সার্চের শব্দ লিখুন।");return;}if(found.length){state.activeTab="all";render();notify(`${found.length}টি মিল পাওয়া গেছে।`);$("postsList").scrollIntoView({behavior:"smooth"});}else notify("এই প্রোফাইলে কোনো মিল পাওয়া যায়নি।");};};
-  $("closeModal").onclick=closeModal;$("modalBackdrop").addEventListener("click",e=>{if(e.target===$("modalBackdrop"))closeModal();});
-  document.addEventListener("keydown",e=>{if(e.key==="Escape")closeModal();});
-  $("postsList").addEventListener("click",e=>{
-    const like=e.target.closest("[data-like]");if(like){const p=state.posts.find(x=>x.id===like.dataset.like);if(p){p.likes=(p.likes||0)+1;saveState();renderPosts();}return;}
-    const comment=e.target.closest("[data-comment]");if(comment){const p=state.posts.find(x=>x.id===comment.dataset.comment);if(p)openModal("Comments",`<p>${escapeHTML(p.text||"Photo post")}</p><p class="meta">Comments need a shared backend to sync between users. This local demo does not send comments.</p><div class="modal-actions"><button class="btn btn-primary" id="commentClose">Close</button></div>`);$("commentClose").onclick=closeModal;return;}
-    const share=e.target.closest("[data-share]");if(share){shareProfile();return;}
-    const menu=e.target.closest("[data-post-menu]");if(menu){const id=menu.dataset.postMenu;showMenu("Post options",[["Delete this post","delete:"+id],["Share profile","share"]]);}
-  });
-  function handleMenuAction(action){
-    if(action.startsWith("delete:")){const id=action.slice(7);state.posts=state.posts.filter(p=>p.id!==id);saveState();render();notify("পোস্ট এই ব্রাউজার থেকে মুছে ফেলা হয়েছে।");return;}
-    if(action.startsWith("nav:")){handleMenuActionOrNav(action.slice(4));return;}
-    if(action==="post")openComposer();else if(action==="reel")openComposer("reel");else if(action==="live")openComposer("live");else if(action==="feeling")openComposer("feeling");
-    else if(action==="edit")editProfile();else if(action==="share")shareProfile();
-    else if(action==="posts"){currentFilter="withPhoto";render();notify("Showing posts with photos");}
-    else if(action==="text"){currentFilter="textOnly";render();notify("Showing text-only posts");}
-    else if(action==="clear"){currentFilter="all";render();notify("Filters cleared");}
-    else if(action==="about")notify("Zemivo profile: account details and public posts.");
-    else if(action==="saved")notify("Saved items page must be connected to the main Zemivo app.");
-    else if(action==="settings")notify("Settings page must be connected to the main Zemivo app.");
-  }
-  document.querySelectorAll(".nav-btn").forEach(btn=>btn.addEventListener("click",()=>{document.querySelectorAll(".nav-btn").forEach(b=>b.classList.toggle("active",b===btn));handleMenuActionOrNav(btn.dataset.nav);}));
-  render();
+(()=>{
+"use strict";
+const $=id=>document.getElementById(id),KEY="zemivo_profile_demo_v3";
+const defaults={name:"Your Name",bio:"Add a short introduction so people can get to know you.",location:"",occupation:"",relationship:"",website:"",followers:0,following:0,avatar:"",cover:"",posts:[],friends:[],activeTab:"all",note:""};
+let state=load(),filter="all",timer;
+function load(){try{const x=JSON.parse(localStorage.getItem(KEY)||"{}");return {...defaults,...x,posts:Array.isArray(x.posts)?x.posts:[],friends:Array.isArray(x.friends)?x.friends:[]}}catch(e){return {...defaults}}}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(state))}catch(e){toast("ব্রাউজারের জায়গা পূর্ণ। ছোট ছবি ব্যবহার করুন বা পুরোনো পোস্ট মুছুন।")}}
+function esc(v){return String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
+function toast(s){$("toast").textContent=s;$("toast").classList.add("show");clearTimeout(timer);timer=setTimeout(()=>$("toast").classList.remove("show"),2600)}
+function initials(s){const a=String(s||"Z").trim().split(/\s+/).filter(Boolean);return (a.length>1?a[0][0]+a[a.length-1][0]:a[0]?.[0]||"Z").toUpperCase()}
+function setPic(el,url,fallback){el.style.backgroundImage=url?`url("${url}")`:"";el.textContent=url?"":fallback}
+function safeURL(s){s=String(s||"").trim();if(/^https?:\/\//i.test(s))return s;if(/^[\w.-]+\.[a-z]{2,}/i.test(s))return "https://"+s;return ""}
+function render(){
+ $("profileName").textContent=state.name||"Your Name";$("bioText").textContent=state.bio||"";
+ $("followMeta").textContent=`${Number(state.followers)||0} followers · ${Number(state.following)||0} following`;
+ setPic($("avatar"),state.avatar,initials(state.name));setPic($("miniAvatar"),state.avatar,initials(state.name));
+ $("cover").style.backgroundImage=state.cover?`url("${state.cover}")`:"";$("noteBtn").textContent=state.note||"Share a note...";
+ const d=[["⌖","Lives in",state.location],["▣","Work",state.occupation],["♡","Relationship",state.relationship],["↗","Website",state.website]].filter(x=>x[2]);
+ $("detailsList").innerHTML=d.length?d.map(([i,l,v])=>{const u=l==="Website"?safeURL(v):"";return `<div class="detail"><span class="detail-icon">${i}</span><div><strong>${esc(l)}</strong><br>${u?`<a href="${esc(u)}" target="_blank" rel="noopener noreferrer">${esc(v)}</a>`:esc(v)}</div></div>`}).join(""):'<div class="empty">No personal details added yet.</div>';
+ $("friendsList").innerHTML=state.friends.length?state.friends.map(f=>`<div class="friend"><div class="friend-photo" ${f.photo?`style="background-image:url('${f.photo}')"`:""}>${f.photo?"":esc(initials(f.name))}</div><div class="friend-name">${esc(f.name)}</div><div class="friend-mutual">${Number(f.mutual)||0} mutual friends</div></div>`).join(""):'<div class="empty">Your friends will appear here when connected.</div>';
+ document.querySelectorAll(".tab[data-tab]").forEach(b=>b.classList.toggle("active",b.dataset.tab===state.activeTab));
+ $("postsHeading").textContent=state.activeTab==="reels"?"Reels":state.activeTab==="photos"?"Photos":"All posts";renderPosts();
+}
+function renderPosts(){
+ let posts=state.posts.slice().reverse();if(state.activeTab==="reels")posts=posts.filter(p=>p.type==="reel");if(state.activeTab==="photos")posts=posts.filter(p=>p.image);if(filter==="withPhoto")posts=posts.filter(p=>p.image);if(filter==="textOnly")posts=posts.filter(p=>!p.image);
+ $("postsList").innerHTML=posts.length?posts.map(p=>`<article class="card post">
+ <div class="post-head"><div class="mini-avatar" ${state.avatar?`style="background-image:url('${state.avatar}')"`:""}>${state.avatar?"":esc(initials(state.name))}</div><div><div class="post-author">${esc(state.name||"Your Name")}${p.type==="reel"?" · Reel":""}</div><div class="post-time">${esc(new Date(p.createdAt).toLocaleString())} · 🌐 Public</div></div><button class="post-menu" data-menu="${esc(p.id)}">•••</button></div>
+ ${p.text?`<div class="post-text">${esc(p.text)}</div>`:""}${p.image?`<img class="post-image" src="${p.image}" alt="Post image" loading="lazy">`:""}
+ <div class="post-stats"><span>👍 ${Number(p.likes)||0} likes</span><span>${(p.comments||[]).length} comments · ${Number(p.views)||0} views</span></div>
+ <div class="post-actions"><button class="post-action ${p.liked?"liked":""}" data-like="${esc(p.id)}">${p.liked?"👍 Liked":"♡ Like"}</button><button class="post-action" data-focus-comment="${esc(p.id)}">▢ Comment</button><button class="post-action" data-share="${esc(p.id)}">↗ Share</button></div>
+ <div class="comment-preview">${(p.comments||[]).slice(-2).map(c=>`<div class="comment-bubble"><strong>${esc(c.name)}</strong> ${esc(c.text)}</div>`).join("")}<div class="comment-compose"><input class="comment-input" data-input="${esc(p.id)}" placeholder="Write a comment..."><button class="link-btn" data-send="${esc(p.id)}">➤</button></div></div></article>`).join(""):'<section class="card empty"><strong>No posts yet</strong><p>Your content will appear here after you create a post.</p><button class="btn btn-blue" id="firstPost">＋ Create your first post</button></section>';
+ $("firstPost")?.addEventListener("click",()=>composer());
+}
+function modal(title,html){$("modalTitle").textContent=title;$("modalBody").innerHTML=html;$("modalBackdrop").classList.add("open");document.body.style.overflow="hidden"}
+function close(){ $("modalBackdrop").classList.remove("open");document.body.style.overflow=""}
+function field(label,id,value="",placeholder=""){return `<div class="field"><label for="${id}">${label}</label><input id="${id}" value="${esc(value)}" placeholder="${esc(placeholder)}"></div>`}
+function edit(){
+ modal("Edit profile",`${field("Name","eName",state.name)}<div class="field"><label for="eBio">Bio</label><textarea id="eBio">${esc(state.bio)}</textarea></div>${field("Location","eLocation",state.location,"City, country")}${field("Work / Creator role","eWork",state.occupation,"Digital creator")}${field("Relationship","eRelationship",state.relationship,"Optional")}${field("Website","eWebsite",state.website,"https://example.com")}<div class="modal-actions"><button class="btn btn-grey" id="cancel">Cancel</button><button class="btn btn-blue" id="save">Save changes</button></div>`);
+ $("cancel").onclick=close;$("save").onclick=()=>{const n=$("eName").value.trim();if(!n){toast("নাম লিখুন।");$("eName").focus();return}state.name=n;state.bio=$("eBio").value.trim();state.location=$("eLocation").value.trim();state.occupation=$("eWork").value.trim();state.relationship=$("eRelationship").value.trim();state.website=$("eWebsite").value.trim();save();render();close();toast("প্রোফাইল এই ব্রাউজারে সংরক্ষিত হয়েছে।")};
+}
+function compress(file,max,quality){return new Promise((resolve,reject)=>{const r=new FileReader();r.onerror=reject;r.onload=()=>{const im=new Image();im.onerror=reject;im.onload=()=>{const s=Math.min(1,max/Math.max(im.width,im.height)),c=document.createElement("canvas");c.width=Math.round(im.width*s);c.height=Math.round(im.height*s);const ctx=c.getContext("2d");if(!ctx){reject(Error("Canvas unavailable"));return}ctx.drawImage(im,0,0,c.width,c.height);resolve(c.toDataURL("image/jpeg",quality))};im.src=r.result};r.readAsDataURL(file)})}
+function pick(inputId,max,cb){const el=$(inputId);el.onchange=async()=>{const f=el.files?.[0];if(!f)return;if(!f.type.startsWith("image/")){toast("ছবির ফাইল নির্বাচন করুন।");el.value="";return}try{cb(await compress(f,max,.78));save();render();toast("ছবি এই ব্রাউজারে সংরক্ষিত হয়েছে।")}catch(e){toast("ছবি পড়া যায়নি। আবার চেষ্টা করুন।")}el.value=""};el.click()}
+function composer(type="post"){
+ let image="";modal(type==="reel"?"Create a Reel":type==="live"?"Go Live":type==="feeling"?"Share a feeling":"Create post",`<div class="field"><label for="pText">What's on your mind?</label><textarea id="pText" placeholder="Write something to share..."></textarea></div><div class="field"><label>Photo (optional)</label><button class="btn btn-grey" id="choosePhoto">▧ Choose photo</button><span id="photoStatus" class="post-time">No photo selected</span></div>${type==="live"?'<p class="post-time">Real live streaming needs a secure streaming service and backend.</p>':""}<div class="modal-actions"><button class="btn btn-grey" id="pCancel">Cancel</button><button class="btn btn-blue" id="pPublish">${type==="live"?"Continue":"Post"}</button></div>`);
+ $("pCancel").onclick=close;$("choosePhoto").onclick=()=>$("postFile").click();$("postFile").onchange=async()=>{const f=$("postFile").files?.[0];if(!f)return;try{image=await compress(f,1400,.78);$("photoStatus").textContent="Photo selected"}catch(e){toast("ছবি পড়া যায়নি।")} $("postFile").value=""};
+ $("pPublish").onclick=()=>{if(type==="live"){close();toast("Live-এর জন্য backend ও streaming service প্রয়োজন।");return}const text=$("pText").value.trim();if(!text&&!image){toast("পোস্টের লেখা বা ছবি যোগ করুন।");return}state.posts.push({id:crypto.randomUUID?crypto.randomUUID():String(Date.now()),text,image,type:type==="reel"?"reel":"post",createdAt:new Date().toISOString(),likes:0,liked:false,comments:[],views:0});save();state.activeTab=type==="reel"?"reels":"all";filter="all";render();close();toast("পোস্ট এই ব্রাউজারে সংরক্ষিত হয়েছে।")};
+}
+async function share(){const url=location.href;try{if(navigator.share)await navigator.share({title:`${state.name} on Zemivo`,text:state.bio,url});else if(navigator.clipboard){await navigator.clipboard.writeText(url);toast("প্রোফাইল লিংক কপি হয়েছে।")}else toast(url)}catch(e){if(e.name!=="AbortError")toast("শেয়ার করা যায়নি।")}}
+function menu(title,items){modal(title,`<div class="menu-list">${items.map(([t,a])=>`<button class="menu-item" data-action="${esc(a)}">${t}</button>`).join("")}</div>`);$("modalBody").querySelectorAll("[data-action]").forEach(b=>b.onclick=()=>{const a=b.dataset.action;close();action(a)})}
+function action(a){
+ if(a==="edit")edit();else if(a==="share")share();else if(a==="post")composer();else if(a==="reel")composer("reel");else if(a==="live")composer("live");else if(a==="feeling")composer("feeling");
+ else if(a==="withPhoto"||a==="textOnly"||a==="clear"){filter=a==="clear"?"all":a;renderPosts()}
+ else if(a==="saved"||a==="settings")toast("এই অংশটি মূল Zemivo অ্যাপের সঙ্গে যুক্ত করতে হবে।");
+ else if(a.startsWith("delete:")){state.posts=state.posts.filter(p=>p.id!==a.slice(7));save();render();toast("পোস্ট মুছে ফেলা হয়েছে।")}
+ else if(a.startsWith("nav:"))nav(a.slice(4));
+}
+function nav(name){if(name==="Profile")window.scrollTo({top:0,behavior:"smooth"});else toast(`${name} পেজটি মূল navigation-এর সঙ্গে যুক্ত করতে হবে।`)}
+function dashboard(){modal("Creator Dashboard",`<div class="details"><div class="detail"><span class="detail-icon">♡</span><strong>${Number(state.followers)||0} followers</strong></div><div class="detail"><span class="detail-icon">▣</span><strong>${state.posts.length} posts</strong></div></div><p class="post-time">Creator earnings ও analytics-এর জন্য shared Zemivo backend প্রয়োজন।</p><div class="modal-actions"><button class="btn btn-blue" id="dashClose">Close</button></div>`);$("dashClose").onclick=close}
+function comment(id){const input=document.querySelector(`[data-input="${CSS.escape(id)}"]`),text=input?.value.trim();if(!text){toast("কমেন্ট লিখুন।");return}const p=state.posts.find(x=>x.id===id);if(!p)return;p.comments=Array.isArray(p.comments)?p.comments:[];p.comments.push({name:state.name||"You",text});save();renderPosts();toast("কমেন্ট এই ব্রাউজারে সংরক্ষিত হয়েছে।")}
+document.querySelectorAll(".tab[data-tab]").forEach(b=>b.onclick=()=>{state.activeTab=b.dataset.tab;filter="all";save();render()});
+$("moreTabBtn").onclick=()=>menu("More profile sections",[["Posts with photos","withPhoto"],["Text-only posts","textOnly"],["Clear filters","clear"],["Saved items","saved"],["Settings","settings"]]);
+$("editTopBtn").onclick=edit;$("editDetailsBtn").onclick=edit;$("avatarUploadBtn").onclick=()=>pick("avatarFile",900,v=>state.avatar=v);$("coverUploadBtn").onclick=()=>pick("coverFile",1800,v=>state.cover=v);
+$("dashboardBtn").onclick=dashboard;$("createBtn").onclick=()=>menu("Create on Zemivo",[["Create post","post"],["Create Reel","reel"],["Live video","live"],["Feeling / activity","feeling"]]);
+$("composerOpen").onclick=()=>composer();$("photoPostBtn").onclick=()=>composer();$("reelBtn").onclick=()=>composer("reel");$("liveBtn").onclick=()=>composer("live");$("feelingBtn").onclick=()=>composer("feeling");
+$("managePostsBtn").onclick=()=>menu("Manage posts",[["All posts","clear"],["Posts with photos","withPhoto"],["Text-only posts","textOnly"]]);$("filterBtn").onclick=()=>menu("Filter posts",[["All posts","clear"],["Posts with photos","withPhoto"],["Text-only posts","textOnly"]]);
+$("seeFriendsBtn").onclick=()=>toast(state.friends.length?`${state.friends.length} friends shown.`:"এখনো কোনো বন্ধু যুক্ত করা হয়নি।");
+$("noteBtn").onclick=()=>{modal("Share a note",`<div class="field"><label for="noteText">Your note</label><input id="noteText" maxlength="80" value="${esc(state.note)}" placeholder="Share a short note..."></div><div class="modal-actions"><button class="btn btn-grey" id="noteCancel">Cancel</button><button class="btn btn-blue" id="noteSave">Save note</button></div>`);$("noteCancel").onclick=close;$("noteSave").onclick=()=>{state.note=$("noteText").value.trim();save();render();close()}};
+$("moreTopBtn").onclick=()=>menu("More options",[["Edit profile","edit"],["Share profile","share"],["Saved items","saved"],["Settings","settings"]]);
+$("menuBtn").onclick=()=>menu("Zemivo menu",[["Home","nav:Home"],["Friends","nav:Friends"],["Marketplace","nav:Marketplace"],["Notifications","nav:Notifications"],["Edit profile","edit"],["Settings","settings"]]);
+$("searchBtn").onclick=()=>{modal("Search this profile",`<div class="field"><label for="searchText">Search posts</label><input id="searchText" placeholder="Type a keyword"></div><div class="modal-actions"><button class="btn btn-grey" id="sCancel">Cancel</button><button class="btn btn-blue" id="sRun">Search</button></div>`);$("sCancel").onclick=close;$("sRun").onclick=()=>{const q=$("searchText").value.trim().toLowerCase();close();if(!q){toast("সার্চের শব্দ লিখুন।");return}const n=state.posts.filter(p=>(p.text||"").toLowerCase().includes(q)).length;toast(`${n}টি পোস্ট পাওয়া গেছে।`)}};
+$("closeModal").onclick=close;$("modalBackdrop").addEventListener("click",e=>{if(e.target===$("modalBackdrop"))close()});document.addEventListener("keydown",e=>{if(e.key==="Escape")close()});
+$("postsList").addEventListener("click",e=>{
+ const b=e.target.closest("[data-like]");if(b){const p=state.posts.find(x=>x.id===b.dataset.like);if(p){p.liked=!p.liked;p.likes=Math.max(0,(Number(p.likes)||0)+(p.liked?1:-1));save();renderPosts()}return}
+ const f=e.target.closest("[data-focus-comment]");if(f){document.querySelector(`[data-input="${CSS.escape(f.dataset.focusComment)}"]`)?.focus();return}
+ const s=e.target.closest("[data-send]");if(s){comment(s.dataset.send);return}
+ const sh=e.target.closest("[data-share]");if(sh){share();return}
+ const m=e.target.closest("[data-menu]");if(m)menu("Post options",[["Delete this post","delete:"+m.dataset.menu],["Share profile","share"]]);
+});
+document.querySelectorAll(".nav-btn").forEach(b=>b.onclick=()=>{document.querySelectorAll(".nav-btn").forEach(x=>x.classList.toggle("active",x===b));nav(b.dataset.nav)});
+render();
 })();
 </script>
 </body>
