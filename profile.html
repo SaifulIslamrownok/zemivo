@@ -14,10 +14,10 @@ button,input,textarea{font:inherit}button{cursor:pointer}button:focus-visible,in
 .icon-btn{width:40px;height:40px;border:0;border-radius:50%;background:#f0f2f5;color:#30343b;font-size:21px;display:grid;place-items:center}
 .page{max-width:1000px;margin:auto}.profile-shell{background:#fff;box-shadow:0 1px 2px #0001}
 .cover{height:clamp(190px,34vw,350px);position:relative;background:linear-gradient(130deg,#17356e,#3188d8 50%,#8d78ed) center/cover}
-.cover:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 45%,#0003)}
+.cover:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 45%,#0003);pointer-events:none}
 .cover-label{position:absolute;z-index:1;top:18px;left:20px;color:white;font-size:12px;letter-spacing:2px;font-weight:800;text-shadow:0 1px 5px #0008}
-.cover-button{position:absolute;z-index:2;right:14px;bottom:14px;background:#fff;border:0;border-radius:9px;padding:9px 12px;font-weight:700}
-.identity{padding:0 24px 15px;position:relative}.identity-row{display:flex;align-items:flex-end;gap:16px;margin-top:-68px;position:relative;z-index:3}
+.cover-button{position:absolute;z-index:5;right:14px;bottom:14px;background:#fff;border:0;border-radius:9px;padding:10px 13px;font-weight:700;box-shadow:0 2px 8px #0003;touch-action:manipulation}
+.identity{padding:0 24px 15px;position:relative}.identity-row{display:flex;align-items:flex-end;gap:16px;margin-top:-68px;position:relative;z-index:3;flex-wrap:wrap}
 .avatar-wrap{position:relative;flex:0 0 auto}.avatar{width:148px;height:148px;border:5px solid white;border-radius:50%;background:linear-gradient(140deg,#5bd8f4,#4674ff 55%,#9d6dff) center/cover;display:grid;place-items:center;color:white;font-size:44px;font-weight:800;box-shadow:0 1px 3px #0002;overflow:hidden}
 .camera{position:absolute;right:3px;bottom:6px;width:40px;height:40px;border:2px solid white;border-radius:50%;background:#e4e6eb;font-size:18px}
 .note{position:absolute;z-index:4;left:110px;top:-47px;border:0;border-radius:24px;background:#fff;padding:12px 17px;box-shadow:0 1px 5px #0002;color:#606770}
@@ -46,8 +46,7 @@ button,input,textarea{font:inherit}button{cursor:pointer}button:focus-visible,in
 .field{display:grid;gap:6px;margin:12px 0}.field label{font-size:13px;font-weight:750}.field input,.field textarea{width:100%;border:1px solid #ccd0d5;border-radius:9px;padding:11px;background:#fff}.field textarea{min-height:90px;resize:vertical}.modal-actions{display:flex;gap:8px;margin-top:16px}.modal-actions .btn{flex:1}.menu-list{display:grid;gap:8px}.menu-item{border:0;background:#f0f2f5;border-radius:9px;padding:13px;text-align:left;font-weight:700}
 @media(max-width:700px){
  body{background:#fff;padding-bottom:75px}.topbar{height:54px;padding:0 10px}.page{width:100%}.profile-shell{box-shadow:none}.cover{height:clamp(175px,54vw,245px)}
- .identity{padding:0 14px 14px}.identity-row{margin-top:-58px;gap:10px;align-items:flex-end}.avatar{width:116px;height:116px;font-size:36px}.note{left:80px;top:-43px;padding:10px 13px;font-size:13px}
- .profile-name{font-size:clamp(21px,6vw,28px)}.follow-meta{font-size:13px}.bio{font-size:13px}.identity-actions{margin-top:13px;gap:7px}.identity-actions .btn{flex:1;padding:9px 8px;font-size:14px;min-height:42px}.identity-actions .btn-icon{flex:0 0 44px}
+ .identity{padding:0 14px 14px}.identity-row{margin-top:-58px;gap:10px;align-items:flex-end;display:flex;flex-wrap:wrap}.avatar{width:116px;height:116px;font-size:36px}.avatar-wrap{order:1}.note{left:80px;top:-43px;padding:10px 13px;font-size:13px}.identity-main{order:2;flex:0 0 100%;width:100%;padding:0;margin-top:5px}.name-line{align-items:center}.profile-name{font-size:clamp(23px,6vw,29px)}.follow-meta{font-size:14px}.bio{font-size:14px}.identity-actions{margin-top:13px;gap:7px}.identity-actions .btn{flex:1;padding:9px 8px;font-size:14px;min-height:42px}.identity-actions .btn-icon{flex:0 0 44px}
  .profile-tabs{padding:7px 8px 0;gap:0}.tab{padding:12px 14px;font-size:15px}.content{display:flex;flex-direction:column;gap:0;padding:10px 0}.column{display:contents}.about-card{order:1}.friends-card{order:2}.posts-column{order:3}
  .card{border-radius:0;box-shadow:none;border-bottom:8px solid var(--page);margin:0;padding:15px}.card-head h2{font-size:19px}.friend{width:92px;flex-basis:92px}.friend-name{font-size:13px}.composer-tools{justify-content:flex-start}.tool-btn{flex:0 1 auto;min-width:105px}.post-image{max-height:none}
  .bottom-nav{justify-content:space-around;gap:2px;padding-left:4px;padding-right:4px}.nav-btn{max-width:none;font-size:22px}.nav-btn span{font-size:9px}
@@ -100,10 +99,19 @@ button,input,textarea{font:inherit}button{cursor:pointer}button:focus-visible,in
 <script>
 (()=>{
 "use strict";
-const $=id=>document.getElementById(id),KEY="zemivo_profile_demo_v3";
+const $=id=>document.getElementById(id),KEY="zemivo_profile_demo_v3",OLD_KEY="zemivo_profile_demo_v2";
 const defaults={name:"Your Name",bio:"Add a short introduction so people can get to know you.",location:"",occupation:"",relationship:"",website:"",followers:0,following:0,avatar:"",cover:"",posts:[],friends:[],activeTab:"all",note:""};
 let state=load(),filter="all",timer;
-function load(){try{const x=JSON.parse(localStorage.getItem(KEY)||"{}");return {...defaults,...x,posts:Array.isArray(x.posts)?x.posts:[],friends:Array.isArray(x.friends)?x.friends:[]}}catch(e){return {...defaults}}}
+function load(){
+ try{
+  const current=localStorage.getItem(KEY);
+  const legacy=localStorage.getItem(OLD_KEY);
+  const x=JSON.parse(current||legacy||"{}");
+  const migrated={...defaults,...x,posts:Array.isArray(x.posts)?x.posts:[],friends:Array.isArray(x.friends)?x.friends:[]};
+  if(!current&&legacy){try{localStorage.setItem(KEY,JSON.stringify(migrated));}catch(e){}}
+  return migrated;
+ }catch(e){return {...defaults}}
+}
 function save(){try{localStorage.setItem(KEY,JSON.stringify(state))}catch(e){toast("ব্রাউজারের জায়গা পূর্ণ। ছোট ছবি ব্যবহার করুন বা পুরোনো পোস্ট মুছুন।")}}
 function esc(v){return String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
 function toast(s){$("toast").textContent=s;$("toast").classList.add("show");clearTimeout(timer);timer=setTimeout(()=>$("toast").classList.remove("show"),2600)}
@@ -139,7 +147,25 @@ function edit(){
  $("cancel").onclick=close;$("save").onclick=()=>{const n=$("eName").value.trim();if(!n){toast("নাম লিখুন।");$("eName").focus();return}state.name=n;state.bio=$("eBio").value.trim();state.location=$("eLocation").value.trim();state.occupation=$("eWork").value.trim();state.relationship=$("eRelationship").value.trim();state.website=$("eWebsite").value.trim();save();render();close();toast("প্রোফাইল এই ব্রাউজারে সংরক্ষিত হয়েছে।")};
 }
 function compress(file,max,quality){return new Promise((resolve,reject)=>{const r=new FileReader();r.onerror=reject;r.onload=()=>{const im=new Image();im.onerror=reject;im.onload=()=>{const s=Math.min(1,max/Math.max(im.width,im.height)),c=document.createElement("canvas");c.width=Math.round(im.width*s);c.height=Math.round(im.height*s);const ctx=c.getContext("2d");if(!ctx){reject(Error("Canvas unavailable"));return}ctx.drawImage(im,0,0,c.width,c.height);resolve(c.toDataURL("image/jpeg",quality))};im.src=r.result};r.readAsDataURL(file)})}
-function pick(inputId,max,cb){const el=$(inputId);el.onchange=async()=>{const f=el.files?.[0];if(!f)return;if(!f.type.startsWith("image/")){toast("ছবির ফাইল নির্বাচন করুন।");el.value="";return}try{cb(await compress(f,max,.78));save();render();toast("ছবি এই ব্রাউজারে সংরক্ষিত হয়েছে।")}catch(e){toast("ছবি পড়া যায়নি। আবার চেষ্টা করুন।")}el.value=""};el.click()}
+function pick(inputId,max,cb){
+ const el=$(inputId);
+ el.value="";
+ el.onchange=async()=>{
+  const f=el.files&&el.files[0];
+  if(!f)return;
+  if(!f.type||!f.type.startsWith("image/")){toast("ছবির ফাইল নির্বাচন করুন।");el.value="";return}
+  if(f.size>15*1024*1024){toast("১৫ MB-এর চেয়ে ছোট ছবি নির্বাচন করুন।");el.value="";return}
+  try{
+   const data=await compress(f,max,.68);
+   cb(data);
+   render();
+   try{localStorage.setItem(KEY,JSON.stringify(state));toast("ছবি সংরক্ষণ হয়েছে।");}
+   catch(err){toast("ছবি দেখা যাচ্ছে, কিন্তু ব্রাউজারের জায়গা কম থাকায় সংরক্ষণ হয়নি। ছোট ছবি দিন।");}
+  }catch(e){toast("ছবি পড়া যায়নি। JPG বা PNG ছবি দিয়ে আবার চেষ্টা করুন।")}
+  el.value="";
+ };
+ el.click();
+}
 function composer(type="post"){
  let image="";modal(type==="reel"?"Create a Reel":type==="live"?"Go Live":type==="feeling"?"Share a feeling":"Create post",`<div class="field"><label for="pText">What's on your mind?</label><textarea id="pText" placeholder="Write something to share..."></textarea></div><div class="field"><label>Photo (optional)</label><button class="btn btn-grey" id="choosePhoto">▧ Choose photo</button><span id="photoStatus" class="post-time">No photo selected</span></div>${type==="live"?'<p class="post-time">Real live streaming needs a secure streaming service and backend.</p>':""}<div class="modal-actions"><button class="btn btn-grey" id="pCancel">Cancel</button><button class="btn btn-blue" id="pPublish">${type==="live"?"Continue":"Post"}</button></div>`);
  $("pCancel").onclick=close;$("choosePhoto").onclick=()=>$("postFile").click();$("postFile").onchange=async()=>{const f=$("postFile").files?.[0];if(!f)return;try{image=await compress(f,1400,.78);$("photoStatus").textContent="Photo selected"}catch(e){toast("ছবি পড়া যায়নি।")} $("postFile").value=""};
@@ -154,7 +180,13 @@ function action(a){
  else if(a.startsWith("delete:")){state.posts=state.posts.filter(p=>p.id!==a.slice(7));save();render();toast("পোস্ট মুছে ফেলা হয়েছে।")}
  else if(a.startsWith("nav:"))nav(a.slice(4));
 }
-function nav(name){if(name==="Profile")window.scrollTo({top:0,behavior:"smooth"});else toast(`${name} পেজটি মূল navigation-এর সঙ্গে যুক্ত করতে হবে।`)}
+function nav(name){
+ const routes={Home:"index.html",Reels:"feed.html#reels",Friends:"friends.html",Marketplace:"marketplace.html",Notifications:"notifications.html",Profile:"profile.html"};
+ const target=routes[name];
+ if(!target)return;
+ if(name==="Profile"){window.scrollTo({top:0,behavior:"smooth"});return;}
+ window.location.href=target;
+}
 function dashboard(){modal("Creator Dashboard",`<div class="details"><div class="detail"><span class="detail-icon">♡</span><strong>${Number(state.followers)||0} followers</strong></div><div class="detail"><span class="detail-icon">▣</span><strong>${state.posts.length} posts</strong></div></div><p class="post-time">Creator earnings ও analytics-এর জন্য shared Zemivo backend প্রয়োজন।</p><div class="modal-actions"><button class="btn btn-blue" id="dashClose">Close</button></div>`);$("dashClose").onclick=close}
 function comment(id){const input=document.querySelector(`[data-input="${CSS.escape(id)}"]`),text=input?.value.trim();if(!text){toast("কমেন্ট লিখুন।");return}const p=state.posts.find(x=>x.id===id);if(!p)return;p.comments=Array.isArray(p.comments)?p.comments:[];p.comments.push({name:state.name||"You",text});save();renderPosts();toast("কমেন্ট এই ব্রাউজারে সংরক্ষিত হয়েছে।")}
 document.querySelectorAll(".tab[data-tab]").forEach(b=>b.onclick=()=>{state.activeTab=b.dataset.tab;filter="all";save();render()});
