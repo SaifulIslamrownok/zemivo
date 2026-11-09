@@ -1,19 +1,107 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="bn">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Zemivo - Affiliate</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#071c35">
+<title>Zemivo | Affiliate Center</title>
 <style>
-body{font-family:Arial;background:#f4f6f8}.card{background:white;max-width:750px;margin:30px auto;padding:25px;border-radius:15px}.box{padding:18px;border:1px solid #eee;border-radius:12px;margin:12px 0}button{background:#16a34a;color:white;border:0;padding:10px 17px;border-radius:20px}
+:root{--bg:#071326;--panel:#102541;--line:#29415f;--text:#eef6ff;--muted:#b4c6d9;--cyan:#67e8f9;--green:#34d399}
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;color:var(--text);background:radial-gradient(circle at 10% 5%,#164e63,transparent 32%),radial-gradient(circle at 90% 10%,#312e81,transparent 35%),linear-gradient(145deg,#050d1b,#0b1b34 60%,#101b3b);min-height:100vh}
+.wrap{max-width:1120px;margin:auto;padding:20px}
+.top{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:20px}
+.brand{display:flex;align-items:center;gap:12px}.logo{width:46px;height:46px;border-radius:15px;display:grid;place-items:center;background:linear-gradient(135deg,#22d3ee,#6366f1);color:#071326;font-weight:bold;font-size:24px}.brand b{letter-spacing:2px}.brand small{display:block;color:var(--muted);margin-top:4px}
+select{padding:11px;border-radius:11px;background:#102541;color:white;border:1px solid var(--line)}
+.hero,.stat,.wallet,.module,.step{background:#102541dd;border:1px solid var(--line);border-radius:17px;padding:18px}
+.hero{padding:27px;background:linear-gradient(120deg,#123b5b,#29265d)}.eyebrow{color:var(--cyan);font-size:12px;letter-spacing:1.5px;font-weight:bold}.hero h1{font-size:clamp(27px,5vw,40px);margin:12px 0}.hero p,.module p{color:#c6d7e9;line-height:1.65}
+.notice{padding:13px;border:1px solid #fbbf2455;background:#78350f33;border-radius:12px;color:#fde7ad;font-size:13px;line-height:1.6}
+h2{font-size:21px;margin:28px 0 12px}.sub{color:var(--muted);font-size:13px;margin-top:-6px;margin-bottom:13px}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.stat .label{color:var(--muted);font-size:13px}.stat strong{display:block;font-size:25px;margin:9px 0}.stat small,.wallet span{color:var(--muted);font-size:12px}
+.wallets{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.wallet b{display:block;margin-bottom:8px}
+.modules{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}.module{display:flex;gap:13px}.ico{font-size:22px;color:var(--cyan)}.module h3{margin:0 0 6px;font-size:16px}.module p{font-size:13px;margin:0}.tag{display:inline-block;margin-top:10px;padding:5px 9px;border-radius:20px;background:#334155;color:#dbeafe;font-size:11px}
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.step b{display:block;color:var(--cyan);margin-bottom:7px}.step span{font-size:12px;color:var(--muted);line-height:1.5}
+.footer{text-align:center;color:var(--muted);font-size:12px;padding:25px 0 10px}
+@media(max-width:700px){.grid{grid-template-columns:repeat(2,1fr)}.wallets{grid-template-columns:repeat(2,1fr)}.modules{grid-template-columns:1fr}.steps{grid-template-columns:repeat(2,1fr)}.wrap{padding:13px}.hero{padding:20px}}
+@media(max-width:390px){.stat{padding:13px}.stat strong{font-size:21px}}
 </style>
 </head>
 <body>
-<div class="card">
-<h1>🔗 Affiliate Center</h1>
-<p>Manage products and affiliate links.</p>
-<div class="box"><h3>Amazon Affiliate</h3><p>Future integration</p><button onclick="alert('Affiliate setup opened')">Setup</button></div>
-<div class="box"><h3>Partner Programs</h3><p>Future partner integrations</p><button onclick="alert('Partner setup opened')">Setup</button></div>
+<div class="wrap">
+<header class="top">
+ <div class="brand"><div class="logo">Z</div><div><b>ZEMIVO</b><small data-i18n="brand">Affiliate Center • আয় ও Partner ব্যবস্থা</small></div></div>
+ <select id="language" aria-label="Select language"><option value="bn">বাংলা</option><option value="en">English</option><option value="zh">中文</option></select>
+</header>
+
+<section class="hero">
+ <div class="eyebrow" data-i18n="eyebrow">গ্লোবাল অ্যাফিলিয়েট ইকোসিস্টেম</div>
+ <h1 data-i18n="title">Zemivo Affiliate Center</h1>
+ <p data-i18n="intro">Affiliate Partner, Product Link, Commission, Wallet এবং আয় পরিচালনার পরিকল্পিত কেন্দ্র।</p>
+ <div class="notice" data-i18n="notice">প্রাথমিক সংস্করণ: এটি UI ও পরিকল্পনার কাঠামো। কোনো বাস্তব Affiliate Network, ব্যাংক, Payment Provider, KYC বা Firebase Ledger সংযুক্ত নেই। বাস্তব লেনদেন চালুর আগে নিরাপদ সার্ভার, অনুমোদন ও পরীক্ষা প্রয়োজন।</div>
+</section>
+
+<h2 data-i18n="overview">Affiliate Overview</h2><div class="sub" data-i18n="overviewSub">ড্যাশবোর্ডের প্রাথমিক কাঠামো</div>
+<section class="grid">
+ <div class="stat"><div class="label" data-i18n="earn">মোট আয়</div><strong>৳0.00</strong><small data-i18n="demo">ডেমো মান • সংযুক্ত নয়</small></div>
+ <div class="stat"><div class="label" data-i18n="clicks">মোট ক্লিক</div><strong>0</strong><small data-i18n="tracking">ট্র্যাকিং সংযোগ বাকি</small></div>
+ <div class="stat"><div class="label" data-i18n="approved">অনুমোদিত কমিশন</div><strong>৳0.00</strong><small data-i18n="partner">Partner সংযোগ বাকি</small></div>
+ <div class="stat"><div class="label" data-i18n="pending">অপেক্ষমাণ কমিশন</div><strong>৳0.00</strong><small data-i18n="verify">যাচাই ব্যবস্থা তৈরি হবে</small></div>
+ <div class="stat"><div class="label" data-i18n="withdraw">উত্তোলনযোগ্য ব্যালেন্স</div><strong>৳0.00</strong><small data-i18n="disabled">বাস্তব উত্তোলন বন্ধ</small></div>
+ <div class="stat"><div class="label" data-i18n="conversion">কনভার্সন রেট</div><strong>0%</strong><small data-i18n="analytics">Analytics সংযোগ বাকি</small></div>
+</section>
+
+<h2 data-i18n="walletTitle">Wallet System</h2><div class="sub" data-i18n="walletSub">প্রতিটি Wallet-এর আলাদা হিসাব ও লেনদেনের রেকর্ড থাকবে</div>
+<section class="wallets">
+ <div class="wallet"><b data-i18n="aw">Affiliate Wallet</b><span data-i18n="ac">কমিশন জমার জন্য</span></div>
+ <div class="wallet"><b data-i18n="mw">Zemivo Main Wallet</b><span data-i18n="mb">মূল ব্যালেন্স</span></div>
+ <div class="wallet"><b data-i18n="zw">ZMV Wallet</b><span data-i18n="zc">Zemivo Coin হিসাব</span></div>
+ <div class="wallet"><b data-i18n="cw">Creator Wallet</b><span data-i18n="cc">Creator আয়</span></div>
+ <div class="wallet"><b data-i18n="sw">Shopping Wallet</b><span data-i18n="sc">কেনাকাটার জন্য</span></div>
+ <div class="wallet"><b data-i18n="ww">Withdrawal Wallet</b><span data-i18n="wc">অনুমোদিত উত্তোলনের জন্য</span></div>
+</section>
+
+<h2 data-i18n="modules">Affiliate System Modules</h2><div class="sub" data-i18n="modulesSub">সম্পূর্ণ Master Scope অনুযায়ী ধাপে ধাপে তৈরি হবে</div>
+<section class="modules">
+ <article class="module"><div class="ico">▦</div><div><h3 data-i18n="m1">Affiliate Programs & Partners</h3><p data-i18n="d1">Amazon, Alibaba, Daraz ও অনুমোদিত Partner Network; Provider ও দেশভিত্তিক Availability।</p><span class="tag" data-i18n="planned">পরিকল্পিত</span></div></article>
+ <article class="module"><div class="ico">🛍</div><div><h3 data-i18n="m2">Product Marketplace</h3><p data-i18n="d2">পণ্য খোঁজা, ক্যাটাগরি, দাম, কমিশন, রেটিং, তুলনা ও সংরক্ষণ।</p><span class="tag" data-i18n="planned">পরিকল্পিত</span></div></article>
+ <article class="module"><div class="ico">🔗</div><div><h3 data-i18n="m3">Affiliate Link Management</h3><p data-i18n="d3">লিংক তৈরি, Copy, Share, QR, ক্লিক, বিক্রয় ও Performance Tracking।</p><span class="tag" data-i18n="planned">পরিকল্পিত</span></div></article>
+ <article class="module"><div class="ico">📣</div><div><h3 data-i18n="m4">Promotion & Campaign Tools</h3><p data-i18n="d4">সামাজিক মাধ্যমে শেয়ার, Zemivo Feed/Stories, ব্যানার ও Campaign Report।</p><span class="tag" data-i18n="planned">পরিকল্পিত</span></div></article>
+ <article class="module"><div class="ico">💰</div><div><h3 data-i18n="m5">Commission Management</h3><p data-i18n="d5">Pending, Approved, Rejected Commission; Refund, Cancellation ও নিয়ম।</p><span class="tag" data-i18n="planned">পরিকল্পিত</span></div></article>
+ <article class="module"><div class="ico">👥</div><div><h3 data-i18n="m6">Referral & Team System</h3><p data-i18n="d6">Referral Link, সদস্য আমন্ত্রণ, Reward Rules ও Fraud Checks।</p><span class="tag" data-i18n="planned">পরিকল্পিত</span></div></article>
+ <article class="module"><div class="ico">📊</div><div><h3 data-i18n="m7">Reports & Analytics</h3><p data-i18n="d7">দিন/মাস, পণ্য, কোম্পানি, লিংক ও দেশভিত্তিক রিপোর্ট; CSV/PDF।</p><span class="tag" data-i18n="planned">পরিকল্পিত</span></div></article>
+ <article class="module"><div class="ico">🏦</div><div><h3 data-i18n="m8">Payment & Withdrawal</h3><p data-i18n="d8">অনুমোদিত Payment Method, Withdrawal Request, Fee, Limit ও Receipt।</p><span class="tag" data-i18n="planned">পরিকল্পিত</span></div></article>
+ <article class="module"><div class="ico">🛡</div><div><h3 data-i18n="m9">Wallet Transfer & Security</h3><p data-i18n="d9">KYC, PIN/Password, OTP, Risk Checks, Transfer Limits, Holds ও Secure Ledger।</p><span class="tag" data-i18n="planned">পরিকল্পিত</span></div></article>
+ <article class="module"><div class="ico">🔔</div><div><h3 data-i18n="m10">Notifications & Support</h3><p data-i18n="d10">কমিশন, পেমেন্ট, নিরাপত্তা সতর্কতা, Help Center, Ticket ও Dispute।</p><span class="tag" data-i18n="planned">পরিকল্পিত</span></div></article>
+ <article class="module"><div class="ico">⚙</div><div><h3 data-i18n="m11">Admin Control Center</h3><p data-i18n="d11">Provider, কমিশন, KYC, Wallet Limits, Approval, Roles ও Audit Logs।</p><span class="tag" data-i18n="planned">পরিকল্পিত</span></div></article>
+ <article class="module"><div class="ico">🌐</div><div><h3 data-i18n="m12">Legal, Privacy & Global Support</h3><p data-i18n="d12">Disclosure, Terms, Privacy, Consent, দেশ, ভাষা, মুদ্রা ও ফরম্যাট।</p><span class="tag" data-i18n="planned">পরিকল্পিত</span></div></article>
+</section>
+
+<h2 data-i18n="security">Secure Transfer Flow</h2><div class="sub" data-i18n="securitySub">বাস্তব Wallet Transfer চালুর আগে Server-side যাচাই বাধ্যতামূলক</div>
+<section class="steps">
+ <div class="step"><b data-i18n="s1">০১ • পরিচয়</b><span data-i18n="sd1">Authentication ও KYC যাচাই</span></div>
+ <div class="step"><b data-i18n="s2">০২ • নিরাপত্তা</b><span data-i18n="sd2">PIN/Password, OTP ও অতিরিক্ত যাচাই</span></div>
+ <div class="step"><b data-i18n="s3">০৩ • অনুমোদন</b><span data-i18n="sd3">Risk, Limit ও Server-side Authorization</span></div>
+ <div class="step"><b data-i18n="s4">০৪ • রেকর্ড</b><span data-i18n="sd4">Secure Ledger, Audit Log ও Notification</span></div>
+</section>
+<footer class="footer" data-i18n="footer">Zemivo Affiliate Center • ধাপে ধাপে নির্মাণ • বাস্তব অর্থ লেনদেন এখনো চালু নয়</footer>
 </div>
+<script>
+const translations={
+bn:{brand:"Affiliate Center • আয় ও Partner ব্যবস্থা",eyebrow:"গ্লোবাল অ্যাফিলিয়েট ইকোসিস্টেম",title:"Zemivo Affiliate Center",intro:"Affiliate Partner, Product Link, Commission, Wallet এবং আয় পরিচালনার পরিকল্পিত কেন্দ্র।",notice:"প্রাথমিক সংস্করণ: এটি UI ও পরিকল্পনার কাঠামো। কোনো বাস্তব Affiliate Network, ব্যাংক, Payment Provider, KYC বা Firebase Ledger সংযুক্ত নেই। বাস্তব লেনদেন চালুর আগে নিরাপদ সার্ভার, অনুমোদন ও পরীক্ষা প্রয়োজন।",overview:"Affiliate Overview",overviewSub:"ড্যাশবোর্ডের প্রাথমিক কাঠামো",earn:"মোট আয়",clicks:"মোট ক্লিক",approved:"অনুমোদিত কমিশন",pending:"অপেক্ষমাণ কমিশন",withdraw:"উত্তোলনযোগ্য ব্যালেন্স",conversion:"কনভার্সন রেট",demo:"ডেমো মান • সংযুক্ত নয়",tracking:"ট্র্যাকিং সংযোগ বাকি",partner:"Partner সংযোগ বাকি",verify:"যাচাই ব্যবস্থা তৈরি হবে",disabled:"বাস্তব উত্তোলন বন্ধ",analytics:"Analytics সংযোগ বাকি",walletTitle:"Wallet System",walletSub:"প্রতিটি Wallet-এর আলাদা হিসাব ও লেনদেনের রেকর্ড থাকবে",aw:"Affiliate Wallet",ac:"কমিশন জমার জন্য",mw:"Zemivo Main Wallet",mb:"মূল ব্যালেন্স",zw:"ZMV Wallet",zc:"Zemivo Coin হিসাব",cw:"Creator Wallet",cc:"Creator আয়",sw:"Shopping Wallet",sc:"কেনাকাটার জন্য",ww:"Withdrawal Wallet",wc:"অনুমোদিত উত্তোলনের জন্য",modules:"Affiliate System Modules",modulesSub:"সম্পূর্ণ Master Scope অনুযায়ী ধাপে ধাপে তৈরি হবে",planned:"পরিকল্পিত",m1:"Affiliate Programs & Partners",d1:"Amazon, Alibaba, Daraz ও অনুমোদিত Partner Network; Provider ও দেশভিত্তিক Availability।",m2:"Product Marketplace",d2:"পণ্য খোঁজা, ক্যাটাগরি, দাম, কমিশন, রেটিং, তুলনা ও সংরক্ষণ।",m3:"Affiliate Link Management",d3:"লিংক তৈরি, Copy, Share, QR, ক্লিক, বিক্রয় ও Performance Tracking।",m4:"Promotion & Campaign Tools",d4:"সামাজিক মাধ্যমে শেয়ার, Zemivo Feed/Stories, ব্যানার ও Campaign Report।",m5:"Commission Management",d5:"Pending, Approved, Rejected Commission; Refund, Cancellation ও নিয়ম।",m6:"Referral & Team System",d6:"Referral Link, সদস্য আমন্ত্রণ, Reward Rules ও Fraud Checks।",m7:"Reports & Analytics",d7:"দিন/মাস, পণ্য, কোম্পানি, লিংক ও দেশভিত্তিক রিপোর্ট; CSV/PDF।",m8:"Payment & Withdrawal",d8:"অনুমোদিত Payment Method, Withdrawal Request, Fee, Limit ও Receipt।",m9:"Wallet Transfer & Security",d9:"KYC, PIN/Password, OTP, Risk Checks, Transfer Limits, Holds ও Secure Ledger।",m10:"Notifications & Support",d10:"কমিশন, পেমেন্ট, নিরাপত্তা সতর্কতা, Help Center, Ticket ও Dispute।",m11:"Admin Control Center",d11:"Provider, কমিশন, KYC, Wallet Limits, Approval, Roles ও Audit Logs।",m12:"Legal, Privacy & Global Support",d12:"Disclosure, Terms, Privacy, Consent, দেশ, ভাষা, মুদ্রা ও ফরম্যাট।",security:"Secure Transfer Flow",securitySub:"বাস্তব Wallet Transfer চালুর আগে Server-side যাচাই বাধ্যতামূলক",s1:"০১ • পরিচয়",sd1:"Authentication ও KYC যাচাই",s2:"০২ • নিরাপত্তা",sd2:"PIN/Password, OTP ও অতিরিক্ত যাচাই",s3:"০৩ • অনুমোদন",sd3:"Risk, Limit ও Server-side Authorization",s4:"০৪ • রেকর্ড",sd4:"Secure Ledger, Audit Log ও Notification",footer:"Zemivo Affiliate Center • ধাপে ধাপে নির্মাণ • বাস্তব অর্থ লেনদেন এখনো চালু নয়"},
+en:{brand:"Affiliate Center • Earnings & Partners",eyebrow:"GLOBAL AFFILIATE ECOSYSTEM",title:"Zemivo Affiliate Center",intro:"A planned hub to manage affiliate partners, product links, commissions, wallets, and earnings.",notice:"Initial version: UI and planning framework only. No live affiliate network, bank, payment provider, KYC service, or Firebase ledger is connected. Secure server services, approvals, and testing are required before real transactions.",overview:"Affiliate Overview",overviewSub:"Initial dashboard structure",earn:"Total Earnings",clicks:"Total Clicks",approved:"Approved Commission",pending:"Pending Commission",withdraw:"Withdrawable Balance",conversion:"Conversion Rate",demo:"Demo value • Not connected",tracking:"Tracking integration pending",partner:"Partner integration pending",verify:"Verification system to be built",disabled:"Live withdrawals disabled",analytics:"Analytics integration pending",walletTitle:"Wallet System",walletSub:"Each wallet will have separate balances and transaction records",aw:"Affiliate Wallet",ac:"Affiliate commission deposits",mw:"Zemivo Main Wallet",mb:"Main balance",zw:"ZMV Wallet",zc:"Zemivo Coin balance",cw:"Creator Wallet",cc:"Creator earnings",sw:"Shopping Wallet",sc:"For purchases",ww:"Withdrawal Wallet",wc:"For approved withdrawals",modules:"Affiliate System Modules",modulesSub:"To be built gradually according to the complete Master Scope",planned:"Planned",m1:"Affiliate Programs & Partners",d1:"Amazon, Alibaba, Daraz and approved partner networks; provider controls and country availability.",m2:"Product Marketplace",d2:"Product discovery, categories, prices, commissions, ratings, comparison, and saved products.",m3:"Affiliate Link Management",d3:"Create, copy, share, QR codes, clicks, sales, and performance tracking.",m4:"Promotion & Campaign Tools",d4:"Social sharing, Zemivo Feed/Stories, banners, promotional content, and campaign reports.",m5:"Commission Management",d5:"Pending, approved, and rejected commissions; refunds, cancellations, and company-specific rules.",m6:"Referral & Team System",d6:"Referral links, invitations, reward rules, referral history, and fraud checks.",m7:"Reports & Analytics",d7:"Daily/monthly, product, company, link, and country reports; CSV/PDF export.",m8:"Payment & Withdrawal",d8:"Approved payment methods, withdrawal requests, fees, limits, status, and receipts.",m9:"Wallet Transfer & Security",d9:"KYC, PIN/password, OTP, risk checks, transfer limits, holds, alerts, and secure ledger.",m10:"Notifications & Support",d10:"Commission, payment, and security alerts; help center, support tickets, and disputes.",m11:"Admin Control Center",d11:"Provider, commission, KYC, wallet limits, withdrawal approvals, roles, permissions, and audit logs.",m12:"Legal, Privacy & Global Support",d12:"Disclosure, terms, privacy, consent, country rules, languages, currencies, and formats.",security:"Secure Transfer Flow",securitySub:"Server-side verification is mandatory before live wallet transfers",s1:"01 • Identity",sd1:"User authentication and KYC verification",s2:"02 • Security",sd2:"PIN/password, OTP, and step-up checks",s3:"03 • Authorization",sd3:"Risk, limits, and server-side authorization",s4:"04 • Records",sd4:"Secure ledger, audit log, and notification",footer:"Zemivo Affiliate Center • Built step by step • Real-money transfers are not enabled"},
+zh:{brand:"联盟中心 • 收益与合作伙伴",eyebrow:"全球联盟营销生态",title:"Zemivo 联盟中心",intro:"集中管理联盟合作伙伴、商品链接、佣金、钱包和收益的规划平台。",notice:"初始版本：目前仅为界面和规划框架。尚未连接真实联盟网络、银行、支付服务商、KYC 服务或 Firebase 账本。启用真实交易前，必须完成安全服务器、授权和测试。",overview:"联盟概览",overviewSub:"仪表板初始结构",earn:"总收益",clicks:"总点击量",approved:"已批准佣金",pending:"待处理佣金",withdraw:"可提现余额",conversion:"转化率",demo:"演示数据 • 尚未连接",tracking:"等待接入点击追踪",partner:"等待接入合作伙伴",verify:"待建立验证系统",disabled:"真实提现尚未启用",analytics:"等待接入分析系统",walletTitle:"钱包系统",walletSub:"每个钱包都有独立余额和交易记录",aw:"联盟钱包",ac:"用于存入联盟佣金",mw:"Zemivo 主钱包",mb:"主余额",zw:"ZMV 钱包",zc:"Zemivo Coin 余额",cw:"创作者钱包",cc:"创作者收入",sw:"购物钱包",sc:"用于购物",ww:"提现钱包",wc:"用于已批准的提现",modules:"联盟系统模块",modulesSub:"按照完整主计划逐步开发",planned:"计划中",m1:"联盟计划与合作伙伴",d1:"接入 Amazon、Alibaba、Daraz 及获批准的合作网络；管理服务商和国家可用性。",m2:"商品市场",d2:"商品搜索、分类、价格、佣金、评分、比较和收藏。",m3:"联盟链接管理",d3:"创建、复制、分享链接，二维码、点击、销售和效果追踪。",m4:"推广与活动工具",d4:"社交分享、Zemivo Feed/Stories、横幅、推广内容和活动报告。",m5:"佣金管理",d5:"待处理、已批准和已拒绝佣金；退款、取消及公司规则。",m6:"推荐与团队系统",d6:"推荐链接、邀请成员、奖励规则、推荐记录和欺诈检查。",m7:"报告与分析",d7:"按日/月、商品、公司、链接和国家生成报告；支持 CSV/PDF。",m8:"支付与提现",d8:"获批准的支付方式、提现申请、费用、限额、状态和收据。",m9:"钱包转账与安全",d9:"KYC、密码、OTP、风险检查、转账限额、冻结、提醒和安全账本。",m10:"通知与支持",d10:"佣金、支付和安全提醒；帮助中心、支持工单和争议处理。",m11:"管理员控制中心",d11:"服务商、佣金、KYC、钱包限额、提现审批、角色、权限和审计日志。",m12:"法律、隐私与全球支持",d12:"推广披露、条款、隐私、授权、国家规则、语言、货币和格式。",security:"安全转账流程",securitySub:"启用真实钱包转账前必须进行服务器端验证",s1:"01 • 身份",sd1:"用户身份验证和 KYC 审核",s2:"02 • 安全",sd2:"密码、OTP 和必要的额外验证",s3:"03 • 授权",sd3:"风险、限额和服务器端授权",s4:"04 • 记录",sd4:"安全账本、审计日志和通知",footer:"Zemivo 联盟中心 • 逐步建设 • 尚未启用真实资金转账"}
+};
+function setLanguage(lang){
+ const dict=translations[lang]||translations.bn;
+ document.documentElement.lang=lang;
+ document.querySelectorAll("[data-i18n]").forEach(el=>{const key=el.dataset.i18n;if(dict[key])el.textContent=dict[key]});
+ try{localStorage.setItem("zemivoAffiliateLanguage",lang)}catch(e){}
+}
+const selector=document.getElementById("language");
+let initial="bn";try{initial=localStorage.getItem("zemivoAffiliateLanguage")||"bn"}catch(e){}
+selector.value=translations[initial]?initial:"bn";
+selector.addEventListener("change",e=>setLanguage(e.target.value));
+setLanguage(selector.value);
+</script>
 </body>
 </html>
