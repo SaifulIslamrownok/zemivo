@@ -1,0 +1,237 @@
+<!doctype html>
+<html lang="bn">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#071c35">
+<title>Zemivo | Affiliate KYC Admin</title>
+<style>
+:root{color-scheme:dark;--bg:#071426;--panel:rgba(15,35,65,.82);--line:rgba(148,190,255,.2);--text:#eef6ff;--muted:#a8bad3;--cyan:#67e8f9;--blue:#2563eb;--green:#34d399;--red:#fb7185}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;background:radial-gradient(circle at 15% 0,#164e83 0,transparent 35%),radial-gradient(circle at 90% 20%,#312e81 0,transparent 32%),var(--bg);font:15px system-ui,-apple-system,Segoe UI,sans-serif;color:var(--text)}
+.wrap{width:min(1120px,94%);margin:auto;padding:28px 0 60px}
+.top,.panel,.request{border:1px solid var(--line);background:var(--panel);backdrop-filter:blur(18px);border-radius:22px;box-shadow:0 18px 50px #0004}
+.top{padding:22px;display:flex;gap:16px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+.brand{font-size:25px;font-weight:900;letter-spacing:2px;background:linear-gradient(90deg,#fff,var(--cyan));color:transparent;background-clip:text}
+.muted{color:var(--muted)}
+h1{font-size:clamp(22px,4vw,32px);margin:18px 0 6px}
+.panel{padding:18px;margin-top:18px}
+.bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.bar .muted{flex:1}
+button{border:0;border-radius:12px;padding:11px 16px;font-weight:750;cursor:pointer;color:#061629;background:linear-gradient(110deg,var(--cyan),#93c5fd)}
+button:disabled{opacity:.5;cursor:not-allowed}
+.request{padding:18px;margin-top:14px}
+.request-head{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.pill{border:1px solid var(--line);border-radius:999px;padding:5px 10px;color:var(--cyan);font-size:12px}
+.details{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin:15px 0}
+.detail{background:#07182d99;border:1px solid var(--line);padding:11px;border-radius:12px}
+.detail small{display:block;color:var(--muted);margin-bottom:4px}
+.actions{display:flex;gap:9px;flex-wrap:wrap}
+.secondary{background:#1e3a5f;color:var(--text);border:1px solid var(--line)}
+.approve{background:linear-gradient(110deg,#34d399,#a7f3d0)}
+.reject{background:linear-gradient(110deg,#fb7185,#fecdd3)}
+textarea{width:100%;min-height:76px;background:#061629;color:var(--text);border:1px solid var(--line);border-radius:12px;padding:12px;margin:8px 0;resize:vertical}
+.status{padding:12px;border-radius:12px;background:#061629;border:1px solid var(--line);margin-top:12px;white-space:pre-wrap}
+@media(max-width:560px){.wrap{width:92%;padding-top:14px}.top,.panel,.request{border-radius:16px}.request{padding:14px}}
+</style>
+</head>
+<body>
+<main class="wrap">
+<header class="top">
+<div>
+<div class="brand">ZEMIVO</div>
+<div class="muted">Affiliate • Secure KYC Review</div>
+</div>
+<div class="bar">
+<span id="adminState" class="pill">পরিচয় যাচাই হচ্ছে…</span>
+<button id="refreshBtn" class="secondary" disabled>রিফ্রেশ</button>
+<button id="signOutBtn" class="secondary">সাইন আউট</button>
+</div>
+</header>
+
+<h1>Affiliate KYC আবেদন পর্যালোচনা</h1>
+<div class="muted">শুধু অনুমোদিত Admin আবেদন দেখতে, ডকুমেন্ট খুলতে এবং সিদ্ধান্ত দিতে পারবেন।</div>
+
+<section class="panel">
+<div class="bar">
+<strong>Pending applications</strong>
+<span class="muted" id="count">—</span>
+</div>
+<div id="status" class="status">Firebase সংযোগের অপেক্ষায়…</div>
+<div id="requests"></div>
+</section>
+</main>
+
+<script type="module">
+import { auth, app } from "./zemivo-security.js";
+import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
+import { getFunctions, httpsCallable } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-functions.js";
+
+const $=id=>document.getElementById(id);
+const status=$("status"),list=$("requests"),adminState=$("adminState");
+const functions=getFunctions(app,"asia-south1");
+const listPending=httpsCallable(functions,"listPendingAffiliateKyc");
+const getDocument=httpsCallable(functions,"getAffiliateKycDocumentUrl");
+const review=httpsCallable(functions,"reviewAffiliateKyc");
+let isAdmin=false;
+
+function message(text){status.textContent=text;}
+
+function esc(v){
+return String(v??"").replace(/[&<>"']/g,c=>({
+"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
+}[c]));
+}
+
+function date(v){
+if(!v)return "—";
+const d=new Date(v);
+return Number.isNaN(d.getTime())?"—":d.toLocaleString();
+}
+
+async function load(){
+if(!isAdmin)return;
+list.innerHTML="";
+message("আবেদন লোড হচ্ছে…");
+$("refreshBtn").disabled=true;
+
+try{
+const result=await listPending();
+const rows=result.data?.requests||[];
+$("count").textContent=`${rows.length}টি আবেদন`;
+
+if(!rows.length){
+message("এখন কোনো Pending আবেদন নেই।");
+return;
+}
+
+message("আবেদনগুলো নিচে দেখানো হয়েছে।");
+
+for(const r of rows){
+const card=document.createElement("article");
+card.className="request";
+
+card.innerHTML=`
+<div class="request-head">
+<strong>${esc(r.displayName||"নাম দেওয়া নেই")}</strong>
+<span class="pill">${esc(r.status)}</span>
+</div>
+<div class="details">
+<div class="detail"><small>দেশ</small>${esc(r.country)}</div>
+<div class="detail"><small>ডকুমেন্ট</small>${esc(r.documentType)}</div>
+<div class="detail"><small>জমার সময়</small>${esc(date(r.submittedAt))}</div>
+<div class="detail"><small>Request ID</small>${esc(r.requestId)}</div>
+</div>
+<div class="detail">
+<small>Affiliate কাজের পরিকল্পনা</small>
+${esc(r.affiliateReason||"তথ্য দেওয়া হয়নি")}
+</div>
+<div class="actions">
+<button class="secondary doc">নিরাপদ ডকুমেন্ট খুলুন</button>
+</div>
+<label class="muted" for="note-${esc(r.requestId)}">
+সিদ্ধান্তের নোট (Reject করলে অন্তত ৫ অক্ষর)
+</label>
+<textarea id="note-${esc(r.requestId)}" maxlength="500" placeholder="প্রয়োজনে কারণ লিখুন…"></textarea>
+<div class="actions">
+<button class="approve yes">Approve</button>
+<button class="reject no">Reject</button>
+</div>`;
+
+card.querySelector(".doc").addEventListener("click",async e=>{
+const b=e.currentTarget;
+const popup=window.open("about:blank","_blank");
+b.disabled=true;
+
+try{
+const x=await getDocument({requestId:r.requestId});
+if(x.data?.url){
+if(popup)popup.location.href=x.data.url;
+else message("ব্রাউজার নতুন ট্যাব আটকেছে। Pop-ups অনুমতি দিয়ে আবার চেষ্টা করুন।");
+}else{
+if(popup)popup.close();
+throw new Error("ডকুমেন্ট লিংক পাওয়া যায়নি।");
+}
+}catch(err){
+if(popup)popup.close();
+message(err.message||"ডকুমেন্ট খোলা যায়নি।");
+}finally{
+b.disabled=false;
+}
+});
+
+async function decide(decision,btn){
+const note=card.querySelector("textarea").value.trim();
+
+if(decision==="rejected"&&note.length<5){
+message("Reject করার আগে অন্তত ৫ অক্ষরের কারণ লিখুন।");
+return;
+}
+
+if(!confirm(decision==="approved"?"এই KYC আবেদন অনুমোদন করবেন?":"এই KYC আবেদন বাতিল করবেন?"))return;
+
+btn.disabled=true;
+
+try{
+await review({
+requestId:r.requestId,
+decision,
+decisionNote:note
+});
+
+card.remove();
+$("count").textContent=`${list.children.length}টি আবেদন বাকি`;
+message("সিদ্ধান্ত সংরক্ষিত হয়েছে এবং সদস্যকে নোটিফিকেশন পাঠানো হয়েছে।");
+
+if(!list.children.length)message("সব Pending আবেদন পর্যালোচনা হয়েছে।");
+
+}catch(err){
+message(err.message||"সিদ্ধান্ত সংরক্ষণ করা যায়নি।");
+btn.disabled=false;
+}
+}
+
+card.querySelector(".yes").addEventListener("click",e=>decide("approved",e.currentTarget));
+card.querySelector(".no").addEventListener("click",e=>decide("rejected",e.currentTarget));
+list.append(card);
+}
+}catch(err){
+message(err.message||"আবেদন লোড করা যায়নি।");
+}finally{
+$("refreshBtn").disabled=false;
+}
+}
+
+onAuthStateChanged(auth,async user=>{
+if(!user){
+isAdmin=false;
+adminState.textContent="সাইন ইন প্রয়োজন";
+message("প্রথমে Admin অ্যাকাউন্ট দিয়ে সাইন ইন করুন।");
+return;
+}
+
+try{
+const token=await user.getIdTokenResult(true);
+isAdmin=token.claims.admin===true;
+
+if(!isAdmin){
+adminState.textContent="Admin অনুমতি নেই";
+message("এই অ্যাকাউন্টে Admin custom claim নেই। নিরাপত্তার কারণে আবেদন দেখানো হবে না।");
+return;
+}
+
+adminState.textContent="Admin verified";
+$("refreshBtn").disabled=false;
+await load();
+
+}catch(err){
+adminState.textContent="যাচাই ব্যর্থ";
+message(err.message||"Admin যাচাই করা যায়নি।");
+}
+});
+
+$("refreshBtn").addEventListener("click",load);
+$("signOutBtn").addEventListener("click",()=>signOut(auth));
+</script>
+</body>
+</html>
