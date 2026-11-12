@@ -26,6 +26,7 @@ button,input,select{font:inherit}button{cursor:pointer}.shell{max-width:1440px;m
  <div class="side-title" data-i18n="menu">AFFILIATE MENU</div>
  <button class="nav active" data-target="overviewSection"><span>▦</span><span data-i18n="navOverview">Overview</span></button>
  <button class="nav" data-target="applicationSection"><span>🪪</span><span data-i18n="navApply">Affiliate application</span></button>
+ <button class="nav" data-target="globalPartnerSection"><span>🌍</span><span>Global Partners</span></button>
  <button class="nav" data-target="walletSection"><span>👛</span><span data-i18n="navWallet">Wallets</span></button>
  <button class="nav" data-target="modulesSection"><span>◈</span><span data-i18n="navModules">All modules</span></button>
  <button class="nav" data-target="securitySection"><span>🛡</span><span data-i18n="navSecurity">Security</span></button>
@@ -55,14 +56,27 @@ button,input,select{font:inherit}button{cursor:pointer}.shell{max-width:1440px;m
   <div class="status" data-i18n="kycNotice">এই ফর্ম এখন প্রস্তুতিমূলক UI। পরিচয়পত্র এখানে আপলোড বা যাচাই হচ্ছে না। নিরাপদ KYC upload ও অনুমোদিত যাচাই ব্যবস্থা যুক্ত না হওয়া পর্যন্ত আবেদন জমা দেওয়ার বাস্তব সুবিধা বন্ধ থাকবে।</div>
   <form id="affiliateApplicationForm">
    <div class="two">
-    <div class="field"><label for="country" data-i18n="country">দেশ</label><select id="country" required><option value="">দেশ নির্বাচন</option><option value="BD">Bangladesh</option><option value="IN">India</option><option value="US">United States</option><option value="GB">United Kingdom</option><option value="PK">Pakistan</option><option value="MY">Malaysia</option><option value="AE">United Arab Emirates</option><option value="OTHER">Other supported country</option></select></div>
-    <div class="field"><label for="documentType" data-i18n="docType">পরিচয়পত্রের ধরন</label><select id="documentType" required><option value="">ধরন নির্বাচন</option><option value="passport">Passport</option><option value="national_id">National ID</option><option value="voter_id">Voter ID (যেখানে প্রযোজ্য)</option><option value="other_official">Other official document</option></select></div>
+    <div class="field"><label for="country" data-i18n="country">দেশ</label><select id="country" required><option value="">দেশ নির্বাচন</option><option value="BD">Bangladesh</option><option value="IN">India</option><option value="US">United States</option><option value="GB">United Kingdom</option><option value="PK">Pakistan</option><option value="MY">Malaysia</option><option value="AE">United Arab Emirates</option></select></div>
+    <div class="field"><label for="documentType" data-i18n="docType">পরিচয়পত্রের ধরন</label><select id="documentType" required><option value="">ধরন নির্বাচন</option><option value="passport">Passport</option><option value="national_id">National ID</option><option value="voter_id">Voter ID (যেখানে প্রযোজ্য)</option><option value="other_government_id">Other government-issued ID</option></select></div>
    </div>
    <div class="field"><label for="affiliateReason" data-i18n="reason">Affiliate কাজের সংক্ষিপ্ত পরিকল্পনা</label><input id="affiliateReason" maxlength="500" placeholder="আপনি কীভাবে পণ্য প্রচার করবেন?" required></div>
+   <div class="field"><label for="kycDocument" data-i18n="uploadLabel">পরিচয়পত্রের ছবি/PDF</label><input id="kycDocument" type="file" accept=".pdf,.jpg,.jpeg,.png,.webp,application/pdf,image/jpeg,image/png,image/webp" required><small class="muted" data-i18n="uploadHelp">PDF/JPG/PNG/WebP • সর্বোচ্চ ১০ MB। পরিষ্কার ছবি দিন; অপ্রয়োজনীয় তথ্য ঢেকে দিতে পারেন, তবে যাচাইয়ের জন্য প্রয়োজনীয় তথ্য দৃশ্যমান রাখুন।</small></div>
+   <div id="kycSubmitStatus" class="status" role="status" aria-live="polite">আবেদন জমা দিতে Zemivo account-এ লগইন থাকতে হবে।</div>
    <label class="field" style="display:flex;grid-template-columns:auto 1fr;align-items:start"><span><input id="acceptAffiliateTerms" type="checkbox" required style="width:auto"></span><span data-i18n="terms">আমি Affiliate-এর শর্ত, disclosure এবং পরিচয় যাচাইয়ের নিয়ম পড়েছি ও সম্মত।</span></label>
-   <div class="actions"><button class="btn primary" type="submit" disabled data-i18n="submitDisabled">KYC ব্যবস্থা যুক্ত না হওয়া পর্যন্ত আবেদন বন্ধ</button></div>
+   <div class="actions"><button class="btn primary" id="kycSubmitButton" type="submit" data-i18n="submitNow">নিরাপদে আবেদন জমা দিন</button></div>
   </form>
  </div>
+</section>
+
+<section id="globalPartnerSection">
+ <div class="section-head"><div><h2>Global Partner Directory</h2><p>কোম্পানির নিয়ম, দেশভিত্তিক যোগ্যতা ও লিখিত অনুমোদন যাচাই না হওয়া পর্যন্ত কোনো Partner চালু হবে না।</p></div><span class="tag">ADMIN CONTROLLED</span></div>
+ <div class="modules">
+  <article class="module"><div class="ico">🛒</div><div><h3>Amazon Associates</h3><p>Marketplace অনুযায়ী আলাদা আবেদন ও যোগ্যতা যাচাই প্রয়োজন। Bangladesh eligibility এবং সংশ্লিষ্ট marketplace-এর শর্ত নিশ্চিত না হওয়া পর্যন্ত লিংক/কমিশন চালু নয়।</p><span class="tag">NOT CONNECTED • NOT APPROVED</span></div></article>
+  <article class="module"><div class="ico">🎵</div><div><h3>Spotify Partner / Affiliate</h3><p>প্রোগ্রাম ও দেশের যোগ্যতা Spotify-এর নিজস্ব শর্তে নির্ধারিত। বাংলাদেশে অনুমোদন নিশ্চিত না হওয়া পর্যন্ত কোনো আয় বা অফার দেখানো হবে না।</p><span class="tag">ELIGIBILITY CHECK REQUIRED</span></div></article>
+  <article class="module"><div class="ico">🌐</div><div><h3>Alibaba / AliExpress</h3><p>প্রতিটি প্রোগ্রামের আলাদা আবেদন, ট্র্যাকিং ও পেমেন্ট শর্ত থাকবে। লিখিত অনুমোদন এবং কার্যকর tracking credentials ছাড়া চালু নয়।</p><span class="tag">NOT CONNECTED • NOT APPROVED</span></div></article>
+  <article class="module"><div class="ico">🏬</div><div><h3>Daraz & Local Partners</h3><p>দেশ ও বাজারভিত্তিক প্রোগ্রাম, সদস্যের যোগ্যতা, কমিশন ও payout rules যাচাই করে যুক্ত হবে।</p><span class="tag">COUNTRY REVIEW REQUIRED</span></div></article>
+ </div>
+ <div class="panel"><h3>Partner approval checklist</h3><p>১. কোম্পানির অফিসিয়াল প্রোগ্রাম ও চুক্তি যাচাই • ২. Bangladesh ও সদস্য-দেশের eligibility যাচাই • ৩. Tax, payout ও disclosure শর্ত • ৪. লিখিত approval / publisher ID • ৫. API বা tracking link পরীক্ষা • ৬. Admin security review ও audit।</p><div class="status">কোনো কোম্পানির নাম দেখানো মানে তাদের সঙ্গে Zemivo-এর partnership আছে—এমন নয়। অনুমোদন না পাওয়া পর্যন্ত Partner status বন্ধ থাকবে।</div></div>
 </section>
 
 <section id="walletSection">
@@ -106,197 +120,73 @@ button,input,select{font:inherit}button{cursor:pointer}.shell{max-width:1440px;m
   <div class="step"><b data-i18n="s3">03 • Earnings</b><span data-i18n="sd3">যাচাইকৃত কমিশন server ledger-এ Affiliate Wallet-এ জমা</span></div>
   <div class="step"><b data-i18n="s4">04 • Transfer/withdraw</b><span data-i18n="sd4">পুনরায় পরিচয় যাচাই, PIN/OTP, risk/limit checks ও server approval</span></div>
  </div>
- <div class="panel"><h3 data-i18n="backendTitle">Backend connection status</h3><p data-i18n="backendText">এই পেজ এখনো Firebase callable functions, affiliate KYC document storage, partner APIs, live analytics বা financial ledger-এর সঙ্গে সংযুক্ত নয়। functions scaffold থাকলেই production backend সম্পূর্ণ হয় না।</p><div class="status" data-i18n="safeStatus">নিরাপত্তার জন্য এই সংস্করণে কোনো বাস্তব আবেদন, KYC upload, wallet transfer বা withdrawal জমা হয় না।</div></div>
+ <div class="panel"><h3 data-i18n="backendTitle">Backend connection status</h3><p data-i18n="backendText">এই পেজে Firebase Auth, private Storage upload এবং submitAffiliateKyc callable সংযোগের কোড আছে। Functions deploy, Storage/Firestore Rules merge, App Check ও Admin claim যাচাই না হওয়া পর্যন্ত production-ready নয়। Partner API, live analytics ও financial ledger এখনো আলাদা কাজ।</p><div class="status" data-i18n="safeStatus">আবেদন জমার সংযোগ deploy ও পরীক্ষা না হওয়া পর্যন্ত live status নিশ্চিত নয়। Wallet transfer ও withdrawal বন্ধ।</div></div>
 </section>
 <footer class="footer" data-i18n="footer">Zemivo Affiliate Center • ধাপে ধাপে নির্মাণ • বাস্তব অর্থ লেনদেন চালু নয়</footer>
 </main>
 </div>
 </div>
 <script>
-
+const translations={
+bn:{brand:"Affiliate Center • আয় ও Partner ব্যবস্থা",menu:"অ্যাফিলিয়েট মেনু",navOverview:"ওভারভিউ",navApply:"Affiliate আবেদন",navWallet:"ওয়ালেট",navModules:"সব মডিউল",navSecurity:"নিরাপত্তা",eyebrow:"গ্লোবাল অ্যাফিলিয়েট ইকোসিস্টেম",title:"Zemivo Affiliate Center",intro:"Affiliate Partner, Product Link, Commission, Wallet এবং আয় পরিচালনার কেন্দ্র।",notice:"বর্তমান অবস্থা: এটি Affiliate Center-এর UI ও প্রস্তুতি কাঠামো। বাস্তব Affiliate Network, KYC approval, commission tracking, wallet ledger বা payment provider এখনো সংযুক্ত নয়। বাস্তব অর্থ লেনদেন চালু নেই।",overview:"Affiliate Overview",overviewSub:"সার্ভার সংযোগ না হওয়া পর্যন্ত নিচের মানগুলো ডেমো",demoTag:"ডেমো • চালু নয়",earn:"মোট আয়",clicks:"মোট ক্লিক",approved:"অনুমোদিত কমিশন",pending:"অপেক্ষমাণ কমিশন",withdraw:"উত্তোলনযোগ্য ব্যালেন্স",conversion:"কনভার্সন রেট",demo:"ডেমো মান • সংযুক্ত নয়",tracking:"ট্র্যাকিং সংযোগ বাকি",partner:"Partner সংযোগ বাকি",verify:"যাচাই ব্যবস্থা তৈরি হবে",disabled:"বাস্তব উত্তোলন বন্ধ",analytics:"Analytics সংযোগ বাকি",applyTitle:"Affiliate কাজ শুরু করার আবেদন",applySub:"সাধারণ Zemivo account-এর জন্য KYC নয়; Affiliate কার্যক্রমে যোগ দেওয়ার সময় পরিচয় যাচাই প্রয়োজন।",kycNotice:"Affiliate কাজে যোগ দিতে পরিচয় যাচাই প্রয়োজন। আপনার ডকুমেন্ট নিরাপদ private storage-এ যাবে; Admin যাচাই না করা পর্যন্ত আবেদন pending থাকবে। সাধারণ Zemivo account-এর জন্য KYC প্রয়োজন নেই।",country:"দেশ",docType:"পরিচয়পত্রের ধরন",reason:"Affiliate কাজের সংক্ষিপ্ত পরিকল্পনা",terms:"আমি Affiliate-এর শর্ত, disclosure এবং পরিচয় যাচাইয়ের নিয়ম পড়েছি ও সম্মত।",uploadLabel:"পরিচয়পত্রের ছবি/PDF",uploadHelp:"PDF/JPG/PNG/WebP • সর্বোচ্চ ১০ MB। পরিষ্কার ছবি দিন।",submitNow:"নিরাপদে আবেদন জমা দিন",walletTitle:"Wallet System",walletSub:"প্রতিটি Wallet-এর আলাদা হিসাব ও সার্ভার-নিয়ন্ত্রিত লেজার থাকবে",aw:"Affiliate Wallet",ac:"কমিশন জমার জন্য",mw:"Zemivo Main Wallet",mb:"মূল ব্যালেন্স",zw:"ZMV Wallet",zc:"Zemivo Coin হিসাব",cw:"Creator Wallet",cc:"Creator আয়",sw:"Shopping Wallet",sc:"কেনাকাটার জন্য",ww:"Withdrawal Wallet",wc:"অনুমোদিত উত্তোলনের জন্য",transferTitle:"Wallet Transfer & Withdrawal",transferText:"Affiliate Wallet থেকে Zemivo Wallet-এ অনুমোদিত transfer এবং withdrawal—দুটিই KYC re-verification, PIN/OTP, risk checks, limits ও server authorization ছাড়া চালু হবে না। এই prototype-এ কোনো transfer বা withdrawal action সক্রিয় নয়।",transferDisabled:"Transfer চালু নয়",withdrawDisabled:"Withdrawal চালু নয়",modules:"Affiliate System Modules",modulesSub:"সম্পূর্ণ অনুমোদিত Master Scope অনুযায়ী ধাপে ধাপে নির্মাণ",m1:"Affiliate Programs & Partners",d1:"Amazon, Alibaba, AliExpress, Daraz ও সরাসরি Partner; provider controls, commission rules এবং country availability.",m2:"Product Marketplace",d2:"Search, category, product details, price, discount, commission, ratings, comparison ও saved products.",m3:"Affiliate Link Management",d3:"Create, name, copy, share, QR, click/sales tracking, attribution, expiry ও fraud checks.",m4:"Promotion & Campaign Tools",d4:"Zemivo feed/stories এবং বাইরের social platform-এ campaign, banner, templates ও reports.",m5:"Commission Management",d5:"Pending, approved, rejected, refunds, cancellations, disputes ও provider-specific rules.",m6:"Referral & Team System",d6:"Referral links, invitations, bonuses, team activity, attribution ও abuse prevention.",m7:"Reports & Analytics",d7:"Daily/weekly/monthly reports by product, provider, link, country; CSV/PDF export.",m8:"Payment & Withdrawal",d8:"Approved bank/mobile-money providers, requests, fees, limits, receipts, failures ও disputes.",m9:"Wallet Transfer & Security",d9:"Affiliate-only KYC, withdrawal-time identity re-check, PIN, OTP, limits, holds ও secure ledger.",m10:"Notifications & Support",d10:"Commission, sale, payment, KYC, transfer/security alerts, tickets ও dispute handling.",m11:"Admin Control Center",d11:"Provider/member/product controls, commissions, country rules, KYC, payout approval, roles, audit, emergency disable.",m12:"Legal, Privacy & Global Support",d12:"Affiliate disclosure, terms, privacy, consent, refunds, complaints, local rules, languages, currencies ও formats.",m13:"Affiliate KYC & Verification",d13:"শুধু Affiliate কাজে যোগদানের সময় পরিচয়পত্র; দেশভেদে supported official document; withdrawal-এ পুনরায় যাচাই.",m14:"Backend, Ledger & Reliability",d14:"Firebase Auth UID, secure server functions, immutable ledger, audit logs, fraud checks, backup, recovery ও tests.",security:"Secure Affiliate Money Flow",securitySub:"সাধারণ account creation-এ KYC নয়; Affiliate ও financial action-এ প্রয়োজন",s1:"01 • Affiliate join",sd1:"Affiliate আবেদন ও দেশ অনুযায়ী official ID যাচাই",s2:"02 • Approval",sd2:"বিশ্বস্ত যাচাইকারী অনুমোদন না দিলে Affiliate কাজ শুরু নয়",s3:"03 • Earnings",sd3:"যাচাইকৃত কমিশন server ledger-এ Affiliate Wallet-এ জমা",s4:"04 • Transfer/withdraw",sd4:"পুনরায় পরিচয় যাচাই, PIN/OTP, risk/limit checks ও server approval",backendTitle:"Backend connection status",backendText:"এই পেজে Firebase Auth, private Storage upload এবং submitAffiliateKyc callable সংযোগের কোড আছে। Functions deploy, Storage/Firestore Rules merge, App Check ও Admin claim যাচাই না হওয়া পর্যন্ত production-ready নয়। Partner API, live analytics ও financial ledger এখনো আলাদা কাজ।",safeStatus:"আবেদন জমার সংযোগ deploy ও পরীক্ষা না হওয়া পর্যন্ত live status নিশ্চিত নয়। Wallet transfer ও withdrawal বন্ধ।",footer:"Zemivo Affiliate Center • ধাপে ধাপে নির্মাণ • বাস্তব অর্থ লেনদেন চালু নয়"},
+en:{brand:"Affiliate Center • Earnings & Partners",menu:"AFFILIATE MENU",navOverview:"Overview",navApply:"Affiliate application",navWallet:"Wallets",navModules:"All modules",navSecurity:"Security",eyebrow:"GLOBAL AFFILIATE ECOSYSTEM",title:"Zemivo Affiliate Center",intro:"Manage affiliate partners, product links, commissions, wallets, and earnings in one place.",notice:"Current status: UI and preparation framework only. No live affiliate network, KYC approval, commission tracking, wallet ledger, or payment provider is connected. Real-money transactions are not enabled.",overview:"Affiliate Overview",overviewSub:"Values below are demo until server integration",demoTag:"DEMO • NOT LIVE",earn:"Total earnings",clicks:"Total clicks",approved:"Approved commission",pending:"Pending commission",withdraw:"Withdrawable balance",conversion:"Conversion rate",demo:"Demo value • Not connected",tracking:"Tracking integration pending",partner:"Partner integration pending",verify:"Verification system pending",disabled:"Live withdrawals disabled",analytics:"Analytics integration pending",applyTitle:"Apply to start Affiliate work",applySub:"KYC is not required for a normal Zemivo account; identity verification is required when joining Affiliate activities.",kycNotice:"Identity verification is required to join Affiliate activities. Your document is sent to private storage; the application remains pending until an admin reviews it. Ordinary Zemivo accounts do not require KYC.",country:"Country",docType:"Identity document type",reason:"Brief Affiliate promotion plan",terms:"I have read and accept Affiliate terms, disclosure, and identity-verification rules.",uploadLabel:"Identity document image/PDF",uploadHelp:"PDF/JPG/PNG/WebP • Maximum 10 MB. Upload a clear image.",submitNow:"Submit secure application",walletTitle:"Wallet System",walletSub:"Each wallet will have separate accounting and a server-controlled ledger",aw:"Affiliate Wallet",ac:"Affiliate commission deposits",mw:"Zemivo Main Wallet",mb:"Main balance",zw:"ZMV Wallet",zc:"Zemivo Coin balance",cw:"Creator Wallet",cc:"Creator earnings",sw:"Shopping Wallet",sc:"For purchases",ww:"Withdrawal Wallet",wc:"For approved withdrawals",transferTitle:"Wallet Transfer & Withdrawal",transferText:"Transfers from Affiliate Wallet to Zemivo Wallet and withdrawals require KYC re-verification, PIN/OTP, risk checks, limits, and server authorization. No transfer or withdrawal action is active in this prototype.",transferDisabled:"Transfer unavailable",withdrawDisabled:"Withdrawal unavailable",modules:"Affiliate System Modules",modulesSub:"To be built gradually according to the approved Master Scope",m1:"Affiliate Programs & Partners",d1:"Amazon, Alibaba, AliExpress, Daraz and direct partners; provider controls, commission rules, and country availability.",m2:"Product Marketplace",d2:"Search, categories, product details, prices, discounts, commissions, ratings, comparison, and saved products.",m3:"Affiliate Link Management",d3:"Create, name, copy, share, QR, click/sales tracking, attribution, expiry, and fraud checks.",m4:"Promotion & Campaign Tools",d4:"Campaigns, banners, templates, and reports across Zemivo and external social platforms.",m5:"Commission Management",d5:"Pending, approved, rejected, refunds, cancellations, disputes, and provider-specific rules.",m6:"Referral & Team System",d6:"Referral links, invitations, bonuses, team activity, attribution, and abuse prevention.",m7:"Reports & Analytics",d7:"Daily/weekly/monthly reports by product, provider, link, and country; CSV/PDF export.",m8:"Payment & Withdrawal",d8:"Approved bank/mobile-money providers, requests, fees, limits, receipts, failures, and disputes.",m9:"Wallet Transfer & Security",d9:"Affiliate-only KYC, withdrawal-time identity re-check, PIN, OTP, limits, holds, and secure ledger.",m10:"Notifications & Support",d10:"Commission, sale, payment, KYC, transfer/security alerts, tickets, and dispute handling.",m11:"Admin Control Center",d11:"Provider/member/product controls, commissions, country rules, KYC, payout approval, roles, audit, and emergency disable.",m12:"Legal, Privacy & Global Support",d12:"Affiliate disclosure, terms, privacy, consent, refunds, complaints, local rules, languages, currencies, and formats.",m13:"Affiliate KYC & Verification",d13:"Identity documents only when joining Affiliate; supported official documents vary by country; re-verification at withdrawal.",m14:"Backend, Ledger & Reliability",d14:"Firebase Auth UID, secure server functions, immutable ledger, audit logs, fraud checks, backup, recovery, and tests.",security:"Secure Affiliate Money Flow",securitySub:"No KYC for ordinary account creation; required for Affiliate and financial actions",s1:"01 • Affiliate join",sd1:"Affiliate application and country-appropriate official ID review",s2:"02 • Approval",sd2:"Affiliate work begins only after trusted reviewer approval",s3:"03 • Earnings",sd3:"Verified commission enters Affiliate Wallet through server ledger",s4:"04 • Transfer/withdraw",sd4:"Identity re-check, PIN/OTP, risk/limit checks, and server approval",backendTitle:"Backend connection status",backendText:"This page contains Firebase Auth, private Storage upload, and submitAffiliateKyc callable integration code. It is not production-ready until Functions deployment, merged Storage/Firestore Rules, App Check, and Admin claims are verified. Partner APIs, live analytics, and the financial ledger remain separate work.",safeStatus:"The KYC form includes Firebase upload and submission code. It becomes usable only after Functions, Storage/Firestore Rules, and App Check are deployed and tested. Wallet transfer and withdrawal remain disabled.",footer:"Zemivo Affiliate Center • Built step by step • Real-money transactions are not enabled"},
+zh:{brand:"联盟中心 • 收益与合作伙伴",menu:"联盟菜单",navOverview:"概览",navApply:"联盟申请",navWallet:"钱包",navModules:"全部模块",navSecurity:"安全",eyebrow:"全球联盟营销生态",title:"Zemivo 联盟中心",intro:"集中管理联盟合作伙伴、商品链接、佣金、钱包和收益。",notice:"当前状态：仅为界面和准备框架。尚未连接真实联盟网络、KYC 审批、佣金追踪、钱包账本或支付服务商。尚未启用真实资金交易。",overview:"联盟概览",overviewSub:"服务器接入前以下数据均为演示值",demoTag:"演示 • 未上线",earn:"总收益",clicks:"总点击量",approved:"已批准佣金",pending:"待处理佣金",withdraw:"可提现余额",conversion:"转化率",demo:"演示数据 • 未连接",tracking:"等待接入追踪",partner:"等待接入合作伙伴",verify:"待建立验证系统",disabled:"真实提现未启用",analytics:"等待接入分析",applyTitle:"申请开始联盟工作",applySub:"普通 Zemivo 账户无需 KYC；加入联盟活动时需要身份验证。",kycNotice:"加入联盟活动需要身份验证。证件将安全存储，管理员审核前申请保持待处理状态。普通 Zemivo 账户无需 KYC。",country:"国家",docType:"身份证件类型",reason:"简要联盟推广计划",terms:"我已阅读并接受联盟条款、推广披露和身份验证规则。",uploadLabel:"身份证件图片/PDF",uploadHelp:"PDF/JPG/PNG/WebP • 最大 10 MB。请上传清晰文件。",submitNow:"安全提交申请",walletTitle:"钱包系统",walletSub:"每个钱包都有独立账目和服务器控制的账本",aw:"联盟钱包",ac:"用于存入联盟佣金",mw:"Zemivo 主钱包",mb:"主余额",zw:"ZMV 钱包",zc:"Zemivo Coin 余额",cw:"创作者钱包",cc:"创作者收入",sw:"购物钱包",sc:"用于购物",ww:"提现钱包",wc:"用于已批准的提现",transferTitle:"钱包转账与提现",transferText:"从联盟钱包转入 Zemivo 钱包及提现都必须经过 KYC 重新验证、PIN/OTP、风险检查、限额和服务器授权。本原型未启用任何转账或提现操作。",transferDisabled:"转账不可用",withdrawDisabled:"提现不可用",modules:"联盟系统模块",modulesSub:"按照已批准的主范围逐步开发",m1:"联盟计划与合作伙伴",d1:"Amazon、Alibaba、AliExpress、Daraz 及直接合作伙伴；服务商控制、佣金规则和国家可用性。",m2:"商品市场",d2:"搜索、分类、商品详情、价格、折扣、佣金、评分、比较和收藏。",m3:"联盟链接管理",d3:"创建、命名、复制、分享、二维码、点击/销售追踪、归因、到期和欺诈检查。",m4:"推广与活动工具",d4:"在 Zemivo 和外部社交平台进行活动、横幅、模板和报告。",m5:"佣金管理",d5:"待处理、已批准、已拒绝佣金；退款、取消、争议和服务商规则。",m6:"推荐与团队系统",d6:"推荐链接、邀请、奖金、团队活动、归因和滥用防范。",m7:"报告与分析",d7:"按日/周/月、商品、服务商、链接和国家生成报告；支持 CSV/PDF。",m8:"支付与提现",d8:"获批准的银行/移动支付服务商、申请、费用、限额、收据、失败和争议。",m9:"钱包转账与安全",d9:"仅联盟 KYC、提现时重新验证身份、PIN、OTP、限额、冻结和安全账本。",m10:"通知与支持",d10:"佣金、销售、支付、KYC、转账/安全提醒、工单和争议处理。",m11:"管理员控制中心",d11:"服务商/成员/商品控制、佣金、国家规则、KYC、付款审批、角色、审计和紧急停用。",m12:"法律、隐私与全球支持",d12:"联盟披露、条款、隐私、同意、退款、投诉、当地规则、语言、货币和格式。",m13:"联盟 KYC 与验证",d13:"仅在加入联盟时提交身份文件；各国支持的官方证件不同；提现时重新验证。",m14:"后端、账本与可靠性",d14:"Firebase Auth UID、安全服务器函数、不可篡改账本、审计日志、欺诈检查、备份、恢复和测试。",security:"联盟资金安全流程",securitySub:"普通账户注册无需 KYC；联盟和金融操作需要验证",s1:"01 • 加入联盟",sd1:"提交联盟申请并审核符合国家要求的官方证件",s2:"02 • 审批",sd2:"可信审核员批准后才能开始联盟工作",s3:"03 • 收益",sd3:"经验证的佣金通过服务器账本进入联盟钱包",s4:"04 • 转账/提现",sd4:"重新验证身份、PIN/OTP、风险/限额检查和服务器审批",backendTitle:"后端连接状态",backendText:"本页面尚未连接 Firebase callable functions、联盟 KYC 文件存储、合作伙伴 API、实时分析或财务账本。仅有 functions 框架并不代表生产后端已完成。",safeStatus:"KYC 表单包含 Firebase 上传和提交代码。只有在部署并测试 Functions、Storage/Firestore Rules 和 App Check 后才能使用。钱包转账和提现仍处于关闭状态。",footer:"Zemivo 联盟中心 • 逐步建设 • 尚未启用真实资金交易"}
+};
 function setLanguage(lang){const d=translations[lang]||translations.bn;document.documentElement.lang=lang;document.querySelectorAll("[data-i18n]").forEach(el=>{const k=el.dataset.i18n;if(d[k])el.textContent=d[k]});try{localStorage.setItem("zemivoAffiliateLanguage",lang)}catch(e){}}
 const language=document.getElementById("language");let saved="bn";try{saved=localStorage.getItem("zemivoAffiliateLanguage")||"bn"}catch(e){}language.value=translations[saved]?saved:"bn";language.addEventListener("change",e=>setLanguage(e.target.value));setLanguage(language.value);
 document.querySelectorAll(".nav").forEach(btn=>btn.addEventListener("click",()=>{document.querySelectorAll(".nav").forEach(x=>x.classList.remove("active"));btn.classList.add("active");document.getElementById(btn.dataset.target).scrollIntoView({behavior:"smooth",block:"start"})}));
-document.getElementById("affiliateApplicationForm").addEventListener("submit",e=>{e.preventDefault();alert(language.value==="en"?"Application submission is disabled until secure KYC is implemented.":language.value==="zh"?"安全 KYC 功能完成前，申请提交已关闭。":"নিরাপদ KYC ব্যবস্থা তৈরি না হওয়া পর্যন্ত আবেদন জমা বন্ধ আছে।")});
- <script type="module">
+
+</script>
+<script type="module">
 import { auth, app, storage } from "./zemivo-security.js";
-import {
-  ref,
-  uploadBytes
-} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-storage.js";
-import {
-  getFunctions,
-  httpsCallable
-} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-functions.js";
+import { ref, uploadBytes } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-storage.js";
+import { getFunctions, httpsCallable } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-functions.js";
 
 const form = document.getElementById("affiliateApplicationForm");
 const submitButton = document.getElementById("kycSubmitButton");
 const statusBox = document.getElementById("kycSubmitStatus");
 const fileInput = document.getElementById("kycDocument");
-
 const functions = getFunctions(app, "asia-south1");
 const submitKyc = httpsCallable(functions, "submitAffiliateKyc");
-
-const allowedTypes = new Set([
-  "application/pdf",
-  "image/jpeg",
-  "image/png",
-  "image/webp"
-]);
-
+const allowedTypes = new Set(["application/pdf", "image/jpeg", "image/png", "image/webp"]);
 const maxBytes = 10 * 1024 * 1024;
-
 const messages = {
-  bn: {
-    login: "আবেদন জমা দিতে আগে Zemivo account-এ লগইন করুন।",
-    badFile: "PDF, JPG, PNG বা WebP ফাইল দিন; সর্বোচ্চ ১০ MB।",
-    working: "নিরাপদে ডকুমেন্ট আপলোড ও আবেদন জমা হচ্ছে। পেজ বন্ধ করবেন না…",
-    success: "আপনার আবেদন সফলভাবে জমা হয়েছে। অবস্থা: যাচাইয়ের অপেক্ষায়।",
-    error: "আবেদন জমা হয়নি। লগইন, ইন্টারনেট ও Firebase সেটআপ পরীক্ষা করুন।",
-    signedout: "আপনার লগইন সেশন শেষ হয়েছে। আবার লগইন করুন।"
-  },
-  en: {
-    login: "Please sign in before applying.",
-    badFile: "Choose a PDF, JPG, PNG, or WebP file up to 10 MB.",
-    working: "Uploading your document securely. Please keep this page open…",
-    success: "Application submitted successfully. Status: pending review.",
-    error: "Submission failed. Check sign-in, connection, and Firebase setup.",
-    signedout: "Your session expired. Please sign in again."
-  },
-  zh: {
-    login: "请先登录 Zemivo 账户。",
-    badFile: "请选择不超过 10 MB 的 PDF、JPG、PNG 或 WebP 文件。",
-    working: "正在安全上传文件，请保持页面打开…",
-    success: "申请已成功提交，正在等待审核。",
-    error: "提交失败，请检查登录状态、网络和 Firebase 设置。",
-    signedout: "登录状态已过期，请重新登录。"
-  }
+ bn: {login:"আবেদন জমা দিতে আগে Zemivo account-এ লগইন করুন।",badFile:"PDF, JPG, PNG বা WebP ফাইল দিন; সর্বোচ্চ ১০ MB।",working:"নিরাপদে ডকুমেন্ট আপলোড ও আবেদন জমা হচ্ছে। পেজ বন্ধ করবেন না…",success:"আপনার আবেদন সফলভাবে জমা হয়েছে। অবস্থা: যাচাইয়ের অপেক্ষায়। Admin-কে নোটিফিকেশন পাঠানো হয়েছে।",error:"আবেদন জমা হয়নি। ইন্টারনেট, লগইন ও Firebase সেটআপ পরীক্ষা করে আবার চেষ্টা করুন।",signedout:"আপনার লগইন সেশন শেষ হয়েছে। আবার লগইন করুন।"},
+ en: {login:"Please sign in to your Zemivo account before applying.",badFile:"Choose a PDF, JPG, PNG, or WebP file up to 10 MB.",working:"Securely uploading your document and submitting the application. Please keep this page open…",success:"Your application was submitted successfully and is pending review. An admin notification was created.",error:"The application could not be submitted. Check your connection, sign-in, and Firebase setup, then try again.",signedout:"Your sign-in session expired. Please sign in again."},
+ zh: {login:"请先登录 Zemivo 账户再提交申请。",badFile:"请选择不超过 10 MB 的 PDF、JPG、PNG 或 WebP 文件。",working:"正在安全上传文件并提交申请，请保持页面打开…",success:"申请已成功提交，正在等待审核。系统已创建管理员通知。",error:"申请提交失败。请检查网络、登录状态和 Firebase 设置后重试。",signedout:"登录状态已过期，请重新登录。"}
 };
-
-function say(key) {
-  const lang = document.getElementById("language").value;
-  return (messages[lang] || messages.bn)[key];
-}
-
-function setStatus(message, success = false) {
-  statusBox.textContent = message;
-  statusBox.style.borderColor = success
-    ? "#34d39988"
-    : "var(--line)";
-  statusBox.style.color = success
-    ? "#a7f3d0"
-    : "#cde6f8";
-}
-
+function say(key){const lang=document.getElementById("language").value;return (messages[lang]||messages.bn)[key]||messages.bn[key];}
+function setStatus(text, good=false){statusBox.textContent=text;statusBox.style.borderColor=good?"#34d39988":"var(--line)";statusBox.style.color=good?"#a7f3d0":"#cde6f8";}
 form.addEventListener("submit", async (event) => {
-  event.preventDefault();
-
-  const user = auth.currentUser;
-
-  if (!user) {
-    setStatus(say("login"));
-    return;
-  }
-
-  if (!form.reportValidity()) return;
-
-  const file = fileInput.files?.[0];
-
-  if (
-    !file ||
-    !allowedTypes.has(file.type) ||
-    file.size < 1 ||
-    file.size > maxBytes
-  ) {
-    setStatus(say("badFile"));
-    return;
-  }
-
-  const country = document.getElementById("country").value;
-  const documentType = document.getElementById("documentType").value;
-  const affiliateReason =
-    document.getElementById("affiliateReason").value.trim();
-  const acceptedTerms =
-    document.getElementById("acceptAffiliateTerms").checked;
-  const language =
-    document.getElementById("language").value;
-
-  if (!/^[A-Z]{2}$/.test(country)) {
-    setStatus("সঠিক দুই অক্ষরের দেশের কোড নির্বাচন করুন।");
-    return;
-  }
-
-  if (affiliateReason.length < 10) {
-    setStatus("Affiliate পরিকল্পনা কমপক্ষে ১০ অক্ষরে লিখুন।");
-    return;
-  }
-
-  if (!acceptedTerms) {
-    setStatus("আবেদনের শর্তে সম্মতি দিতে হবে।");
-    return;
-  }
-
-  const requestId = crypto.randomUUID().replace(/-/g, "");
-
-  const safeName = (file.name || "identity-document")
-    .normalize("NFKD")
-    .replace(/[^A-Za-z0-9._-]/g, "_")
-    .slice(-100) || "identity-document";
-
-  const storagePath =
-    `affiliateKycUploads/${user.uid}/${requestId}/${safeName}`;
-
-  submitButton.disabled = true;
-  setStatus(say("working"));
-
-  try {
-    await uploadBytes(
-      ref(storage, storagePath),
-      file,
-      {
-        contentType: file.type,
-        customMetadata: {
-          ownerUid: user.uid
-        }
-      }
-    );
-
-    if (
-      !auth.currentUser ||
-      auth.currentUser.uid !== user.uid
-    ) {
-      throw new Error("AUTH_SESSION_CHANGED");
-    }
-
-    await submitKyc({
-      country,
-      documentType,
-      affiliateReason,
-      storagePath,
-      language,
-      acceptedTerms
-    });
-
-    setStatus(say("success"), true);
-    form.reset();
-
-  } catch (error) {
-    console.error("Affiliate KYC submission failed:", error);
-
-    if (
-      error?.message === "AUTH_SESSION_CHANGED" ||
-      error?.code === "functions/unauthenticated"
-    ) {
-      setStatus(say("signedout"));
-    } else {
-      setStatus(say("error"));
-    }
-
-  } finally {
-    submitButton.disabled = false;
-  }
+ event.preventDefault();
+ if (!auth.currentUser) { setStatus(say("login")); return; }
+ const file = fileInput.files?.[0];
+ if (!file || !allowedTypes.has(file.type) || file.size < 1 || file.size > maxBytes) { setStatus(say("badFile")); return; }
+ if (!form.reportValidity()) return;
+ const user = auth.currentUser;
+ const requestId = crypto.randomUUID().replace(/-/g, "");
+ const safeName = (file.name || "identity-document").normalize("NFKD").replace(/[^A-Za-z0-9._-]/g, "_").slice(-100) || "identity-document";
+ const storagePath = `affiliateKycUploads/${user.uid}/${requestId}/${safeName}`;
+ submitButton.disabled = true;
+ setStatus(say("working"));
+ try {
+   await uploadBytes(ref(storage, storagePath), file, { contentType: file.type, customMetadata: { ownerUid: user.uid } });
+   if (!auth.currentUser || auth.currentUser.uid !== user.uid) throw new Error("AUTH_SESSION_CHANGED");
+   await submitKyc({
+     country: document.getElementById("country").value,
+     documentType: document.getElementById("documentType").value,
+     affiliateReason: document.getElementById("affiliateReason").value.trim(),
+     storagePath,
+     language: document.getElementById("language").value,
+     acceptedTerms: document.getElementById("acceptAffiliateTerms").checked
+   });
+   setStatus(say("success"), true);
+   form.reset();
+ } catch (error) {
+   console.error("Affiliate KYC submission failed:", error);
+   setStatus(error?.message === "AUTH_SESSION_CHANGED" ? say("signedout") : (error?.code === "functions/unauthenticated" ? say("signedout") : say("error")));
+ } finally { submitButton.disabled = false; }
 });
-</script>
 </script>
 </body>
 </html>
